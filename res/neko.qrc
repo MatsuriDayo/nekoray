@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/neko-breeze">
+        <file>internet-web-browser.svg</file>
+        <file>system-run.svg</file>
+        <file>preferences.svg</file>
+        <file>network-server.svg</file>
+    </qresource>
+    <qresource prefix="/nekoray">
+        <file>nekoray.png</file>
+    </qresource>
+</RCC>

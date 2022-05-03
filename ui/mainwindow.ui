@@ -14,7 +14,88 @@
    <string>NekoRay</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,3,0,0">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QToolButton" name="toolButton_program">
+        <property name="text">
+         <string>Program</string>
+        </property>
+        <property name="icon">
+         <iconset theme="system-run"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonFollowStyle</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_preferences">
+        <property name="text">
+         <string>Preferences</string>
+        </property>
+        <property name="icon">
+         <iconset theme="preferences"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonFollowStyle</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_server">
+        <property name="text">
+         <string>Server</string>
+        </property>
+        <property name="icon">
+         <iconset theme="network-server"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonFollowStyle</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_ads">
+        <property name="text">
+         <string>Ads</string>
+        </property>
+        <property name="icon">
+         <iconset theme="internet-web-browser"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonFollowStyle</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
@@ -155,9 +236,9 @@
     <addaction name="separator"/>
     <addaction name="menu_exit"/>
    </widget>
-   <widget class="QMenu" name="menu_prefernces">
+   <widget class="QMenu" name="menu_preferences">
     <property name="title">
-     <string>Preference</string>
+     <string>Preferences</string>
     </property>
     <addaction name="menu_basic_settings"/>
     <addaction name="menu_manage_groups"/>
@@ -207,7 +288,7 @@
     <addaction name="menuManage"/>
    </widget>
    <addaction name="menu_program"/>
-   <addaction name="menu_prefernces"/>
+   <addaction name="menu_preferences"/>
    <addaction name="menu_server"/>
   </widget>
   <action name="menu_exit">

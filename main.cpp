@@ -11,7 +11,15 @@ int main(int argc, char *argv[]) {
         return 0;
 
     QApplication a(argc, argv);
+
     QDir::setCurrent(QApplication::applicationDirPath());
+
+    // icons
+    QIcon::setFallbackSearchPaths(QStringList{
+            ":/neko-breeze",
+            ":/nekoray",
+    });
+
     MainWindow w;
     w.show();
     return a.exec();

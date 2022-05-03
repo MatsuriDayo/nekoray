@@ -16,13 +16,11 @@ void EditChain::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->ChainBean();
 
-    QString str;
-    if (!bean->list.isEmpty()) {
-        for (auto id: bean->list) {
-            str += Int2String(id) + "\n";
-        }
+    QStringList list2;
+    for (auto id: bean->list) {
+        list2 += Int2String(id);
     }
-    ui->plainTextEdit->setPlainText(str);
+    ui->plainTextEdit->setPlainText(list2.join("\n"));
 }
 
 bool EditChain::onEnd() {

@@ -61,6 +61,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
 
+    // top bar
+    ui->toolButton_program->setMenu(ui->menu_program);
+    ui->toolButton_preferences->setMenu(ui->menu_preferences);
+    ui->toolButton_server->setMenu(ui->menu_server);
+    ui->menubar->setVisible(false);
+    connect(ui->toolButton_ads, &QToolButton::clicked, this,
+            [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
+
     // Setup log UI
     qvLogHighlighter = new SyntaxHighlighter(false, qvLogDocument);
     ui->masterLogBrowser->setDocument(qvLogDocument);
@@ -132,7 +140,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tabWidget->setCurrentIndex(last_selected);
 
     // Setup Tray
-    auto icon = QIcon(QPixmap("nekoray.png"));
+    auto icon = QIcon::fromTheme("nekoray");
+    auto pixmap = QPixmap("nekoray.png");
+    if (!pixmap.isNull()) icon = QIcon(pixmap);
     setWindowIcon(icon);
 
     tray = new QSystemTrayIcon(this);//初始化托盘对象tray
@@ -157,7 +167,7 @@ MainWindow::MainWindow(QWidget *parent)
             });
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
     connect(ui->menu_manage_group, &QAction::triggered, ui->menu_manage_groups, &QAction::trigger);
-    ui->menu_program_preference->addActions(ui->menu_prefernces->actions());
+    ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_system_proxy, &QMenu::aboutToShow, this, [=]() {
         if (NekoRay::dataStore->system_proxy) {
             ui->menu_system_proxy_enabled->setChecked(true);
@@ -852,6 +862,14 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
         qvLogDocument->clear();
     });
     menu->addAction(action_clear);
+
+    auto action_hide = new QAction;
+    action_hide->setText(tr("Hide"));
+    action_hide->setData(-1);
+    connect(action_hide, &QAction::triggered, this, [=] {
+        ui->masterLogBrowser->setVisible(false);
+    });
+    menu->addAction(action_hide);
 
     menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); //弹出菜单
 }

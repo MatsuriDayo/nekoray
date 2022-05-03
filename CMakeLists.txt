@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Svg)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg)
 
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
@@ -94,6 +94,8 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.cpp
         ui/dialog_manage_routes.h
         ui/dialog_manage_routes.ui
+
+        res/neko.qrc
         )
 
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -125,7 +127,7 @@ target_include_directories(nekoray PRIVATE
 
 target_link_libraries(nekoray PRIVATE
         myproto
-        Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network
+        Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
         ${YAML_CPP_LINK_LIBRARIES}
         ${PLATFORM_FUCKING_LIBRARIES}
         )
