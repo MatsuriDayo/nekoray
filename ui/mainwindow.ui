@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NekoRay</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="3,0,0">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="widget1">
+       <attribute name="title">
+        <string/>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_2">
+        <item row="0" column="0">
+         <widget class="MyTableWidget" name="proxyListTable">
+          <property name="contextMenuPolicy">
+           <enum>Qt::CustomContextMenu</enum>
+          </property>
+          <property name="editTriggers">
+           <set>QAbstractItemView::NoEditTriggers</set>
+          </property>
+          <property name="selectionBehavior">
+           <enum>QAbstractItemView::SelectRows</enum>
+          </property>
+          <property name="verticalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <property name="horizontalScrollMode">
+           <enum>QAbstractItemView::ScrollPerPixel</enum>
+          </property>
+          <attribute name="horizontalHeaderMinimumSectionSize">
+           <number>16</number>
+          </attribute>
+          <attribute name="horizontalHeaderHighlightSections">
+           <bool>false</bool>
+          </attribute>
+          <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+           <bool>false</bool>
+          </attribute>
+          <column>
+           <property name="text">
+            <string/>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Type</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Address</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Name</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Test Result</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Traffic</string>
+           </property>
+          </column>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTextBrowser" name="masterLogBrowser">
+      <property name="contextMenuPolicy">
+       <enum>Qt::CustomContextMenu</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_running">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_inbound">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_speed">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_program">
+    <property name="title">
+     <string>Program</string>
+    </property>
+    <widget class="QMenu" name="menu_system_proxy">
+     <property name="title">
+      <string>System Proxy</string>
+     </property>
+     <addaction name="menu_system_proxy_enabled"/>
+     <addaction name="menu_system_proxy_disabled"/>
+    </widget>
+    <widget class="QMenu" name="menu_program_preference">
+     <property name="title">
+      <string>Preference</string>
+     </property>
+     <addaction name="actionfake"/>
+    </widget>
+    <addaction name="menu_add_from_clipboard2"/>
+    <addaction name="menu_scan_qr"/>
+    <addaction name="separator"/>
+    <addaction name="menu_system_proxy"/>
+    <addaction name="menu_program_preference"/>
+    <addaction name="separator"/>
+    <addaction name="menu_exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_prefernces">
+    <property name="title">
+     <string>Preference</string>
+    </property>
+    <addaction name="menu_basic_settings"/>
+    <addaction name="menu_manage_groups"/>
+    <addaction name="menu_routing_settings"/>
+   </widget>
+   <widget class="QMenu" name="menu_server">
+    <property name="title">
+     <string>Server</string>
+    </property>
+    <widget class="QMenu" name="menuShare_Item">
+     <property name="title">
+      <string>Share</string>
+     </property>
+     <addaction name="menu_qr"/>
+     <addaction name="menu_copy_link"/>
+     <addaction name="menu_profile_debug_info"/>
+     <addaction name="menu_export_config"/>
+    </widget>
+    <widget class="QMenu" name="menuSpeedtest">
+     <property name="title">
+      <string>Speedtest</string>
+     </property>
+     <addaction name="menu_tcp_ping"/>
+     <addaction name="menu_url_test"/>
+     <addaction name="menu_clear_test_result"/>
+    </widget>
+    <widget class="QMenu" name="menuManage">
+     <property name="title">
+      <string>Manage</string>
+     </property>
+     <addaction name="menu_delete_repeat"/>
+     <addaction name="menu_manage_group"/>
+    </widget>
+    <addaction name="menu_add_from_input"/>
+    <addaction name="menu_add_from_clipboard"/>
+    <addaction name="separator"/>
+    <addaction name="menu_start"/>
+    <addaction name="menu_stop"/>
+    <addaction name="separator"/>
+    <addaction name="menu_delete"/>
+    <addaction name="menu_reset_traffic"/>
+    <addaction name="separator"/>
+    <addaction name="menuShare_Item"/>
+    <addaction name="separator"/>
+    <addaction name="menuSpeedtest"/>
+    <addaction name="separator"/>
+    <addaction name="menuManage"/>
+   </widget>
+   <addaction name="menu_program"/>
+   <addaction name="menu_prefernces"/>
+   <addaction name="menu_server"/>
+  </widget>
+  <action name="menu_exit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="menu_basic_settings">
+   <property name="text">
+    <string>Basic Settings</string>
+   </property>
+  </action>
+  <action name="menu_add_from_input">
+   <property name="text">
+    <string>Add profile from input</string>
+   </property>
+  </action>
+  <action name="menu_manage_groups">
+   <property name="text">
+    <string>Groups</string>
+   </property>
+  </action>
+  <action name="menu_start">
+   <property name="text">
+    <string>Start</string>
+   </property>
+  </action>
+  <action name="menu_stop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="menu_routing_settings">
+   <property name="text">
+    <string>Routes</string>
+   </property>
+  </action>
+  <action name="menu_add_from_clipboard">
+   <property name="text">
+    <string>Add profile from clipboard</string>
+   </property>
+  </action>
+  <action name="menu_delete">
+   <property name="text">
+    <string>Delete</string>
+   </property>
+  </action>
+  <action name="menu_add_from_clipboard2">
+   <property name="text">
+    <string>Add profile from clipboard</string>
+   </property>
+  </action>
+  <action name="menu_profile_debug_info">
+   <property name="text">
+    <string>Debug Info</string>
+   </property>
+  </action>
+  <action name="menu_qr">
+   <property name="text">
+    <string>QR Code</string>
+   </property>
+  </action>
+  <action name="menu_copy_link">
+   <property name="text">
+    <string>Copy Link</string>
+   </property>
+  </action>
+  <action name="menu_tcp_ping">
+   <property name="text">
+    <string>Tcp Ping All</string>
+   </property>
+  </action>
+  <action name="menu_url_test">
+   <property name="text">
+    <string>Url Test All</string>
+   </property>
+  </action>
+  <action name="menu_clear_test_result">
+   <property name="text">
+    <string>Clear Test Result</string>
+   </property>
+  </action>
+  <action name="menu_export_config">
+   <property name="text">
+    <string>Export Config</string>
+   </property>
+  </action>
+  <action name="menu_reset_traffic">
+   <property name="text">
+    <string>Reset Traffic</string>
+   </property>
+  </action>
+  <action name="menu_scan_qr">
+   <property name="text">
+    <string>Scan QR Code</string>
+   </property>
+  </action>
+  <action name="actionRoutes">
+   <property name="text">
+    <string>Routes</string>
+   </property>
+  </action>
+  <action name="menu_system_proxy_enabled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable</string>
+   </property>
+  </action>
+  <action name="menu_system_proxy_disabled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable</string>
+   </property>
+  </action>
+  <action name="menu_delete_repeat">
+   <property name="text">
+    <string>Delete Repeat</string>
+   </property>
+  </action>
+  <action name="menu_manage_group">
+   <property name="text">
+    <string>Manage Group</string>
+   </property>
+  </action>
+  <action name="actionfake">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ui/widget/MyTableWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

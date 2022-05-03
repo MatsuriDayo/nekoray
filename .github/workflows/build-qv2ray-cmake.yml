@@ -1,0 +1,150 @@
+name: Nekoray build matrix - cmake
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release Tag'
+        required: true
+      publish:
+        description: 'Publish: If want ignore'
+        required: false
+jobs:
+  build:
+    strategy:
+      matrix:
+        platform: [ windows-latest, ubuntu-18.04 ]
+        arch: [ x64 ]
+        build_type: [ Release ]
+        qt_version: [ 5.15.0 ]
+        include:
+          - platform: windows-latest
+            arch: x64
+            qtarch: win64_msvc2019_64
+      fail-fast: false
+
+    runs-on: ${{ matrix.platform }}
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v2
+        with:
+          submodules: "recursive"
+      - name: Install MSVC compiler
+        if: matrix.platform == 'windows-latest'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          # 14.1 is for vs2017, 14.2 is vs2019, following the upstream vcpkg build from Qv2ray-deps repo
+          toolset: 14.2
+          arch: ${{ matrix.arch }}
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.14.0
+        with:
+          version: 5.15.0
+          py7zrversion: ' '
+          aqtversion: ' '
+          setup-python: false
+      # ========================================================================================================= Other install
+      - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
+        if: matrix.platform == 'windows-latest'
+        uses: ashutoshvarma/setup-ninja@master
+        with:
+          # ninja version to download. Default: 1.10.0
+          version: 1.10.0
+      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Other install
+        shell: bash
+        if: matrix.platform == 'ubuntu-18.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential autoconf libtool pkg-config ninja-build cmake
+      - name: Install Golang
+        uses: actions/setup-go@v2
+        with:
+          stable: false
+          go-version: 1.18.1
+      # ========================================================================================================= Cache & Build deps
+      - name: Cache Download & Build Dependencies
+        id: cache-deps
+        uses: actions/cache@v2
+        with:
+          path: libs
+          key: ${{ hashFiles('libs/*.sh') }}
+      - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
+        shell: bash
+        if: matrix.platform == 'windows-latest' && steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
+          ./libs/download_windows64.sh
+          ./libs/build_deps_all.sh
+      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
+        shell: bash
+        if: matrix.platform == 'ubuntu-18.04' && steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
+          ./libs/build_deps_all.sh
+          ./libs/build_deps_linux.sh
+      # ========================================================================================================= Generate MakeFile and Build
+      - name: Windows - ${{ matrix.qt_version }} - Generate Dependencies and Build
+        shell: bash
+        if: matrix.platform == 'windows-latest'
+        env:
+          CC: cl.exe
+          CXX: cl.exe
+        run: |
+          choco install pkgconfiglite
+          export PKG_CONFIG_PATH=$PWD/libs/deps/built/share/pkgconfig
+          mkdir build
+          cd build
+          cmake .. -GNinja \
+            -DCMAKE_TOOLCHAIN_FILE=./libs/deps/windows-x64/scripts/buildsystems/vcpkg.cmake \
+            -DCMAKE_PREFIX_PATH=./libs/deps/built \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake --build . --parallel $(nproc)
+          cd ..
+          ./libs/deploy_windows64.sh
+      - name: Linux - ${{ matrix.qt_version }} - Generate Dependencies and Build
+        shell: bash
+        if: matrix.platform == 'ubuntu-18.04'
+        run: |
+          export PKG_CONFIG_PATH=$PWD/libs/deps/built/share/pkgconfig
+          mkdir build
+          cd build
+          cmake .. -GNinja \
+            -DCMAKE_PREFIX_PATH=./libs/deps/built \
+            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake --build . --parallel $(nproc)
+          cd ..
+          ./libs/deploy_linux64.sh
+      # ========================================================================================================= Deployments
+      - name: Uploading Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
+          path: ./deployment/
+  publish:
+    name: Publish Release
+    if: github.event.inputs.publish != 'y'
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Donwload Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: NekoRay-${{ github.sha }}-ubuntu-18.04-x64
+          path: artifacts-linux
+      - name: Donwload Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: NekoRay-${{ github.sha }}-windows-latest-x64
+          path: artifacts-windows
+      - name: Release
+        run: |
+          wget -O ghr.tar.gz https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz
+          tar -xvf ghr.tar.gz
+          mv ghr*linux_amd64/ghr .
+          mkdir apks
+          find artifacts-linux -name "*.tar.gz" -exec cp {} apks \;
+          find artifacts-windows -name "*.zip" -exec cp {} apks \;
+          ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" apks

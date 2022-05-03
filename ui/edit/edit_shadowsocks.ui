@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditShadowSocks</class>
+ <widget class="QWidget" name="EditShadowSocks">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="horizontalSpacing">
+    <number>0</number>
+   </property>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Plugin Args</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="plugin_opts"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Encryption</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="plugin">
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>obfs-local</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>v2ray-plugin</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>ssr</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="password"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="method">
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string>AES_128_GCM</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_192_GCM</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_256_GCM</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CHACHA20_IETF_POLY1305</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>XCHACHA20_IETF_POLY1305</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_128_CTR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_192_CTR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_256_CTR</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_128_CFB</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_192_CFB</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>AES_256_CFB</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>RC4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>RC4_MD5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>SALSA20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CHACHA20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>CHACHA20_IETF</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>XCHACHA20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>none</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Plugin</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <tabstops>
+  <tabstop>method</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>plugin</tabstop>
+  <tabstop>plugin_opts</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
