@@ -1,0 +1,6 @@
+*.log
+*.pem
+*.json
+*.exe
+*.dat
+/nekoray_core

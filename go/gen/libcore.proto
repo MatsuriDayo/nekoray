@@ -1,0 +1,96 @@
+syntax = "proto3";
+
+package libcore;
+option go_package = "nekoray_core/gen";
+
+service LibcoreService {
+  rpc Exit(EmptyReq) returns (EmptyResp) {}
+  rpc KeepAlive(EmptyReq) returns (EmptyResp) {}
+  rpc Update(UpdateReq) returns (UpdateResp) {}
+  //
+  rpc Start(LoadConfigReq) returns (ErrorResp) {}
+  rpc SetTun(SetTunReq) returns (ErrorResp) {}
+  rpc Stop(EmptyReq) returns (ErrorResp) {}
+  rpc Test(TestReq) returns (TestResp) {}
+  rpc QueryStats(QueryStatsReq) returns (QueryStatsResp) {}
+  rpc ListV2rayConnections(EmptyReq) returns (ListV2rayConnectionsResp) {}
+}
+
+message EmptyReq {}
+
+message EmptyResp {}
+
+message ErrorResp {
+  string error = 1;
+}
+
+message LoadConfigReq {
+  string coreConfig = 1;
+  string tryDomains = 2;
+}
+
+message SetTunReq {
+  string name = 1;
+  int32 mtu = 2;
+  int32 implementation = 3;
+  bool fakedns = 4;
+}
+
+enum TestMode {
+  TcpPing = 0;
+  UrlTest = 1;
+  FullTest = 2;
+}
+
+message TestReq {
+  TestMode mode = 1;
+  int32 timeout = 6;
+  // TcpPing
+  string address = 2;
+  // UrlTest
+  LoadConfigReq config = 3;
+  string inbound = 4;
+  string url = 5;
+  // FullTest
+  string in_address = 7;
+  bool full_latency = 8;
+  bool full_speed = 9;
+  bool full_in_out = 10;
+  bool full_nat = 11;
+}
+
+message TestResp {
+  string error = 1;
+  int32 ms = 2;
+  string full_report = 3;
+}
+
+message QueryStatsReq{
+  string tag = 1;
+  string direct = 2;
+}
+
+message QueryStatsResp{
+  int64 traffic = 1;
+}
+
+enum UpdateAction {
+  Check = 0;
+  Download = 1;
+}
+
+message UpdateReq {
+  UpdateAction action = 1;
+}
+
+message UpdateResp {
+  string error = 1;
+  string assets_name = 2;
+  string download_url = 3;
+  string release_url = 4;
+  string release_note = 5;
+}
+
+message ListV2rayConnectionsResp {
+  string matsuri_connections_json = 1;
+}

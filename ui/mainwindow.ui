@@ -1,0 +1,770 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>800</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>NekoRay</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QToolButton" name="toolButton_program">
+        <property name="text">
+         <string>Program</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-system-run">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_preferences">
+        <property name="text">
+         <string>Preferences</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-preferences">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_server">
+        <property name="text">
+         <string>Server</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-network-server">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_ads">
+        <property name="text">
+         <string>Ads</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-internet-web-browser">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_document">
+        <property name="text">
+         <string>Document</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-dialog-question">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_update">
+        <property name="text">
+         <string>Update</string>
+        </property>
+        <property name="icon">
+         <iconset theme="b-system-software-update">
+          <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBox_VPN">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>VPN Mode</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="search">
+        <property name="clearButtonEnabled">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QSplitter" name="splitter">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+      <widget class="QTabWidget" name="tabWidget">
+       <property name="currentIndex">
+        <number>0</number>
+       </property>
+       <property name="movable">
+        <bool>true</bool>
+       </property>
+       <widget class="QWidget" name="widget1">
+        <attribute name="title">
+         <string/>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_2">
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
+         <property name="spacing">
+          <number>0</number>
+         </property>
+         <item row="0" column="0">
+          <widget class="MyTableWidget" name="proxyListTable">
+           <property name="contextMenuPolicy">
+            <enum>Qt::CustomContextMenu</enum>
+           </property>
+           <property name="editTriggers">
+            <set>QAbstractItemView::NoEditTriggers</set>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="selectionBehavior">
+            <enum>QAbstractItemView::SelectRows</enum>
+           </property>
+           <property name="verticalScrollMode">
+            <enum>QAbstractItemView::ScrollPerPixel</enum>
+           </property>
+           <property name="horizontalScrollMode">
+            <enum>QAbstractItemView::ScrollPerPixel</enum>
+           </property>
+           <attribute name="horizontalHeaderMinimumSectionSize">
+            <number>16</number>
+           </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="verticalHeaderDefaultSectionSize">
+            <number>26</number>
+           </attribute>
+           <column>
+            <property name="text">
+             <string/>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Type</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Address</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Name</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Test Result</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Traffic</string>
+            </property>
+           </column>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="aaaaaaaaaaaaaaaaaa">
+       <layout class="QVBoxLayout" name="aaaaaaaaaaaa" stretch="0">
+        <item>
+         <widget class="QTabWidget" name="down_tab">
+          <property name="currentIndex">
+           <number>0</number>
+          </property>
+          <widget class="QWidget" name="tab">
+           <attribute name="title">
+            <string>Log</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTextBrowser" name="masterLogBrowser">
+              <property name="contextMenuPolicy">
+               <enum>Qt::CustomContextMenu</enum>
+              </property>
+              <property name="openLinks">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="tab_2">
+           <attribute name="title">
+            <string>Connection</string>
+           </attribute>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
+            <property name="spacing">
+             <number>0</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="topMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <property name="bottomMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QTableWidget" name="tableWidget_conn">
+              <property name="contextMenuPolicy">
+               <enum>Qt::CustomContextMenu</enum>
+              </property>
+              <property name="editTriggers">
+               <set>QAbstractItemView::NoEditTriggers</set>
+              </property>
+              <property name="selectionBehavior">
+               <enum>QAbstractItemView::SelectRows</enum>
+              </property>
+              <property name="verticalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+              <property name="horizontalScrollMode">
+               <enum>QAbstractItemView::ScrollPerPixel</enum>
+              </property>
+              <attribute name="horizontalHeaderHighlightSections">
+               <bool>false</bool>
+              </attribute>
+              <column>
+               <property name="text">
+                <string>Status</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Outbound</string>
+               </property>
+              </column>
+              <column>
+               <property name="text">
+                <string>Destination</string>
+               </property>
+              </column>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QLabel" name="label_running">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Maximum</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_inbound">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_speed">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu_program">
+    <property name="title">
+     <string>Program</string>
+    </property>
+    <widget class="QMenu" name="menu_spmode">
+     <property name="title">
+      <string>System Proxy</string>
+     </property>
+     <addaction name="menu_spmode_system_proxy"/>
+     <addaction name="menu_spmode_vpn"/>
+     <addaction name="menu_spmode_disabled"/>
+    </widget>
+    <widget class="QMenu" name="menu_program_preference">
+     <property name="title">
+      <string>Preferences</string>
+     </property>
+     <addaction name="actionfake"/>
+    </widget>
+    <widget class="QMenu" name="menuActive_Server">
+     <property name="title">
+      <string>Active Server</string>
+     </property>
+     <addaction name="actionfake_2"/>
+    </widget>
+    <widget class="QMenu" name="menuActive_Routing">
+     <property name="title">
+      <string>Active Routing</string>
+     </property>
+     <addaction name="actionfake_3"/>
+    </widget>
+    <addaction name="menu_add_from_clipboard2"/>
+    <addaction name="menu_scan_qr"/>
+    <addaction name="separator"/>
+    <addaction name="actionStart_with_system"/>
+    <addaction name="actionStart_minimal"/>
+    <addaction name="actionRemember_last_proxy"/>
+    <addaction name="menuActive_Server"/>
+    <addaction name="menuActive_Routing"/>
+    <addaction name="menu_spmode"/>
+    <addaction name="menu_program_preference"/>
+    <addaction name="separator"/>
+    <addaction name="menu_exit"/>
+   </widget>
+   <widget class="QMenu" name="menu_preferences">
+    <property name="title">
+     <string>Preferences</string>
+    </property>
+    <addaction name="menu_basic_settings"/>
+    <addaction name="menu_manage_groups"/>
+    <addaction name="menu_routing_settings"/>
+    <addaction name="menu_hotkey_settings"/>
+   </widget>
+   <widget class="QMenu" name="menu_server">
+    <property name="title">
+     <string>Server</string>
+    </property>
+    <widget class="QMenu" name="menuShare_Item">
+     <property name="title">
+      <string>Share</string>
+     </property>
+     <addaction name="menu_qr"/>
+     <addaction name="menu_qr_nkr"/>
+     <addaction name="menu_export_config"/>
+     <addaction name="separator"/>
+     <addaction name="menu_copy_links"/>
+    </widget>
+    <widget class="QMenu" name="menugroup">
+     <property name="title">
+      <string>Current Group</string>
+     </property>
+     <addaction name="menu_delete_repeat"/>
+     <addaction name="menu_tcp_ping"/>
+     <addaction name="menu_url_test"/>
+     <addaction name="menu_full_test"/>
+     <addaction name="menu_clear_test_result"/>
+     <addaction name="menu_remove_unavailable"/>
+    </widget>
+    <addaction name="menu_add_from_input"/>
+    <addaction name="menu_add_from_clipboard"/>
+    <addaction name="separator"/>
+    <addaction name="menu_start"/>
+    <addaction name="menu_stop"/>
+    <addaction name="separator"/>
+    <addaction name="menu_select_all"/>
+    <addaction name="menu_move"/>
+    <addaction name="menu_reset_traffic"/>
+    <addaction name="menu_delete"/>
+    <addaction name="separator"/>
+    <addaction name="menuShare_Item"/>
+    <addaction name="separator"/>
+    <addaction name="menugroup"/>
+    <addaction name="separator"/>
+    <addaction name="menu_profile_debug_info"/>
+    <addaction name="separator"/>
+   </widget>
+   <addaction name="menu_program"/>
+   <addaction name="menu_preferences"/>
+   <addaction name="menu_server"/>
+  </widget>
+  <action name="menu_exit">
+   <property name="text">
+    <string>Exit</string>
+   </property>
+  </action>
+  <action name="menu_basic_settings">
+   <property name="text">
+    <string>Basic Settings</string>
+   </property>
+  </action>
+  <action name="menu_add_from_input">
+   <property name="text">
+    <string>New profile</string>
+   </property>
+  </action>
+  <action name="menu_manage_groups">
+   <property name="text">
+    <string>Groups</string>
+   </property>
+  </action>
+  <action name="menu_start">
+   <property name="text">
+    <string>Start [ Enter ]</string>
+   </property>
+  </action>
+  <action name="menu_stop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="menu_routing_settings">
+   <property name="text">
+    <string>Routes</string>
+   </property>
+  </action>
+  <action name="menu_add_from_clipboard">
+   <property name="text">
+    <string>New profile from clipboard</string>
+   </property>
+  </action>
+  <action name="menu_delete">
+   <property name="text">
+    <string>Delete [ Delete ]</string>
+   </property>
+  </action>
+  <action name="menu_add_from_clipboard2">
+   <property name="text">
+    <string>Add profile from clipboard</string>
+   </property>
+  </action>
+  <action name="menu_profile_debug_info">
+   <property name="text">
+    <string>Debug Info</string>
+   </property>
+  </action>
+  <action name="menu_qr">
+   <property name="text">
+    <string>QR Code and link</string>
+   </property>
+  </action>
+  <action name="menu_copy_link">
+   <property name="text">
+    <string>Copy Link</string>
+   </property>
+  </action>
+  <action name="menu_tcp_ping">
+   <property name="text">
+    <string notr="true">Tcp Ping</string>
+   </property>
+  </action>
+  <action name="menu_url_test">
+   <property name="text">
+    <string notr="true">Url Test</string>
+   </property>
+  </action>
+  <action name="menu_clear_test_result">
+   <property name="text">
+    <string>Clear Test Result</string>
+   </property>
+  </action>
+  <action name="menu_export_config">
+   <property name="text">
+    <string>Export V2ray config</string>
+   </property>
+  </action>
+  <action name="menu_reset_traffic">
+   <property name="text">
+    <string>Reset Traffic</string>
+   </property>
+  </action>
+  <action name="menu_scan_qr">
+   <property name="text">
+    <string>Scan QR Code</string>
+   </property>
+  </action>
+  <action name="menu_spmode_system_proxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable System Proxy</string>
+   </property>
+  </action>
+  <action name="menu_spmode_disabled">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Disable</string>
+   </property>
+  </action>
+  <action name="menu_delete_repeat">
+   <property name="text">
+    <string>Delete Repeat</string>
+   </property>
+  </action>
+  <action name="actionfake">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="menu_move">
+   <property name="text">
+    <string>Move</string>
+   </property>
+  </action>
+  <action name="actionStart_with_system">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start with system</string>
+   </property>
+  </action>
+  <action name="actionRemember_last_proxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Remember last profile</string>
+   </property>
+  </action>
+  <action name="actionStart_minimal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start minimal</string>
+   </property>
+  </action>
+  <action name="menu_remove_unavailable">
+   <property name="text">
+    <string>Remove Unavailable</string>
+   </property>
+  </action>
+  <action name="menu_full_test">
+   <property name="text">
+    <string>Full Test</string>
+   </property>
+  </action>
+  <action name="menu_hotkey_settings">
+   <property name="text">
+    <string>Hot key</string>
+   </property>
+  </action>
+  <action name="menu_select_all">
+   <property name="text">
+    <string>Select All</string>
+   </property>
+  </action>
+  <action name="menu_qr_nkr">
+   <property name="text">
+    <string>QR Code and link (Nekoray)</string>
+   </property>
+  </action>
+  <action name="actionfake_2">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionfake_3">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="menu_copy_links">
+   <property name="text">
+    <string>Copy links of selected</string>
+   </property>
+  </action>
+  <action name="menu_spmode_vpn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Enable VPN</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>ui/widget/MyTableWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

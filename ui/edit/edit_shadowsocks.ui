@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditShadowSocks</class>
+ <widget class="QWidget" name="EditShadowSocks">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="horizontalSpacing">
+    <number>0</number>
+   </property>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Plugin Args</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="MyLineEdit" name="plugin_opts"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Encryption</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="plugin">
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">obfs-local</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">v2ray-plugin</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">ssr</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="MyLineEdit" name="password"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="method">
+     <property name="editable">
+      <bool>true</bool>
+     </property>
+     <item>
+      <property name="text">
+       <string notr="true">aes-128-gcm</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-192-gcm</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-256-gcm</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">chacha20-poly1305</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">xchacha20-poly1305</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-128-ctr</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-192-ctr</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-256-ctr</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-128-cfb</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-192-cfb</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">aes-256-cfb</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">rc4</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">rc4-md5</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">salsa20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">chacha20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">chacha20-ietf</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">xchacha20</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">none</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Plugin</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>ui/widget/MyLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>method</tabstop>
+  <tabstop>password</tabstop>
+  <tabstop>plugin</tabstop>
+  <tabstop>plugin_opts</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

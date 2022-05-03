@@ -1,0 +1,32 @@
+<svg width="48" xmlns="http://www.w3.org/2000/svg" height="48" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <linearGradient id="a" y1="543.8" y2="503.8" x2="0" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#c6cdd1"/>
+   <stop offset="1" stop-color="#e0e5e7"/>
+  </linearGradient>
+  <linearGradient id="b" y1="13" y2="33" x2="0" gradientUnits="userSpaceOnUse" gradientTransform="translate(384.57 499.8)">
+   <stop stop-color="#f67400"/>
+   <stop offset="1" stop-color="#fdbc4b"/>
+  </linearGradient>
+  <linearGradient xlink:href="#b" id="c" y1="42" y2="6" gradientUnits="userSpaceOnUse" x2="0"/>
+  <linearGradient id="d" y1="539.8" x1="410.57" y2="523.8" x2="428.57" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#f67400"/>
+   <stop offset="1" stop-color="#f67400" stop-opacity="0"/>
+  </linearGradient>
+  <linearGradient id="e" y1="520.8" x1="402.57" y2="536.8" x2="418.57" gradientUnits="userSpaceOnUse">
+   <stop stop-color="#292c2f"/>
+   <stop offset="1" stop-opacity="0"/>
+  </linearGradient>
+ </defs>
+ <g transform="translate(-384.57-499.8)">
+  <g stroke-opacity=".55" stroke-width="2.8">
+   <rect width="40" x="388.57" y="503.8" fill="url(#a)" rx="20" height="40"/>
+   <path fill="url(#b)" d="m408.57 512.8l-9 9h5v11h8v-11h5z"/>
+   <path opacity=".5" fill="#808080" d="m24 42c9.972 0 18-8.03 18-18 0-9.972-8.03-18-18-18v2c8.864 0 16 7.136 16 16 0 8.864-7.136 16-16 16z" transform="translate(384.57 499.8)"/>
+   <path fill="url(#d)" d="m408.57 505.8c-9.972 0-18 8.03-18 18 0 9.972 8.03 18 18 18 9.972 0 18-8.03 18-18 0-9.972-8.03-18-18-18m0 2c8.864 0 16 7.136 16 16 0 8.864-7.136 16-16 16-8.864 0-16-7.136-16-16 0-8.864 7.136-16 16-16"/>
+   <path fill="url(#c)" d="m24 42v-2c-8.864 0-16-7.136-16-16 0-8.864 7.136-16 16-16v-2c-9.972 0-18 8.03-18 18 0 9.972 8.03 18 18 18" transform="translate(384.57 499.8)"/>
+   <path fill="#99a1a7" d="m4.01 23.5c-.004.167-.012.332-.012.5 0 11.08 8.92 20 20 20 11.08 0 20-8.92 20-20 0-.168-.008-.333-.012-.5-.264 10.847-9.08 19.5-19.988 19.5-10.912 0-19.724-8.653-19.988-19.5" transform="translate(384.57 499.8)"/>
+  </g>
+  <path opacity=".2" fill="url(#e)" fill-rule="evenodd" d="m412.57 521.8v11h-8l10.06 10.06c5.685-1.796 10.248-6.05 12.467-11.533l-9.531-9.531z"/>
+ </g>
+</svg>
