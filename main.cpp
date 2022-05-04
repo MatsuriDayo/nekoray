@@ -12,12 +12,14 @@ int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
 
-    QDir::setCurrent(QApplication::applicationDirPath());
+    auto wd = QDir(QApplication::applicationDirPath());
+    if (!wd.exists("config")) wd.mkdir("config");
+    QDir::setCurrent(wd.absoluteFilePath("config"));
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{
-            ":/neko-breeze",
-            ":/nekoray",
+            ":neko-breeze",
+            ":nekoray",
     });
 
     MainWindow w;

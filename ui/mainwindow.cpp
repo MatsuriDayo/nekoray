@@ -141,7 +141,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup Tray
     auto icon = QIcon::fromTheme("nekoray");
-    auto pixmap = QPixmap("nekoray.png");
+    auto pixmap = QPixmap("../nekoray.png");
     if (!pixmap.isNull()) icon = QIcon(pixmap);
     setWindowIcon(icon);
 
@@ -784,7 +784,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
             req.set_mode(mode);
             req.set_timeout(3000);
             req.set_inbound("socks-in"); // no needed?
-            req.set_url("truehttp://cp.cloudflare.com/");
+            req.set_url(NekoRay::dataStore->test_url.toStdString());
 
             if (mode == libcore::TestMode::UrlTest) {
                 auto c = NekoRay::fmt::BuildConfig(profile, true);
@@ -805,7 +805,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
 
             runOnUiThread([=] {
                 if (!result.error().empty()) {
-                    writeLog_ui(QString(result.error().c_str()));
+                    writeLog_ui(tr("[%1] test error: %2").arg(profile->bean->DisplayName(), result.error().c_str()));
                 }
                 refresh_proxy_list(profile->id);
             });

@@ -37,9 +37,10 @@ namespace NekoRay {
         // Saved
 
         // Misc
-        QString core_path = "./nekoray_core";
+        QString core_path = "../nekoray_core";
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.8";
+        QString test_url = "truehttp://cp.cloudflare.com/";
         int traffic_loop_interval = 500;
         int current_group = 0; //group id
         int mux_cool = 8;
@@ -65,6 +66,7 @@ namespace NekoRay {
         DataStore() : JsonStore("groups/nekoray.json") {
             _add(new configItem("core_path", &core_path, itemType::string));
             _add(new configItem("user_agent", &user_agent, itemType::string));
+            _add(new configItem("test_url", &test_url, itemType::string));
             _add(new configItem("current_group", &current_group, itemType::integer));
             _add(new configItem("inbound_address", &inbound_address, itemType::string));
             _add(new configItem("inbound_socks_port", &inbound_socks_port, itemType::integer));
