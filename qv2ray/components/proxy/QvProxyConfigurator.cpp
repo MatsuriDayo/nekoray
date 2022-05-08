@@ -1,3 +1,5 @@
+#ifndef __MINGW32__
+
 #include "QvProxyConfigurator.hpp"
 
 #ifdef Q_OS_WIN
@@ -478,3 +480,5 @@ namespace Qv2ray::components::proxy {
 #endif
     }
 } // namespace Qv2ray::components::proxy
+
+#endif

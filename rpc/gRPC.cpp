@@ -2,6 +2,8 @@
 
 #include <utility>
 
+#ifndef NO_GRPC
+
 namespace NekoRay::rpc {
     Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
         auto channel = grpc::CreateChannel(target.toStdString(), grpc::InsecureChannelCredentials());
@@ -119,3 +121,5 @@ namespace NekoRay::rpc {
         return reply.traffic();
     }
 }
+
+#endif

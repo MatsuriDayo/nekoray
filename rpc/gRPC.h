@@ -1,6 +1,11 @@
 #ifndef NEKORAY_GRPC_H
 #define NEKORAY_GRPC_H
 
+// MINGW gRPC build not ok now
+#ifdef __MINGW32__
+#define NO_GRPC
+#else
+
 #include "rpc/libcore.grpc.pb.h"
 #include <grpc++/grpc++.h>
 #include <QString>
@@ -32,5 +37,6 @@ namespace NekoRay::rpc {
 
     inline Client *defaultClient;
 };
+#endif
 
 #endif //NEKORAY_GRPC_H

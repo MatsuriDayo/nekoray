@@ -1,7 +1,12 @@
 #include <QInputDialog>
 #include "RawUpdater.hpp"
 
-#include "3rdparty/qtyaml.hpp"
+#ifndef __MINGW32__
+
+#include <yaml-cpp/yaml.h>
+
+#endif
+
 #include "db/Database.hpp"
 #include "ui/mainwindow_message.h"
 #include "qv2ray/utils/HTTPRequestHelper.hpp"
@@ -59,11 +64,16 @@ namespace NekoRay::sub {
         dataStore->updated_count++;
     }
 
+#ifndef __MINGW32__
+
     QString Node2QString(const YAML::Node &n) {
         return {n.Scalar().c_str()};
     }
 
+#endif
+
     void RawUpdater::updateClash(const QString &str) {
+#ifndef __MINGW32__
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {
@@ -98,6 +108,7 @@ namespace NekoRay::sub {
         } catch (const YAML::Exception &ex) {
             MessageBoxWarning("YAML Exception", ex.what());
         }
+#endif
     }
 
     // 各种奇妙UI

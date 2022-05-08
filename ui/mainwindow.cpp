@@ -13,7 +13,12 @@
 #include "ui/dialog_manage_routes.h"
 
 #include "3rdparty/qrcodegen.hpp"
+
+#ifndef __MINGW32__
+
 #include "qv2ray/components/proxy/QvProxyConfigurator.hpp"
+
+#endif
 
 #include <QClipboard>
 #include <QLabel>
@@ -181,6 +186,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_system_proxy_disabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(false); });
     refresh_status();
 
+#ifndef NO_GRPC
     // Start Core
     NekoRay::dataStore->core_token = GetRandomString(32);
     NekoRay::dataStore->core_port = MkPort();
@@ -231,6 +237,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Looper
     runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });
+#endif
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -325,7 +332,9 @@ void MainWindow::on_menu_exit_triggered() {
     neko_set_system_proxy(false);
     neko_stop();
     core_process_killed = true;
+#ifndef NO_GRPC
     defaultClient->Exit();
+#endif
     qApp->quit();
 }
 
@@ -636,11 +645,15 @@ void MainWindow::on_menu_scan_qr_triggered() {
 }
 
 void MainWindow::on_menu_tcp_ping_triggered() {
+#ifndef NO_GRPC
     speedtest_current_group(libcore::TestMode::TcpPing);
+#endif
 }
 
 void MainWindow::on_menu_url_test_triggered() {
+#ifndef NO_GRPC
     speedtest_current_group(libcore::TestMode::UrlTest);
+#endif
 }
 
 void MainWindow::on_menu_clear_test_result_triggered() {
@@ -708,6 +721,7 @@ void MainWindow::neko_start(int id) {
         return;
     }
 
+#ifndef NO_GRPC
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, QJsonObject2QString(result->coreConfig, true));
     if (rpcOK && !error.isEmpty()) {
@@ -718,6 +732,7 @@ void MainWindow::neko_start(int id) {
     NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
     NekoRay::traffic::trafficLooper->items = result->outboundStats;
     NekoRay::traffic::trafficLooper->loop_enabled = true;
+#endif
 
     NekoRay::dataStore->started_id = ent->id;
     running = ent;
@@ -728,6 +743,7 @@ void MainWindow::neko_start(int id) {
 void MainWindow::neko_stop() {
     if (NekoRay::dataStore->started_id < 0) return;
 
+#ifndef NO_GRPC
     // TODO save traffic & conflict?
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
@@ -745,6 +761,7 @@ void MainWindow::neko_stop() {
         MessageBoxWarning("Stop return error", error);
         return;
     }
+#endif
 
     NekoRay::dataStore->started_id = -1919;
     running = nullptr;
@@ -754,6 +771,7 @@ void MainWindow::neko_stop() {
 
 void MainWindow::neko_set_system_proxy(bool enable) {
     NekoRay::dataStore->system_proxy = enable;
+#ifndef __MINGW32__
     if (enable) {
         SetSystemProxy("127.0.0.1",
                        NekoRay::dataStore->inbound_http_port,
@@ -761,6 +779,7 @@ void MainWindow::neko_set_system_proxy(bool enable) {
     } else {
         ClearSystemProxy();
     }
+#endif
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -777,6 +796,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 }
 
 // 测速
+
+#ifndef NO_GRPC
 
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
     runOnNewThread([=]() {
@@ -822,6 +843,8 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         }
     });
 }
+
+#endif
 
 // Log
 

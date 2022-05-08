@@ -24,7 +24,9 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
+#ifndef NO_GRPC
     NekoRay::rpc::Client *defaultClient;
+#endif
 
     MainWindow(QWidget *parent = nullptr);
 
@@ -118,7 +120,11 @@ private:
 
     void hideEvent(QHideEvent *event) override;
 
+#ifndef NO_GRPC
+
     void speedtest_current_group(libcore::TestMode mode);
+
+#endif
 };
 
 #endif // MAINWINDOW_H

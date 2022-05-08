@@ -125,8 +125,15 @@ target_include_directories(nekoray PRIVATE
         ${YAML_CPP_INCLUDE_DIRS}
         )
 
+if (MINGW)
+    unset(YAML_CPP_LINK_LIBRARIES)
+    unset(PLATFORM_FUCKING_LIBRARIES)
+else ()
+    set(MY_PROTO_LIBRARIES myproto)
+endif ()
+
 target_link_libraries(nekoray PRIVATE
-        myproto
+        ${MY_PROTO_LIBRARIES}
         Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
         ${YAML_CPP_LINK_LIBRARIES}
         ${PLATFORM_FUCKING_LIBRARIES}

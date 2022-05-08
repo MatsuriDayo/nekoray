@@ -8,6 +8,7 @@
 
 namespace NekoRay::traffic {
     void TrafficLooper::update(TrafficData *item) {
+#ifndef NO_GRPC
         bool rpcOK;
         auto uplink = NekoRay::rpc::defaultClient->QueryStats(&rpcOK, item->tag, "uplink");
         auto downlink = NekoRay::rpc::defaultClient->QueryStats(&rpcOK, item->tag, "downlink");
@@ -18,6 +19,7 @@ namespace NekoRay::traffic {
         //?
         item->downlink_rate = downlink;
         item->uplink_rate = uplink;
+#endif
     }
 
     [[noreturn]] void TrafficLooper::loop() {
