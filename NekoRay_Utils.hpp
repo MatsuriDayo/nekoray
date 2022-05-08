@@ -1,5 +1,9 @@
 // DO NOT INCLUDE THIS
 
+#include <random>
+#include <utility>
+#include <functional>
+
 #include <QString>
 #include <QWidget>
 #include <QVariant>
@@ -13,11 +17,8 @@
 #include <QMetaObject>
 #include <QThread>
 #include <QUrlQuery>
-#include <random>
-
-#include <utility>
-#include <functional>
 #include <QHostAddress>
+#include <QTcpServer>
 
 // Dialogs
 
@@ -132,6 +133,15 @@ inline QString ReadableSize(const qint64 &size) {
         sizeAsDouble /= 1024.0;
     }
     return QString::fromLatin1("%1 %2").arg(sizeAsDouble, 0, 'f', 2).arg(measure);
+}
+
+// Net
+inline int MkPort() {
+    QTcpServer s;
+    s.listen();
+    auto port = s.serverPort();
+    s.close();
+    return port;
 }
 
 // Validators

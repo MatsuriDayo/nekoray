@@ -183,12 +183,22 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Start Core
     NekoRay::dataStore->core_token = GetRandomString(32);
-    QStringList args;
-    args.push_back("nekoray");
+    NekoRay::dataStore->core_port = MkPort();
+    if (NekoRay::dataStore->core_port <= 0) NekoRay::dataStore->core_port = 19810;
+
     runOnNewThread([=]() {
         core_process = new QProcess;
+
         connect(core_process, &QProcess::readyReadStandardOutput, this,
-                [=]() { showLog(core_process->readAllStandardOutput().trimmed()); });
+                [=]() {
+                    // TODO read output sometimes crash
+                    showLog(core_process->readAllStandardOutput().trimmed());
+                });
+
+        QStringList args;
+        args.push_back("nekoray");
+        args.push_back("-port");
+        args.push_back(Int2String(NekoRay::dataStore->core_port));
 
         while (true) {
 //            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
@@ -204,7 +214,7 @@ MainWindow::MainWindow(QWidget *parent)
     // Setup Connection
     NekoRay::rpc::defaultClient = defaultClient = new NekoRay::rpc::Client([=](const QString &errStr) {
         showLog("gRPC Error: " + errStr);
-    }, NekoRay::dataStore->core_token);
+    }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
     connect(t, &QTimer::timeout, this, [=]() {
         bool ok = defaultClient->keepAlive();

@@ -8,7 +8,7 @@
 namespace NekoRay::rpc {
     class Client {
     public:
-        explicit Client(std::function<void(const QString &)> onError, const QString &token);
+        explicit Client(std::function<void(const QString &)> onError, const QString &target, const QString &token);
 
         void Exit();
 
@@ -22,7 +22,7 @@ namespace NekoRay::rpc {
 
         libcore::TestResp Test(bool *rpcOK, const libcore::TestReq &request);
 
-        long long QueryStats(bool *rpcOK, const std::string& tag, const std::string& direct);
+        long long QueryStats(bool *rpcOK, const std::string &tag, const std::string &direct);
 
     private:
         std::unique_ptr<libcore::LibcoreService::Stub> _stub;

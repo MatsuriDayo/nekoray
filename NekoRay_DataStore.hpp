@@ -31,6 +31,7 @@ namespace NekoRay {
         // Running
 
         QString core_token;
+        int core_port;
         int started_id = -1919;
         bool system_proxy = false;
 

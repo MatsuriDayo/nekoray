@@ -3,8 +3,8 @@
 #include <utility>
 
 namespace NekoRay::rpc {
-    Client::Client(std::function<void(const QString &)> onError, const QString &token) {
-        auto channel = grpc::CreateChannel("127.0.0.1:19810", grpc::InsecureChannelCredentials());
+    Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
+        auto channel = grpc::CreateChannel(target.toStdString(), grpc::InsecureChannelCredentials());
         this->_stub = libcore::LibcoreService::NewStub(channel);
         this->onError = std::move(onError);
         this->token = token;
