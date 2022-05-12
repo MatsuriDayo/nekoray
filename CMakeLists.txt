@@ -86,6 +86,9 @@ set(PROJECT_SOURCES
         ui/edit/edit_vmess.h
         ui/edit/edit_vmess.cpp
         ui/edit/edit_vmess.ui
+        ui/edit/edit_trojan.h
+        ui/edit/edit_trojan.cpp
+        ui/edit/edit_trojan.ui
 
         ui/dialog_basic_settings.cpp
         ui/dialog_basic_settings.h

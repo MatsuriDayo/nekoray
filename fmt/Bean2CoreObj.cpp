@@ -1,6 +1,7 @@
 #include "SocksBean.hpp"
 #include "ShadowSocksBean.hpp"
 #include "VMessBean.hpp"
+#include "TrojanBean.hpp"
 
 namespace NekoRay::fmt {
 
@@ -130,4 +131,31 @@ namespace NekoRay::fmt {
         return result;
     }
 
+    CoreObjOutboundBuildResult TrojanBean::BuildCoreObj() {
+        CoreObjOutboundBuildResult result;
+        QJsonObject outbound{
+                {"protocol", "trojan"},
+        };
+
+        QJsonObject settings{
+                {"servers", QJsonArray{
+                        QJsonObject{
+                                {"address",  serverAddress},
+                                {"port",     serverPort},
+                                {"password", password},
+                        }
+                }}
+        };
+
+        outbound["settings"] = settings;
+        auto streamSettings = stream->BuildStreamSettings();
+        auto sec = streamSettings["security"].toString();
+        if (sec.isEmpty() || sec == "none") {
+            result.error = QObject::tr("reject clear text trojan");
+        }
+        outbound["streamSettings"] = streamSettings;
+
+        result.outbound = outbound;
+        return result;
+    }
 }

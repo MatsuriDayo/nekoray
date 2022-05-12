@@ -85,7 +85,9 @@ namespace NekoRay::fmt {
         } else {
             ents += ent;
         }
+
         BuildChain(false, ents, status);
+        if (!result->error.isEmpty()) return result;
 
         // direct & bypass & block
         status->outbounds += QJsonObject{{"protocol", "freedom"},
@@ -237,6 +239,10 @@ namespace NekoRay::fmt {
 
         for (const auto &ent: ents) {
             auto mainObj = ent->bean->BuildCoreObj();
+            if (!mainObj.error.isEmpty()) { // rejected
+                status->result->error = mainObj.error;
+                return "";
+            }
             auto outbound = mainObj.outbound;
 
             // tagOut: v2ray outbound tagOut for a profile
@@ -296,7 +302,7 @@ namespace NekoRay::fmt {
             if (dataStore->mux_cool > 0) {
                 if (ent->type == "vmess" || ent->type == "trojan") {//常见的*ray后端
                     outbound["mux"] = QJsonObject{
-                            {"enabled", true},
+                            {"enabled",     true},
                             {"concurrency", dataStore->mux_cool},
                     };
                 }

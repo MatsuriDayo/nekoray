@@ -10,6 +10,7 @@
 #include "fmt/ShadowSocksBean.hpp"
 #include "fmt/ChainBean.hpp"
 #include "fmt/VMessBean.hpp"
+#include "fmt/TrojanBean.hpp"
 
 namespace NekoRay {
     class ProxyEntity : public JsonStore {
@@ -56,6 +57,10 @@ namespace NekoRay {
 
         [[nodiscard]] fmt::VMessBean *VMessBean() const {
             return (fmt::VMessBean *) bean.get();
+        };
+
+        [[nodiscard]] fmt::TrojanBean *TrojanBean() const {
+            return (fmt::TrojanBean *) bean.get();
         };
 
     };

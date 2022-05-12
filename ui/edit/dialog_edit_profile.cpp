@@ -7,6 +7,7 @@
 #include "ui/edit/edit_shadowsocks.h"
 #include "ui/edit/edit_chain.h"
 #include "ui/edit/edit_vmess.h"
+#include "ui/edit/edit_trojan.h"
 
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 
@@ -96,6 +97,10 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         innerEditor = _innerWidget;
     } else if (type == "vmess") {
         auto _innerWidget = new EditVMess(this);
+        innerWidget = _innerWidget;
+        innerEditor = _innerWidget;
+    } else if (type == "trojan") {
+        auto _innerWidget = new EditTrojan(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
     } else {

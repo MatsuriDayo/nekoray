@@ -57,6 +57,8 @@ namespace NekoRay {
             bean = new fmt::ChainBean();
         } else if (type == "vmess") {
             bean = new fmt::VMessBean();
+        } else if (type == "trojan") {
+            bean = new fmt::TrojanBean();
         } else {
             bean = new fmt::AbstractBean(-114514);
         }

@@ -8,6 +8,7 @@ namespace NekoRay::fmt {
     class CoreObjOutboundBuildResult {
     public:
         QJsonObject outbound;
+        QString error;
     };
 
     class AbstractBean : public JsonStore {

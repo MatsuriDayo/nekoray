@@ -102,6 +102,11 @@
              </item>
              <item>
               <property name="text">
+               <string>trojan</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string>chain</string>
               </property>
              </item>
