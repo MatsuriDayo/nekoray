@@ -122,162 +122,167 @@
     <name>DialogEditProfile</name>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="20"/>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="362"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="367"/>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="44"/>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation>通用</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="61"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>类型</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="68"/>
         <source>Port</source>
-        <translation type="unfinished"></translation>
+        <translation>端口</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="75"/>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation>地址</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="82"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>名称</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="90"/>
         <source>socks</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="95"/>
         <source>shadowsocks</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="100"/>
         <source>vmess</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="105"/>
+        <source>trojan</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="110"/>
         <source>chain</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="124"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="129"/>
         <source>Bean</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="187"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="192"/>
         <source>Stream Settings</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="195"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="200"/>
         <source>Network</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="208"/>
-        <source>tcp</source>
-        <translation type="unfinished"></translation>
+        <translation>传输</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="213"/>
-        <source>ws</source>
-        <translation type="unfinished"></translation>
+        <source>tcp</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="218"/>
-        <source>h2</source>
-        <translation type="unfinished"></translation>
+        <source>ws</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="223"/>
+        <source>h2</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="228"/>
         <source>grpc</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="231"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="236"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="244"/>
-        <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation>传输层安全</translation>
     </message>
     <message>
         <location filename="../ui/edit/dialog_edit_profile.ui" line="249"/>
+        <source>none</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="254"/>
         <source>tls</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="268"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="273"/>
         <source>Network Settings (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>传输设置 (%1)</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="274"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="279"/>
         <source>Path</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="284"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="289"/>
         <source>Host</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="303"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="308"/>
         <source>Security Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>安全设置</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="309"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="314"/>
         <source>Allow insecure</source>
-        <translation type="unfinished"></translation>
+        <translation>不检查证书</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="318"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="323"/>
         <source>Not Set</source>
-        <translation type="unfinished"></translation>
+        <translation>未设定</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="325"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="330"/>
         <source>SNI</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="332"/>
-        <location filename="../ui/edit/dialog_edit_profile.cpp" line="234"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="337"/>
+        <location filename="../ui/edit/dialog_edit_profile.cpp" line="239"/>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>证书</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.ui" line="356"/>
+        <location filename="../ui/edit/dialog_edit_profile.ui" line="361"/>
         <source>Custom Json Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>自定义 JSON 设置</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.cpp" line="213"/>
         <location filename="../ui/edit/dialog_edit_profile.cpp" line="218"/>
+        <location filename="../ui/edit/dialog_edit_profile.cpp" line="223"/>
         <source>Not set</source>
-        <translation type="unfinished"></translation>
+        <translation>未设置</translation>
     </message>
     <message>
-        <location filename="../ui/edit/dialog_edit_profile.cpp" line="215"/>
         <location filename="../ui/edit/dialog_edit_profile.cpp" line="220"/>
+        <location filename="../ui/edit/dialog_edit_profile.cpp" line="225"/>
         <source>Already set</source>
-        <translation type="unfinished"></translation>
+        <translation>已设置</translation>
     </message>
 </context>
 <context>
@@ -346,158 +351,158 @@
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="14"/>
         <source>Routes</source>
-        <translation type="unfinished"></translation>
+        <translation>路由</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="24"/>
         <source>Outbound Domain Strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>出站域名策略</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="31"/>
         <source>Ipv6 mode (VPN)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ipv6 模式（VPN）</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="39"/>
         <location filename="../ui/dialog_manage_routes.ui" line="70"/>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation>禁用</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="44"/>
         <source>Enable</source>
-        <translation type="unfinished"></translation>
+        <translation>启用</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="49"/>
         <source>Prefer</source>
-        <translation type="unfinished"></translation>
+        <translation>优先</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="54"/>
         <source>Only</source>
-        <translation type="unfinished"></translation>
+        <translation>仅</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="62"/>
         <source>Sniffing Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>流量探测</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="75"/>
         <source>Sniffing to DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>探测结果用于 DNS 解析</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="80"/>
         <source>Sniffing to destination</source>
-        <translation type="unfinished"></translation>
+        <translation>探测结果用于目标地址</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="92"/>
         <source>AsIs</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="97"/>
         <source>UseIP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="102"/>
         <source>UseIPv4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="107"/>
         <source>UseIPv6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="112"/>
         <source>PreferIPv4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="117"/>
         <source>PreferIPv6</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="125"/>
         <source>Direct DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>直连 DNS</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="132"/>
         <source>Remote DNS</source>
-        <translation type="unfinished"></translation>
+        <translation>远程 DNS</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="151"/>
         <source>Enable DNS Routing</source>
-        <translation type="unfinished"></translation>
+        <translation>启用 DNS 路由</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="165"/>
         <source>Domain Strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>域名策略</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="194"/>
         <source>Matcher</source>
-        <translation type="unfinished"></translation>
+        <translation>域名匹配器</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="202"/>
         <source>Original</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="207"/>
         <source>Minimal Perfect Hash Matcher</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="219"/>
         <source>Block</source>
-        <translation type="unfinished"></translation>
+        <translation>阻止</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="232"/>
         <source>Direct</source>
-        <translation type="unfinished"></translation>
+        <translation>直连</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="242"/>
         <source>Domain</source>
-        <translation type="unfinished"></translation>
+        <translation>域名</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="258"/>
         <source>Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation>代理</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="274"/>
         <source>IP</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.ui" line="293"/>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>预设</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.cpp" line="78"/>
         <source>Bypass LAN and China</source>
-        <translation type="unfinished"></translation>
+        <translation>绕过局域网和大陆</translation>
     </message>
     <message>
         <location filename="../ui/dialog_manage_routes.cpp" line="79"/>
         <source>Global</source>
-        <translation type="unfinished"></translation>
+        <translation>全局</translation>
     </message>
 </context>
 <context>
@@ -505,22 +510,22 @@
     <message>
         <location filename="../ui/edit/edit_chain.ui" line="14"/>
         <source>EditChain</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_chain.ui" line="20"/>
-        <source>从上到下为流量入口到出口的顺序，一行填写一个ID</source>
-        <translation type="unfinished"></translation>
+        <source>TODO</source>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_chain.ui" line="30"/>
         <source>Select Profile</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_chain.cpp" line="34"/>
         <source>Invalid ID: %1</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -528,132 +533,132 @@
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="23"/>
         <source>Plugin Args</source>
-        <translation type="unfinished"></translation>
+        <translation>插件参数</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="33"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="40"/>
         <source>Encryption</source>
-        <translation type="unfinished"></translation>
+        <translation>加密</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="53"/>
         <source>obfs-local</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="58"/>
         <source>v2ray-plugin</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="63"/>
         <source>ssr</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="78"/>
         <source>AES_128_GCM</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="83"/>
         <source>AES_192_GCM</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="88"/>
         <source>AES_256_GCM</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="93"/>
         <source>CHACHA20_IETF_POLY1305</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="98"/>
         <source>XCHACHA20_IETF_POLY1305</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="103"/>
         <source>AES_128_CTR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="108"/>
         <source>AES_192_CTR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="113"/>
         <source>AES_256_CTR</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="118"/>
         <source>AES_128_CFB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="123"/>
         <source>AES_192_CFB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="128"/>
         <source>AES_256_CFB</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="133"/>
         <source>RC4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="138"/>
         <source>RC4_MD5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="143"/>
         <source>SALSA20</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="148"/>
         <source>CHACHA20</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="153"/>
         <source>CHACHA20_IETF</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="158"/>
         <source>XCHACHA20</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="163"/>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_shadowsocks.ui" line="171"/>
         <source>Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>插件</translation>
     </message>
 </context>
 <context>
@@ -661,32 +666,45 @@
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="14"/>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="23"/>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation>版本</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="36"/>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>用户名</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="44"/>
         <source>5</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="49"/>
         <source>4</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_socks.ui" line="57"/>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>密码</translation>
+    </message>
+</context>
+<context>
+    <name>EditTrojan</name>
+    <message>
+        <location filename="../ui/edit/edit_trojan.ui" line="14"/>
+        <source>EditTrojan</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location filename="../ui/edit/edit_trojan.ui" line="20"/>
+        <source>Password</source>
+        <translation>密码</translation>
     </message>
 </context>
 <context>
@@ -694,47 +712,47 @@
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="14"/>
         <source>EditVMess</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="20"/>
         <source>Alter Id</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="30"/>
         <source>Security</source>
-        <translation type="unfinished"></translation>
+        <translation>加密</translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="40"/>
         <source>UUID</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="51"/>
         <source>auto</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="56"/>
         <source>zero</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="61"/>
         <source>none</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="66"/>
         <source>chacha20-poly1305</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location filename="../ui/edit/edit_vmess.ui" line="71"/>
         <source>aes-128-gcm</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>
@@ -1024,6 +1042,11 @@
         <translation>信息</translation>
     </message>
     <message>
+        <location filename="../ui/mainwindow.cpp" line="311"/>
+        <source>Imported %1 profile(s)</source>
+        <translation>导入了 %1 个配置</translation>
+    </message>
+    <message>
         <location filename="../ui/mainwindow.cpp" line="360"/>
         <source>Running: %1</source>
         <translation>正在运行: %1</translation>
@@ -1088,6 +1111,59 @@
         <location filename="../ui/mainwindow.cpp" line="900"/>
         <source>Hide</source>
         <translation>隐藏</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../fmt/Bean2CoreObj.cpp" line="151"/>
+        <source>reject clear text trojan</source>
+        <translation>禁止明文 Trojan</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="135"/>
+        <source>As Subscription</source>
+        <translation>作为订阅</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="135"/>
+        <source>As link</source>
+        <translation>作为链接</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="138"/>
+        <source>url detected</source>
+        <translation>检测到 URL</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="139"/>
+        <source>%1
+How to update?</source>
+        <translation>%1
+如何处理？</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="199"/>
+        <source>Change</source>
+        <translation>变化</translation>
+    </message>
+    <message>
+        <location filename="../sub/RawUpdater.cpp" line="200"/>
+        <source>Added %1 profiles:
+%2
+Deleted %3 Profiles:
+%4</source>
+        <translation>增加了 %1 个配置：
+%2
+删除了 %3 个配置：
+%4</translation>
+    </message>
+    <message>
+        <location filename="../db/traffic/TrafficLooper.cpp" line="59"/>
+        <source>Proxy: %1
+Direct: %2</source>
+        <translation>代理: %1
+直连: %2</translation>
     </message>
 </context>
 <context>

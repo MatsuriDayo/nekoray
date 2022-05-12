@@ -17,7 +17,7 @@
    <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>从上到下为流量入口到出口的顺序，一行填写一个ID</string>
+      <string>TODO</string>
      </property>
     </widget>
    </item>

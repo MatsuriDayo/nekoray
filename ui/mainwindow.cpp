@@ -308,7 +308,7 @@ void MainWindow::dialog_message(const QString &dialog, const QString &info) {
             // 订阅完毕
             refresh_proxy_list();
             QMessageBox::information(this, tr("Info"),
-                                     QString("Imported %1 profile(s).").arg(NekoRay::dataStore->updated_count));
+                                     tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
         }
     });
 }

@@ -132,11 +132,11 @@ namespace NekoRay::sub {
         bool asURL = update_sub_gid >= 0; // 订阅
 
         if (!asURL && (content.startsWith("http://") || content.startsWith("https://"))) {
-            auto items = QStringList{"作为订阅链接", "作为节点"};
+            auto items = QStringList{QObject::tr("As Subscription"), QObject::tr("As link")};
             bool ok;
             auto a = QInputDialog::getItem(nullptr,
-                                           "url detected",
-                                           content + "\nhow to update?",
+                                           QObject::tr("url detected"),
+                                           QObject::tr("%1\nHow to update?").arg(content),
                                            items, 0, false, &ok);
             if (!ok) return;
             if (items.indexOf(a) == 0) asURL = true;
@@ -196,9 +196,10 @@ namespace NekoRay::sub {
                     notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
                 }
                 runOnUiThread([=] {
-                    MessageBoxWarning("变化", QString("增加了 %1 个代理：\n%2\n减少了 %3 个代理：\n%4").
-                            arg(only_out.length()).arg(notice_added).
-                            arg(only_in.length()).arg(notice_deleted));
+                    MessageBoxWarning(QObject::tr("Change"),
+                                      QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
+                                              arg(only_out.length()).arg(notice_added).
+                                              arg(only_in.length()).arg(notice_deleted));
                     GetMainWindow()->dialog_message("SubUpdater", "finish-dingyue");
                 });
             } else {

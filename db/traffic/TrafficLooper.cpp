@@ -55,7 +55,8 @@ namespace NekoRay::traffic {
             // post to UI
             runOnUiThread([=] {
                 auto m = GetMainWindow();
-                m->refresh_status(QString("Proxy: %1\nDirect: %2").arg(proxy->DisplaySpeed(), bypass->DisplaySpeed()));
+                m->refresh_status(
+                        QObject::tr("Proxy: %1\nDirect: %2").arg(proxy->DisplaySpeed(), bypass->DisplaySpeed()));
                 for (const auto &item: items) {
                     if (item->id < 0) continue;
                     m->refresh_proxy_list(item->id);
