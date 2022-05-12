@@ -30,6 +30,10 @@ find_package(PkgConfig REQUIRED)
 pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
 message(STATUS "[yaml-cpp] ${YAML_CPP_LINK_LIBRARIES}")
 
+# Release
+file(STRINGS nekoray_version.txt NKR_RELEASE_DATE)
+add_compile_definitions(NKR_RELEASE_DATE=\"${NKR_RELEASE_DATE}\")
+
 set(PROJECT_SOURCES
         main.cpp
         NekoRay.cpp

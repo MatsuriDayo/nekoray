@@ -18,6 +18,10 @@ int main(int argc, char *argv[]) {
             ":neko-breeze",
             ":nekoray",
     });
+    // TODO theme
+    if (QIcon::themeName().isEmpty()) {
+        QIcon::setThemeName("breeze");
+    }
 
     RunGuard guard("nekoray" + wd.absolutePath());
     if (!guard.tryToRun())

@@ -4,7 +4,6 @@
 #include "sub/RawUpdater.hpp"
 #include "db/traffic/TrafficLooper.hpp"
 #include "db/filter/ProfileFilter.hpp"
-#include "Release.hpp"
 
 #include "ui/mainwindow.h"
 #include "ui/dialog_basic_settings.h"
@@ -377,7 +376,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         tt_running = running->bean->DisplayTypeAndName();
     }
 
-    QString windowText = QString("%1%2 (%3)").arg(tt_status, title_base, NekoRay::release::date);
+    QString windowText = QString("%1%2 (%3)").arg(tt_status, title_base, NKR_RELEASE_DATE);
     QString trayText = QString("%1%2").arg(tt_status, title_base);
 
     if (!tt_running.isEmpty()) {

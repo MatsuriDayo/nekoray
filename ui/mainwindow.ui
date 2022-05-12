@@ -23,13 +23,14 @@
          <string>Program</string>
         </property>
         <property name="icon">
-         <iconset theme="system-run"/>
+         <iconset theme="system-run">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonFollowStyle</enum>
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -39,13 +40,14 @@
          <string>Preferences</string>
         </property>
         <property name="icon">
-         <iconset theme="preferences"/>
+         <iconset theme="preferences">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonFollowStyle</enum>
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -55,13 +57,14 @@
          <string>Server</string>
         </property>
         <property name="icon">
-         <iconset theme="network-server"/>
+         <iconset theme="network-server">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonFollowStyle</enum>
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
@@ -71,13 +74,14 @@
          <string>Ads</string>
         </property>
         <property name="icon">
-         <iconset theme="internet-web-browser"/>
+         <iconset theme="internet-web-browser">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonFollowStyle</enum>
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
         </property>
        </widget>
       </item>
