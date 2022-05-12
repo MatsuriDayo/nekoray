@@ -1,4 +1,4 @@
-#include "SocksBean.hpp"
+#include "db/ProxyEntity.hpp"
 
 namespace NekoRay::fmt {
     QString SocksBean::ToShareLink() {
@@ -8,6 +8,16 @@ namespace NekoRay::fmt {
         if (!password.isEmpty()) url.setPassword(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);
+        return url.toString();
+    }
+
+    QString TrojanBean::ToShareLink() {
+        QUrl url;
+        url.setScheme("trojan");
+        url.setUserName(password);
+        url.setHost(serverAddress);
+        url.setPort(serverPort);
+        if (!stream->sni.isEmpty()) url.setQuery(QUrlQuery{{"sni", stream->sni}});
         return url.toString();
     }
 }

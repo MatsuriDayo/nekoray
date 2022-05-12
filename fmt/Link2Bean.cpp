@@ -1,12 +1,30 @@
 #include <QUrlQuery>
-#include "SocksBean.hpp"
-#include "ShadowSocksBean.hpp"
-#include "VMessBean.hpp"
+#include "db/ProxyEntity.hpp"
 
 namespace NekoRay::fmt {
 
     bool SocksBean::ParseStdLink(const QString &link) {
         return false;
+    }
+
+    bool TrojanBean::ParseStdLink(const QString &link) {
+        auto url = QUrl(link);
+        if (!url.isValid()) return false;
+        auto query = GetQuery(url);
+
+        name = url.fragment();
+        serverAddress = url.host();
+        serverPort = url.port();
+        password = url.userName();
+
+        stream->security = GetQueryValue(query, "security", "tls");
+        auto sni1 = GetQueryValue(query, "sni", "");
+        auto sni2 = GetQueryValue(query, "peer", "");
+        if (!sni1.isEmpty()) stream->sni = sni1;
+        if (!sni2.isEmpty()) stream->sni = sni2;
+        if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
+
+        return true;
     }
 
     bool ShadowSocksBean::ParseStdLink(const QString &link) {

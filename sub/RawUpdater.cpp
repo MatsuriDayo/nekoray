@@ -58,6 +58,13 @@ namespace NekoRay::sub {
             if (!ok) ent = nullptr;
         }
 
+        // Trojan
+        if (str.startsWith("trojan://")) {
+            ent = ProfileManager::NewProxyEntity("trojan");
+            auto ok = ent->TrojanBean()->ParseStdLink(str);
+            if (!ok) ent = nullptr;
+        }
+
         // End
         if (ent.get() == nullptr) return;
         profileManager->AddProfile(ent, update_sub_gid);
@@ -97,8 +104,12 @@ namespace NekoRay::sub {
                                            Node2QString(pluginOpts_n["host"]);
                         }
                     }
+                } else if (type == "trojan") {
+                    auto bean = ent->TrojanBean();
+                    bean->password = Node2QString(proxy["password"]);
+                    bean->stream->sni = Node2QString(proxy["sni"]);
+                    if (proxy["skip-cert-verify"].as<bool>()) bean->stream->allow_insecure = true;
                 } else {
-                    // TODO impl
                     continue;
                 }
 

@@ -20,5 +20,9 @@ namespace NekoRay::fmt {
         QString DisplayType() override { return "Trojan"; };
 
         CoreObjOutboundBuildResult BuildCoreObj() override;
+
+        bool ParseStdLink(const QString &link);
+
+        QString ToShareLink() override;
     };
 }

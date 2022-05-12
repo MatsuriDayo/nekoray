@@ -1,7 +1,4 @@
-#include "SocksBean.hpp"
-#include "ShadowSocksBean.hpp"
-#include "VMessBean.hpp"
-#include "TrojanBean.hpp"
+#include "db/ProxyEntity.hpp"
 
 namespace NekoRay::fmt {
 
