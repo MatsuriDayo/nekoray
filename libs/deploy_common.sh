@@ -15,10 +15,10 @@ COMMIT=$(cat matsuri_commit.txt)
 version_standalone="nekoray-"$(cat nekoray_version.txt)
 
 git clone --no-checkout https://github.com/MatsuriDayo/Matsuri.git
-git clone https://github.com/MatsuriDayo/v2ray-core.git
 
 pushd Matsuri
 git checkout $COMMIT
+bash buildScript/lib/core/clone.sh # Get v2ray source of the commit
 popd
 
 pushd v2ray-core
