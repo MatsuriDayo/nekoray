@@ -11,8 +11,8 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Svg)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
 
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
@@ -24,16 +24,16 @@ include("cmake/myproto.cmake")
 include("cmake/print.cmake")
 #list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/deps/built")
 
+# Release
+include("cmake/release.cmake")
+
 # yaml-cpp (static)
 #find_package(yaml-cpp REQUIRED) # not working with CMAKE_PREFIX_PATH ??
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
 message(STATUS "[yaml-cpp] ${YAML_CPP_LINK_LIBRARIES}")
 
-# Release
-file(STRINGS nekoray_version.txt NKR_RELEASE_DATE)
-add_compile_definitions(NKR_RELEASE_DATE=\"${NKR_RELEASE_DATE}\")
-
+# Sources
 set(PROJECT_SOURCES
         main.cpp
         NekoRay.cpp
@@ -102,6 +102,15 @@ set(PROJECT_SOURCES
         res/neko.qrc
         )
 
+# Translations
+set(TS_FILES
+        translations/zh_CN.ts
+        )
+qt_create_translation(QM_FILES ${PROJECT_SOURCES} ${TS_FILES})
+configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
+set(PROJECT_SOURCES ${PROJECT_SOURCES} ${TS_FILES} ${QM_FILES} ${CMAKE_BINARY_DIR}/translations.qrc)
+
+# Qt exe
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(nekoray
             MANUAL_FINALIZATION
@@ -125,10 +134,12 @@ else ()
     endif ()
 endif ()
 
+# Include dirs
 target_include_directories(nekoray PRIVATE
         ${YAML_CPP_INCLUDE_DIRS}
         )
 
+# Link
 if (MINGW)
     unset(YAML_CPP_LINK_LIBRARIES)
     unset(PLATFORM_FUCKING_LIBRARIES)

@@ -228,7 +228,7 @@
     </widget>
     <widget class="QMenu" name="menu_program_preference">
      <property name="title">
-      <string>Preference</string>
+      <string>Preferences</string>
      </property>
      <addaction name="actionfake"/>
     </widget>

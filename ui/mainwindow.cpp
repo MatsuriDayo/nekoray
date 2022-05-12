@@ -604,7 +604,8 @@ void MainWindow::on_menu_export_config_triggered() {
     auto ent = ents.first();
     auto result = NekoRay::fmt::BuildConfig(ent, false);
     auto config_core = QJsonObject2QString(result->coreConfig, true);
-    MessageBoxWarning("info", config_core);
+    QApplication::clipboard()->setText(config_core);
+    MessageBoxWarning(tr("Config copied"), config_core);
 }
 
 void MainWindow::on_menu_copy_link_triggered() {

@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QDir>
+#include <QTranslator>
 
 #include "3rdparty/RunGuard.hpp"
 
@@ -18,9 +19,16 @@ int main(int argc, char *argv[]) {
             ":neko-breeze",
             ":nekoray",
     });
+
     // TODO theme
     if (QIcon::themeName().isEmpty()) {
         QIcon::setThemeName("breeze");
+    }
+
+    // Locale
+    QTranslator trans;
+    if (trans.load(":/translations/" + QLocale().name() + ".qm")) {
+        QCoreApplication::installTranslator(&trans);
     }
 
     RunGuard guard("nekoray" + wd.absolutePath());
