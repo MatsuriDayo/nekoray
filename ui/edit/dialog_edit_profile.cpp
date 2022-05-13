@@ -19,7 +19,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
           ui(new Ui::DialogEditProfile) {
     // setup UI
     ui->setupUi(this);
-    ui->dialog_layout->setAlignment(ui->main, Qt::AlignTop);
+    ui->dialog_layout->setAlignment(ui->left, Qt::AlignTop);
     ui->dialog_layout->setAlignment(ui->right_all, Qt::AlignTop);
 
     // type changed

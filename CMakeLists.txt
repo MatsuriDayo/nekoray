@@ -109,7 +109,7 @@ set(PROJECT_SOURCES
 set(TS_FILES
         translations/zh_CN.ts
         )
-qt_create_translation(QM_FILES ${PROJECT_SOURCES} ${TS_FILES})
+qt_create_translation(QM_FILES ${PROJECT_SOURCES} ${TS_FILES} OPTIONS -locations none)
 configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
 set(PROJECT_SOURCES ${PROJECT_SOURCES} ${TS_FILES} ${QM_FILES} ${CMAKE_BINARY_DIR}/translations.qrc)
 

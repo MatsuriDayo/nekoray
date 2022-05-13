@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QLineEdit" name="plugin_opts"/>
+    <widget class="MyLineEdit" name="plugin_opts"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_5">
@@ -66,7 +66,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="password"/>
+    <widget class="MyLineEdit" name="password"/>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="method">
@@ -75,87 +75,87 @@
      </property>
      <item>
       <property name="text">
-       <string>AES_128_GCM</string>
+       <string>aes-128-gcm</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_192_GCM</string>
+       <string>aes-192-gcm</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_256_GCM</string>
+       <string>aes-256-gcm</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>CHACHA20_IETF_POLY1305</string>
+       <string>chacha20-poly1305</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>XCHACHA20_IETF_POLY1305</string>
+       <string>xchacha20-poly1305</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_128_CTR</string>
+       <string>aes-128-ctr</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_192_CTR</string>
+       <string>aes-192-ctr</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_256_CTR</string>
+       <string>aes-256-ctr</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_128_CFB</string>
+       <string>aes-128-cfb</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_192_CFB</string>
+       <string>aes-192-cfb</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>AES_256_CFB</string>
+       <string>aes-256-cfb</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>RC4</string>
+       <string>rc4</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>RC4_MD5</string>
+       <string>rc4-md5</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>SALSA20</string>
+       <string>salsa20</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>CHACHA20</string>
+       <string>chacha20</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>CHACHA20_IETF</string>
+       <string>chacha20-ietf</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>XCHACHA20</string>
+       <string>xchacha20</string>
       </property>
      </item>
      <item>
@@ -174,6 +174,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>ui/widget/MyLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>method</tabstop>
   <tabstop>password</tabstop>

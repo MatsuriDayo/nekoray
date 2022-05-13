@@ -109,7 +109,6 @@ private:
     QSharedPointer<NekoRay::ProxyEntity> running;
     QString traffic_update_cache;
     //
-    bool auto_resize_table_header = true;
     int proxy_last_order = -1;
 
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> GetNowSelected();

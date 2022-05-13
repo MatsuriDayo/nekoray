@@ -1,5 +1,4 @@
-#ifndef NEKORAY_MYTABLEWIDGET_HPP
-#define NEKORAY_MYTABLEWIDGET_HPP
+#pragma once
 
 #include <QWidget>
 #include <QTableWidget>
@@ -9,7 +8,7 @@
 
 class MyTableWidget : public QTableWidget {
 public:
-    explicit MyTableWidget(QWidget *parent = nullptr) {
+    explicit MyTableWidget(QWidget *parent = nullptr) : QTableWidget(parent) {
         // 拖拽设置
         this->setDragDropMode(QAbstractItemView::InternalMove);  // 内部移动
         this->setDropIndicatorShown(true);  // drop位置 提示
@@ -124,5 +123,3 @@ protected:
         _save_order(true);
     };
 };
-
-#endif //NEKORAY_MYTABLEWIDGET_HPP

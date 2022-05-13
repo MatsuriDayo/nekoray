@@ -134,7 +134,12 @@ MainWindow::MainWindow(QWidget *parent)
                 }
                 refresh_proxy_list(-1, action);
             });
-    // TODO header: disable auto size when size changed by user
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
 
     // refresh
     this->refresh_groups();
@@ -357,7 +362,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
     // From UI
     ui->label_speed->setText(traffic_update_cache);
-    ui->label_running->setText(tr("Running: %1").arg(running.isNull() ? tr("None") : running->bean->DisplayName()));
+    ui->label_running->setText(tr("Running: %1").arg(running.isNull()
+                                                     ? tr("None")
+                                                     : running->bean->DisplayName().left(50)));
     auto inbound_txt = tr("Socks: %1").arg(
             DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port));
     if (InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
@@ -391,7 +398,6 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 // table显示
 
 void MainWindow::refresh_groups() {
-    auto_resize_table_header = true;
     tab_index_GroupId.clear();
 
     // refresh group?
@@ -440,7 +446,11 @@ void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction grou
         // C0: is Running
         auto *f = new QTableWidgetItem("");
         f->setData(114514, profile->id);
-        if (profile->id == NekoRay::dataStore->started_id) f->setText("✓");
+        if (profile->id == NekoRay::dataStore->started_id) {
+            f->setText("✓");
+        } else {
+            f->setText("　");
+        };
         ui->proxyListTable->setItem(row, 0, f);
 
         // C1: Type
@@ -540,8 +550,6 @@ void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction grou
         }
         ui->proxyListTable->update_order(groupSortAction.save_sort);
     }
-    if (auto_resize_table_header)
-        ui->proxyListTable->horizontalHeader()->resizeSections(QHeaderView::ResizeToContents);
 }
 
 // table菜单相关
