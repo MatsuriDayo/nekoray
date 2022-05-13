@@ -55,7 +55,7 @@ inline QUrlQuery GetQuery(const QUrl &url) {
     return QUrlQuery(url.query(QUrl::ComponentFormattingOption::FullyDecoded));
 }
 
-inline QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def) {
+inline QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def = "") {
     auto a = q.queryItemValue(key);
     if (a.isEmpty()) {
         return def;

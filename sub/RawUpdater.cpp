@@ -38,16 +38,17 @@ namespace NekoRay::sub {
         QSharedPointer<ProxyEntity> ent;
 
         // SOCKS
-        if (str.startsWith("socks5://") || str.startsWith("socks4://")) {
+        if (str.startsWith("socks5://") || str.startsWith("socks4://") ||
+            str.startsWith("socks4a://") || str.startsWith("socks://")) {
             ent = ProfileManager::NewProxyEntity("socks");
-            auto ok = ent->SocksBean()->ParseStdLink(str);
+            auto ok = ent->SocksBean()->TryParseLink(str);
             if (!ok) ent = nullptr;
         }
 
         // ShadowSocks
         if (str.startsWith("ss://")) {
             ent = ProfileManager::NewProxyEntity("shadowsocks");
-            auto ok = ent->ShadowSocksBean()->ParseStdLink(str);
+            auto ok = ent->ShadowSocksBean()->TryParseLink(str);
             if (!ok) ent = nullptr;
         }
 
@@ -61,7 +62,7 @@ namespace NekoRay::sub {
         // Trojan
         if (str.startsWith("trojan://")) {
             ent = ProfileManager::NewProxyEntity("trojan");
-            auto ok = ent->TrojanBean()->ParseStdLink(str);
+            auto ok = ent->TrojanBean()->TryParseLink(str);
             if (!ok) ent = nullptr;
         }
 
@@ -73,8 +74,28 @@ namespace NekoRay::sub {
 
 #ifndef __MINGW32__
 
-    QString Node2QString(const YAML::Node &n) {
-        return {n.Scalar().c_str()};
+    QString Node2QString(const YAML::Node &n, const QString &def = "") {
+        try {
+            return n.as<std::string>().c_str();
+        } catch (const YAML::Exception &ex) {
+            return def;
+        }
+    }
+
+    int Node2Int(const YAML::Node &n, const int &def = 0) {
+        try {
+            return n.as<int>();
+        } catch (const YAML::Exception &ex) {
+            return def;
+        }
+    }
+
+    bool Node2Bool(const YAML::Node &n, const bool &def = false) {
+        try {
+            return n.as<bool>();
+        } catch (const YAML::Exception &ex) {
+            return def;
+        }
     }
 
 #endif
@@ -85,12 +106,12 @@ namespace NekoRay::sub {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {
                 auto type = Node2QString(proxy["type"]);
-                if (type == "ss") type = "shadowsocks";
+                if (type == "ss" || type == "ssr") type = "shadowsocks";
 
                 auto ent = ProfileManager::NewProxyEntity(type);
                 ent->bean->name = Node2QString(proxy["name"]);
                 ent->bean->serverAddress = Node2QString(proxy["server"]);
-                ent->bean->serverPort = proxy["port"].as<int>();
+                ent->bean->serverPort = Node2Int(proxy["port"]);
 
                 if (type == "shadowsocks") {
                     auto bean = ent->ShadowSocksBean();
@@ -104,11 +125,37 @@ namespace NekoRay::sub {
                                            Node2QString(pluginOpts_n["host"]);
                         }
                     }
+                    auto protocol_n = proxy["protocol"];
+                    if (protocol_n.IsDefined()) { // SSR
+                        continue; // TODO SSR
+                    }
                 } else if (type == "trojan") {
                     auto bean = ent->TrojanBean();
                     bean->password = Node2QString(proxy["password"]);
                     bean->stream->sni = Node2QString(proxy["sni"]);
-                    if (proxy["skip-cert-verify"].as<bool>()) bean->stream->allow_insecure = true;
+                    if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+                } else if (type == "vmess") {
+                    auto bean = ent->VMessBean();
+                    bean->uuid = Node2QString(proxy["uuid"]);
+                    bean->aid = Node2Int(proxy["alterId"]);
+                    bean->security = Node2QString(proxy["cipher"]);
+                    bean->stream->network = Node2QString(proxy["network"]);
+                    bean->stream->sni = Node2QString(proxy["sni"]);
+                    if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
+                    if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+
+                    auto ws = proxy["ws-opts"];
+                    if (ws.IsMap()) {
+                        auto headers = ws["headers"];
+                        for (auto header: headers) {
+                            if (Node2QString(header.first).toLower() == "host") {
+                                bean->stream->host = Node2QString(header.second);
+                            }
+                        }
+                        bean->stream->path = Node2QString(ws["path"]);
+                        bean->stream->max_early_data = Node2Int(proxy["max-early-data"]);
+                        bean->stream->early_data_header_name = Node2QString(ws["early-data-header-name"]);
+                    }
                 } else {
                     continue;
                 }
@@ -117,7 +164,9 @@ namespace NekoRay::sub {
                 dataStore->updated_count++;
             }
         } catch (const YAML::Exception &ex) {
-            MessageBoxWarning("YAML Exception", ex.what());
+            runOnUiThread([=] {
+                MessageBoxWarning("YAML Exception", ex.what());
+            });
         }
 #endif
     }

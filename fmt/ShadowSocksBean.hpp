@@ -26,7 +26,9 @@ namespace NekoRay::fmt {
 
         CoreObjOutboundBuildResult BuildCoreObj() override;
 
-        bool ParseStdLink(const QString &link);
+        bool TryParseLink(const QString &link);
+
+        QString ToShareLink() override;
     };
 }
 

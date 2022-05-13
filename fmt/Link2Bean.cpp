@@ -3,11 +3,39 @@
 
 namespace NekoRay::fmt {
 
-    bool SocksBean::ParseStdLink(const QString &link) {
-        return false;
+#define DECODE_V2RAY_N_1 auto linkN = DecodeB64IfValid(SubStrBefore(SubStrAfter(link, "://"), "#"), QByteArray::Base64Option::Base64UrlEncoding); \
+    if (linkN.isEmpty()) return false; \
+    auto hasRemarks = link.contains("#"); \
+    if (hasRemarks) linkN += "#" + SubStrAfter(link, "#"); \
+    auto url = QUrl("https://" + linkN);
+
+    bool SocksBean::TryParseLink(const QString &link) {
+        if (!SubStrAfter(link, "://").contains(":")) {
+            // v2rayN shit format
+            DECODE_V2RAY_N_1
+
+            if (hasRemarks) name = url.fragment(); // TODO "+"
+            serverAddress = url.host();
+            serverPort = url.port();
+            username = url.userName();
+            password = url.password();
+        } else {
+            auto url = QUrl(link);
+            if (!url.isValid()) return false;
+            auto query = GetQuery(url);
+
+            if (link.startsWith("socks4")) socksVersion = 4;
+            serverAddress = url.host();
+            serverPort = url.port();
+            username = url.userName();
+            password = url.password();
+            stream->security = GetQueryValue(query, "security", "") == "true" ? "tls" : "none";
+            stream->sni = GetQueryValue(query, "sni");
+        }
+        return true;
     }
 
-    bool TrojanBean::ParseStdLink(const QString &link) {
+    bool TrojanBean::TryParseLink(const QString &link) {
         auto url = QUrl(link);
         if (!url.isValid()) return false;
         auto query = GetQuery(url);
@@ -18,8 +46,8 @@ namespace NekoRay::fmt {
         password = url.userName();
 
         stream->security = GetQueryValue(query, "security", "tls");
-        auto sni1 = GetQueryValue(query, "sni", "");
-        auto sni2 = GetQueryValue(query, "peer", "");
+        auto sni1 = GetQueryValue(query, "sni");
+        auto sni2 = GetQueryValue(query, "peer");
         if (!sni1.isEmpty()) stream->sni = sni1;
         if (!sni2.isEmpty()) stream->sni = sni2;
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
@@ -27,11 +55,12 @@ namespace NekoRay::fmt {
         return true;
     }
 
-    bool ShadowSocksBean::ParseStdLink(const QString &link) {
+    bool ShadowSocksBean::TryParseLink(const QString &link) {
         if (SubStrBefore(link, "#").contains("@")) {
             // SS
             auto url = QUrl(link);
             if (!url.isValid()) return false;
+
             name = url.fragment();
             serverAddress = url.host();
             serverPort = url.port();
@@ -43,21 +72,14 @@ namespace NekoRay::fmt {
             plugin = query.queryItemValue("plugin");
         } else {
             // v2rayN
-            auto hasRemarks = link.contains("#");
-            auto linkN = DecodeB64IfValid(SubStrBefore(SubStrAfter(link, "ss://"), "#"),
-                                          QByteArray::Base64Option::Base64UrlEncoding);
-            if (linkN.isEmpty()) return false;
-            if (hasRemarks) linkN += "#" + SubStrAfter(link, "#");
-            auto url = QUrl("https://" + linkN);
+            DECODE_V2RAY_N_1
+
+            if (hasRemarks) name = url.fragment(); // TODO "+"
             serverAddress = url.host();
             serverPort = url.port();
             method = url.userName();
             password = url.password();
             plugin = "";
-            if (hasRemarks) {
-                // TODO "+"
-                name = url.fragment();
-            }
         }
         return true;
     }
