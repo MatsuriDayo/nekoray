@@ -1,5 +1,4 @@
-#ifndef NEKORAY_PROFILE_MANAGER
-#define NEKORAY_PROFILE_MANAGER
+#pragma once
 
 #include "NekoRay.hpp"
 #include "db/ProxyEntity.hpp"
@@ -58,5 +57,3 @@ namespace NekoRay {
 
     extern ProfileManager *profileManager;
 }
-
-#endif

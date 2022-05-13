@@ -1,5 +1,4 @@
-#ifndef NEKORAY_SHADOWSOCKS_BEAN
-#define NEKORAY_SHADOWSOCKS_BEAN
+#pragma once
 
 #include "fmt/AbstractBean.hpp"
 #include "fmt/comm/V2RayStreamSettings.hpp"
@@ -31,5 +30,3 @@ namespace NekoRay::fmt {
         QString ToShareLink() override;
     };
 }
-
-#endif

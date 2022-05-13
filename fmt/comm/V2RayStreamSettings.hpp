@@ -1,5 +1,4 @@
-#ifndef NEKORAY_V2RAYSTREAMSETTINGS_HPP
-#define NEKORAY_V2RAYSTREAMSETTINGS_HPP
+#pragma once
 
 #include "NekoRay.hpp"
 
@@ -38,4 +37,3 @@ namespace NekoRay::fmt {
     };
 }
 
-#endif //NEKORAY_V2RAYSTREAMSETTINGS_HPP

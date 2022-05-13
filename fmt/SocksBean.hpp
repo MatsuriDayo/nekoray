@@ -1,5 +1,4 @@
-#ifndef NEKORAY_SOCKS_BEAN
-#define NEKORAY_SOCKS_BEAN
+#pragma once
 
 #include "fmt/AbstractBean.hpp"
 #include "fmt/comm/V2RayStreamSettings.hpp"
@@ -28,8 +27,6 @@ namespace NekoRay::fmt {
 
         bool TryParseLink(const QString &link);
 
-        QString ToShareLink() override ;
+        QString ToShareLink() override;
     };
 }
-
-#endif

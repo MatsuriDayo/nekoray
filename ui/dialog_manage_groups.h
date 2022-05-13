@@ -1,5 +1,4 @@
-#ifndef NEKORAY_DIALOG_MANAGE_GROUPS_H
-#define NEKORAY_DIALOG_MANAGE_GROUPS_H
+#pragma once
 
 #include <QWidget>
 #include <QDialog>
@@ -31,10 +30,10 @@ private:
     QMap<int, QSharedPointer<NekoRay::Group>> GetNowSelected();
 
 private slots:
+
     void on_groupListTable_customContextMenuRequested(const QPoint &pos);
 
     void on_groupListTable_itemDoubleClicked(QTableWidgetItem *item);
 };
 
 
-#endif //NEKORAY_DIALOG_MANAGE_GROUPS_H

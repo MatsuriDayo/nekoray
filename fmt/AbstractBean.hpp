@@ -1,5 +1,4 @@
-#ifndef NEKORAY_ABSTRACT_BEAN
-#define NEKORAY_ABSTRACT_BEAN
+#pragma once
 
 #include "NekoRay.hpp"
 
@@ -53,5 +52,3 @@ namespace NekoRay::fmt {
     };
 
 }
-
-#endif

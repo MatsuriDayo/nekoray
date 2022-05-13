@@ -1,5 +1,4 @@
-#ifndef NEKORAY_CONST_HPP
-#define NEKORAY_CONST_HPP
+#pragma once
 
 namespace NekoRay {
     namespace DomainMatcher {
@@ -27,4 +26,3 @@ namespace NekoRay {
     }
 }
 
-#endif //NEKORAY_CONST_HPP

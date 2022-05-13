@@ -1,5 +1,4 @@
-#ifndef NEKORAY_DIALOG_MANAGE_ROUTES_H
-#define NEKORAY_DIALOG_MANAGE_ROUTES_H
+#pragma once
 
 #include <QDialog>
 #include <QMenu>
@@ -44,4 +43,3 @@ public slots:
 };
 
 
-#endif //NEKORAY_DIALOG_MANAGE_ROUTES_H

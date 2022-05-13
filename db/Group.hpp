@@ -1,5 +1,4 @@
-#ifndef NEKORAY_GROUP
-#define NEKORAY_GROUP
+#pragma once
 
 #include "NekoRay.hpp"
 #include "ProxyEntity.hpp"
@@ -47,5 +46,3 @@ namespace NekoRay {
         [[nodiscard]] QList<QSharedPointer<ProxyEntity>> Profiles() const;
     };
 }
-
-#endif

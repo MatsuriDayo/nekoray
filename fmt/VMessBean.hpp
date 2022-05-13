@@ -1,5 +1,4 @@
-#ifndef NEKORAY_VMESSBEAN_HPP
-#define NEKORAY_VMESSBEAN_HPP
+#pragma once
 
 #include "fmt/AbstractBean.hpp"
 #include "fmt/comm/V2RayStreamSettings.hpp"
@@ -28,8 +27,7 @@ namespace NekoRay::fmt {
 
         bool TryParseLink(const QString &link);
 
-        QString ToShareLink() override ;
+        QString ToShareLink() override;
     };
 }
 
-#endif //NEKORAY_VMESSBEAN_HPP

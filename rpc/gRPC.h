@@ -1,5 +1,4 @@
-#ifndef NEKORAY_GRPC_H
-#define NEKORAY_GRPC_H
+#pragma once
 
 // MINGW gRPC build not ok now
 #ifdef __MINGW32__
@@ -39,4 +38,3 @@ namespace NekoRay::rpc {
 };
 #endif
 
-#endif //NEKORAY_GRPC_H

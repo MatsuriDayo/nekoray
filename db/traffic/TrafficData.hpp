@@ -1,5 +1,4 @@
-#ifndef NEKORAY_TRAFFICDATA_HPP
-#define NEKORAY_TRAFFICDATA_HPP
+#pragma once
 
 #include <utility>
 
@@ -46,4 +45,3 @@ namespace NekoRay::traffic {
         }
     };
 }
-#endif //NEKORAY_TRAFFICDATA_HPP

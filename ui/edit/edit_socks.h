@@ -16,7 +16,7 @@ public:
 
     ~EditSocks() override;
 
-    void onStart( QSharedPointer<NekoRay::ProxyEntity> _ent) override;
+    void onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) override;
 
     bool onEnd() override;
 

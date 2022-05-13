@@ -1,5 +1,4 @@
-#ifndef NEKORAY_RAWUPDATER_HPP
-#define NEKORAY_RAWUPDATER_HPP
+#pragma once
 
 #include <QString>
 
@@ -18,4 +17,3 @@ namespace NekoRay::sub {
     extern RawUpdater *rawUpdater;
 }
 
-#endif //NEKORAY_RAWUPDATER_HPP

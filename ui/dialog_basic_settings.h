@@ -16,6 +16,7 @@ public:
     ~DialogBasicSettings();
 
 public slots:
+
     void accept();
 
 private:

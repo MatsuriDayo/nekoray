@@ -1,5 +1,4 @@
-#ifndef NEKORAY_PROXY_ENTITY
-#define NEKORAY_PROXY_ENTITY
+#pragma once
 
 #include <utility>
 
@@ -65,5 +64,3 @@ namespace NekoRay {
 
     };
 }
-
-#endif

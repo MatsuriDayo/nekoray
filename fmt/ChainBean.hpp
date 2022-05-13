@@ -1,5 +1,4 @@
-#ifndef NEKORAY_CHAIN_BEAN
-#define NEKORAY_CHAIN_BEAN
+#pragma once
 
 #include "NekoRay.hpp"
 
@@ -17,5 +16,3 @@ namespace NekoRay::fmt {
         QString DisplayAddress() override { return ""; };
     };
 }
-
-#endif

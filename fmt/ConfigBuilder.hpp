@@ -1,5 +1,4 @@
-#ifndef NEKORAY_CONFIGBUILDER_HPP
-#define NEKORAY_CONFIGBUILDER_HPP
+#pragma once
 
 #include "db/ProxyEntity.hpp"
 #include "db/traffic/TrafficData.hpp"
@@ -38,4 +37,3 @@ namespace NekoRay::fmt {
                        const QSharedPointer<BuildConfigStatus> &status);
 }
 
-#endif //NEKORAY_CONFIGBUILDER_HPP

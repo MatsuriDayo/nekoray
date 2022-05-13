@@ -1,5 +1,4 @@
-#ifndef NEKORAY_EDIT_TROJAN_HPP
-#define NEKORAY_EDIT_TROJAN_HPP
+#pragma once
 
 #include <QWidget>
 #include "profile_editor.h"
@@ -27,4 +26,3 @@ private:
 };
 
 
-#endif //NEKORAY_EDIT_TROJAN_HPP

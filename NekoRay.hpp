@@ -1,7 +1,4 @@
-#ifndef NEKORAY_NEKORAY
-#define NEKORAY_NEKORAY
+#pragma once
 
 #include "NekoRay_Utils.hpp"
 #include "NekoRay_DataStore.hpp"
-
-#endif

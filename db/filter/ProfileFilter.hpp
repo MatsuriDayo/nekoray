@@ -1,5 +1,4 @@
-#ifndef NEKORAY_PROFILEFILTER_HPP
-#define NEKORAY_PROFILEFILTER_HPP
+#pragma once
 
 #include "db/Database.hpp"
 
@@ -35,5 +34,3 @@ namespace NekoRay {
         );
     };
 }
-
-#endif //NEKORAY_PROFILEFILTER_HPP

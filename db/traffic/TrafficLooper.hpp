@@ -1,5 +1,4 @@
-#ifndef NEKORAY_TRAFFICLOOPER_HPP
-#define NEKORAY_TRAFFICLOOPER_HPP
+#pragma once
 
 #include <QSharedPointer>
 #include <QString>
@@ -27,4 +26,3 @@ namespace NekoRay::traffic {
     extern TrafficLooper *trafficLooper;
 }
 
-#endif //NEKORAY_TRAFFICLOOPER_HPP

@@ -1,5 +1,4 @@
-#ifndef NEKORAY_DIALOG_EDIT_GROUP_HPP
-#define NEKORAY_DIALOG_EDIT_GROUP_HPP
+#pragma once
 
 #include <QDialog>
 #include "db/Group.hpp"
@@ -12,7 +11,7 @@ class DialogEditGroup : public QDialog {
 Q_OBJECT
 
 public:
-    explicit DialogEditGroup(const QSharedPointer<NekoRay::Group>& ent, QWidget *parent = nullptr);
+    explicit DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent = nullptr);
 
     ~DialogEditGroup() override;
 
@@ -21,4 +20,3 @@ private:
 };
 
 
-#endif //NEKORAY_DIALOG_EDIT_GROUP_HPP
