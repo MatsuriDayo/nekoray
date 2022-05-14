@@ -23,6 +23,7 @@
 #include <QLabel>
 #include <QTextBlock>
 #include <QScrollBar>
+#include <QMutex>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -843,44 +844,73 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         auto group = NekoRay::ProfileManager::CurrentGroup();
         if (group->archive) return;
         auto order = ui->proxyListTable->order;//copy
-        auto count = order.length();
-        int tested = 0;
+
+        QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
+        QMutex lock;
+        QMutex lock2;
+        int threadN = NekoRay::dataStore->test_concurrent;
+        int threadN_finished = 0;
 
         // 这个是按照显示的顺序
         for (auto id: order) {
             auto profile = NekoRay::profileManager->GetProfile(id);
-            // TODO multi thread
+            profiles += profile;
+        }
 
-            libcore::TestReq req;
-            req.set_mode(mode);
-            req.set_timeout(3000);
-            req.set_inbound("socks-in"); // no needed?
-            req.set_url(NekoRay::dataStore->test_url.toStdString());
+        // Threads
+        for (int i = 0; i < threadN; i++) {
+            runOnNewThread([&] {
+                forever {
+                    //
+                    lock.lock();
+                    if (profiles.isEmpty()) {
+                        threadN_finished++;
+                        if (threadN == threadN_finished) lock2.unlock();
+                        lock.unlock();
+                        return;
+                    }
+                    auto profile = profiles.takeFirst();
+                    lock.unlock();
 
-            if (mode == libcore::TestMode::UrlTest) {
-                auto c = NekoRay::fmt::BuildConfig(profile, true);
-                auto config = new libcore::LoadConfigReq;
-                config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
-                req.set_allocated_config(config);
-            } else {
-                req.set_address(profile->bean->DisplayAddress().toStdString());
-            }
+                    //
+                    libcore::TestReq req;
+                    req.set_mode(mode);
+                    req.set_timeout(3000);
+                    req.set_inbound("socks-in"); // no needed?
+                    req.set_url(NekoRay::dataStore->test_url.toStdString());
 
-            bool rpcOK;
-            auto result = defaultClient->Test(&rpcOK, req);
-            tested++;
-            if (!rpcOK) return;
+                    if (mode == libcore::TestMode::UrlTest) {
+                        auto c = NekoRay::fmt::BuildConfig(profile, true);
+                        auto config = new libcore::LoadConfigReq;
+                        config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
+                        req.set_allocated_config(config);
+                    } else {
+                        req.set_address(profile->bean->DisplayAddress().toStdString());
+                    }
 
-            profile->latency = result.ms();
-            if (profile->latency == 0) profile->latency = -1; // sn
+                    bool rpcOK;
+                    auto result = defaultClient->Test(&rpcOK, req);
+                    if (!rpcOK) return;
 
-            runOnUiThread([=] {
-                if (!result.error().empty()) {
-                    writeLog_ui(tr("[%1] test error: %2").arg(profile->bean->DisplayName(), result.error().c_str()));
+                    profile->latency = result.ms();
+                    if (profile->latency == 0) profile->latency = -1; // sn
+
+                    runOnUiThread([=] {
+                        if (!result.error().empty()) {
+                            writeLog_ui(
+                                    tr("[%1] test error: %2").arg(profile->bean->DisplayName(),
+                                                                  result.error().c_str()));
+                        }
+                        refresh_proxy_list(profile->id);
+                    });
                 }
-                refresh_proxy_list(profile->id);
             });
         }
+
+        // Control
+        lock2.lock();
+        lock2.lock();
+        lock2.unlock();
     });
 }
 

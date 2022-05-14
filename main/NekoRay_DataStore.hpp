@@ -39,6 +39,7 @@ namespace NekoRay {
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.8";
         QString test_url = "truehttp://cp.cloudflare.com/";
+        int test_concurrent = 5;
         int traffic_loop_interval = 500;
         int current_group = 0; //group id
         int mux_cool = 8;
@@ -80,6 +81,7 @@ namespace NekoRay {
             _add(new configItem("routing", dynamic_cast<JsonStore *>(routing), itemType::jsonStore));
             _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
             _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
+            _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
         }
 
         // Cache
