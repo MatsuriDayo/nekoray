@@ -186,7 +186,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_system_proxy_disabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(false); });
     refresh_status();
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     // Start Core
     NekoRay::dataStore->core_token = GetRandomString(32);
     NekoRay::dataStore->core_port = MkPort();
@@ -350,7 +350,7 @@ void MainWindow::on_menu_exit_triggered() {
     neko_set_system_proxy(false);
     neko_stop();
     core_process_killed = true;
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     defaultClient->Exit();
 #endif
     qApp->quit();
@@ -684,13 +684,13 @@ void MainWindow::on_menu_scan_qr_triggered() {
 }
 
 void MainWindow::on_menu_tcp_ping_triggered() {
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     speedtest_current_group(libcore::TestMode::TcpPing);
 #endif
 }
 
 void MainWindow::on_menu_url_test_triggered() {
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     speedtest_current_group(libcore::TestMode::UrlTest);
 #endif
 }
@@ -761,7 +761,7 @@ void MainWindow::neko_start(int id) {
         return;
     }
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, QJsonObject2QString(result->coreConfig, true));
     if (rpcOK && !error.isEmpty()) {
@@ -783,7 +783,7 @@ void MainWindow::neko_start(int id) {
 void MainWindow::neko_stop() {
     if (NekoRay::dataStore->started_id < 0) return;
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     // TODO save traffic & conflict?
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
@@ -837,7 +837,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 // 测速
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
 
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
     runOnNewThread([=]() {

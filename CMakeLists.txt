@@ -103,6 +103,7 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.ui
 
         res/neko.qrc
+        ${QV2RAY_RC}
         )
 
 # Translations

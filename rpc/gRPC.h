@@ -2,8 +2,10 @@
 
 // MINGW gRPC build not ok now
 #ifdef __MINGW32__
-#define NO_GRPC
-#else
+#define NKR_NO_GRPC
+#endif
+
+#ifndef NKR_NO_GRPC
 
 #include "rpc/libcore.grpc.pb.h"
 #include <grpc++/grpc++.h>

@@ -4,13 +4,9 @@ if (WIN32)
             QV2RAY_RC
             NAME "Nekoray"
             BUNDLE "Nekoray Project Family"
-            #            ICON               "${CMAKE_SOURCE_DIR}/assets/icons/qv2ray.ico"
-            #            VERSION_MAJOR      ${CMAKE_PROJECT_VERSION_MAJOR}
-            #            VERSION_MINOR      ${CMAKE_PROJECT_VERSION_MINOR}
-            #            VERSION_PATCH      ${CPACK_PACKAGE_VERSION_PATCH}
-            #            VERSION_REVISION   ${QV2RAY_BUILD_VERSION}
+            ICON "${CMAKE_SOURCE_DIR}/res/nekoray.ico"
             COMPANY_NAME "Nekoray Workgroup"
-            COMPANY_COPYRIGHT "Nekoray Workgroup 2021"
+            COMPANY_COPYRIGHT "Nekoray Workgroup"
             FILE_DESCRIPTION "Nekoray Main Application"
     )
     add_definitions(-DUNICODE -D_UNICODE -DNOMINMAX)

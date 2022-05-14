@@ -24,7 +24,7 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
     NekoRay::rpc::Client *defaultClient;
 #endif
 
@@ -119,7 +119,7 @@ private:
 
     void hideEvent(QHideEvent *event) override;
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
 
     void speedtest_current_group(libcore::TestMode mode);
 

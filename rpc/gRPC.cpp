@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#ifndef NO_GRPC
+#ifndef NKR_NO_GRPC
 
 namespace NekoRay::rpc {
     Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
