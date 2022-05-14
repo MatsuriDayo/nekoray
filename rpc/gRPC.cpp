@@ -13,8 +13,11 @@ namespace NekoRay::rpc {
     }
 
 #define MAKE_CONTEXT auto context = grpc::ClientContext(); context.AddMetadata("nekoray_auth", token.toStdString());
-
-    // TODO 太多复制代码
+#define NOT_OK *rpcOK = false; \
+    onError( \
+            QString("error code: %1, error message: %2\n").arg(status.error_code()).arg( \
+            status.error_message().c_str()) \
+    );
 
     void Client::Exit() {
         MAKE_CONTEXT
@@ -36,11 +39,7 @@ namespace NekoRay::rpc {
                 *rpcOK = true;
                 return {reply.error().c_str()};
             } else {
-                *rpcOK = false;
-                onError(
-                        QString("error code: %1, error message: %2\n").arg(status.error_code()).arg(
-                                status.error_message().c_str())
-                );
+                NOT_OK
                 return "";
             }
         }
@@ -58,11 +57,7 @@ namespace NekoRay::rpc {
                 *rpcOK = true;
                 return {reply.error().c_str()};
             } else {
-                *rpcOK = false;
-                onError(
-                        QString("error code: %1, error message: %2\n").arg(status.error_code()).arg(
-                                status.error_message().c_str())
-                );
+                NOT_OK
                 return "";
             }
         }
@@ -87,11 +82,7 @@ namespace NekoRay::rpc {
         grpc::Status status = _stub->Test(&context, request, &reply);
 
         if (!status.ok()) {
-            *rpcOK = false;
-            onError(
-                    QString("error code: %1, error message: %2\n").arg(status.error_code()).arg(
-                            status.error_message().c_str())
-            );
+            NOT_OK
             return reply;
         }
 
@@ -109,11 +100,7 @@ namespace NekoRay::rpc {
         grpc::Status status = _stub->QueryStats(&context, request, &reply);
 
         if (!status.ok()) {
-            *rpcOK = false;
-            onError(
-                    QString("error code: %1, error message: %2\n").arg(status.error_code()).arg(
-                            status.error_message().c_str())
-            );
+            NOT_OK
             return 0;
         }
 

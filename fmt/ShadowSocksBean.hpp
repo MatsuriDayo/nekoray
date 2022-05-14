@@ -27,6 +27,8 @@ namespace NekoRay::fmt {
 
         bool TryParseLink(const QString &link);
 
+        bool TryParseSSR(const QString &link);
+
         QString ToShareLink() override;
     };
 }

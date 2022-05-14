@@ -14,7 +14,7 @@ namespace NekoRay::fmt {
             // v2rayN shit format
             DECODE_V2RAY_N_1
 
-            if (hasRemarks) name = url.fragment(); // TODO "+"
+            if (hasRemarks) name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             username = url.userName();
@@ -40,7 +40,7 @@ namespace NekoRay::fmt {
         if (!url.isValid()) return false;
         auto query = GetQuery(url);
 
-        name = url.fragment();
+        name = url.fragment(QUrl::FullyDecoded);
         serverAddress = url.host();
         serverPort = url.port();
         password = url.userName();
@@ -61,7 +61,7 @@ namespace NekoRay::fmt {
             auto url = QUrl(link);
             if (!url.isValid()) return false;
 
-            name = url.fragment();
+            name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             auto method_password = DecodeB64IfValid(url.userName(), QByteArray::Base64Option::Base64UrlEncoding);
@@ -74,7 +74,7 @@ namespace NekoRay::fmt {
             // v2rayN
             DECODE_V2RAY_N_1
 
-            if (hasRemarks) name = url.fragment(); // TODO "+"
+            if (hasRemarks) name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             method = url.userName();
@@ -82,6 +82,10 @@ namespace NekoRay::fmt {
             plugin = "";
         }
         return true;
+    }
+
+    bool ShadowSocksBean::TryParseSSR(const QString &link) {
+        return false;
     }
 
     bool VMessBean::TryParseLink(const QString &link) {

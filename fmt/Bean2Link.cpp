@@ -17,7 +17,7 @@ namespace NekoRay::fmt {
         url.setUserName(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        if (!name.isEmpty()) url.setFragment(name); // TODO url safe
+        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
         if (!stream->sni.isEmpty()) url.setQuery(QUrlQuery{{"sni", stream->sni}});
         return url.toString();
     }
@@ -29,7 +29,7 @@ namespace NekoRay::fmt {
         url.setUserName(username.toUtf8().toBase64(QByteArray::Base64Option::Base64UrlEncoding));
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        if (!name.isEmpty()) url.setFragment(name); // TODO url safe
+        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
         QUrlQuery q;
         if (!plugin.isEmpty()) q.addQueryItem("plugin", plugin);
         if (!q.isEmpty()) url.setQuery(q);

@@ -5,14 +5,12 @@
 
 #include "NekoRay.hpp"
 
-#include <QRegExpValidator>
-
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {
     ui->setupUi(this);
 
-    ui->socks_port->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$"), this));
-    ui->http_port->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$"), this));
+    ui->socks_port->setValidator(QRegExpValidator_Number, this));
+    ui->http_port->setValidator(QRegExpValidator_Number, this));
 
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->socks_port->setText(Int2String(NekoRay::dataStore->inbound_socks_port));
@@ -46,7 +44,7 @@ DialogBasicSettings::~DialogBasicSettings() {
 void DialogBasicSettings::accept() {
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
     NekoRay::dataStore->inbound_socks_port = ui->socks_port->text().toInt();
-    NekoRay::dataStore->log_level = ui->log_level->currentText(); // TODO refresh
+    NekoRay::dataStore->log_level = ui->log_level->currentText();
     NekoRay::dataStore->user_agent = ui->user_agent->text();
 
     if (ui->http_enable->isChecked()) {

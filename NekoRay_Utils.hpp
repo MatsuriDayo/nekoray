@@ -19,6 +19,7 @@
 #include <QUrlQuery>
 #include <QHostAddress>
 #include <QTcpServer>
+#include <QRegExpValidator>
 
 // Dialogs
 
@@ -117,6 +118,10 @@ inline QList<QString> QJsonArray2QListString(const QJsonArray &arr) {
     return list2;
 }
 
+inline QString UrlSafe_encode(const QString &s) {
+    return s.toUtf8().toPercentEncoding().replace(" ", "%20");
+}
+
 inline bool InRange(unsigned x, unsigned low, unsigned high) {
     return (low <= x && x <= high);
 }
@@ -144,6 +149,7 @@ inline QString ReadableSize(const qint64 &size) {
 }
 
 // Net
+
 inline int MkPort() {
     QTcpServer s;
     s.listen();
@@ -266,6 +272,7 @@ inline QString VerifyJsonString(const QString &source) {
 }
 
 // GUI TOOLS
+
 #define RED(obj)                                                                                                                                     \
     {                                                                                                                                                \
         auto _temp = obj->palette();                                                                                                                 \
@@ -274,3 +281,5 @@ inline QString VerifyJsonString(const QString &source) {
     }
 
 #define BLACK(obj) obj->setPalette(QWidget::palette());
+
+#define QRegExpValidator_Number new QRegExpValidator(QRegExp("^[0-9]+$")

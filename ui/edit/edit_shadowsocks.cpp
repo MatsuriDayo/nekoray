@@ -11,7 +11,6 @@ EditShadowSocks::~EditShadowSocks() {
 }
 
 void EditShadowSocks::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
-    // TODO ssr
     this->ent = _ent;
     auto bean = this->ent->ShadowSocksBean();
 

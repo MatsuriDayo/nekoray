@@ -198,7 +198,6 @@ namespace NekoRay {
         return changed;
     }
 
-    // TODO exception
     bool JsonStore::Load() {
         QFile file;
         file.setFileName(fn);

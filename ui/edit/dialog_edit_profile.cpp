@@ -11,7 +11,6 @@
 
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 
-#include <QRegExpValidator>
 #include <QInputDialog>
 
 DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent)
@@ -160,7 +159,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->name->setText(ent->bean->name);
     ui->address->setText(ent->bean->serverAddress);
     ui->port->setText(Int2String(ent->bean->serverPort));
-    ui->port->setValidator(new QRegExpValidator(QRegExp("^[0-9]+$"), this)); // TODO util
+    ui->port->setValidator(QRegExpValidator_Number, this));
 
     dialog_editor_cache_updated();
 

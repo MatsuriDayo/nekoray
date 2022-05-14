@@ -52,6 +52,13 @@ namespace NekoRay::sub {
             if (!ok) ent = nullptr;
         }
 
+        // ShadowSocksR (as ss stream + plugin)
+        if (str.startsWith("ssr://")) {
+            ent = ProfileManager::NewProxyEntity("shadowsocks");
+            auto ok = ent->ShadowSocksBean()->TryParseSSR(str);
+            if (!ok) ent = nullptr;
+        }
+
         // VMess
         if (str.startsWith("vmess://")) {
             ent = ProfileManager::NewProxyEntity("vmess");

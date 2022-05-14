@@ -784,7 +784,6 @@ void MainWindow::neko_stop() {
     if (NekoRay::dataStore->started_id < 0) return;
 
 #ifndef NKR_NO_GRPC
-    // TODO save traffic & conflict?
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
     for (const auto &item: NekoRay::traffic::trafficLooper->items) {
