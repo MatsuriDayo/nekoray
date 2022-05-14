@@ -23,7 +23,7 @@ private:
     Ui::DialogManageGroups *ui;
     QMenu *menu;
 
-    void refresh_group_list(bool postMain);
+    void refresh_group_list(int postMain_gid);
 
     void create_right_click_menu();
 

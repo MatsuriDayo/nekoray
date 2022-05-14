@@ -30,7 +30,7 @@ namespace NekoRay::sub {
         if (str.count("\n") > 0) {
             auto list = str.split("\n");
             for (const auto &str2: list) {
-                update(str2);
+                update(str2.trimmed());
             }
             return;
         }

@@ -12,7 +12,7 @@ DialogManageGroups::DialogManageGroups(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
     ui->groupListTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    this->refresh_group_list(false);
+    this->refresh_group_list(-114514);
     this->create_right_click_menu();
 }
 
@@ -24,7 +24,7 @@ void DialogManageGroups::on_groupListTable_customContextMenuRequested(const QPoi
     menu->popup(ui->groupListTable->viewport()->mapToGlobal(pos)); //弹出菜单
 }
 
-void DialogManageGroups::refresh_group_list(bool postMain) {
+void DialogManageGroups::refresh_group_list(int postMain_gid) {
     ui->groupListTable->setRowCount(0); //这样才能清空数据
 
     for (const auto &group: NekoRay::profileManager->groups) {
@@ -51,8 +51,8 @@ void DialogManageGroups::refresh_group_list(bool postMain) {
         ui->groupListTable->setItem(i, 2, f);
     }
 
-    if (postMain) {
-        emit GetMainWindow()->dialog_message(Dialog_DialogManageGroups, "refresh");
+    if (postMain_gid > -114514) { // <= -114514 don't post to mainwindow
+        emit GetMainWindow()->dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(postMain_gid));
     }
 }
 
@@ -91,10 +91,10 @@ void DialogManageGroups::create_right_click_menu() {
 
                 if (ret == QDialog::Accepted) {
                     NekoRay::profileManager->AddGroup(ent);
-                    refresh_group_list(true);
+                    refresh_group_list(-1);
                     //初次订阅
-                    if (QMessageBox::question(this, tr("Confirmation"),
-                                              QString(tr("Update %1 item(s) ?")).arg(1)) ==
+                    if (!ent->url.isEmpty() &&
+                        QMessageBox::question(this, tr("Confirmation"), QString(tr("Update %1 item(s) ?")).arg(1)) ==
                         QMessageBox::StandardButton::Yes) {
                         NekoRay::profileManager->AsyncUpdateSubscription(ent->id);
                     }
@@ -109,7 +109,7 @@ void DialogManageGroups::create_right_click_menu() {
                     QMessageBox::StandardButton::Yes) {
                     for (const auto &ent: ents) {
                         NekoRay::profileManager->DeleteGroup(ent->id);
-                        refresh_group_list(true);
+                        refresh_group_list(-2);
                     }
                 }
                 break;
@@ -146,6 +146,6 @@ void DialogManageGroups::on_groupListTable_itemDoubleClicked(QTableWidgetItem *i
 
     if (ret == QDialog::Accepted) {
         ent->Save();
-        refresh_group_list(true);
+        refresh_group_list(ent->id);
     }
 }

@@ -12,6 +12,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     });
 
     ui->name->setText(ent->name);
+    ui->archive->setChecked(ent->archive);
     ui->url->setText(ent->url);
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
@@ -31,6 +32,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=] {
         ent->name = ui->name->text();
         ent->url = ui->url->text();
+        ent->archive = ui->archive->isChecked();
         QDialog::accept();
     });
 }

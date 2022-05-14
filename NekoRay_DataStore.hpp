@@ -87,6 +87,7 @@ namespace NekoRay {
 
         // Cache
         int updated_count = 0;
+        bool refreshing_group_list = false;
     };
 
     extern DataStore *dataStore;

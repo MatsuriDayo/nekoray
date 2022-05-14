@@ -143,10 +143,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     // refresh
     this->refresh_groups();
-    this->refresh_proxy_list();
-    auto last_selected = NekoRay::dataStore->current_group;
-    NekoRay::dataStore->current_group = 0;
-    ui->tabWidget->setCurrentIndex(last_selected);
 
     // Setup Tray
     auto icon = QIcon::fromTheme("nekoray");
@@ -267,21 +263,38 @@ MainWindow::~MainWindow() {
 inline QMap<int, int> tab_index_GroupId;
 
 inline int tabIndex2GroupId(int index) {
+    if (!tab_index_GroupId.contains(index)) return -1;
     return tab_index_GroupId[index];
 }
 
 inline int groupId2TabIndex(int gid) {
-    for (auto key: tab_index_GroupId) {
-        if (tab_index_GroupId[key] == gid) return tab_index_GroupId[key];
+    for (auto key: tab_index_GroupId.keys()) {
+        if (tab_index_GroupId[key] == gid) return key;
     }
-    return 0;
+    return -1;
 }
 
+// changed
 void MainWindow::on_tabWidget_currentChanged(int index) {
-    if (index == NekoRay::dataStore->current_group) return;
-    NekoRay::dataStore->current_group = tabIndex2GroupId(index);
-    NekoRay::dataStore->Save();
-    ui->tabWidget->widget(index)->layout()->addWidget(ui->proxyListTable);
+    if (NekoRay::dataStore->refreshing_group_list) return;
+//    qDebug() << tab_index_GroupId;
+//    qDebug() << index << tabIndex2GroupId(index) << groupId2TabIndex(tabIndex2GroupId(index));
+    if (tabIndex2GroupId(index) == NekoRay::dataStore->current_group) return;
+    show_group(tabIndex2GroupId(index));
+}
+
+void MainWindow::show_group(int gid) {
+    auto group = NekoRay::profileManager->GetGroup(gid);
+    if (group == nullptr) {
+        MessageBoxWarning(tr("Error"),
+                          tr("No such group: %1").arg(NekoRay::dataStore->current_group));
+        return;
+    }
+    if (NekoRay::dataStore->current_group != gid) {
+        NekoRay::dataStore->current_group = gid;
+        NekoRay::dataStore->Save();
+    }
+    ui->tabWidget->widget(groupId2TabIndex(gid))->layout()->addWidget(ui->proxyListTable);
     refresh_proxy_list();
 }
 
@@ -305,15 +318,16 @@ void MainWindow::dialog_message(const QString &dialog, const QString &info) {
                 this->refresh_proxy_list();
             }
         } else if (dialog == Dialog_DialogManageGroups) {
-            if (info == "refresh") {
+            if (info.startsWith("refresh")) {
                 this->refresh_groups();
-                on_tabWidget_currentChanged(groupId2TabIndex(0));
             }
         } else if (dialog == "SubUpdater") {
             // 订阅完毕
             refresh_proxy_list();
-            QMessageBox::information(this, tr("Info"),
-                                     tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
+            if (!info.contains("dingyue")) {
+                QMessageBox::information(this, tr("Info"),
+                                         tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
+            }
         }
     });
 }
@@ -397,7 +411,10 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
 // table显示
 
+// update tab_index_GroupId
+// refresh proxy list
 void MainWindow::refresh_groups() {
+    NekoRay::dataStore->refreshing_group_list = true;
     tab_index_GroupId.clear();
 
     // refresh group?
@@ -407,7 +424,7 @@ void MainWindow::refresh_groups() {
 
     int index = 0;
     for (const auto &group: NekoRay::profileManager->groups) {
-        if (group->id == 0) {
+        if (index == 0) {
             ui->tabWidget->setTabText(0, group->name);
         } else {
             auto widget2 = new QWidget();
@@ -418,8 +435,17 @@ void MainWindow::refresh_groups() {
         index++;
     }
 
-//    ui->tabWidget->widget(0)->layout()->addWidget(ui->proxyListTable);
-    ui->tabWidget->setCurrentIndex(0);
+    // show after group changed
+    if (NekoRay::profileManager->GetGroup(NekoRay::dataStore->current_group) == nullptr) {
+        NekoRay::dataStore->current_group = -1;
+        ui->tabWidget->setCurrentIndex(groupId2TabIndex(0));
+        show_group(0);
+    } else {
+        ui->tabWidget->setCurrentIndex(groupId2TabIndex(NekoRay::dataStore->current_group));
+        show_group(NekoRay::dataStore->current_group);
+    }
+
+    NekoRay::dataStore->refreshing_group_list = false;
 }
 
 
@@ -491,6 +517,11 @@ void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction grou
         switch (groupSortAction.method) {
             case NekoRay::GroupSortMethod::Raw: {
                 auto group = NekoRay::ProfileManager::CurrentGroup();
+                if (group == nullptr) {
+                    MessageBoxWarning(tr("Error"),
+                                      tr("No such group: %1").arg(NekoRay::dataStore->current_group));
+                    return;
+                }
                 ui->proxyListTable->order = group->order;
                 break;
             }
@@ -722,6 +753,7 @@ void MainWindow::neko_start(int id) {
     auto ent = id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(id);
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
+    if (NekoRay::profileManager->GetGroup(ent->group_id)->archive) return;
 
     auto result = NekoRay::fmt::BuildConfig(ent, false);
     if (!result->error.isEmpty()) {
@@ -810,6 +842,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
     runOnNewThread([=]() {
         auto group = NekoRay::ProfileManager::CurrentGroup();
+        if (group->archive) return;
         auto order = ui->proxyListTable->order;//copy
         auto count = order.length();
         int tested = 0;

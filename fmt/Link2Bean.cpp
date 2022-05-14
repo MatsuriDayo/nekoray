@@ -93,7 +93,7 @@ namespace NekoRay::fmt {
             // REQUIRED
             uuid = objN["id"].toString();
             serverAddress = objN["add"].toString();
-            serverPort = objN["port"].toInt();
+            serverPort = objN["port"].toVariant().toInt();
             // OPTIONAL
             name = objN["ps"].toString();
             aid = objN["aid"].toInt();

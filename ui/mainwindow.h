@@ -124,6 +124,8 @@ private:
     void speedtest_current_group(libcore::TestMode mode);
 
 #endif
+
+    void show_group(int gid);
 };
 
 #endif // MAINWINDOW_H

@@ -94,6 +94,10 @@
         <source>URL</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Archive</source>
+        <translation>归档</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
@@ -879,6 +883,10 @@
     <message>
         <source>HTTP: %1</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>No such group: %1</source>
+        <translation>分组 %1 不存在</translation>
     </message>
 </context>
 <context>
