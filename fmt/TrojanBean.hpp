@@ -1,7 +1,7 @@
 #pragma once
 
 #include "fmt/AbstractBean.hpp"
-#include "fmt/comm/V2RayStreamSettings.hpp"
+#include "fmt/V2RayStreamSettings.hpp"
 
 namespace NekoRay::fmt {
     class TrojanBean : public AbstractBean {
@@ -12,7 +12,7 @@ namespace NekoRay::fmt {
         QString custom = "";
 
         TrojanBean() : AbstractBean(0) {
-            _add(new configItem("password", &password, itemType::string));
+            _add(new configItem("pass", &password, itemType::string));
             _add(new configItem("stream", dynamic_cast<JsonStore *>(stream.get()), itemType::jsonStore));
             _add(new configItem("custom", &custom, itemType::string));
         };

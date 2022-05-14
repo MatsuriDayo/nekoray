@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 #include "db/traffic/TrafficData.hpp"
 #include "fmt/AbstractBean.hpp"
 #include "fmt/SocksBean.hpp"
@@ -17,7 +17,7 @@ namespace NekoRay {
         QString type = "";
 
         int id = -1;
-        int group_id = 0;
+        int gid = 0;
         QSharedPointer<fmt::AbstractBean> bean;
         QSharedPointer<traffic::TrafficData> traffic_data = QSharedPointer<traffic::TrafficData>(
                 new traffic::TrafficData(""));
@@ -29,16 +29,14 @@ namespace NekoRay {
             this->type = std::move(type);
             _add(new configItem("type", &this->type, itemType::string));
             _add(new configItem("id", &id, itemType::integer));
-            _add(new configItem("group_id", &group_id, itemType::integer));
+            _add(new configItem("gid", &gid, itemType::integer));
 
             // 可以不关联 bean，只加载 ProxyEntity 的信息
             if (bean != nullptr) {
                 this->bean = QSharedPointer<fmt::AbstractBean>(bean);
                 // 有虚函数就要在这里 dynamic_cast
                 _add(new configItem("bean", dynamic_cast<JsonStore *>(bean), itemType::jsonStore));
-                _add(new configItem("traffic_data",
-                                    dynamic_cast<JsonStore *>(traffic_data.get()),
-                                    itemType::jsonStore));
+                _add(new configItem("traffic", dynamic_cast<JsonStore *>(traffic_data.get()), itemType::jsonStore));
             }
         };
 

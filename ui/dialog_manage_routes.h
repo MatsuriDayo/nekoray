@@ -4,7 +4,7 @@
 #include <QMenu>
 
 #include "qv2ray/ui/QvAutoCompleteTextEdit.hpp"
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class DialogManageRoutes; }

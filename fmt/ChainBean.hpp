@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 namespace NekoRay::fmt {
     class ChainBean : public AbstractBean {

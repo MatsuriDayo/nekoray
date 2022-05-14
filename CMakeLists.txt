@@ -35,8 +35,8 @@ message(STATUS "[yaml-cpp] ${YAML_CPP_LINK_LIBRARIES}")
 
 # Sources
 set(PROJECT_SOURCES
-        main.cpp
-        NekoRay.cpp
+        main/main.cpp
+        main/NekoRay.cpp
 
         3rdparty/qrcodegen.cpp
 

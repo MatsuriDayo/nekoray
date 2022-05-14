@@ -1,4 +1,4 @@
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 #include "db/Database.hpp"
 #include "sub/RawUpdater.hpp"
 #include "db/traffic/TrafficLooper.hpp"

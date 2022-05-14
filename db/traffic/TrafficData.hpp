@@ -2,7 +2,7 @@
 
 #include <utility>
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 namespace NekoRay::traffic {
     class TrafficData : public JsonStore {
@@ -17,8 +17,8 @@ namespace NekoRay::traffic {
 
         explicit TrafficData(std::string tag) {
             this->tag = std::move(tag);
-            _add(new configItem("downlink", &downlink, itemType::integer64));
-            _add(new configItem("uplink", &uplink, itemType::integer64));
+            _add(new configItem("dl", &downlink, itemType::integer64));
+            _add(new configItem("ul", &uplink, itemType::integer64));
         };
 
         void Reset() {

@@ -3,7 +3,7 @@
 
 #include <QThread>
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 #include "ui/mainwindow_message.h"
 
 namespace NekoRay::traffic {

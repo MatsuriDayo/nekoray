@@ -1,8 +1,5 @@
 // DO NOT INCLUDE THIS
 
-#include "NekoRay_ConfigItem.hpp"
-#include "Const.hpp"
-
 #include <QString>
 #include <QJsonObject>
 #include <QJsonDocument>

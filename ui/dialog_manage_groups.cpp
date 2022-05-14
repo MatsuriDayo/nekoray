@@ -5,6 +5,7 @@
 #include "ui/edit/dialog_edit_group.h"
 
 #include "db/Database.hpp"
+#include "main/GuiUtils.hpp"
 
 #include <QInputDialog>
 
@@ -40,7 +41,7 @@ void DialogManageGroups::refresh_group_list(int postMain_gid) {
         f = f->clone();
         int count = 0;
         for (const auto &profile: NekoRay::profileManager->profiles) {
-            if (profile->group_id == group->id) count++;
+            if (profile->gid == group->id) count++;
         }
         f->setText(Int2String(count));
         ui->groupListTable->setItem(i, 1, f);

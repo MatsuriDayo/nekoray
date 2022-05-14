@@ -12,21 +12,20 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QMenu>
 #include <QTimer>
 #include <QMetaObject>
 #include <QThread>
 #include <QUrlQuery>
 #include <QHostAddress>
 #include <QTcpServer>
-#include <QRegExpValidator>
 
 // Dialogs
 
-inline QString Dialog_DialogBasicSettings = "DialogBasicSettings";
-inline QString Dialog_DialogEditProfile = "DialogEditProfile";
-inline QString Dialog_DialogManageGroups = "DialogManageGroups";
-inline QString Dialog_DialogManageRoutes = "DialogManageRoutes";
+#define Dialog_DialogBasicSettings "DialogBasicSettings"
+#define Dialog_DialogEditProfile "DialogEditProfile"
+#define Dialog_DialogManageGroups "DialogManageGroups"
+#define Dialog_DialogManageRoutes "DialogManageRoutes"
+
 inline QWidget *mainwindow;
 inline std::function<void(QString)> showLog;
 
@@ -126,26 +125,8 @@ inline bool InRange(unsigned x, unsigned low, unsigned high) {
     return (low <= x && x <= high);
 }
 
-inline QString ReadableSize(const qint64 &size) {
-    double sizeAsDouble = size;
-    static QStringList measures;
-    if (measures.isEmpty())
-        measures << "B"
-                 << "KiB"
-                 << "MiB"
-                 << "GiB"
-                 << "TiB"
-                 << "PiB"
-                 << "EiB"
-                 << "ZiB"
-                 << "YiB";
-    QStringListIterator it(measures);
-    QString measure(it.next());
-    while (sizeAsDouble >= 1024.0 && it.hasNext()) {
-        measure = it.next();
-        sizeAsDouble /= 1024.0;
-    }
-    return QString::fromLatin1("%1 %2").arg(sizeAsDouble, 0, 'f', 2).arg(measure);
+inline QStringList SplitLines(const QString &_string) {
+    return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
 }
 
 // Net
@@ -196,6 +177,30 @@ inline QString DisplayAddress(QString serverAddress, int serverPort) {
     return WrapIPV6Host(serverAddress) + ":" + Int2String(serverPort);
 };
 
+// Format
+
+inline QString ReadableSize(const qint64 &size) {
+    double sizeAsDouble = size;
+    static QStringList measures;
+    if (measures.isEmpty())
+        measures << "B"
+                 << "KiB"
+                 << "MiB"
+                 << "GiB"
+                 << "TiB"
+                 << "PiB"
+                 << "EiB"
+                 << "ZiB"
+                 << "YiB";
+    QStringListIterator it(measures);
+    QString measure(it.next());
+    while (sizeAsDouble >= 1024.0 && it.hasNext()) {
+        measure = it.next();
+        sizeAsDouble /= 1024.0;
+    }
+    return QString::fromLatin1("%1 %2").arg(sizeAsDouble, 0, 'f', 2).arg(measure);
+}
+
 // UI
 
 inline int MessageBoxWarning(const QString &title, const QString &text) {
@@ -204,31 +209,6 @@ inline int MessageBoxWarning(const QString &title, const QString &text) {
 
 inline int MessageBoxWarningStdString(const std::string &title, const std::string &text) {
     return QMessageBox::warning(mainwindow, QString(title.c_str()), QString(text.c_str()));
-}
-
-inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, std::function<void(QAction *)> slot) {
-    auto menu = new QMenu(parent);
-    QList<QAction *> acts;
-
-    for (const auto &text: texts) {
-        acts.push_back(new QAction(text, parent)); //按顺序来
-    }
-
-    for (int i = 0; i < acts.size(); i++) {
-        if (acts[i]->text() == "[Separator]") {
-            acts[i]->setSeparator(true);
-            acts[i]->setText("");
-            acts[i]->setDisabled(true);
-            acts[i]->setData(-1);
-        } else {
-            acts[i]->setData(i);
-        }
-
-        menu->addAction(acts[i]);
-    }
-
-    QWidget::connect(menu, &QMenu::triggered, parent, std::move(slot));
-    return menu;
 }
 
 inline void runOnUiThread(const std::function<void()> &callback) {
@@ -247,39 +227,3 @@ inline void runOnUiThread(const std::function<void()> &callback) {
 inline void runOnNewThread(const std::function<void()> &callback) {
     QThread::create(callback)->start();
 }
-
-// Copy from Qv2ray
-
-inline QStringList SplitLines(const QString &_string) {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
-    return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
-#else
-    return _string.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts);
-#endif
-}
-
-inline QString VerifyJsonString(const QString &source) {
-    QJsonParseError error{};
-    QJsonDocument doc = QJsonDocument::fromJson(source.toUtf8(), &error);
-    Q_UNUSED(doc)
-
-    if (error.error == QJsonParseError::NoError) {
-        return "";
-    } else {
-        //LOG("WARNING: Json parse returns: " + error.errorString());
-        return error.errorString();
-    }
-}
-
-// GUI TOOLS
-
-#define RED(obj)                                                                                                                                     \
-    {                                                                                                                                                \
-        auto _temp = obj->palette();                                                                                                                 \
-        _temp.setColor(QPalette::Text, Qt::red);                                                                                                     \
-        obj->setPalette(_temp);                                                                                                                      \
-    }
-
-#define BLACK(obj) obj->setPalette(QWidget::palette());
-
-#define QRegExpValidator_Number new QRegExpValidator(QRegExp("^[0-9]+$")

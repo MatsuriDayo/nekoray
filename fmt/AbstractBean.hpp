@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 namespace NekoRay::fmt {
 
@@ -22,10 +22,10 @@ namespace NekoRay::fmt {
 
         explicit AbstractBean(int version) {
             this->version = version;
-            _add(new configItem("version", &this->version, itemType::integer));
+            _add(new configItem("_v", &this->version, itemType::integer));
             _add(new configItem("name", &name, itemType::string));
-            _add(new configItem("serverAddress", &serverAddress, itemType::string));
-            _add(new configItem("serverPort", &serverPort, itemType::integer));
+            _add(new configItem("addr", &serverAddress, itemType::string));
+            _add(new configItem("port", &serverPort, itemType::integer));
         };
 
         [[nodiscard]] virtual QString DisplayAddress() {

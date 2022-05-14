@@ -458,7 +458,7 @@ void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction grou
     // 绘制或更新item(s)
     int row = -1;
     for (const auto &profile: NekoRay::profileManager->profiles) {
-        if (NekoRay::dataStore->current_group != profile->group_id) continue;
+        if (NekoRay::dataStore->current_group != profile->gid) continue;
 
         row++;
         if (id >= 0 && profile->id != id) continue; // update only one item
@@ -697,7 +697,7 @@ void MainWindow::on_menu_url_test_triggered() {
 
 void MainWindow::on_menu_clear_test_result_triggered() {
     for (const auto &profile: NekoRay::profileManager->profiles) {
-        if (NekoRay::dataStore->current_group != profile->group_id) continue;
+        if (NekoRay::dataStore->current_group != profile->gid) continue;
         profile->latency = 0;
     }
     refresh_proxy_list();
@@ -753,7 +753,7 @@ void MainWindow::neko_start(int id) {
     auto ent = id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(id);
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
-    if (NekoRay::profileManager->GetGroup(ent->group_id)->archive) return;
+    if (NekoRay::profileManager->GetGroup(ent->gid)->archive) return;
 
     auto result = NekoRay::fmt::BuildConfig(ent, false);
     if (!result->error.isEmpty()) {

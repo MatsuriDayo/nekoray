@@ -83,7 +83,7 @@ namespace NekoRay {
             return false;
         }
 
-        ent->group_id = gid < 0 ? dataStore->current_group : gid;
+        ent->gid = gid < 0 ? dataStore->current_group : gid;
         ent->id = NewProfileID();
         profiles[ent->id] = ent;
         _profiles.push_back(ent->id);
@@ -144,7 +144,7 @@ namespace NekoRay {
         if (!groups.contains(id)) return;
         groups.remove(id);
         for (const auto &profile: profileManager->profiles) {
-            if (profile->group_id == id) profileManager->DeleteProfile(profile->id);
+            if (profile->gid == id) profileManager->DeleteProfile(profile->id);
         }
         if (!_groups.contains(id)) return;
         _groups.removeAll(id);
@@ -166,7 +166,7 @@ namespace NekoRay {
     QList<QSharedPointer<ProxyEntity>> Group::Profiles() const {
         QList<QSharedPointer<ProxyEntity>> ret;
         for (const auto &profile: profileManager->profiles) {
-            if (id == profile->group_id) ret += profile;
+            if (id == profile->gid) ret += profile;
         }
         return ret;
     }

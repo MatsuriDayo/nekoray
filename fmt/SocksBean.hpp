@@ -1,7 +1,7 @@
 #pragma once
 
 #include "fmt/AbstractBean.hpp"
-#include "fmt/comm/V2RayStreamSettings.hpp"
+#include "fmt/V2RayStreamSettings.hpp"
 
 namespace NekoRay::fmt {
     class SocksBean : public AbstractBean {
@@ -14,7 +14,7 @@ namespace NekoRay::fmt {
         QString custom = "";
 
         SocksBean() : AbstractBean(0) {
-            _add(new configItem("socksVersion", &socksVersion, itemType::integer));
+            _add(new configItem("v", &socksVersion, itemType::integer));
             _add(new configItem("username", &username, itemType::string));
             _add(new configItem("password", &password, itemType::string));
             _add(new configItem("stream", dynamic_cast<JsonStore *>(stream.get()), itemType::jsonStore));

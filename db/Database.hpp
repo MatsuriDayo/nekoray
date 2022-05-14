@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 #include "db/ProxyEntity.hpp"
 #include "db/Group.hpp"
 

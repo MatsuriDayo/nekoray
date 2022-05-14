@@ -9,6 +9,7 @@
 #include "ui/edit/edit_vmess.h"
 #include "ui/edit/edit_trojan.h"
 
+#include "main/GuiUtils.hpp"
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 
 #include <QInputDialog>
@@ -113,7 +114,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
 
     if (newEnt) {
         this->ent = NekoRay::ProfileManager::NewProxyEntity(type);
-        this->ent->group_id = groupId;
+        this->ent->gid = groupId;
     }
 
     // hide some widget

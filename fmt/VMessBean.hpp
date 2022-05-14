@@ -1,7 +1,7 @@
 #pragma once
 
 #include "fmt/AbstractBean.hpp"
-#include "fmt/comm/V2RayStreamSettings.hpp"
+#include "fmt/V2RayStreamSettings.hpp"
 
 namespace NekoRay::fmt {
     class VMessBean : public AbstractBean {
@@ -14,9 +14,9 @@ namespace NekoRay::fmt {
         QString custom = "";
 
         VMessBean() : AbstractBean(0) {
-            _add(new configItem("uuid", &uuid, itemType::string));
+            _add(new configItem("id", &uuid, itemType::string));
             _add(new configItem("aid", &aid, itemType::integer));
-            _add(new configItem("security", &security, itemType::string));
+            _add(new configItem("sec", &security, itemType::string));
             _add(new configItem("stream", dynamic_cast<JsonStore *>(stream.get()), itemType::jsonStore));
             _add(new configItem("custom", &custom, itemType::string));
         };

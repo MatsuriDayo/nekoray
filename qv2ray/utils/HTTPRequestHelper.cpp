@@ -5,7 +5,7 @@
 #include <QEventLoop>
 #include <QMetaEnum>
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 #define QV_MODULE_NAME "NetworkCore"
 

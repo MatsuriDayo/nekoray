@@ -1,6 +1,6 @@
 #pragma once
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
 
 namespace NekoRay::fmt {
     class V2rayStreamSettings : public JsonStore {
@@ -21,16 +21,16 @@ namespace NekoRay::fmt {
         bool allow_insecure = false;
 
         V2rayStreamSettings() : JsonStore() {
-            _add(new configItem("network", &network, itemType::string));
-            _add(new configItem("security", &security, itemType::string));
+            _add(new configItem("net", &network, itemType::string));
+            _add(new configItem("sec", &security, itemType::string));
             _add(new configItem("path", &path, itemType::string));
             _add(new configItem("host", &host, itemType::string));
             _add(new configItem("sni", &sni, itemType::string));
-            _add(new configItem("certificate", &certificate, itemType::string));
-            _add(new configItem("allow_insecure", &allow_insecure, itemType::boolean));
-            _add(new configItem("max_early_data", &max_early_data, itemType::integer));
-            _add(new configItem("early_data_header_name", &early_data_header_name, itemType::string));
-            _add(new configItem("header_type", &header_type, itemType::string));
+            _add(new configItem("cert", &certificate, itemType::string));
+            _add(new configItem("insecure", &allow_insecure, itemType::boolean));
+            _add(new configItem("ws_med", &max_early_data, itemType::integer));
+            _add(new configItem("ws_edhn", &early_data_header_name, itemType::string));
+            _add(new configItem("h_type", &header_type, itemType::string));
         }
 
         QJsonObject BuildStreamSettings();

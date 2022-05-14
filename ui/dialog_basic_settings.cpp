@@ -3,7 +3,8 @@
 #include "ui/mainwindow_message.h"
 #include "ui/dialog_basic_settings.h"
 
-#include "NekoRay.hpp"
+#include "main/NekoRay.hpp"
+#include "main/GuiUtils.hpp"
 
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {
