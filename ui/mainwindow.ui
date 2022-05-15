@@ -30,7 +30,7 @@
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
        </widget>
       </item>
@@ -47,7 +47,7 @@
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
        </widget>
       </item>
@@ -64,7 +64,7 @@
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
        </widget>
       </item>
@@ -81,7 +81,7 @@
          <enum>QToolButton::InstantPopup</enum>
         </property>
         <property name="toolButtonStyle">
-         <enum>Qt::ToolButtonTextBesideIcon</enum>
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
         </property>
        </widget>
       </item>
@@ -104,6 +104,9 @@
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
        <number>0</number>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
       </property>
       <widget class="QWidget" name="widget1">
        <attribute name="title">

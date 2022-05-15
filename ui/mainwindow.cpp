@@ -67,6 +67,14 @@ MainWindow::MainWindow(QWidget *parent)
     title_base = windowTitle();
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
+    connect(ui->tabWidget->tabBar(), &QTabBar::tabMoved, this, [=](int from, int to) {
+        // use tabData to track tab & gid
+        NekoRay::profileManager->_groups.clear();
+        for (int i = 0; i < ui->tabWidget->tabBar()->count(); i++) {
+            NekoRay::profileManager->_groups += ui->tabWidget->tabBar()->tabData(i).toInt();
+        }
+        NekoRay::profileManager->Save();
+    });
 
     // top bar
     ui->toolButton_program->setMenu(ui->menu_program);
@@ -263,18 +271,16 @@ MainWindow::~MainWindow() {
 
 // Group tab manage
 
-inline QMap<int, int> tab_index_GroupId;
-
 inline int tabIndex2GroupId(int index) {
-    if (!tab_index_GroupId.contains(index)) return -1;
-    return tab_index_GroupId[index];
+    if (NekoRay::profileManager->_groups.length() <= index) return -1;
+    return NekoRay::profileManager->_groups[index];
 }
 
 inline int groupId2TabIndex(int gid) {
-    for (auto key: tab_index_GroupId.keys()) {
-        if (tab_index_GroupId[key] == gid) return key;
+    for (int key = 0; key < NekoRay::profileManager->_groups.count(); key++) {
+        if (NekoRay::profileManager->_groups[key] == gid) return key;
     }
-    return -1;
+    return 0;
 }
 
 // changed
@@ -419,7 +425,6 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 // refresh proxy list
 void MainWindow::refresh_groups() {
     NekoRay::dataStore->refreshing_group_list = true;
-    tab_index_GroupId.clear();
 
     // refresh group?
     for (int i = ui->tabWidget->count() - 1; i > 0; i--) {
@@ -427,7 +432,8 @@ void MainWindow::refresh_groups() {
     }
 
     int index = 0;
-    for (const auto &group: NekoRay::profileManager->groups) {
+    for (const auto &gid: NekoRay::profileManager->_groups) {
+        auto group = NekoRay::profileManager->GetGroup(gid);
         if (index == 0) {
             ui->tabWidget->setTabText(0, group->name);
         } else {
@@ -435,7 +441,7 @@ void MainWindow::refresh_groups() {
             widget2->setLayout(new QVBoxLayout());
             ui->tabWidget->addTab(widget2, group->name);
         }
-        tab_index_GroupId[index] = group->id;
+        ui->tabWidget->tabBar()->setTabData(index, gid);
         index++;
     }
 

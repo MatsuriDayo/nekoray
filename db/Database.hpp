@@ -12,7 +12,7 @@ namespace NekoRay {
 
         // JSON
         QList<int> _profiles;
-        QList<int> _groups;
+        QList<int> _groups; // with order
 
         ProfileManager() : JsonStore("groups/pm.json") {
             _hooks_after_load.push_back([=]() { LoadManager(); });

@@ -32,13 +32,15 @@ namespace NekoRay {
         QString name = "";
         QList<int> order;
         QString url = "";
+        QString info = "";
 
         Group() {
             _add(new configItem("id", &id, itemType::integer));
             _add(new configItem("archive", &archive, itemType::boolean));
-            _add(new configItem("name", &this->name, itemType::string));
+            _add(new configItem("name", &name, itemType::string));
             _add(new configItem("order", &order, itemType::integerList));
-            _add(new configItem("url", &this->url, itemType::string));
+            _add(new configItem("url", &url, itemType::string));
+            _add(new configItem("info", &info, itemType::string));
         }
 
         [[nodiscard]] bool IsSubscription() const {

@@ -276,6 +276,10 @@
         <source>Remove %1 item(s) ?</source>
         <translation>删除 %1 个项目？</translation>
     </message>
+    <message>
+        <source>Info</source>
+        <translation>信息</translation>
+    </message>
 </context>
 <context>
     <name>DialogManageRoutes</name>
@@ -900,6 +904,10 @@ Deleted %3 Profiles:
 Direct: %2</source>
         <translation>代理: %1
 直连: %2</translation>
+    </message>
+    <message>
+        <source>Used: %1 Total: %2 Expire: %3</source>
+        <translation>已用 %1 总共 %2 过期 %3</translation>
     </message>
 </context>
 <context>

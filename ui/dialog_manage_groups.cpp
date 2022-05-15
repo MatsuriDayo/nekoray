@@ -12,7 +12,10 @@
 DialogManageGroups::DialogManageGroups(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
-    ui->groupListTable->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    ui->groupListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->groupListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->groupListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->groupListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
     this->refresh_group_list(-114514);
     this->create_right_click_menu();
 }
@@ -23,6 +26,43 @@ DialogManageGroups::~DialogManageGroups() {
 
 void DialogManageGroups::on_groupListTable_customContextMenuRequested(const QPoint &pos) {
     menu->popup(ui->groupListTable->viewport()->mapToGlobal(pos)); //弹出菜单
+}
+
+QString ParseSubInfo(const QString &info) {
+    if (info.trimmed().isEmpty()) return "";
+
+    QString result;
+
+    // CFW 格式
+    long long used = 0;
+    long long total = 0;
+    long long expire = 0;
+
+    QRegExp re0("total=([0-9]+)");
+    if (re0.indexIn(info) != -1) {
+        total = re0.cap(1).toLongLong();
+    } else {
+        return "";
+    }
+    QRegExp re1("upload=([0-9]+)");
+    if (re1.indexIn(info) != -1) {
+        used += re1.cap(1).toLongLong();
+    }
+    QRegExp re2("download=([0-9]+)");
+    if (re2.indexIn(info) != -1) {
+        used += re2.cap(1).toLongLong();
+    }
+    QRegExp re3("expire=([0-9]+)");
+    if (re3.indexIn(info) != -1) {
+        expire = re3.cap(1).toLongLong();
+    }
+
+    QDateTime t;
+    t.setTime_t(expire);
+    result = QObject::tr("Used: %1 Total: %2 Expire: %3")
+            .arg(ReadableSize(used), ReadableSize(total), QLocale().toString(t, QLocale::ShortFormat));
+
+    return result;
 }
 
 void DialogManageGroups::refresh_group_list(int postMain_gid) {
@@ -50,6 +90,11 @@ void DialogManageGroups::refresh_group_list(int postMain_gid) {
         f = f->clone();
         f->setText(group->url);
         ui->groupListTable->setItem(i, 2, f);
+
+        // C3: Info
+        f = f->clone();
+        f->setText(ParseSubInfo(group->info));
+        ui->groupListTable->setItem(i, 3, f);
     }
 
     if (postMain_gid > -114514) { // <= -114514 don't post to mainwindow

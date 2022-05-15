@@ -62,7 +62,7 @@ namespace Qv2ray::common::network {
         request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, NekoRay::dataStore->user_agent);
     }
 
-    QByteArray NetworkRequestHelper::HttpGet(const QUrl &url) {
+    HTTPResponse NetworkRequestHelper::HttpGet(const QUrl &url) {
         QNetworkRequest request;
         QNetworkAccessManager accessManager;
         request.setUrl(url);
@@ -75,8 +75,7 @@ namespace Qv2ray::common::network {
             loop.exec();
         }
         //
-        auto data = _reply->readAll();
-        return data;
+        return HTTPResponse{_reply->readAll(), _reply->rawHeaderPairs()};
     }
 
     void NetworkRequestHelper::AsyncHttpGet(const QString &url, std::function<void(const QByteArray &)> funcPtr) {
@@ -93,7 +92,7 @@ namespace Qv2ray::common::network {
                 bool h2Used = reply->attribute(QNetworkRequest::HTTP2WasUsedAttribute).toBool();
 #endif
                 if (h2Used)
-                        DEBUG("HTTP/2 was used.");
+                    DEBUG("HTTP/2 was used.");
 
                 if (reply->error() != QNetworkReply::NoError)
                     LOG("Network error: " +
@@ -103,6 +102,13 @@ namespace Qv2ray::common::network {
                 accessManagerPtr->deleteLater();
             }
         });
+    }
+
+    QString NetworkRequestHelper::GetHeader(const QList<QPair<QByteArray, QByteArray>> &header, const QString &name) {
+        for (auto p: header) {
+            if (QString(p.first).toLower() == name.toLower()) return p.second;
+        }
+        return "";
     }
 
 } // namespace Qv2ray::common::network

@@ -6,20 +6,29 @@
 #include <QObject>
 #include <functional>
 
-namespace Qv2ray::common::network
-{
-    class NetworkRequestHelper : QObject
-    {
-        Q_OBJECT
-        explicit NetworkRequestHelper(QObject *parent) : QObject(parent){};
-        ~NetworkRequestHelper(){};
+namespace Qv2ray::common::network {
+    struct HTTPResponse {
+        QByteArray data;
+        QList<QPair<QByteArray, QByteArray>> header;
+    };
 
-      public:
+    class NetworkRequestHelper : QObject {
+    Q_OBJECT
+
+        explicit NetworkRequestHelper(QObject *parent) : QObject(parent) {};
+
+        ~NetworkRequestHelper() {};
+
+    public:
         static void AsyncHttpGet(const QString &url, std::function<void(const QByteArray &)> funcPtr);
-        static QByteArray HttpGet(const QUrl &url);
 
-      private:
+        static HTTPResponse HttpGet(const QUrl &url);
+
+        static QString GetHeader(const QList<QPair<QByteArray, QByteArray>>& header, const QString& name);
+
+    private:
         static void setAccessManagerAttributes(QNetworkRequest &request, QNetworkAccessManager &accessManager);
+
         static void setHeader(QNetworkRequest &request, const QByteArray &key, const QByteArray &value);
     };
 } // namespace Qv2ray::common::network

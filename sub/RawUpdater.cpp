@@ -178,7 +178,6 @@ namespace NekoRay::sub {
 #endif
     }
 
-    // 各种奇妙UI
     // 不要刷新，下载导入完会自己刷新
     void RawUpdater::AsyncUpdate(const QString &str, int _update_sub_gid) {
         dataStore->updated_count = 0;
@@ -200,11 +199,14 @@ namespace NekoRay::sub {
 
         runOnNewThread([=] {
             auto content2 = content;
+            QString sub_user_info;
             auto group = profileManager->GetGroup(update_sub_gid);
 
             if (asURL) {
                 showLog("URL=" + content2);
-                content2 = NetworkRequestHelper::HttpGet(content2);
+                auto resp = NetworkRequestHelper::HttpGet(content2);
+                content2 = resp.data;
+                sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
                 showLog("Content=" + content2);
             }
 
@@ -215,8 +217,9 @@ namespace NekoRay::sub {
             QList<QSharedPointer<ProxyEntity>> only_out; // 只在更新后有的
             QList<QSharedPointer<ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
 
-            if (group != nullptr) {// 订阅更新前
+            if (group != nullptr) {// 订阅更新（解析）前
                 in = group->Profiles();
+                group->info = sub_user_info;
             }
 
             // 解析并添加 profile
@@ -235,13 +238,6 @@ namespace NekoRay::sub {
                     dataStore->updated_count--;
                     profileManager->DeleteProfile(ent->id);
                 }
-
-                qDebug() << "in" << in;
-                qDebug() << "out_all" << out_all;
-                qDebug() << "out" << out;
-                qDebug() << "only_in" << only_in;
-                qDebug() << "only_out" << only_out;
-                qDebug() << "update_del" << update_del;
 
                 QString notice_added;
                 for (const auto &ent: only_out) {
