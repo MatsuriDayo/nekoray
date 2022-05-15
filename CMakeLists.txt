@@ -63,6 +63,8 @@ set(PROJECT_SOURCES
 
         sub/RawUpdater.cpp
 
+        ui/ThemeManager.cpp
+
         ui/mainwindow.cpp
         ui/mainwindow.h
         ui/mainwindow.ui
@@ -103,6 +105,7 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.ui
 
         res/neko.qrc
+        res/theme/feiyangqingyun/qss.qrc
         ${QV2RAY_RC}
         )
 

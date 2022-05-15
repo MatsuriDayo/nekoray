@@ -89,32 +89,32 @@
          </property>
          <item>
           <property name="text">
-           <string>AsIs</string>
+           <string notr="true">AsIs</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>UseIP</string>
+           <string notr="true">UseIP</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>UseIPv4</string>
+           <string notr="true">UseIPv4</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>UseIPv6</string>
+           <string notr="true">UseIPv6</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>PreferIPv4</string>
+           <string notr="true">PreferIPv4</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>PreferIPv6</string>
+           <string notr="true">PreferIPv6</string>
           </property>
          </item>
         </widget>
@@ -199,12 +199,12 @@
           <widget class="QComboBox" name="domainMatcherCombo">
            <item>
             <property name="text">
-             <string>Original</string>
+             <string notr="true">Original</string>
             </property>
            </item>
            <item>
             <property name="text">
-             <string>Minimal Perfect Hash Matcher</string>
+             <string notr="true">Minimal Perfect Hash Matcher</string>
             </property>
            </item>
           </widget>

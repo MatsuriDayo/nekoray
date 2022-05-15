@@ -43,6 +43,7 @@ namespace NekoRay {
         int traffic_loop_interval = 500;
         int current_group = 0; //group id
         int mux_cool = 8;
+        QString theme = "0";
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";
@@ -82,6 +83,7 @@ namespace NekoRay {
             _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
             _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
             _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
+            _add(new configItem("theme", &theme, itemType::string));
         }
 
         // Cache

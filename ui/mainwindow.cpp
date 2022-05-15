@@ -5,6 +5,7 @@
 #include "db/traffic/TrafficLooper.hpp"
 #include "db/filter/ProfileFilter.hpp"
 
+#include "ui/ThemeManager.hpp"
 #include "ui/mainwindow.h"
 #include "ui/dialog_basic_settings.h"
 #include "ui/edit/dialog_edit_profile.h"
@@ -61,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // Setup misc UI
+    themeManager->ApplyTheme(NekoRay::dataStore->theme);
     ui->setupUi(this);
     title_base = windowTitle();
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
@@ -351,6 +353,7 @@ void MainWindow::on_menu_exit_triggered() {
     neko_set_system_proxy(false);
     neko_stop();
     core_process_killed = true;
+    hide();
 #ifndef NKR_NO_GRPC
     defaultClient->Exit();
 #endif

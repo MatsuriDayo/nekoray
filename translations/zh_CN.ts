@@ -32,24 +32,24 @@
         <translation></translation>
     </message>
     <message>
-        <source>debug</source>
-        <translation></translation>
+        <source>Common</source>
+        <translation>通用</translation>
     </message>
     <message>
-        <source>info</source>
-        <translation></translation>
+        <source>Style</source>
+        <translation>样式</translation>
     </message>
     <message>
-        <source>warning</source>
-        <translation></translation>
+        <source>Theme</source>
+        <translation>主题</translation>
     </message>
     <message>
-        <source>mux.cool</source>
-        <translation></translation>
+        <source>System</source>
+        <translation>系统</translation>
     </message>
     <message>
-        <source>Loglevel</source>
-        <translation></translation>
+        <source>Subscription</source>
+        <translation>订阅</translation>
     </message>
 </context>
 <context>
@@ -368,38 +368,6 @@
         <translation>全局</translation>
     </message>
     <message>
-        <source>AsIs</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>UseIP</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>UseIPv4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>UseIPv6</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PreferIPv4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>PreferIPv6</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Original</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Minimal Perfect Hash Matcher</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>IP</source>
         <translation></translation>
     </message>
@@ -611,47 +579,47 @@
     <name>JsonEditor</name>
     <message>
         <source>JSON Editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Format JSON</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Remove All Comments</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Structure Preview</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Json Contains Syntax Errors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Original Json may contain syntax errors. Json tree is disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>You must correct these errors before continuing.</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Syntax Errors</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <source>Please fix the JSON errors or remove the comments before continue</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
 </context>
 <context>

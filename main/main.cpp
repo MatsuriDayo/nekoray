@@ -16,11 +16,11 @@ int main(int argc, char *argv[]) {
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{
-            ":neko-breeze",
-            ":nekoray",
+            ":/nekoray",
+            ":/icon",
     });
 
-    // TODO theme
+    // icon for no theme
     if (QIcon::themeName().isEmpty()) {
         QIcon::setThemeName("breeze");
     }

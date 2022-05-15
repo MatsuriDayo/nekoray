@@ -22,8 +22,8 @@ namespace NekoRay::rpc {
     void Client::Exit() {
         MAKE_CONTEXT
         libcore::EmptyReq request;
-        libcore::ErrorResp reply;
-        grpc::Status status = _stub->Stop(&context, request, &reply);
+        libcore::EmptyResp reply;
+        grpc::Status status = _stub->Exit(&context, request, &reply);
     }
 
     QString Client::Start(bool *rpcOK, const QString &coreConfig) {
