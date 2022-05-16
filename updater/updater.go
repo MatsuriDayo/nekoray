@@ -1,12 +1,14 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
-	"updater/unzip"
+
+	"github.com/codeclysm/extract"
 )
 
 func Updater() {
@@ -24,30 +26,52 @@ func Updater() {
 		os.Remove("./del.json")
 	}
 
-	// update
-	if !Exist("./nekoray.zip") {
-		log.Fatalln("no update")
-	}
-
-	log.Println("updating from zip")
-
 	if runtime.GOOS == "linux" {
 		os.RemoveAll("./usr")
 	}
 
 	os.RemoveAll("./nekoray_update")
-	err := unzip.New("./nekoray.zip", "./nekoray_update").Extract()
-	if err != nil {
-		log.Fatalln(err.Error())
+
+	// update extract
+	if Exist("./nekoray.zip") {
+		log.Println("updating from zip")
+
+		f, err := os.Open("./nekoray.zip")
+		if err != nil {
+			log.Fatalln(err.Error())
+		} else {
+			defer f.Close()
+		}
+		err = extract.Zip(context.Background(), f, "./nekoray_update", nil)
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+	} else if Exist("./nekoray.tar.gz") {
+		log.Println("updating from tar.gz")
+
+		f, err := os.Open("./nekoray.tar.gz")
+		if err != nil {
+			log.Fatalln(err.Error())
+		} else {
+			defer f.Close()
+		}
+		err = extract.Gz(context.Background(), f, "./nekoray_update", nil)
+		if err != nil {
+			log.Fatalln(err.Error())
+		}
+	} else {
+		log.Fatalln("no update")
 	}
 
-	err = Mv("./nekoray_update/nekoray", "./")
+	// update move
+	err := Mv("./nekoray_update/nekoray", "./")
 	if err != nil {
 		log.Fatalln(err.Error())
 	}
 
 	os.RemoveAll("./nekoray_update")
 	os.RemoveAll("./nekoray.zip")
+	os.RemoveAll("./nekoray.tar.gz")
 }
 
 func Exist(path string) bool {
