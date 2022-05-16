@@ -108,6 +108,7 @@ private:
     QString title_status;
     QSharedPointer<NekoRay::ProxyEntity> running;
     QString traffic_update_cache;
+    QTime last_test_time;
     //
     int proxy_last_order = -1;
 
@@ -126,6 +127,9 @@ private:
 #endif
 
     void show_group(int gid);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif // MAINWINDOW_H

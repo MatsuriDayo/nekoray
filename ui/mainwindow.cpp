@@ -1,9 +1,10 @@
 #include "./ui_mainwindow.h"
 
-#include "fmt/ConfigBuilder.hpp"
-#include "sub/RawUpdater.hpp"
 #include "db/traffic/TrafficLooper.hpp"
 #include "db/filter/ProfileFilter.hpp"
+#include "fmt/ConfigBuilder.hpp"
+#include "sub/RawUpdater.hpp"
+#include "sys/ExternalProcess.hpp"
 
 #include "ui/ThemeManager.hpp"
 #include "ui/mainwindow.h"
@@ -75,6 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
         NekoRay::profileManager->Save();
     });
+    ui->label_running->installEventFilter(this);
 
     // top bar
     ui->toolButton_program->setMenu(ui->menu_program);
@@ -109,6 +111,11 @@ MainWindow::MainWindow(QWidget *parent)
     showLog = [=](const QString &log) {
         runOnUiThread([=] {
             writeLog_ui(log);
+        });
+    };
+    showLog_ext = [=](const QString &tag, const QString &log) {
+        runOnUiThread([=] {
+            writeLog_ui("[" + tag + "] " + log);
         });
     };
 
@@ -216,6 +223,9 @@ MainWindow::MainWindow(QWidget *parent)
         args.push_back("nekoray");
         args.push_back("-port");
         args.push_back(Int2String(NekoRay::dataStore->core_port));
+#ifdef NKR_DEBUG
+        args.push_back("-debug");
+#endif
 
         while (true) {
 //            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
@@ -386,9 +396,11 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
     // From UI
     ui->label_speed->setText(traffic_update_cache);
-    ui->label_running->setText(tr("Running: %1").arg(running.isNull()
-                                                     ? tr("None")
-                                                     : running->bean->DisplayName().left(50)));
+    if (last_test_time.addSecs(1) < QTime::currentTime()) {
+        ui->label_running->setText(tr("Running: %1").arg(running.isNull()
+                                                         ? tr("None")
+                                                         : running->bean->DisplayName().left(50)));
+    }
     auto inbound_txt = tr("Socks: %1").arg(
             DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port));
     if (InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
@@ -784,6 +796,10 @@ void MainWindow::neko_start(int id) {
     NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
+    for (auto extC: NekoRay::sys::running_ext) {
+        extC->Start();
+    }
+
     NekoRay::dataStore->started_id = ent->id;
     running = ent;
     refresh_status();
@@ -792,6 +808,12 @@ void MainWindow::neko_start(int id) {
 
 void MainWindow::neko_stop() {
     if (NekoRay::dataStore->started_id < 0) return;
+
+    while (!NekoRay::sys::running_ext.isEmpty()) {
+        auto extC = NekoRay::sys::running_ext.takeFirst();
+        extC->Kill();
+        extC->deleteLater();
+    }
 
 #ifndef NKR_NO_GRPC
     NekoRay::traffic::trafficLooper->loop_enabled = false;
@@ -885,7 +907,6 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
                     libcore::TestReq req;
                     req.set_mode(mode);
                     req.set_timeout(3000);
-                    req.set_inbound("socks-in"); // no needed?
                     req.set_url(NekoRay::dataStore->test_url.toStdString());
 
                     if (mode == libcore::TestMode::UrlTest) {
@@ -984,4 +1005,42 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     menu->addAction(action_hide);
 
     menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); //弹出菜单
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (obj == ui->label_running) {
+        if (event->type() == QEvent::MouseButtonPress) {
+            auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
+            if (mouseEvent->button() == Qt::LeftButton && running != nullptr) {
+#ifndef NKR_NO_GRPC
+                last_test_time = QTime::currentTime();
+                ui->label_running->setText(tr("Testing"));
+
+                runOnNewThread([=] {
+                    libcore::TestReq req;
+                    req.set_mode(libcore::UrlTest);
+                    req.set_timeout(3000);
+                    req.set_url(NekoRay::dataStore->test_url.toStdString());
+
+                    bool rpcOK;
+                    auto result = defaultClient->Test(&rpcOK, req);
+                    if (!rpcOK) return;
+
+                    auto latency = result.ms();
+                    last_test_time = QTime::currentTime();
+
+                    runOnUiThread([=] {
+                        if (latency <= 0) {
+                            ui->label_running->setText(tr("Test Result") + ": " + tr("Unavailable"));
+                        } else if (latency > 0) {
+                            ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
+                        }
+                    });
+                });
+                return true;
+#endif
+            }
+        }
+    }
+    return QMainWindow::eventFilter(obj, event);
 }

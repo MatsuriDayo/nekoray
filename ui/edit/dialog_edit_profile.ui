@@ -176,7 +176,7 @@
      </property>
      <layout class="QVBoxLayout" name="right_all">
       <item>
-       <widget class="QWidget" name="right" native="true">
+       <widget class="QWidget" name="stream_box_2" native="true">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
           <horstretch>0</horstretch>
@@ -339,7 +339,7 @@
               <item row="1" column="1">
                <widget class="QPushButton" name="certificate_edit">
                 <property name="text">
-                 <string>Not Set</string>
+                 <string notr="true">PushButton</string>
                 </property>
                </widget>
               </item>

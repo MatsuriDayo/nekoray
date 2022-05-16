@@ -8,6 +8,7 @@
 #include "ui/edit/edit_chain.h"
 #include "ui/edit/edit_vmess.h"
 #include "ui/edit/edit_trojan.h"
+#include "ui/edit/edit_naive.h"
 
 #include "main/GuiUtils.hpp"
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
@@ -103,13 +104,17 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditTrojan(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
+    } else if (type == "naive") {
+        auto _innerWidget = new EditNaive(this);
+        innerWidget = _innerWidget;
+        innerEditor = _innerWidget;
     } else {
         validType = false;
     }
 
     if (!validType) {
         MessageBoxWarning(newType, "Wrong type");
-        close();
+        return;
     }
 
     if (newEnt) {
@@ -127,7 +132,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     // 右边 Outbound: settings
     auto stream_item = ent->bean->_get("stream");
     if (stream_item != nullptr) {
-        ui->right->setVisible(true);
+        ui->right_all_w->setVisible(true);
         auto stream_store = (NekoRay::JsonStore *) stream_item->ptr;
         auto stream = (NekoRay::fmt::V2rayStreamSettings *) stream_store;
         ui->network->setCurrentText(stream->network);
@@ -138,7 +143,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->insecure->setChecked(stream->allow_insecure);
         certificate_edit_cache = stream->certificate;
     } else {
-        ui->right->setVisible(false);
+        ui->right_all_w->setVisible(false);
     }
     auto custom_item = ent->bean->_get("custom");
     if (custom_item != nullptr) {
@@ -154,6 +159,10 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     old->deleteLater();
     ui->bean->layout()->addWidget(innerWidget);
     ui->bean->setTitle(ent->bean->DisplayType());
+    // 左边 bean inner editor
+    innerEditor->dialog_editor_cache_updated = [=] {
+        dialog_editor_cache_updated();
+    };
     innerEditor->onStart(ent);
 
     // 左边 common
@@ -224,6 +233,14 @@ void DialogEditProfile::dialog_editor_cache_updated() {
     } else {
         ui->custom_edit->setText(tr("Already set"));
     }
+
+    for (auto a: innerEditor->get_editor_cached()) {
+        if (a.second.isEmpty()) {
+            a.first->setText(tr("Not set"));
+        } else {
+            a.first->setText(tr("Already set"));
+        }
+    }
 }
 
 void DialogEditProfile::on_custom_edit_clicked() {
@@ -236,7 +253,7 @@ void DialogEditProfile::on_custom_edit_clicked() {
 
 void DialogEditProfile::on_certificate_edit_clicked() {
     bool ok;
-    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", "", &ok);
+    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", certificate_edit_cache, &ok);
     if (ok) {
         certificate_edit_cache = txt;
         dialog_editor_cache_updated();

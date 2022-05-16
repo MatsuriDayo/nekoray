@@ -24,8 +24,8 @@ include("cmake/myproto.cmake")
 include("cmake/print.cmake")
 #list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/deps/built")
 
-# Release
-include("cmake/release.cmake")
+# NKR
+include("cmake/nkr.cmake")
 
 # yaml-cpp (static)
 #find_package(yaml-cpp REQUIRED) # not working with CMAKE_PREFIX_PATH ??
@@ -57,11 +57,14 @@ set(PROJECT_SOURCES
         db/filter/ProfileFilter.cpp
 
         fmt/Bean2CoreObj.cpp
+        fmt/Bean2External.cpp
         fmt/Bean2Link.cpp
         fmt/Link2Bean.cpp
         fmt/ConfigBuilder.cpp
 
         sub/RawUpdater.cpp
+
+        sys/ExternalProcess.cpp
 
         ui/ThemeManager.cpp
 
@@ -91,6 +94,10 @@ set(PROJECT_SOURCES
         ui/edit/edit_trojan.h
         ui/edit/edit_trojan.cpp
         ui/edit/edit_trojan.ui
+
+        ui/edit/edit_naive.h
+        ui/edit/edit_naive.cpp
+        ui/edit/edit_naive.ui
 
         ui/dialog_basic_settings.cpp
         ui/dialog_basic_settings.h

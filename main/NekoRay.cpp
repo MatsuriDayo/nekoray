@@ -40,6 +40,12 @@ namespace NekoRay {
         _add(new configItem("block_domain", &this->block_domain, itemType::string));
     }
 
+    // NO default extra core
+    ExtraCore::ExtraCore() : JsonStore() {
+        _add(new configItem("naive_core", &this->naive_core, itemType::string));
+        _add(new configItem("hysteria_core", &this->hysteria_core, itemType::string));
+    }
+
     // 添加关联
     void JsonStore::_add(configItem *item) {
         _map.insert(item->name, QSharedPointer<configItem>(item));
@@ -191,7 +197,7 @@ namespace NekoRay {
 
         QFile file;
         file.setFileName(fn);
-        file.open(QIODevice::ReadWrite | QIODevice::Truncate | QIODevice::Text);
+        file.open(QIODevice::ReadWrite | QIODevice::Truncate);
         file.write(save_content);
         file.close();
 
@@ -205,7 +211,7 @@ namespace NekoRay {
         if (!file.exists() && !load_control_force)
             return false;
 
-        bool ok = file.open(QIODevice::ReadOnly | QIODevice::Text);
+        bool ok = file.open(QIODevice::ReadOnly);
         if (!ok) {
             MessageBoxWarning("error", "can not open config " + fn + "\n" + file.errorString());
         } else {

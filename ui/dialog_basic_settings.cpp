@@ -1,4 +1,6 @@
 #include <QStyleFactory>
+#include <QFileDialog>
+
 #include "ui_dialog_basic_settings.h"
 
 #include "ui/ThemeManager.hpp"
@@ -68,6 +70,24 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     ui->user_agent->setText(NekoRay::dataStore->user_agent);
 
+    // Core
+
+    ui->core_naive->setText(NekoRay::dataStore->extraCore->naive_core);
+    ui->core_hysteria->setText(NekoRay::dataStore->extraCore->hysteria_core);
+
+    connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
+        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
+        if (!fn.isEmpty()) {
+            ui->core_naive->setText(fn);
+        }
+    });
+    connect(ui->core_hysteria_pick, &QPushButton::clicked, this, [=] {
+        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
+        if (!fn.isEmpty()) {
+            ui->core_hysteria->setText(fn);
+        }
+    });
+
 }
 
 DialogBasicSettings::~DialogBasicSettings() {
@@ -94,7 +114,13 @@ void DialogBasicSettings::accept() {
     }
 
     // Subscription
+
     NekoRay::dataStore->user_agent = ui->user_agent->text();
+
+    // Core
+
+    NekoRay::dataStore->extraCore->naive_core = ui->core_naive->text();
+    NekoRay::dataStore->extraCore->hysteria_core = ui->core_hysteria->text();
 
     emit GetMainWindow()->dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
     QDialog::accept();

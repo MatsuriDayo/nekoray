@@ -7,7 +7,6 @@
 #include <QList>
 #include <QFile>
 #include <QDir>
-#include <QCoreApplication>
 
 namespace NekoRay {
 
@@ -23,12 +22,20 @@ namespace NekoRay {
         explicit Routing(int preset = 0);
     };
 
+    class ExtraCore : public JsonStore {
+    public:
+        QString naive_core;
+        QString hysteria_core;
+
+        explicit ExtraCore();
+    };
+
     class DataStore : public JsonStore {
     public:
         // Running
 
         QString core_token;
-        int core_port;
+        int core_port = 19810;
         int started_id = -1919;
         bool system_proxy = false;
 
@@ -63,7 +70,13 @@ namespace NekoRay {
         int domain_matcher = DomainMatcher::MPH;
         Routing *routing = new Routing;
 
+        // Other Core
+        ExtraCore *extraCore = new ExtraCore;
+
         DataStore() : JsonStore("groups/nekoray.json") {
+            _add(new configItem("routing", dynamic_cast<JsonStore *>(routing), itemType::jsonStore));
+            _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
+
             _add(new configItem("core_path", &core_path, itemType::string));
             _add(new configItem("user_agent", &user_agent, itemType::string));
             _add(new configItem("test_url", &test_url, itemType::string));
@@ -79,14 +92,14 @@ namespace NekoRay {
             _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
             _add(new configItem("mux_cool", &mux_cool, itemType::integer));
             _add(new configItem("ipv6_mode", &ipv6_mode, itemType::integer));
-            _add(new configItem("routing", dynamic_cast<JsonStore *>(routing), itemType::jsonStore));
             _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
             _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
             _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
             _add(new configItem("theme", &theme, itemType::string));
         }
 
-        // Cache
+        // Running Cache
+
         int updated_count = 0;
         bool refreshing_group_list = false;
     };

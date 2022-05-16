@@ -51,6 +51,22 @@
         <source>Subscription</source>
         <translation>订阅</translation>
     </message>
+    <message>
+        <source>Core</source>
+        <translation>核心</translation>
+    </message>
+    <message>
+        <source>Extra Core</source>
+        <translation>其他核心</translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -144,10 +160,6 @@
     <message>
         <source>Allow insecure</source>
         <translation>不检查证书</translation>
-    </message>
-    <message>
-        <source>Not Set</source>
-        <translation>未设定</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -393,6 +405,41 @@
     <message>
         <source>Invalid ID: %1</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>EditNaive</name>
+    <message>
+        <source>EditNaive</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>Extra headers</source>
+        <translation>附加标头</translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>证书</translation>
+    </message>
+    <message>
+        <source>Insecure concurrency</source>
+        <translation>不安全并发</translation>
     </message>
 </context>
 <context>
@@ -859,6 +906,10 @@
     <message>
         <source>No such group: %1</source>
         <translation>分组 %1 不存在</translation>
+    </message>
+    <message>
+        <source>Testing</source>
+        <translation>正在测试</translation>
     </message>
 </context>
 <context>

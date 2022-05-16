@@ -4,9 +4,17 @@
 
 namespace NekoRay::fmt {
 
-    class CoreObjOutboundBuildResult {
+    struct CoreObjOutboundBuildResult {
     public:
         QJsonObject outbound;
+        QString error;
+    };
+
+    struct ExternalBuildResult {
+    public:
+        QString program;
+        QStringList env;
+        QStringList arguments;
         QString error;
     };
 
@@ -46,6 +54,8 @@ namespace NekoRay::fmt {
         virtual bool NeedExternal() { return false; };
 
         virtual CoreObjOutboundBuildResult BuildCoreObj() { return {}; };
+
+        virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port) { return {}; };
 
         virtual QString ToShareLink() { return ""; };
 

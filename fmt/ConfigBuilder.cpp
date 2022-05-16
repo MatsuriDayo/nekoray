@@ -1,5 +1,6 @@
 #include "ConfigBuilder.hpp"
 #include "db/Database.hpp"
+#include "sys/ExternalProcess.hpp"
 
 namespace NekoRay::fmt {
 
@@ -34,7 +35,6 @@ namespace NekoRay::fmt {
 
         // Inbounds
         bool dnsIn = false;
-        QJsonArray inbounds;
 
         QJsonObject sniffing{{"destOverride", QJsonArray{"http", "tls"}},
                              {"enabled",      true},
@@ -51,7 +51,7 @@ namespace NekoRay::fmt {
             socksInbound["settings"] = QJsonObject({{"auth", "noauth"},
                                                     {"udp",  true},});
             if (dataStore->sniffing_mode != SniffingMode::DISABLE) socksInbound["sniffing"] = sniffing;
-            inbounds += socksInbound;
+            status->inbounds += socksInbound;
         }
         // http-in
         if (InRange(dataStore->inbound_http_port, 0, 65535) && !forTest) {
@@ -61,10 +61,8 @@ namespace NekoRay::fmt {
             socksInbound["listen"] = dataStore->inbound_address;
             socksInbound["port"] = dataStore->inbound_http_port;
             if (dataStore->sniffing_mode != SniffingMode::DISABLE) socksInbound["sniffing"] = sniffing;
-            inbounds += socksInbound;
+            status->inbounds += socksInbound;
         }
-
-        result->coreConfig.insert("inbounds", inbounds);
 
         // Outbounds
         QList<QSharedPointer<ProxyEntity>> ents;
@@ -107,6 +105,7 @@ namespace NekoRay::fmt {
             status->outbounds += dnsOut;
         }
 
+        result->coreConfig.insert("inbounds", status->inbounds);
         result->coreConfig.insert("outbounds", status->outbounds);
 
         // dns domain user rules
@@ -238,13 +237,6 @@ namespace NekoRay::fmt {
         int index = 0;
 
         for (const auto &ent: ents) {
-            auto mainObj = ent->bean->BuildCoreObj();
-            if (!mainObj.error.isEmpty()) { // rejected
-                status->result->error = mainObj.error;
-                return "";
-            }
-            auto outbound = mainObj.outbound;
-
             // tagOut: v2ray outbound tagOut for a profile
             // profile1 (in)  tagOut=global-proxy-(id)
             // profile2       tagOut=proxy-(id)
@@ -259,6 +251,8 @@ namespace NekoRay::fmt {
                 ent->bean->isFirstProfile = true;
                 needGlobal = true;
                 if (index != 0) tagOut = "global-" + tagOut;
+            } else {
+                ent->bean->isFirstProfile = false;
             }
 
             if (needGlobal) {
@@ -268,10 +262,8 @@ namespace NekoRay::fmt {
                 status->globalProfiles += ent->id;
             }
 
-            // chain rules
-            ent->traffic_data->id = ent->id;
             if (index > 0) {
-                // chain route/proxy rules
+                // chain rules: past
                 if (!ents[index - 1]->bean->NeedExternal()) {
                     auto replaced = status->outbounds.last().toObject();
                     replaced["proxySettings"] = QJsonObject{
@@ -283,7 +275,7 @@ namespace NekoRay::fmt {
                 } else {
                     status->routingRules += QJsonObject{
                             {"type",        "field"},
-                            {"inboundTag",  QJsonArray{pastTag}},
+                            {"inboundTag",  QJsonArray{pastTag + "-mapping"}},
                             {"outboundTag", tagOut},
                     };
                 }
@@ -292,11 +284,75 @@ namespace NekoRay::fmt {
                 chainOutboundTag = tagOut;
                 status->result->outboundStat = ent->traffic_data;
             }
-            ent->traffic_data->tag = tagOut.toStdString();
-            status->result->outboundStats += ent->traffic_data;
 
+            // chain rules: this
+            auto mapping_port = MkPort();
+            if (ent->bean->NeedExternal()) {
+                status->inbounds += QJsonObject{
+                        {"protocol", "dokodemo-door"},
+                        {"tag",      tagOut + "-mapping"},
+                        {"listen",   "127.0.0.1"},
+                        {"port",     mapping_port},
+                        {"settings", QJsonObject{ // to
+                                {"address", ent->bean->serverAddress},
+                                {"port",    ent->bean->serverPort},
+                                {"network", "tcp,udp"},
+                        }},
+                };
+                // no chain rule and not outbound, so need to set to direct
+                if (ent->bean->isFirstProfile) {
+                    status->routingRules += QJsonObject{
+                            {"type",        "field"},
+                            {"inboundTag",  QJsonArray{tagOut + "-mapping"}},
+                            {"outboundTag", "bypass"},
+                    };
+                }
+            }
+
+            // Outbound
+
+            QJsonObject outbound;
+            CoreObjOutboundBuildResult coreR;
+            ExternalBuildResult extR;
+
+            if (ent->bean->NeedExternal()) {
+                auto ext_socks_port = MkPort();
+                extR = ent->bean->BuildExternal(mapping_port, ext_socks_port);
+                if (!extR.error.isEmpty()) { // rejected
+                    status->result->error = extR.error;
+                    return "";
+                }
+
+                // SOCKS OUTBOUND
+                outbound["protocol"] = "socks";
+                QJsonObject settings;
+                QJsonArray servers;
+                QJsonObject server;
+                server["address"] = "127.0.0.1";
+                server["port"] = ext_socks_port;
+                servers.push_back(server);
+                settings["servers"] = servers;
+                outbound["settings"] = settings;
+
+                // EXTERNAL PROCESS
+                auto extC = new sys::ExternalProcess(ent->bean->DisplayType(),
+                                                     extR.program, extR.arguments, extR.env);
+                sys::running_ext += extC;
+            } else {
+                coreR = ent->bean->BuildCoreObj();
+                if (!coreR.error.isEmpty()) { // rejected
+                    status->result->error = coreR.error;
+                    return "";
+                }
+                outbound = coreR.outbound;
+            }
+
+            // outbound misc
             outbound["tag"] = tagOut;
             outbound["domainStrategy"] = dataStore->outbound_domain_strategy;
+            ent->traffic_data->id = ent->id;
+            ent->traffic_data->tag = tagOut.toStdString();
+            status->result->outboundStats += ent->traffic_data;
 
             // apply mux
             if (dataStore->mux_cool > 0) {
@@ -323,6 +379,7 @@ namespace NekoRay::fmt {
             pastTag = tagOut;
             index++;
         }
+
         return chainOutboundTag;
     }
 

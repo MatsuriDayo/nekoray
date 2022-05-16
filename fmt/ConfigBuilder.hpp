@@ -27,7 +27,9 @@ namespace NekoRay::fmt {
         QJsonArray routingRules;
         QJsonObject hosts;
 
+        QJsonArray inbounds;
         QJsonArray outbounds;
+
         QList<int> globalProfiles;
     };
 
