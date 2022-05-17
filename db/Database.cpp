@@ -61,6 +61,8 @@ namespace NekoRay {
             bean = new fmt::TrojanBean();
         } else if (type == "naive") {
             bean = new fmt::NaiveBean();
+        } else if (type == "custom") {
+            bean = new fmt::CustomBean();
         } else {
             bean = new fmt::AbstractBean(-114514);
         }

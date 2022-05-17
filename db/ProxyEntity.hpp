@@ -11,6 +11,7 @@
 #include "fmt/VMessBean.hpp"
 #include "fmt/TrojanBean.hpp"
 #include "fmt/NaiveBean.hpp"
+#include "fmt/CustomBean.hpp"
 
 namespace NekoRay {
     class ProxyEntity : public JsonStore {
@@ -63,6 +64,10 @@ namespace NekoRay {
 
         [[nodiscard]] fmt::NaiveBean *NaiveBean() const {
             return (fmt::NaiveBean *) bean.get();
+        };
+
+        [[nodiscard]] fmt::CustomBean *CustomBean() const {
+            return (fmt::CustomBean *) bean.get();
         };
 
     };

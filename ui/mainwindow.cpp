@@ -856,9 +856,13 @@ void MainWindow::neko_set_system_proxy(bool enable) {
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Escape:
-            break; //屏蔽esc
-        case Qt::Key_Return: {//回车
+            break;
+        case Qt::Key_Return: {
             neko_start();
+            break;
+        }
+        case Qt::Key_Delete: {
+            on_menu_delete_triggered();
             break;
         }
         default:

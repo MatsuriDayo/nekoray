@@ -67,6 +67,10 @@
         <source>Select</source>
         <translation>选择</translation>
     </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -180,26 +184,6 @@
     <message>
         <source>Stream Settings</source>
         <translation>流设置</translation>
-    </message>
-    <message>
-        <source>socks</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>shadowsocks</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>vmess</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>trojan</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>chain</source>
-        <translation></translation>
     </message>
     <message>
         <source>Bean</source>
@@ -405,6 +389,29 @@
     <message>
         <source>Invalid ID: %1</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>EditCustom</name>
+    <message>
+        <source>EditCustom</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Core</source>
+        <translation>核心</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>Json</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Command</source>
+        <translation>命令</translation>
     </message>
 </context>
 <context>
@@ -724,10 +731,6 @@
         <translation>测速</translation>
     </message>
     <message>
-        <source>Manage</source>
-        <translation>管理</translation>
-    </message>
-    <message>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -959,6 +962,18 @@ Direct: %2</source>
     <message>
         <source>Used: %1 Total: %2 Expire: %3</source>
         <translation>已用 %1 总共 %2 过期 %3</translation>
+    </message>
+    <message>
+        <source>Core not found: %1</source>
+        <translation>找不到 %1 核心</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
+    </message>
+    <message>
+        <source>Select a known core</source>
+        <translation>选择已知的核心</translation>
     </message>
 </context>
 <context>

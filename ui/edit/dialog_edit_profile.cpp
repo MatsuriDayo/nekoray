@@ -9,6 +9,7 @@
 #include "ui/edit/edit_vmess.h"
 #include "ui/edit/edit_trojan.h"
 #include "ui/edit/edit_naive.h"
+#include "ui/edit/edit_custom.h"
 
 #include "main/GuiUtils.hpp"
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
@@ -108,6 +109,26 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
+    } else if (type == "custom" || type == "hysteria") {
+        auto _innerWidget = new EditCustom(this);
+        innerWidget = _innerWidget;
+        innerEditor = _innerWidget;
+        // I don't want to write a settings
+        if (type == "hysteria") {
+            _innerWidget->preset_core = type;
+            _innerWidget->preset_command = "-c %config%";
+            _innerWidget->preset_config = "{\n"
+                                          "  \"server\": \"127.0.0.1:%mapping_port%\",\n"
+                                          "  \"obfs\": \"fuck me till the daylight\",\n"
+                                          "  \"up_mbps\": 10,\n"
+                                          "  \"down_mbps\": 50,\n"
+                                          "  \"server_name\": \"real.name.com\",\n"
+                                          "  \"socks5\": {\n"
+                                          "    \"listen\": \"127.0.0.1:%socks_port%\"\n"
+                                          "  }\n"
+                                          "}";
+            type = "custom";
+        }
     } else {
         validType = false;
     }
@@ -141,14 +162,14 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->host->setText(stream->host);
         ui->sni->setText(stream->sni);
         ui->insecure->setChecked(stream->allow_insecure);
-        certificate_edit_cache = stream->certificate;
+        CACHE_certificate = stream->certificate;
     } else {
         ui->right_all_w->setVisible(false);
     }
     auto custom_item = ent->bean->_get("custom");
     if (custom_item != nullptr) {
         ui->custom_box->setVisible(true);
-        custom_edit_cache = *((QString *) custom_item->ptr);
+        CACHE_custom = *((QString *) custom_item->ptr);
     } else {
         ui->custom_box->setVisible(false);
     }
@@ -200,11 +221,11 @@ void DialogEditProfile::accept() {
         stream->host = ui->host->text();
         stream->sni = ui->sni->text();
         stream->allow_insecure = ui->insecure->isChecked();
-        stream->certificate = certificate_edit_cache;
+        stream->certificate = CACHE_certificate;
     }
     auto custom_item = ent->bean->_get("custom");
     if (custom_item != nullptr) {
-        *((QString *) custom_item->ptr) = custom_edit_cache;
+        *((QString *) custom_item->ptr) = CACHE_custom;
     }
 
     if (newEnt) {
@@ -223,17 +244,18 @@ void DialogEditProfile::accept() {
 // cached editor (dialog)
 
 void DialogEditProfile::dialog_editor_cache_updated() {
-    if (certificate_edit_cache.isEmpty()) {
+    if (CACHE_certificate.isEmpty()) {
         ui->certificate_edit->setText(tr("Not set"));
     } else {
         ui->certificate_edit->setText(tr("Already set"));
     }
-    if (custom_edit_cache.isEmpty()) {
+    if (CACHE_custom.isEmpty()) {
         ui->custom_edit->setText(tr("Not set"));
     } else {
         ui->custom_edit->setText(tr("Already set"));
     }
 
+    // CACHE macro
     for (auto a: innerEditor->get_editor_cached()) {
         if (a.second.isEmpty()) {
             a.first->setText(tr("Not set"));
@@ -244,18 +266,18 @@ void DialogEditProfile::dialog_editor_cache_updated() {
 }
 
 void DialogEditProfile::on_custom_edit_clicked() {
-    auto editor = new JsonEditor(QString2QJsonObject(custom_edit_cache), this);
+    auto editor = new JsonEditor(QString2QJsonObject(CACHE_custom), this);
     auto result = editor->OpenEditor();
-    custom_edit_cache = QJsonObject2QString(result, true);
-    if (result.isEmpty()) custom_edit_cache = "";
+    CACHE_custom = QJsonObject2QString(result, true);
+    if (result.isEmpty()) CACHE_custom = "";
     dialog_editor_cache_updated();
 }
 
 void DialogEditProfile::on_certificate_edit_clicked() {
     bool ok;
-    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", certificate_edit_cache, &ok);
+    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", CACHE_certificate, &ok);
     if (ok) {
-        certificate_edit_cache = txt;
+        CACHE_certificate = txt;
         dialog_editor_cache_updated();
     }
 }

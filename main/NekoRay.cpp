@@ -41,9 +41,29 @@ namespace NekoRay {
     }
 
     // NO default extra core
+
     ExtraCore::ExtraCore() : JsonStore() {
-        _add(new configItem("naive_core", &this->naive_core, itemType::string));
-        _add(new configItem("hysteria_core", &this->hysteria_core, itemType::string));
+        _add(new configItem("core_map", &this->core_map, itemType::string));
+    }
+
+    QString ExtraCore::Get(const QString &id) const {
+        auto obj = QString2QJsonObject(core_map);
+        for (const auto &c: obj.keys()) {
+            if (c == id) return obj[id].toString();
+        }
+        return "";
+    }
+
+    void ExtraCore::Set(const QString &id, const QString &path) {
+        auto obj = QString2QJsonObject(core_map);
+        obj[id] = path;
+        core_map = QJsonObject2QString(obj, true);
+    }
+
+    void ExtraCore::Delete(const QString &id) {
+        auto obj = QString2QJsonObject(core_map);
+        obj.remove(id);
+        core_map = QJsonObject2QString(obj, true);
     }
 
     // 添加关联
@@ -76,7 +96,7 @@ namespace NekoRay {
                 case itemType::boolean:
                     object.insert(item->name, *(bool *) item->ptr);
                     break;
-                case stringList:
+                case itemType::stringList:
                     object.insert(item->name, QList2QJsonArray<QString>(*(QList<QString> *) item->ptr));
                     break;
                 case itemType::integerList:

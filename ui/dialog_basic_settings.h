@@ -21,6 +21,12 @@ public slots:
 
 private:
     Ui::DialogBasicSettings *ui;
+
+    QString core_editCache;
+
+private slots:
+
+    void on_core_edit_clicked();
 };
 
 #endif // DIALOG_BASIC_SETTINGS_H

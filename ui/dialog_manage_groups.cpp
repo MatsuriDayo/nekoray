@@ -14,7 +14,7 @@ DialogManageGroups::DialogManageGroups(QWidget *parent) :
     ui->setupUi(this);
     ui->groupListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->groupListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
-    ui->groupListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+    ui->groupListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Interactive);
     ui->groupListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
     this->refresh_group_list(-114514);
     this->create_right_click_menu();

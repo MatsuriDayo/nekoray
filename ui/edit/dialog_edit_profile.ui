@@ -30,7 +30,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>360</width>
+       <width>400</width>
        <height>0</height>
       </size>
      </property>
@@ -93,27 +93,37 @@
             <widget class="QComboBox" name="type">
              <item>
               <property name="text">
-               <string>socks</string>
+               <string notr="true">socks</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>shadowsocks</string>
+               <string notr="true">shadowsocks</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>vmess</string>
+               <string notr="true">vmess</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>trojan</string>
+               <string notr="true">trojan</string>
               </property>
              </item>
              <item>
               <property name="text">
-               <string>chain</string>
+               <string notr="true">naive</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">hysteria</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">custom</string>
               </property>
              </item>
             </widget>
@@ -170,7 +180,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>360</width>
+       <width>400</width>
        <height>0</height>
       </size>
      </property>

@@ -41,25 +41,25 @@ bool EditNaive::onEnd() {
 
 QList<QPair<QPushButton *, QString>> EditNaive::get_editor_cached() {
     return {
-            {ui->certificate,   editCache.certificate},
-            {ui->extra_headers, editCache.extra_headers},
+            {ui->certificate,   CACHE.certificate},
+            {ui->extra_headers, CACHE.extra_headers},
     };
 }
 
 void EditNaive::on_certificate_clicked() {
     bool ok;
-    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", editCache.certificate, &ok);
+    auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", CACHE.certificate, &ok);
     if (ok) {
-        editCache.certificate = txt;
+        CACHE.certificate = txt;
         dialog_editor_cache_updated();
     }
 }
 
 void EditNaive::on_extra_headers_clicked() {
     bool ok;
-    auto txt = QInputDialog::getMultiLineText(this, tr("Extra headers"), "", editCache.extra_headers, &ok);
+    auto txt = QInputDialog::getMultiLineText(this, tr("Extra headers"), "", CACHE.extra_headers, &ok);
     if (ok) {
-        editCache.extra_headers = txt;
+        CACHE.extra_headers = txt;
         dialog_editor_cache_updated();
     }
 }

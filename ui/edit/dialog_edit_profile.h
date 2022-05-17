@@ -38,8 +38,8 @@ private:
     QSharedPointer<NekoRay::ProxyEntity> ent;
 
     QString network_title_base;
-    QString custom_edit_cache;
-    QString certificate_edit_cache;
+    QString CACHE_custom;
+    QString CACHE_certificate;
 
     void typeSelected(const QString &newType);
 

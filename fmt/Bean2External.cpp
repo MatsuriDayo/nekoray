@@ -15,7 +15,11 @@ auto TempFile = QFileInfo(f).absoluteFilePath();
 
 namespace NekoRay::fmt {
     ExternalBuildResult NaiveBean::BuildExternal(int mapping_port, int socks_port) {
-        ExternalBuildResult result{dataStore->extraCore->naive_core};
+        ExternalBuildResult result{dataStore->extraCore->Get("naive")};
+        if (result.program.isEmpty()) {
+            result.error = QObject::tr("Core not found: %1").arg(DisplayType());
+            return result;
+        }
 
         auto _serverAddress = sni.isEmpty() ? serverAddress : sni;
 
@@ -30,6 +34,29 @@ namespace NekoRay::fmt {
         if (!certificate.isEmpty()) {
             WriteTempFile("naive.crt", certificate.toUtf8());
             result.env += "SSL_CERT_FILE=" + TempFile;
+        }
+
+        return result;
+    }
+
+    ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port) {
+        ExternalBuildResult result{dataStore->extraCore->Get(core)};
+        if (result.program.isEmpty()) {
+            result.error = QObject::tr("Core not found: %1").arg(DisplayType());
+            return result;
+        }
+
+        result.arguments = command; // TODO ?
+
+        if (!config_simple.trimmed().isEmpty()) {
+            auto config = config_simple;
+            config = config.replace("%mapping_port%", Int2String(mapping_port));
+            config = config.replace("%socks_port%", Int2String(socks_port));
+
+            WriteTempFile("custom_cfg.tmp", config.toUtf8());
+            for (int i = 0; i < result.arguments.count(); i++) {
+                result.arguments[i] = result.arguments[i].replace("%config%", TempFile);
+            }
         }
 
         return result;

@@ -1,6 +1,8 @@
 #include <QStyleFactory>
 #include <QFileDialog>
 
+#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
+
 #include "ui_dialog_basic_settings.h"
 
 #include "ui/ThemeManager.hpp"
@@ -72,8 +74,9 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
-    ui->core_naive->setText(NekoRay::dataStore->extraCore->naive_core);
-    ui->core_hysteria->setText(NekoRay::dataStore->extraCore->hysteria_core);
+    core_editCache = NekoRay::dataStore->extraCore->core_map;
+    ui->core_naive->setText(NekoRay::dataStore->extraCore->Get("naive"));
+    ui->core_hysteria->setText(NekoRay::dataStore->extraCore->Get("hysteria"));
 
     connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
         auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
@@ -119,9 +122,17 @@ void DialogBasicSettings::accept() {
 
     // Core
 
-    NekoRay::dataStore->extraCore->naive_core = ui->core_naive->text();
-    NekoRay::dataStore->extraCore->hysteria_core = ui->core_hysteria->text();
+    NekoRay::dataStore->extraCore->core_map = core_editCache;
+    NekoRay::dataStore->extraCore->Set("naive", ui->core_naive->text());
+    NekoRay::dataStore->extraCore->Set("hysteria", ui->core_hysteria->text());
 
     emit GetMainWindow()->dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
     QDialog::accept();
+}
+
+void DialogBasicSettings::on_core_edit_clicked() {
+    auto editor = new JsonEditor(QString2QJsonObject(core_editCache), this);
+    auto result = editor->OpenEditor();
+    core_editCache = QJsonObject2QString(result, true);
+    if (result.isEmpty()) core_editCache = "";
 }

@@ -24,10 +24,15 @@ namespace NekoRay {
 
     class ExtraCore : public JsonStore {
     public:
-        QString naive_core;
-        QString hysteria_core;
+        QString core_map;
 
         explicit ExtraCore();
+
+        QString Get(const QString &id) const;
+
+        void Set(const QString &id, const QString &path);
+
+        void Delete(const QString &id);
     };
 
     class DataStore : public JsonStore {
