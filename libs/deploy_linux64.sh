@@ -9,10 +9,14 @@ mv $DEST/updater $DEST/launcher
 #### copy exe ####
 cp build/nekoray $DEST
 
-#### copy runtime ####
+#### prebuilt runtime ####
 curl -Lso usr.zip https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/5.15.0-linux64.zip
 unzip usr.zip
 mv usr $DEST
+
+#### copy runtime ####
+LIB=$SRC_ROOT/libs/deps/built/lib
+cp $LIB/libZXing.so.1 $DEST/usr/lib
 
 #### pack tar ####
 chmod +x $DEST/nekoray $DEST/nekoray_core $DEST/launcher

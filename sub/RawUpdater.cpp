@@ -1,7 +1,7 @@
 #include <QInputDialog>
 #include "RawUpdater.hpp"
 
-#ifndef __MINGW32__
+#ifndef NKR_NO_EXTERNAL
 
 #include <yaml-cpp/yaml.h>
 
@@ -79,7 +79,7 @@ namespace NekoRay::sub {
         dataStore->updated_count++;
     }
 
-#ifndef __MINGW32__
+#ifndef NKR_NO_EXTERNAL
 
     QString Node2QString(const YAML::Node &n, const QString &def = "") {
         try {
@@ -108,7 +108,7 @@ namespace NekoRay::sub {
 #endif
 
     void RawUpdater::updateClash(const QString &str) {
-#ifndef __MINGW32__
+#ifndef NKR_NO_EXTERNAL
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {

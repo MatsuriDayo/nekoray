@@ -17,21 +17,39 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg Lingu
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
 
-# My proto
-include("cmake/myproto.cmake")
-
 # My dependencies
 include("cmake/print.cmake")
-#list(APPEND CMAKE_PREFIX_PATH "${CMAKE_SOURCE_DIR}/libs/deps/built")
+set(MY_DEPS_DIR "${CMAKE_SOURCE_DIR}/libs/deps/built")
+list(APPEND CMAKE_PREFIX_PATH ${MY_DEPS_DIR})
+#set(ENV{PKG_CONFIG_PATH} "${MY_DEPS_DIR}/share/pkgconfig")
+#find_package(PkgConfig REQUIRED)
 
 # NKR
 include("cmake/nkr.cmake")
 
-# yaml-cpp (static)
-#find_package(yaml-cpp REQUIRED) # not working with CMAKE_PREFIX_PATH ??
-find_package(PkgConfig REQUIRED)
-pkg_check_modules(YAML_CPP REQUIRED yaml-cpp)
-message(STATUS "[yaml-cpp] ${YAML_CPP_LINK_LIBRARIES}")
+if (MINGW)
+    add_compile_definitions(NKR_NO_EXTERNAL)
+else ()
+    # My proto
+    include("cmake/myproto.cmake")
+    list(APPEND NKR_EXTERNAL_TARGETS myproto)
+
+    # yaml-cpp (static)
+    find_package(yaml-cpp CONFIG REQUIRED) # only Release is built
+    list(APPEND NKR_EXTERNAL_TARGETS yaml-cpp)
+
+    # zxing-cpp
+    find_package(ZXing CONFIG REQUIRED)
+    list(APPEND NKR_EXTERNAL_TARGETS ZXing::ZXing)
+endif ()
+
+# debug print
+if (DBG_CMAKE)
+    print_all_variables()
+    print_target_properties(myproto)
+    print_target_properties(yaml-cpp)
+    print_target_properties(ZXing::ZXing)
+endif ()
 
 # Sources
 set(PROJECT_SOURCES
@@ -152,23 +170,11 @@ else ()
     endif ()
 endif ()
 
-# Include dirs
-target_include_directories(nekoray PRIVATE
-        ${YAML_CPP_INCLUDE_DIRS}
-        )
-
-# Link
-if (MINGW)
-    unset(YAML_CPP_LINK_LIBRARIES)
-    unset(PLATFORM_FUCKING_LIBRARIES)
-else ()
-    set(MY_PROTO_LIBRARIES myproto)
-endif ()
+# Target Link
 
 target_link_libraries(nekoray PRIVATE
-        ${MY_PROTO_LIBRARIES}
         Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
-        ${YAML_CPP_LINK_LIBRARIES}
+        ${NKR_EXTERNAL_TARGETS}
         ${PLATFORM_FUCKING_LIBRARIES}
         )
 

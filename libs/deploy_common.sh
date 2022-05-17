@@ -31,9 +31,6 @@ rm *.go
 mv v2ray* $DEST/nekoray_core
 popd
 
-#### copy tanslations ####
-# TODO
-
 #### geoip ####
 curl -Lso $DEST/geoip.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202204292212/geoip.dat"
 curl -Lso $DEST/geosite.dat "https://github.com/Loyalsoldier/v2ray-rules-dat/releases/download/202204292212/geosite.dat"

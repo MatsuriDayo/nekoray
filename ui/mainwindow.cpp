@@ -15,7 +15,9 @@
 
 #include "3rdparty/qrcodegen.hpp"
 
-#ifndef __MINGW32__
+#ifndef NKR_NO_EXTERNAL
+
+#include "3rdparty/ZxingQtReader.hpp"
 
 #include "qv2ray/components/proxy/QvProxyConfigurator.hpp"
 
@@ -26,6 +28,8 @@
 #include <QTextBlock>
 #include <QScrollBar>
 #include <QMutex>
+#include <QScreen>
+#include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -262,13 +266,6 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
-    if (tray->isVisible()) {
-        hide(); //隐藏窗口
-        event->ignore(); //忽略事件
-    }
-}
-
-void MainWindow::hideEvent(QHideEvent *event) {
     if (tray->isVisible()) {
         hide(); //隐藏窗口
         event->ignore(); //忽略事件
@@ -689,20 +686,59 @@ void MainWindow::on_menu_qr_triggered() {
         for (int x = 0; x < sz; x++)
             im.setPixel(x, y, qr.getModule(x, y) ? black : white);
 
-    // TODO 可放大
-    auto w = new QDialog();
+    class W : public QDialog {
+    public:
+        QLabel *l;
+        QImage im;
+
+        void set(QLabel *qLabel, QImage qImage) {
+            this->l = qLabel;
+            this->im = std::move(qImage);
+        }
+
+        void resizeEvent(QResizeEvent *resizeEvent) override {
+            auto size = resizeEvent->size();
+            l->resize(size.width() - 20, size.width() - 20);
+        }
+    };
+
+    auto w = new W();
     auto l = new QLabel(w);
+    w->set(l, im);
     w->setMinimumSize(256, 256);
     l->setMinimumSize(256, 256);
+    l->setMargin(6);
+    l->setAlignment(Qt::AlignmentFlag::AlignCenter);
+    l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     l->setScaledContents(true);
-    l->setPixmap(QPixmap::fromImage(im.scaled(256, 256, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
+    l->setPixmap(QPixmap::fromImage(im.scaled(512, 512, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
     w->setWindowTitle(ents.first()->bean->DisplayName());
+    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+    sizePolicy.setHeightForWidth(true);
+    w->setSizePolicy(sizePolicy);
     w->exec();
     w->deleteLater();
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
+#ifndef NKR_NO_EXTERNAL
+    using namespace ZXingQt;
 
+    auto screen = QGuiApplication::primaryScreen();
+    auto geom = screen->geometry();
+    auto qpx = screen->grabWindow(0, geom.x(), geom.y(), geom.width(), geom.height());
+
+    auto hints = DecodeHints()
+            .setFormats(BarcodeFormat::QRCode)
+            .setTryRotate(false)
+            .setBinarizer(Binarizer::FixedThreshold);
+
+    auto result = ReadBarcode(qpx.toImage(), hints);
+    const auto &text = result.text();
+    if (!text.isEmpty()) {
+        NekoRay::sub::rawUpdater->AsyncUpdate(text);
+    }
+#endif
 }
 
 void MainWindow::on_menu_tcp_ping_triggered() {
@@ -842,7 +878,7 @@ void MainWindow::neko_stop() {
 
 void MainWindow::neko_set_system_proxy(bool enable) {
     NekoRay::dataStore->system_proxy = enable;
-#ifndef __MINGW32__
+#ifndef NKR_NO_EXTERNAL
     if (enable) {
         SetSystemProxy("127.0.0.1",
                        NekoRay::dataStore->inbound_http_port,

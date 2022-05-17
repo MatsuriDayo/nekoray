@@ -13,12 +13,12 @@ jobs:
   build:
     strategy:
       matrix:
-        platform: [ windows-latest, ubuntu-18.04 ]
+        platform: [ windows-2022, ubuntu-18.04 ]
         arch: [ x64 ]
         build_type: [ Release ]
         qt_version: [ 5.15.0 ]
         include:
-          - platform: windows-latest
+          - platform: windows-2022
             arch: x64
             qtarch: win64_msvc2019_64
       fail-fast: false
@@ -33,12 +33,18 @@ jobs:
         with:
           submodules: "recursive"
       - name: Install MSVC compiler
-        if: matrix.platform == 'windows-latest'
+        if: matrix.platform == 'windows-2022'
         uses: ilammy/msvc-dev-cmd@v1
         with:
           # 14.1 is for vs2017, 14.2 is vs2019, following the upstream vcpkg build from Qv2ray-deps repo
           toolset: 14.2
           arch: ${{ matrix.arch }}
+      - name: Cache Qt
+        id: cache-qt
+        uses: actions/cache@v3
+        with:
+          path: ${{ runner.workspace }}/Qt
+          key: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
@@ -46,9 +52,10 @@ jobs:
           py7zrversion: ' '
           aqtversion: ' '
           setup-python: false
+          cached: ${{ steps.cache-qt.outputs.cache-hit }}
       # ========================================================================================================= Other install
       - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
-        if: matrix.platform == 'windows-latest'
+        if: matrix.platform == 'windows-2022'
         uses: ashutoshvarma/setup-ninja@master
         with:
           # ninja version to download. Default: 1.10.0
@@ -58,22 +65,22 @@ jobs:
         if: matrix.platform == 'ubuntu-18.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential autoconf libtool pkg-config ninja-build cmake
+          sudo apt-get install -y build-essential autoconf libtool ninja-build cmake
       - name: Install Golang
         uses: actions/setup-go@v2
         with:
           stable: false
-          go-version: 1.18.1
+          go-version: 1.18.2
       # ========================================================================================================= Cache & Build deps
       - name: Cache Download & Build Dependencies
         id: cache-deps
         uses: actions/cache@v2
         with:
           path: libs
-          key: ${{ hashFiles('libs/*.sh') }}
+          key: ${{ hashFiles('libs/build*.sh', 'libs/download*.sh') }}
       - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
         shell: bash
-        if: matrix.platform == 'windows-latest' && steps.cache-deps.outputs.cache-hit != 'true'
+        if: matrix.platform == 'windows-2022' && steps.cache-deps.outputs.cache-hit != 'true'
         run: |
           ./libs/download_windows64.sh
           ./libs/build_deps_all.sh
@@ -86,13 +93,11 @@ jobs:
       # ========================================================================================================= Generate MakeFile and Build
       - name: Windows - ${{ matrix.qt_version }} - Generate Dependencies and Build
         shell: bash
-        if: matrix.platform == 'windows-latest'
+        if: matrix.platform == 'windows-2022'
         env:
           CC: cl.exe
           CXX: cl.exe
         run: |
-          choco install pkgconfiglite
-          export PKG_CONFIG_PATH=$PWD/libs/deps/built/share/pkgconfig
           mkdir build
           cd build
           cmake .. -GNinja \
@@ -106,7 +111,6 @@ jobs:
         shell: bash
         if: matrix.platform == 'ubuntu-18.04'
         run: |
-          export PKG_CONFIG_PATH=$PWD/libs/deps/built/share/pkgconfig
           mkdir build
           cd build
           cmake .. -GNinja \
@@ -137,7 +141,7 @@ jobs:
       - name: Donwload Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: NekoRay-${{ github.sha }}-windows-latest-x64
+          name: NekoRay-${{ github.sha }}-windows-2022-x64
           path: artifacts-windows
       - name: Release
         run: |

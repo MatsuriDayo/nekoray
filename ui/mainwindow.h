@@ -118,8 +118,6 @@ private:
 
     void closeEvent(QCloseEvent *event) override;
 
-    void hideEvent(QHideEvent *event) override;
-
 #ifndef NKR_NO_GRPC
 
     void speedtest_current_group(libcore::TestMode mode);
