@@ -90,7 +90,7 @@ namespace NekoRay::rpc {
         return reply;
     }
 
-    long long Client::QueryStats(bool *rpcOK, const std::string &tag, const std::string &direct) {
+    long long Client::QueryStats(const std::string &tag, const std::string &direct) {
         MAKE_CONTEXT
         libcore::QueryStatsReq request;
         request.set_tag(tag);
@@ -100,11 +100,9 @@ namespace NekoRay::rpc {
         grpc::Status status = _stub->QueryStats(&context, request, &reply);
 
         if (!status.ok()) {
-            NOT_OK
             return 0;
         }
 
-        *rpcOK = true;
         return reply.traffic();
     }
 }

@@ -9,8 +9,7 @@
 #include "ui/mainwindow_message.h"
 #include "ui/dialog_basic_settings.h"
 
-#include "main/NekoRay.hpp"
-#include "main/GuiUtils.hpp"
+#include "ui/edit/profile_editor.h"
 
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {
@@ -19,29 +18,13 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Common
 
     ui->socks_port->setValidator(QRegExpValidator_Number, this));
-    ui->http_port->setValidator(QRegExpValidator_Number, this));
 
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->socks_port->setText(Int2String(NekoRay::dataStore->inbound_socks_port));
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
 
-    auto http_port = NekoRay::dataStore->inbound_http_port;
-    if (http_port > 0) {
-        ui->http_enable->setChecked(true);
-    } else {
-        ui->http_enable->setChecked(false);
-        http_port = -http_port;
-    }
-    ui->http_port->setText(Int2String(http_port));
-
-    auto mux_cool = NekoRay::dataStore->mux_cool;
-    if (mux_cool > 0) {
-        ui->mux_cool_enable->setChecked(true);
-    } else {
-        ui->mux_cool_enable->setChecked(false);
-        mux_cool = -mux_cool;
-    }
-    ui->mux_cool->setText(Int2String(mux_cool));
+    P_E_LOAD_INT_ENABLE(inbound_http_port, http_enable)
+    P_E_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
 
     // Style
     int built_in_len = ui->theme->count();
@@ -104,17 +87,8 @@ void DialogBasicSettings::accept() {
     NekoRay::dataStore->inbound_socks_port = ui->socks_port->text().toInt();
     NekoRay::dataStore->log_level = ui->log_level->currentText();
 
-    if (ui->http_enable->isChecked()) {
-        NekoRay::dataStore->inbound_http_port = ui->http_port->text().toInt();
-    } else {
-        NekoRay::dataStore->inbound_http_port = -ui->http_port->text().toInt();
-    }
-
-    if (ui->mux_cool_enable->isChecked()) {
-        NekoRay::dataStore->mux_cool = ui->mux_cool->text().toInt();
-    } else {
-        NekoRay::dataStore->mux_cool = -ui->mux_cool->text().toInt();
-    }
+    P_E_SAVE_INT_ENABLE(inbound_http_port, http_enable)
+    P_E_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
 
     // Subscription
 

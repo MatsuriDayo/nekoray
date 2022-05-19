@@ -7,7 +7,7 @@
 
 #ifndef NKR_NO_GRPC
 
-#include "rpc/libcore.grpc.pb.h"
+#include "go/gen/libcore.grpc.pb.h"
 #include <grpc++/grpc++.h>
 #include <QString>
 
@@ -28,7 +28,7 @@ namespace NekoRay::rpc {
 
         libcore::TestResp Test(bool *rpcOK, const libcore::TestReq &request);
 
-        long long QueryStats(bool *rpcOK, const std::string &tag, const std::string &direct);
+        long long QueryStats(const std::string &tag, const std::string &direct);
 
     private:
         std::unique_ptr<libcore::LibcoreService::Stub> _stub;

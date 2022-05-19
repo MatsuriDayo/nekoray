@@ -76,7 +76,7 @@ jobs:
         id: cache-deps
         uses: actions/cache@v2
         with:
-          path: libs
+          path: libs/deps
           key: ${{ hashFiles('libs/build*.sh', 'libs/download*.sh') }}
       - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
         shell: bash

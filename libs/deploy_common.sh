@@ -11,9 +11,11 @@ rm *.go
 mv updater* $DEST
 popd
 
+#### libcore ####
 COMMIT=$(cat matsuri_commit.txt)
 version_standalone="nekoray-"$(cat nekoray_version.txt)
 
+pushd ..
 git clone --no-checkout https://github.com/MatsuriDayo/Matsuri.git
 
 pushd Matsuri
@@ -25,10 +27,13 @@ pushd v2ray-core
 version_v2ray=$(git log --pretty=format:'%h' -n 1)
 popd
 
-pushd Matsuri/libcore/v2ray
+popd
+
+#### nekoray_core ####
+pushd go
 go build -trimpath -ldflags "-w -s -X main.version_v2ray=$version_v2ray -X main.version_standalone=$version_standalone"
 rm *.go
-mv v2ray* $DEST/nekoray_core
+mv nekoray_core* $DEST/nekoray_core
 popd
 
 #### geoip ####

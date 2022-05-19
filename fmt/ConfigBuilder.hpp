@@ -24,6 +24,9 @@ namespace NekoRay::fmt {
         QJsonArray ipListRemote;
         QJsonArray ipListDirect;
 
+        QJsonArray domainListBlock;
+        QJsonArray ipListBlock;
+
         QJsonArray routingRules;
         QJsonObject hosts;
 

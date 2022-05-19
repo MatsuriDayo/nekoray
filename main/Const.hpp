@@ -8,15 +8,6 @@ namespace NekoRay {
         };
     }
 
-    namespace IPv6Mode {
-        enum IPv6Mode {
-            DISABLE,
-            ENABLE,
-            PREFER,
-            ONLY,
-        };
-    }
-
     namespace SniffingMode {
         enum SniffingMode {
             DISABLE,

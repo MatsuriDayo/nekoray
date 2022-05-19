@@ -40,7 +40,7 @@
 | 分组                            | ✔️                |
 | 订阅                            | ✔️ (不完善)          |
 | 剪切板导入                         | ✔️                |
-| QR Code 扫描                    | ❌                 |
+| QR Code 扫描                    | ✔️                |
 | 剪切板导出                         | ✔️                |
 | QR Code 生成                    | ✔️                |
 | 流量/速度统计                       | ✔️                |
@@ -53,9 +53,9 @@
 | 预编译 Windows 二进制文件             | ✔️                |
 | 系统代理                          | Linux/Windows     |
 | 系统代理分流                        | ❌                 |
-| VPN Tun/Tap                   | ❌                 |
+| VPN                           | WIP               |
 | 检查更新                          | ❌                 |
-| 主题样式                          | ❌                 |
+| 主题样式                          | ✔️                |
 
 ## Linux 运行 & 简易编译教程
 
@@ -88,6 +88,7 @@ Nekoray 的诞生离不开 v2ray 开源项目以及其他开源软件。
 - Qt
 - gRPC
 - yaml-cpp
+- zxing-cpp
 
 参考：
 - [Qv2ray/Qv2ray](https://github.com/Qv2ray/Qv2ray)

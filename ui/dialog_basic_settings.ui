@@ -30,35 +30,6 @@
        <string>Common</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string notr="true">mux.cool</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="socks_ip"/>
-       </item>
-       <item row="7" column="2">
-        <widget class="QComboBox" name="log_level">
-         <item>
-          <property name="text">
-           <string notr="true">debug</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">info</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">warning</string>
-          </property>
-         </item>
-        </widget>
-       </item>
        <item row="9" column="2">
         <widget class="QWidget" name="horizontalWidget_1" native="true">
          <property name="sizePolicy">
@@ -100,6 +71,45 @@
          </layout>
         </widget>
        </item>
+       <item row="7" column="2">
+        <widget class="QComboBox" name="log_level">
+         <item>
+          <property name="text">
+           <string notr="true">debug</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">info</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">warning</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_6">
+         <property name="text">
+          <string notr="true">mux.cool</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="2">
+        <widget class="QLineEdit" name="socks_ip"/>
+       </item>
+       <item row="2" column="2">
+        <widget class="QLineEdit" name="socks_port"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string notr="true">Loglevel</string>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="2">
         <widget class="QWidget" name="horizontalWidget" native="true">
          <property name="sizePolicy">
@@ -122,7 +132,7 @@
            <number>0</number>
           </property>
           <item>
-           <widget class="QLineEdit" name="http_port"/>
+           <widget class="QLineEdit" name="inbound_http_port"/>
           </item>
           <item>
            <widget class="QCheckBox" name="http_enable">
@@ -141,13 +151,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Socks Listen Port</string>
-         </property>
-        </widget>
-       </item>
        <item row="5" column="0">
         <widget class="QLabel" name="label_5">
          <property name="text">
@@ -155,13 +158,10 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="2">
-        <widget class="QLineEdit" name="socks_port"/>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string notr="true">Loglevel</string>
+          <string>Socks Listen Port</string>
          </property>
         </widget>
        </item>
@@ -331,7 +331,7 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>socks_ip</tabstop>
   <tabstop>socks_port</tabstop>
-  <tabstop>http_port</tabstop>
+  <tabstop>inbound_http_port</tabstop>
   <tabstop>http_enable</tabstop>
   <tabstop>log_level</tabstop>
   <tabstop>mux_cool</tabstop>

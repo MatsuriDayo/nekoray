@@ -289,7 +289,7 @@
     </message>
     <message>
         <source>Ipv6 mode (VPN)</source>
-        <translation>Ipv6 模式（VPN）</translation>
+        <translation type="vanished">Ipv6 模式（VPN）</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -297,15 +297,15 @@
     </message>
     <message>
         <source>Enable</source>
-        <translation>启用</translation>
+        <translation type="vanished">启用</translation>
     </message>
     <message>
         <source>Prefer</source>
-        <translation>优先</translation>
+        <translation type="vanished">优先</translation>
     </message>
     <message>
         <source>Only</source>
-        <translation>仅</translation>
+        <translation type="vanished">仅</translation>
     </message>
     <message>
         <source>Sniffing Mode</source>

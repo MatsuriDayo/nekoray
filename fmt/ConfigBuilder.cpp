@@ -34,11 +34,9 @@ namespace NekoRay::fmt {
         result->coreConfig.insert("log", QJsonObject{{"loglevel", dataStore->log_level}});
 
         // Inbounds
-        bool dnsIn = false;
-
         QJsonObject sniffing{{"destOverride", QJsonArray{"http", "tls"}},
                              {"enabled",      true},
-                             {"metadataOnly", true},
+                             {"metadataOnly", false},
                              {"routeOnly",    dataStore->sniffing_mode == SniffingMode::TO_DNS},};
 
         // socks-in
@@ -95,20 +93,45 @@ namespace NekoRay::fmt {
         status->outbounds += QJsonObject{{"protocol", "blackhole"},
                                          {"tag",      "block"},};
 
-        if (dnsIn) {
+        // DNS Routing (tun2socks 用到，防污染)
+        if (dataStore->dns_routing) {
             QJsonObject dnsOut;
             dnsOut["protocol"] = "dns";
             dnsOut["tag"] = "dns-out";
             QJsonObject dnsOut_settings;
+            dnsOut_settings["network"] = "tcp";
+            dnsOut_settings["port"] = 53;
+            dnsOut_settings["address"] = "1.1.1.1";
             dnsOut_settings["userLevel"] = 1;
             dnsOut["settings"] = dnsOut_settings;
+
             status->outbounds += dnsOut;
+            status->routingRules += QJsonObject{
+                    {"type",        "field"},
+                    {"port",        "53"},
+                    {"network",     "udp"},
+                    {"outboundTag", "dns-out"},
+            };
         }
+
+        // temp: block QUIC
+        status->routingRules += QJsonObject{{"type",        "field"},
+                                            {"port",        "443"},
+                                            {"network",     "udp"},
+                                            {"outboundTag", "block"},};
+
+        // block for tun
+        status->routingRules += QJsonObject{{"type",        "field"},
+                                            {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},
+                                            {"outboundTag", "block"},};
+        status->routingRules += QJsonObject{{"type",        "field"},
+                                            {"port",        "137,5353"},
+                                            {"outboundTag", "block"},};
 
         result->coreConfig.insert("inbounds", status->inbounds);
         result->coreConfig.insert("outbounds", status->outbounds);
 
-        // dns domain user rules
+        // dns domain user rule
         for (const auto &line: SplitLines(dataStore->routing->proxy_domain)) {
             if (line.startsWith("#")) continue;
             if (dataStore->dns_routing) status->domainListDNSRemote += line;
@@ -118,6 +141,10 @@ namespace NekoRay::fmt {
             if (line.startsWith("#")) continue;
             if (dataStore->dns_routing) status->domainListDNSDirect += line;
             status->domainListDirect += line;
+        }
+        for (const auto &line: SplitLines(dataStore->routing->block_domain)) {
+            if (line.startsWith("#")) continue;
+            status->domainListBlock += line;
         }
 
         // final add DNS
@@ -132,11 +159,21 @@ namespace NekoRay::fmt {
 
         //direct
         auto directDnsAddress = dataStore->direct_dns;
-        if (directDnsAddress.contains("https://")) {
-            directDnsAddress.replace("https://", "https+local://");
-        } else {
-            status->routingRules += QJsonObject({{"type", "field"},
-                                                 {"ip",   QJsonArray{directDnsAddress}},});
+        if (directDnsAddress.contains("://")) {
+            auto directDnsIp = SubStrBefore(SubStrAfter(directDnsAddress, "://"), "/");
+            if (IsIpAddress(directDnsIp)) {
+                status->routingRules += QJsonObject{{"type",        "field"},
+                                                    {"ip",          QJsonArray{directDnsIp}},
+                                                    {"outboundTag", "direct"},};
+            } else {
+                status->routingRules += QJsonObject{{"type",        "field"},
+                                                    {"domain",      QJsonArray{directDnsIp}},
+                                                    {"outboundTag", "direct"},};
+            }
+        } else if (directDnsAddress != "localhost") {
+            status->routingRules += QJsonObject{{"type",        "field"},
+                                                {"ip",          QJsonArray{directDnsAddress}},
+                                                {"outboundTag", "direct"},};
         }
         dnsServers += QJsonObject{{"address",      directDnsAddress},
                                   {"domains",      status->domainListDNSDirect},
@@ -151,14 +188,6 @@ namespace NekoRay::fmt {
         QJsonObject routing;
         routing["domainStrategy"] = dataStore->domain_strategy;
 
-        if (dnsIn) {
-            QJsonObject routingRules_dns_in;
-            routingRules_dns_in["type"] = "field";
-            routingRules_dns_in["inboundTag"] = QList2QJsonArray(QList<QString>({"dns-in"}));
-            routingRules_dns_in["outboundTag"] = "dns-out";
-            status->routingRules += routingRules_dns_in;
-        }
-
         // ip user rule
         // proxy
         QJsonObject routingRule_tmp;
@@ -170,14 +199,14 @@ namespace NekoRay::fmt {
         }
         // final add proxy route
         if (!status->ipListRemote.isEmpty()) {
-            auto routingRule_proxy_ip = routingRule_tmp;
-            routingRule_proxy_ip["ip"] = status->ipListRemote;
-            status->routingRules += routingRule_proxy_ip;
+            auto tmp = routingRule_tmp;
+            tmp["ip"] = status->ipListRemote;
+            status->routingRules += tmp;
         }
         if (!status->domainListRemote.isEmpty()) {
-            auto routingRule_proxy_domain = routingRule_tmp;
-            routingRule_proxy_domain["domain"] = status->domainListRemote;
-            status->routingRules += routingRule_proxy_domain;
+            auto tmp = routingRule_tmp;
+            tmp["domain"] = status->domainListRemote;
+            status->routingRules += tmp;
         }
 
         // bypass
@@ -188,14 +217,32 @@ namespace NekoRay::fmt {
         }
         // final add bypass route
         if (!status->ipListDirect.isEmpty()) {
-            auto routingRule_direct_ip = routingRule_tmp;
-            routingRule_direct_ip["ip"] = status->ipListDirect;
-            status->routingRules += routingRule_direct_ip;
+            auto tmp = routingRule_tmp;
+            tmp["ip"] = status->ipListDirect;
+            status->routingRules += tmp;
         }
         if (!status->domainListDirect.isEmpty()) {
-            auto routingRule_direct_domain = routingRule_tmp;
-            routingRule_direct_domain["domain"] = status->domainListDirect;
-            status->routingRules += routingRule_direct_domain;
+            auto tmp = routingRule_tmp;
+            tmp["domain"] = status->domainListDirect;
+            status->routingRules += tmp;
+        }
+
+        // block
+        routingRule_tmp["outboundTag"] = "block";
+        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
+            if (line.startsWith("#")) continue;
+            status->ipListBlock += line;
+        }
+        // final add block route
+        if (!status->ipListBlock.isEmpty()) {
+            auto tmp = routingRule_tmp;
+            tmp["ip"] = status->ipListBlock;
+            status->routingRules += tmp;
+        }
+        if (!status->domainListBlock.isEmpty()) {
+            auto tmp = routingRule_tmp;
+            tmp["domain"] = status->domainListBlock;
+            status->routingRules += tmp;
         }
 
         routing["rules"] = status->routingRules;
@@ -304,7 +351,7 @@ namespace NekoRay::fmt {
                     status->routingRules += QJsonObject{
                             {"type",        "field"},
                             {"inboundTag",  QJsonArray{tagOut + "-mapping"}},
-                            {"outboundTag", "bypass"},
+                            {"outboundTag", "direct"},
                     };
                 }
             }

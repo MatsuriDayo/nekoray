@@ -216,6 +216,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     runOnNewThread([=]() {
         core_process = new QProcess;
+        QString starting_info;
+
+#ifdef Q_OS_LINUX
+        auto core_path = NekoRay::dataStore->core_cap_path;
+        if (QFile(core_path).exists()) {
+            starting_info = "with cap_net_admin";
+        } else {
+            starting_info = "as normal user";
+            core_path = NekoRay::dataStore->core_path;
+        }
+#else
+        auto core_path = NekoRay::dataStore->core_path;
+#endif
 
         connect(core_process, &QProcess::readyReadStandardOutput, this,
                 [=]() {
@@ -233,8 +246,8 @@ MainWindow::MainWindow(QWidget *parent)
 
         while (true) {
 //            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
-            showLog("Starting nekoray core\n");
-            core_process->start(NekoRay::dataStore->core_path, args);
+            showLog("Starting nekoray core " + starting_info + "\n");
+            core_process->start(core_path, args);
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
             if (core_process_killed) return;
@@ -495,7 +508,7 @@ void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction grou
             f->setText("✓");
         } else {
             f->setText("　");
-        };
+        }
         ui->proxyListTable->setItem(row, 0, f);
 
         // C1: Type
@@ -821,7 +834,9 @@ void MainWindow::neko_start(int id) {
 
 #ifndef NKR_NO_GRPC
     bool rpcOK;
-    QString error = defaultClient->Start(&rpcOK, QJsonObject2QString(result->coreConfig, true));
+    QString error = defaultClient->Start(&rpcOK,
+                                         QJsonObject2QString(result->coreConfig, true)
+    );
     if (rpcOK && !error.isEmpty()) {
         MessageBoxWarning("LoadConfig return error", error);
         return;
@@ -839,11 +854,12 @@ void MainWindow::neko_start(int id) {
     NekoRay::dataStore->started_id = ent->id;
     running = ent;
     refresh_status();
-    refresh_proxy_list();
+    refresh_proxy_list(ent->id);
 }
 
 void MainWindow::neko_stop() {
-    if (NekoRay::dataStore->started_id < 0) return;
+    auto id = NekoRay::dataStore->started_id;
+    if (id < 0) return;
 
     while (!NekoRay::sys::running_ext.isEmpty()) {
         auto extC = NekoRay::sys::running_ext.takeFirst();
@@ -861,7 +877,6 @@ void MainWindow::neko_stop() {
     }
     NekoRay::traffic::trafficLooper->loop_mutex.unlock();
 
-    // TODO instance not restated?
     bool rpcOK;
     QString error = defaultClient->Stop(&rpcOK);
     if (rpcOK && !error.isEmpty()) {
@@ -873,7 +888,7 @@ void MainWindow::neko_stop() {
     NekoRay::dataStore->started_id = -1919;
     running = nullptr;
     refresh_status();
-    refresh_proxy_list();
+    refresh_proxy_list(id);
 }
 
 void MainWindow::neko_set_system_proxy(bool enable) {

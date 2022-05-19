@@ -8,7 +8,6 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageRoutes) {
     ui->setupUi(this);
 
-    ui->ipv6_mode->setCurrentIndex(NekoRay::dataStore->ipv6_mode);
     ui->sniffing_mode->setCurrentIndex(NekoRay::dataStore->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
     ui->domainMatcherCombo->setCurrentIndex(NekoRay::dataStore->domain_matcher);
@@ -51,7 +50,6 @@ DialogManageRoutes::~DialogManageRoutes() {
 }
 
 void DialogManageRoutes::accept() {
-    NekoRay::dataStore->ipv6_mode = ui->ipv6_mode->currentIndex();
     NekoRay::dataStore->sniffing_mode = ui->sniffing_mode->currentIndex();
     NekoRay::dataStore->domain_matcher = ui->domainMatcherCombo->currentIndex();
     NekoRay::dataStore->domain_strategy = ui->domainStrategyCombo->currentText();

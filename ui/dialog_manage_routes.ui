@@ -18,52 +18,7 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Outbound Domain Strategy</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Ipv6 mode (VPN)</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QComboBox" name="ipv6_mode">
-         <item>
-          <property name="text">
-           <string>Disable</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Enable</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Prefer</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Only</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Sniffing Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
+       <item row="0" column="1">
         <widget class="QComboBox" name="sniffing_mode">
          <item>
           <property name="text">
@@ -82,7 +37,28 @@
          </item>
         </widget>
        </item>
-       <item row="3" column="1">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Sniffing Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Outbound Domain Strategy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Remote DNS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
         <widget class="QComboBox" name="outbound_domain_strategy">
          <property name="editable">
           <bool>false</bool>
@@ -119,25 +95,18 @@
          </item>
         </widget>
        </item>
-       <item row="6" column="0">
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="dns_remote"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="dns_direct"/>
+       </item>
+       <item row="3" column="0">
         <widget class="QLabel" name="label_8">
          <property name="text">
           <string>Direct DNS</string>
          </property>
         </widget>
-       </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Remote DNS</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QLineEdit" name="dns_remote"/>
-       </item>
-       <item row="6" column="1">
-        <widget class="QLineEdit" name="dns_direct"/>
        </item>
       </layout>
      </item>
@@ -322,7 +291,6 @@
  <tabstops>
   <tabstop>sniffing_mode</tabstop>
   <tabstop>outbound_domain_strategy</tabstop>
-  <tabstop>ipv6_mode</tabstop>
   <tabstop>dns_remote</tabstop>
   <tabstop>dns_direct</tabstop>
   <tabstop>dns_routing</tabstop>

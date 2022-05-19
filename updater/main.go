@@ -12,6 +12,7 @@ import (
 )
 
 func main() {
+	// update & launcher
 	exe, err := os.Executable()
 	if err != nil {
 		panic(err.Error())

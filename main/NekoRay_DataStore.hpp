@@ -48,6 +48,7 @@ namespace NekoRay {
 
         // Misc
         QString core_path = "../nekoray_core";
+        QString core_cap_path = "../nekoray_core_cap";
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.8";
         QString test_url = "truehttp://cp.cloudflare.com/";
@@ -71,7 +72,6 @@ namespace NekoRay {
         QString domain_strategy = "AsIs";
         QString outbound_domain_strategy = "AsIs";
         int sniffing_mode = SniffingMode::DISABLE;
-        int ipv6_mode = IPv6Mode::DISABLE;
         int domain_matcher = DomainMatcher::MPH;
         Routing *routing = new Routing;
 
@@ -83,6 +83,7 @@ namespace NekoRay {
             _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
 
             _add(new configItem("core_path", &core_path, itemType::string));
+            _add(new configItem("core_cap_path", &core_cap_path, itemType::string));
             _add(new configItem("user_agent", &user_agent, itemType::string));
             _add(new configItem("test_url", &test_url, itemType::string));
             _add(new configItem("current_group", &current_group, itemType::integer));
@@ -96,7 +97,6 @@ namespace NekoRay {
             _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));
             _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
             _add(new configItem("mux_cool", &mux_cool, itemType::integer));
-            _add(new configItem("ipv6_mode", &ipv6_mode, itemType::integer));
             _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
             _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
             _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));

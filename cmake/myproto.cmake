@@ -6,7 +6,7 @@ find_package(Threads)
 # Protobuf/Grpc source files
 #
 set(PROTO_FILES
-        rpc/libcore.proto
+        go/gen/libcore.proto
         )
 
 #

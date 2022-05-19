@@ -39,26 +39,24 @@ func Updater() {
 		f, err := os.Open("./nekoray.zip")
 		if err != nil {
 			log.Fatalln(err.Error())
-		} else {
-			defer f.Close()
 		}
 		err = extract.Zip(context.Background(), f, "./nekoray_update", nil)
 		if err != nil {
 			log.Fatalln(err.Error())
 		}
+		f.Close()
 	} else if Exist("./nekoray.tar.gz") {
 		log.Println("updating from tar.gz")
 
 		f, err := os.Open("./nekoray.tar.gz")
 		if err != nil {
 			log.Fatalln(err.Error())
-		} else {
-			defer f.Close()
 		}
 		err = extract.Gz(context.Background(), f, "./nekoray_update", nil)
 		if err != nil {
 			log.Fatalln(err.Error())
 		}
+		f.Close()
 	} else {
 		log.Fatalln("no update")
 	}
