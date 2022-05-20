@@ -7,9 +7,9 @@
 
 #endif
 
-#include "db/Database.hpp"
-#include "ui/mainwindow_message.h"
 #include "qv2ray/utils/HTTPRequestHelper.hpp"
+
+#include "db/Database.hpp"
 #include "db/filter/ProfileFilter.hpp"
 
 namespace NekoRay::sub {
@@ -252,11 +252,11 @@ namespace NekoRay::sub {
                                       QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
                                               arg(only_out.length()).arg(notice_added).
                                               arg(only_in.length()).arg(notice_deleted));
-                    GetMainWindow()->dialog_message("SubUpdater", "finish-dingyue");
+                    dialog_message("SubUpdater", "finish-dingyue");
                 });
             } else {
                 runOnUiThread([=] {
-                    GetMainWindow()->dialog_message("SubUpdater", "finish");
+                    dialog_message("SubUpdater", "finish");
                 });
             }
         });

@@ -20,6 +20,12 @@ public:
 
 private:
     Ui::DialogManageRoutes *ui;
+
+    struct {
+        QString custom_route;
+    } CACHE;
+
+
     QMenu *builtInSchemesMenu;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *directDomainTxt;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *proxyDomainTxt;
@@ -33,7 +39,7 @@ private:
     NekoRay::Routing routing_global = NekoRay::Routing(-1);
 public slots:
 
-    void accept();
+    void accept() override;
 
     QList<QAction *> getBuiltInSchemes();
 

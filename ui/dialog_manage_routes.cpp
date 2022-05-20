@@ -1,8 +1,10 @@
 #include <QInputDialog>
+
 #include "dialog_manage_routes.h"
 #include "ui_dialog_manage_routes.h"
 
-#include "ui/mainwindow_message.h"
+#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
+#include "main/GuiUtils.hpp"
 
 DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageRoutes) {
@@ -15,7 +17,13 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
+    D_C_LOAD_STRING(custom_route)
 
+    connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
+        C_EDIT_JSON_ALLOW_EMPTY(custom_route)
+    });
+
+    //
     builtInSchemesMenu = new QMenu(this);
     builtInSchemesMenu->addActions(this->getBuiltInSchemes());
     ui->preset->setMenu(builtInSchemesMenu);
@@ -57,6 +65,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
+    D_C_SAVE_STRING(custom_route)
 
     NekoRay::dataStore->routing->direct_ip = directIPTxt->toPlainText();
     NekoRay::dataStore->routing->direct_domain = directDomainTxt->toPlainText();
@@ -65,7 +74,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->routing->block_ip = blockIPTxt->toPlainText();
     NekoRay::dataStore->routing->block_domain = blockDomainTxt->toPlainText();
 
-    emit GetMainWindow()->dialog_message(Dialog_DialogManageRoutes, "SaveDataStore");
+    dialog_message(Dialog_DialogManageRoutes, "SaveDataStore");
     QDialog::accept();
 }
 

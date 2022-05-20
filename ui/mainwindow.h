@@ -5,7 +5,6 @@
 #include <QTableWidgetItem>
 #include <QKeyEvent>
 #include <QSystemTrayIcon>
-#include <QDesktopServices>
 #include <QProcess>
 #include <QTextDocument>
 
@@ -32,10 +31,11 @@ public:
 
     ~MainWindow();
 
-    // 可以被外面调用的
-    void dialog_message(const QString &dialog, const QString &info);
+    void dialog_message_impl(const QString &dialog, const QString &info);
 
-    void refresh_proxy_list(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
+    void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
+
+    void refresh_proxy_list(const int &id = -1) { refresh_proxy_list_impl(id, {}); };
 
     void refresh_groups();
 
@@ -47,7 +47,7 @@ public:
 
     void neko_set_system_proxy(bool enable);
 
-    void writeLog_ui(const QString &log);
+    void show_log_impl(const QString &log);
 
 private slots:
 
@@ -129,5 +129,9 @@ private:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 };
+
+inline MainWindow *GetMainWindow() {
+    return (MainWindow *) mainwindow;
+}
 
 #endif // MAINWINDOW_H

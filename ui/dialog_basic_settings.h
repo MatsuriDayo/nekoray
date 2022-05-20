@@ -22,11 +22,10 @@ public slots:
 private:
     Ui::DialogBasicSettings *ui;
 
-    QString core_editCache;
-
-private slots:
-
-    void on_core_edit_clicked();
+    struct {
+        QString core_map;
+        QString custom_inbound;
+    } CACHE;
 };
 
 #endif // DIALOG_BASIC_SETTINGS_H

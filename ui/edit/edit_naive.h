@@ -26,11 +26,10 @@ private:
     Ui::EditNaive *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 
-    struct Cache {
+    struct {
         QString certificate;
         QString extra_headers;
-    };
-    Cache CACHE;
+    } CACHE;
 
 private slots:
 

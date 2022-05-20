@@ -29,11 +29,17 @@
 #include <QScrollBar>
 #include <QMutex>
 #include <QScreen>
+#include <QDesktopServices>
 #include <utility>
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
+    dialog_message = [=](const QString &a, const QString &b) {
+        runOnUiThread([=] {
+            dialog_message_impl(a, b);
+        });
+    };
 
     // Dir
     QDir dir;
@@ -114,12 +120,12 @@ MainWindow::MainWindow(QWidget *parent)
     });
     showLog = [=](const QString &log) {
         runOnUiThread([=] {
-            writeLog_ui(log);
+            show_log_impl(log);
         });
     };
     showLog_ext = [=](const QString &tag, const QString &log) {
         runOnUiThread([=] {
-            writeLog_ui("[" + tag + "] " + log);
+            show_log_impl("[" + tag + "] " + log);
         });
     };
 
@@ -154,7 +160,7 @@ MainWindow::MainWindow(QWidget *parent)
                 } else {
                     return;
                 }
-                refresh_proxy_list(-1, action);
+                refresh_proxy_list_impl(-1, action);
             });
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
@@ -247,6 +253,11 @@ MainWindow::MainWindow(QWidget *parent)
         while (true) {
 //            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
             showLog("Starting nekoray core " + starting_info + "\n");
+            if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
+                core_process->setEnvironment(QStringList{
+                        "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir
+                });
+            }
             core_process->start(core_path, args);
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
@@ -329,36 +340,34 @@ void MainWindow::show_group(int gid) {
 
 // callback
 
-void MainWindow::dialog_message(const QString &dialog, const QString &info) {
-    runOnUiThread([=] {
-        if (info.contains("SaveDataStore")) {
-            auto changed = NekoRay::dataStore->Save();
+void MainWindow::dialog_message_impl(const QString &dialog, const QString &info) {
+    if (info.contains("SaveDataStore")) {
+        auto changed = NekoRay::dataStore->Save();
+        this->refresh_proxy_list();
+        if (changed && NekoRay::dataStore->started_id >= 0 &&
+            QMessageBox::question(this,
+                                  tr("Confirmation"), QString(tr("Settings changed, restart proxy?"))
+            ) == QMessageBox::StandardButton::Yes) {
+            neko_start(NekoRay::dataStore->started_id);
+        }
+        refresh_status();
+    }
+    if (dialog == Dialog_DialogEditProfile) {
+        if (info == "accept") {
             this->refresh_proxy_list();
-            if (changed && NekoRay::dataStore->started_id >= 0 &&
-                QMessageBox::question(this,
-                                      tr("Confirmation"), QString(tr("Settings changed, restart proxy?"))
-                ) == QMessageBox::StandardButton::Yes) {
-                neko_start(NekoRay::dataStore->started_id);
-            }
-            refresh_status();
         }
-        if (dialog == Dialog_DialogEditProfile) {
-            if (info == "accept") {
-                this->refresh_proxy_list();
-            }
-        } else if (dialog == Dialog_DialogManageGroups) {
-            if (info.startsWith("refresh")) {
-                this->refresh_groups();
-            }
-        } else if (dialog == "SubUpdater") {
-            // 订阅完毕
-            refresh_proxy_list();
-            if (!info.contains("dingyue")) {
-                QMessageBox::information(this, tr("Info"),
-                                         tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
-            }
+    } else if (dialog == Dialog_DialogManageGroups) {
+        if (info.startsWith("refresh")) {
+            this->refresh_groups();
         }
-    });
+    } else if (dialog == "SubUpdater") {
+        // 订阅完毕
+        refresh_proxy_list();
+        if (!info.contains("dingyue")) {
+            QMessageBox::information(this, tr("Info"),
+                                     tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
+        }
+    }
 }
 
 // menu
@@ -481,7 +490,7 @@ void MainWindow::refresh_groups() {
 }
 
 
-void MainWindow::refresh_proxy_list(const int &id, NekoRay::GroupSortAction groupSortAction) {
+void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction groupSortAction) {
     if (id < 0) {
         //这样才能清空数据
         ui->proxyListTable->setRowCount(0);
@@ -982,7 +991,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
 
                     runOnUiThread([=] {
                         if (!result.error().empty()) {
-                            writeLog_ui(
+                            show_log_impl(
                                     tr("[%1] test error: %2").arg(profile->bean->DisplayName(),
                                                                   result.error().c_str()));
                         }
@@ -1013,7 +1022,7 @@ inline void FastAppendTextDocument(const QString &message, QTextDocument *doc) {
     cursor.endEditBlock();
 }
 
-void MainWindow::writeLog_ui(const QString &log) {
+void MainWindow::show_log_impl(const QString &log) {
     if (log.trimmed().isEmpty()) return;
 
     FastAppendTextDocument(log, qvLogDocument);

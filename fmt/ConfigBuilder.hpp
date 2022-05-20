@@ -1,7 +1,6 @@
 #pragma once
 
 #include "db/ProxyEntity.hpp"
-#include "db/traffic/TrafficData.hpp"
 
 namespace NekoRay::fmt {
     class BuildConfigResult {
@@ -41,4 +40,3 @@ namespace NekoRay::fmt {
     QString BuildChain(bool extra, const QList<QSharedPointer<ProxyEntity>> &ents,
                        const QSharedPointer<BuildConfigStatus> &status);
 }
-

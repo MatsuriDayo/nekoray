@@ -57,11 +57,15 @@ namespace NekoRay {
         int current_group = 0; //group id
         int mux_cool = 8;
         QString theme = "0";
+        QString v2ray_asset_dir = "";
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";
         int inbound_socks_port = 2080;
         int inbound_http_port = -2081;
+        QString custom_inbound = "{\n"
+                                 "    \"inbounds\": []\n"
+                                 "}";
 
         // DNS
         QString remote_dns = "https://1.0.0.1/dns-query";
@@ -73,6 +77,9 @@ namespace NekoRay {
         QString outbound_domain_strategy = "AsIs";
         int sniffing_mode = SniffingMode::DISABLE;
         int domain_matcher = DomainMatcher::MPH;
+        QString custom_route = "{\n"
+                               "    \"rules\": []\n"
+                               "}";
         Routing *routing = new Routing;
 
         // Other Core
@@ -101,6 +108,9 @@ namespace NekoRay {
             _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
             _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
             _add(new configItem("theme", &theme, itemType::string));
+            _add(new configItem("custom_inbound", &custom_inbound, itemType::string));
+            _add(new configItem("custom_route", &custom_route, itemType::string));
+            _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         }
 
         // Running Cache

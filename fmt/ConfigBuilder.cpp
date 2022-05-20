@@ -31,7 +31,11 @@ namespace NekoRay::fmt {
         status->result = result;
 
         // Log
-        result->coreConfig.insert("log", QJsonObject{{"loglevel", dataStore->log_level}});
+        auto logObj = QJsonObject{{"loglevel", dataStore->log_level}};
+        if (dataStore->log_level != "debug") {
+            logObj["access"] = "none";
+        }
+        result->coreConfig.insert("log", logObj);
 
         // Inbounds
         QJsonObject sniffing{{"destOverride", QJsonArray{"http", "tls"}},
@@ -128,6 +132,9 @@ namespace NekoRay::fmt {
                                             {"port",        "137,5353"},
                                             {"outboundTag", "block"},};
 
+        // custom inbound
+        QJSONARRAY_ADD(status->inbounds, QString2QJsonObject(dataStore->custom_inbound)["inbounds"].toArray())
+
         result->coreConfig.insert("inbounds", status->inbounds);
         result->coreConfig.insert("outbounds", status->outbounds);
 
@@ -187,6 +194,7 @@ namespace NekoRay::fmt {
         // Routing
         QJsonObject routing;
         routing["domainStrategy"] = dataStore->domain_strategy;
+        routing["domainMatcher"] = dataStore->domain_matcher == DomainMatcher::MPH ? "mph" : "linear";
 
         // ip user rule
         // proxy
@@ -245,7 +253,11 @@ namespace NekoRay::fmt {
             status->routingRules += tmp;
         }
 
-        routing["rules"] = status->routingRules;
+        // final add routing rule
+        // custom routing rule
+        auto routingRules = QString2QJsonObject(dataStore->custom_route)["rules"].toArray();
+        QJSONARRAY_ADD(routingRules, status->routingRules)
+        routing["rules"] = routingRules;
         result->coreConfig.insert("routing", routing);
 
         // Policy & stats
@@ -411,7 +423,7 @@ namespace NekoRay::fmt {
                 }
             }
 
-            // apply custom
+            // apply custom outbound settings
             auto custom_item = ent->bean->_get("custom");
             if (custom_item != nullptr) {
                 ApplyCustomOutboundJsonSettings(QString2QJsonObject(*((QString *) custom_item->ptr)), outbound);

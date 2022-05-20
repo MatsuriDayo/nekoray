@@ -1,10 +1,7 @@
 #include "TrafficLooper.hpp"
-#include "rpc/gRPC.h"
+#include "ui/mainwindow.h"
 
 #include <QThread>
-
-#include "main/NekoRay.hpp"
-#include "ui/mainwindow_message.h"
 
 namespace NekoRay::traffic {
     void TrafficLooper::update(TrafficData *item) {

@@ -19,7 +19,7 @@ public:
 
 public slots:
 
-    void accept();
+    void accept() override;
 
 private slots:
 
@@ -38,8 +38,11 @@ private:
     QSharedPointer<NekoRay::ProxyEntity> ent;
 
     QString network_title_base;
-    QString CACHE_custom;
-    QString CACHE_certificate;
+
+    struct {
+        QString custom;
+        QString certificate;
+    } CACHE;
 
     void typeSelected(const QString &newType);
 

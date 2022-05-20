@@ -71,6 +71,26 @@
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
+    <message>
+        <source>Custom Inbound</source>
+        <translation>自定义入站</translation>
+    </message>
+    <message>
+        <source>Asset Location</source>
+        <translation>资源文件路径</translation>
+    </message>
+    <message>
+        <source>Default: dir of &quot;nekoray-core&quot;</source>
+        <translation>默认值：和 nekoray_core 同路径</translation>
+    </message>
+    <message>
+        <source>Settings changed</source>
+        <translation>设置改变</translation>
+    </message>
+    <message>
+        <source>Restart nekoray to take effect.</source>
+        <translation>重启 nekoray 生效。</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -370,6 +390,10 @@
     <message>
         <source>IP</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <translation>自定义</translation>
     </message>
 </context>
 <context>

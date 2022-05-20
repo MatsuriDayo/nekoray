@@ -29,8 +29,11 @@
 inline QWidget *mainwindow;
 inline std::function<void(QString)> showLog;
 inline std::function<void(QString, QString)> showLog_ext;
+inline std::function<void(QString, QString)> dialog_message;
 
 // Utils
+
+#define QJSONARRAY_ADD(arr, add) for(const auto &a: (add)) { (arr) += a; }
 
 inline QString SubStrBefore(QString str, const QString &sub) {
     if (!str.contains(sub)) return str;
@@ -205,11 +208,7 @@ inline QString ReadableSize(const qint64 &size) {
 // UI
 
 inline int MessageBoxWarning(const QString &title, const QString &text) {
-    return QMessageBox::warning(mainwindow, title, text);
-}
-
-inline int MessageBoxWarningStdString(const std::string &title, const std::string &text) {
-    return QMessageBox::warning(mainwindow, QString(title.c_str()), QString(text.c_str()));
+    return QMessageBox::warning(nullptr, title, text);
 }
 
 inline void runOnUiThread(const std::function<void()> &callback) {

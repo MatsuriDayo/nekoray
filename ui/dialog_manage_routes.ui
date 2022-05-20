@@ -270,6 +270,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="custom_route_edit">
+         <property name="text">
+          <string>Custom</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QDialogButtonBox" name="buttonBox">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">

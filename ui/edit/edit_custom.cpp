@@ -23,9 +23,9 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->CustomBean();
 
-    P_E_LOAD_STRING(core)
+    P_LOAD_STRING(core)
     ui->command->setText(bean->command.join(" "));
-    P_E_LOAD_STRING(config_simple)
+    P_LOAD_STRING(config_simple)
 
     if (!preset_core.isEmpty()) {
         bean->core = preset_core;
@@ -45,9 +45,9 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
 bool EditCustom::onEnd() {
     auto bean = this->ent->CustomBean();
 
-    P_E_SAVE_STRING(core)
+    P_SAVE_STRING(core)
     bean->command = ui->command->text().split(" ");
-    P_E_SAVE_STRING_QTEXTEDIT(config_simple)
+    P_SAVE_STRING_QTEXTEDIT(config_simple)
 
     return true;
 }

@@ -1,7 +1,6 @@
 #include "ui_dialog_manage_groups.h"
 
 #include "ui/dialog_manage_groups.h"
-#include "ui/mainwindow_message.h"
 #include "ui/edit/dialog_edit_group.h"
 
 #include "db/Database.hpp"
@@ -98,7 +97,7 @@ void DialogManageGroups::refresh_group_list(int postMain_gid) {
     }
 
     if (postMain_gid > -114514) { // <= -114514 don't post to mainwindow
-        emit GetMainWindow()->dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(postMain_gid));
+        dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(postMain_gid));
     }
 }
 

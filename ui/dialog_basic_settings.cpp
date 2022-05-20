@@ -1,15 +1,13 @@
 #include <QStyleFactory>
 #include <QFileDialog>
 
-#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
-
 #include "ui_dialog_basic_settings.h"
 
+#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 #include "ui/ThemeManager.hpp"
-#include "ui/mainwindow_message.h"
 #include "ui/dialog_basic_settings.h"
-
-#include "ui/edit/profile_editor.h"
+#include "main/GuiUtils.hpp"
+#include "main/NekoRay.hpp"
 
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {
@@ -17,16 +15,20 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Common
 
-    ui->socks_port->setValidator(QRegExpValidator_Number, this));
-
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
-    ui->socks_port->setText(Int2String(NekoRay::dataStore->inbound_socks_port));
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
+    CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
 
-    P_E_LOAD_INT_ENABLE(inbound_http_port, http_enable)
-    P_E_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_LOAD_INT(inbound_socks_port)
+    D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
+    D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
+
+    connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
+        C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
+    });
 
     // Style
+
     int built_in_len = ui->theme->count();
     ui->theme->addItems(QStyleFactory::keys());
     //
@@ -57,10 +59,18 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
-    core_editCache = NekoRay::dataStore->extraCore->core_map;
+    ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
+    CACHE.core_map = NekoRay::dataStore->extraCore->core_map;
     ui->core_naive->setText(NekoRay::dataStore->extraCore->Get("naive"));
     ui->core_hysteria->setText(NekoRay::dataStore->extraCore->Get("hysteria"));
 
+    connect(ui->core_v2ray_asset_pick, &QPushButton::clicked, this, [=] {
+        auto fn = QFileDialog::getExistingDirectory(this, tr("Select"), QDir::currentPath());
+        if (!fn.isEmpty()) {
+            ui->core_v2ray_asset->setText(fn);
+            MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
+        }
+    });
     connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
         auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
         if (!fn.isEmpty()) {
@@ -73,6 +83,9 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             ui->core_hysteria->setText(fn);
         }
     });
+    connect(ui->core_edit, &QPushButton::clicked, this, [=] {
+        C_EDIT_JSON_ALLOW_EMPTY(core_map)
+    });
 
 }
 
@@ -84,11 +97,12 @@ void DialogBasicSettings::accept() {
     // Common
 
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
-    NekoRay::dataStore->inbound_socks_port = ui->socks_port->text().toInt();
     NekoRay::dataStore->log_level = ui->log_level->currentText();
+    NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
 
-    P_E_SAVE_INT_ENABLE(inbound_http_port, http_enable)
-    P_E_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_SAVE_INT(inbound_socks_port)
+    D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
+    D_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
 
     // Subscription
 
@@ -96,17 +110,11 @@ void DialogBasicSettings::accept() {
 
     // Core
 
-    NekoRay::dataStore->extraCore->core_map = core_editCache;
+    NekoRay::dataStore->v2ray_asset_dir = ui->core_v2ray_asset->text();
+    NekoRay::dataStore->extraCore->core_map = CACHE.core_map;
     NekoRay::dataStore->extraCore->Set("naive", ui->core_naive->text());
     NekoRay::dataStore->extraCore->Set("hysteria", ui->core_hysteria->text());
 
-    emit GetMainWindow()->dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
+    dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
     QDialog::accept();
-}
-
-void DialogBasicSettings::on_core_edit_clicked() {
-    auto editor = new JsonEditor(QString2QJsonObject(core_editCache), this);
-    auto result = editor->OpenEditor();
-    core_editCache = QJsonObject2QString(result, true);
-    if (result.isEmpty()) core_editCache = "";
 }
