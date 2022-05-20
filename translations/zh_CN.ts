@@ -938,6 +938,10 @@
         <source>Testing</source>
         <translation>正在测试</translation>
     </message>
+    <message>
+        <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
+        <translation>HTTP 入站未启用，无法设置系统代理。</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

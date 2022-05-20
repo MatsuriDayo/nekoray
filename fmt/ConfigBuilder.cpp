@@ -118,12 +118,6 @@ namespace NekoRay::fmt {
             };
         }
 
-        // temp: block QUIC
-        status->routingRules += QJsonObject{{"type",        "field"},
-                                            {"port",        "443"},
-                                            {"network",     "udp"},
-                                            {"outboundTag", "block"},};
-
         // block for tun
         status->routingRules += QJsonObject{{"type",        "field"},
                                             {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},

@@ -7,33 +7,19 @@
     R"((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.(\d{1,2}|1\d\d|2[0-4]\d|25[0-5]))"
 #define REGEX_PORT_NUMBER R"(([0-9]|[1-9]\d{1,3}|[1-5]\d{4}|6[0-5]{2}[0-3][0-5])*)"
 
-namespace Qv2ray::ui
-{
-    SyntaxHighlighter::SyntaxHighlighter(bool darkMode, QTextDocument *parent) : QSyntaxHighlighter(parent)
-    {
+namespace Qv2ray::ui {
+    SyntaxHighlighter::SyntaxHighlighter(bool darkMode, QTextDocument *parent) : QSyntaxHighlighter(parent) {
         HighlightingRule rule;
 
-        if (darkMode)
-        {
+        if (darkMode) {
             tcpudpFormat.setForeground(QColor(0, 200, 230));
             ipHostFormat.setForeground(Qt::yellow);
-            warningFormat.setForeground(QColor(255, 160, 15));
-        }
-        else
-        {
+            warningFormat.setForeground(Qt::cyan);
+        } else {
             ipHostFormat.setForeground(Qt::black);
             ipHostFormat.setFontWeight(QFont::Bold);
-            warningFormat.setForeground(Qt::white);
+            warningFormat.setForeground(Qt::darkCyan);
             tcpudpFormat.setForeground(QColor(0, 52, 130));
-            warningFormat.setBackground(QColor(255, 160, 15));
-        }
-
-        for (const auto &pattern : { "tcp", "udp" })
-        {
-            tcpudpFormat.setFontWeight(QFont::Bold);
-            rule.pattern = QRegularExpression(pattern);
-            rule.format = tcpudpFormat;
-            highlightingRules.append(rule);
         }
 
         dateFormat.setForeground(darkMode ? Qt::cyan : Qt::darkCyan);
@@ -56,24 +42,6 @@ namespace Qv2ray::ui
         rule.format = infoFormat;
         highlightingRules.append(rule);
         //
-        //
-        {
-            // IP IPv6 Host;
-            rule.pattern = QRegularExpression(REGEX_IPV4_ADDR ":" REGEX_PORT_NUMBER);
-            rule.pattern.setPatternOptions(QRegularExpression::ExtendedPatternSyntaxOption);
-            rule.format = ipHostFormat;
-            highlightingRules.append(rule);
-            //
-            rule.pattern = QRegularExpression(REGEX_IPV6_ADDR ":" REGEX_PORT_NUMBER);
-            rule.pattern.setPatternOptions(QRegularExpression::ExtendedPatternSyntaxOption);
-            rule.format = ipHostFormat;
-            highlightingRules.append(rule);
-            //
-            rule.pattern = QRegularExpression("([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}(/|):" REGEX_PORT_NUMBER);
-            rule.pattern.setPatternOptions(QRegularExpression::PatternOption::ExtendedPatternSyntaxOption);
-            rule.format = ipHostFormat;
-            highlightingRules.append(rule);
-        }
 
         const static QColor darkGreenColor(10, 180, 0);
         //
@@ -120,16 +88,44 @@ namespace Qv2ray::ui
         rule.pattern = QRegularExpression(R"( \[\w+\] )");
         rule.format = qvAppDebugLogFormat;
         highlightingRules.append(rule);
+        //
+        rule.pattern = QRegularExpression("default route");
+        rule.format = qvAppDebugLogFormat;
+        highlightingRules.append(rule);
+
+        {
+            // IP IPv6 Host;
+            rule.pattern = QRegularExpression(REGEX_IPV4_ADDR ":" REGEX_PORT_NUMBER);
+            rule.pattern.setPatternOptions(QRegularExpression::ExtendedPatternSyntaxOption);
+            rule.format = ipHostFormat;
+            highlightingRules.append(rule);
+            //
+            rule.pattern = QRegularExpression(REGEX_IPV6_ADDR ":" REGEX_PORT_NUMBER);
+            rule.pattern.setPatternOptions(QRegularExpression::ExtendedPatternSyntaxOption);
+            rule.format = ipHostFormat;
+            highlightingRules.append(rule);
+            //
+            rule.pattern = QRegularExpression(
+                    "([a-zA-Z0-9]([a-zA-Z0-9\\-]{0,61}[a-zA-Z0-9])?\\.)+[a-zA-Z]{2,6}(/|):" REGEX_PORT_NUMBER);
+            rule.pattern.setPatternOptions(QRegularExpression::PatternOption::ExtendedPatternSyntaxOption);
+            rule.format = ipHostFormat;
+            highlightingRules.append(rule);
+        }
+
+        for (const auto &pattern: {"tcp", "udp"}) {
+            tcpudpFormat.setFontWeight(QFont::Bold);
+            rule.pattern = QRegularExpression(pattern);
+            rule.format = tcpudpFormat;
+            highlightingRules.append(rule);
+        }
+
     }
 
-    void SyntaxHighlighter::highlightBlock(const QString &text)
-    {
-        for (const HighlightingRule &rule : qAsConst(highlightingRules))
-        {
+    void SyntaxHighlighter::highlightBlock(const QString &text) {
+        for (const HighlightingRule &rule: qAsConst(highlightingRules)) {
             QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
 
-            while (matchIterator.hasNext())
-            {
+            while (matchIterator.hasNext()) {
                 QRegularExpressionMatch match = matchIterator.next();
                 setFormat(match.capturedStart(), match.capturedLength(), rule.format);
             }

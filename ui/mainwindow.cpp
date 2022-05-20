@@ -238,8 +238,16 @@ MainWindow::MainWindow(QWidget *parent)
 
         connect(core_process, &QProcess::readyReadStandardOutput, this,
                 [=]() {
-                    // TODO read output sometimes crash
                     showLog(core_process->readAllStandardOutput().trimmed());
+                });
+        connect(core_process, &QProcess::readyReadStandardError, this,
+                [=]() {
+                    auto log = core_process->readAllStandardError().trimmed();
+                    if (log.contains("token is set")) {
+                        core_process_show_stderr = true;
+                        return;
+                    }
+                    if (core_process_show_stderr) showLog(log);
                 });
 
         QStringList args;
@@ -258,6 +266,7 @@ MainWindow::MainWindow(QWidget *parent)
                         "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir
                 });
             }
+            core_process_show_stderr = false;
             core_process->start(core_path, args);
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
@@ -275,9 +284,9 @@ MainWindow::MainWindow(QWidget *parent)
         bool ok = defaultClient->keepAlive();
         runOnUiThread([=]() {
             if (!ok) {
-                title_status = tr("Error");
+                title_error = tr("Error");
             } else {
-                title_status = "";
+                title_error = "";
             }
             refresh_status();
         });
@@ -428,26 +437,18 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
     ui->label_inbound->setText(inbound_txt);
 
-    QString tt_status;
-    if (!title_status.isEmpty()) {
-        tt_status = "[" + title_status + "] ";
-    }
+    auto make_title = [=](const QString &sep) {
+        QStringList tt;
+        if (!title_error.isEmpty()) tt << "[" + title_error + "]";
+        if (!title_system_proxy.isEmpty()) tt << "[" + title_system_proxy + "]";
+        tt << title_base;
+        if (sep == " ") tt << "(" + QString(NKR_RELEASE_DATE) + ")"; // window title
+        if (!running.isNull()) tt << running->bean->DisplayTypeAndName();
+        return tt.join(sep);
+    };
 
-    QString tt_running = "";
-    if (!running.isNull()) {
-        tt_running = running->bean->DisplayTypeAndName();
-    }
-
-    QString windowText = QString("%1%2 (%3)").arg(tt_status, title_base, NKR_RELEASE_DATE);
-    QString trayText = QString("%1%2").arg(tt_status, title_base);
-
-    if (!tt_running.isEmpty()) {
-        windowText += " " + tt_running;
-        trayText += "\n" + tt_running;
-    }
-
-    setWindowTitle(windowText);
-    if (tray != nullptr) tray->setToolTip(trayText);
+    setWindowTitle(make_title(" "));
+    if (tray != nullptr) tray->setToolTip(make_title("\n"));
 }
 
 // table显示
@@ -901,14 +902,22 @@ void MainWindow::neko_stop() {
 }
 
 void MainWindow::neko_set_system_proxy(bool enable) {
+#ifdef Q_OS_WIN
+    if (enable && !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
+        MessageBoxWarning(tr("Error"), tr("Http inbound is not enabled, can't set system proxy."));
+        return;
+    }
+#endif
     NekoRay::dataStore->system_proxy = enable;
 #ifndef NKR_NO_EXTERNAL
     if (enable) {
         SetSystemProxy("127.0.0.1",
                        NekoRay::dataStore->inbound_http_port,
                        NekoRay::dataStore->inbound_socks_port);
+        title_system_proxy = tr("System Proxy");
     } else {
         ClearSystemProxy();
+        title_system_proxy = "";
     }
 #endif
 }

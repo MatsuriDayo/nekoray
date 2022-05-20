@@ -69,6 +69,7 @@ func Main() {
 		fmt.Println("You must set a token")
 		os.Exit(0)
 	}
+	os.Stderr.WriteString("token is set\n")
 
 	auther := Authenticator{
 		Token: token,

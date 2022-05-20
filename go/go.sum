@@ -731,8 +731,6 @@ honnef.co/go/tools v0.0.0-20190523083050-ea95bdfd59fc/go.mod h1:rf3lG4BRIbNafJWh
 honnef.co/go/tools v0.0.1-2019.2.3/go.mod h1:a3bituU0lyd329TUQxRnasdCoJDkEUEAqEt0JzvZhAg=
 inet.af/netaddr v0.0.0-20211027220019-c74959edd3b6 h1:acCzuUSQ79tGsM/O50VRFySfMm19IoMKL+sZztZkCxw=
 inet.af/netaddr v0.0.0-20211027220019-c74959edd3b6/go.mod h1:y3MGhcFMlh0KZPMuXXow8mpjxxAk3yoDNsp4cQz54i8=
-kernel.org/pub/linux/libs/security/libcap v1.2.64 h1:kMcrL7YdPYyHBgOj14bbuWXeVYW2TihdwMerAICCMFI=
-kernel.org/pub/linux/libs/security/libcap v1.2.64/go.mod h1:zhygrwkaoXfXy4g1LiuDrA5u8XfPr7p/r3WRJV1OV+c=
 kernel.org/pub/linux/libs/security/libcap/cap v1.2.64 h1:E1U4GNGSXEdzQUT+mop0iYawCNXDUU46Y8nfodb+ZY0=
 kernel.org/pub/linux/libs/security/libcap/cap v1.2.64/go.mod h1:gtBlgvjXflnxHng9/3bXyXG3XmBYKDt35zu+lNmB+IA=
 kernel.org/pub/linux/libs/security/libcap/psx v1.2.64 h1:zlw/KoDjEObyddpFcvLiuu8frEvyEwVNc62WZQBp68w=

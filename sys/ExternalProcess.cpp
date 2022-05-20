@@ -15,12 +15,10 @@ namespace NekoRay::sys {
     void ExternalProcess::Start() {
         connect(this, &QProcess::readyReadStandardOutput, this,
                 [=]() {
-                    // TODO read output sometimes crash
                     showLog_ext(tag, readAllStandardOutput().trimmed());
                 });
         connect(this, &QProcess::readyReadStandardError, this,
                 [=]() {
-                    // TODO read output sometimes crash
                     showLog_ext(tag, readAllStandardError().trimmed());
                 });
         connect(this, &QProcess::errorOccurred, this,

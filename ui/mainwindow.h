@@ -98,6 +98,7 @@ private:
     QSystemTrayIcon *tray;
     //
     bool core_process_killed = false;
+    bool core_process_show_stderr = false;
     QProcess *core_process;
     //
     bool qvLogAutoScoll = true;
@@ -105,7 +106,8 @@ private:
     SyntaxHighlighter *qvLogHighlighter;
     //
     QString title_base;
-    QString title_status;
+    QString title_error;
+    QString title_system_proxy;
     QSharedPointer<NekoRay::ProxyEntity> running;
     QString traffic_update_cache;
     QTime last_test_time;
