@@ -21,7 +21,7 @@ func main() {
 
 	// nekoray
 	if len(os.Args) > 1 && os.Args[1] == "nekoray" {
-		Main()
+		NekorayCore()
 		return
 	}
 

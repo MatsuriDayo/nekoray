@@ -24,6 +24,7 @@ const _ = grpc.SupportPackageIsVersion7
 type LibcoreServiceClient interface {
 	Exit(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error)
 	KeepAlive(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error)
+	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
 	//
 	Start(ctx context.Context, in *LoadConfigReq, opts ...grpc.CallOption) (*ErrorResp, error)
 	Stop(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ErrorResp, error)
@@ -51,6 +52,15 @@ func (c *libcoreServiceClient) Exit(ctx context.Context, in *EmptyReq, opts ...g
 func (c *libcoreServiceClient) KeepAlive(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error) {
 	out := new(EmptyResp)
 	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/KeepAlive", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *libcoreServiceClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
+	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -99,6 +109,7 @@ func (c *libcoreServiceClient) QueryStats(ctx context.Context, in *QueryStatsReq
 type LibcoreServiceServer interface {
 	Exit(context.Context, *EmptyReq) (*EmptyResp, error)
 	KeepAlive(context.Context, *EmptyReq) (*EmptyResp, error)
+	Update(context.Context, *UpdateReq) (*UpdateResp, error)
 	//
 	Start(context.Context, *LoadConfigReq) (*ErrorResp, error)
 	Stop(context.Context, *EmptyReq) (*ErrorResp, error)
@@ -116,6 +127,9 @@ func (UnimplementedLibcoreServiceServer) Exit(context.Context, *EmptyReq) (*Empt
 }
 func (UnimplementedLibcoreServiceServer) KeepAlive(context.Context, *EmptyReq) (*EmptyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
+}
+func (UnimplementedLibcoreServiceServer) Update(context.Context, *UpdateReq) (*UpdateResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedLibcoreServiceServer) Start(context.Context, *LoadConfigReq) (*ErrorResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
@@ -174,6 +188,24 @@ func _LibcoreService_KeepAlive_Handler(srv interface{}, ctx context.Context, dec
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LibcoreServiceServer).KeepAlive(ctx, req.(*EmptyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _LibcoreService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LibcoreServiceServer).Update(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/libcore.LibcoreService/Update",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LibcoreServiceServer).Update(ctx, req.(*UpdateReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -264,6 +296,10 @@ var LibcoreService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "KeepAlive",
 			Handler:    _LibcoreService_KeepAlive_Handler,
+		},
+		{
+			MethodName: "Update",
+			Handler:    _LibcoreService_Update_Handler,
 		},
 		{
 			MethodName: "Start",

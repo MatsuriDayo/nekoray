@@ -16,6 +16,8 @@ namespace NekoRay::rpc {
     public:
         explicit Client(std::function<void(const QString &)> onError, const QString &target, const QString &token);
 
+        libcore::UpdateResp Update(bool *rpcOK, const libcore::UpdateReq &request);
+
         void Exit();
 
         bool keepAlive();

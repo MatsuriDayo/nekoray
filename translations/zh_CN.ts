@@ -942,6 +942,10 @@
         <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
         <translation>HTTP 入站未启用，无法设置系统代理。</translation>
     </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1002,6 +1006,34 @@ Direct: %2</source>
     <message>
         <source>Select a known core</source>
         <translation>选择已知的核心</translation>
+    </message>
+    <message>
+        <source>Update</source>
+        <translation>更新</translation>
+    </message>
+    <message>
+        <source>No update</source>
+        <translation>无更新</translation>
+    </message>
+    <message>
+        <source>Open in browser</source>
+        <translation>浏览器打开</translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Update is ready, restart to install?</source>
+        <translation>更新已下载好，重启应用？</translation>
+    </message>
+    <message>
+        <source>Update found: %1
+Release note:
+%2</source>
+        <translation>检测到更新: %1
+更新日志:
+%2</translation>
     </message>
 </context>
 <context>

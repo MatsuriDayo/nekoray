@@ -23,10 +23,6 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-#ifndef NKR_NO_GRPC
-    NekoRay::rpc::Client *defaultClient;
-#endif
-
     MainWindow(QWidget *parent = nullptr);
 
     ~MainWindow();
@@ -49,6 +45,11 @@ public:
 
     void show_log_impl(const QString &log);
 
+    bool exit_update = false;
+public slots:
+
+    void on_menu_exit_triggered();
+
 private slots:
 
     void on_masterLogBrowser_customContextMenuRequested(const QPoint &pos);
@@ -56,8 +57,6 @@ private slots:
     void on_menu_basic_settings_triggered();
 
     void on_menu_routing_settings_triggered();
-
-    void on_menu_exit_triggered();
 
     void on_menu_add_from_input_triggered();
 

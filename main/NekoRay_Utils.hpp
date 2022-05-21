@@ -211,6 +211,10 @@ inline int MessageBoxWarning(const QString &title, const QString &text) {
     return QMessageBox::warning(nullptr, title, text);
 }
 
+inline int MessageBoxInfo(const QString &title, const QString &text) {
+    return QMessageBox::information(nullptr, title, text);
+}
+
 inline void runOnUiThread(const std::function<void()> &callback) {
     // any thread
     auto *timer = new QTimer();

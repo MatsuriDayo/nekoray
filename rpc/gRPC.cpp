@@ -27,39 +27,36 @@ namespace NekoRay::rpc {
     }
 
     QString Client::Start(bool *rpcOK, const QString &coreConfig) {
-        {
-            MAKE_CONTEXT
-            libcore::LoadConfigReq request;
-            request.set_coreconfig(coreConfig.toStdString());
+        MAKE_CONTEXT
+        libcore::LoadConfigReq request;
+        request.set_coreconfig(coreConfig.toStdString());
 
-            libcore::ErrorResp reply;
-            grpc::Status status = _stub->Start(&context, request, &reply);
+        libcore::ErrorResp reply;
+        grpc::Status status = _stub->Start(&context, request, &reply);
 
-            if (status.ok()) {
-                *rpcOK = true;
-                return {reply.error().c_str()};
-            } else {
-                NOT_OK
-                return "";
-            }
+        if (status.ok()) {
+            *rpcOK = true;
+            return {reply.error().c_str()};
+        } else {
+            NOT_OK
+            return "";
         }
+
     }
 
     QString Client::Stop(bool *rpcOK) {
-        {
-            MAKE_CONTEXT
-            libcore::EmptyReq request;
+        MAKE_CONTEXT
+        libcore::EmptyReq request;
 
-            libcore::ErrorResp reply;
-            grpc::Status status = _stub->Stop(&context, request, &reply);
+        libcore::ErrorResp reply;
+        grpc::Status status = _stub->Stop(&context, request, &reply);
 
-            if (status.ok()) {
-                *rpcOK = true;
-                return {reply.error().c_str()};
-            } else {
-                NOT_OK
-                return "";
-            }
+        if (status.ok()) {
+            *rpcOK = true;
+            return {reply.error().c_str()};
+        } else {
+            NOT_OK
+            return "";
         }
     }
 
@@ -104,6 +101,20 @@ namespace NekoRay::rpc {
         }
 
         return reply.traffic();
+    }
+
+    libcore::UpdateResp Client::Update(bool *rpcOK, const libcore::UpdateReq &request) {
+        MAKE_CONTEXT
+        libcore::UpdateResp reply;
+        grpc::Status status = _stub->Update(&context, request, &reply);
+
+        if (!status.ok()) {
+            NOT_OK
+            return reply;
+        }
+
+        *rpcOK = true;
+        return reply;
     }
 }
 

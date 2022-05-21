@@ -86,6 +86,22 @@
        </widget>
       </item>
       <item>
+       <widget class="QToolButton" name="update">
+        <property name="text">
+         <string>Update</string>
+        </property>
+        <property name="icon">
+         <iconset theme="update-none"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>

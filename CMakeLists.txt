@@ -84,6 +84,7 @@ set(PROJECT_SOURCES
 
         sys/ExternalProcess.cpp
 
+        ui/CheckUpdate.cpp
         ui/ThemeManager.cpp
 
         ui/mainwindow.cpp

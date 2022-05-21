@@ -6,6 +6,7 @@
 #include "sub/RawUpdater.hpp"
 #include "sys/ExternalProcess.hpp"
 
+#include "ui/CheckUpdate.hpp"
 #include "ui/ThemeManager.hpp"
 #include "ui/mainwindow.h"
 #include "ui/dialog_basic_settings.h"
@@ -31,6 +32,8 @@
 #include <QScreen>
 #include <QDesktopServices>
 #include <utility>
+
+using namespace NekoRay::rpc;
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -95,6 +98,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->menubar->setVisible(false);
     connect(ui->toolButton_ads, &QToolButton::clicked, this,
             [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
+    connect(ui->update, &QToolButton::clicked, this,
+            [] { runOnNewThread([] { CheckUpdate(); }); });
 
     // Setup log UI
     qvLogHighlighter = new SyntaxHighlighter(false, qvLogDocument);
@@ -276,7 +281,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
 
     // Setup Connection
-    NekoRay::rpc::defaultClient = defaultClient = new NekoRay::rpc::Client([=](const QString &errStr) {
+    defaultClient = new Client([=](const QString &errStr) {
         showLog("gRPC Error: " + errStr);
     }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
@@ -401,6 +406,10 @@ void MainWindow::on_menu_exit_triggered() {
 #ifndef NKR_NO_GRPC
     defaultClient->Exit();
 #endif
+    if (exit_update) {
+        QDir::setCurrent(QApplication::applicationDirPath());
+        QProcess::startDetached("./updater", QStringList{});
+    }
     qApp->quit();
 }
 
