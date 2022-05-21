@@ -946,6 +946,10 @@
         <source>Update</source>
         <translation>更新</translation>
     </message>
+    <message>
+        <source>Document</source>
+        <translation>文档</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

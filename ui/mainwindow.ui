@@ -86,12 +86,29 @@
        </widget>
       </item>
       <item>
-       <widget class="QToolButton" name="update">
+       <widget class="QToolButton" name="toolButton_document">
+        <property name="text">
+         <string>Document</string>
+        </property>
+        <property name="icon">
+         <iconset theme="data-information"/>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::InstantPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextUnderIcon</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QToolButton" name="toolButton_update">
         <property name="text">
          <string>Update</string>
         </property>
         <property name="icon">
-         <iconset theme="update-none"/>
+         <iconset theme="update-none">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>

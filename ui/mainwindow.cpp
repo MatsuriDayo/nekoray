@@ -96,9 +96,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolButton_preferences->setMenu(ui->menu_preferences);
     ui->toolButton_server->setMenu(ui->menu_server);
     ui->menubar->setVisible(false);
-    connect(ui->toolButton_ads, &QToolButton::clicked, this,
+    connect(ui->toolButton_document, &QToolButton::clicked, this,
             [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
-    connect(ui->update, &QToolButton::clicked, this,
+    connect(ui->toolButton_ads, &QToolButton::clicked, this,
+            [=] { QDesktopServices::openUrl(QUrl("https://matsuricom.github.io/")); });
+    connect(ui->toolButton_update, &QToolButton::clicked, this,
             [] { runOnNewThread([] { CheckUpdate(); }); });
 
     // Setup log UI

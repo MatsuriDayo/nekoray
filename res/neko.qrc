@@ -4,6 +4,8 @@
         <file>icon/system-run.svg</file>
         <file>icon/preferences.svg</file>
         <file>icon/network-server.svg</file>
+        <file>icon/update-none.svg</file>
+        <file>icon/data-information.svg</file>
     </qresource>
     <qresource prefix="/nekoray">
         <file>nekoray.png</file>
