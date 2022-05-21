@@ -33,7 +33,9 @@
 #include <QDesktopServices>
 #include <utility>
 
+#ifndef NKR_NO_GRPC
 using namespace NekoRay::rpc;
+#endif
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -57,9 +59,6 @@ MainWindow::MainWindow(QWidget *parent)
         MessageBoxWarning(tr("Error"), tr("No permission to write %1").arg(dir.absolutePath()));
         return;
     }
-
-    // Clean
-    QFile::remove("updater.old");
 
     // Load dataStore
     auto isLoaded = NekoRay::dataStore->Load();

@@ -14,7 +14,7 @@
 
 | 协议           | 状态      | 配置编辑 | 分享链接生成 | 分享链接解析    | Clash 配置解析 |
 |--------------|---------|------|--------|-----------|------------|
-| Socks        | ✔️      | ✔️   | ✔️     | ✔️        | 不适用        | 
+| Socks        | ✔️      | ✔️   | ✔️     | ✔️        | ✔️         | 
 | ShadowSocks  | ✔️ (经典) | ✔️   | ✔️     | 常见格式      | ✔️         |
 | ShadowSocksR | ✔️      | ❌    | ❌      | ❌         | ❌          |
 | VMess        | ✔️ (经典) | ✔️   | ✔️     | v2rayN 格式 | ✔️         |
@@ -67,7 +67,9 @@
 
 已知部分 Linux 系统上使用发布的二进制文件，进入主界面后容易闪退，可以尝试自行编译。
 
-依赖： `qt5 grpc yaml-cpp` 包管理器安装， Qt 版本必须大于等于 5.15
+### 简单编译法
+
+C++ 依赖： `qt5 grpc yaml-cpp zxing-cpp` 包管理器安装， Qt 版本必须大于等于 5.15
 
 ```
 mkdir build
@@ -76,7 +78,25 @@ cmake ..
 make -j
 ```
 
+编译完成后得到 `nekoray`
+
 解压 Release 的压缩包，替换其中的 `nekoray`，删除 `launcher` 即可使用。
+
+### 复杂编译法
+
+C++ 部分
+
+当您的发行版没有上面几个 C++ 依赖包，或者版本不符合要求时，可以参考 libs 文件夹内的默认编译脚本自行编译。
+
+依赖搜寻 prefix 为 `libs/deps/bulit`
+
+编译完成后得到 `nekoray`
+
+Go 部分
+
+把 `Matsuridayo/Matsuri` `Matsuridayo/v2ray-core` 置于 `../` ，进入 `go` 文件夹 `go build` 得到 `nekoray_core`。
+
+非官方构建无需编译 `update` `launcher`
 
 ## Credits
 

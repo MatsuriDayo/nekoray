@@ -9,6 +9,10 @@
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
+    // Clean
+    QDir::setCurrent(QApplication::applicationDirPath());
+    QFile::remove("updater.old");
+
     // dirs
     auto wd = QDir(QApplication::applicationDirPath());
     if (!wd.exists("config")) wd.mkdir("config");

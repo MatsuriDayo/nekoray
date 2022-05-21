@@ -8,6 +8,7 @@
 #include <QDesktopServices>
 
 void CheckUpdate() {
+#ifndef NKR_NO_GRPC
     bool ok;
     libcore::UpdateReq request;
     request.set_action(libcore::UpdateAction::Check);
@@ -62,4 +63,5 @@ void CheckUpdate() {
             QDesktopServices::openUrl(QUrl(response.release_url().c_str()));
         }
     });
+#endif
 }

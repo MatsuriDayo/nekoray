@@ -12,6 +12,8 @@
 #include "db/Database.hpp"
 #include "db/filter/ProfileFilter.hpp"
 
+#define FIRST_OR_SECOND(a, b) a.isEmpty() ? b : a
+
 namespace NekoRay::sub {
     void RawUpdater::update(const QString &str) {
         // Base64 encoded subscription
@@ -107,6 +109,7 @@ namespace NekoRay::sub {
 
 #endif
 
+// https://github.com/Dreamacro/clash/wiki/configuration
     void RawUpdater::updateClash(const QString &str) {
 #ifndef NKR_NO_EXTERNAL
         try {
@@ -114,8 +117,11 @@ namespace NekoRay::sub {
             for (auto proxy: proxies) {
                 auto type = Node2QString(proxy["type"]);
                 if (type == "ss" || type == "ssr") type = "shadowsocks";
+                if (type == "socks5") type = "socks";
 
                 auto ent = ProfileManager::NewProxyEntity(type);
+                if (ent->bean->version == -114514) continue;
+
                 ent->bean->name = Node2QString(proxy["name"]);
                 ent->bean->serverAddress = Node2QString(proxy["server"]);
                 ent->bean->serverPort = Node2Int(proxy["port"]);
@@ -136,10 +142,16 @@ namespace NekoRay::sub {
                     if (protocol_n.IsDefined()) { // SSR
                         continue; // TODO SSR
                     }
+                } else if (type == "socks5") {
+                    auto bean = ent->SocksBean();
+                    bean->password = Node2QString(proxy["username"]);
+                    bean->password = Node2QString(proxy["password"]);
+                    if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
+                    if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "trojan") {
                     auto bean = ent->TrojanBean();
                     bean->password = Node2QString(proxy["password"]);
-                    bean->stream->sni = Node2QString(proxy["sni"]);
+                    bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "vmess") {
                     auto bean = ent->VMessBean();
@@ -147,7 +159,7 @@ namespace NekoRay::sub {
                     bean->aid = Node2Int(proxy["alterId"]);
                     bean->security = Node2QString(proxy["cipher"]);
                     bean->stream->network = Node2QString(proxy["network"]);
-                    bean->stream->sni = Node2QString(proxy["sni"]);
+                    bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
 
@@ -162,6 +174,21 @@ namespace NekoRay::sub {
                         bean->stream->path = Node2QString(ws["path"]);
                         bean->stream->max_early_data = Node2Int(proxy["max-early-data"]);
                         bean->stream->early_data_header_name = Node2QString(ws["early-data-header-name"]);
+                    }
+
+                    auto grpc = proxy["grpc-opts"];
+                    if (grpc.IsMap()) {
+                        bean->stream->path = Node2QString(grpc["grpc-service-name"]);
+                    }
+
+                    auto h2 = proxy["h2-opts"];
+                    if (h2.IsMap()) {
+                        auto hosts = ws["host"];
+                        for (auto host: hosts) {
+                            bean->stream->host = Node2QString(host);
+                            break;
+                        }
+                        bean->stream->path = Node2QString(h2["path"]);
                     }
                 } else {
                     continue;
