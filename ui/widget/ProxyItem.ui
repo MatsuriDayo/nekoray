@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ProxyItem</class>
+ <widget class="QWidget" name="ProxyItem">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string notr="true"/>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_2">
+   <item>
+    <widget class="QLabel" name="name">
+     <property name="text">
+      <string notr="true">名称</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QLabel" name="address">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(102, 102, 102);</string>
+       </property>
+       <property name="text">
+        <string notr="true">地址</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="test_result">
+       <property name="text">
+        <string notr="true">测试结果</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="type">
+       <property name="styleSheet">
+        <string notr="true">color: rgb(251, 114, 153);</string>
+       </property>
+       <property name="text">
+        <string notr="true">类型</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="traffic">
+       <property name="text">
+        <string notr="true">流量</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

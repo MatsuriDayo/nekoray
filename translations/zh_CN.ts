@@ -403,16 +403,16 @@
         <translation></translation>
     </message>
     <message>
-        <source>TODO</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Select Profile</source>
-        <translation></translation>
+        <translation>选择配置</translation>
     </message>
     <message>
-        <source>Invalid ID: %1</source>
-        <translation></translation>
+        <source>Traffic order is from top to bottom</source>
+        <translation>流量顺序是从上到下（最后一个配置为流量的出口）</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
     </message>
 </context>
 <context>
@@ -950,6 +950,10 @@
         <source>Document</source>
         <translation>文档</translation>
     </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>
@@ -1038,6 +1042,10 @@ Release note:
         <translation>检测到更新: %1
 更新日志:
 %2</translation>
+    </message>
+    <message>
+        <source>Unavailable</source>
+        <translation>不可用</translation>
     </message>
 </context>
 <context>

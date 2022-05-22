@@ -134,6 +134,10 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.h
         ui/dialog_manage_routes.ui
 
+        ui/widget/ProxyItem.cpp
+        ui/widget/ProxyItem.h
+        ui/widget/ProxyItem.ui
+
         res/neko.qrc
         res/theme/feiyangqingyun/qss.qrc
         ${QV2RAY_RC}

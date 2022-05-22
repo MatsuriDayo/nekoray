@@ -14,19 +14,19 @@ namespace NekoRay::sys {
 
     void ExternalProcess::Start() {
         connect(this, &QProcess::readyReadStandardOutput, this,
-                [=]() {
+                [&]() {
                     showLog_ext(tag, readAllStandardOutput().trimmed());
                 });
         connect(this, &QProcess::readyReadStandardError, this,
-                [=]() {
+                [&]() {
                     showLog_ext(tag, readAllStandardError().trimmed());
                 });
         connect(this, &QProcess::errorOccurred, this,
-                [=](QProcess::ProcessError error) {
+                [&](QProcess::ProcessError error) {
                     if (!killed) showLog_ext(tag, "[ERROR] " + QProcess::errorString());
                 });
         connect(this, &QProcess::stateChanged, this,
-                [=](QProcess::ProcessState state) {
+                [&](QProcess::ProcessState state) {
                     if (state == QProcess::NotRunning) {
                         showLog_ext(tag, "Stopped");
                     }

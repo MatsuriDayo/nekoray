@@ -22,4 +22,10 @@ public:
 private:
     Ui::EditChain *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
+
+    void keyPressEvent(QKeyEvent *event) override;
+
+private slots:
+
+    void on_select_profile_clicked();
 };

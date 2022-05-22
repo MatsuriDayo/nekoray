@@ -89,6 +89,7 @@ MainWindow::MainWindow(QWidget *parent)
         NekoRay::profileManager->Save();
     });
     ui->label_running->installEventFilter(this);
+    ui->label_inbound->installEventFilter(this);
 
     // top bar
     ui->toolButton_program->setMenu(ui->menu_program);
@@ -243,11 +244,11 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
         connect(core_process, &QProcess::readyReadStandardOutput, this,
-                [=]() {
+                [&]() {
                     showLog(core_process->readAllStandardOutput().trimmed());
                 });
         connect(core_process, &QProcess::readyReadStandardError, this,
-                [=]() {
+                [&]() {
                     auto log = core_process->readAllStandardError().trimmed();
                     if (log.contains("token is set")) {
                         core_process_show_stderr = true;
@@ -395,6 +396,7 @@ void MainWindow::on_menu_basic_settings_triggered() {
 
 void MainWindow::on_menu_routing_settings_triggered() {
     auto dialog = new DialogManageRoutes(this);
+    connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
     dialog->exec();
     dialog->deleteLater();
 }
@@ -432,6 +434,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
             return;
         }
     }
+
     // From UI
     ui->label_speed->setText(traffic_update_cache);
     if (last_test_time.addSecs(1) < QTime::currentTime()) {
@@ -446,9 +449,13 @@ void MainWindow::refresh_status(const QString &traffic_update) {
                 DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port));
     }
     ui->label_inbound->setText(inbound_txt);
+    if (select_mode) {
+        ui->label_running->setText("[" + tr("Select") + "]");
+    }
 
     auto make_title = [=](const QString &sep) {
         QStringList tt;
+        if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
         if (!title_system_proxy.isEmpty()) tt << "[" + title_system_proxy + "]";
         tt << title_base;
@@ -548,14 +555,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
 
         // C4: Latency
         f = f->clone();
-        if (profile->latency < 0) {
-            // TODO reason
-            f->setText(tr("Unavailable"));
-        } else if (profile->latency > 0) {
-            f->setText(QString("%1 ms").arg(profile->latency));
-        } else {
-            f->setText("");
-        }
+        f->setText(profile->DisplayLatency());
         ui->proxyListTable->setItem(row, 4, f);
 
         // C5: Traffic
@@ -638,16 +638,23 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
 // table菜单相关
 
 void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
-    auto dialog = new DialogEditProfile("", item->data(114514).toInt(), this);
-    dialog->exec();
-    dialog->deleteLater();
+    auto id = item->data(114514).toInt();
+    if (select_mode) {
+        emit profile_selected(id);
+        select_mode = false;
+        refresh_status();
+        return;
+    }
+    auto dialog = new DialogEditProfile("", id, this);
+    connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
+    dialog->show();
 }
 
 void MainWindow::on_menu_add_from_input_triggered() {
     if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
     auto dialog = new DialogEditProfile("socks", NekoRay::dataStore->current_group, this);
-    dialog->exec();
-    dialog->deleteLater();
+    connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
+    dialog->show();
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
@@ -838,10 +845,17 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
 
 // 按键
 
-void MainWindow::neko_start(int id) {
+void MainWindow::neko_start(int _id) {
     auto ents = GetNowSelected();
-    if (ents.isEmpty() && id < 0) return;
-    auto ent = id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(id);
+    if (ents.isEmpty() && _id < 0) return;
+    auto ent = _id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(_id);
+
+    if (select_mode) {
+        emit profile_selected(ent->id);
+        select_mode = false;
+        refresh_status();
+        return;
+    }
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
     if (NekoRay::profileManager->GetGroup(ent->gid)->archive) return;
@@ -877,7 +891,7 @@ void MainWindow::neko_start(int id) {
     refresh_proxy_list(ent->id);
 }
 
-void MainWindow::neko_stop() {
+void MainWindow::neko_stop(bool crash) {
     auto id = NekoRay::dataStore->started_id;
     if (id < 0) return;
 
@@ -891,17 +905,19 @@ void MainWindow::neko_stop() {
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
     for (const auto &item: NekoRay::traffic::trafficLooper->items) {
-        NekoRay::traffic::trafficLooper->update(item.get());
+        NekoRay::traffic::TrafficLooper::update(item.get());
         NekoRay::profileManager->GetProfile(item->id)->Save();
         refresh_proxy_list(item->id);
     }
     NekoRay::traffic::trafficLooper->loop_mutex.unlock();
 
-    bool rpcOK;
-    QString error = defaultClient->Stop(&rpcOK);
-    if (rpcOK && !error.isEmpty()) {
-        MessageBoxWarning("Stop return error", error);
-        return;
+    if (!crash) {
+        bool rpcOK;
+        QString error = defaultClient->Stop(&rpcOK);
+        if (rpcOK && !error.isEmpty()) {
+            MessageBoxWarning("Stop return error", error);
+            return;
+        }
     }
 #endif
 
@@ -1090,40 +1106,52 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); //弹出菜单
 }
 
+// eventFilter
+
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
-    if (obj == ui->label_running) {
-        if (event->type() == QEvent::MouseButtonPress) {
-            auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
-            if (mouseEvent->button() == Qt::LeftButton && running != nullptr) {
+    if (event->type() == QEvent::MouseButtonPress) {
+        auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
+
+        if (obj == ui->label_running && mouseEvent->button() == Qt::LeftButton && running != nullptr) {
 #ifndef NKR_NO_GRPC
+            last_test_time = QTime::currentTime();
+            ui->label_running->setText(tr("Testing"));
+
+            runOnNewThread([=] {
+                libcore::TestReq req;
+                req.set_mode(libcore::UrlTest);
+                req.set_timeout(3000);
+                req.set_url(NekoRay::dataStore->test_url.toStdString());
+
+                bool rpcOK;
+                auto result = defaultClient->Test(&rpcOK, req);
+                if (!rpcOK) return;
+
+                auto latency = result.ms();
                 last_test_time = QTime::currentTime();
-                ui->label_running->setText(tr("Testing"));
 
-                runOnNewThread([=] {
-                    libcore::TestReq req;
-                    req.set_mode(libcore::UrlTest);
-                    req.set_timeout(3000);
-                    req.set_url(NekoRay::dataStore->test_url.toStdString());
-
-                    bool rpcOK;
-                    auto result = defaultClient->Test(&rpcOK, req);
-                    if (!rpcOK) return;
-
-                    auto latency = result.ms();
-                    last_test_time = QTime::currentTime();
-
-                    runOnUiThread([=] {
-                        if (latency <= 0) {
-                            ui->label_running->setText(tr("Test Result") + ": " + tr("Unavailable"));
-                        } else if (latency > 0) {
-                            ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
-                        }
-                    });
+                runOnUiThread([=] {
+                    if (latency <= 0) {
+                        ui->label_running->setText(tr("Test Result") + ": " + tr("Unavailable"));
+                    } else if (latency > 0) {
+                        ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
+                    }
                 });
-                return true;
+            });
+            return true;
 #endif
-            }
+        } else if (obj == ui->label_inbound && mouseEvent->button() == Qt::LeftButton) {
+            on_menu_basic_settings_triggered();
+            return true;
         }
     }
     return QMainWindow::eventFilter(obj, event);
+}
+
+// profile selector
+
+void MainWindow::start_select_mode(QObject *context, const std::function<void(int)> &callback) {
+    select_mode = true;
+    connectOnce(this, &MainWindow::profile_selected, context, callback);
+    refresh_status();
 }

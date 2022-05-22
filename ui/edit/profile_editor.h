@@ -11,6 +11,7 @@ public:
 
     virtual bool onEnd() = 0;
 
+    std::function<QWidget *()> get_edit_dialog;
 
     // cached editor
 

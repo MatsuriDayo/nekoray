@@ -37,15 +37,22 @@ public:
 
     void refresh_status(const QString &traffic_update = "");
 
-    void neko_start(int id = -1);
+    void neko_start(int _id = -1);
 
-    void neko_stop();
+    void neko_stop(bool crash = false);
 
     void neko_set_system_proxy(bool enable);
 
     void show_log_impl(const QString &log);
 
+    void start_select_mode(QObject *context, const std::function<void(int)> &callback);
+
     bool exit_update = false;
+
+signals:
+
+    void profile_selected(int id);
+
 public slots:
 
     void on_menu_exit_triggered();
@@ -112,6 +119,7 @@ private:
     QTime last_test_time;
     //
     int proxy_last_order = -1;
+    bool select_mode = false;
 
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> GetNowSelected();
 

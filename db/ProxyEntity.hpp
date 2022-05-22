@@ -27,20 +27,9 @@ namespace NekoRay {
         // Cache
         int latency = 0;
 
-        ProxyEntity(fmt::AbstractBean *bean, QString type) {
-            this->type = std::move(type);
-            _add(new configItem("type", &this->type, itemType::string));
-            _add(new configItem("id", &id, itemType::integer));
-            _add(new configItem("gid", &gid, itemType::integer));
+        ProxyEntity(fmt::AbstractBean *bean, QString type);
 
-            // 可以不关联 bean，只加载 ProxyEntity 的信息
-            if (bean != nullptr) {
-                this->bean = QSharedPointer<fmt::AbstractBean>(bean);
-                // 有虚函数就要在这里 dynamic_cast
-                _add(new configItem("bean", dynamic_cast<JsonStore *>(bean), itemType::jsonStore));
-                _add(new configItem("traffic", dynamic_cast<JsonStore *>(traffic_data.get()), itemType::jsonStore));
-            }
-        };
+        [[nodiscard]] QString DisplayLatency() const;
 
         [[nodiscard]] fmt::ChainBean *ChainBean() const {
             return (fmt::ChainBean *) bean.get();

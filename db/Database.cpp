@@ -76,6 +76,34 @@ namespace NekoRay {
         return ent;
     }
 
+    // ProxyEntity
+
+    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, QString type) {
+        this->type = std::move(type);
+        _add(new configItem("type", &this->type, itemType::string));
+        _add(new configItem("id", &id, itemType::integer));
+        _add(new configItem("gid", &gid, itemType::integer));
+
+        // 可以不关联 bean，只加载 ProxyEntity 的信息
+        if (bean != nullptr) {
+            this->bean = QSharedPointer<fmt::AbstractBean>(bean);
+            // 有虚函数就要在这里 dynamic_cast
+            _add(new configItem("bean", dynamic_cast<JsonStore *>(bean), itemType::jsonStore));
+            _add(new configItem("traffic", dynamic_cast<JsonStore *>(traffic_data.get()), itemType::jsonStore));
+        }
+    };
+
+    QString ProxyEntity::DisplayLatency() const {
+        if (latency < 0) {
+            // TODO reason
+            return QObject::tr("Unavailable");
+        } else if (latency > 0) {
+            return QString("%1 ms").arg(latency);
+        } else {
+            return "";
+        }
+    }
+
     // Profile
 
     int ProfileManager::NewProfileID() const {

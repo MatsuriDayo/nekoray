@@ -126,6 +126,11 @@
                <string notr="true">custom</string>
               </property>
              </item>
+             <item>
+              <property name="text">
+               <string notr="true">chain</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>

@@ -179,6 +179,9 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->bean->layout()->addWidget(innerWidget);
     ui->bean->setTitle(ent->bean->DisplayType());
     // 左边 bean inner editor
+    innerEditor->get_edit_dialog = [&]() {
+        return (QWidget *) this;
+    };
     innerEditor->dialog_editor_cache_updated = [=] {
         dialog_editor_cache_updated();
     };

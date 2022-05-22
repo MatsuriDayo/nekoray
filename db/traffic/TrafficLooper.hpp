@@ -18,7 +18,7 @@ namespace NekoRay::traffic {
         TrafficData *bypass = new TrafficData("bypass");
         TrafficData *proxy = nullptr;
 
-        void update(TrafficData *item);
+        static void update(TrafficData *item);
 
         [[noreturn]] void loop();
     };

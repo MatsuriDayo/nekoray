@@ -89,6 +89,10 @@ namespace NekoRay::rpc {
 
     long long Client::QueryStats(const std::string &tag, const std::string &direct) {
         MAKE_CONTEXT
+
+        auto deadline = std::chrono::system_clock::now() + std::chrono::milliseconds(500);
+        context.set_deadline(deadline);
+
         libcore::QueryStatsReq request;
         request.set_tag(tag);
         request.set_direct(direct);

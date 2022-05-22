@@ -4,8 +4,8 @@
 #include <QWidget>
 #include <QRegExpValidator>
 
-inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, std::function<void(QAction *)> slot) {
-    auto menu = new QMenu(parent);
+inline QList<QAction *>
+CreateActions(QWidget *parent, const QList<QString> &texts, const std::function<void(QAction *)> &slot) {
     QList<QAction *> acts;
 
     for (const auto &text: texts) {
@@ -20,12 +20,18 @@ inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, std::func
             acts[i]->setData(-1);
         } else {
             acts[i]->setData(i);
+            QObject::connect(acts[i], &QAction::triggered, parent, [=] {
+                slot(acts[i]);
+            });
         }
-
-        menu->addAction(acts[i]);
     }
 
-    QWidget::connect(menu, &QMenu::triggered, parent, std::move(slot));
+    return acts;
+}
+
+inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, const std::function<void(QAction *)> &slot) {
+    auto menu = new QMenu(parent);
+    menu->addActions(CreateActions(parent, texts, slot));
     return menu;
 }
 
