@@ -32,7 +32,7 @@ namespace NekoRay::fmt {
         if (insecure_concurrency > 0) result.arguments += "--insecure-concurrency=" + Int2String(insecure_concurrency);
         if (!extra_headers.isEmpty()) result.arguments += "--extra-headers=" + extra_headers;
         if (!certificate.isEmpty()) {
-            WriteTempFile("naive.crt", certificate.toUtf8());
+            WriteTempFile("naive_" + GetRandomString(10) + ".crt", certificate.toUtf8());
             result.env += "SSL_CERT_FILE=" + TempFile;
         }
 
@@ -53,7 +53,7 @@ namespace NekoRay::fmt {
             config = config.replace("%mapping_port%", Int2String(mapping_port));
             config = config.replace("%socks_port%", Int2String(socks_port));
 
-            WriteTempFile("custom_cfg.tmp", config.toUtf8());
+            WriteTempFile("custom_cfg_" + GetRandomString(10) + ".tmp", config.toUtf8());
             for (int i = 0; i < result.arguments.count(); i++) {
                 result.arguments[i] = result.arguments[i].replace("%config%", TempFile);
             }

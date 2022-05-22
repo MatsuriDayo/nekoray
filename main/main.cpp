@@ -17,6 +17,7 @@ int main(int argc, char *argv[]) {
     auto wd = QDir(QApplication::applicationDirPath());
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
+    QDir("temp").removeRecursively();
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{

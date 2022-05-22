@@ -797,6 +797,10 @@
         <source>Select</source>
         <translation>选择</translation>
     </message>
+    <message>
+        <source>QR Code not found</source>
+        <translation>未扫描到 QR Code</translation>
+    </message>
 </context>
 <context>
     <name>QObject</name>

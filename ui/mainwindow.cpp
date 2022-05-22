@@ -764,9 +764,14 @@ void MainWindow::on_menu_scan_qr_triggered() {
 #ifndef NKR_NO_EXTERNAL
     using namespace ZXingQt;
 
+    hide();
+    QThread::sleep(1);
+
     auto screen = QGuiApplication::primaryScreen();
     auto geom = screen->geometry();
     auto qpx = screen->grabWindow(0, geom.x(), geom.y(), geom.width(), geom.height());
+
+    show();
 
     auto hints = DecodeHints()
             .setFormats(BarcodeFormat::QRCode)
@@ -775,7 +780,9 @@ void MainWindow::on_menu_scan_qr_triggered() {
 
     auto result = ReadBarcode(qpx.toImage(), hints);
     const auto &text = result.text();
-    if (!text.isEmpty()) {
+    if (text.isEmpty()) {
+        MessageBoxInfo(tr("Info"), tr("QR Code not found"));
+    } else {
         NekoRay::sub::rawUpdater->AsyncUpdate(text);
     }
 #endif
@@ -847,8 +854,9 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
 
 void MainWindow::neko_start(int _id) {
     auto ents = GetNowSelected();
-    if (ents.isEmpty() && _id < 0) return;
+    if (ents.isEmpty()) return;
     auto ent = _id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(_id);
+    if (ent == nullptr) return;
 
     if (select_mode) {
         emit profile_selected(ent->id);
@@ -857,7 +865,6 @@ void MainWindow::neko_start(int _id) {
         return;
     }
 
-    if (NekoRay::dataStore->started_id >= 0) neko_stop();
     if (NekoRay::profileManager->GetGroup(ent->gid)->archive) return;
 
     auto result = NekoRay::fmt::BuildConfig(ent, false);
@@ -865,6 +872,8 @@ void MainWindow::neko_start(int _id) {
         MessageBoxWarning("BuildConfig return error", result->error);
         return;
     }
+
+    if (NekoRay::dataStore->started_id >= 0) neko_stop();
 
 #ifndef NKR_NO_GRPC
     bool rpcOK;

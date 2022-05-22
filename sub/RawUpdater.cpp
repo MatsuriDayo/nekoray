@@ -144,6 +144,7 @@ namespace NekoRay::sub {
                 } else if (type == "trojan") {
                     auto bean = ent->TrojanBean();
                     bean->password = Node2QString(proxy["password"]);
+                    bean->stream->security = "tls";
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "vmess") {
