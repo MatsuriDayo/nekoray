@@ -21,7 +21,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
-    D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
+    D_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
 
     connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)

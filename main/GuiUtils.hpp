@@ -4,6 +4,15 @@
 #include <QWidget>
 #include <QRegExpValidator>
 
+// Dialogs
+
+#define Dialog_DialogBasicSettings "DialogBasicSettings"
+#define Dialog_DialogEditProfile "DialogEditProfile"
+#define Dialog_DialogManageGroups "DialogManageGroups"
+#define Dialog_DialogManageRoutes "DialogManageRoutes"
+
+// Utils
+
 inline QList<QAction *>
 CreateActions(QWidget *parent, const QList<QString> &texts, const std::function<void(QAction *)> &slot) {
     QList<QAction *> acts;

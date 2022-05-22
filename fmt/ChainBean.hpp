@@ -11,7 +11,7 @@ namespace NekoRay::fmt {
             _add(new configItem("list", &list, itemType::integerList));
         };
 
-        QString DisplayType() override { return "Chain Proxy"; };
+        QString DisplayType() override { return QObject::tr("Chain Proxy"); };
 
         QString DisplayAddress() override { return ""; };
     };

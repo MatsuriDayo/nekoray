@@ -21,13 +21,11 @@ namespace NekoRay::fmt {
             _add(new configItem("custom", &custom, itemType::string));
         };
 
-        QString DisplayType() override { return "ShadowSocks"; };
+        QString DisplayType() override { return "Shadowsocks"; };
 
         CoreObjOutboundBuildResult BuildCoreObj() override;
 
         bool TryParseLink(const QString &link);
-
-        bool TryParseSSR(const QString &link);
 
         QString ToShareLink() override;
     };

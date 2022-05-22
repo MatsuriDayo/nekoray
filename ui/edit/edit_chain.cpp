@@ -7,19 +7,18 @@
 
 #define AddProfileToListIfExist(_id) auto __ent = NekoRay::profileManager->GetProfile(_id); \
 if (__ent != nullptr && __ent->type != "chain") { \
-auto w = new ProxyItem(this, __ent); \
 auto wI = new QListWidgetItem(); \
+auto w = new ProxyItem(this, __ent, wI); \
 wI->setData(114514, _id); \
 wI->setSizeHint(w->sizeHint()); \
-ui->listWidget->addItem(wI); \
+ui->listWidget->addItem(wI);                                                                \
 ui->listWidget->setItemWidget(wI, w); \
 }
 
 #define DeleteSelected auto items = ui->listWidget->selectedItems(); \
 for (auto item: items) { \
 delete item; \
-}
-
+} // TODO -> ProxyItem button & callback
 
 EditChain::EditChain(QWidget *parent) : QWidget(parent), ui(new Ui::EditChain) {
     ui->setupUi(this);

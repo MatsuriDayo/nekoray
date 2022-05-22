@@ -48,27 +48,27 @@
      </property>
      <item>
       <property name="text">
-       <string>auto</string>
+       <string notr="true">auto</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>zero</string>
+       <string notr="true">zero</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>none</string>
+       <string notr="true">none</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>chacha20-poly1305</string>
+       <string notr="true">chacha20-poly1305</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>aes-128-gcm</string>
+       <string notr="true">aes-128-gcm</string>
       </property>
      </item>
     </widget>

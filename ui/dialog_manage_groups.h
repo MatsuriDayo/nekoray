@@ -21,19 +21,8 @@ public:
 
 private:
     Ui::DialogManageGroups *ui;
-    QMenu *menu;
-
-    void refresh_group_list(int postMain_gid);
-
-    void create_right_click_menu();
-
-    QMap<int, QSharedPointer<NekoRay::Group>> GetNowSelected();
 
 private slots:
 
-    void on_groupListTable_customContextMenuRequested(const QPoint &pos);
-
-    void on_groupListTable_itemDoubleClicked(QTableWidgetItem *item);
+    void on_add_clicked();
 };
-
-

@@ -183,7 +183,7 @@
     </message>
     <message>
         <source>Allow insecure</source>
-        <translation>不检查证书</translation>
+        <translation>不检查服务器证书（不安全）</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -203,43 +203,15 @@
     </message>
     <message>
         <source>Stream Settings</source>
-        <translation>流设置</translation>
-    </message>
-    <message>
-        <source>Bean</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>tcp</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ws</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>h2</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>grpc</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>tls</source>
-        <translation></translation>
+        <translation>流设置 (streamSettings)</translation>
     </message>
     <message>
         <source>Path</source>
-        <translation></translation>
+        <translation>路径(Path)</translation>
     </message>
     <message>
         <source>Host</source>
-        <translation></translation>
+        <translation>主机(Host)</translation>
     </message>
     <message>
         <source>SNI</source>
@@ -253,48 +225,8 @@
         <translation>分组</translation>
     </message>
     <message>
-        <source>Name</source>
-        <translation>名称</translation>
-    </message>
-    <message>
-        <source>Profile Count</source>
-        <translation>配置数</translation>
-    </message>
-    <message>
-        <source>Subscription</source>
-        <translation>订阅</translation>
-    </message>
-    <message>
-        <source>Edit</source>
-        <translation>编辑</translation>
-    </message>
-    <message>
-        <source>Add</source>
-        <translation>添加</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
-        <source>Update Subscription</source>
-        <translation>更新订阅</translation>
-    </message>
-    <message>
-        <source>Confirmation</source>
-        <translation>确认</translation>
-    </message>
-    <message>
-        <source>Update %1 item(s) ?</source>
-        <translation>更新 %1 个项目？</translation>
-    </message>
-    <message>
-        <source>Remove %1 item(s) ?</source>
-        <translation>删除 %1 个项目？</translation>
-    </message>
-    <message>
-        <source>Info</source>
-        <translation>信息</translation>
+        <source>New group</source>
+        <translation>新建分组</translation>
     </message>
 </context>
 <context>
@@ -308,24 +240,8 @@
         <translation>出站域名策略</translation>
     </message>
     <message>
-        <source>Ipv6 mode (VPN)</source>
-        <translation type="vanished">Ipv6 模式（VPN）</translation>
-    </message>
-    <message>
         <source>Disable</source>
         <translation>禁用</translation>
-    </message>
-    <message>
-        <source>Enable</source>
-        <translation type="vanished">启用</translation>
-    </message>
-    <message>
-        <source>Prefer</source>
-        <translation type="vanished">优先</translation>
-    </message>
-    <message>
-        <source>Only</source>
-        <translation type="vanished">仅</translation>
     </message>
     <message>
         <source>Sniffing Mode</source>
@@ -495,90 +411,6 @@
         <source>Form</source>
         <translation></translation>
     </message>
-    <message>
-        <source>obfs-local</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>v2ray-plugin</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>ssr</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-128-gcm</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-192-gcm</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-256-gcm</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>chacha20-poly1305</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xchacha20-poly1305</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-128-ctr</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-192-ctr</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-256-ctr</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-128-cfb</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-192-cfb</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>aes-256-cfb</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>rc4</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>rc4-md5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>salsa20</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>chacha20</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>chacha20-ietf</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>xchacha20</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>none</source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>EditSocks</name>
@@ -596,14 +428,6 @@
     </message>
     <message>
         <source>Form</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>4</source>
         <translation></translation>
     </message>
 </context>
@@ -636,25 +460,44 @@
         <source>UUID</source>
         <translation></translation>
     </message>
+</context>
+<context>
+    <name>GroupItem</name>
     <message>
-        <source>auto</source>
-        <translation></translation>
+        <source>Update Subscription</source>
+        <translation>更新订阅</translation>
     </message>
     <message>
-        <source>zero</source>
-        <translation></translation>
+        <source>Edit</source>
+        <translation>编辑</translation>
     </message>
     <message>
-        <source>none</source>
-        <translation></translation>
+        <source>Basic</source>
+        <translation>基本</translation>
     </message>
     <message>
-        <source>chacha20-poly1305</source>
-        <translation></translation>
+        <source>Subscription</source>
+        <translation>订阅</translation>
     </message>
     <message>
-        <source>aes-128-gcm</source>
-        <translation></translation>
+        <source>Confirmation</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Remove %1?</source>
+        <translation>删除 %1 ?</translation>
+    </message>
+    <message>
+        <source>Archive</source>
+        <translation>归档</translation>
+    </message>
+    <message>
+        <source>Update %1?</source>
+        <translation>更新 %1 ?</translation>
     </message>
 </context>
 <context>

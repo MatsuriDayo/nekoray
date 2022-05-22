@@ -54,13 +54,6 @@ namespace NekoRay::sub {
             if (!ok) ent = nullptr;
         }
 
-        // ShadowSocksR (as ss stream + plugin)
-        if (str.startsWith("ssr://")) {
-            ent = ProfileManager::NewProxyEntity("shadowsocks");
-            auto ok = ent->ShadowSocksBean()->TryParseSSR(str);
-            if (!ok) ent = nullptr;
-        }
-
         // VMess
         if (str.startsWith("vmess://")) {
             ent = ProfileManager::NewProxyEntity("vmess");
@@ -139,8 +132,8 @@ namespace NekoRay::sub {
                         }
                     }
                     auto protocol_n = proxy["protocol"];
-                    if (protocol_n.IsDefined()) { // SSR
-                        continue; // TODO SSR
+                    if (protocol_n.IsDefined()) {
+                        continue; // SSR
                     }
                 } else if (type == "socks5") {
                     auto bean = ent->SocksBean();

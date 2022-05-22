@@ -147,7 +147,7 @@
          </sizepolicy>
         </property>
         <property name="title">
-         <string>Bean</string>
+         <string notr="true">Bean</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
@@ -230,6 +230,9 @@
              <layout class="QGridLayout" name="_2">
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
+                <property name="toolTip">
+                 <string notr="true">底层传输方式。必须服务器一致，否则无法建立连接。</string>
+                </property>
                 <property name="text">
                  <string>Network</string>
                 </property>
@@ -239,33 +242,41 @@
                <widget class="QComboBox" name="network">
                 <item>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>tcp</string>
+                  <string notr="true">tcp</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>ws</string>
+                  <string notr="true">ws</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>h2</string>
+                  <string notr="true">h2</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>grpc</string>
+                  <string notr="true">grpc</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">quic</string>
                  </property>
                 </item>
                </widget>
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_3">
+                <property name="toolTip">
+                 <string notr="true">传输层安全。必须服务器一致，否则无法建立连接。</string>
+                </property>
                 <property name="text">
                  <string>Security</string>
                 </property>
@@ -275,17 +286,17 @@
                <widget class="QComboBox" name="security">
                 <item>
                  <property name="text">
-                  <string/>
+                  <string notr="true"/>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>none</string>
+                  <string notr="true">none</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string>tls</string>
+                  <string notr="true">tls</string>
                  </property>
                 </item>
                </widget>
@@ -309,6 +320,9 @@
            <layout class="QGridLayout" name="gridLayout">
             <item row="0" column="0">
              <widget class="QLabel" name="label_7">
+              <property name="toolTip">
+               <string notr="true">http path (ws/http) 或 serviceName (gRPC)</string>
+              </property>
               <property name="text">
                <string>Path</string>
               </property>
@@ -319,6 +333,9 @@
             </item>
             <item row="1" column="0">
              <widget class="QLabel" name="host_l">
+              <property name="toolTip">
+               <string notr="true">http host</string>
+              </property>
               <property name="text">
                <string>Host</string>
               </property>
@@ -344,6 +361,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QCheckBox" name="insecure">
+              <property name="toolTip">
+               <string notr="true">开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</string>
+              </property>
               <property name="text">
                <string>Allow insecure</string>
               </property>
@@ -360,6 +380,9 @@
               </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_5">
+                <property name="toolTip">
+                 <string notr="true">服务器名称指示，明文。</string>
+                </property>
                 <property name="text">
                  <string>SNI</string>
                 </property>
@@ -367,6 +390,9 @@
               </item>
               <item row="1" column="0">
                <widget class="QLabel" name="label_6">
+                <property name="toolTip">
+                 <string notr="true">固定证书</string>
+                </property>
                 <property name="text">
                  <string>Certificate</string>
                 </property>

@@ -2,9 +2,10 @@
 #include "ui_ProxyItem.h"
 
 
-ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent) :
+ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent, QListWidgetItem *item) :
         QWidget(parent), ui(new Ui::ProxyItem) {
     ui->setupUi(this);
+    this->item = item;
     if (ent == nullptr) return;
 
     ui->type->setText(ent->bean->DisplayType());

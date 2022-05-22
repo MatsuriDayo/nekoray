@@ -21,11 +21,6 @@
 
 // Dialogs
 
-#define Dialog_DialogBasicSettings "DialogBasicSettings"
-#define Dialog_DialogEditProfile "DialogEditProfile"
-#define Dialog_DialogManageGroups "DialogManageGroups"
-#define Dialog_DialogManageRoutes "DialogManageRoutes"
-
 inline QWidget *mainwindow;
 inline std::function<void(QString)> showLog;
 inline std::function<void(QString, QString)> showLog_ext;

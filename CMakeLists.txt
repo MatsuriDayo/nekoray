@@ -137,6 +137,9 @@ set(PROJECT_SOURCES
         ui/widget/ProxyItem.cpp
         ui/widget/ProxyItem.h
         ui/widget/ProxyItem.ui
+        ui/widget/GroupItem.cpp
+        ui/widget/GroupItem.h
+        ui/widget/GroupItem.ui
 
         res/neko.qrc
         res/theme/feiyangqingyun/qss.qrc

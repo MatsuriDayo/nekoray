@@ -79,13 +79,8 @@ namespace NekoRay::fmt {
             serverPort = url.port();
             method = url.userName();
             password = url.password();
-            plugin = "";
         }
         return true;
-    }
-
-    bool ShadowSocksBean::TryParseSSR(const QString &link) {
-        return false;
     }
 
     bool VMessBean::TryParseLink(const QString &link) {
