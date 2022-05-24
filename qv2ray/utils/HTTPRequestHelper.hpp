@@ -8,6 +8,7 @@
 
 namespace Qv2ray::common::network {
     struct HTTPResponse {
+        QString error;
         QByteArray data;
         QList<QPair<QByteArray, QByteArray>> header;
     };

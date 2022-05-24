@@ -89,20 +89,6 @@
         <item row="0" column="1">
          <widget class="MyLineEdit" name="url"/>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="label_3">
-          <property name="text">
-           <string>Update Subscription</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="update_sub">
-          <property name="text">
-           <string>Update</string>
-          </property>
-         </widget>
-        </item>
        </layout>
       </item>
      </layout>

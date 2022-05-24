@@ -91,6 +91,18 @@
         <source>Restart nekoray to take effect.</source>
         <translation>重启 nekoray 生效。</translation>
     </message>
+    <message>
+        <source>Concurrent</source>
+        <translation>并发</translation>
+    </message>
+    <message>
+        <source>Test URL</source>
+        <translation>测试 URL</translation>
+    </message>
+    <message>
+        <source>Use proxy when updating subscription</source>
+        <translation>更新订阅时使用代理</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -113,22 +125,6 @@
     <message>
         <source>Subscription</source>
         <translation>订阅</translation>
-    </message>
-    <message>
-        <source>Update Subscription</source>
-        <translation>更新订阅</translation>
-    </message>
-    <message>
-        <source>Update</source>
-        <translation>更新</translation>
-    </message>
-    <message>
-        <source>Confirmation</source>
-        <translation>确认</translation>
-    </message>
-    <message>
-        <source>update?</source>
-        <translation>更新？</translation>
     </message>
     <message>
         <source>URL</source>
@@ -893,6 +889,18 @@ Release note:
     <message>
         <source>Unavailable</source>
         <translation>不可用</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <source>Request with proxy but no profile started.</source>
+        <translation>即将使用代理请求，但是代理未启动。</translation>
     </message>
 </context>
 <context>

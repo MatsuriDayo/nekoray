@@ -226,6 +226,12 @@ namespace NekoRay::sub {
             if (asURL) {
                 showLog("URL=" + content2);
                 auto resp = NetworkRequestHelper::HttpGet(content2);
+                if (!resp.error.isEmpty()) {
+                    runOnUiThread([=] {
+                        MessageBoxWarning(QObject::tr("Error"), resp.error + "\n" + resp.data);
+                    });
+                    return;
+                }
                 content2 = resp.data;
                 sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
                 showLog("Content=" + content2);

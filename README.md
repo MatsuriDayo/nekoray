@@ -34,12 +34,12 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 自定义 v2ray stream settings     | ✔️                |
 | 自定义 v2ray outbound object     | ✔️                |
 | 外部 socks 接入 (类似 SagerNet 的插件) | ✔️                |
-| 自定义配置接入 (类似 Matsuri 的高级插件)    | ❌                 |
+| 自定义配置接入 (类似 Matsuri 的高级插件)    | ❓                 |
 | 自定义 v2ray 路由                  | ✔️                |
 | (实用类↓)                        |                   |
 | 日志显示                          | ✔️                |
 | 分组                            | ✔️                |
-| 订阅                            | ✔️ (不完善)          |
+| 订阅                            | ❓                 |
 | 剪切板导入                         | ✔️                |
 | QR Code 扫描                    | ✔️                |
 | 剪切板导出                         | ✔️                |
@@ -54,7 +54,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 预编译 Windows 二进制文件             | ✔️                |
 | 系统代理                          | Linux/Windows     |
 | 系统代理分流                        | ❌                 |
-| VPN                           | WIP               |
+| VPN                           | ❓                 |
 | 检查更新                          | ✔️                |
 | 主题样式                          | ✔️                |
 

@@ -20,6 +20,16 @@
    <string>Basic Settings</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <item row="7" column="3">
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
    <item row="2" column="3">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
@@ -30,14 +40,58 @@
        <string>Common</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string notr="true">Loglevel</string>
+          <string>Listen Address</string>
          </property>
         </widget>
        </item>
-       <item row="9" column="0">
+       <item row="1" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_10">
+         <item>
+          <widget class="QLineEdit" name="socks_ip"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Custom Inbound</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="custom_inbound_edit">
+           <property name="text">
+            <string>Edit</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="7" column="2">
+        <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="8,1,1">
+         <item>
+          <widget class="QLineEdit" name="test_url"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_14">
+           <property name="text">
+            <string>Concurrent</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="test_concurrent"/>
+         </item>
+        </layout>
+       </item>
+       <item row="10" column="0">
         <widget class="QLabel" name="label_6">
          <property name="text">
           <string notr="true">mux.cool</string>
@@ -45,45 +99,6 @@
         </widget>
        </item>
        <item row="2" column="2">
-        <widget class="QLineEdit" name="inbound_socks_port"/>
-       </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Listen Address</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <widget class="QComboBox" name="log_level">
-         <item>
-          <property name="text">
-           <string notr="true">debug</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">info</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">warning</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLineEdit" name="socks_ip"/>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Socks Listen Port</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
         <widget class="QWidget" name="horizontalWidget" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -105,6 +120,16 @@
            <number>0</number>
           </property>
           <item>
+           <widget class="QLineEdit" name="inbound_socks_port"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>HTTP Listen Port</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QLineEdit" name="inbound_http_port"/>
           </item>
           <item>
@@ -117,7 +142,26 @@
          </layout>
         </widget>
        </item>
-       <item row="9" column="2">
+       <item row="8" column="2">
+        <widget class="QComboBox" name="log_level">
+         <item>
+          <property name="text">
+           <string notr="true">debug</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">info</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">warning</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="10" column="2">
         <widget class="QWidget" name="horizontalWidget_1" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -158,24 +202,30 @@
          </layout>
         </widget>
        </item>
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_5">
+       <item row="8" column="0">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>HTTP Listen Port</string>
+          <string notr="true">Loglevel</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <widget class="QLabel" name="label_11">
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_2">
          <property name="text">
-          <string>Custom Inbound</string>
+          <string>Socks Listen Port</string>
          </property>
         </widget>
        </item>
-       <item row="6" column="2">
-        <widget class="QPushButton" name="custom_inbound_edit">
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
-          <string>Edit</string>
+          <string>Test URL</string>
          </property>
         </widget>
        </item>
@@ -234,6 +284,9 @@
        <string>Subscription</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="0" column="1">
+        <widget class="MyLineEdit" name="user_agent"/>
+       </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_4">
          <property name="text">
@@ -241,8 +294,12 @@
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="MyLineEdit" name="user_agent"/>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="sub_use_proxy">
+         <property name="text">
+          <string>Use proxy when updating subscription</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -356,16 +413,6 @@
      </widget>
     </widget>
    </item>
-   <item row="7" column="3">
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -376,14 +423,26 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>tabWidget</tabstop>
   <tabstop>socks_ip</tabstop>
+  <tabstop>custom_inbound_edit</tabstop>
   <tabstop>inbound_socks_port</tabstop>
   <tabstop>inbound_http_port</tabstop>
   <tabstop>http_enable</tabstop>
+  <tabstop>test_url</tabstop>
+  <tabstop>test_concurrent</tabstop>
   <tabstop>log_level</tabstop>
   <tabstop>mux_cool</tabstop>
   <tabstop>mux_cool_enable</tabstop>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>theme</tabstop>
+  <tabstop>user_agent</tabstop>
+  <tabstop>core_v2ray_asset</tabstop>
+  <tabstop>core_v2ray_asset_pick</tabstop>
+  <tabstop>core_naive</tabstop>
+  <tabstop>core_naive_pick</tabstop>
+  <tabstop>core_hysteria</tabstop>
+  <tabstop>core_hysteria_pick</tabstop>
+  <tabstop>core_edit</tabstop>
  </tabstops>
  <resources/>
  <connections>

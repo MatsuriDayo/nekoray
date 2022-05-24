@@ -22,6 +22,8 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
     D_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_LOAD_INT(test_concurrent)
+    D_LOAD_STRING(test_url)
 
     connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
@@ -56,6 +58,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Subscription
 
     ui->user_agent->setText(NekoRay::dataStore->user_agent);
+    ui->sub_use_proxy->setChecked(NekoRay::dataStore->sub_use_proxy);
 
     // Core
 
@@ -65,20 +68,23 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->core_hysteria->setText(NekoRay::dataStore->extraCore->Get("hysteria"));
 
     connect(ui->core_v2ray_asset_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getExistingDirectory(this, tr("Select"), QDir::currentPath());
+        auto fn = QFileDialog::getExistingDirectory(this, tr("Select"), QDir::currentPath(),
+                                                    QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::ReadOnly);
         if (!fn.isEmpty()) {
             ui->core_v2ray_asset->setText(fn);
             MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
         }
     });
     connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
+        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath(),
+                                               "", nullptr, QFileDialog::Option::ReadOnly);
         if (!fn.isEmpty()) {
             ui->core_naive->setText(fn);
         }
     });
     connect(ui->core_hysteria_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath());
+        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath(),
+                                               "", nullptr, QFileDialog::Option::ReadOnly);
         if (!fn.isEmpty()) {
             ui->core_hysteria->setText(fn);
         }
@@ -103,10 +109,13 @@ void DialogBasicSettings::accept() {
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
     D_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_SAVE_INT(test_concurrent)
+    D_SAVE_STRING(test_url)
 
     // Subscription
 
     NekoRay::dataStore->user_agent = ui->user_agent->text();
+    NekoRay::dataStore->sub_use_proxy = ui->sub_use_proxy->isChecked();
 
     // Core
 

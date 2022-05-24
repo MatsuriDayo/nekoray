@@ -51,6 +51,7 @@ namespace NekoRay {
         QString core_cap_path = "../nekoray_core_cap";
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.9.premium";
+        bool sub_use_proxy = false;
         QString test_url = "truehttp://cp.cloudflare.com/";
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
@@ -85,33 +86,7 @@ namespace NekoRay {
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
 
-        DataStore() : JsonStore("groups/nekoray.json") {
-            _add(new configItem("routing", dynamic_cast<JsonStore *>(routing), itemType::jsonStore));
-            _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
-
-            _add(new configItem("core_path", &core_path, itemType::string));
-            _add(new configItem("core_cap_path", &core_cap_path, itemType::string));
-            _add(new configItem("user_agent", &user_agent, itemType::string));
-            _add(new configItem("test_url", &test_url, itemType::string));
-            _add(new configItem("current_group", &current_group, itemType::integer));
-            _add(new configItem("inbound_address", &inbound_address, itemType::string));
-            _add(new configItem("inbound_socks_port", &inbound_socks_port, itemType::integer));
-            _add(new configItem("inbound_http_port", &inbound_http_port, itemType::integer));
-            _add(new configItem("log_level", &log_level, itemType::string));
-            _add(new configItem("remote_dns", &remote_dns, itemType::string));
-            _add(new configItem("direct_dns", &direct_dns, itemType::string));
-            _add(new configItem("domain_strategy", &domain_strategy, itemType::string));
-            _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));
-            _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
-            _add(new configItem("mux_cool", &mux_cool, itemType::integer));
-            _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
-            _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
-            _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
-            _add(new configItem("theme", &theme, itemType::string));
-            _add(new configItem("custom_inbound", &custom_inbound, itemType::string));
-            _add(new configItem("custom_route", &custom_route, itemType::string));
-            _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
-        }
+        DataStore();
 
         // Running Cache
 

@@ -19,31 +19,19 @@ namespace Qv2ray::common::network {
 
     void
     NetworkRequestHelper::setAccessManagerAttributes(QNetworkRequest &request, QNetworkAccessManager &accessManager) {
-//        switch (GlobalConfig.networkConfig.proxyType) {
-//            case Qv2rayConfig_Network::QVPROXY_NONE: {
-//                DEBUG("Get without proxy.");
-//                accessManager.setProxy(QNetworkProxy(QNetworkProxy::ProxyType::NoProxy));
-//                break;
-//            }
-//            case Qv2rayConfig_Network::QVPROXY_SYSTEM: {
-//                accessManager.setProxy(QNetworkProxyFactory::systemProxyForQuery().first());
-//                break;
-//            }
-//            case Qv2rayConfig_Network::QVPROXY_CUSTOM: {
-//                QNetworkProxy p{
-//                        GlobalConfig.networkConfig.type == "http" ? QNetworkProxy::HttpProxy
-//                                                                  : QNetworkProxy::Socks5Proxy, //
-//                        GlobalConfig.networkConfig.address,                                                                //
-//                        quint16(GlobalConfig.networkConfig.port)                                                           //
-//                };
-//                accessManager.setProxy(p);
-//                break;
-//            }
-//            default:
-//                Q_UNREACHABLE();
-//        }
 
-// TODO update in proxy
+        // Use proxy
+        if (NekoRay::dataStore->sub_use_proxy) {
+            QNetworkProxy p{QNetworkProxy::Socks5Proxy, "127.0.0.1",
+                            static_cast<quint16>(NekoRay::dataStore->inbound_socks_port)};
+            accessManager.setProxy(p);
+            if (NekoRay::dataStore->started_id < 0) {
+                runOnUiThread([=] {
+                    MessageBoxWarning(QObject::tr("Warning"),
+                                      QObject::tr("Request with proxy but no profile started."));
+                });
+            }
+        }
 
         if (accessManager.proxy().type() == QNetworkProxy::Socks5Proxy) {
             DEBUG("Adding HostNameLookupCapability to proxy.");
@@ -75,7 +63,8 @@ namespace Qv2ray::common::network {
             loop.exec();
         }
         //
-        return HTTPResponse{_reply->readAll(), _reply->rawHeaderPairs()};
+        return HTTPResponse{_reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString(),
+                            _reply->readAll(), _reply->rawHeaderPairs()};
     }
 
     void NetworkRequestHelper::AsyncHttpGet(const QString &url, std::function<void(const QByteArray &)> funcPtr) {
