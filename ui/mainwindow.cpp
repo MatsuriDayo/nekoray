@@ -647,14 +647,12 @@ void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
     }
     auto dialog = new DialogEditProfile("", id, this);
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
-    dialog->show();
 }
 
 void MainWindow::on_menu_add_from_input_triggered() {
     if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
     auto dialog = new DialogEditProfile("socks", NekoRay::dataStore->current_group, this);
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
-    dialog->show();
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
@@ -854,8 +852,7 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
 
 void MainWindow::neko_start(int _id) {
     auto ents = GetNowSelected();
-    if (ents.isEmpty()) return;
-    auto ent = _id < 0 ? ents.first() : NekoRay::profileManager->GetProfile(_id);
+    auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoRay::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
 
     if (select_mode) {

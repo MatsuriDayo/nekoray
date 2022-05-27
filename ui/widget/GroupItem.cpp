@@ -100,6 +100,5 @@ void GroupItem::on_remove_clicked() {
         NekoRay::profileManager->DeleteGroup(ent->id);
         dialog_message(Dialog_DialogManageGroups, "refresh-1");
         delete item;
-        deleteLater();
     }
 }

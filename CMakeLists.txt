@@ -4,10 +4,6 @@ project(nekoray VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTORCC ON)
-
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -27,12 +23,16 @@ list(APPEND CMAKE_PREFIX_PATH ${MY_DEPS_DIR})
 # NKR
 include("cmake/nkr.cmake")
 
-if (MINGW)
+if (NKR_NO_EXTERNAL)
     add_compile_definitions(NKR_NO_EXTERNAL)
 else ()
-    # My proto
-    include("cmake/myproto.cmake")
-    list(APPEND NKR_EXTERNAL_TARGETS myproto)
+    if (NKR_NO_GRPC)
+        add_compile_definitions(NKR_NO_GRPC)
+    else ()
+        # My proto
+        include("cmake/myproto.cmake")
+        list(APPEND NKR_EXTERNAL_TARGETS myproto)
+    endif ()
 
     # yaml-cpp (static)
     find_package(yaml-cpp CONFIG REQUIRED) # only Release is built
@@ -49,6 +49,8 @@ if (DBG_CMAKE)
     print_target_properties(myproto)
     print_target_properties(yaml-cpp)
     print_target_properties(ZXing::ZXing)
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
+    set_property(GLOBAL PROPERTY RULE_LAUNCH_LINK "${CMAKE_COMMAND} -E time")
 endif ()
 
 # Sources
@@ -177,6 +179,12 @@ else ()
                 )
     endif ()
 endif ()
+
+# Target
+
+set_property(TARGET nekoray PROPERTY AUTOUIC ON)
+set_property(TARGET nekoray PROPERTY AUTOMOC ON)
+set_property(TARGET nekoray PROPERTY AUTORCC ON)
 
 # Target Link
 

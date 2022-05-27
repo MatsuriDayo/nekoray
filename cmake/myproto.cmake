@@ -25,6 +25,3 @@ target_include_directories(myproto PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
 get_target_property(grpc_cpp_plugin_location gRPC::grpc_cpp_plugin LOCATION)
 protobuf_generate(TARGET myproto LANGUAGE cpp)
 protobuf_generate(TARGET myproto LANGUAGE grpc GENERATE_EXTENSIONS .grpc.pb.h .grpc.pb.cc PLUGIN "protoc-gen-grpc=${grpc_cpp_plugin_location}")
-
-get_target_property(SOURCES myproto SOURCES)
-set_property(SOURCE ${SOURCES} PROPERTY SKIP_AUTOGEN ON)

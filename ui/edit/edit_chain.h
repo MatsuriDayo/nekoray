@@ -23,7 +23,7 @@ private:
     Ui::EditChain *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 
-    void keyPressEvent(QKeyEvent *event) override;
+    void AddProfileToListIfExist(int id);
 
 private slots:
 

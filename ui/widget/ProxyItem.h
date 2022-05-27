@@ -20,4 +20,9 @@ public:
 private:
     Ui::ProxyItem *ui;
     QListWidgetItem *item;
+    QSharedPointer<NekoRay::ProxyEntity> ent;
+
+private slots:
+
+    void on_remove_clicked();
 };

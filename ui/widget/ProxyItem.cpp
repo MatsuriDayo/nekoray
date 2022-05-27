@@ -6,6 +6,7 @@ ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity>
         QWidget(parent), ui(new Ui::ProxyItem) {
     ui->setupUi(this);
     this->item = item;
+    this->ent = ent;
     if (ent == nullptr) return;
 
     ui->type->setText(ent->bean->DisplayType());
@@ -17,4 +18,12 @@ ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity>
 
 ProxyItem::~ProxyItem() {
     delete ui;
+}
+
+void ProxyItem::on_remove_clicked() {
+    if (QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->bean->DisplayName())) ==
+        QMessageBox::StandardButton::Yes) {
+        // TODO do remove (or not) -> callback
+        delete item;
+    }
 }

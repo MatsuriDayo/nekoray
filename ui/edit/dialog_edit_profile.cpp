@@ -14,6 +14,8 @@
 
 #include <QInputDialog>
 
+#define ADJUST_SIZE runOnUiThread([=] { adjustSize(); adjustPosition(mainwindow); }, this);
+
 DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent)
         : QDialog(parent),
           ui(new Ui::DialogEditProfile) {
@@ -41,9 +43,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
                 ui->host_l->setVisible(true);
             }
         }
-        //?
-        adjustSize();
-        adjustSize();
+        ADJUST_SIZE
     });
     ui->network->removeItem(0);
 
@@ -54,9 +54,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         } else {
             ui->security_box->setVisible(false);
         }
-        //?
-        adjustSize();
-        adjustSize();
+        ADJUST_SIZE
     });
     ui->security->removeItem(0);
 
@@ -175,9 +173,10 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     // 左边 bean
     auto old = ui->bean->layout()->itemAt(0)->widget();
     ui->bean->layout()->removeWidget(old);
-    old->deleteLater();
     ui->bean->layout()->addWidget(innerWidget);
     ui->bean->setTitle(ent->bean->DisplayType());
+    delete old;
+
     // 左边 bean inner editor
     innerEditor->get_edit_dialog = [&]() {
         return (QWidget *) this;
@@ -194,10 +193,12 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port->setValidator(QRegExpValidator_Number, this));
 
     dialog_editor_cache_updated();
+    ADJUST_SIZE
 
-    //?
-    adjustSize();
-    adjustSize();
+    // 第一次显示
+    if (isHidden()) {
+        show();
+    }
 }
 
 void DialogEditProfile::accept() {

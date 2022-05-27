@@ -322,10 +322,6 @@
         <source>Traffic order is from top to bottom</source>
         <translation>流量顺序是从上到下（最后一个配置为流量的出口）</translation>
     </message>
-    <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
 </context>
 <context>
     <name>EditCustom</name>
@@ -796,6 +792,21 @@
     <message>
         <source>QR Code not found</source>
         <translation>未扫描到 QR Code</translation>
+    </message>
+</context>
+<context>
+    <name>ProxyItem</name>
+    <message>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Remove %1?</source>
+        <translation>删除 %1 ?</translation>
     </message>
 </context>
 <context>

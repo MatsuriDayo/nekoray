@@ -5,26 +5,8 @@
 #include "ui/widget/ProxyItem.h"
 #include "db/Database.hpp"
 
-#define AddProfileToListIfExist(_id) auto __ent = NekoRay::profileManager->GetProfile(_id); \
-if (__ent != nullptr && __ent->type != "chain") { \
-auto wI = new QListWidgetItem(); \
-auto w = new ProxyItem(this, __ent, wI); \
-wI->setData(114514, _id); \
-wI->setSizeHint(w->sizeHint()); \
-ui->listWidget->addItem(wI);                                                                \
-ui->listWidget->setItemWidget(wI, w); \
-}
-
-#define DeleteSelected auto items = ui->listWidget->selectedItems(); \
-for (auto item: items) { \
-delete item; \
-} // TODO -> ProxyItem button & callback
-
 EditChain::EditChain(QWidget *parent) : QWidget(parent), ui(new Ui::EditChain) {
     ui->setupUi(this);
-    ui->listWidget->addActions(CreateActions(this, QStringList{tr("Delete")}, [=](QAction *action) {
-        DeleteSelected
-    }));
 }
 
 EditChain::~EditChain() {
@@ -36,7 +18,7 @@ void EditChain::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     auto bean = this->ent->ChainBean();
 
     for (auto id: bean->list) {
-        AddProfileToListIfExist(id)
+        AddProfileToListIfExist(id);
     }
 }
 
@@ -56,17 +38,18 @@ void EditChain::on_select_profile_clicked() {
     get_edit_dialog()->hide();
     GetMainWindow()->start_select_mode(this, [=](int id) {
         get_edit_dialog()->show();
-        AddProfileToListIfExist(id)
+        AddProfileToListIfExist(id);
     });
 }
 
-void EditChain::keyPressEvent(QKeyEvent *event) {
-    switch (event->key()) {
-        case Qt::Key_Delete: {
-            DeleteSelected
-            break;
-        }
-        default:
-            QWidget::keyPressEvent(event);
+void EditChain::AddProfileToListIfExist(int id) {
+    auto _ent = NekoRay::profileManager->GetProfile(id);
+    if (_ent != nullptr && _ent->type != "chain") {
+        auto wI = new QListWidgetItem();
+        auto w = new ProxyItem(this, _ent, wI);
+        wI->setData(114514, id);
+        wI->setSizeHint(w->sizeHint());
+        ui->listWidget->addItem(wI);
+        ui->listWidget->setItemWidget(wI, w);
     }
 }

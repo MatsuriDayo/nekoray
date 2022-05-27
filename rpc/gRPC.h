@@ -1,6 +1,5 @@
 #pragma once
 
-// MINGW gRPC build not ok now
 #ifdef NKR_NO_EXTERNAL
 #define NKR_NO_GRPC
 #endif
