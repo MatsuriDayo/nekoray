@@ -134,6 +134,22 @@ namespace NekoRay {
         QFile(QString("profiles/%1.json").arg(id)).remove();
     }
 
+    void ProfileManager::MoveProfile(const QSharedPointer<ProxyEntity> &ent, int gid) {
+        if (gid == ent->gid || gid < 0) return;
+        auto oldGroup = GetGroup(ent->gid);
+        if (oldGroup != nullptr && !oldGroup->order.isEmpty()) {
+            oldGroup->order.removeAll(ent->id);
+            oldGroup->Save();
+        }
+        auto newGroup = GetGroup(gid);
+        if (newGroup != nullptr && !newGroup->order.isEmpty()) {
+            newGroup->order.push_back(ent->id);
+            newGroup->Save();
+        }
+        ent->gid = gid;
+        ent->Save();
+    }
+
     QSharedPointer<ProxyEntity> ProfileManager::GetProfile(int id) {
         if (profiles.contains(id)) {
             return profiles[id];

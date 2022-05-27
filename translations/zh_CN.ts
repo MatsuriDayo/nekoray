@@ -793,6 +793,14 @@
         <source>QR Code not found</source>
         <translation>未扫描到 QR Code</translation>
     </message>
+    <message>
+        <source>Move</source>
+        <translation>移动</translation>
+    </message>
+    <message>
+        <source>Move %1</source>
+        <translation>移动 %1</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

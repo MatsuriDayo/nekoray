@@ -69,6 +69,8 @@ private slots:
 
     void on_menu_add_from_clipboard_triggered();
 
+    void on_menu_move_triggered();
+
     void on_menu_delete_triggered();
 
     void on_menu_reset_traffic_triggered();

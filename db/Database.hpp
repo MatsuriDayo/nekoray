@@ -29,6 +29,8 @@ namespace NekoRay {
 
         void DeleteProfile(int id);
 
+        void MoveProfile(const QSharedPointer<ProxyEntity> &ent, int gid);
+
         QSharedPointer<ProxyEntity> GetProfile(int id);
 
         bool AddGroup(const QSharedPointer<Group> &ent);

@@ -91,7 +91,8 @@
          <string>Document</string>
         </property>
         <property name="icon">
-         <iconset theme="data-information"/>
+         <iconset theme="data-information">
+          <normaloff>.</normaloff>.</iconset>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -327,6 +328,7 @@
     <addaction name="menu_start"/>
     <addaction name="menu_stop"/>
     <addaction name="separator"/>
+    <addaction name="menu_move"/>
     <addaction name="menu_delete"/>
     <addaction name="menu_delete_repeat"/>
     <addaction name="menu_reset_traffic"/>
@@ -472,6 +474,11 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="menu_move">
+   <property name="text">
+    <string>Move</string>
    </property>
   </action>
  </widget>

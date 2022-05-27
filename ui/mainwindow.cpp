@@ -33,6 +33,7 @@
 #include <QScreen>
 #include <QDesktopServices>
 #include <utility>
+#include <QInputDialog>
 
 #ifndef NKR_NO_GRPC
 using namespace NekoRay::rpc;
@@ -665,6 +666,29 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
     if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
     auto clipboard = QApplication::clipboard()->text();
     NekoRay::sub::rawUpdater->AsyncUpdate(clipboard);
+}
+
+void MainWindow::on_menu_move_triggered() {
+    auto ents = GetNowSelected();
+    if (ents.count() != 1) return;
+    auto ent = ents.first();
+
+    auto items = QStringList{};
+    for (auto &&group: NekoRay::profileManager->groups) {
+        if (!group->url.isEmpty()) continue;
+        items += Int2String(group->id) + " " + group->name;
+    }
+
+    bool ok;
+    auto a = QInputDialog::getItem(nullptr,
+                                   tr("Move"),
+                                   tr("Move %1").arg(ent->bean->DisplayName()),
+                                   items, 0, false, &ok);
+    if (!ok) return;
+
+    auto gid = SubStrBefore(a, " ").toInt();
+    NekoRay::profileManager->MoveProfile(ent, gid);
+    refresh_proxy_list();
 }
 
 void MainWindow::on_menu_delete_triggered() {
