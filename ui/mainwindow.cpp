@@ -15,6 +15,7 @@
 #include "ui/dialog_manage_routes.h"
 
 #include "3rdparty/qrcodegen.hpp"
+#include "3rdparty/VT100Parser.hpp"
 
 #ifndef NKR_NO_EXTERNAL
 
@@ -133,6 +134,11 @@ MainWindow::MainWindow(QWidget *parent)
     showLog_ext = [=](const QString &tag, const QString &log) {
         runOnUiThread([=] {
             show_log_impl("[" + tag + "] " + log);
+        });
+    };
+    showLog_ext_vt100 = [=](const QString &log) {
+        runOnUiThread([=] {
+            show_log_impl(cleanVT100String(log));
         });
     };
 

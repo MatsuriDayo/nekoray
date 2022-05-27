@@ -24,6 +24,7 @@
 inline QWidget *mainwindow;
 inline std::function<void(QString)> showLog;
 inline std::function<void(QString, QString)> showLog_ext;
+inline std::function<void(QString)> showLog_ext_vt100;
 inline std::function<void(QString, QString)> dialog_message;
 
 // Utils
