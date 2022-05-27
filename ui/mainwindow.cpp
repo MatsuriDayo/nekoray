@@ -893,7 +893,7 @@ void MainWindow::neko_start(int _id) {
     NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
-    for (auto extC: NekoRay::sys::running_ext) {
+    for (auto extC: result->ext) {
         extC->Start();
     }
 
@@ -982,6 +982,8 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 #ifndef NKR_NO_GRPC
 
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
+    neko_stop();
+
     runOnNewThread([=]() {
         auto group = NekoRay::ProfileManager::CurrentGroup();
         if (group->archive) return;
@@ -1020,8 +1022,20 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
                     req.set_timeout(3000);
                     req.set_url(NekoRay::dataStore->test_url.toStdString());
 
+                    //
+                    QList<NekoRay::sys::ExternalProcess *> ext;
+
                     if (mode == libcore::TestMode::UrlTest) {
                         auto c = NekoRay::fmt::BuildConfig(profile, true);
+                        // external test ???
+                        if (!c->ext.isEmpty()) {
+                            ext = c->ext;
+                            for (auto extC: ext) {
+                                extC->Start();
+                            }
+                            QThread::msleep(500);
+                        }
+                        //
                         auto config = new libcore::LoadConfigReq;
                         config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
                         req.set_allocated_config(config);
@@ -1031,6 +1045,10 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
 
                     bool rpcOK;
                     auto result = defaultClient->Test(&rpcOK, req);
+                    for (auto extC: ext) {
+                        extC->Kill();
+                        extC->deleteLater();
+                    }
                     if (!rpcOK) return;
 
                     profile->latency = result.ms();

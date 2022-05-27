@@ -13,6 +13,10 @@ namespace NekoRay::sys {
     }
 
     void ExternalProcess::Start() {
+        if (started) return;
+        started = true;
+        running_ext += this;
+
         connect(this, &QProcess::readyReadStandardOutput, this,
                 [&]() {
                     showLog_ext_vt100(readAllStandardOutput().trimmed());
@@ -39,7 +43,9 @@ namespace NekoRay::sys {
     }
 
     void ExternalProcess::Kill() {
+        if (killed) return;
         killed = true;
+        running_ext.removeAll(this);
         QProcess::kill();
         QProcess::waitForFinished(500);
     }

@@ -17,14 +17,17 @@ namespace NekoRay::sys {
                         const QStringList &arguments,
                         const QStringList &env);
 
+        // start & kill is one time
 
         void Start();
 
         void Kill();
 
     private:
+        bool started = false;
         bool killed = false;
     };
 
+    // start & kill change this list
     inline QList<ExternalProcess *> running_ext;
 }

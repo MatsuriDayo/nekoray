@@ -1,6 +1,5 @@
 #include "ConfigBuilder.hpp"
 #include "db/Database.hpp"
-#include "sys/ExternalProcess.hpp"
 
 namespace NekoRay::fmt {
 
@@ -390,7 +389,7 @@ namespace NekoRay::fmt {
                 // EXTERNAL PROCESS
                 auto extC = new sys::ExternalProcess(ent->bean->DisplayType(),
                                                      extR.program, extR.arguments, extR.env);
-                sys::running_ext += extC;
+                status->result->ext += extC;
             } else {
                 coreR = ent->bean->BuildCoreObj();
                 if (!coreR.error.isEmpty()) { // rejected

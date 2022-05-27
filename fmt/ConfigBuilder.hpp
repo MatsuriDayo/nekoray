@@ -1,6 +1,7 @@
 #pragma once
 
 #include "db/ProxyEntity.hpp"
+#include "sys/ExternalProcess.hpp"
 
 namespace NekoRay::fmt {
     class BuildConfigResult {
@@ -10,6 +11,8 @@ namespace NekoRay::fmt {
 
         QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including direct
         QSharedPointer<traffic::TrafficData> outboundStat; // main
+
+        QList<sys::ExternalProcess *> ext;
     };
 
     class BuildConfigStatus {
