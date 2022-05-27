@@ -18,6 +18,17 @@ namespace NekoRay::traffic {
 #endif
     }
 
+
+    QJsonArray TrafficLooper::get_connection_list() {
+#ifndef NKR_NO_GRPC
+        auto str = NekoRay::rpc::defaultClient->ListV2rayConnections();
+        QJsonDocument jsonDocument = QJsonDocument::fromJson(str.c_str());
+        return jsonDocument.array();
+#else
+        return QJsonArray{};
+#endif
+    }
+
     [[noreturn]] void TrafficLooper::loop() {
         while (true) {
             if (dataStore->traffic_loop_interval < 500 || dataStore->traffic_loop_interval > 2000)
@@ -42,10 +53,15 @@ namespace NekoRay::traffic {
 
             // do update
             loop_mutex.lock();
+
             for (const auto &item: items) {
                 update(item.get());
             }
             update(bypass);
+
+            // do conn list update
+            auto conn_list = get_connection_list();
+
             loop_mutex.unlock();
 
             // post to UI
@@ -59,6 +75,7 @@ namespace NekoRay::traffic {
                     if (item->id < 0) continue;
                     m->refresh_proxy_list(item->id);
                 }
+                m->refresh_connection_list(conn_list);
             });
         }
     }

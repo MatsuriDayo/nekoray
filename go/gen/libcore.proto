@@ -12,6 +12,7 @@ service LibcoreService {
   rpc Stop(EmptyReq) returns (ErrorResp) {}
   rpc Test(TestReq) returns (TestResp) {}
   rpc QueryStats(QueryStatsReq) returns (QueryStatsResp) {}
+  rpc ListV2rayConnections(EmptyReq) returns (ListV2rayConnectionsResp) {}
 }
 
 message EmptyReq {}
@@ -71,4 +72,8 @@ message UpdateResp {
   string download_url = 3;
   string release_url = 4;
   string release_note = 5;
+}
+
+message ListV2rayConnectionsResp {
+  string matsuri_connections_json = 1;
 }

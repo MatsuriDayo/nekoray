@@ -182,6 +182,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
+    ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+    ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
     // refresh
     this->refresh_groups();
@@ -285,6 +288,7 @@ MainWindow::MainWindow(QWidget *parent)
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
             if (core_process_killed) return;
+            runOnUiThread([=] { neko_stop(true); });
             QThread::sleep(2);
         }
     });
@@ -1208,4 +1212,57 @@ void MainWindow::start_select_mode(QObject *context, const std::function<void(in
     select_mode = true;
     connectOnce(this, &MainWindow::profile_selected, context, callback);
     refresh_status();
+}
+
+// 连接列表
+
+inline QJsonArray last_arr;
+
+void MainWindow::refresh_connection_list(const QJsonArray &arr) {
+    if (last_arr == arr) {
+        return;
+    }
+    last_arr = arr;
+
+    ui->tableWidget_conn->setRowCount(0);
+
+    int row = -1;
+    for (const auto &item: arr) {
+        row++;
+        ui->tableWidget_conn->insertRow(row);
+
+        // C0: Status
+        auto *f = new QTableWidgetItem("");
+        f->setData(114514, item["ID"].toInt());
+        auto start_t = item["Start"].toInt();
+        auto end_t = item["End"].toInt();
+        if (end_t > 0) {
+            f->setText(tr("End"));
+        } else {
+            f->setText(tr("Active"));
+        }
+        f->setToolTip(tr("Start: %1\nEnd: %2").arg(
+                DisplayTime(start_t),
+                end_t > 0 ? DisplayTime(end_t) : ""
+        ));
+        ui->tableWidget_conn->setItem(row, 0, f);
+
+        // C1: Outbound
+        f = f->clone();
+        f->setToolTip("");
+        f->setText(item["Tag"].toString());
+        ui->tableWidget_conn->setItem(row, 1, f);
+
+        // C2: Destination
+        f = f->clone();
+        QString target1 = item["Dest"].toString();
+        QString target2 = item["RDest"].toString();
+        if (!target2.isEmpty() && target1 != target2) {
+            std::swap(target1, target2);
+        } else {
+            target2 = "";
+        }
+        f->setText("[" + target1 + "] " + target2);
+        ui->tableWidget_conn->setItem(row, 2, f);
+    }
 }

@@ -30,6 +30,7 @@ type LibcoreServiceClient interface {
 	Stop(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ErrorResp, error)
 	Test(ctx context.Context, in *TestReq, opts ...grpc.CallOption) (*TestResp, error)
 	QueryStats(ctx context.Context, in *QueryStatsReq, opts ...grpc.CallOption) (*QueryStatsResp, error)
+	ListV2RayConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListV2RayConnectionsResp, error)
 }
 
 type libcoreServiceClient struct {
@@ -103,6 +104,15 @@ func (c *libcoreServiceClient) QueryStats(ctx context.Context, in *QueryStatsReq
 	return out, nil
 }
 
+func (c *libcoreServiceClient) ListV2RayConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListV2RayConnectionsResp, error) {
+	out := new(ListV2RayConnectionsResp)
+	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/ListV2rayConnections", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // LibcoreServiceServer is the server API for LibcoreService service.
 // All implementations must embed UnimplementedLibcoreServiceServer
 // for forward compatibility
@@ -115,6 +125,7 @@ type LibcoreServiceServer interface {
 	Stop(context.Context, *EmptyReq) (*ErrorResp, error)
 	Test(context.Context, *TestReq) (*TestResp, error)
 	QueryStats(context.Context, *QueryStatsReq) (*QueryStatsResp, error)
+	ListV2RayConnections(context.Context, *EmptyReq) (*ListV2RayConnectionsResp, error)
 	mustEmbedUnimplementedLibcoreServiceServer()
 }
 
@@ -142,6 +153,9 @@ func (UnimplementedLibcoreServiceServer) Test(context.Context, *TestReq) (*TestR
 }
 func (UnimplementedLibcoreServiceServer) QueryStats(context.Context, *QueryStatsReq) (*QueryStatsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryStats not implemented")
+}
+func (UnimplementedLibcoreServiceServer) ListV2RayConnections(context.Context, *EmptyReq) (*ListV2RayConnectionsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListV2RayConnections not implemented")
 }
 func (UnimplementedLibcoreServiceServer) mustEmbedUnimplementedLibcoreServiceServer() {}
 
@@ -282,6 +296,24 @@ func _LibcoreService_QueryStats_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
+func _LibcoreService_ListV2RayConnections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmptyReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(LibcoreServiceServer).ListV2RayConnections(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/libcore.LibcoreService/ListV2rayConnections",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(LibcoreServiceServer).ListV2RayConnections(ctx, req.(*EmptyReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // LibcoreService_ServiceDesc is the grpc.ServiceDesc for LibcoreService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -316,6 +348,10 @@ var LibcoreService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "QueryStats",
 			Handler:    _LibcoreService_QueryStats_Handler,
+		},
+		{
+			MethodName: "ListV2rayConnections",
+			Handler:    _LibcoreService_ListV2RayConnections_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

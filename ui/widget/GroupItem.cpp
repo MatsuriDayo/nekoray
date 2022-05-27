@@ -33,10 +33,8 @@ QString ParseSubInfo(const QString &info) {
         expire = re3.cap(1).toLongLong();
     }
 
-    QDateTime t;
-    t.setTime_t(expire);
     result = QObject::tr("Used: %1 Total: %2 Expire: %3")
-            .arg(ReadableSize(used), ReadableSize(total), QLocale().toString(t, QLocale::ShortFormat));
+            .arg(ReadableSize(used), ReadableSize(total), DisplayTime(expire, QLocale::ShortFormat));
 
     return result;
 }

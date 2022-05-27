@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+	"github.com/v2fly/v2ray-core/v5/nekoutils"
 )
 
 var instance *libcore.V2RayInstance
@@ -18,7 +19,9 @@ var setupCore_platforms = make([]func(), 0)
 
 func setupCore() {
 	device.IsNekoray = true
+	nekoutils.Connection_V2Ray_Enabled = true
 	libcore.InitCore("", "", "", nil, ".", "moe.nekoray.pc:bg", true, 50)
+
 	for _, f := range setupCore_platforms {
 		f()
 	}
@@ -72,6 +75,8 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 	}()
 
 	if instance != nil {
+		libcore.ResetConnections(false)
+		libcore.ResetConnections(true)
 		err = instance.Close()
 		instance = nil
 	}
@@ -147,4 +152,11 @@ func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *ge
 		out.Traffic = instance.QueryStats(in.Tag, in.Direct)
 	}
 	return
+}
+
+func (s *server) ListV2RayConnections(ctx context.Context, in *gen.EmptyReq) (*gen.ListV2RayConnectionsResp, error) {
+	out := &gen.ListV2RayConnectionsResp{
+		MatsuriConnectionsJson: libcore.ListV2rayConnections(),
+	}
+	return out, nil
 }

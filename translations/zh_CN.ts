@@ -801,6 +801,40 @@
         <source>Move %1</source>
         <translation>移动 %1</translation>
     </message>
+    <message>
+        <source>Log</source>
+        <translation>日志</translation>
+    </message>
+    <message>
+        <source>Connection</source>
+        <translation>连接</translation>
+    </message>
+    <message>
+        <source>Status</source>
+        <translation>状态</translation>
+    </message>
+    <message>
+        <source>Outbound</source>
+        <translation>出站</translation>
+    </message>
+    <message>
+        <source>Destination</source>
+        <translation>目标地址</translation>
+    </message>
+    <message>
+        <source>End</source>
+        <translation>结束</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>活动</translation>
+    </message>
+    <message>
+        <source>Start: %1
+End: %2</source>
+        <translation>开始: %1
+结束: %2</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

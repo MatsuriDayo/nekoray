@@ -70,7 +70,7 @@ namespace NekoRay {
 
         // DNS
         QString remote_dns = "https://1.0.0.1/dns-query";
-        QString direct_dns = "https://223.5.5.5/dns-query";
+        QString direct_dns = "https+local://223.5.5.5/dns-query";
         bool dns_routing = true;
 
         // Routing

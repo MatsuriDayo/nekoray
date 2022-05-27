@@ -179,6 +179,12 @@ inline QString DisplayAddress(QString serverAddress, int serverPort) {
 
 // Format
 
+inline QString DisplayTime(long long time, QLocale::FormatType formatType = QLocale::LongFormat) {
+    QDateTime t;
+    t.setTime_t(time);
+    return QLocale().toString(t, formatType);
+}
+
 inline QString ReadableSize(const qint64 &size) {
     double sizeAsDouble = size;
     static QStringList measures;

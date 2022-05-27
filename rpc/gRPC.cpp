@@ -120,6 +120,19 @@ namespace NekoRay::rpc {
         *rpcOK = true;
         return reply;
     }
+
+    std::string Client::ListV2rayConnections() {
+        MAKE_CONTEXT
+        libcore::EmptyReq request;
+        libcore::ListV2rayConnectionsResp reply;
+        grpc::Status status = _stub->ListV2rayConnections(&context, request, &reply);
+
+        if (!status.ok()) {
+            return "";
+        }
+
+        return reply.matsuri_connections_json();
+    }
 }
 
 #endif

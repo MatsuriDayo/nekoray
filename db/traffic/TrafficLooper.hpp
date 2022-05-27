@@ -20,6 +20,8 @@ namespace NekoRay::traffic {
 
         static void update(TrafficData *item);
 
+        static QJsonArray get_connection_list();
+
         [[noreturn]] void loop();
     };
 

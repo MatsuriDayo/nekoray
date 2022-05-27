@@ -31,6 +31,8 @@ namespace NekoRay::rpc {
 
         long long QueryStats(const std::string &tag, const std::string &direct);
 
+        std::string ListV2rayConnections();
+
     private:
         std::unique_ptr<libcore::LibcoreService::Stub> _stub;
         std::function<void(const QString &)> onError;
