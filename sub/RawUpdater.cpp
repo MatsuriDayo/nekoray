@@ -203,7 +203,7 @@ namespace NekoRay::sub {
     }
 
     // 不要刷新，下载导入完会自己刷新
-    void RawUpdater::AsyncUpdate(const QString &str, int _update_sub_gid) {
+    void RawUpdater::AsyncUpdate(const QString &str, int _update_sub_gid, const std::function<void()> &callback) {
         dataStore->updated_count = 0;
         this->update_sub_gid = _update_sub_gid;
 
@@ -226,6 +226,7 @@ namespace NekoRay::sub {
             QString sub_user_info;
             auto group = profileManager->GetGroup(update_sub_gid);
 
+            // 网络请求
             if (asURL) {
                 showLog("URL=" + content2);
                 auto resp = NetworkRequestHelper::HttpGet(content2);
@@ -247,15 +248,18 @@ namespace NekoRay::sub {
             QList<QSharedPointer<ProxyEntity>> only_out; // 只在更新后有的
             QList<QSharedPointer<ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
 
-            if (group != nullptr) {// 订阅更新（解析）前
+            // 订阅解析前
+            if (group != nullptr) {
                 in = group->Profiles();
                 group->info = sub_user_info;
+                group->order.clear();
+                group->Save();
             }
 
             // 解析并添加 profile
             update(content2);
 
-            if (group != nullptr) {// 订阅更新完
+            if (group != nullptr) {
                 out_all = group->Profiles();
 
                 ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
@@ -277,7 +281,11 @@ namespace NekoRay::sub {
                 for (const auto &ent: only_in) {
                     notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
                 }
+
                 runOnUiThread([=] {
+                    if (callback != nullptr) {
+                        callback();
+                    }
                     MessageBoxWarning(QObject::tr("Change"),
                                       QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
                                               arg(only_out.length()).arg(notice_added).

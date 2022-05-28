@@ -222,9 +222,9 @@ namespace NekoRay {
 
     // 订阅
 
-    void ProfileManager::AsyncUpdateSubscription(int gid) {
+    void ProfileManager::AsyncUpdateSubscription(int gid, const std::function<void()> &callback) {
         auto group = GetGroup(gid);
-        sub::rawUpdater->AsyncUpdate(group->url, gid);
+        sub::rawUpdater->AsyncUpdate(group->url, gid, callback);
     }
 
 }

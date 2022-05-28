@@ -41,7 +41,7 @@ namespace NekoRay {
 
         static QSharedPointer<Group> CurrentGroup();
 
-        void AsyncUpdateSubscription(int gid);
+        void AsyncUpdateSubscription(int gid, const std::function<void()> &callback = nullptr);
 
     private:
         void LoadManager();

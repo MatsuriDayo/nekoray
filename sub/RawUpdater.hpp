@@ -11,7 +11,7 @@ namespace NekoRay::sub {
 
         int update_sub_gid = -1; // 订阅更新标志，订阅更新前设置
     public:
-        void AsyncUpdate(const QString &str, int _update_sub_gid = -1);
+        void AsyncUpdate(const QString &str, int _update_sub_gid = -1, const std::function<void()> &callback = nullptr);
     };
 
     extern RawUpdater *rawUpdater;

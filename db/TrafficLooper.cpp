@@ -16,8 +16,8 @@ namespace NekoRay::traffic {
         item->uplink += uplink;
 
         //?
-        item->downlink_rate = downlink;
-        item->uplink_rate = uplink;
+        item->downlink_rate = downlink * 1000 / dataStore->traffic_loop_interval;
+        item->uplink_rate = uplink * 1000 / dataStore->traffic_loop_interval;
 #endif
     }
 

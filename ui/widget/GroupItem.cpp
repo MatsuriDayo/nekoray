@@ -68,6 +68,7 @@ void GroupItem::refresh_data() {
         if (subinfo.isEmpty()) {
             ui->subinfo->hide();
         } else {
+            ui->subinfo->show();
             ui->subinfo->setText(subinfo);
         }
     }
@@ -76,7 +77,9 @@ void GroupItem::refresh_data() {
 void GroupItem::on_update_sub_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update %1?").arg(ent->name))
         == QMessageBox::StandardButton::Yes) {
-        NekoRay::profileManager->AsyncUpdateSubscription(ent->id);
+        NekoRay::profileManager->AsyncUpdateSubscription(ent->id, [=] {
+            refresh_data();
+        });
     }
 }
 
