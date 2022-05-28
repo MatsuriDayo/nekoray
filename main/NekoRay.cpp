@@ -37,7 +37,7 @@ namespace NekoRay {
 
     // default routing
     Routing::Routing(int preset) : JsonStore() {
-        if (preset == 0) { // default conf with CN routing
+        if (preset == 1) {
             direct_ip = "geoip:cn\n"
                         "geoip:private";
             direct_domain = "geosite:cn";

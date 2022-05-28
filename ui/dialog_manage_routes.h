@@ -35,8 +35,8 @@ private:
     Qv2ray::ui::widgets::AutoCompleteTextEdit *blockIPTxt;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *proxyIPTxt;
     //
-    NekoRay::Routing routing_cn_lan = NekoRay::Routing();
-    NekoRay::Routing routing_global = NekoRay::Routing(-1);
+    NekoRay::Routing routing_cn_lan = NekoRay::Routing(1);
+    NekoRay::Routing routing_global = NekoRay::Routing(0);
 public slots:
 
     void accept() override;
