@@ -1,7 +1,7 @@
 #include "./ui_mainwindow.h"
 
-#include "db/traffic/TrafficLooper.hpp"
-#include "db/filter/ProfileFilter.hpp"
+#include "db/TrafficLooper.hpp"
+#include "db/ProfileFilter.hpp"
 #include "fmt/ConfigBuilder.hpp"
 #include "sub/RawUpdater.hpp"
 #include "sys/ExternalProcess.hpp"
@@ -20,7 +20,6 @@
 #ifndef NKR_NO_EXTERNAL
 
 #include "3rdparty/ZxingQtReader.hpp"
-
 #include "qv2ray/components/proxy/QvProxyConfigurator.hpp"
 
 #endif
@@ -32,7 +31,6 @@
 #include <QMutex>
 #include <QScreen>
 #include <QDesktopServices>
-#include <utility>
 #include <QInputDialog>
 
 #ifndef NKR_NO_GRPC

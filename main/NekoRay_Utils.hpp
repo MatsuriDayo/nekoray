@@ -7,7 +7,6 @@
 #include <QString>
 #include <QWidget>
 #include <QVariant>
-#include <QDebug>
 #include <QMessageBox>
 #include <QJsonObject>
 #include <QJsonDocument>

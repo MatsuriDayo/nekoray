@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QTextStream>
 
+ThemeManager *themeManager = new ThemeManager;
+
 void ThemeManager::ApplyTheme(const QString &theme) {
     if (this->system_style_name.isEmpty()) {
         this->system_style_name = qApp->style()->objectName();
@@ -78,5 +80,3 @@ void ThemeManager::ApplyTheme(const QString &theme) {
 
     current_theme = theme;
 }
-
-ThemeManager *themeManager = new ThemeManager;

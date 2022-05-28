@@ -10,11 +10,14 @@
 #include "qv2ray/utils/HTTPRequestHelper.hpp"
 
 #include "db/Database.hpp"
-#include "db/filter/ProfileFilter.hpp"
+#include "db/ProfileFilter.hpp"
 
 #define FIRST_OR_SECOND(a, b) a.isEmpty() ? b : a
 
 namespace NekoRay::sub {
+
+    RawUpdater *rawUpdater = new RawUpdater;
+
     void RawUpdater::update(const QString &str) {
         // Base64 encoded subscription
         if (auto str2 = DecodeB64IfValid(str);!str2.isEmpty()) {

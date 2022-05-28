@@ -1,7 +1,6 @@
 #include "ProxyItem.h"
 #include "ui_ProxyItem.h"
 
-
 ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent, QListWidgetItem *item) :
         QWidget(parent), ui(new Ui::ProxyItem) {
     ui->setupUi(this);

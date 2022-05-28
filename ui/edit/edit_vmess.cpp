@@ -1,7 +1,6 @@
 #include "edit_vmess.h"
 #include "ui_edit_vmess.h"
 
-
 EditVMess::EditVMess(QWidget *parent) :
         QWidget(parent), ui(new Ui::EditVMess) {
     ui->setupUi(this);

@@ -1,13 +1,13 @@
-#include <QStyleFactory>
-#include <QFileDialog>
-
+#include "dialog_basic_settings.h"
 #include "ui_dialog_basic_settings.h"
 
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 #include "ui/ThemeManager.hpp"
-#include "ui/dialog_basic_settings.h"
 #include "main/GuiUtils.hpp"
 #include "main/NekoRay.hpp"
+
+#include <QStyleFactory>
+#include <QFileDialog>
 
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {

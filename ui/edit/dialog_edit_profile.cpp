@@ -1,6 +1,6 @@
+#include "dialog_edit_profile.h"
 #include "ui_dialog_edit_profile.h"
 
-#include "ui/edit/dialog_edit_profile.h"
 #include "ui/edit/edit_socks.h"
 #include "ui/edit/edit_shadowsocks.h"
 #include "ui/edit/edit_chain.h"

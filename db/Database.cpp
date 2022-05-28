@@ -3,6 +3,8 @@
 
 namespace NekoRay {
 
+    ProfileManager *profileManager = new ProfileManager();
+
     void ProfileManager::LoadManager() {
         for (auto id: _profiles) {
             profiles[id] = LoadProxyEntity(QString("profiles/%1.json").arg(id));

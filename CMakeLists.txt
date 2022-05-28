@@ -73,8 +73,8 @@ set(PROJECT_SOURCES
         rpc/gRPC.cpp
 
         db/Database.cpp
-        db/traffic/TrafficLooper.cpp
-        db/filter/ProfileFilter.cpp
+        db/TrafficLooper.cpp
+        db/ProfileFilter.cpp
 
         fmt/Bean2CoreObj.cpp
         fmt/Bean2External.cpp

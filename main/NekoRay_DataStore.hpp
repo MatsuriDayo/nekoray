@@ -1,13 +1,5 @@
 // DO NOT INCLUDE THIS
 
-#include <QString>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QMap>
-#include <QList>
-#include <QFile>
-#include <QDir>
-
 namespace NekoRay {
 
     class Routing : public JsonStore {

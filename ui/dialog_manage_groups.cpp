@@ -1,6 +1,5 @@
+#include "dialog_manage_groups.h"
 #include "ui_dialog_manage_groups.h"
-
-#include "ui/dialog_manage_groups.h"
 
 #include "db/Database.hpp"
 #include "main/GuiUtils.hpp"

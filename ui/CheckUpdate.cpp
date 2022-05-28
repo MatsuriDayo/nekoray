@@ -1,8 +1,8 @@
 #include "CheckUpdate.hpp"
+
 #include "ui/mainwindow.h"
 #include "main/NekoRay.hpp"
 
-#include <QInputDialog>
 #include <QAbstractButton>
 #include <QPushButton>
 #include <QDesktopServices>

@@ -4,6 +4,9 @@
 #include <QThread>
 
 namespace NekoRay::traffic {
+
+    TrafficLooper *trafficLooper = new TrafficLooper;
+
     void TrafficLooper::update(TrafficData *item) {
 #ifndef NKR_NO_GRPC
         auto uplink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "uplink");

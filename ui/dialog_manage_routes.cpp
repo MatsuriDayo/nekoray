@@ -1,10 +1,10 @@
-#include <QInputDialog>
-
 #include "dialog_manage_routes.h"
 #include "ui_dialog_manage_routes.h"
 
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
+
+#include <QInputDialog>
 
 DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageRoutes) {

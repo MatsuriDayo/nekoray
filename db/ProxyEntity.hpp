@@ -3,7 +3,7 @@
 #include <utility>
 
 #include "main/NekoRay.hpp"
-#include "db/traffic/TrafficData.hpp"
+#include "TrafficData.hpp"
 #include "fmt/AbstractBean.hpp"
 #include "fmt/SocksBean.hpp"
 #include "fmt/ShadowSocksBean.hpp"

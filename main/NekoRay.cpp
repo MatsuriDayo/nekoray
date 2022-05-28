@@ -1,20 +1,8 @@
 #include "main/NekoRay.hpp"
-#include "db/Database.hpp"
-#include "sub/RawUpdater.hpp"
-#include "db/traffic/TrafficLooper.hpp"
 
 namespace NekoRay {
-    // 全局对象的定义
+
     DataStore *dataStore = new DataStore();
-    ProfileManager *profileManager = new ProfileManager();
-
-    namespace sub {
-        RawUpdater *rawUpdater = new RawUpdater;
-    }
-
-    namespace traffic {
-        TrafficLooper *trafficLooper = new TrafficLooper;
-    }
 
     // datastore
 
