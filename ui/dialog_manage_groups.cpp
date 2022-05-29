@@ -14,7 +14,6 @@ if (__ent != nullptr) { \
 auto wI = new QListWidgetItem(); \
 auto w = new GroupItem(this, __ent, wI); \
 wI->setData(114514, _id); \
-wI->setSizeHint(w->sizeHint()); \
 ui->listWidget->addItem(wI); \
 ui->listWidget->setItemWidget(wI, w); \
 }

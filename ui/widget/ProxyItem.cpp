@@ -13,6 +13,8 @@ ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity>
     ui->address->setText(ent->bean->DisplayAddress());
     ui->traffic->setText(ent->traffic_data->DisplayTraffic());
     ui->test_result->setText(ent->DisplayLatency());
+
+    item->setSizeHint(sizeHint());
 }
 
 ProxyItem::~ProxyItem() {

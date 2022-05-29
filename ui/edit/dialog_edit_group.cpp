@@ -21,6 +21,12 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     }
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=] {
+        if (ent->id >= 0) { // already a group
+            if (!ent->url.isEmpty() && ui->url->text().isEmpty()) {
+                MessageBoxWarning(tr("Warning"), tr("Please input URL"));
+                return;
+            }
+        }
         ent->name = ui->name->text();
         ent->url = ui->url->text();
         ent->archive = ui->archive->isChecked();

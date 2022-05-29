@@ -1151,14 +1151,6 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     });
     menu->addAction(action_clear);
 
-    auto action_hide = new QAction;
-    action_hide->setText(tr("Hide"));
-    action_hide->setData(-1);
-    connect(action_hide, &QAction::triggered, this, [=] {
-        ui->masterLogBrowser->setVisible(false);
-    });
-    menu->addAction(action_hide);
-
     menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); //弹出菜单
 }
 

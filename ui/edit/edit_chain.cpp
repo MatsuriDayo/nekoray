@@ -48,7 +48,6 @@ void EditChain::AddProfileToListIfExist(int id) {
         auto wI = new QListWidgetItem();
         auto w = new ProxyItem(this, _ent, wI);
         wI->setData(114514, id);
-        wI->setSizeHint(w->sizeHint());
         ui->listWidget->addItem(wI);
         ui->listWidget->setItemWidget(wI, w);
     }

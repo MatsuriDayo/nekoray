@@ -134,6 +134,14 @@
         <source>Archive</source>
         <translation>归档</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>警告</translation>
+    </message>
+    <message>
+        <source>Please input URL</source>
+        <translation>请输入 URL</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
@@ -740,10 +748,6 @@
     <message>
         <source>Clear</source>
         <translation>清除</translation>
-    </message>
-    <message>
-        <source>Hide</source>
-        <translation>隐藏</translation>
     </message>
     <message>
         <source>NekoRay</source>

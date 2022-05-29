@@ -72,6 +72,8 @@ void GroupItem::refresh_data() {
             ui->subinfo->setText(subinfo);
         }
     }
+
+    item->setSizeHint(sizeHint());
 }
 
 void GroupItem::on_update_sub_clicked() {
