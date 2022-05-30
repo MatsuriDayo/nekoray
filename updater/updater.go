@@ -48,12 +48,8 @@ func Updater() {
 	}
 
 	// remove old file
-	files, _ := filepath.Glob("./*.dll")
-	if files != nil {
-		for _, f := range files {
-			os.Remove(f)
-		}
-	}
+	removeAll("./*.dll")
+	removeAll("./*.dmp")
 
 	// nekoray_list_old := make([]string, 0)
 	// nekoray_list_new := make([]string, 0)
@@ -139,4 +135,13 @@ func Mv(src, dst string) error {
 		}
 	}
 	return nil
+}
+
+func removeAll(glob string) {
+	files, _ := filepath.Glob(glob)
+	if files != nil {
+		for _, f := range files {
+			os.Remove(f)
+		}
+	}
 }

@@ -55,6 +55,8 @@ endif ()
 
 # Sources
 set(PROJECT_SOURCES
+        ${PLATFORM_FUCKING_SOURCES}
+
         main/main.cpp
         main/NekoRay.cpp
 

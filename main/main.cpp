@@ -6,7 +6,16 @@
 
 #include "3rdparty/RunGuard.hpp"
 
+#ifdef Q_OS_WIN
+#include "sys/windows/MiniDump.h"
+#endif
+
 int main(int argc, char *argv[]) {
+    // Core dump
+#ifdef Q_OS_WIN
+    Windows_SetCrashHandler();
+#endif
+
     QApplication a(argc, argv);
 
     // Clean
