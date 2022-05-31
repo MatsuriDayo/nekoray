@@ -27,7 +27,7 @@ public:
 
     ~MainWindow();
 
-    void dialog_message_impl(const QString &dialog, const QString &info);
+    void dialog_message_impl(const QString &sender, const QString &info);
 
     void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
 

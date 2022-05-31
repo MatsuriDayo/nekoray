@@ -5,7 +5,7 @@
 namespace NekoRay::sub {
     class RawUpdater {
     private:
-        void updateClash(const QString &str);
+        void updateClash(const QString &str) const;
 
         void update(const QString &str);
 

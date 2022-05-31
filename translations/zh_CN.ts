@@ -839,6 +839,14 @@ End: %2</source>
         <translation>开始: %1
 结束: %2</translation>
     </message>
+    <message>
+        <source>Starting profile %1</source>
+        <translation>正在启动配置 %1</translation>
+    </message>
+    <message>
+        <source>Stopping profile %1</source>
+        <translation>正在停止配置 %1</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

@@ -26,6 +26,7 @@ namespace NekoRay::sys {
     private:
         bool started = false;
         bool killed = false;
+        bool crashed = false;
     };
 
     // start & kill change this list

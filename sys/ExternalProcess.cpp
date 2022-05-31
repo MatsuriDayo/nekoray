@@ -27,12 +27,22 @@ namespace NekoRay::sys {
                 });
         connect(this, &QProcess::errorOccurred, this,
                 [&](QProcess::ProcessError error) {
-                    if (!killed) showLog_ext(tag, "[ERROR] " + QProcess::errorString());
+                    if (!killed) {
+                        crashed = true;
+                        showLog_ext(tag, "[Error] Crashed:" + QProcess::errorString());
+                        dialog_message("ExternalProcess", "Crashed");
+                    }
                 });
         connect(this, &QProcess::stateChanged, this,
                 [&](QProcess::ProcessState state) {
                     if (state == QProcess::NotRunning) {
-                        showLog_ext(tag, "Stopped");
+                        if (killed) {
+                            showLog_ext(tag, "Stopped");
+                        } else if (!crashed) {
+                            crashed = true;
+                            showLog_ext(tag, "[Error] Crashed?");
+                            dialog_message("ExternalProcess", "Crashed");
+                        }
                     }
                 });
 
@@ -46,8 +56,10 @@ namespace NekoRay::sys {
         if (killed) return;
         killed = true;
         running_ext.removeAll(this);
-        QProcess::kill();
-        QProcess::waitForFinished(500);
+        if (!crashed) {
+            QProcess::kill();
+            QProcess::waitForFinished(500);
+        }
     }
 
 }

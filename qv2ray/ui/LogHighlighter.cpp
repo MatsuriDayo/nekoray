@@ -14,12 +14,15 @@ namespace Qv2ray::ui {
         if (darkMode) {
             tcpudpFormat.setForeground(QColor(0, 200, 230));
             ipHostFormat.setForeground(Qt::yellow);
-            warningFormat.setForeground(Qt::cyan);
+            warningFormat.setForeground(QColor(255, 160, 15));
+            warningFormat2.setForeground(Qt::cyan);
         } else {
             ipHostFormat.setForeground(Qt::black);
             ipHostFormat.setFontWeight(QFont::Bold);
-            warningFormat.setForeground(Qt::darkCyan);
             tcpudpFormat.setForeground(QColor(0, 52, 130));
+            warningFormat.setBackground(QColor(255, 160, 15));
+            warningFormat.setForeground(Qt::white);
+            warningFormat2.setForeground(Qt::darkCyan);
         }
 
         dateFormat.setForeground(darkMode ? Qt::cyan : Qt::darkCyan);
@@ -72,6 +75,11 @@ namespace Qv2ray::ui {
         rule.format = warningFormat;
         highlightingRules.append(rule);
         //
+        warningFormat2.setFontWeight(QFont::Bold);
+        rule.pattern = QRegularExpression("\\[[Ww]arning\\]" TO_EOL);
+        rule.format = warningFormat2;
+        highlightingRules.append(rule);
+        //
         failedFormat.setFontWeight(QFont::Bold);
         failedFormat.setBackground(Qt::red);
         failedFormat.setForeground(Qt::white);
@@ -91,6 +99,10 @@ namespace Qv2ray::ui {
         //
         rule.pattern = QRegularExpression("default route");
         rule.format = qvAppDebugLogFormat;
+        highlightingRules.append(rule);
+        //
+        rule.pattern = QRegularExpression(">>>>+");
+        rule.format = warningFormat;
         highlightingRules.append(rule);
 
         {

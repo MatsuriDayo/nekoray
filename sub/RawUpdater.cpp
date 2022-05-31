@@ -106,7 +106,7 @@ namespace NekoRay::sub {
 #endif
 
 // https://github.com/Dreamacro/clash/wiki/configuration
-    void RawUpdater::updateClash(const QString &str) {
+    void RawUpdater::updateClash(const QString &str) const {
 #ifndef NKR_NO_EXTERNAL
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
@@ -286,7 +286,7 @@ namespace NekoRay::sub {
                     if (callback != nullptr) {
                         callback();
                     }
-                    MessageBoxWarning(QObject::tr("Change"),
+                    MessageBoxInfo(QObject::tr("Change"),
                                       QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
                                               arg(only_out.length()).arg(notice_added).
                                               arg(only_in.length()).arg(notice_deleted));

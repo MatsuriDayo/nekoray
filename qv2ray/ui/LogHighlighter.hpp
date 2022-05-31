@@ -80,6 +80,7 @@ namespace Qv2ray::ui
         QTextCharFormat rejectedFormat;
         QTextCharFormat failedFormat;
         QTextCharFormat warningFormat;
+        QTextCharFormat warningFormat2;
         QTextCharFormat infoFormat;
         QTextCharFormat debugFormat;
         QTextCharFormat timeFormat;

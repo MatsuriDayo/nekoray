@@ -365,7 +365,7 @@ void MainWindow::show_group(int gid) {
 
 // callback
 
-void MainWindow::dialog_message_impl(const QString &dialog, const QString &info) {
+void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
     if (info.contains("SaveDataStore")) {
         auto changed = NekoRay::dataStore->Save();
         this->refresh_proxy_list();
@@ -377,20 +377,24 @@ void MainWindow::dialog_message_impl(const QString &dialog, const QString &info)
         }
         refresh_status();
     }
-    if (dialog == Dialog_DialogEditProfile) {
+    if (sender == Dialog_DialogEditProfile) {
         if (info == "accept") {
             this->refresh_proxy_list();
         }
-    } else if (dialog == Dialog_DialogManageGroups) {
+    } else if (sender == Dialog_DialogManageGroups) {
         if (info.startsWith("refresh")) {
             this->refresh_groups();
         }
-    } else if (dialog == "SubUpdater") {
+    } else if (sender == "SubUpdater") {
         // 订阅完毕
         refresh_proxy_list();
         if (!info.contains("dingyue")) {
             QMessageBox::information(this, tr("Info"),
                                      tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
+        }
+    } else if (sender == "ExternalProcess") {
+        if (info == "Crashed") {
+            neko_stop();
         }
     }
 }
@@ -903,6 +907,7 @@ void MainWindow::neko_start(int _id) {
     }
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
+    show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
 
 #ifndef NKR_NO_GRPC
     bool rpcOK;
@@ -932,6 +937,7 @@ void MainWindow::neko_start(int _id) {
 void MainWindow::neko_stop(bool crash) {
     auto id = NekoRay::dataStore->started_id;
     if (id < 0) return;
+    show_log_impl(">>>>>>>> " + tr("Stopping profile %1").arg(running->bean->DisplayTypeAndName()));
 
     while (!NekoRay::sys::running_ext.isEmpty()) {
         auto extC = NekoRay::sys::running_ext.takeFirst();
