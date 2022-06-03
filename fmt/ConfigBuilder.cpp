@@ -121,9 +121,6 @@ namespace NekoRay::fmt {
         status->routingRules += QJsonObject{{"type",        "field"},
                                             {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},
                                             {"outboundTag", "block"},};
-        status->routingRules += QJsonObject{{"type",        "field"},
-                                            {"port",        "137,5353"},
-                                            {"outboundTag", "block"},};
 
         // custom inbound
         QJSONARRAY_ADD(status->inbounds, QString2QJsonObject(dataStore->custom_inbound)["inbounds"].toArray())
@@ -162,18 +159,24 @@ namespace NekoRay::fmt {
         if (directDnsAddress.contains("://")) {
             auto directDnsIp = SubStrBefore(SubStrAfter(directDnsAddress, "://"), "/");
             if (IsIpAddress(directDnsIp)) {
-                status->routingRules += QJsonObject{{"type",        "field"},
-                                                    {"ip",          QJsonArray{directDnsIp}},
-                                                    {"outboundTag", "direct"},};
+                status->routingRules.push_front(QJsonObject{
+                        {"type",        "field"},
+                        {"ip",          QJsonArray{directDnsIp}},
+                        {"outboundTag", "direct"},
+                });
             } else {
-                status->routingRules += QJsonObject{{"type",        "field"},
-                                                    {"domain",      QJsonArray{directDnsIp}},
-                                                    {"outboundTag", "direct"},};
+                status->routingRules.push_front(QJsonObject{
+                        {"type",        "field"},
+                        {"domain",      QJsonArray{directDnsIp}},
+                        {"outboundTag", "direct"},
+                });
             }
         } else if (directDnsAddress != "localhost") {
-            status->routingRules += QJsonObject{{"type",        "field"},
-                                                {"ip",          QJsonArray{directDnsAddress}},
-                                                {"outboundTag", "direct"},};
+            status->routingRules.push_front(QJsonObject{
+                    {"type",        "field"},
+                    {"ip",          QJsonArray{directDnsAddress}},
+                    {"outboundTag", "direct"},
+            });
         }
         dnsServers += QJsonObject{{"address",      directDnsAddress},
                                   {"domains",      status->domainListDNSDirect},

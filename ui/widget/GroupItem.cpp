@@ -9,7 +9,6 @@ QString ParseSubInfo(const QString &info) {
 
     QString result;
 
-    // CFW 格式
     long long used = 0;
     long long total = 0;
     long long expire = 0;
@@ -33,8 +32,8 @@ QString ParseSubInfo(const QString &info) {
         expire = re3.cap(1).toLongLong();
     }
 
-    result = QObject::tr("Used: %1 Total: %2 Expire: %3")
-            .arg(ReadableSize(used), ReadableSize(total), DisplayTime(expire, QLocale::ShortFormat));
+    result = QObject::tr("Used: %1 Remain: %2 Expire: %3")
+            .arg(ReadableSize(used), ReadableSize(total - used), DisplayTime(expire, QLocale::ShortFormat));
 
     return result;
 }

@@ -908,8 +908,8 @@ Direct: %2</source>
 直连: %2</translation>
     </message>
     <message>
-        <source>Used: %1 Total: %2 Expire: %3</source>
-        <translation>已用 %1 总共 %2 过期 %3</translation>
+        <source>Used: %1 Remain: %2 Expire: %3</source>
+        <translation>已用 %1 剩余 %2 过期 %3</translation>
     </message>
     <message>
         <source>Core not found: %1</source>
