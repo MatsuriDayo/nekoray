@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
-	"github.com/v2fly/v2ray-core/v5/nekoutils"
 )
 
 var instance *libcore.V2RayInstance
@@ -19,7 +18,7 @@ var setupCore_platforms = make([]func(), 0)
 
 func setupCore() {
 	device.IsNekoray = true
-	nekoutils.Connection_V2Ray_Enabled = true
+	libcore.SetConfig("", false, true)
 	libcore.InitCore("", "", "", nil, ".", "moe.nekoray.pc:bg", true, 50)
 
 	for _, f := range setupCore_platforms {
@@ -49,6 +48,8 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 	}
 
 	instance = libcore.NewV2rayInstance()
+
+	libcore.SetConfig(in.TryDomains, false, true)
 
 	err = instance.LoadConfig(in.CoreConfig)
 	if err != nil {

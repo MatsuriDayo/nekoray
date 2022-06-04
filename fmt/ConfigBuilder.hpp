@@ -8,6 +8,7 @@ namespace NekoRay::fmt {
     public:
         QString error;
         QJsonObject coreConfig;
+        QStringList tryDomains;
 
         QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including direct
         QSharedPointer<traffic::TrafficData> outboundStat; // main

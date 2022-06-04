@@ -33,6 +33,7 @@ namespace NekoRay {
         _add(new configItem("custom_route", &custom_route, itemType::string));
         _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
+        _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
     }
 
     // default routing

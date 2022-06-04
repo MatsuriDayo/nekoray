@@ -64,6 +64,7 @@ namespace NekoRay {
         QString remote_dns = "https://1.0.0.1/dns-query";
         QString direct_dns = "https+local://223.5.5.5/dns-query";
         bool dns_routing = true;
+        bool enhance_resolve_server_domain = false;
 
         // Routing
         QString domain_strategy = "AsIs";

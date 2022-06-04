@@ -427,7 +427,11 @@ namespace NekoRay::fmt {
 
             // Bypass Lookup for the first profile
             if (ent->bean->isFirstProfile && !IsIpAddress(ent->bean->serverAddress)) {
-                status->domainListDNSDirect += "full:" + ent->bean->serverAddress;
+                if (dataStore->enhance_resolve_server_domain) {
+                    status->result->tryDomains += ent->bean->serverAddress;
+                } else {
+                    status->domainListDNSDirect += "full:" + ent->bean->serverAddress;
+                }
             }
 
             status->outbounds += outbound;

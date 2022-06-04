@@ -18,6 +18,44 @@
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Outbound Domain Strategy</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Remote DNS</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>Sniffing Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLineEdit" name="dns_direct"/>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="enhance_resolve_server_domain">
+           <property name="toolTip">
+            <string notr="true">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</string>
+           </property>
+           <property name="text">
+            <string notr="true">增强域名解析</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
        <item row="0" column="1">
         <widget class="QComboBox" name="sniffing_mode">
          <item>
@@ -37,24 +75,13 @@
          </item>
         </widget>
        </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Sniffing Mode</string>
-         </property>
-        </widget>
+       <item row="2" column="1">
+        <widget class="QLineEdit" name="dns_remote"/>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_8">
          <property name="text">
-          <string>Outbound Domain Strategy</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Remote DNS</string>
+          <string>Direct DNS</string>
          </property>
         </widget>
        </item>
@@ -93,19 +120,6 @@
            <string notr="true">PreferIPv6</string>
           </property>
          </item>
-        </widget>
-       </item>
-       <item row="2" column="1">
-        <widget class="QLineEdit" name="dns_remote"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="dns_direct"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Direct DNS</string>
-         </property>
         </widget>
        </item>
       </layout>
@@ -300,10 +314,12 @@
   <tabstop>outbound_domain_strategy</tabstop>
   <tabstop>dns_remote</tabstop>
   <tabstop>dns_direct</tabstop>
+  <tabstop>enhance_resolve_server_domain</tabstop>
   <tabstop>dns_routing</tabstop>
   <tabstop>domainStrategyCombo</tabstop>
   <tabstop>domainMatcherCombo</tabstop>
   <tabstop>preset</tabstop>
+  <tabstop>custom_route_edit</tabstop>
  </tabstops>
  <resources/>
  <connections>

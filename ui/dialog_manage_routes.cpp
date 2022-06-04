@@ -17,6 +17,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
+    ui->enhance_resolve_server_domain->setChecked(NekoRay::dataStore->enhance_resolve_server_domain);
     D_C_LOAD_STRING(custom_route)
 
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
@@ -65,6 +66,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
+    NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
     D_C_SAVE_STRING(custom_route)
 
     NekoRay::dataStore->routing->direct_ip = directIPTxt->toPlainText();

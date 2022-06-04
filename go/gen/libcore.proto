@@ -25,6 +25,7 @@ message ErrorResp {
 
 message LoadConfigReq {
   string coreConfig = 1;
+  string tryDomains = 2;
 }
 
 enum TestMode {

@@ -1,6 +1,7 @@
 #include "gRPC.h"
 
 #include <utility>
+#include <QStringList>
 
 #ifndef NKR_NO_GRPC
 
@@ -26,10 +27,11 @@ namespace NekoRay::rpc {
         grpc::Status status = _stub->Exit(&context, request, &reply);
     }
 
-    QString Client::Start(bool *rpcOK, const QString &coreConfig) {
+    QString Client::Start(bool *rpcOK, const QString &coreConfig, const QStringList &tryDomains) {
         MAKE_CONTEXT
         libcore::LoadConfigReq request;
         request.set_coreconfig(coreConfig.toStdString());
+        request.set_trydomains(tryDomains.join(",").toStdString());
 
         libcore::ErrorResp reply;
         grpc::Status status = _stub->Start(&context, request, &reply);

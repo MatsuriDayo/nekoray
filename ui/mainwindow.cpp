@@ -912,7 +912,8 @@ void MainWindow::neko_start(int _id) {
 #ifndef NKR_NO_GRPC
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK,
-                                         QJsonObject2QString(result->coreConfig, true)
+                                         QJsonObject2QString(result->coreConfig, true),
+                                         result->tryDomains
     );
     if (rpcOK && !error.isEmpty()) {
         MessageBoxWarning("LoadConfig return error", error);
