@@ -173,6 +173,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     // 左边 bean
     auto old = ui->bean->layout()->itemAt(0)->widget();
     ui->bean->layout()->removeWidget(old);
+    innerWidget->layout()->setContentsMargins(0, 0, 0, 0);
     ui->bean->layout()->addWidget(innerWidget);
     ui->bean->setTitle(ent->bean->DisplayType());
     delete old;

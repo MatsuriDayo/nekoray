@@ -795,6 +795,7 @@ void MainWindow::on_menu_qr_triggered() {
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
+    if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
 #ifndef NKR_NO_EXTERNAL
     using namespace ZXingQt;
 
