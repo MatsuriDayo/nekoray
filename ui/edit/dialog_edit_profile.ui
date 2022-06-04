@@ -90,48 +90,7 @@
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QComboBox" name="type">
-             <item>
-              <property name="text">
-               <string notr="true">socks</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">shadowsocks</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">vmess</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">trojan</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">naive</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">hysteria</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">custom</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">chain</string>
-              </property>
-             </item>
-            </widget>
+            <widget class="QComboBox" name="type"/>
            </item>
           </layout>
          </item>

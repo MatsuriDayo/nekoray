@@ -15,6 +15,7 @@
 #include <QInputDialog>
 
 #define ADJUST_SIZE runOnUiThread([=] { adjustSize(); adjustPosition(mainwindow); }, this);
+#define LOAD_TYPE(a) ui->type->addItem(NekoRay::ProfileManager::NewProxyEntity(a)->bean->DisplayType(), a);
 
 DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent)
         : QDialog(parent),
@@ -23,9 +24,6 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     ui->setupUi(this);
     ui->dialog_layout->setAlignment(ui->left, Qt::AlignTop);
     ui->dialog_layout->setAlignment(ui->right_all, Qt::AlignTop);
-
-    // type changed
-    connect(ui->type, &QComboBox::currentTextChanged, this, &DialogEditProfile::typeSelected);
 
     // network changed
     network_title_base = ui->network_box->title();
@@ -63,6 +61,21 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     if (newEnt) {
         this->groupId = profileOrGroupId;
         this->type = _type;
+
+        // load type to combo box
+        LOAD_TYPE("socks")
+        LOAD_TYPE("shadowsocks");
+        LOAD_TYPE("vmess");
+        LOAD_TYPE("trojan");
+        LOAD_TYPE("naive");
+        ui->type->addItem("Hysteria", "hysteria");
+        ui->type->addItem(tr("Custom"), "custom");
+        LOAD_TYPE("chain");
+
+        // type changed
+        connect(ui->type, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+            typeSelected(ui->type->itemData(index).toString());
+        });
     } else {
         this->ent = NekoRay::profileManager->GetProfile(profileOrGroupId);
         this->type = ent->type;

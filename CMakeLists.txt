@@ -83,6 +83,7 @@ set(PROJECT_SOURCES
         fmt/Bean2Link.cpp
         fmt/Link2Bean.cpp
         fmt/ConfigBuilder.cpp
+        fmt/ChainBean.hpp # translate
 
         sub/RawUpdater.cpp
 

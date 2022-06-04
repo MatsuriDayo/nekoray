@@ -221,6 +221,10 @@
         <source>SNI</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Custom</source>
+        <translation>自定义</translation>
+    </message>
 </context>
 <context>
     <name>DialogManageGroups</name>
@@ -954,6 +958,10 @@ Release note:
     <message>
         <source>Request with proxy but no profile started.</source>
         <translation>即将使用代理请求，但是代理未启动。</translation>
+    </message>
+    <message>
+        <source>Chain Proxy</source>
+        <translation>链式代理</translation>
     </message>
 </context>
 <context>
