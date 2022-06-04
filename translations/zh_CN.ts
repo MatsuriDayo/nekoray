@@ -342,10 +342,6 @@
         <translation>核心</translation>
     </message>
     <message>
-        <source>Select</source>
-        <translation>选择</translation>
-    </message>
-    <message>
         <source>Json</source>
         <translation></translation>
     </message>
@@ -914,14 +910,6 @@ Direct: %2</source>
     <message>
         <source>Core not found: %1</source>
         <translation>找不到 %1 核心</translation>
-    </message>
-    <message>
-        <source>Select</source>
-        <translation>选择</translation>
-    </message>
-    <message>
-        <source>Select a known core</source>
-        <translation>选择已知的核心</translation>
     </message>
     <message>
         <source>Update</source>

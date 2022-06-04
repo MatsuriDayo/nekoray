@@ -30,7 +30,5 @@ private:
 
 private slots:
 
-    void on_pick_core_clicked();
-
     void on_as_json_clicked();
 };

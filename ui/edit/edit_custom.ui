@@ -18,18 +18,21 @@
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
       <widget class="QLabel" name="label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
         <string>Core</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QLineEdit" name="core"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="pick_core">
-       <property name="text">
-        <string>Select</string>
+      <widget class="QComboBox" name="core">
+       <property name="editable">
+        <bool>true</bool>
        </property>
       </widget>
      </item>
@@ -72,6 +75,12 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>core</tabstop>
+  <tabstop>as_json</tabstop>
+  <tabstop>command</tabstop>
+  <tabstop>config_simple</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
