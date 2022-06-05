@@ -72,12 +72,14 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->core_naive->setText(NekoRay::dataStore->extraCore->Get("naive"));
     ui->core_hysteria->setText(NekoRay::dataStore->extraCore->Get("hysteria"));
 
+    connect(ui->core_v2ray_asset, &QLineEdit::textChanged, this, [=] {
+        CACHE.needRestart = true;
+    });
     connect(ui->core_v2ray_asset_pick, &QPushButton::clicked, this, [=] {
         auto fn = QFileDialog::getExistingDirectory(this, tr("Select"), QDir::currentPath(),
                                                     QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::ReadOnly);
         if (!fn.isEmpty()) {
             ui->core_v2ray_asset->setText(fn);
-            CACHE.needRestart = true;
         }
     });
     connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
