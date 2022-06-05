@@ -163,7 +163,6 @@ namespace NekoRay {
 
     QSharedPointer<Group> ProfileManager::LoadGroup(const QString &jsonPath) {
         QSharedPointer<Group> ent = QSharedPointer<Group>(new Group());
-        ent->load_control_force = false;
         ent->fn = jsonPath;
         ent->Load();
         return ent;

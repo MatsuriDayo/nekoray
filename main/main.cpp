@@ -5,6 +5,7 @@
 #include <QTranslator>
 
 #include "3rdparty/RunGuard.hpp"
+#include "main/NekoRay.hpp"
 
 #ifdef Q_OS_WIN
 #include "sys/windows/MiniDump.h"
@@ -22,7 +23,7 @@ int main(int argc, char *argv[]) {
     QDir::setCurrent(QApplication::applicationDirPath());
     QFile::remove("updater.old");
 
-    // dirs
+    // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
@@ -39,9 +40,39 @@ int main(int argc, char *argv[]) {
         QIcon::setThemeName("breeze");
     }
 
-    // Locale
+    // Dir
+    QDir dir;
+    bool dir_success = true;
+    if (!dir.exists("profiles")) {
+        dir_success = dir_success && dir.mkdir("profiles");
+    }
+    if (!dir.exists("groups")) {
+        dir_success = dir_success && dir.mkdir("groups");
+    }
+    if (!dir_success) {
+        QMessageBox::warning(nullptr, "Error", "No permission to write " + dir.absolutePath());
+        return 1;
+    }
+
+    // Load dataStore
+    auto isLoaded = NekoRay::dataStore->Load();
+    if (!isLoaded) {
+        NekoRay::dataStore->Save();
+    }
+
+    // Translate
     QTranslator trans;
-    if (trans.load(":/translations/" + QLocale().name() + ".qm")) {
+    QString locale;
+    switch (NekoRay::dataStore->language) {
+        case 1: // English
+            break;
+        case 2:
+            locale = "zh_CN";
+            break;
+        default:
+            locale = QLocale().name();
+    }
+    if (trans.load(":/translations/" + locale + ".qm")) {
         QCoreApplication::installTranslator(&trans);
     }
 
@@ -50,5 +81,5 @@ int main(int argc, char *argv[]) {
         return 0;
 
     MainWindow w;
-    return a.exec();
+    return QApplication::exec();
 }

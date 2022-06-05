@@ -37,6 +37,7 @@ namespace NekoRay {
         _add(new configItem("remember_id", &remember_id, itemType::integer));
         _add(new configItem("remember_enable", &remember_last_proxy, itemType::boolean));
         _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
+        _add(new configItem("language", &language, itemType::integer));
     }
 
     void DataStore::UpdateStartedId(int id) {

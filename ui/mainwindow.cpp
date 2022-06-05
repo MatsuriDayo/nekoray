@@ -47,28 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
         });
     };
 
-    // Dir
-    QDir dir;
-    bool dir_success = true;
-    if (!dir.exists("profiles")) {
-        dir_success = dir_success && dir.mkdir("profiles");
-    }
-    if (!dir.exists("groups")) {
-        dir_success = dir_success && dir.mkdir("groups");
-    }
-    if (!dir_success) {
-        MessageBoxWarning(tr("Error"), tr("No permission to write %1").arg(dir.absolutePath()));
-        return;
-    }
-
-    // Load dataStore
-    auto isLoaded = NekoRay::dataStore->Load();
-    if (!isLoaded) {
-        NekoRay::dataStore->Save();
-    }
-
     // Load Manager
-    isLoaded = NekoRay::profileManager->Load();
+    auto isLoaded = NekoRay::profileManager->Load();
     if (!isLoaded) {
         auto defaultGroup = NekoRay::ProfileManager::NewGroup();
         defaultGroup->name = tr("Default");

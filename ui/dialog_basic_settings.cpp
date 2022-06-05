@@ -31,6 +31,11 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Style
 
+    ui->language->setCurrentIndex(NekoRay::dataStore->language);
+    connect(ui->language, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        CACHE.needRestart = true;
+    });
+
     int built_in_len = ui->theme->count();
     ui->theme->addItems(QStyleFactory::keys());
     //
@@ -72,7 +77,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
                                                     QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::ReadOnly);
         if (!fn.isEmpty()) {
             ui->core_v2ray_asset->setText(fn);
-            MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
+            CACHE.needRestart = true;
         }
     });
     connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
@@ -100,6 +105,8 @@ DialogBasicSettings::~DialogBasicSettings() {
 }
 
 void DialogBasicSettings::accept() {
+    if (CACHE.needRestart) MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
+
     // Common
 
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
@@ -111,6 +118,10 @@ void DialogBasicSettings::accept() {
     D_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
     D_SAVE_INT(test_concurrent)
     D_SAVE_STRING(test_url)
+
+    // Style
+
+    NekoRay::dataStore->language = ui->language->currentIndex();
 
     // Subscription
 

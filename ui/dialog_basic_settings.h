@@ -25,6 +25,7 @@ private:
     struct {
         QString core_map;
         QString custom_inbound;
+        bool needRestart = false;
     } CACHE;
 };
 

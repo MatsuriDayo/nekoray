@@ -103,6 +103,10 @@
         <source>Use proxy when updating subscription</source>
         <translation>更新订阅时使用代理</translation>
     </message>
+    <message>
+        <source>Language</source>
+        <translation>语言</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -683,7 +687,7 @@
     </message>
     <message>
         <source>No permission to write %1</source>
-        <translation>没有权限写入 %1</translation>
+        <translation type="vanished">没有权限写入 %1</translation>
     </message>
     <message>
         <source>Default</source>

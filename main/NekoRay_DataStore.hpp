@@ -54,6 +54,7 @@ namespace NekoRay {
         int remember_id = -1919;
         bool remember_last_proxy = false;
         bool start_minimal = false;
+        int language = 0;
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";
