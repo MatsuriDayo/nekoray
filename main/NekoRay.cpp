@@ -34,6 +34,20 @@ namespace NekoRay {
         _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
         _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
+        _add(new configItem("remember_id", &remember_id, itemType::integer));
+        _add(new configItem("remember_enable", &remember_last_proxy, itemType::boolean));
+        _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
+    }
+
+    void DataStore::UpdateStartedId(int id) {
+        started_id = id;
+        if (remember_last_proxy) {
+            remember_id = id;
+            Save();
+        } else if (remember_id >= 0) {
+            remember_id = -1919;
+            Save();
+        }
     }
 
     // default routing

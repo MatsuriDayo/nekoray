@@ -88,6 +88,7 @@ set(PROJECT_SOURCES
         sub/RawUpdater.cpp
 
         sys/ExternalProcess.cpp
+        sys/AutoRun.cpp
 
         ui/CheckUpdate.cpp
         ui/ThemeManager.cpp

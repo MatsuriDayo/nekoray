@@ -51,6 +51,9 @@ namespace NekoRay {
         int mux_cool = 8;
         QString theme = "0";
         QString v2ray_asset_dir = "";
+        int remember_id = -1919;
+        bool remember_last_proxy = false;
+        bool start_minimal = false;
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";
@@ -79,12 +82,16 @@ namespace NekoRay {
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
 
-        DataStore();
-
         // Running Cache
 
         int updated_count = 0;
         bool refreshing_group_list = false;
+
+        //
+
+        DataStore();
+
+        void UpdateStartedId(int id);
     };
 
     extern DataStore *dataStore;

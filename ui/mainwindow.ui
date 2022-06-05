@@ -355,6 +355,9 @@
     <addaction name="menu_add_from_clipboard2"/>
     <addaction name="menu_scan_qr"/>
     <addaction name="separator"/>
+    <addaction name="actionStart_with_system"/>
+    <addaction name="actionRemember_last_proxy"/>
+    <addaction name="actionStart_minimal"/>
     <addaction name="menu_system_proxy"/>
     <addaction name="menu_program_preference"/>
     <addaction name="separator"/>
@@ -504,11 +507,6 @@
     <string>Scan QR Code</string>
    </property>
   </action>
-  <action name="actionRoutes">
-   <property name="text">
-    <string>Routes</string>
-   </property>
-  </action>
   <action name="menu_system_proxy_enabled">
    <property name="checkable">
     <bool>true</bool>
@@ -530,11 +528,6 @@
     <string>Delete Repeat</string>
    </property>
   </action>
-  <action name="menu_manage_group">
-   <property name="text">
-    <string>Manage Group</string>
-   </property>
-  </action>
   <action name="actionfake">
    <property name="text">
     <string>fake</string>
@@ -546,6 +539,30 @@
   <action name="menu_move">
    <property name="text">
     <string>Move</string>
+   </property>
+  </action>
+  <action name="actionStart_with_system">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start with system</string>
+   </property>
+  </action>
+  <action name="actionRemember_last_proxy">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Remember last profile</string>
+   </property>
+  </action>
+  <action name="actionStart_minimal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Start minimal</string>
    </property>
   </action>
  </widget>

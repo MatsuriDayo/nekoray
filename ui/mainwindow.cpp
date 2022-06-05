@@ -5,6 +5,7 @@
 #include "fmt/ConfigBuilder.hpp"
 #include "sub/RawUpdater.hpp"
 #include "sys/ExternalProcess.hpp"
+#include "sys/AutoRun.hpp"
 
 #include "ui/CheckUpdate.hpp"
 #include "ui/ThemeManager.hpp"
@@ -213,9 +214,28 @@ MainWindow::MainWindow(QWidget *parent)
                         break;
                 }
             });
-    connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
-    connect(ui->menu_manage_group, &QAction::triggered, ui->menu_manage_groups, &QAction::trigger);
+
+    //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
+    connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
+    //
+    connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
+        ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_last_proxy);
+        ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
+        ui->actionStart_minimal->setChecked(NekoRay::dataStore->start_minimal);
+    });
+    connect(ui->actionRemember_last_proxy, &QAction::triggered, this, [=](bool checked) {
+        NekoRay::dataStore->remember_last_proxy = checked;
+        NekoRay::dataStore->Save();
+    });
+    connect(ui->actionStart_with_system, &QAction::triggered, this, [=](bool checked) {
+        SetProcessAutoRunSelf(checked);
+    });
+    connect(ui->actionStart_minimal, &QAction::triggered, this, [=](bool checked) {
+        NekoRay::dataStore->start_minimal = checked;
+        NekoRay::dataStore->Save();
+    });
+    //
     connect(ui->menu_system_proxy, &QMenu::aboutToShow, this, [=]() {
         if (NekoRay::dataStore->system_proxy) {
             ui->menu_system_proxy_enabled->setChecked(true);
@@ -312,6 +332,13 @@ MainWindow::MainWindow(QWidget *parent)
     // Looper
     runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });
 #endif
+
+    // Start last
+    if (NekoRay::dataStore->remember_last_proxy && NekoRay::dataStore->remember_id >= 0) {
+        runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
+    }
+
+    if (!NekoRay::dataStore->start_minimal) show();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -416,7 +443,13 @@ void MainWindow::on_menu_routing_settings_triggered() {
 
 void MainWindow::on_menu_exit_triggered() {
     neko_set_system_proxy(false);
+
+    auto last_id = NekoRay::dataStore->started_id;
     neko_stop();
+    if (NekoRay::dataStore->remember_last_proxy && last_id >= 0) {
+        NekoRay::dataStore->UpdateStartedId(last_id);
+    }
+
     core_process_killed = true;
     hide();
 #ifndef NKR_NO_GRPC
@@ -930,7 +963,7 @@ void MainWindow::neko_start(int _id) {
         extC->Start();
     }
 
-    NekoRay::dataStore->started_id = ent->id;
+    NekoRay::dataStore->UpdateStartedId(ent->id);
     running = ent;
     refresh_status();
     refresh_proxy_list(ent->id);
@@ -967,7 +1000,7 @@ void MainWindow::neko_stop(bool crash) {
     }
 #endif
 
-    NekoRay::dataStore->started_id = -1919;
+    NekoRay::dataStore->UpdateStartedId(-1919);
     running = nullptr;
     refresh_status();
     refresh_proxy_list(id);

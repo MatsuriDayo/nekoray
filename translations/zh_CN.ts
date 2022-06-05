@@ -678,10 +678,6 @@
         <translation>删除重复</translation>
     </message>
     <message>
-        <source>Manage Group</source>
-        <translation>管理分组</translation>
-    </message>
-    <message>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -846,6 +842,18 @@ End: %2</source>
     <message>
         <source>Stopping profile %1</source>
         <translation>正在停止配置 %1</translation>
+    </message>
+    <message>
+        <source>Start with system</source>
+        <translation>跟随系统启动</translation>
+    </message>
+    <message>
+        <source>Remember last profile</source>
+        <translation>记住最后的配置</translation>
+    </message>
+    <message>
+        <source>Start minimal</source>
+        <translation>最小化启动</translation>
     </message>
 </context>
 <context>
