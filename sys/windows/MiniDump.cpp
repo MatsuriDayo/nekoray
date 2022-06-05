@@ -52,9 +52,10 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
                 dumpText = "";
             }
             //创建消息提示
-            QMessageBox::warning(NULL, "Dump",
-                                 QString("ErrorCode: %1 ErrorAddr：%2 ErrorFlag: %3 ErrorPara: %4\nDump file at %5")
-                                 .arg(errCode).arg(errAddr).arg(errFlag).arg(errPara).arg(dumpText),
+            QMessageBox::warning(NULL, "Application crashed",
+                                 QString("ErrorCode: %1 ErrorAddr:%2 ErrorFlag: %3 ErrorPara: %4\nVersion: %5\nDump file at %6")
+                                         .arg(errCode).arg(errAddr).arg(errFlag).arg(errPara)
+                                         .arg(NKR_VERSION).arg(dumpText),
                                  QMessageBox::Ok);
             return EXCEPTION_EXECUTE_HANDLER;
         }

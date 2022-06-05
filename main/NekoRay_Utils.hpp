@@ -233,10 +233,9 @@ inline void runOnNewThread(const std::function<void()> &callback) {
     QThread::create(callback)->start();
 }
 
-
 template<typename EMITTER, typename SIGNAL, typename RECEIVER, typename ReceiverFunc>
-void connectOnce(EMITTER *emitter, SIGNAL signal, RECEIVER *receiver, ReceiverFunc f,
-                 Qt::ConnectionType connectionType = Qt::AutoConnection) {
+inline void connectOnce(EMITTER *emitter, SIGNAL signal, RECEIVER *receiver, ReceiverFunc f,
+                        Qt::ConnectionType connectionType = Qt::AutoConnection) {
     auto connection = std::make_shared<QMetaObject::Connection>();
     auto onTriggered = [connection, f](auto... arguments) {
         std::invoke(f, arguments...);

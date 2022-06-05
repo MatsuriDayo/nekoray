@@ -479,19 +479,19 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         ui->label_running->setText("[" + tr("Select") + "]");
     }
 
-    auto make_title = [=](const QString &sep) {
+    auto make_title = [=](bool isTray) {
         QStringList tt;
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
         if (!title_system_proxy.isEmpty()) tt << "[" + title_system_proxy + "]";
         tt << title_base;
-        if (sep == " ") tt << "(" + QString(NKR_RELEASE_DATE) + ")"; // window title
+        if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
         if (!running.isNull()) tt << running->bean->DisplayTypeAndName();
-        return tt.join(sep);
+        return tt.join(tray ? "\n" : " ");
     };
 
-    setWindowTitle(make_title(" "));
-    if (tray != nullptr) tray->setToolTip(make_title("\n"));
+    setWindowTitle(make_title(false));
+    if (tray != nullptr) tray->setToolTip(make_title(true));
 }
 
 // table显示
@@ -606,12 +606,10 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             case NekoRay::GroupSortMethod::ById: {
                 std::sort(ui->proxyListTable->order.begin(), ui->proxyListTable->order.end(),
                           [=](int a, int b) {
-                              int int_a = NekoRay::profileManager->GetProfile(a)->id;
-                              int int_b = NekoRay::profileManager->GetProfile(b)->id;
                               if (groupSortAction.descending) {
-                                  return int_a > int_b;
+                                  return a > b;
                               } else {
-                                  return int_a < int_b;
+                                  return a < b;
                               }
                           });
                 break;
@@ -1045,7 +1043,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         // 这个是按照显示的顺序
         for (auto id: order) {
             auto profile = NekoRay::profileManager->GetProfile(id);
-            profiles += profile;
+            if (profile != nullptr) profiles += profile;
         }
 
         // Threads

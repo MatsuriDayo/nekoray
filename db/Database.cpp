@@ -128,9 +128,7 @@ namespace NekoRay {
     }
 
     void ProfileManager::DeleteProfile(int id) {
-        if (!profiles.contains(id)) return;
         profiles.remove(id);
-        if (!_profiles.contains(id)) return;
         _profiles.removeAll(id);
         Save();
         QFile(QString("profiles/%1.json").arg(id)).remove();

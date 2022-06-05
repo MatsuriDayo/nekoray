@@ -78,6 +78,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         });
     } else {
         this->ent = NekoRay::profileManager->GetProfile(profileOrGroupId);
+        if (this->ent == nullptr) return;
         this->type = ent->type;
         ui->type->setVisible(false);
         ui->type_l->setVisible(false);
