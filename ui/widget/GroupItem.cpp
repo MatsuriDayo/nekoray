@@ -13,23 +13,24 @@ QString ParseSubInfo(const QString &info) {
     long long total = 0;
     long long expire = 0;
 
-    QRegExp re0("total=([0-9]+)");
-    if (re0.indexIn(info) != -1) {
-        total = re0.cap(1).toLongLong();
+
+    auto re0m = QRegularExpression("total=([0-9]+)").match(info);
+    if (re0m.lastCapturedIndex() >= 1) {
+        total = re0m.captured(1).toLongLong();
     } else {
         return "";
     }
-    QRegExp re1("upload=([0-9]+)");
-    if (re1.indexIn(info) != -1) {
-        used += re1.cap(1).toLongLong();
+    auto re1m = QRegularExpression("upload=([0-9]+)").match(info);
+    if (re1m.lastCapturedIndex() >= 1) {
+        used += re1m.captured(1).toLongLong();
     }
-    QRegExp re2("download=([0-9]+)");
-    if (re2.indexIn(info) != -1) {
-        used += re2.cap(1).toLongLong();
+    auto re2m = QRegularExpression("download=([0-9]+)").match(info);
+    if (re2m.lastCapturedIndex() >= 1) {
+        used += re2m.captured(1).toLongLong();
     }
-    QRegExp re3("expire=([0-9]+)");
-    if (re3.indexIn(info) != -1) {
-        expire = re3.cap(1).toLongLong();
+    auto re3m = QRegularExpression("expire=([0-9]+)").match(info);
+    if (re3m.lastCapturedIndex() >= 1) {
+        expire = re3m.captured(1).toLongLong();
     }
 
     result = QObject::tr("Used: %1 Remain: %2 Expire: %3")

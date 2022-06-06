@@ -165,7 +165,7 @@ enum class DecodeStatus
 
         auto exec = [&](const QImage& img) {
             return Result(ZXing::ReadBarcode(
-                    {img.bits(), img.width(), img.height(), ImgFmtFromQImg(img), img.bytesPerLine()}, hints));
+                    {img.bits(), img.width(), img.height(), ImgFmtFromQImg(img), static_cast<int>(img.bytesPerLine())}, hints));
         };
 
         return ImgFmtFromQImg(img) == ImageFormat::None ? exec(img.convertToFormat(QImage::Format_Grayscale8)) : exec(img);

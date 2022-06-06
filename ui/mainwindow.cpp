@@ -1234,7 +1234,9 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
     ui->tableWidget_conn->setRowCount(0);
 
     int row = -1;
-    for (const auto &item: arr) {
+    for (const auto &_item: arr) {
+        auto item = _item.toObject();
+
         row++;
         ui->tableWidget_conn->insertRow(row);
 

@@ -2,7 +2,8 @@
 
 #include <QMenu>
 #include <QWidget>
-#include <QRegExpValidator>
+#include <QRegularExpression>
+#include <QRegularExpressionValidator>
 
 // Dialogs
 
@@ -44,7 +45,7 @@ inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, const std
     return menu;
 }
 
-#define QRegExpValidator_Number new QRegExpValidator(QRegExp("^[0-9]+$")
+#define QRegExpValidator_Number new QRegularExpressionValidator(QRegularExpression("^[0-9]+$")
 
 // NekoRay Save&Load
 

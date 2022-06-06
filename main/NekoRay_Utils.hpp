@@ -180,7 +180,7 @@ inline QString DisplayAddress(QString serverAddress, int serverPort) {
 
 inline QString DisplayTime(long long time, QLocale::FormatType formatType = QLocale::LongFormat) {
     QDateTime t;
-    t.setTime_t(time);
+    t.setSecsSinceEpoch(time);
     return QLocale().toString(t, formatType);
 }
 
