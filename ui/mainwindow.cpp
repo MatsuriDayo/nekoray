@@ -687,8 +687,7 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
 
 void MainWindow::on_menu_move_triggered() {
     auto ents = GetNowSelected();
-    if (ents.count() != 1) return;
-    auto ent = ents.first();
+    if (ents.isEmpty()) return;
 
     auto items = QStringList{};
     for (auto &&group: NekoRay::profileManager->groups) {
@@ -699,12 +698,13 @@ void MainWindow::on_menu_move_triggered() {
     bool ok;
     auto a = QInputDialog::getItem(nullptr,
                                    tr("Move"),
-                                   tr("Move %1").arg(ent->bean->DisplayName()),
+                                   tr("Move %1 item(s)").arg(ents.count()),
                                    items, 0, false, &ok);
     if (!ok) return;
-
     auto gid = SubStrBefore(a, " ").toInt();
-    NekoRay::profileManager->MoveProfile(ent, gid);
+    for (const auto &ent: ents) {
+        NekoRay::profileManager->MoveProfile(ent, gid);
+    }
     refresh_proxy_list();
 }
 
@@ -889,9 +889,7 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
     for (auto item: items) {
         auto id = item->data(114514).toInt();
         auto ent = NekoRay::profileManager->GetProfile(id);
-        if (ent != nullptr) {
-            map[id] = ent;
-        }
+        if (ent != nullptr) map[id] = ent;
     }
     return map;
 }

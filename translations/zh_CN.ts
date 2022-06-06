@@ -686,10 +686,6 @@
         <translation>错误</translation>
     </message>
     <message>
-        <source>No permission to write %1</source>
-        <translation type="vanished">没有权限写入 %1</translation>
-    </message>
-    <message>
         <source>Default</source>
         <translation>默认</translation>
     </message>
@@ -802,10 +798,6 @@
         <translation>移动</translation>
     </message>
     <message>
-        <source>Move %1</source>
-        <translation>移动 %1</translation>
-    </message>
-    <message>
         <source>Log</source>
         <translation>日志</translation>
     </message>
@@ -858,6 +850,10 @@ End: %2</source>
     <message>
         <source>Start minimal</source>
         <translation>最小化启动</translation>
+    </message>
+    <message>
+        <source>Move %1 item(s)</source>
+        <translation>移动 %1 个项目</translation>
     </message>
 </context>
 <context>
