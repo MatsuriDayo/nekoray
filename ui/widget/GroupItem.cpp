@@ -55,9 +55,12 @@ GroupItem::~GroupItem() {
 
 void GroupItem::refresh_data() {
     ui->name->setText(ent->name);
+
     auto type = ent->url.isEmpty() ? tr("Basic") : tr("Subscription");
     if (ent->archive) type = tr("Archive") + " " + type;
+    type += " (" + Int2String(ent->Profiles().length()) + ")";
     ui->type->setText(type);
+
     if (ent->url.isEmpty()) {
         ui->url->hide();
         ui->subinfo->hide();
