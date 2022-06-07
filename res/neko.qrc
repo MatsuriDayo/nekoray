@@ -9,5 +9,6 @@
     </qresource>
     <qresource prefix="/nekoray">
         <file>nekoray.png</file>
+        <file>nekoray.css</file>
     </qresource>
 </RCC>

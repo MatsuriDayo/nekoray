@@ -1,0 +1,3 @@
+QMessageBox {
+    messagebox-text-interaction-flags: 5;
+}
