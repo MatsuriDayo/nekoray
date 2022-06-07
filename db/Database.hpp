@@ -35,11 +35,11 @@ namespace NekoRay {
 
         bool AddGroup(const QSharedPointer<Group> &ent);
 
-        void DeleteGroup(int id);
+        void DeleteGroup(int gid);
 
         QSharedPointer<Group> GetGroup(int id);
 
-        static QSharedPointer<Group> CurrentGroup();
+        QSharedPointer<Group> CurrentGroup();
 
         void AsyncUpdateSubscription(int gid, const std::function<void()> &callback = nullptr);
 

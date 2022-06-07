@@ -187,10 +187,10 @@ namespace NekoRay {
                     break;
                 case itemType::integer64:
                     if (value.type() != QJsonValue::Double) {
-                        MessageBoxWarning("错误", "Not a int\n" + key);
+                        MessageBoxWarning("错误", "Not a int64\n" + key);
                         continue;
                     }
-                    *(long long *) item->ptr = value.toInt();
+                    *(long long *) item->ptr = value.toDouble();
                     break;
                 case itemType::boolean:
                     if (value.type() != QJsonValue::Bool) {

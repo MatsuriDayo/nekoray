@@ -124,7 +124,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // table UI
     ui->proxyListTable->callback_save_order = [=] {
-        auto group = NekoRay::ProfileManager::CurrentGroup();
+        auto group = NekoRay::profileManager->CurrentGroup();
         group->order = ui->proxyListTable->order;
         group->Save();
     };
@@ -521,7 +521,7 @@ void MainWindow::refresh_groups() {
     }
 
     // show after group changed
-    if (NekoRay::profileManager->GetGroup(NekoRay::dataStore->current_group) == nullptr) {
+    if (NekoRay::profileManager->CurrentGroup() == nullptr) {
         NekoRay::dataStore->current_group = -1;
         ui->tabWidget->setCurrentIndex(groupId2TabIndex(0));
         show_group(0);
@@ -594,7 +594,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
     if (id < 0) {
         switch (groupSortAction.method) {
             case NekoRay::GroupSortMethod::Raw: {
-                auto group = NekoRay::ProfileManager::CurrentGroup();
+                auto group = NekoRay::profileManager->CurrentGroup();
                 if (group == nullptr) {
                     MessageBoxWarning(tr("Error"),
                                       tr("No such group: %1").arg(NekoRay::dataStore->current_group));
@@ -674,13 +674,13 @@ void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
 }
 
 void MainWindow::on_menu_add_from_input_triggered() {
-    if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
+    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
     auto dialog = new DialogEditProfile("socks", NekoRay::dataStore->current_group, this);
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
-    if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
+    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
     auto clipboard = QApplication::clipboard()->text();
     NekoRay::sub::rawUpdater->AsyncUpdate(clipboard);
 }
@@ -806,7 +806,7 @@ void MainWindow::on_menu_qr_triggered() {
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
-    if (NekoRay::ProfileManager::CurrentGroup()->IsSubscription()) return;
+    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
 #ifndef NKR_NO_EXTERNAL
     using namespace ZXingQt;
 
@@ -858,8 +858,8 @@ void MainWindow::on_menu_delete_repeat_triggered() {
     QList<QSharedPointer<NekoRay::ProxyEntity>> out;
     QList<QSharedPointer<NekoRay::ProxyEntity>> out_del;
 
-    NekoRay::ProfileFilter::Uniq(NekoRay::ProfileManager::CurrentGroup()->Profiles(), out, true, false);
-    NekoRay::ProfileFilter::OnlyInSrc_ByPointer(NekoRay::ProfileManager::CurrentGroup()->Profiles(), out, out_del);
+    NekoRay::ProfileFilter::Uniq(NekoRay::profileManager->CurrentGroup()->Profiles(), out, true, false);
+    NekoRay::ProfileFilter::OnlyInSrc_ByPointer(NekoRay::profileManager->CurrentGroup()->Profiles(), out, out_del);
     if (out_del.length() > 0 &&
         QMessageBox::question(this,
                               tr("Confirmation"),
@@ -1028,7 +1028,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
     neko_stop();
 
     runOnNewThread([=]() {
-        auto group = NekoRay::ProfileManager::CurrentGroup();
+        auto group = NekoRay::profileManager->CurrentGroup();
         if (group->archive) return;
         auto order = ui->proxyListTable->order;//copy
 

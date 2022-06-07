@@ -185,17 +185,19 @@ namespace NekoRay {
         return true;
     }
 
-    void ProfileManager::DeleteGroup(int id) {
-        if (id == 0) return;
-        if (!groups.contains(id)) return;
-        groups.remove(id);
-        for (const auto &profile: profileManager->profiles) {
-            if (profile->gid == id) profileManager->DeleteProfile(profile->id);
+    void ProfileManager::DeleteGroup(int gid) {
+        if (gid == 0) return;
+        QList<int> toDelete;
+        for (const auto &profile: profiles) {
+            if (profile->gid == gid) toDelete += profile->id; // map访问中，不能操作
         }
-        if (!_groups.contains(id)) return;
-        _groups.removeAll(id);
+        for (const auto &id: toDelete) {
+            DeleteProfile(id);
+        }
+        groups.remove(gid);
+        _groups.removeAll(gid);
         Save();
-        QFile(QString("groups/%1.json").arg(id)).remove();
+        QFile(QString("groups/%1.json").arg(gid)).remove();
     }
 
     QSharedPointer<Group> ProfileManager::GetGroup(int id) {
@@ -206,7 +208,7 @@ namespace NekoRay {
     }
 
     QSharedPointer<Group> ProfileManager::CurrentGroup() {
-        return NekoRay::profileManager->GetGroup(NekoRay::dataStore->current_group);
+        return GetGroup(NekoRay::dataStore->current_group);
     }
 
     QList<QSharedPointer<ProxyEntity>> Group::Profiles() const {
