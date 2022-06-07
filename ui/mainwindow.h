@@ -7,6 +7,7 @@
 #include <QSystemTrayIcon>
 #include <QProcess>
 #include <QTextDocument>
+#include <QShortcut>
 
 #include "db/ProxyEntity.hpp"
 #include "db/Group.hpp"
@@ -106,6 +107,8 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray;
+    QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
+    QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
     bool core_process_killed = false;
     bool core_process_show_stderr = false;

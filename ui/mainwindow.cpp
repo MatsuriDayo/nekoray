@@ -165,6 +165,35 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
 
+    // search box
+    ui->search->setVisible(false);
+    connect(shortcut_ctrl_f, &QShortcut::activated, this, [=] {
+        ui->search->setVisible(true);
+        ui->search->setFocus();
+    });
+    connect(shortcut_esc, &QShortcut::activated, this, [=] {
+        if (ui->search->isVisible()) {
+            ui->search->setText("");
+            ui->search->textChanged("");
+            ui->search->setVisible(false);
+        }
+    });
+    connect(ui->search, &QLineEdit::textChanged, this, [=](const QString &text) {
+        if (text.isEmpty()) {
+            for (int i = 0; i < ui->proxyListTable->rowCount(); i++) {
+                ui->proxyListTable->setRowHidden(i, false);
+            }
+        } else {
+            QList<QTableWidgetItem *> findItem = ui->proxyListTable->findItems(text, Qt::MatchContains);
+            for (int i = 0; i < ui->proxyListTable->rowCount(); i++) {
+                ui->proxyListTable->setRowHidden(i, true);
+            }
+            for (auto item: findItem) {
+                if (item != nullptr) ui->proxyListTable->setRowHidden(item->row(), false);
+            }
+        }
+    });
+
     // refresh
     this->refresh_groups();
 
@@ -349,8 +378,6 @@ inline int groupId2TabIndex(int gid) {
 // changed
 void MainWindow::on_tabWidget_currentChanged(int index) {
     if (NekoRay::dataStore->refreshing_group_list) return;
-//    qDebug() << tab_index_GroupId;
-//    qDebug() << index << tabIndex2GroupId(index) << groupId2TabIndex(tabIndex2GroupId(index));
     if (tabIndex2GroupId(index) == NekoRay::dataStore->current_group) return;
     show_group(tabIndex2GroupId(index));
 }
@@ -358,8 +385,7 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
 void MainWindow::show_group(int gid) {
     auto group = NekoRay::profileManager->GetGroup(gid);
     if (group == nullptr) {
-        MessageBoxWarning(tr("Error"),
-                          tr("No such group: %1").arg(NekoRay::dataStore->current_group));
+        MessageBoxWarning("Error", QString("No such group: %1").arg(NekoRay::dataStore->current_group));
         return;
     }
     if (NekoRay::dataStore->current_group != gid) {
@@ -595,11 +621,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         switch (groupSortAction.method) {
             case NekoRay::GroupSortMethod::Raw: {
                 auto group = NekoRay::profileManager->CurrentGroup();
-                if (group == nullptr) {
-                    MessageBoxWarning(tr("Error"),
-                                      tr("No such group: %1").arg(NekoRay::dataStore->current_group));
-                    return;
-                }
+                if (group == nullptr) return;
                 ui->proxyListTable->order = group->order;
                 break;
             }
@@ -1126,7 +1148,6 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
 // Log
 
 inline void FastAppendTextDocument(const QString &message, QTextDocument *doc) {
-    // TODO 有个第一行空着
     QTextCursor cursor(doc);
     cursor.movePosition(QTextCursor::End);
     cursor.beginEditBlock();
