@@ -738,7 +738,12 @@ void MainWindow::on_menu_reset_traffic_triggered() {
 void MainWindow::on_menu_profile_debug_info_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
-    MessageBoxWarning("info", ents.first()->ToJsonBytes());
+    auto btn = QMessageBox::information(nullptr, "info", ents.first()->ToJsonBytes(), "OK", "Edit", "", 0, 0);
+    if (btn == 1) {
+        QDesktopServices::openUrl(QUrl::fromLocalFile(
+                QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()
+        ));
+    }
 }
 
 void MainWindow::on_menu_export_config_triggered() {

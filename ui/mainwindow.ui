@@ -382,7 +382,6 @@
      <addaction name="menu_qr"/>
      <addaction name="menu_copy_link"/>
      <addaction name="menu_export_config"/>
-     <addaction name="menu_profile_debug_info"/>
     </widget>
     <widget class="QMenu" name="menuSpeedtest">
      <property name="title">
@@ -399,13 +398,15 @@
     <addaction name="menu_stop"/>
     <addaction name="separator"/>
     <addaction name="menu_move"/>
-    <addaction name="menu_delete"/>
-    <addaction name="menu_delete_repeat"/>
     <addaction name="menu_reset_traffic"/>
+    <addaction name="menu_delete_repeat"/>
+    <addaction name="menu_delete"/>
     <addaction name="separator"/>
     <addaction name="menuShare_Item"/>
     <addaction name="separator"/>
     <addaction name="menuSpeedtest"/>
+    <addaction name="separator"/>
+    <addaction name="menu_profile_debug_info"/>
     <addaction name="separator"/>
    </widget>
    <addaction name="menu_program"/>
