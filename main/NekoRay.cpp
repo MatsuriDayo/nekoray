@@ -1,4 +1,4 @@
-#include "main/NekoRay.hpp"
+#include "NekoRay.hpp"
 
 namespace NekoRay {
 

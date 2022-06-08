@@ -7,7 +7,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
+if (NOT QT_VERSION_MAJOR)
+    set(QT_VERSION_MAJOR 5)
+endif ()
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
 
 # Windows

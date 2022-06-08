@@ -1,9 +1,15 @@
-#include "db/Database.hpp"
-#include "sub/RawUpdater.hpp"
+#include "Database.hpp"
 
 namespace NekoRay {
 
     ProfileManager *profileManager = new ProfileManager();
+
+    ProfileManager::ProfileManager() : JsonStore("groups/pm.json") {
+        _hooks_after_load.push_back([=]() { LoadManager(); });
+        _hooks_before_save.push_back([=]() { SaveManager(); });
+        _add(new configItem("profiles", &_profiles, itemType::integerList));
+        _add(new configItem("groups", &_groups, itemType::integerList));
+    }
 
     void ProfileManager::LoadManager() {
         for (auto id: _profiles) {
@@ -159,6 +165,15 @@ namespace NekoRay {
 
     //Group
 
+    Group::Group() {
+        _add(new configItem("id", &id, itemType::integer));
+        _add(new configItem("archive", &archive, itemType::boolean));
+        _add(new configItem("name", &name, itemType::string));
+        _add(new configItem("order", &order, itemType::integerList));
+        _add(new configItem("url", &url, itemType::string));
+        _add(new configItem("info", &info, itemType::string));
+    }
+
     QSharedPointer<Group> ProfileManager::LoadGroup(const QString &jsonPath) {
         QSharedPointer<Group> ent = QSharedPointer<Group>(new Group());
         ent->fn = jsonPath;
@@ -217,13 +232,6 @@ namespace NekoRay {
             if (id == profile->gid) ret += profile;
         }
         return ret;
-    }
-
-    // 订阅
-
-    void ProfileManager::AsyncUpdateSubscription(int gid, const std::function<void()> &callback) {
-        auto group = GetGroup(gid);
-        sub::rawUpdater->AsyncUpdate(group->url, gid, callback);
     }
 
 }

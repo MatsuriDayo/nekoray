@@ -1,13 +1,13 @@
 #pragma once
 
-#include "db/Database.hpp"
+#include "ProxyEntity.hpp"
 
 namespace NekoRay {
     class ProfileFilter {
     public:
         static void Uniq(
                 const QList<QSharedPointer<ProxyEntity>> &in,
-                QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+                QList<QSharedPointer<ProxyEntity>> &out,
                 bool by_address = false, //def by bean
                 bool keep_last = false //def keep first
         );
@@ -15,7 +15,7 @@ namespace NekoRay {
         static void Common(
                 const QList<QSharedPointer<ProxyEntity>> &src,
                 const QList<QSharedPointer<ProxyEntity>> &dst,
-                QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+                QList<QSharedPointer<ProxyEntity>> &out,
                 bool by_address = false, //def by bean
                 bool keep_last = false //def keep first
         );
@@ -30,7 +30,7 @@ namespace NekoRay {
         static void OnlyInSrc_ByPointer(
                 const QList<QSharedPointer<ProxyEntity>> &src,
                 const QList<QSharedPointer<ProxyEntity>> &dst,
-                QList<QSharedPointer<NekoRay::ProxyEntity>> &out
+                QList<QSharedPointer<ProxyEntity>> &out
         );
     };
 }

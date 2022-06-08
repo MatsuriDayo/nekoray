@@ -52,7 +52,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="remove">
+      <widget class="QPushButton" name="update_sub">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -60,7 +60,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Remove</string>
+        <string>Update Subscription</string>
        </property>
       </widget>
      </item>
@@ -78,7 +78,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="update_sub">
+      <widget class="QPushButton" name="remove">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
          <horstretch>0</horstretch>
@@ -86,7 +86,7 @@
         </sizepolicy>
        </property>
        <property name="text">
-        <string>Update Subscription</string>
+        <string>Remove</string>
        </property>
       </widget>
      </item>

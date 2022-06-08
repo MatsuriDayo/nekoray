@@ -2,7 +2,7 @@
 
 namespace NekoRay {
     void ProfileFilter::Uniq(const QList<QSharedPointer<ProxyEntity>> &in,
-                             QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+                             QList<QSharedPointer<ProxyEntity>> &out,
                              bool by_address, bool keep_last) {
         QMap<QString, QSharedPointer<ProxyEntity>> hashMap;
 
@@ -25,7 +25,7 @@ namespace NekoRay {
     void
     ProfileFilter::Common(const QList<QSharedPointer<ProxyEntity>> &src,
                           const QList<QSharedPointer<ProxyEntity>> &dst,
-                          QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+                          QList<QSharedPointer<ProxyEntity >> &out,
                           bool by_address, bool keep_last) {
         QMap<QString, QSharedPointer<ProxyEntity>> hashMap;
 
@@ -49,7 +49,7 @@ namespace NekoRay {
 
     void ProfileFilter::OnlyInSrc(const QList<QSharedPointer<ProxyEntity>> &src,
                                   const QList<QSharedPointer<ProxyEntity>> &dst,
-                                  QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+                                  QList<QSharedPointer<ProxyEntity>> &out,
                                   bool by_address) {
         QMap<QString, bool> hashMap;
 
@@ -68,7 +68,7 @@ namespace NekoRay {
     void
     ProfileFilter::OnlyInSrc_ByPointer(const QList<QSharedPointer<ProxyEntity>> &src,
                                        const QList<QSharedPointer<ProxyEntity>> &dst,
-                                       QList<QSharedPointer<NekoRay::ProxyEntity>> &out) {
+                                       QList<QSharedPointer<ProxyEntity>> &out) {
         for (const auto &ent: src) {
             if (!dst.contains(ent)) out += ent;
         }

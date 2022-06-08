@@ -74,6 +74,12 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 
 ## Linux 运行 & 简易编译教程
 
+| CMake 参数         | 默认值 | 含义                      | 
+|------------------|-----|-------------------------|
+| QT_VERSION_MAJOR | 5   | QT版本                    | 
+| NKR_NO_EXTERNAL  |     | 不包含外部C++依赖(如ZXing/gRPC) | 
+| NKR_NO_GRPC      |     | 不包含gRPC                 |
+
 **使用 Linux 系统相信您已具备基本的排错能力，本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
 
 系统要求： Qt5 运行环境，一般桌面 Linux 已经安装，如果没有请用包管理器安装，如 `apt install libqt5gui5`

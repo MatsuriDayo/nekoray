@@ -13,6 +13,7 @@
 #include "db/Group.hpp"
 #include "rpc/gRPC.h"
 #include "qv2ray/ui/LogHighlighter.hpp"
+#include "GroupSort.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

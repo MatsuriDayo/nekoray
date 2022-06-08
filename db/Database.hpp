@@ -1,8 +1,8 @@
 #pragma once
 
 #include "main/NekoRay.hpp"
-#include "db/ProxyEntity.hpp"
-#include "db/Group.hpp"
+#include "ProxyEntity.hpp"
+#include "Group.hpp"
 
 namespace NekoRay {
     class ProfileManager : public JsonStore {
@@ -14,12 +14,7 @@ namespace NekoRay {
         QList<int> _profiles;
         QList<int> _groups; // with order
 
-        ProfileManager() : JsonStore("groups/pm.json") {
-            _hooks_after_load.push_back([=]() { LoadManager(); });
-            _hooks_before_save.push_back([=]() { SaveManager(); });
-            _add(new configItem("profiles", &_profiles, itemType::integerList));
-            _add(new configItem("groups", &_groups, itemType::integerList));
-        }
+        ProfileManager();
 
         [[nodiscard]] static QSharedPointer<ProxyEntity> NewProxyEntity(const QString &type);
 
@@ -40,8 +35,6 @@ namespace NekoRay {
         QSharedPointer<Group> GetGroup(int id);
 
         QSharedPointer<Group> CurrentGroup();
-
-        void AsyncUpdateSubscription(int gid, const std::function<void()> &callback = nullptr);
 
     private:
         void LoadManager();

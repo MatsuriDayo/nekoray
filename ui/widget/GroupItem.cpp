@@ -3,6 +3,7 @@
 
 #include "ui/edit/dialog_edit_group.h"
 #include "main/GuiUtils.hpp"
+#include "sub/RawUpdater.hpp"
 
 QString ParseSubInfo(const QString &info) {
     if (info.trimmed().isEmpty()) return "";
@@ -84,7 +85,7 @@ void GroupItem::refresh_data() {
 void GroupItem::on_update_sub_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update %1?").arg(ent->name))
         == QMessageBox::StandardButton::Yes) {
-        NekoRay::profileManager->AsyncUpdateSubscription(ent->id, [=] {
+        NekoRay::sub::rawUpdater->AsyncUpdate(ent->url, ent->id, [=] {
             refresh_data();
         });
     }

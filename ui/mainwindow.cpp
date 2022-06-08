@@ -696,13 +696,13 @@ void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
 }
 
 void MainWindow::on_menu_add_from_input_triggered() {
-    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
+    if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) return;
     auto dialog = new DialogEditProfile("socks", NekoRay::dataStore->current_group, this);
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
-    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
+    if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) return;
     auto clipboard = QApplication::clipboard()->text();
     NekoRay::sub::rawUpdater->AsyncUpdate(clipboard);
 }
@@ -833,7 +833,7 @@ void MainWindow::on_menu_qr_triggered() {
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
-    if (NekoRay::profileManager->CurrentGroup()->IsSubscription()) return;
+    if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) return;
 #ifndef NKR_NO_EXTERNAL
     using namespace ZXingQt;
 
