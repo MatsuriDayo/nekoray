@@ -25,6 +25,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 协议           | 状态     | 配置编辑 | 分享链接生成 | 分享链接解析    | Clash 配置解析 |
 |--------------|--------|------|--------|-----------|------------|
 | Socks        | ✅      | ✅    | ✅      | ✅         | ✅          | 
+| HTTP         | ✅      | ✅    | ✅      | ✅         | ✅          | 
 | Shadowsocks  | ✅ (经典) | ✅    | ✅      | 常见格式      | ✅          |
 | ShadowsocksR | ❌❌     |      |        |           |            |
 | VMess        | ✅      | ✅    | ✅      | v2rayN 格式 | ✅          |
@@ -51,6 +52,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | (实用类↓)                        |                   |
 | 日志显示                          | ✅                 |
 | 连接显示                          | ✅                 |
+| 搜索配置                          | ✅                 |
 | 分组                            | ✅                 |
 | 订阅                            | ❓                 |
 | 剪切板导入                         | ✅                 |
