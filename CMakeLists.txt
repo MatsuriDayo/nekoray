@@ -109,9 +109,9 @@ set(PROJECT_SOURCES
         ui/edit/edit_chain.h
         ui/edit/edit_chain.cpp
         ui/edit/edit_chain.ui
-        ui/edit/edit_socks.h
-        ui/edit/edit_socks.cpp
-        ui/edit/edit_socks.ui
+        ui/edit/edit_socks_http.h
+        ui/edit/edit_socks_http.cpp
+        ui/edit/edit_socks_http.ui
         ui/edit/edit_shadowsocks.h
         ui/edit/edit_shadowsocks.cpp
         ui/edit/edit_shadowsocks.ui

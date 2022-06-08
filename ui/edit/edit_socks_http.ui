@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditSocks</class>
- <widget class="QWidget" name="EditSocks">
+ <class>EditSocksHttp</class>
+ <widget class="QWidget" name="EditSocksHttp">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -18,7 +18,7 @@
     <number>0</number>
    </property>
    <item row="0" column="0">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="version_l">
      <property name="text">
       <string>Version</string>
      </property>

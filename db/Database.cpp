@@ -58,7 +58,11 @@ namespace NekoRay {
         fmt::AbstractBean *bean;
 
         if (type == "socks") {
-            bean = new fmt::SocksBean();
+            bean = new fmt::SocksHttpBean();
+        } else if (type == "http") {
+            auto _bean = new fmt::SocksHttpBean();
+            _bean->socks_http_type = NekoRay::fmt::SocksHttpBean::type_HTTP;
+            bean = _bean;
         } else if (type == "shadowsocks") {
             bean = new fmt::ShadowSocksBean();
         } else if (type == "chain") {

@@ -40,11 +40,11 @@ namespace NekoRay::fmt {
         return streamSettings;
     }
 
-    CoreObjOutboundBuildResult SocksBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult SocksHttpBean::BuildCoreObj() {
         CoreObjOutboundBuildResult result;
 
         QJsonObject outbound;
-        outbound["protocol"] = "socks";
+        outbound["protocol"] = socks_http_type == type_HTTP ? "http" : "socks";
 
         QJsonObject settings;
         QJsonArray servers;

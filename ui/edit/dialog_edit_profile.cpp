@@ -1,7 +1,7 @@
 #include "dialog_edit_profile.h"
 #include "ui_dialog_edit_profile.h"
 
-#include "ui/edit/edit_socks.h"
+#include "ui/edit/edit_socks_http.h"
 #include "ui/edit/edit_shadowsocks.h"
 #include "ui/edit/edit_chain.h"
 #include "ui/edit/edit_vmess.h"
@@ -64,6 +64,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
 
         // load type to combo box
         LOAD_TYPE("socks")
+        LOAD_TYPE("http")
         LOAD_TYPE("shadowsocks");
         LOAD_TYPE("vmess");
         LOAD_TYPE("trojan");
@@ -95,8 +96,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     type = newType;
     bool validType = true;
 
-    if (type == "socks") {
-        auto _innerWidget = new EditSocks(this);
+    if (type == "socks" || type == "http") {
+        auto _innerWidget = new EditSocksHttp(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
     } else if (type == "shadowsocks") {

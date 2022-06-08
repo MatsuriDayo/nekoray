@@ -417,7 +417,7 @@
     </message>
 </context>
 <context>
-    <name>EditSocks</name>
+    <name>EditSocksHttp</name>
     <message>
         <source>Version</source>
         <translation>版本</translation>

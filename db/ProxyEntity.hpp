@@ -5,7 +5,7 @@
 #include "main/NekoRay.hpp"
 #include "TrafficData.hpp"
 #include "fmt/AbstractBean.hpp"
-#include "fmt/SocksBean.hpp"
+#include "fmt/SocksHttpBean.hpp"
 #include "fmt/ShadowSocksBean.hpp"
 #include "fmt/ChainBean.hpp"
 #include "fmt/VMessBean.hpp"
@@ -35,8 +35,8 @@ namespace NekoRay {
             return (fmt::ChainBean *) bean.get();
         };
 
-        [[nodiscard]] fmt::SocksBean *SocksBean() const {
-            return (fmt::SocksBean *) bean.get();
+        [[nodiscard]] fmt::SocksHttpBean *SocksHTTPBean() const {
+            return (fmt::SocksHttpBean *) bean.get();
         };
 
         [[nodiscard]] fmt::ShadowSocksBean *ShadowSocksBean() const {

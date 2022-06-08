@@ -46,7 +46,14 @@ namespace NekoRay::sub {
         if (str.startsWith("socks5://") || str.startsWith("socks4://") ||
             str.startsWith("socks4a://") || str.startsWith("socks://")) {
             ent = ProfileManager::NewProxyEntity("socks");
-            auto ok = ent->SocksBean()->TryParseLink(str);
+            auto ok = ent->SocksHTTPBean()->TryParseLink(str);
+            if (!ok) ent = nullptr;
+        }
+
+        // HTTP
+        if (str.startsWith("http://") || str.startsWith("https://")) {
+            ent = ProfileManager::NewProxyEntity("http");
+            auto ok = ent->SocksHTTPBean()->TryParseLink(str);
             if (!ok) ent = nullptr;
         }
 
@@ -118,6 +125,7 @@ namespace NekoRay::sub {
                 auto ent = ProfileManager::NewProxyEntity(type);
                 if (ent->bean->version == -114514) continue;
 
+                // common
                 ent->bean->name = Node2QString(proxy["name"]);
                 ent->bean->serverAddress = Node2QString(proxy["server"]);
                 ent->bean->serverPort = Node2Int(proxy["port"]);
@@ -138,8 +146,8 @@ namespace NekoRay::sub {
                     if (protocol_n.IsDefined()) {
                         continue; // SSR
                     }
-                } else if (type == "socks5") {
-                    auto bean = ent->SocksBean();
+                } else if (type == "socks" || type == "http") {
+                    auto bean = ent->SocksHTTPBean();
                     bean->password = Node2QString(proxy["username"]);
                     bean->password = Node2QString(proxy["password"]);
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
@@ -287,9 +295,9 @@ namespace NekoRay::sub {
                         callback();
                     }
                     MessageBoxInfo(QObject::tr("Change"),
-                                      QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
-                                              arg(only_out.length()).arg(notice_added).
-                                              arg(only_in.length()).arg(notice_deleted));
+                                   QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
+                                           arg(only_out.length()).arg(notice_added).
+                                           arg(only_in.length()).arg(notice_deleted));
                     dialog_message("SubUpdater", "finish-dingyue");
                 });
             } else {
