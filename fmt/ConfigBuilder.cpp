@@ -411,7 +411,7 @@ namespace NekoRay::fmt {
 
             // apply mux
             if (dataStore->mux_cool > 0) {
-                if (ent->type == "vmess" || ent->type == "trojan") {//常见的*ray后端
+                if (ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless") {//常见的*ray后端
                     outbound["mux"] = QJsonObject{
                             {"enabled",     true},
                             {"concurrency", dataStore->mux_cool},

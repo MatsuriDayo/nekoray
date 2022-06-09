@@ -128,21 +128,39 @@ namespace NekoRay::fmt {
         return result;
     }
 
-    CoreObjOutboundBuildResult TrojanBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObj() {
         CoreObjOutboundBuildResult result;
         QJsonObject outbound{
-                {"protocol", "trojan"},
+                {"protocol", proxy_type == proxy_VLESS ? "vless" : "trojan"},
         };
 
-        QJsonObject settings{
-                {"servers", QJsonArray{
-                        QJsonObject{
-                                {"address",  serverAddress},
-                                {"port",     serverPort},
-                                {"password", password},
-                        }
-                }}
-        };
+        QJsonObject settings;
+        if (proxy_type == proxy_VLESS) {
+            settings = QJsonObject{
+                    {"vnext", QJsonArray{
+                            QJsonObject{
+                                    {"address", serverAddress},
+                                    {"port",    serverPort},
+                                    {"users",   QJsonArray{
+                                            QJsonObject{
+                                                    {"id", password},
+                                                    {"encryption", "none"},
+                                            }
+                                    }},
+                            }
+                    }}
+            };
+        } else {
+            settings = QJsonObject{
+                    {"servers", QJsonArray{
+                            QJsonObject{
+                                    {"address",  serverAddress},
+                                    {"port",     serverPort},
+                                    {"password", password},
+                            }
+                    }}
+            };
+        }
 
         outbound["settings"] = settings;
         auto streamSettings = stream->BuildStreamSettings();

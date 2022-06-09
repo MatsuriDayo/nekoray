@@ -436,14 +436,10 @@
     </message>
 </context>
 <context>
-    <name>EditTrojan</name>
+    <name>EditTrojanVLESS</name>
     <message>
         <source>Password</source>
         <translation>密码</translation>
-    </message>
-    <message>
-        <source>EditTrojan</source>
-        <translation></translation>
     </message>
 </context>
 <context>

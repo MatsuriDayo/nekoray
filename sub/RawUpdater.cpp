@@ -71,10 +71,17 @@ namespace NekoRay::sub {
             if (!ok) ent = nullptr;
         }
 
+        // VMess
+        if (str.startsWith("vless://")) {
+            ent = ProfileManager::NewProxyEntity("vless");
+            auto ok = ent->TrojanVLESSBean()->TryParseLink(str);
+            if (!ok) ent = nullptr;
+        }
+
         // Trojan
         if (str.startsWith("trojan://")) {
             ent = ProfileManager::NewProxyEntity("trojan");
-            auto ok = ent->TrojanBean()->TryParseLink(str);
+            auto ok = ent->TrojanVLESSBean()->TryParseLink(str);
             if (!ok) ent = nullptr;
         }
 
@@ -153,7 +160,7 @@ namespace NekoRay::sub {
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "trojan") {
-                    auto bean = ent->TrojanBean();
+                    auto bean = ent->TrojanVLESSBean();
                     bean->password = Node2QString(proxy["password"]);
                     bean->stream->security = "tls";
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));

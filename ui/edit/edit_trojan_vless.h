@@ -5,23 +5,23 @@
 
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditTrojan; }
+namespace Ui { class EditTrojanVLESS; }
 QT_END_NAMESPACE
 
-class EditTrojan : public QWidget, public ProfileEditor {
+class EditTrojanVLESS : public QWidget, public ProfileEditor {
 Q_OBJECT
 
 public:
-    explicit EditTrojan(QWidget *parent = nullptr);
+    explicit EditTrojanVLESS(QWidget *parent = nullptr);
 
-    ~EditTrojan() override;
+    ~EditTrojanVLESS() override;
 
     void onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) override;
 
     bool onEnd() override;
 
 private:
-    Ui::EditTrojan *ui;
+    Ui::EditTrojanVLESS *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 };
 

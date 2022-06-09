@@ -36,7 +36,7 @@ namespace NekoRay::fmt {
         return true;
     }
 
-    bool TrojanBean::TryParseLink(const QString &link) {
+    bool TrojanVLESSBean::TryParseLink(const QString &link) {
         auto url = QUrl(link);
         if (!url.isValid()) return false;
         auto query = GetQuery(url);
@@ -53,7 +53,7 @@ namespace NekoRay::fmt {
         if (!sni2.isEmpty()) stream->sni = sni2;
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
 
-        return true;
+        return !password.isEmpty();
     }
 
     bool ShadowSocksBean::TryParseLink(const QString &link) {

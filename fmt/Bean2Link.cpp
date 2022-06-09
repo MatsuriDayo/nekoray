@@ -11,7 +11,6 @@ namespace NekoRay::fmt {
             }
         } else {
             url.setScheme(QString("socks%1").arg(socks_http_type));
-
         }
         if (!username.isEmpty()) url.setUserName(username);
         if (!password.isEmpty()) url.setPassword(password);
@@ -20,9 +19,9 @@ namespace NekoRay::fmt {
         return url.toString();
     }
 
-    QString TrojanBean::ToShareLink() {
+    QString TrojanVLESSBean::ToShareLink() {
         QUrl url;
-        url.setScheme("trojan");
+        url.setScheme(proxy_type == proxy_VLESS ? "vless" : "trojan");
         url.setUserName(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);

@@ -118,9 +118,9 @@ set(PROJECT_SOURCES
         ui/edit/edit_vmess.h
         ui/edit/edit_vmess.cpp
         ui/edit/edit_vmess.ui
-        ui/edit/edit_trojan.h
-        ui/edit/edit_trojan.cpp
-        ui/edit/edit_trojan.ui
+        ui/edit/edit_trojan_vless.h
+        ui/edit/edit_trojan_vless.cpp
+        ui/edit/edit_trojan_vless.ui
 
         ui/edit/edit_naive.h
         ui/edit/edit_naive.cpp

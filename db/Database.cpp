@@ -70,7 +70,9 @@ namespace NekoRay {
         } else if (type == "vmess") {
             bean = new fmt::VMessBean();
         } else if (type == "trojan") {
-            bean = new fmt::TrojanBean();
+            bean = new fmt::TrojanVLESSBean(fmt::TrojanVLESSBean::proxy_Trojan);
+        } else if (type == "vless") {
+            bean = new fmt::TrojanVLESSBean(fmt::TrojanVLESSBean::proxy_VLESS);
         } else if (type == "naive") {
             bean = new fmt::NaiveBean();
         } else if (type == "custom") {

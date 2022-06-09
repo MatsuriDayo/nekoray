@@ -9,7 +9,7 @@
 #include "fmt/ShadowSocksBean.hpp"
 #include "fmt/ChainBean.hpp"
 #include "fmt/VMessBean.hpp"
-#include "fmt/TrojanBean.hpp"
+#include "fmt/TrojanVLESSBean.hpp"
 #include "fmt/NaiveBean.hpp"
 #include "fmt/CustomBean.hpp"
 
@@ -47,8 +47,8 @@ namespace NekoRay {
             return (fmt::VMessBean *) bean.get();
         };
 
-        [[nodiscard]] fmt::TrojanBean *TrojanBean() const {
-            return (fmt::TrojanBean *) bean.get();
+        [[nodiscard]] fmt::TrojanVLESSBean *TrojanVLESSBean() const {
+            return (fmt::TrojanVLESSBean *) bean.get();
         };
 
         [[nodiscard]] fmt::NaiveBean *NaiveBean() const {
