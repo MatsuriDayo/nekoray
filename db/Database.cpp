@@ -140,6 +140,8 @@ namespace NekoRay {
     }
 
     void ProfileManager::DeleteProfile(int id) {
+        if (id < 0) return;
+        if (dataStore->started_id == id) return;
         profiles.remove(id);
         _profiles.removeAll(id);
         Save();

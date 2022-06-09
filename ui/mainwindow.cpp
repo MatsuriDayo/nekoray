@@ -401,7 +401,7 @@ void MainWindow::show_group(int gid) {
 void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
     if (info.contains("SaveDataStore")) {
         auto changed = NekoRay::dataStore->Save();
-        this->refresh_proxy_list();
+        refresh_proxy_list();
         if (changed && NekoRay::dataStore->started_id >= 0 &&
             QMessageBox::question(this,
                                   tr("Confirmation"), QString(tr("Settings changed, restart proxy?"))
@@ -412,7 +412,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     }
     if (sender == Dialog_DialogEditProfile) {
         if (info == "accept") {
-            this->refresh_proxy_list();
+            refresh_proxy_list();
         }
     } else if (sender == Dialog_DialogManageGroups) {
         if (info.startsWith("refresh")) {
@@ -737,8 +737,8 @@ void MainWindow::on_menu_delete_triggered() {
         QMessageBox::StandardButton::Yes) {
         for (const auto &ent: ents) {
             NekoRay::profileManager->DeleteProfile(ent->id);
-            refresh_proxy_list();
         }
+        refresh_proxy_list();
     }
 }
 
