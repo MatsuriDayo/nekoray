@@ -411,11 +411,17 @@ namespace NekoRay::fmt {
 
             // apply mux
             if (dataStore->mux_cool > 0) {
-                if (ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless") {//常见的*ray后端
-                    outbound["mux"] = QJsonObject{
+                //常见的*ray后端
+                if (ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless") {
+                    auto muxObj = QJsonObject{
                             {"enabled",     true},
                             {"concurrency", dataStore->mux_cool},
                     };
+                    auto stream = GetStreamSettings(ent->bean);
+                    if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
+                        muxObj["packetEncoding"] = stream->packet_encoding;
+                    }
+                    outbound["mux"] = muxObj;
                 }
             }
 

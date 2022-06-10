@@ -1,5 +1,10 @@
 #include "db/ProxyEntity.hpp"
 
+#define MAKE_SETTINGS_STREAM_SETTINGS if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
+outbound["settings"] = settings; \
+auto streamSettings = stream->BuildStreamSettings(); \
+outbound["streamSettings"] = streamSettings;
+
 namespace NekoRay::fmt {
 
     QJsonObject V2rayStreamSettings::BuildStreamSettings() {
@@ -62,8 +67,8 @@ namespace NekoRay::fmt {
 
         servers.push_back(server);
         settings["servers"] = servers;
-        outbound["settings"] = settings;
-        outbound["streamSettings"] = stream->BuildStreamSettings();
+
+        MAKE_SETTINGS_STREAM_SETTINGS
 
         result.outbound = outbound;
         return result;
@@ -92,8 +97,7 @@ namespace NekoRay::fmt {
             settings["pluginOpts"] = SubStrAfter(plugin, ";");
         }
 
-        outbound["settings"] = settings;
-        outbound["streamSettings"] = stream->BuildStreamSettings();
+        MAKE_SETTINGS_STREAM_SETTINGS
 
         result.outbound = outbound;
         return result;
@@ -121,8 +125,7 @@ namespace NekoRay::fmt {
                 }}
         };
 
-        outbound["settings"] = settings;
-        outbound["streamSettings"] = stream->BuildStreamSettings();
+        MAKE_SETTINGS_STREAM_SETTINGS
 
         result.outbound = outbound;
         return result;
@@ -143,7 +146,7 @@ namespace NekoRay::fmt {
                                     {"port",    serverPort},
                                     {"users",   QJsonArray{
                                             QJsonObject{
-                                                    {"id", password},
+                                                    {"id",         password},
                                                     {"encryption", "none"},
                                             }
                                     }},
@@ -162,13 +165,12 @@ namespace NekoRay::fmt {
             };
         }
 
-        outbound["settings"] = settings;
-        auto streamSettings = stream->BuildStreamSettings();
+        MAKE_SETTINGS_STREAM_SETTINGS
+
         auto sec = streamSettings["security"].toString();
         if (sec.isEmpty() || sec == "none") {
             result.error = QObject::tr("reject clear text trojan");
         }
-        outbound["streamSettings"] = streamSettings;
 
         result.outbound = outbound;
         return result;

@@ -163,13 +163,12 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port_l->setVisible(notChain);
 
     // 右边 Outbound: settings
-    auto stream_item = ent->bean->_get("stream");
-    if (stream_item != nullptr) {
+    auto stream = GetStreamSettings(ent->bean);
+    if (stream != nullptr) {
         ui->right_all_w->setVisible(true);
-        auto stream_store = (NekoRay::JsonStore *) stream_item->ptr;
-        auto stream = (NekoRay::fmt::V2rayStreamSettings *) stream_store;
         ui->network->setCurrentText(stream->network);
         ui->security->setCurrentText(stream->security);
+        ui->packet_encoding->setCurrentText(stream->packet_encoding);
         ui->path->setText(stream->path);
         ui->host->setText(stream->host);
         ui->sni->setText(stream->sni);
@@ -230,12 +229,11 @@ void DialogEditProfile::accept() {
     }
 
     // 右边
-    auto stream_item = ent->bean->_get("stream");
-    if (stream_item != nullptr) {
-        auto stream_store = (NekoRay::JsonStore *) stream_item->ptr;
-        auto stream = (NekoRay::fmt::V2rayStreamSettings *) stream_store;
+    auto stream = GetStreamSettings(ent->bean);
+    if (stream != nullptr) {
         stream->network = ui->network->currentText();
         stream->security = ui->security->currentText();
+        stream->packet_encoding = ui->packet_encoding->currentText();
         stream->path = ui->path->text();
         stream->host = ui->host->text();
         stream->sni = ui->sni->text();

@@ -182,11 +182,30 @@
             </sizepolicy>
            </property>
            <property name="title">
-            <string>Stream Settings</string>
+            <string>Settings</string>
            </property>
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <layout class="QGridLayout" name="_2">
+              <item row="1" column="1">
+               <widget class="QComboBox" name="security">
+                <item>
+                 <property name="text">
+                  <string notr="true"/>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">none</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string notr="true">tls</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="toolTip">
@@ -199,6 +218,12 @@
               </item>
               <item row="0" column="1">
                <widget class="QComboBox" name="network">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <item>
                  <property name="text">
                   <string notr="true"/>
@@ -241,8 +266,18 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QComboBox" name="security">
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="toolTip">
+                 <string notr="true">包编码，用于实现 UDP FullCone 等特性。需要服务器支持，选错无法连接。不懂请留空。</string>
+                </property>
+                <property name="text">
+                 <string>Packet Encoding</string>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QComboBox" name="packet_encoding">
                 <item>
                  <property name="text">
                   <string notr="true"/>
@@ -250,12 +285,12 @@
                 </item>
                 <item>
                  <property name="text">
-                  <string notr="true">none</string>
+                  <string notr="true">packet</string>
                  </property>
                 </item>
                 <item>
                  <property name="text">
-                  <string notr="true">tls</string>
+                  <string notr="true">xudp</string>
                  </property>
                 </item>
                </widget>

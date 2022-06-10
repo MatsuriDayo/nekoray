@@ -210,10 +210,6 @@
         <translation>已设置</translation>
     </message>
     <message>
-        <source>Stream Settings</source>
-        <translation>流设置 (streamSettings)</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>路径(Path)</translation>
     </message>
@@ -228,6 +224,14 @@
     <message>
         <source>Custom</source>
         <translation>自定义</translation>
+    </message>
+    <message>
+        <source>Packet Encoding</source>
+        <translation>包编码</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
     </message>
 </context>
 <context>
