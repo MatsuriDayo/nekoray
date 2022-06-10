@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
+#include "AbstractBean.hpp"
 
 namespace NekoRay::fmt {
     class V2rayStreamSettings : public JsonStore {
@@ -36,6 +36,8 @@ namespace NekoRay::fmt {
         }
 
         QJsonObject BuildStreamSettings();
+
+        [[nodiscard]] QString InsecureHint() const;
     };
 
     inline V2rayStreamSettings *GetStreamSettings(const QSharedPointer<AbstractBean> &bean) {
@@ -49,4 +51,3 @@ namespace NekoRay::fmt {
         return nullptr;
     }
 }
-

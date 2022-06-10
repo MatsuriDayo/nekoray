@@ -47,7 +47,7 @@ namespace NekoRay::fmt {
             return name;
         };
 
-        virtual QString DisplayType() { return ""; };
+        virtual QString DisplayType() { return {}; };
 
         virtual QString DisplayTypeAndName() { return QString(" [%1] %2").arg(DisplayType(), DisplayName()); };
 
@@ -57,8 +57,12 @@ namespace NekoRay::fmt {
 
         virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port) { return {}; };
 
-        virtual QString ToShareLink() { return ""; };
+        virtual QString ToShareLink() { return {}; };
+
+        virtual QString InsecureHint() { return {}; };
 
     };
+
+    QString DisplayInsecureHint(const QSharedPointer<AbstractBean> &);
 
 }

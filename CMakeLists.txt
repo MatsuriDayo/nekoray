@@ -83,6 +83,7 @@ set(PROJECT_SOURCES
         fmt/Bean2CoreObj.cpp
         fmt/Bean2External.cpp
         fmt/Bean2Link.cpp
+        fmt/InsecureHint.cpp
         fmt/Link2Bean.cpp
         fmt/ConfigBuilder.cpp
         fmt/ChainBean.hpp # translate

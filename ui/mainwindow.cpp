@@ -580,9 +580,11 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             row = ui->proxyListTable->id2Row[id];
         }
 
+        auto *f0 = new QTableWidgetItem("");
+        f0->setData(114514, profile->id);
+
         // C0: is Running
-        auto *f = new QTableWidgetItem("");
-        f->setData(114514, profile->id);
+        auto f = f0->clone();
         if (profile->id == NekoRay::dataStore->started_id) {
             f->setText("✓");
         } else {
@@ -591,27 +593,32 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         ui->proxyListTable->setItem(row, 0, f);
 
         // C1: Type
-        f = f->clone();
+        f = f0->clone();
         f->setText(profile->bean->DisplayType());
+        auto insecure_hint = DisplayInsecureHint(profile->bean);
+        if (!insecure_hint.isEmpty()) {
+            f->setBackground(Qt::red);
+            f->setToolTip(insecure_hint);
+        }
         ui->proxyListTable->setItem(row, 1, f);
 
         // C2: Address+Port
-        f = f->clone();
+        f = f0->clone();
         f->setText(profile->bean->DisplayAddress());
         ui->proxyListTable->setItem(row, 2, f);
 
         // C3: Name
-        f = f->clone();
+        f = f0->clone();
         f->setText(profile->bean->name);
         ui->proxyListTable->setItem(row, 3, f);
 
         // C4: Latency
-        f = f->clone();
+        f = f0->clone();
         f->setText(profile->DisplayLatency());
         ui->proxyListTable->setItem(row, 4, f);
 
         // C5: Traffic
-        f = f->clone();
+        f = f0->clone();
         f->setText(profile->traffic_data->DisplayTraffic());
         ui->proxyListTable->setItem(row, 5, f);
     }
@@ -945,6 +952,8 @@ void MainWindow::neko_start(int _id) {
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
     show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
+    auto insecure_hint = DisplayInsecureHint(ent->bean);
+    if (!insecure_hint.isEmpty()) show_log_impl(">>>>>>>> " + tr("Profile is insecure: %1").arg(insecure_hint));
 
 #ifndef NKR_NO_GRPC
     bool rpcOK;

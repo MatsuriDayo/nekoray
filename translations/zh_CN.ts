@@ -851,6 +851,10 @@ End: %2</source>
         <source>Move %1 item(s)</source>
         <translation>移动 %1 个项目</translation>
     </message>
+    <message>
+        <source>Profile is insecure: %1</source>
+        <translation>配置不安全: %1</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -966,6 +970,26 @@ Release note:
     <message>
         <source>Chain Proxy</source>
         <translation>链式代理</translation>
+    </message>
+    <message>
+        <source>The configuration (insecure) can be detected and identified, the transmission is fully visible to the censor and is not resistant to man-in-the-middle tampering with the content of the communication.</source>
+        <translation>该配置 (不安全) 能够被检测识别，传输的内容对审查者完全可见，并且无法抵抗中间人篡改通讯内容.</translation>
+    </message>
+    <message>
+        <source>This configuration (Shadowsocks streaming cipher) can be accurately proactively detected and decrypted by censors without requiring a password, and cannot be mitigated by turning on IV replay filters on the server side.
+
+Learn more: https://github.com/net4people/bbs/issues/24</source>
+        <translation>该配置 (Shadowsocks 流式密码) 可以被准确地主动探测、在不需要密码的情况下被审查者解密流量, 且服务端开启 IV 重放过滤器也无法缓解.
+
+了解更多: https://github.com/net4people/bbs/issues/24</translation>
+    </message>
+    <message>
+        <source>This configuration (VMess MD5 authentication) has been deprecated by upstream because of its questionable resistance to tampering and concealment.
+
+As of January 1, 2022, compatibility with MD5 authentication information will be disabled on the server side by default. Any client using MD5 authentication information will not be able to connect to a server with VMess MD5 authentication information disabled.</source>
+        <translation>该配置 (VMess MD5 认证) 抗篡改能力存疑, 隐蔽性存疑, 已被上游废弃.
+
+自 2022 年 1 月 1 日起, 服务器端将默认禁用对于 MD5 认证信息 的兼容. 任何使用 MD5 认证信息的客户端将无法连接到禁用 VMess MD5 认证信息的服务器端.</translation>
     </message>
 </context>
 <context>
