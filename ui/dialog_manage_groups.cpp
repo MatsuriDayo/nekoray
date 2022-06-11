@@ -22,9 +22,15 @@ ui->listWidget->setItemWidget(wI, w); \
 DialogManageGroups::DialogManageGroups(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
+
     for (auto id: NekoRay::profileManager->_groups) {
         AddGroupToListIfExist(id)
     }
+
+    connect(ui->listWidget, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *wI) {
+        auto w = dynamic_cast<GroupItem *>(ui->listWidget->itemWidget(wI));
+        emit w->edit_clicked();
+    });
 }
 
 DialogManageGroups::~DialogManageGroups() {

@@ -425,7 +425,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         // 订阅完毕
         refresh_proxy_list();
         if (!info.contains("dingyue")) {
-            QMessageBox::information(this, tr("Info"),
+            QMessageBox::information(this, "NekoRay",
                                      tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
         }
     } else if (sender == "ExternalProcess") {
@@ -772,7 +772,7 @@ void MainWindow::on_menu_reset_traffic_triggered() {
 void MainWindow::on_menu_profile_debug_info_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
-    auto btn = QMessageBox::information(nullptr, "info", ents.first()->ToJsonBytes(), "OK", "Edit", "", 0, 0);
+    auto btn = QMessageBox::information(nullptr, "NekoRay", ents.first()->ToJsonBytes(), "OK", "Edit", "", 0, 0);
     if (btn == 1) {
         QDesktopServices::openUrl(QUrl::fromLocalFile(
                 QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()
@@ -794,6 +794,7 @@ void MainWindow::on_menu_copy_link_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
     QApplication::clipboard()->setText(ents.first()->bean->ToShareLink());
+    showLog(tr("Copied share link: %1").arg(ents.first()->bean->DisplayTypeAndName()));
 }
 
 void MainWindow::on_menu_qr_triggered() {
@@ -836,7 +837,7 @@ void MainWindow::on_menu_qr_triggered() {
     l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     l->setScaledContents(true);
     l->setPixmap(QPixmap::fromImage(im.scaled(512, 512, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
-    w->setWindowTitle(ents.first()->bean->DisplayName());
+    w->setWindowTitle(ents.first()->bean->DisplayTypeAndName());
     QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     sizePolicy.setHeightForWidth(true);
     w->setSizePolicy(sizePolicy);
@@ -866,7 +867,7 @@ void MainWindow::on_menu_scan_qr_triggered() {
     auto result = ReadBarcode(qpx.toImage(), hints);
     const auto &text = result.text();
     if (text.isEmpty()) {
-        MessageBoxInfo(tr("Info"), tr("QR Code not found"));
+        MessageBoxInfo("NekoRay", tr("QR Code not found"));
     } else {
         NekoRay::sub::rawUpdater->AsyncUpdate(text);
     }
@@ -1168,7 +1169,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
                     runOnUiThread([=] {
                         if (!result.error().empty()) {
                             show_log_impl(
-                                    tr("[%1] test error: %2").arg(profile->bean->DisplayName(),
+                                    tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(),
                                                                   result.error().c_str()));
                         }
                         refresh_proxy_list(profile->id);

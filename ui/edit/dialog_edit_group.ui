@@ -95,6 +95,13 @@
     </widget>
    </item>
    <item>
+    <widget class="QPushButton" name="copy_links">
+     <property name="text">
+      <string>Copy profile share links</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>

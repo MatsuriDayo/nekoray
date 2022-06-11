@@ -43,9 +43,12 @@ QString ParseSubInfo(const QString &info) {
 GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item) :
         QWidget(parent), ui(new Ui::GroupItem) {
     ui->setupUi(this);
+
     this->ent = ent;
     this->item = item;
     if (ent == nullptr) return;
+
+    connect(this, &GroupItem::edit_clicked, this, &GroupItem::on_edit_clicked);
 
     refresh_data();
 }

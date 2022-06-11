@@ -3,6 +3,8 @@
 
 #include "db/Database.hpp"
 
+#include <QClipboard>
+
 DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogEditGroup) {
     ui->setupUi(this);
@@ -32,9 +34,18 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
         ent->archive = ui->archive->isChecked();
         QDialog::accept();
     });
+
+    connect(ui->copy_links, &QPushButton::clicked, this, [=] {
+        QStringList links;
+        for (const auto &profile: NekoRay::profileManager->profiles) {
+            if (profile->gid != ent->id) continue;
+            links += profile->bean->ToShareLink();
+        }
+        QApplication::clipboard()->setText(links.join("\n"));
+        MessageBoxInfo("NekoRay", tr("Copied"));
+    });
 }
 
 DialogEditGroup::~DialogEditGroup() {
     delete ui;
 }
-

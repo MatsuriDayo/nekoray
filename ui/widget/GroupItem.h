@@ -25,6 +25,10 @@ public:
 private:
     Ui::GroupItem *ui;
 
+signals:
+
+    void edit_clicked();
+
 private slots:
 
     void on_update_sub_clicked();

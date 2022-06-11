@@ -146,6 +146,14 @@
         <source>Please input URL</source>
         <translation>请输入 URL</translation>
     </message>
+    <message>
+        <source>Copy profile share links</source>
+        <translation>复制所有配置的分享链接</translation>
+    </message>
+    <message>
+        <source>Copied</source>
+        <translation>复制成功</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
@@ -710,10 +718,6 @@
         <translation>设置已改变，是否重启代理？</translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation>信息</translation>
-    </message>
-    <message>
         <source>Imported %1 profile(s)</source>
         <translation>导入了 %1 个配置</translation>
     </message>
@@ -862,6 +866,10 @@ End: %2</source>
     <message>
         <source>Remove Unavailable</source>
         <translation>删除不可用</translation>
+    </message>
+    <message>
+        <source>Copied share link: %1</source>
+        <translation>复制分享链接成功: %1</translation>
     </message>
 </context>
 <context>
