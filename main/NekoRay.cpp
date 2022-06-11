@@ -36,14 +36,15 @@ namespace NekoRay {
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
         _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
         _add(new configItem("remember_id", &remember_id, itemType::integer));
-        _add(new configItem("remember_enable", &remember_last_proxy, itemType::boolean));
+        _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
         _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
+        _add(new configItem("system_proxy", &system_proxy, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {
         started_id = id;
-        if (remember_last_proxy) {
+        if (remember_enable) {
             remember_id = id;
             Save();
         } else if (remember_id >= 0) {

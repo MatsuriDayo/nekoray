@@ -229,12 +229,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
-        ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_last_proxy);
+        ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
         ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
         ui->actionStart_minimal->setChecked(NekoRay::dataStore->start_minimal);
     });
     connect(ui->actionRemember_last_proxy, &QAction::triggered, this, [=](bool checked) {
-        NekoRay::dataStore->remember_last_proxy = checked;
+        NekoRay::dataStore->remember_enable = checked;
         NekoRay::dataStore->Save();
     });
     connect(ui->actionStart_with_system, &QAction::triggered, this, [=](bool checked) {
@@ -343,8 +343,11 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
     // Start last
-    if (NekoRay::dataStore->remember_last_proxy && NekoRay::dataStore->remember_id >= 0) {
-        runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
+    if (NekoRay::dataStore->remember_enable) {
+        neko_set_system_proxy(NekoRay::dataStore->system_proxy);
+        if (NekoRay::dataStore->remember_id >= 0) {
+            runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
+        }
     }
 
     if (!NekoRay::dataStore->start_minimal) show();
@@ -448,11 +451,13 @@ void MainWindow::on_menu_routing_settings_triggered() {
 }
 
 void MainWindow::on_menu_exit_triggered() {
-    neko_set_system_proxy(false);
+#ifndef NKR_NO_EXTERNAL
+    ClearSystemProxy();
+#endif
 
     auto last_id = NekoRay::dataStore->started_id;
     neko_stop();
-    if (NekoRay::dataStore->remember_last_proxy && last_id >= 0) {
+    if (NekoRay::dataStore->remember_enable && last_id >= 0) {
         NekoRay::dataStore->UpdateStartedId(last_id);
     }
 
@@ -1052,6 +1057,7 @@ void MainWindow::neko_set_system_proxy(bool enable) {
     }
 #endif
     NekoRay::dataStore->system_proxy = enable;
+    NekoRay::dataStore->Save();
 #ifndef NKR_NO_EXTERNAL
     if (enable) {
         SetSystemProxy("127.0.0.1",
