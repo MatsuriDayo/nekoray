@@ -40,6 +40,8 @@ namespace NekoRay {
         _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
         _add(new configItem("system_proxy", &system_proxy, itemType::boolean));
+        _add(new configItem("insecure_hint", &insecure_hint, itemType::boolean));
+        _add(new configItem("skip_cert", &skip_cert, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {

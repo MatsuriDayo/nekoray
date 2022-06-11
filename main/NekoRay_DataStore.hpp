@@ -50,11 +50,17 @@ namespace NekoRay {
         int mux_cool = 8;
         QString theme = "0";
         QString v2ray_asset_dir = "";
+        int language = 0;
+
+        // Security
+        bool insecure_hint = true;
+        bool skip_cert = false;
+
+        // Remember
+        bool system_proxy = false;
         int remember_id = -1919;
         bool remember_enable = false;
         bool start_minimal = false;
-        int language = 0;
-        bool system_proxy = false;
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";

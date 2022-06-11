@@ -100,6 +100,10 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         C_EDIT_JSON_ALLOW_EMPTY(core_map)
     });
 
+    // Security
+
+    ui->insecure_hint->setChecked(NekoRay::dataStore->insecure_hint);
+    ui->skip_cert->setChecked(NekoRay::dataStore->skip_cert);
 }
 
 DialogBasicSettings::~DialogBasicSettings() {
@@ -136,6 +140,11 @@ void DialogBasicSettings::accept() {
     NekoRay::dataStore->extraCore->core_map = CACHE.core_map;
     NekoRay::dataStore->extraCore->Set("naive", ui->core_naive->text());
     NekoRay::dataStore->extraCore->Set("hysteria", ui->core_hysteria->text());
+
+    // Security
+
+    NekoRay::dataStore->insecure_hint = ui->insecure_hint->isChecked();
+    NekoRay::dataStore->skip_cert = ui->skip_cert->isChecked();
 
     dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
     QDialog::accept();

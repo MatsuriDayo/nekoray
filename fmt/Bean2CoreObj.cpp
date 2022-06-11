@@ -32,7 +32,7 @@ namespace NekoRay::fmt {
         if (security == "tls") {
             QJsonObject tls;
             if (!sni.isEmpty()) tls["serverName"] = sni;
-            if (allow_insecure) tls["allowInsecure"] = true;
+            if (allow_insecure || dataStore->skip_cert) tls["allowInsecure"] = true;
             if (!certificate.isEmpty())
                 tls["certificates"] = QJsonArray{
                         QJsonObject{
@@ -166,11 +166,6 @@ namespace NekoRay::fmt {
         }
 
         MAKE_SETTINGS_STREAM_SETTINGS
-
-        auto sec = streamSettings["security"].toString();
-        if (sec.isEmpty() || sec == "none") {
-            result.error = QObject::tr("reject clear text trojan");
-        }
 
         result.outbound = outbound;
         return result;

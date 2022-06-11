@@ -107,6 +107,18 @@
         <source>Language</source>
         <translation>语言</translation>
     </message>
+    <message>
+        <source>Security</source>
+        <translation>安全</translation>
+    </message>
+    <message>
+        <source>Insecure hint</source>
+        <translation>提示不安全的配置</translation>
+    </message>
+    <message>
+        <source>Skip TLS certificate authentication by default</source>
+        <translation>默认跳过 TLS 证书验证</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -890,10 +902,6 @@ End: %2</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>reject clear text trojan</source>
-        <translation>禁止明文 Trojan</translation>
-    </message>
-    <message>
         <source>As Subscription</source>
         <translation>作为订阅</translation>
     </message>
@@ -1010,6 +1018,10 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
     <message>
         <source>Change of %1:</source>
         <translation>%1 变化:</translation>
+    </message>
+    <message>
+        <source>This profile is cleartext, don&apos;t use it if the server is not in your local network.</source>
+        <translation>该配置为明文传输，如果服务器不在本地局域网，请不要使用。</translation>
     </message>
 </context>
 <context>
