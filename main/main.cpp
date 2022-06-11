@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
 #endif
 
     QApplication a(argc, argv);
+    QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 
     // Clean
     QDir::setCurrent(QApplication::applicationDirPath());

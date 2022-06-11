@@ -104,6 +104,7 @@ void GroupItem::on_edit_clicked() {
 }
 
 void GroupItem::on_remove_clicked() {
+    if (NekoRay::profileManager->groups.count() == 1) return;
     if (QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->name)) ==
         QMessageBox::StandardButton::Yes) {
         NekoRay::profileManager->DeleteGroup(ent->id);

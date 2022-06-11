@@ -30,10 +30,10 @@ func tryLink(sub string) {
 
 	if !Exist(wd_plugins) {
 		paths := []string{
-			filepath.Join("/usr/lib/qt/plugins", sub),
 			filepath.Join("/usr/lib/qt5/plugins", sub),
-			filepath.Join("/usr/lib/qt5/plugins", sub),
+			filepath.Join("/usr/lib64/qt5/plugins", sub),
 			filepath.Join("/usr/lib/x86_64-linux-gnu/qt5/plugins", sub),
+			filepath.Join("/usr/lib/qt/plugins", sub),
 		}
 		path := FindExist(paths)
 		if path == "" {

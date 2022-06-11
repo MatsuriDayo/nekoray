@@ -12,6 +12,7 @@ namespace NekoRay::fmt {
         } else {
             url.setScheme(QString("socks%1").arg(socks_http_type));
         }
+        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
         if (!username.isEmpty()) url.setUserName(username);
         if (!password.isEmpty()) url.setPassword(password);
         url.setHost(serverAddress);

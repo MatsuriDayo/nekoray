@@ -209,7 +209,7 @@ namespace NekoRay {
     }
 
     void ProfileManager::DeleteGroup(int gid) {
-        if (gid == 0) return;
+        if (groups.count() == 1) return;
         QList<int> toDelete;
         for (const auto &profile: profiles) {
             if (profile->gid == gid) toDelete += profile->id; // map访问中，不能操作

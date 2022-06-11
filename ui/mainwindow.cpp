@@ -385,7 +385,7 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
 void MainWindow::show_group(int gid) {
     auto group = NekoRay::profileManager->GetGroup(gid);
     if (group == nullptr) {
-        MessageBoxWarning("Error", QString("No such group: %1").arg(NekoRay::dataStore->current_group));
+        MessageBoxWarning("Error", QString("No such group: %1").arg(gid));
         return;
     }
     if (NekoRay::dataStore->current_group != gid) {
@@ -550,7 +550,7 @@ void MainWindow::refresh_groups() {
     if (NekoRay::profileManager->CurrentGroup() == nullptr) {
         NekoRay::dataStore->current_group = -1;
         ui->tabWidget->setCurrentIndex(groupId2TabIndex(0));
-        show_group(0);
+        show_group(NekoRay::profileManager->_groups.count() > 0 ? NekoRay::profileManager->_groups.first() : 0);
     } else {
         ui->tabWidget->setCurrentIndex(groupId2TabIndex(NekoRay::dataStore->current_group));
         show_group(NekoRay::dataStore->current_group);

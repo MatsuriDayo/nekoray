@@ -30,6 +30,8 @@ namespace NekoRay::fmt {
             serverPort = url.port();
             username = url.userName();
             password = url.password();
+            if (serverPort == -1) serverPort = socks_http_type == type_HTTP ? 443 : 1080;
+
             stream->security = GetQueryValue(query, "security", "") == "true" ? "tls" : "none";
             stream->sni = GetQueryValue(query, "sni");
         }
@@ -45,6 +47,7 @@ namespace NekoRay::fmt {
         serverAddress = url.host();
         serverPort = url.port();
         password = url.userName();
+        if (serverPort == -1) serverPort = 443;
 
         stream->security = GetQueryValue(query, "security", "tls");
         auto sni1 = GetQueryValue(query, "sni");

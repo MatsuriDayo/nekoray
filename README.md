@@ -30,7 +30,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | ShadowsocksR | ❌❌     |      |        |           |            |
 | VMess        | ✅      | ✅    | ✅      | v2rayN 格式 | ✅          |
 | Trojan       | ✅      | ✅    | ✅      | 标准&常见格式   | ✅          |
-| VLESS        | ❌      |      |        |           | 不适用        |
+| VLESS        | ✅      | ✅    | ✅      | ✅         | 不适用        |
 | NaïveProxy   | ✅      | ✅    | ❌      | ❌         | 不适用        |
 | Hysteria     | ✅      | ❌    | ❌      | ❌         | 不适用        |
 
