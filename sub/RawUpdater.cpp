@@ -219,6 +219,15 @@ namespace NekoRay::sub {
 
     // 不要刷新，下载导入完会自己刷新
     void RawUpdater::AsyncUpdate(const QString &str, int _update_sub_gid, const std::function<void()> &callback) {
+        runOnNewThread([=] {
+            Update(str, _update_sub_gid);
+            runOnUiThread([=] {
+                if (callback != nullptr) callback();
+            });
+        });
+    }
+
+    void RawUpdater::Update(const QString &str, int _update_sub_gid) {
         dataStore->updated_count = 0;
         this->update_sub_gid = _update_sub_gid;
 
@@ -236,82 +245,76 @@ namespace NekoRay::sub {
             if (items.indexOf(a) == 0) asURL = true;
         }
 
-        runOnNewThread([=] {
-            auto content2 = content;
-            QString sub_user_info;
-            auto group = profileManager->GetGroup(update_sub_gid);
+        auto content2 = content;
+        QString sub_user_info;
+        auto group = profileManager->GetGroup(update_sub_gid);
 
-            // 网络请求
-            if (asURL) {
-                showLog("URL=" + content2);
-                auto resp = NetworkRequestHelper::HttpGet(content2);
-                if (!resp.error.isEmpty()) {
-                    runOnUiThread([=] {
-                        MessageBoxWarning(QObject::tr("Error"), resp.error + "\n" + resp.data);
-                    });
-                    return;
-                }
-                content2 = resp.data;
-                sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
-                showLog("Content=" + content2);
+        // 网络请求
+        if (asURL) {
+            showLog(">>>>>>> " + QObject::tr("Requesting subscription: %1").arg(group->name));
+            auto resp = NetworkRequestHelper::HttpGet(content2);
+            if (!resp.error.isEmpty()) {
+                showLog(">>>>>>> " + QObject::tr("Requesting subscription %1 error: %2")
+                        .arg(group->name, resp.error + "\n" + resp.data));
+                return;
+            }
+            content2 = resp.data;
+            sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
+        }
+
+        QList<QSharedPointer<ProxyEntity>> in; // 更新前
+        QList<QSharedPointer<ProxyEntity>> out_all; // 更新前 + 更新后
+        QList<QSharedPointer<ProxyEntity>> out; // 更新后
+        QList<QSharedPointer<ProxyEntity>> only_in; // 只在更新前有的
+        QList<QSharedPointer<ProxyEntity>> only_out; // 只在更新后有的
+        QList<QSharedPointer<ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
+
+        // 订阅解析前
+        if (group != nullptr) {
+            in = group->Profiles();
+            group->info = sub_user_info;
+            group->order.clear();
+            group->Save();
+        }
+
+        // 解析并添加 profile
+        update(content2);
+
+        if (group != nullptr) {
+            out_all = group->Profiles();
+
+            ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
+            ProfileFilter::OnlyInSrc(in, out, only_in);
+            ProfileFilter::OnlyInSrc(out, in, only_out);
+            ProfileFilter::Common(in, out, update_del, false, true);
+            update_del += only_in;
+
+            for (const auto &ent: update_del) {
+                dataStore->updated_count--;
+                profileManager->DeleteProfile(ent->id);
             }
 
-            QList<QSharedPointer<ProxyEntity>> in; // 更新前
-            QList<QSharedPointer<ProxyEntity>> out_all; // 更新前 + 更新后
-            QList<QSharedPointer<ProxyEntity>> out; // 更新后
-            QList<QSharedPointer<ProxyEntity>> only_in; // 只在更新前有的
-            QList<QSharedPointer<ProxyEntity>> only_out; // 只在更新后有的
-            QList<QSharedPointer<ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
-
-            // 订阅解析前
-            if (group != nullptr) {
-                in = group->Profiles();
-                group->info = sub_user_info;
-                group->order.clear();
-                group->Save();
+            QString notice_added;
+            for (const auto &ent: only_out) {
+                notice_added += ent->bean->DisplayTypeAndName() + "\n";
+            }
+            QString notice_deleted;
+            for (const auto &ent: only_in) {
+                notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
             }
 
-            // 解析并添加 profile
-            update(content2);
-
-            if (group != nullptr) {
-                out_all = group->Profiles();
-
-                ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
-                ProfileFilter::OnlyInSrc(in, out, only_in);
-                ProfileFilter::OnlyInSrc(out, in, only_out);
-                ProfileFilter::Common(in, out, update_del, false, true);
-                update_del += only_in;
-
-                for (const auto &ent: update_del) {
-                    dataStore->updated_count--;
-                    profileManager->DeleteProfile(ent->id);
-                }
-
-                QString notice_added;
-                for (const auto &ent: only_out) {
-                    notice_added += ent->bean->DisplayTypeAndName() + "\n";
-                }
-                QString notice_deleted;
-                for (const auto &ent: only_in) {
-                    notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
-                }
-
-                runOnUiThread([=] {
-                    if (callback != nullptr) {
-                        callback();
-                    }
-                    MessageBoxInfo(QObject::tr("Change"),
-                                   QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4").
-                                           arg(only_out.length()).arg(notice_added).
-                                           arg(only_in.length()).arg(notice_deleted));
-                    dialog_message("SubUpdater", "finish-dingyue");
-                });
-            } else {
-                runOnUiThread([=] {
-                    dialog_message("SubUpdater", "finish");
-                });
-            }
-        });
+            runOnUiThread([=] {
+                auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
+                        .arg(only_out.length()).arg(notice_added)
+                        .arg(only_in.length()).arg(notice_deleted);
+                if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
+                showLog(">>>>>>> " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
+                dialog_message("SubUpdater", "finish-dingyue");
+            });
+        } else {
+            runOnUiThread([=] {
+                dialog_message("SubUpdater", "finish");
+            });
+        }
     }
 }

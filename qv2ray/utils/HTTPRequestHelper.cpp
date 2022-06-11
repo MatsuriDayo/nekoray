@@ -26,10 +26,7 @@ namespace Qv2ray::common::network {
                             static_cast<quint16>(NekoRay::dataStore->inbound_socks_port)};
             accessManager.setProxy(p);
             if (NekoRay::dataStore->started_id < 0) {
-                runOnUiThread([=] {
-                    MessageBoxWarning(QObject::tr("Warning"),
-                                      QObject::tr("Request with proxy but no profile started."));
-                });
+                showLog(QObject::tr("Request with proxy but no profile started."));
             }
         }
 

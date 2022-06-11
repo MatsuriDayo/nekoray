@@ -894,20 +894,46 @@ void MainWindow::on_menu_delete_repeat_triggered() {
 
     NekoRay::ProfileFilter::Uniq(NekoRay::profileManager->CurrentGroup()->Profiles(), out, true, false);
     NekoRay::ProfileFilter::OnlyInSrc_ByPointer(NekoRay::profileManager->CurrentGroup()->Profiles(), out, out_del);
+
+    QString remove_display;
+    for (const auto &ent: out_del) {
+        remove_display += ent->bean->DisplayTypeAndName() + "\n";
+    }
     if (out_del.length() > 0 &&
         QMessageBox::question(this,
                               tr("Confirmation"),
-                              tr("Remove %1 item(s) ?").arg(out_del.length())
+                              tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display
         ) == QMessageBox::StandardButton::Yes) {
 
-        QString deleted;
         for (const auto &ent: out_del) {
-            deleted += ent->bean->DisplayTypeAndName() + "\n";
             NekoRay::profileManager->DeleteProfile(ent->id);
         }
-
         refresh_proxy_list();
-        MessageBoxWarning(tr("Deleted"), tr("Deleted %1 items:").arg(out_del.length()) + "\n" + deleted);
+    }
+}
+
+void MainWindow::on_menu_remove_unavailable_triggered() {
+    QList<QSharedPointer<NekoRay::ProxyEntity>> out_del;
+
+    for (const auto &profile: NekoRay::profileManager->profiles) {
+        if (NekoRay::dataStore->current_group != profile->gid) continue;
+        if (profile->latency < 0) out_del += profile;
+    }
+
+    QString remove_display;
+    for (const auto &ent: out_del) {
+        remove_display += ent->bean->DisplayTypeAndName() + "\n";
+    }
+    if (out_del.length() > 0 &&
+        QMessageBox::question(this,
+                              tr("Confirmation"),
+                              tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display
+        ) == QMessageBox::StandardButton::Yes) {
+
+        for (const auto &ent: out_del) {
+            NekoRay::profileManager->DeleteProfile(ent->id);
+        }
+        refresh_proxy_list();
     }
 }
 

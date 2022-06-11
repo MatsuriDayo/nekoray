@@ -99,6 +99,8 @@ private slots:
 
     void on_menu_delete_repeat_triggered();
 
+    void on_menu_remove_unavailable_triggered();
+
     void on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item);
 
     void on_proxyListTable_customContextMenuRequested(const QPoint &pos);

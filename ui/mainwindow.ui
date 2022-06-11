@@ -397,6 +397,7 @@
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_clear_test_result"/>
+     <addaction name="menu_remove_unavailable"/>
     </widget>
     <addaction name="menu_add_from_input"/>
     <addaction name="menu_add_from_clipboard"/>
@@ -571,6 +572,11 @@
    </property>
    <property name="text">
     <string>Start minimal</string>
+   </property>
+  </action>
+  <action name="menu_remove_unavailable">
+   <property name="text">
+    <string>Remove Unavailable</string>
    </property>
   </action>
  </widget>

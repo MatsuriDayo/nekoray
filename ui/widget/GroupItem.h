@@ -17,12 +17,13 @@ public:
 
     ~GroupItem() override;
 
+    void refresh_data();
+
+    QSharedPointer<NekoRay::Group> ent;
+    QListWidgetItem *item;
+
 private:
     Ui::GroupItem *ui;
-    QListWidgetItem *item;
-    QSharedPointer<NekoRay::Group> ent;
-
-    void refresh_data();
 
 private slots:
 

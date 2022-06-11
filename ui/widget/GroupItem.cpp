@@ -79,6 +79,7 @@ void GroupItem::refresh_data() {
     runOnUiThread([=] {
         adjustSize();
         item->setSizeHint(sizeHint());
+        dynamic_cast<QWidget *>(parent())->adjustSize();
     }, this);
 }
 

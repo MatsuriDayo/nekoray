@@ -244,6 +244,18 @@
         <source>New group</source>
         <translation>新建分组</translation>
     </message>
+    <message>
+        <source>Update all subscriptions</source>
+        <translation>更新所有订阅</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Update all subscriptions?</source>
+        <translation>更新所有订阅？</translation>
+    </message>
 </context>
 <context>
     <name>DialogManageRoutes</name>
@@ -730,14 +742,6 @@
         <translation>配置已复制</translation>
     </message>
     <message>
-        <source>Deleted</source>
-        <translation>已删除</translation>
-    </message>
-    <message>
-        <source>Deleted %1 items:</source>
-        <translation>已删除 %1 个项目：</translation>
-    </message>
-    <message>
         <source>[%1] test error: %2</source>
         <translation>[%1] 测试错误: %2</translation>
     </message>
@@ -855,6 +859,10 @@ End: %2</source>
         <source>Profile is insecure: %1</source>
         <translation>配置不安全: %1</translation>
     </message>
+    <message>
+        <source>Remove Unavailable</source>
+        <translation>删除不可用</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -894,10 +902,6 @@ End: %2</source>
 How to update?</source>
         <translation>%1
 如何处理？</translation>
-    </message>
-    <message>
-        <source>Change</source>
-        <translation>变化</translation>
     </message>
     <message>
         <source>Added %1 profiles:
@@ -956,14 +960,6 @@ Release note:
         <translation>不可用</translation>
     </message>
     <message>
-        <source>Warning</source>
-        <translation>警告</translation>
-    </message>
-    <message>
-        <source>Error</source>
-        <translation>错误</translation>
-    </message>
-    <message>
         <source>Request with proxy but no profile started.</source>
         <translation>即将使用代理请求，但是代理未启动。</translation>
     </message>
@@ -990,6 +986,22 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
         <translation>该配置 (VMess MD5 认证) 抗篡改能力存疑, 隐蔽性存疑, 已被上游废弃.
 
 自 2022 年 1 月 1 日起, 服务器端将默认禁用对于 MD5 认证信息 的兼容. 任何使用 MD5 认证信息的客户端将无法连接到禁用 VMess MD5 认证信息的服务器端.</translation>
+    </message>
+    <message>
+        <source>Requesting subscription: %1</source>
+        <translation>正在请求订阅: %1</translation>
+    </message>
+    <message>
+        <source>Requesting subscription %1 error: %2</source>
+        <translation>请求订阅 %1 错误: %2</translation>
+    </message>
+    <message>
+        <source>Nothing</source>
+        <translation>无</translation>
+    </message>
+    <message>
+        <source>Change of %1:</source>
+        <translation>%1 变化:</translation>
     </message>
 </context>
 <context>

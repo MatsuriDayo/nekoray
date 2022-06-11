@@ -25,4 +25,6 @@ private:
 private slots:
 
     void on_add_clicked();
+
+    void on_update_all_clicked();
 };
