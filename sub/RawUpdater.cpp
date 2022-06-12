@@ -218,23 +218,11 @@ namespace NekoRay::sub {
     }
 
     // 不要刷新，下载导入完会自己刷新
-    void RawUpdater::AsyncUpdate(const QString &str, int _update_sub_gid, const std::function<void()> &callback) {
-        runOnNewThread([=] {
-            Update(str, _update_sub_gid);
-            runOnUiThread([=] {
-                if (callback != nullptr) callback();
-            });
-        });
-    }
-
-    void RawUpdater::Update(const QString &str, int _update_sub_gid) {
-        dataStore->updated_count = 0;
-        this->update_sub_gid = _update_sub_gid;
-
+    void RawUpdater::AsyncUpdate(const QString &str, int _sub_gid, const std::function<void()> &callback) {
         auto content = str.trimmed();
-        bool asURL = update_sub_gid >= 0; // 订阅
+        bool asURL = false;
 
-        if (!asURL && (content.startsWith("http://") || content.startsWith("https://"))) {
+        if (_sub_gid < 0 && (content.startsWith("http://") || content.startsWith("https://"))) {
             auto items = QStringList{QObject::tr("As Subscription"), QObject::tr("As link")};
             bool ok;
             auto a = QInputDialog::getItem(nullptr,
@@ -245,20 +233,37 @@ namespace NekoRay::sub {
             if (items.indexOf(a) == 0) asURL = true;
         }
 
-        auto content2 = content;
+        runOnNewThread([=] {
+            Update(str, _sub_gid, asURL);
+            runOnUiThread([=] {
+                if (callback != nullptr) callback();
+            });
+        });
+    }
+
+    void RawUpdater::Update(const QString &str, int _sub_gid, bool _not_sub_as_url) {
+        dataStore->updated_count = 0;
+        this->update_sub_gid = _sub_gid;
+
+        bool asURL = update_sub_gid >= 0 || _not_sub_as_url; // 把 str 当作 url 处理（下载内容）
+        auto content = str.trimmed();
+
         QString sub_user_info;
         auto group = profileManager->GetGroup(update_sub_gid);
 
         // 网络请求
         if (asURL) {
-            showLog(">>>>>>> " + QObject::tr("Requesting subscription: %1").arg(group->name));
-            auto resp = NetworkRequestHelper::HttpGet(content2);
+            auto groupName = group == nullptr ? content : group->name;
+            showLog(">>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
+
+            auto resp = NetworkRequestHelper::HttpGet(content);
             if (!resp.error.isEmpty()) {
                 showLog(">>>>>>> " + QObject::tr("Requesting subscription %1 error: %2")
-                        .arg(group->name, resp.error + "\n" + resp.data));
+                        .arg(groupName, resp.error + "\n" + resp.data));
                 return;
             }
-            content2 = resp.data;
+
+            content = resp.data;
             sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
         }
 
@@ -278,7 +283,7 @@ namespace NekoRay::sub {
         }
 
         // 解析并添加 profile
-        update(content2);
+        update(content);
 
         if (group != nullptr) {
             out_all = group->Profiles();
