@@ -1,11 +1,11 @@
 <RCC>
     <qresource prefix="/">
-        <file>icon/internet-web-browser.svg</file>
-        <file>icon/system-run.svg</file>
-        <file>icon/preferences.svg</file>
-        <file>icon/network-server.svg</file>
-        <file>icon/update-none.svg</file>
-        <file>icon/data-information.svg</file>
+        <file alias="icon/b-internet-web-browser.svg">icon/internet-web-browser.svg</file>
+        <file alias="icon/b-system-run.svg">icon/system-run.svg</file>
+        <file alias="icon/b-preferences.svg">icon/preferences.svg</file>
+        <file alias="icon/b-network-server.svg">icon/network-server.svg</file>
+        <file alias="icon/b-dialog-question.svg">icon/dialog-question.svg</file>
+        <file alias="icon/b-system-software-update.svg">icon/system-software-update.svg</file>
     </qresource>
     <qresource prefix="/nekoray">
         <file>nekoray.png</file>

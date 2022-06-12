@@ -23,8 +23,14 @@
          <string>Program</string>
         </property>
         <property name="icon">
-         <iconset theme="system-run">
+         <iconset theme="b-system-run">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -40,8 +46,14 @@
          <string>Preferences</string>
         </property>
         <property name="icon">
-         <iconset theme="preferences">
+         <iconset theme="b-preferences">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -57,8 +69,14 @@
          <string>Server</string>
         </property>
         <property name="icon">
-         <iconset theme="network-server">
+         <iconset theme="b-network-server">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -74,8 +92,14 @@
          <string>Ads</string>
         </property>
         <property name="icon">
-         <iconset theme="internet-web-browser">
+         <iconset theme="b-internet-web-browser">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -91,8 +115,14 @@
          <string>Document</string>
         </property>
         <property name="icon">
-         <iconset theme="data-information">
+         <iconset theme="b-dialog-question">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>
@@ -108,8 +138,14 @@
          <string>Update</string>
         </property>
         <property name="icon">
-         <iconset theme="update-none">
+         <iconset theme="b-system-software-update">
           <normaloff>.</normaloff>.</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
         <property name="popupMode">
          <enum>QToolButton::InstantPopup</enum>

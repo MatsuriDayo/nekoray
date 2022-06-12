@@ -73,7 +73,7 @@ Thumbs.db
 # Custom
 /nekoray/
 /build/
-CMakeLists.txt.user
+CMakeLists.txt.user*
 /cmake-build-*
 /build-*
 .vscode
