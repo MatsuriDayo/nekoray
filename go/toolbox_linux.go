@@ -12,7 +12,7 @@ func ToolBox(tool []string) {
 	flag.Parse()
 
 	switch tool[0] {
-	case "tool":
+	case "rule":
 		{
 			// Dial a connection to the rtnetlink socket
 			conn, err := rtnetlink.Dial(nil)
