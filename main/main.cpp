@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
 
     QApplication a(argc, argv);
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
+    QApplication::setAttribute(Qt::AA_DontUseNativeDialogs);
 
     // Clean
     QDir::setCurrent(QApplication::applicationDirPath());

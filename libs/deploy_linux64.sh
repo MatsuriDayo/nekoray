@@ -10,7 +10,7 @@ mv $DEST/updater $DEST/launcher
 cp build/nekoray $DEST
 
 #### prebuilt runtime ####
-curl -Lso usr.zip https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/5.15.0-linux64.zip
+curl -Lso usr.zip https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/20220612-5.15.2-linux64.zip
 unzip usr.zip
 mv usr $DEST
 

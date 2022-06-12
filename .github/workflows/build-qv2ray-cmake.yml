@@ -16,7 +16,7 @@ jobs:
         platform: [ windows-2022, ubuntu-18.04 ]
         arch: [ x64 ]
         build_type: [ Release ]
-        qt_version: [ 5.15.0 ]
+        qt_version: [ 5.15.2 ]
         include:
           - platform: windows-2022
             arch: x64
@@ -48,7 +48,7 @@ jobs:
       - name: Install Qt
         uses: jurplel/install-qt-action@v2.14.0
         with:
-          version: 5.15.0
+          version: ${{ matrix.qt_version }}
           py7zrversion: ' '
           aqtversion: ' '
           setup-python: false
@@ -71,7 +71,7 @@ jobs:
         with:
           stable: false
           go-version: 1.18.2
-      # ========================================================================================================= Cache & Build deps
+      # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Cache Download & Build Dependencies
         id: cache-deps
         uses: actions/cache@v2
@@ -91,7 +91,7 @@ jobs:
           ./libs/build_deps_all.sh
           ./libs/build_deps_linux.sh
       # ========================================================================================================= Generate MakeFile and Build
-      - name: Windows - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: Windows - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
         if: matrix.platform == 'windows-2022'
         env:
@@ -107,7 +107,7 @@ jobs:
           cmake --build . --parallel $(nproc)
           cd ..
           ./libs/deploy_windows64.sh
-      - name: Linux - ${{ matrix.qt_version }} - Generate Dependencies and Build
+      - name: Linux - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
         if: matrix.platform == 'ubuntu-18.04'
         run: |
