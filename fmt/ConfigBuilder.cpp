@@ -31,9 +31,6 @@ namespace NekoRay::fmt {
 
         // Log
         auto logObj = QJsonObject{{"loglevel", dataStore->log_level}};
-        if (dataStore->log_level != "debug") {
-            logObj["access"] = "none";
-        }
         result->coreConfig.insert("log", logObj);
 
         // Inbounds

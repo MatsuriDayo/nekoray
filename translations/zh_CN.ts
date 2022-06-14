@@ -883,6 +883,10 @@ End: %2</source>
         <source>Copied share link: %1</source>
         <translation>复制分享链接成功: %1</translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

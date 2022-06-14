@@ -793,8 +793,11 @@ void MainWindow::on_menu_export_config_triggered() {
 void MainWindow::on_menu_copy_link_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
-    QApplication::clipboard()->setText(ents.first()->bean->ToShareLink());
-    showLog(tr("Copied share link: %1").arg(ents.first()->bean->DisplayTypeAndName()));
+    auto text = ents.first()->bean->ToShareLink();
+    if (!text.isEmpty()) {
+        QApplication::clipboard()->setText(text);
+        showLog(tr("Copied share link: %1").arg(ents.first()->bean->DisplayTypeAndName()));
+    }
 }
 
 void MainWindow::on_menu_qr_triggered() {
@@ -1053,7 +1056,11 @@ void MainWindow::neko_stop(bool crash) {
 void MainWindow::neko_set_system_proxy(bool enable) {
 #ifdef Q_OS_WIN
     if (enable && !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
-        MessageBoxWarning(tr("Error"), tr("Http inbound is not enabled, can't set system proxy."));
+        auto btn = QMessageBox::warning(this, "NekoRay", tr("Http inbound is not enabled, can't set system proxy."),
+                                        "OK", tr("Settings"), "", 0, 0);
+        if (btn == 1) {
+            on_menu_basic_settings_triggered();
+        }
         return;
     }
 #endif

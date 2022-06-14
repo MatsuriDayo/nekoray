@@ -159,6 +159,11 @@
            <string notr="true">warning</string>
           </property>
          </item>
+         <item>
+          <property name="text">
+           <string notr="true">none</string>
+          </property>
+         </item>
         </widget>
        </item>
        <item row="10" column="2">

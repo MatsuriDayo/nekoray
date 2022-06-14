@@ -21,7 +21,7 @@ func main() {
 	wd := filepath.Dir(exe)
 	os.Chdir(wd)
 	exe = filepath.Base(os.Args[0])
-	log.Println("exe:", exe, wd)
+	log.Println("exe:", exe, "exe dir:", wd)
 
 	if strings.HasPrefix(strings.ToLower(exe), "updater") {
 		if runtime.GOOS == "windows" {

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 	"os/exec"
@@ -9,6 +10,9 @@ import (
 
 func Launcher() {
 	log.Println("Running as launcher")
+
+	_debug := flag.Bool("debug", false, "debug")
+	flag.Parse()
 
 	wd, _ := filepath.Abs(".")
 
@@ -22,7 +26,12 @@ func Launcher() {
 	cmd := exec.Command("./nekoray")
 	cmd.Env = os.Environ()
 	cmd.Env = append(cmd.Env, "LD_LIBRARY_PATH="+filepath.Join(wd, "./usr/lib"))
-	cmd.Start()
+
+	if *_debug {
+		cmd.Run()
+	} else {
+		cmd.Start()
+	}
 }
 
 func tryLink(sub string) {
@@ -43,7 +52,7 @@ func tryLink(sub string) {
 
 		err := os.Symlink(path, wd_plugins)
 		if err != nil {
-			log.Fatalln("symlink failed", err.Error())
+			log.Println("symlink failed:", err.Error())
 		}
 	}
 
