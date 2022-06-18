@@ -93,6 +93,8 @@ private slots:
 
     void on_menu_url_test_triggered();
 
+    void on_menu_full_test_triggered();
+
     void on_menu_clear_test_result_triggered();
 
     void on_menu_manage_groups_triggered();

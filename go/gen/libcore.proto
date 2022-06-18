@@ -31,6 +31,7 @@ message LoadConfigReq {
 enum TestMode {
   TcpPing = 0;
   UrlTest = 1;
+  FullTest = 2;
 }
 
 message TestReq {
@@ -42,11 +43,18 @@ message TestReq {
   LoadConfigReq config = 3;
   string inbound = 4;
   string url = 5;
+  // FullTest
+  string in_address = 7;
+  bool full_latency = 8;
+  bool full_speed = 9;
+  bool full_in_out = 10;
+  bool full_nat = 11;
 }
 
 message TestResp {
   string error = 1;
   int32 ms = 2;
+  string full_report = 3;
 }
 
 message QueryStatsReq{

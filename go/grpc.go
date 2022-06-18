@@ -96,20 +96,20 @@ func NekorayCore() {
 
 // PROXY
 
-//go:linkname libcore_instance_dialContext libcore.(*V2RayInstance).dialContext
-func libcore_instance_dialContext(p *libcore.V2RayInstance, ctx context.Context, destination v2rayNet.Destination) (net.Conn, error)
-
-func getProxyHttpClient() *http.Client {
+func getProxyHttpClient(_instance *libcore.V2RayInstance) *http.Client {
 	dailContext := func(ctx context.Context, network, addr string) (net.Conn, error) {
 		dest, err := v2rayNet.ParseDestination(fmt.Sprintf("%s:%s", network, addr))
 		if err != nil {
 			return nil, err
 		}
-		return libcore_instance_dialContext(instance, ctx, dest)
+		return _instance.DialContext(ctx, dest)
 	}
 
-	transport := &http.Transport{}
-	if instance != nil {
+	transport := &http.Transport{
+		TLSHandshakeTimeout:   time.Second * 3,
+		ResponseHeaderTimeout: time.Second * 3,
+	}
+	if _instance != nil {
 		transport.DialContext = dailContext
 	}
 
@@ -127,7 +127,7 @@ var update_download_url, update_download_as string
 func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
 	ret := &gen.UpdateResp{}
 
-	client := getProxyHttpClient()
+	client := getProxyHttpClient(instance)
 
 	if in.Action == gen.UpdateAction_Check { // Check update
 		ctx, cancel := context.WithTimeout(ctx, time.Second*10)

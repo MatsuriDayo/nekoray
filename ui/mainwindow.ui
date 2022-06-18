@@ -432,6 +432,7 @@
      </property>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
+     <addaction name="menu_full_test"/>
      <addaction name="menu_clear_test_result"/>
      <addaction name="menu_remove_unavailable"/>
     </widget>
@@ -613,6 +614,11 @@
   <action name="menu_remove_unavailable">
    <property name="text">
     <string>Remove Unavailable</string>
+   </property>
+  </action>
+  <action name="menu_full_test">
+   <property name="text">
+    <string>Full Test All</string>
    </property>
   </action>
  </widget>

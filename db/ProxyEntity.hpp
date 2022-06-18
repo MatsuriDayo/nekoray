@@ -26,6 +26,7 @@ namespace NekoRay {
 
         // Cache
         int latency = 0;
+        QString full_test_report = "";
 
         ProxyEntity(fmt::AbstractBean *bean, QString type);
 

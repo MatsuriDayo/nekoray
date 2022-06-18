@@ -617,9 +617,10 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         f->setText(profile->bean->name);
         ui->proxyListTable->setItem(row, 3, f);
 
-        // C4: Latency
+        // C4: Test Result
         f = f0->clone();
         f->setText(profile->DisplayLatency());
+        if (!profile->full_test_report.isEmpty()) f->setText(profile->full_test_report);
         ui->proxyListTable->setItem(row, 4, f);
 
         // C5: Traffic
@@ -725,7 +726,6 @@ void MainWindow::on_menu_move_triggered() {
 
     auto items = QStringList{};
     for (auto &&group: NekoRay::profileManager->groups) {
-        if (!group->url.isEmpty()) continue;
         items += Int2String(group->id) + " " + group->name;
     }
 
@@ -889,10 +889,17 @@ void MainWindow::on_menu_url_test_triggered() {
 #endif
 }
 
+void MainWindow::on_menu_full_test_triggered() {
+#ifndef NKR_NO_GRPC
+    speedtest_current_group(libcore::TestMode::FullTest);
+#endif
+}
+
 void MainWindow::on_menu_clear_test_result_triggered() {
     for (const auto &profile: NekoRay::profileManager->profiles) {
         if (NekoRay::dataStore->current_group != profile->gid) continue;
         profile->latency = 0;
+        profile->full_test_report = "";
     }
     refresh_proxy_list();
 }
@@ -1101,8 +1108,19 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 #ifndef NKR_NO_GRPC
 
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
-    neko_stop();
-
+    QStringList full_test_flags;
+    if (mode == libcore::FullTest) {
+        bool ok;
+        auto s = QInputDialog::getText(nullptr, tr("Input"),
+                                       tr("Please enter the items to be tested, separated by commas\n"
+                                          "1. Latency\n"
+                                          "2. Download speed\n"
+                                          "3. In and Out IP\n"
+                                          "4. NAT type"),
+                                       QLineEdit::Normal, "1,2,3,4", &ok);
+        full_test_flags = s.trimmed().split(",");
+        if (!ok) return;
+    }
     runOnNewThread([=]() {
         auto group = NekoRay::profileManager->CurrentGroup();
         if (group->archive) return;
@@ -1111,7 +1129,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
         QMutex lock;
         QMutex lock2;
-        int threadN = NekoRay::dataStore->test_concurrent;
+        int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
         int threadN_finished = 0;
 
         // 这个是按照显示的顺序
@@ -1144,7 +1162,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
                     //
                     QList<NekoRay::sys::ExternalProcess *> ext;
 
-                    if (mode == libcore::TestMode::UrlTest) {
+                    if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
                         auto c = NekoRay::fmt::BuildConfig(profile, true);
                         // external test ???
                         if (!c->ext.isEmpty()) {
@@ -1158,7 +1176,13 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
                         auto config = new libcore::LoadConfigReq;
                         config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
                         req.set_allocated_config(config);
-                    } else {
+                        req.set_in_address(profile->bean->serverAddress.toStdString());
+
+                        req.set_full_latency(full_test_flags.contains("1"));
+                        req.set_full_speed(full_test_flags.contains("2"));
+                        req.set_full_in_out(full_test_flags.contains("3"));
+                        req.set_full_nat(full_test_flags.contains("4"));
+                    } else if (mode == libcore::TcpPing) {
                         req.set_address(profile->bean->DisplayAddress().toStdString());
                     }
 
@@ -1172,6 +1196,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
 
                     profile->latency = result.ms();
                     if (profile->latency == 0) profile->latency = -1; // sn
+                    profile->full_test_report = result.full_report().c_str();
 
                     runOnUiThread([=] {
                         if (!result.error().empty()) {
