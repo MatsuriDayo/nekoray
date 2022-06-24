@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->masterLogBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     {
         auto font = ui->masterLogBrowser->font();
-        font.setPointSize(8);
+        font.setPointSize(9);
         ui->masterLogBrowser->setFont(font);
         qvLogDocument->setDefaultFont(font);
     }
@@ -528,7 +528,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         tt << title_base;
         if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
         if (!running.isNull()) tt << running->bean->DisplayTypeAndName();
-        return tt.join(tray ? "\n" : " ");
+        return tt.join(isTray ? "\n" : " ");
     };
 
     setWindowTitle(make_title(false));
@@ -1134,7 +1134,6 @@ inline bool speedtesting = false;
 
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
     if (speedtesting) return;
-    speedtesting = true;
 
     QStringList full_test_flags;
     if (mode == libcore::FullTest) {
@@ -1149,6 +1148,8 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         full_test_flags = s.trimmed().split(",");
         if (!ok) return;
     }
+
+    speedtesting = true;
 
     runOnNewThread([=]() {
         auto group = NekoRay::profileManager->CurrentGroup();
