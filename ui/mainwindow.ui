@@ -413,6 +413,7 @@
     <addaction name="menu_basic_settings"/>
     <addaction name="menu_manage_groups"/>
     <addaction name="menu_routing_settings"/>
+    <addaction name="menu_hotkey_settings"/>
    </widget>
    <widget class="QMenu" name="menu_server">
     <property name="title">
@@ -442,6 +443,7 @@
     <addaction name="menu_start"/>
     <addaction name="menu_stop"/>
     <addaction name="separator"/>
+    <addaction name="menu_select_all"/>
     <addaction name="menu_move"/>
     <addaction name="menu_reset_traffic"/>
     <addaction name="menu_delete_repeat"/>
@@ -470,7 +472,7 @@
   </action>
   <action name="menu_add_from_input">
    <property name="text">
-    <string>Add profile from input</string>
+    <string>New profile</string>
    </property>
   </action>
   <action name="menu_manage_groups">
@@ -480,7 +482,7 @@
   </action>
   <action name="menu_start">
    <property name="text">
-    <string>Start</string>
+    <string>Start [ Enter ]</string>
    </property>
   </action>
   <action name="menu_stop">
@@ -500,7 +502,7 @@
   </action>
   <action name="menu_delete">
    <property name="text">
-    <string>Delete</string>
+    <string>Delete [ Delete ]</string>
    </property>
   </action>
   <action name="menu_add_from_clipboard2">
@@ -525,12 +527,12 @@
   </action>
   <action name="menu_tcp_ping">
    <property name="text">
-    <string>Tcp Ping All</string>
+    <string>Tcp Ping this group</string>
    </property>
   </action>
   <action name="menu_url_test">
    <property name="text">
-    <string>Url Test All</string>
+    <string>Url Test this group</string>
    </property>
   </action>
   <action name="menu_clear_test_result">
@@ -545,7 +547,7 @@
   </action>
   <action name="menu_reset_traffic">
    <property name="text">
-    <string>Reset Traffic</string>
+    <string>Reset traffic</string>
    </property>
   </action>
   <action name="menu_scan_qr">
@@ -571,7 +573,7 @@
   </action>
   <action name="menu_delete_repeat">
    <property name="text">
-    <string>Delete Repeat</string>
+    <string>Delete repeat</string>
    </property>
   </action>
   <action name="actionfake">
@@ -618,7 +620,17 @@
   </action>
   <action name="menu_full_test">
    <property name="text">
-    <string>Full Test All</string>
+    <string>Full Test this group</string>
+   </property>
+  </action>
+  <action name="menu_hotkey_settings">
+   <property name="text">
+    <string>Hot key</string>
+   </property>
+  </action>
+  <action name="menu_select_all">
+   <property name="text">
+    <string>Select all</string>
    </property>
   </action>
  </widget>

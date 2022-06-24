@@ -119,6 +119,22 @@
         <source>Skip TLS certificate authentication by default</source>
         <translation>默认跳过 TLS 证书验证</translation>
     </message>
+    <message>
+        <source>Traffic statistics refresh rate</source>
+        <translation>流量统计刷新率</translation>
+    </message>
+    <message>
+        <source>Fast</source>
+        <translation>快</translation>
+    </message>
+    <message>
+        <source>Slow</source>
+        <translation>慢</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>关闭</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -661,16 +677,8 @@
         <translation>基本设置</translation>
     </message>
     <message>
-        <source>Add profile from input</source>
-        <translation>手动输入</translation>
-    </message>
-    <message>
         <source>Groups</source>
         <translation>分组</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation>启动</translation>
     </message>
     <message>
         <source>Stop</source>
@@ -685,10 +693,6 @@
         <translation>从剪切板添加</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
         <source>Debug Info</source>
         <translation>调试信息</translation>
     </message>
@@ -697,24 +701,12 @@
         <translation>复制链接</translation>
     </message>
     <message>
-        <source>Tcp Ping All</source>
-        <translation>Tcp Ping 所有</translation>
-    </message>
-    <message>
-        <source>Url Test All</source>
-        <translation>Url Test 所有</translation>
-    </message>
-    <message>
         <source>Clear Test Result</source>
         <translation>清理测试结果</translation>
     </message>
     <message>
         <source>Export Config</source>
         <translation>导出配置</translation>
-    </message>
-    <message>
-        <source>Reset Traffic</source>
-        <translation>重置流量</translation>
     </message>
     <message>
         <source>Scan QR Code</source>
@@ -727,10 +719,6 @@
     <message>
         <source>Disable</source>
         <translation>禁用</translation>
-    </message>
-    <message>
-        <source>Delete Repeat</source>
-        <translation>删除重复</translation>
     </message>
     <message>
         <source>Error</source>
@@ -907,10 +895,6 @@ End: %2</source>
         <translation>设置</translation>
     </message>
     <message>
-        <source>Full Test All</source>
-        <translation>详细测试</translation>
-    </message>
-    <message>
         <source>Input</source>
         <translation>输入</translation>
     </message>
@@ -925,6 +909,46 @@ End: %2</source>
 2. 下载速度
 3. 入口出口 IP
 4. NAT 类型</translation>
+    </message>
+    <message>
+        <source>New profile</source>
+        <translation>手动输入配置</translation>
+    </message>
+    <message>
+        <source>Start [ Enter ]</source>
+        <translation>启动 [ Enter ]</translation>
+    </message>
+    <message>
+        <source>Delete [ Delete ]</source>
+        <translation>删除 [ Delete ]</translation>
+    </message>
+    <message>
+        <source>Tcp Ping this group</source>
+        <translation>TCP Ping 此分组</translation>
+    </message>
+    <message>
+        <source>Url Test this group</source>
+        <translation>URL Test 此分组</translation>
+    </message>
+    <message>
+        <source>Reset traffic</source>
+        <translation>重置流量</translation>
+    </message>
+    <message>
+        <source>Delete repeat</source>
+        <translation>删除重复</translation>
+    </message>
+    <message>
+        <source>Full Test this group</source>
+        <translation>完整测试此分组</translation>
+    </message>
+    <message>
+        <source>Hot key</source>
+        <translation>热键</translation>
+    </message>
+    <message>
+        <source>Select all</source>
+        <translation>全选</translation>
     </message>
 </context>
 <context>

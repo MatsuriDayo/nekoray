@@ -92,7 +92,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->masterLogBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     {
         auto font = ui->masterLogBrowser->font();
-        font.setPointSize(9);
+        font.setPointSize(8);
         ui->masterLogBrowser->setFont(font);
         qvLogDocument->setDefaultFont(font);
     }
@@ -596,6 +596,9 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         }
 
         auto *f0 = new QTableWidgetItem("");
+//        auto font = f0->font();
+//        font.setPointSize(9);
+//        f0->setFont(font);
         f0->setData(114514, profile->id);
 
         // C0: is Running
@@ -782,11 +785,14 @@ void MainWindow::on_menu_reset_traffic_triggered() {
 void MainWindow::on_menu_profile_debug_info_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
-    auto btn = QMessageBox::information(nullptr, "NekoRay", ents.first()->ToJsonBytes(), "OK", "Edit", "", 0, 0);
+    auto btn = QMessageBox::information(nullptr, "NekoRay", ents.first()->ToJsonBytes(), "OK", "Edit", "Reload", 0, 0);
     if (btn == 1) {
         QDesktopServices::openUrl(QUrl::fromLocalFile(
                 QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()
         ));
+    } else if (btn == 2) {
+        ents.first()->Load();
+        refresh_proxy_list();
     }
 }
 
@@ -912,6 +918,10 @@ void MainWindow::on_menu_clear_test_result_triggered() {
         profile->full_test_report = "";
     }
     refresh_proxy_list();
+}
+
+void MainWindow::on_menu_select_all_triggered() {
+    ui->proxyListTable->selectAll();
 }
 
 void MainWindow::on_menu_delete_repeat_triggered() {
@@ -1047,10 +1057,12 @@ void MainWindow::neko_stop(bool crash) {
 #ifndef NKR_NO_GRPC
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
-    for (const auto &item: NekoRay::traffic::trafficLooper->items) {
-        NekoRay::traffic::TrafficLooper::update(item.get());
-        NekoRay::profileManager->GetProfile(item->id)->Save();
-        refresh_proxy_list(item->id);
+    if (NekoRay::dataStore->traffic_loop_interval != 0) {
+        for (const auto &item: NekoRay::traffic::trafficLooper->items) {
+            NekoRay::traffic::TrafficLooper::update(item.get());
+            NekoRay::profileManager->GetProfile(item->id)->Save();
+            refresh_proxy_list(item->id);
+        }
     }
     NekoRay::traffic::trafficLooper->loop_mutex.unlock();
 
@@ -1117,7 +1129,12 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
 
 #ifndef NKR_NO_GRPC
 
+inline bool speedtesting = false;
+
 void MainWindow::speedtest_current_group(libcore::TestMode mode) {
+    if (speedtesting) return;
+    speedtesting = true;
+
     QStringList full_test_flags;
     if (mode == libcore::FullTest) {
         bool ok;
@@ -1131,6 +1148,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         full_test_flags = s.trimmed().split(",");
         if (!ok) return;
     }
+
     runOnNewThread([=]() {
         auto group = NekoRay::profileManager->CurrentGroup();
         if (group->archive) return;
@@ -1224,6 +1242,7 @@ void MainWindow::speedtest_current_group(libcore::TestMode mode) {
         lock2.lock();
         lock2.lock();
         lock2.unlock();
+        speedtesting = false;
     });
 }
 

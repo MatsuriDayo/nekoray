@@ -34,9 +34,12 @@ namespace NekoRay::traffic {
 
     [[noreturn]] void TrafficLooper::loop() {
         while (true) {
-            if (dataStore->traffic_loop_interval < 500 || dataStore->traffic_loop_interval > 2000)
-                dataStore->traffic_loop_interval = 500;
-            QThread::msleep(dataStore->traffic_loop_interval);
+            auto sleep_ms = dataStore->traffic_loop_interval;
+            auto user_disabled = sleep_ms == 0;
+            if (sleep_ms < 500 || sleep_ms > 2000) sleep_ms = 1000;
+            QThread::msleep(sleep_ms);
+            if (user_disabled) continue;
+
             if (!loop_enabled) {
                 // 停止
                 if (looping) {

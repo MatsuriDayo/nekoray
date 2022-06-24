@@ -18,6 +18,13 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
+    if (NekoRay::dataStore->traffic_loop_interval == 500) {
+        ui->rfsh_r->setCurrentIndex(0);
+    } else if (NekoRay::dataStore->traffic_loop_interval == 1000) {
+        ui->rfsh_r->setCurrentIndex(1);
+    } else {
+        ui->rfsh_r->setCurrentIndex(2);
+    }
 
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
@@ -118,6 +125,13 @@ void DialogBasicSettings::accept() {
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
     NekoRay::dataStore->log_level = ui->log_level->currentText();
     NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
+    if (ui->rfsh_r->currentIndex() == 0) {
+        NekoRay::dataStore->traffic_loop_interval = 500;
+    } else if (ui->rfsh_r->currentIndex() == 1) {
+        NekoRay::dataStore->traffic_loop_interval = 1000;
+    } else {
+        NekoRay::dataStore->traffic_loop_interval = 0;
+    }
 
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)

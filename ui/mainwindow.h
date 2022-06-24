@@ -104,6 +104,8 @@ private slots:
 
     void on_menu_manage_groups_triggered();
 
+    void on_menu_select_all_triggered();
+
     void on_menu_delete_repeat_triggered();
 
     void on_menu_remove_unavailable_triggered();
