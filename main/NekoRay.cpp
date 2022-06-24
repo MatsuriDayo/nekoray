@@ -42,6 +42,9 @@ namespace NekoRay {
         _add(new configItem("system_proxy", &system_proxy, itemType::boolean));
         _add(new configItem("insecure_hint", &insecure_hint, itemType::boolean));
         _add(new configItem("skip_cert", &skip_cert, itemType::boolean));
+        _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));
+        _add(new configItem("hk_group", &hotkey_group, itemType::string));
+        _add(new configItem("hk_route", &hotkey_route, itemType::string));
     }
 
     void DataStore::UpdateStartedId(int id) {

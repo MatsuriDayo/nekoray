@@ -1,5 +1,4 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#pragma once
 
 #include <QMainWindow>
 #include <QTableWidgetItem>
@@ -51,6 +50,10 @@ public:
 
     void refresh_connection_list(const QJsonArray &arr);
 
+    void RegisterHotkey(bool unregister);
+
+    void HotkeyEvent(const QString &key);
+
     bool exit_update = false;
 
 signals:
@@ -68,6 +71,8 @@ private slots:
     void on_menu_basic_settings_triggered();
 
     void on_menu_routing_settings_triggered();
+
+    void on_menu_hotkey_settings_triggered();
 
     void on_menu_add_from_input_triggered();
 
@@ -154,5 +159,3 @@ protected:
 inline MainWindow *GetMainWindow() {
     return (MainWindow *) mainwindow;
 }
-
-#endif // MAINWINDOW_H

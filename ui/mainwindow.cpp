@@ -1,4 +1,5 @@
 #include "./ui_mainwindow.h"
+#include "mainwindow.h"
 
 #include "db/TrafficLooper.hpp"
 #include "db/ProfileFilter.hpp"
@@ -9,11 +10,11 @@
 
 #include "ui/CheckUpdate.hpp"
 #include "ui/ThemeManager.hpp"
-#include "ui/mainwindow.h"
-#include "ui/dialog_basic_settings.h"
 #include "ui/edit/dialog_edit_profile.h"
+#include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
 #include "ui/dialog_manage_routes.h"
+#include "ui/dialog_hotkey.h"
 
 #include "3rdparty/qrcodegen.hpp"
 #include "3rdparty/VT100Parser.hpp"
@@ -71,6 +72,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     ui->label_running->installEventFilter(this);
     ui->label_inbound->installEventFilter(this);
+    RegisterHotkey(false);
 
     // top bar
     ui->toolButton_program->setMenu(ui->menu_program);
@@ -200,6 +202,8 @@ MainWindow::MainWindow(QWidget *parent)
     // Setup Tray
     auto icon = QIcon::fromTheme("nekoray");
     auto pixmap = QPixmap("../nekoray.png");
+    if (!pixmap.isNull()) icon = QIcon(pixmap);
+    pixmap = QPixmap("./nekoray.png");
     if (!pixmap.isNull()) icon = QIcon(pixmap);
     setWindowIcon(icon);
 
@@ -437,22 +441,35 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
 
 // menu
 
+inline bool dialog_is_using = false;
+
+#define USE_DIALOG(a) if (dialog_is_using) return; \
+dialog_is_using = true; \
+auto dialog = new a(this); \
+dialog->exec(); \
+dialog->deleteLater(); \
+dialog_is_using = false;
+
 void MainWindow::on_menu_basic_settings_triggered() {
-    auto dialog = new DialogBasicSettings(this);
-    dialog->exec();
-    dialog->deleteLater();
+    USE_DIALOG(DialogBasicSettings)
+}
+
+void MainWindow::on_menu_manage_groups_triggered() {
+    USE_DIALOG(DialogManageGroups)
 }
 
 void MainWindow::on_menu_routing_settings_triggered() {
-    auto dialog = new DialogManageRoutes(this);
-    connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
-    dialog->exec();
-    dialog->deleteLater();
+    USE_DIALOG(DialogManageRoutes)
+}
+
+void MainWindow::on_menu_hotkey_settings_triggered() {
+    USE_DIALOG(DialogHotkey)
 }
 
 void MainWindow::on_menu_exit_triggered() {
 #ifndef NKR_NO_EXTERNAL
     ClearSystemProxy();
+    RegisterHotkey(true);
 #endif
 
     auto last_id = NekoRay::dataStore->started_id;
@@ -471,13 +488,6 @@ void MainWindow::on_menu_exit_triggered() {
         QProcess::startDetached("./updater", QStringList{});
     }
     qApp->quit();
-}
-
-
-void MainWindow::on_menu_manage_groups_triggered() {
-    auto dialog = new DialogManageGroups(this);
-    dialog->exec();
-    dialog->deleteLater();
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
@@ -1375,3 +1385,62 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
         ui->tableWidget_conn->setItem(row, 2, f);
     }
 }
+
+
+// Hotkey
+
+#ifndef NKR_NO_EXTERNAL
+
+#include <QHotkey>
+
+inline QList<QSharedPointer<QHotkey>> RegisteredHotkey;
+
+void MainWindow::RegisterHotkey(bool unregister) {
+    while (!RegisteredHotkey.isEmpty()) {
+        auto hk = RegisteredHotkey.takeFirst();
+        hk->deleteLater();
+    }
+    if (unregister) return;
+
+    QStringList regstr;
+    regstr += NekoRay::dataStore->hotkey_mainwindow;
+    regstr += NekoRay::dataStore->hotkey_group;
+    regstr += NekoRay::dataStore->hotkey_route;
+
+    for (const auto &key: regstr) {
+        if (key.isEmpty()) continue;
+        if (regstr.count(key) > 1) return; // Conflict hotkey
+    }
+    for (const auto &key: regstr) {
+        QKeySequence k(key);
+        if (k.isEmpty()) continue;
+        auto hk = QSharedPointer<QHotkey>(new QHotkey(k, true));
+        if (hk->isRegistered()) {
+            RegisteredHotkey += hk;
+            connect(hk.get(), &QHotkey::activated, this, [=] { HotkeyEvent(key); });
+        } else {
+            hk->deleteLater();
+        }
+    }
+}
+
+void MainWindow::HotkeyEvent(const QString &key) {
+    if (key.isEmpty()) return;
+    runOnUiThread([=] {
+        if (key == NekoRay::dataStore->hotkey_mainwindow) {
+            tray->activated(QSystemTrayIcon::ActivationReason::Trigger);
+        } else if (key == NekoRay::dataStore->hotkey_group) {
+            on_menu_manage_groups_triggered();
+        } else if (key == NekoRay::dataStore->hotkey_route) {
+            on_menu_routing_settings_triggered();
+        }
+    });
+}
+
+#else
+
+void MainWindow::RegisterHotkey(bool unregister) {}
+
+void MainWindow::HotkeyEvent(const QString &key) {}
+
+#endif

@@ -19,8 +19,6 @@ include("cmake/fuck_windows/fuck.cmake")
 include("cmake/print.cmake")
 set(MY_DEPS_DIR "${CMAKE_SOURCE_DIR}/libs/deps/built")
 list(APPEND CMAKE_PREFIX_PATH ${MY_DEPS_DIR})
-#set(ENV{PKG_CONFIG_PATH} "${MY_DEPS_DIR}/share/pkgconfig")
-#find_package(PkgConfig REQUIRED)
 
 # NKR
 include("cmake/nkr.cmake")
@@ -43,6 +41,11 @@ else ()
     # zxing-cpp
     find_package(ZXing CONFIG REQUIRED)
     list(APPEND NKR_EXTERNAL_TARGETS ZXing::ZXing)
+
+    # QHotkey (static submodule)
+    set(QHOTKEY_INSTALL OFF)
+    add_subdirectory(3rdparty/QHotkey)
+    list(APPEND NKR_EXTERNAL_TARGETS qhotkey)
 endif ()
 
 # debug print
@@ -63,6 +66,7 @@ set(PROJECT_SOURCES
         main/NekoRay.cpp
 
         3rdparty/qrcodegen.cpp
+        3rdparty/QtExtKeySequenceEdit.cpp
 
         qv2ray/ui/LogHighlighter.cpp
         qv2ray/ui/QvAutoCompleteTextEdit.cpp
@@ -142,6 +146,10 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.cpp
         ui/dialog_manage_routes.h
         ui/dialog_manage_routes.ui
+
+        ui/dialog_hotkey.cpp
+        ui/dialog_hotkey.h
+        ui/dialog_hotkey.ui
 
         ui/widget/ProxyItem.cpp
         ui/widget/ProxyItem.h

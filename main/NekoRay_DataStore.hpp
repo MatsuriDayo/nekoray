@@ -86,6 +86,11 @@ namespace NekoRay {
                                "}";
         Routing *routing = new Routing;
 
+        // Hotkey
+        QString hotkey_mainwindow = "";
+        QString hotkey_group = "";
+        QString hotkey_route = "";
+
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
 

@@ -255,6 +255,25 @@
     </message>
 </context>
 <context>
+    <name>DialogHotkey</name>
+    <message>
+        <source>Hot key</source>
+        <translation>热键</translation>
+    </message>
+    <message>
+        <source>Show groups</source>
+        <translation>显示分组</translation>
+    </message>
+    <message>
+        <source>Show routes</source>
+        <translation>显示路由</translation>
+    </message>
+    <message>
+        <source>Trigger main window</source>
+        <translation>显示/隐藏主窗口</translation>
+    </message>
+</context>
+<context>
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
