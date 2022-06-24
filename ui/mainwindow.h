@@ -88,8 +88,6 @@ private slots:
 
     void on_menu_export_config_triggered();
 
-    void on_menu_copy_link_triggered();
-
     void on_menu_qr_triggered();
 
     void on_menu_scan_qr_triggered();

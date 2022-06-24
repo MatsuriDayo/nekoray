@@ -777,10 +777,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>QR Code</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>fake</source>
         <translation></translation>
     </message>
@@ -887,10 +883,6 @@ End: %2</source>
         <translation>删除不可用</translation>
     </message>
     <message>
-        <source>Copied share link: %1</source>
-        <translation>复制分享链接成功: %1</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>设置</translation>
     </message>
@@ -949,6 +941,10 @@ End: %2</source>
     <message>
         <source>Select all</source>
         <translation>全选</translation>
+    </message>
+    <message>
+        <source>QR Code &amp; share link</source>
+        <translation>显示 QR Code 和分享链接</translation>
     </message>
 </context>
 <context>

@@ -806,21 +806,12 @@ void MainWindow::on_menu_export_config_triggered() {
     MessageBoxWarning(tr("Config copied"), config_core);
 }
 
-void MainWindow::on_menu_copy_link_triggered() {
-    auto ents = GetNowSelected();
-    if (ents.count() != 1) return;
-    auto text = ents.first()->bean->ToShareLink();
-    if (!text.isEmpty()) {
-        QApplication::clipboard()->setText(text);
-        showLog(tr("Copied share link: %1").arg(ents.first()->bean->DisplayTypeAndName()));
-    }
-}
-
 void MainWindow::on_menu_qr_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
 
-    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(ents.first()->bean->ToShareLink().toUtf8().data(),
+    auto link = ents.first()->bean->ToShareLink();
+    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link.toUtf8().data(),
                                                          qrcodegen::QrCode::Ecc::MEDIUM);
     qint32 sz = qr.getSize();
     QImage im(sz, sz, QImage::Format_RGB32);
@@ -832,30 +823,40 @@ void MainWindow::on_menu_qr_triggered() {
 
     class W : public QDialog {
     public:
-        QLabel *l;
+        QLabel *l = nullptr;
+        QPlainTextEdit *l2 = nullptr;
         QImage im;
 
-        void set(QLabel *qLabel, QImage qImage) {
+        void set(QLabel *qLabel, QPlainTextEdit *pl, QImage qImage) {
             this->l = qLabel;
+            this->l2 = pl;
             this->im = std::move(qImage);
         }
 
         void resizeEvent(QResizeEvent *resizeEvent) override {
             auto size = resizeEvent->size();
-            l->resize(size.width() - 20, size.width() - 20);
+            auto side = size.height() - 20 - l2->size().height();
+            l->setPixmap(QPixmap::fromImage(im.scaled(side, side, Qt::KeepAspectRatio, Qt::FastTransformation),
+                                            Qt::MonoOnly));
+            l->resize(side, side);
         }
     };
 
     auto w = new W();
     auto l = new QLabel(w);
-    w->set(l, im);
+    w->setLayout(new QVBoxLayout);
     w->setMinimumSize(256, 256);
     l->setMinimumSize(256, 256);
     l->setMargin(6);
     l->setAlignment(Qt::AlignmentFlag::AlignCenter);
     l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
     l->setScaledContents(true);
-    l->setPixmap(QPixmap::fromImage(im.scaled(512, 512, Qt::KeepAspectRatio, Qt::FastTransformation), Qt::MonoOnly));
+    w->layout()->addWidget(l);
+    auto l2 = new QPlainTextEdit(w);
+    l2->setPlainText(link);
+    l2->setReadOnly(true);
+    w->layout()->addWidget(l2);
+    w->set(l, l2, im);
     w->setWindowTitle(ents.first()->bean->DisplayTypeAndName());
     QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
     sizePolicy.setHeightForWidth(true);
