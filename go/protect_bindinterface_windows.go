@@ -19,7 +19,7 @@ func windows_Protect_BindInterfaceIndex() uint32 {
 	}
 	// TODO hardcoded tun name "wintun"
 	if len(intfs) > 1 {
-		if intfs[0].Name == "wintun" {
+		if intfs[0].Name == "wintun" || intfs[0].Name == "TunMax" {
 			return uint32(intfs[1].Index)
 		}
 	}

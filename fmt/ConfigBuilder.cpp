@@ -109,7 +109,6 @@ namespace NekoRay::fmt {
             status->routingRules += QJsonObject{
                     {"type",        "field"},
                     {"port",        "53"},
-                    {"network",     "udp"},
                     {"outboundTag", "dns-out"},
             };
         }
@@ -117,6 +116,9 @@ namespace NekoRay::fmt {
         // block for tun
         status->routingRules += QJsonObject{{"type",        "field"},
                                             {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},
+                                            {"outboundTag", "block"},};
+        status->routingRules += QJsonObject{{"type",        "field"},
+                                            {"port",        "135-139"},
                                             {"outboundTag", "block"},};
 
         // custom inbound
@@ -190,9 +192,28 @@ namespace NekoRay::fmt {
         routing["domainMatcher"] = dataStore->domain_matcher == DomainMatcher::MPH ? "mph" : "linear";
 
         // ip user rule
-        // proxy
         QJsonObject routingRule_tmp;
         routingRule_tmp["type"] = "field";
+
+        // block
+        routingRule_tmp["outboundTag"] = "block";
+        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
+            if (line.startsWith("#")) continue;
+            status->ipListBlock += line;
+        }
+        // final add block route
+        if (!status->ipListBlock.isEmpty()) {
+            auto tmp = routingRule_tmp;
+            tmp["ip"] = status->ipListBlock;
+            status->routingRules += tmp;
+        }
+        if (!status->domainListBlock.isEmpty()) {
+            auto tmp = routingRule_tmp;
+            tmp["domain"] = status->domainListBlock;
+            status->routingRules += tmp;
+        }
+
+        // proxy
         routingRule_tmp["outboundTag"] = "proxy";
         for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {
             if (line.startsWith("#")) continue;
@@ -225,24 +246,6 @@ namespace NekoRay::fmt {
         if (!status->domainListDirect.isEmpty()) {
             auto tmp = routingRule_tmp;
             tmp["domain"] = status->domainListDirect;
-            status->routingRules += tmp;
-        }
-
-        // block
-        routingRule_tmp["outboundTag"] = "block";
-        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListBlock += line;
-        }
-        // final add block route
-        if (!status->ipListBlock.isEmpty()) {
-            auto tmp = routingRule_tmp;
-            tmp["ip"] = status->ipListBlock;
-            status->routingRules += tmp;
-        }
-        if (!status->domainListBlock.isEmpty()) {
-            auto tmp = routingRule_tmp;
-            tmp["domain"] = status->domainListBlock;
             status->routingRules += tmp;
         }
 

@@ -16,5 +16,5 @@ popd
 
 #### pack zip ####
 7z a $SRC_ROOT/deployment/$version_standalone-windows64.zip $DEST
-7z a $SRC_ROOT/deployment/$version_standalone-windows64-pdb.zip build/*.pdb
+cp build/*.pdb $SRC_ROOT/deployment/
 rm -rf $DEST build

@@ -12,18 +12,20 @@ mv updater* $DEST
 popd
 
 #### libcore ####
-COMMIT=$(cat matsuri_commit.txt)
+COMMIT_M=$(cat matsuri_commit.txt)
+COMMIT_V=$(cat core_commit.txt)
 version_standalone="nekoray-"$(cat nekoray_version.txt)
 
 pushd ..
 git clone --no-checkout https://github.com/MatsuriDayo/Matsuri.git
+git clone --no-checkout https://github.com/MatsuriDayo/v2ray-core.git
 
 pushd Matsuri
-git checkout $COMMIT
-bash buildScript/lib/core/clone.sh # Get v2ray source of the commit
+git checkout $COMMIT_M
 popd
 
 pushd v2ray-core
+git checkout $COMMIT_V
 version_v2ray=$(git log --pretty=format:'%h' -n 1)
 popd
 
