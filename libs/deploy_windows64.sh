@@ -10,9 +10,11 @@ mv $DEST/nekoray_core $DEST/nekoray_core.exe
 cp build/*.dll build/nekoray.exe $DEST
 
 #### deploy qt & msvc runtime ####
-cd $DEST
+pushd $DEST
 windeployqt nekoray.exe --no-compiler-runtime --no-system-d3d-compiler --no-opengl-sw --verbose 2
+popd
 
 #### pack zip ####
 7z a $SRC_ROOT/deployment/$version_standalone-windows64.zip $DEST
-rm -rf $DEST
+7z a $SRC_ROOT/deployment/$version_standalone-windows64-pdb.zip build/*.pdb
+rm -rf $DEST build
