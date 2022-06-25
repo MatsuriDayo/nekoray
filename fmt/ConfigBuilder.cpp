@@ -34,7 +34,8 @@ namespace NekoRay::fmt {
         result->coreConfig.insert("log", logObj);
 
         // Inbounds
-        QJsonObject sniffing{{"destOverride", QJsonArray{"http", "tls"}},
+        QJsonObject sniffing{{"destOverride", dataStore->fake_dns ?
+                                              QJsonArray{"fakedns", "http", "tls"} : QJsonArray{"http", "tls"}},
                              {"enabled",      true},
                              {"metadataOnly", false},
                              {"routeOnly",    dataStore->sniffing_mode == SniffingMode::TO_DNS},};
@@ -48,7 +49,9 @@ namespace NekoRay::fmt {
             socksInbound["port"] = dataStore->inbound_socks_port;
             socksInbound["settings"] = QJsonObject({{"auth", "noauth"},
                                                     {"udp",  true},});
-            if (dataStore->sniffing_mode != SniffingMode::DISABLE) socksInbound["sniffing"] = sniffing;
+            if (dataStore->fake_dns || dataStore->sniffing_mode != SniffingMode::DISABLE) {
+                socksInbound["sniffing"] = sniffing;
+            }
             status->inbounds += socksInbound;
         }
         // http-in
@@ -101,7 +104,7 @@ namespace NekoRay::fmt {
             QJsonObject dnsOut_settings;
             dnsOut_settings["network"] = "tcp";
             dnsOut_settings["port"] = 53;
-            dnsOut_settings["address"] = "1.1.1.1";
+            dnsOut_settings["address"] = "1.0.0.1";
             dnsOut_settings["userLevel"] = 1;
             dnsOut["settings"] = dnsOut_settings;
 
@@ -146,6 +149,12 @@ namespace NekoRay::fmt {
         // final add DNS
         QJsonObject dns;
         QJsonArray dnsServers;
+
+        // FakeDNS
+        QJsonObject dnsServerFake;
+        dnsServerFake["address"] = "fakedns";
+        dnsServerFake["domains"] = status->domainListDNSRemote;
+        if (dataStore->fake_dns && !forTest) dnsServers += dnsServerFake;
 
         // remote
         QJsonObject dnsServerRemote;

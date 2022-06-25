@@ -45,6 +45,7 @@ namespace NekoRay {
         _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));
         _add(new configItem("hk_group", &hotkey_group, itemType::string));
         _add(new configItem("hk_route", &hotkey_route, itemType::string));
+        _add(new configItem("fakedns", &fake_dns, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {

@@ -1267,7 +1267,7 @@ void MainWindow::show_log_impl(const QString &log) {
     FastAppendTextDocument(log, qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);
     // From https://gist.github.com/jemyzhang/7130092
-    auto maxLines = 1000;
+    auto maxLines = 200;
     auto block = qvLogDocument->begin();
 
     while (block.isValid()) {

@@ -77,6 +77,7 @@ namespace NekoRay {
         bool enhance_resolve_server_domain = false;
 
         // Routing
+        bool fake_dns = false;
         QString domain_strategy = "AsIs";
         QString outbound_domain_strategy = "AsIs";
         int sniffing_mode = SniffingMode::DISABLE;

@@ -14,6 +14,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
     ui->domainMatcherCombo->setCurrentIndex(NekoRay::dataStore->domain_matcher);
     ui->domainStrategyCombo->setCurrentText(NekoRay::dataStore->domain_strategy);
+    ui->fake_dns->setChecked(NekoRay::dataStore->fake_dns);
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
@@ -64,6 +65,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->domain_strategy = ui->domainStrategyCombo->currentText();
     NekoRay::dataStore->outbound_domain_strategy = ui->outbound_domain_strategy->currentText();
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();
+    NekoRay::dataStore->fake_dns = ui->fake_dns->isChecked();
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
     NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
