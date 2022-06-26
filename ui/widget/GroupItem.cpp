@@ -89,7 +89,7 @@ void GroupItem::refresh_data() {
 void GroupItem::on_update_sub_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update %1?").arg(ent->name))
         == QMessageBox::StandardButton::Yes) {
-        NekoRay::sub::rawUpdater->AsyncUpdate(ent->url, ent->id, [=] {
+        NekoRay::sub::rawUpdater->AsyncUpdate(ent->url, ent->id, this, [=] {
             refresh_data();
         });
     }

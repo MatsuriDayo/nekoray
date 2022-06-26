@@ -53,21 +53,35 @@ void DialogManageGroups::on_add_clicked() {
 void DialogManageGroups::on_update_all_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?"))
         == QMessageBox::StandardButton::Yes) {
-        runOnNewThread([=] {
-            for (const auto &group: NekoRay::profileManager->groups) {
-                if (group->url.isEmpty()) continue;
-                NekoRay::sub::rawUpdater->Update(group->url, group->id);
-                runOnUiThread([=] {
-                    for (int i = 0; i < ui->listWidget->count(); i++) {
-                        auto w = ui->listWidget->itemWidget(ui->listWidget->item(i));
-                        if (w == nullptr) return;
-                        auto item = dynamic_cast<GroupItem *>(w);
-                        if (item->ent->id == group->id) {
-                            item->refresh_data();
-                        }
-                    }
-                });
-            }
-        });
+        for (const auto &gid: NekoRay::profileManager->_groups) {
+            auto group = NekoRay::profileManager->GetGroup(gid);
+            if (group == nullptr || group->url.isEmpty()) continue;
+            _update_one_group(group);
+            return;
+        }
     }
+}
+
+void DialogManageGroups::_update_one_group(const QSharedPointer<NekoRay::Group> &group) {
+    NekoRay::sub::rawUpdater->AsyncUpdate(group->url, group->id, this, [=] {
+        // refresh ui
+        for (int i = 0; i < ui->listWidget->count(); i++) {
+            auto w = ui->listWidget->itemWidget(ui->listWidget->item(i));
+            if (w == nullptr) return;
+            auto item = dynamic_cast<GroupItem *>(w);
+            if (item->ent->id == group->id) {
+                item->refresh_data();
+            }
+        }
+        // update next group
+        auto nextOrder = NekoRay::profileManager->_groups.indexOf(group->id);
+        forever {
+            nextOrder += 1;
+            if (nextOrder >= NekoRay::profileManager->_groups.length()) return;
+            auto nextGid = NekoRay::profileManager->_groups[nextOrder];
+            auto nextGroup = NekoRay::profileManager->GetGroup(nextGid);
+            if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
+            _update_one_group(nextGroup);
+        }
+    });
 }

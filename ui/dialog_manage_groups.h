@@ -22,6 +22,8 @@ public:
 private:
     Ui::DialogManageGroups *ui;
 
+    void _update_one_group(const QSharedPointer<NekoRay::Group> &group);
+
 private slots:
 
     void on_add_clicked();

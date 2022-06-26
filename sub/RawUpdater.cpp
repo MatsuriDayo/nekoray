@@ -218,7 +218,15 @@ namespace NekoRay::sub {
     }
 
     // 不要刷新，下载导入完会自己刷新
-    void RawUpdater::AsyncUpdate(const QString &str, int _sub_gid, const std::function<void()> &callback) {
+    void RawUpdater::AsyncUpdate(const QString &str, int _sub_gid,
+                                 QObject *caller, const std::function<void()> &callback) {
+        if (caller != nullptr && callback != nullptr) {
+            connectOnce(this, &RawUpdater::AsyncUpdateCallback, caller,
+                        [=](QObject *receiver) {
+                            if (receiver == caller) callback();
+                        });
+        }
+
         auto content = str.trimmed();
         bool asURL = false;
 
@@ -235,11 +243,11 @@ namespace NekoRay::sub {
 
         runOnNewThread([=] {
             Update(str, _sub_gid, asURL);
-            runOnUiThread([=] {
-                if (callback != nullptr) callback();
-            });
+            emit AsyncUpdateCallback(caller);
         });
     }
+
+    // TODO concurrent
 
     void RawUpdater::Update(const QString &str, int _sub_gid, bool _not_sub_as_url) {
         dataStore->updated_count = 0;
