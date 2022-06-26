@@ -28,7 +28,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     // network changed
     network_title_base = ui->network_box->title();
     connect(ui->network, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
-        if (txt == "tcp") {
+        if (txt == "tcp" || txt == "quic") {
             ui->network_box->setVisible(false);
         } else {
             ui->network_box->setVisible(true);

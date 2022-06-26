@@ -49,12 +49,24 @@ namespace NekoRay::fmt {
         password = url.userName();
         if (serverPort == -1) serverPort = 443;
 
+        stream->network = GetQueryValue(query, "type", "tcp").replace("http", "h2");
         stream->security = GetQueryValue(query, "security", "tls");
         auto sni1 = GetQueryValue(query, "sni");
         auto sni2 = GetQueryValue(query, "peer");
         if (!sni1.isEmpty()) stream->sni = sni1;
         if (!sni2.isEmpty()) stream->sni = sni2;
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
+
+        // TODO header kcp quic
+        if (stream->network == "ws") {
+            stream->path = GetQueryValue(query, "path", "");
+            stream->host = GetQueryValue(query, "host", "");
+        } else if (stream->network == "h2") {
+            stream->path = GetQueryValue(query, "path", "");
+            stream->host = GetQueryValue(query, "host", "").replace("|", ",");
+        } else if (stream->network == "grpc") {
+            stream->path = GetQueryValue(query, "serviceName", "");
+        }
 
         return !password.isEmpty();
     }

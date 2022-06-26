@@ -1,6 +1,7 @@
 #include "db/ProxyEntity.hpp"
 
-#define MAKE_SETTINGS_STREAM_SETTINGS if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
+#define MAKE_SETTINGS_STREAM_SETTINGS \
+if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
 outbound["settings"] = settings; \
 auto streamSettings = stream->BuildStreamSettings(); \
 outbound["streamSettings"] = streamSettings;
@@ -21,7 +22,7 @@ namespace NekoRay::fmt {
         } else if (network == "h2") {
             QJsonObject h2;
             if (!path.isEmpty()) h2["path"] = path;
-            if (!host.isEmpty()) h2["host"] = QJsonArray{host};
+            if (!host.isEmpty()) h2["host"] = QList2QJsonArray(host.split(","));
             streamSettings["httpSettings"] = h2;
         } else if (network == "grpc") {
             QJsonObject grpc;
