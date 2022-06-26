@@ -96,8 +96,18 @@ namespace NekoRay::fmt {
         status->outbounds += QJsonObject{{"protocol", "blackhole"},
                                          {"tag",      "block"},};
 
+        // block for tun
+        if (!forTest) {
+            status->routingRules += QJsonObject{{"type",        "field"},
+                                                {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},
+                                                {"outboundTag", "block"},};
+            status->routingRules += QJsonObject{{"type",        "field"},
+                                                {"port",        "135-139"},
+                                                {"outboundTag", "block"},};
+        }
+
         // DNS Routing (tun2socks 用到，防污染)
-        if (dataStore->dns_routing) {
+        if (dataStore->dns_routing && !forTest) {
             QJsonObject dnsOut;
             dnsOut["protocol"] = "dns";
             dnsOut["tag"] = "dns-out";
@@ -112,17 +122,10 @@ namespace NekoRay::fmt {
             status->routingRules += QJsonObject{
                     {"type",        "field"},
                     {"port",        "53"},
+                    {"inboundTag",  QJsonArray{"socks-in", "http-in"}},
                     {"outboundTag", "dns-out"},
             };
         }
-
-        // block for tun
-        status->routingRules += QJsonObject{{"type",        "field"},
-                                            {"ip",          QJsonArray{"224.0.0.0/3", "169.254.0.0/16",},},
-                                            {"outboundTag", "block"},};
-        status->routingRules += QJsonObject{{"type",        "field"},
-                                            {"port",        "135-139"},
-                                            {"outboundTag", "block"},};
 
         // custom inbound
         QJSONARRAY_ADD(status->inbounds, QString2QJsonObject(dataStore->custom_inbound)["inbounds"].toArray())
@@ -193,6 +196,7 @@ namespace NekoRay::fmt {
         dns["disableFallbackIfMatch"] = true;
         dns["hosts"] = status->hosts;
         dns["servers"] = dnsServers;
+        dns["tag"] = "dns";
         result->coreConfig.insert("dns", dns);
 
         // Routing

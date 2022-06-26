@@ -179,6 +179,11 @@ MainWindow::MainWindow(QWidget *parent)
             ui->search->textChanged("");
             ui->search->setVisible(false);
         }
+        if (select_mode) {
+            emit profile_selected(-1);
+            select_mode = false;
+            refresh_status();
+        }
     });
     connect(ui->search, &QLineEdit::textChanged, this, [=](const QString &text) {
         if (text.isEmpty()) {
@@ -1112,6 +1117,7 @@ void MainWindow::neko_set_system_proxy(bool enable) {
 void MainWindow::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Escape:
+            // take over by shortcut_esc
             break;
         case Qt::Key_Return: {
             neko_start();

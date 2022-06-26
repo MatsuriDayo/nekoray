@@ -163,6 +163,7 @@ namespace NekoRay::sub {
                     auto bean = ent->TrojanVLESSBean();
                     bean->password = Node2QString(proxy["password"]);
                     bean->stream->security = "tls";
+                    bean->stream->network = Node2QString(proxy["network"], "tcp");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "vmess") {
@@ -170,7 +171,7 @@ namespace NekoRay::sub {
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->aid = Node2Int(proxy["alterId"]);
                     bean->security = Node2QString(proxy["cipher"]);
-                    bean->stream->network = Node2QString(proxy["network"]);
+                    bean->stream->network = Node2QString(proxy["network"], "tcp");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;

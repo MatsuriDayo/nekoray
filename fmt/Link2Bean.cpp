@@ -85,7 +85,7 @@ namespace NekoRay::fmt {
             method = SubStrBefore(method_password, ":");
             password = SubStrAfter(method_password, ":");
             auto query = GetQuery(url);
-            plugin = query.queryItemValue("plugin");
+            plugin = query.queryItemValue("plugin").replace("simple-obfs;", "obfs-local;");
         } else {
             // v2rayN
             DECODE_V2RAY_N_1
