@@ -86,6 +86,13 @@ namespace NekoRay::sub {
             if (!ok) ent = nullptr;
         }
 
+        // Naive
+        if (str.startsWith("https+naive://")) {
+            ent = ProfileManager::NewProxyEntity("naive");
+            auto ok = ent->NaiveBean()->TryParseLink(str);
+            if (!ok) ent = nullptr;
+        }
+
         // End
         if (ent.get() == nullptr) return;
         profileManager->AddProfile(ent, gid_add_to);

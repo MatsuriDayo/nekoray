@@ -129,4 +129,17 @@ namespace NekoRay::fmt {
         return false;
     }
 
+    bool NaiveBean::TryParseLink(const QString &link) {
+        auto url = QUrl(link);
+        if (!url.isValid()) return false;
+
+        name = url.fragment(QUrl::FullyDecoded);
+        serverAddress = url.host();
+        serverPort = url.port();
+        username = url.userName();
+        password = url.password();
+
+        return !(username.isEmpty() || password.isEmpty());
+    }
+
 }

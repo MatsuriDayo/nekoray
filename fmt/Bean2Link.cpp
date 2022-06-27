@@ -77,4 +77,15 @@ namespace NekoRay::fmt {
         return "vmess://" + QJsonObject2QString(N, false).toUtf8().toBase64();
     }
 
+    QString NaiveBean::ToShareLink() {
+        QUrl url;
+        url.setScheme("https+naive");
+        url.setUserName(username);
+        url.setPassword(password);
+        url.setHost(serverAddress);
+        url.setPort(serverPort);
+        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
+        return url.toString();
+    }
+
 }

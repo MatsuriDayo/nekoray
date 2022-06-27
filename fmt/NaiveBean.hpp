@@ -28,5 +28,9 @@ namespace NekoRay::fmt {
         bool NeedExternal() override { return true; };
 
         ExternalBuildResult BuildExternal(int mapping_port, int socks_port) override;
+
+        bool TryParseLink(const QString &link);
+
+        QString ToShareLink() override;
     };
 }
