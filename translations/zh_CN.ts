@@ -781,14 +781,6 @@
         <translation></translation>
     </message>
     <message>
-        <source>Socks: %1</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>HTTP: %1</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Testing</source>
         <translation>正在测试</translation>
     </message>

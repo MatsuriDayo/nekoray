@@ -516,12 +516,14 @@ void MainWindow::refresh_status(const QString &traffic_update) {
                                                          ? tr("None")
                                                          : running->bean->DisplayName().left(50)));
     }
-    auto inbound_txt = tr("Socks: %1").arg(
-            DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port));
+    auto display_http = tr("None");
     if (InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
-        inbound_txt += "\n" + tr("HTTP: %1").arg(
-                DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port));
+        display_http = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port);
     }
+    auto inbound_txt = QString("Socks: %1\nHTTP: %2").arg(
+            DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port),
+            display_http
+    );
     ui->label_inbound->setText(inbound_txt);
     if (select_mode) {
         ui->label_running->setText("[" + tr("Select") + "]");
@@ -561,7 +563,10 @@ void MainWindow::refresh_groups() {
             ui->tabWidget->setTabText(0, group->name);
         } else {
             auto widget2 = new QWidget();
-            widget2->setLayout(new QVBoxLayout());
+            auto layout2 = new QVBoxLayout();
+            layout2->setMargin(0);
+            layout2->setSpacing(0);
+            widget2->setLayout(layout2);
             ui->tabWidget->addTab(widget2, group->name);
         }
         ui->tabWidget->tabBar()->setTabData(index, gid);
