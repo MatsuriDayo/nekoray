@@ -4,7 +4,7 @@
 #include "db/TrafficLooper.hpp"
 #include "db/ProfileFilter.hpp"
 #include "fmt/ConfigBuilder.hpp"
-#include "sub/RawUpdater.hpp"
+#include "sub/GroupUpdater.hpp"
 #include "sys/ExternalProcess.hpp"
 #include "sys/AutoRun.hpp"
 
@@ -435,7 +435,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         refresh_proxy_list();
         if (!info.contains("dingyue")) {
             QMessageBox::information(this, "NekoRay",
-                                     tr("Imported %1 profile(s)").arg(NekoRay::dataStore->updated_count));
+                                     tr("Imported %1 profile(s)").arg(NekoRay::dataStore->imported_count));
         }
     } else if (sender == "ExternalProcess") {
         if (info == "Crashed") {
@@ -735,7 +735,7 @@ void MainWindow::on_menu_add_from_input_triggered() {
 void MainWindow::on_menu_add_from_clipboard_triggered() {
     if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) return;
     auto clipboard = QApplication::clipboard()->text();
-    NekoRay::sub::rawUpdater->AsyncUpdate(clipboard);
+    NekoRay::sub::groupUpdater->AsyncUpdate(clipboard);
 }
 
 void MainWindow::on_menu_move_triggered() {
@@ -894,7 +894,7 @@ void MainWindow::on_menu_scan_qr_triggered() {
     if (text.isEmpty()) {
         MessageBoxInfo("NekoRay", tr("QR Code not found"));
     } else {
-        NekoRay::sub::rawUpdater->AsyncUpdate(text);
+        NekoRay::sub::groupUpdater->AsyncUpdate(text);
     }
 #endif
 }

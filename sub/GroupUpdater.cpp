@@ -1,5 +1,11 @@
+#include "qv2ray/utils/HTTPRequestHelper.hpp"
+
+#include "db/Database.hpp"
+#include "db/ProfileFilter.hpp"
+
+#include "GroupUpdater.hpp"
+
 #include <QInputDialog>
-#include "RawUpdater.hpp"
 
 #ifndef NKR_NO_EXTERNAL
 
@@ -7,16 +13,11 @@
 
 #endif
 
-#include "qv2ray/utils/HTTPRequestHelper.hpp"
-
-#include "db/Database.hpp"
-#include "db/ProfileFilter.hpp"
-
 #define FIRST_OR_SECOND(a, b) a.isEmpty() ? b : a
 
 namespace NekoRay::sub {
 
-    RawUpdater *rawUpdater = new RawUpdater;
+    GroupUpdater *groupUpdater = new GroupUpdater;
 
     void RawUpdater::update(const QString &str) {
         // Base64 encoded subscription
@@ -87,8 +88,8 @@ namespace NekoRay::sub {
 
         // End
         if (ent.get() == nullptr) return;
-        profileManager->AddProfile(ent, update_sub_gid);
-        dataStore->updated_count++;
+        profileManager->AddProfile(ent, gid_add_to);
+        update_counter++;
     }
 
 #ifndef NKR_NO_EXTERNAL
@@ -120,7 +121,7 @@ namespace NekoRay::sub {
 #endif
 
 // https://github.com/Dreamacro/clash/wiki/configuration
-    void RawUpdater::updateClash(const QString &str) const {
+    void RawUpdater::updateClash(const QString &str) {
 #ifndef NKR_NO_EXTERNAL
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
@@ -207,8 +208,8 @@ namespace NekoRay::sub {
                     continue;
                 }
 
-                profileManager->AddProfile(ent, update_sub_gid);
-                dataStore->updated_count++;
+                profileManager->AddProfile(ent, gid_add_to);
+                update_counter++;
             }
         } catch (const YAML::Exception &ex) {
             runOnUiThread([=] {
@@ -219,10 +220,10 @@ namespace NekoRay::sub {
     }
 
     // 不要刷新，下载导入完会自己刷新
-    void RawUpdater::AsyncUpdate(const QString &str, int _sub_gid,
-                                 QObject *caller, const std::function<void()> &callback) {
+    void GroupUpdater::AsyncUpdate(const QString &str, int _sub_gid,
+                                   QObject *caller, const std::function<void()> &callback) {
         if (caller != nullptr && callback != nullptr) {
-            connectOnce(this, &RawUpdater::AsyncUpdateCallback, caller,
+            connectOnce(this, &GroupUpdater::AsyncUpdateCallback, caller,
                         [=](QObject *receiver) {
                             if (receiver == caller) callback();
                         });
@@ -248,17 +249,17 @@ namespace NekoRay::sub {
         });
     }
 
-    // TODO concurrent
+    void GroupUpdater::Update(const QString &_str, int _sub_gid, bool _not_sub_as_url) {
+        // 创建 rawUpdater
+        NekoRay::dataStore->imported_count = 0;
+        auto rawUpdater = std::make_unique<RawUpdater>();
+        rawUpdater->gid_add_to = _sub_gid;
 
-    void RawUpdater::Update(const QString &str, int _sub_gid, bool _not_sub_as_url) {
-        dataStore->updated_count = 0;
-        this->update_sub_gid = _sub_gid;
-
-        bool asURL = update_sub_gid >= 0 || _not_sub_as_url; // 把 str 当作 url 处理（下载内容）
-        auto content = str.trimmed();
-
+        // 准备
         QString sub_user_info;
-        auto group = profileManager->GetGroup(update_sub_gid);
+        bool asURL = _sub_gid >= 0 || _not_sub_as_url; // 把 _str 当作 url 处理（下载内容）
+        auto content = _str.trimmed();
+        auto group = profileManager->GetGroup(_sub_gid);
 
         // 网络请求
         if (asURL) {
@@ -292,7 +293,7 @@ namespace NekoRay::sub {
         }
 
         // 解析并添加 profile
-        update(content);
+        rawUpdater->update(content);
 
         if (group != nullptr) {
             out_all = group->Profiles();
@@ -304,7 +305,6 @@ namespace NekoRay::sub {
             update_del += only_in;
 
             for (const auto &ent: update_del) {
-                dataStore->updated_count--;
                 profileManager->DeleteProfile(ent->id);
             }
 
@@ -326,6 +326,7 @@ namespace NekoRay::sub {
                 dialog_message("SubUpdater", "finish-dingyue");
             });
         } else {
+            NekoRay::dataStore->imported_count = rawUpdater->update_counter;
             runOnUiThread([=] {
                 dialog_message("SubUpdater", "finish");
             });

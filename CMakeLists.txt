@@ -100,7 +100,7 @@ set(PROJECT_SOURCES
         fmt/ConfigBuilder.cpp
         fmt/ChainBean.hpp # translate
 
-        sub/RawUpdater.cpp
+        sub/GroupUpdater.cpp
 
         sys/ExternalProcess.cpp
         sys/AutoRun.cpp

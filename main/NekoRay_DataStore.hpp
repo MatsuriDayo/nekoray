@@ -97,7 +97,7 @@ namespace NekoRay {
 
         // Running Cache
 
-        int updated_count = 0;
+        int imported_count = 0;
         bool refreshing_group_list = false;
 
         //

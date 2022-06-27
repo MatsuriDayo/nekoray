@@ -22,7 +22,7 @@ public:
 private:
     Ui::DialogManageGroups *ui;
 
-    void _update_one_group(const QSharedPointer<NekoRay::Group> &group);
+    void _update_one_group(int _order);
 
 private slots:
 

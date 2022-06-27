@@ -2,7 +2,7 @@
 #include "ui_dialog_manage_groups.h"
 
 #include "db/Database.hpp"
-#include "sub/RawUpdater.hpp"
+#include "sub/GroupUpdater.hpp"
 #include "main/GuiUtils.hpp"
 #include "ui/widget/GroupItem.h"
 #include "ui/edit/dialog_edit_group.h"
@@ -56,14 +56,30 @@ void DialogManageGroups::on_update_all_clicked() {
         for (const auto &gid: NekoRay::profileManager->_groups) {
             auto group = NekoRay::profileManager->GetGroup(gid);
             if (group == nullptr || group->url.isEmpty()) continue;
-            _update_one_group(group);
+            _update_one_group(NekoRay::profileManager->_groups.indexOf(gid));
             return;
         }
     }
 }
 
-void DialogManageGroups::_update_one_group(const QSharedPointer<NekoRay::Group> &group) {
-    NekoRay::sub::rawUpdater->AsyncUpdate(group->url, group->id, this, [=] {
+void DialogManageGroups::_update_one_group(int _order) {
+    // calculate next group
+    int nextOrder = _order;
+    QSharedPointer<NekoRay::Group> nextGroup;
+    forever {
+        nextOrder += 1;
+        if (nextOrder >= NekoRay::profileManager->_groups.length()) break;
+        auto nextGid = NekoRay::profileManager->_groups[nextOrder];
+        nextGroup = NekoRay::profileManager->GetGroup(nextGid);
+        if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
+        break;
+    }
+
+    // calculate this group
+    auto group = NekoRay::profileManager->GetGroup(NekoRay::profileManager->_groups[_order]);
+    if (group == nullptr) return;
+
+    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, this, [=] {
         // refresh ui
         for (int i = 0; i < ui->listWidget->count(); i++) {
             auto w = ui->listWidget->itemWidget(ui->listWidget->item(i));
@@ -73,15 +89,7 @@ void DialogManageGroups::_update_one_group(const QSharedPointer<NekoRay::Group> 
                 item->refresh_data();
             }
         }
-        // update next group
-        auto nextOrder = NekoRay::profileManager->_groups.indexOf(group->id);
-        forever {
-            nextOrder += 1;
-            if (nextOrder >= NekoRay::profileManager->_groups.length()) return;
-            auto nextGid = NekoRay::profileManager->_groups[nextOrder];
-            auto nextGroup = NekoRay::profileManager->GetGroup(nextGid);
-            if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
-            _update_one_group(nextGroup);
-        }
+        //
+        if (nextGroup != nullptr) _update_one_group(nextOrder);
     });
 }
