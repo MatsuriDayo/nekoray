@@ -28,28 +28,17 @@ namespace NekoRay::fmt {
         // hidden
         bool isFirstProfile = false;
 
-        explicit AbstractBean(int version) {
-            this->version = version;
-            _add(new configItem("_v", &this->version, itemType::integer));
-            _add(new configItem("name", &name, itemType::string));
-            _add(new configItem("addr", &serverAddress, itemType::string));
-            _add(new configItem("port", &serverPort, itemType::integer));
-        };
+        explicit AbstractBean(int version);
 
-        [[nodiscard]] virtual QString DisplayAddress() {
-            return ::DisplayAddress(serverAddress, serverPort);
-        };
+        QString ToNekorayShareLink(const QString &type);
 
-        [[nodiscard]] virtual QString DisplayName() {
-            if (name.isEmpty()) {
-                return DisplayAddress();
-            }
-            return name;
-        };
+        [[nodiscard]] virtual QString DisplayAddress();
+
+        [[nodiscard]] virtual QString DisplayName();
 
         virtual QString DisplayType() { return {}; };
 
-        virtual QString DisplayTypeAndName() { return QString(" [%1] %2").arg(DisplayType(), DisplayName()); };
+        virtual QString DisplayTypeAndName();
 
         virtual bool NeedExternal() { return false; };
 

@@ -31,7 +31,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | VMess        | ✅      | ✅    | ✅      | v2rayN 格式 | ✅          |
 | Trojan       | ✅      | ✅    | ✅      | 标准&常见格式   | ✅          |
 | VLESS        | ✅      | ✅    | ✅      | ✅         | 不适用        |
-| NaïveProxy   | ✅      | ✅    | ❌      | ❌         | 不适用        |
+| NaïveProxy   | ✅      | ✅    | ✅      | ✅         | 不适用        |
 | Hysteria     | ✅      | ❌    | ❌      | ❌         | 不适用        |
 
 ### 功能
@@ -54,7 +54,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 连接显示                          | ✅                 |
 | 搜索配置                          | ✅                 |
 | 分组                            | ✅                 |
-| 订阅                            | ❓                 |
+| 订阅                            | ✅                 |
 | 剪切板导入                         | ✅                 |
 | QR Code 扫描                    | ✅                 |
 | 剪切板导出                         | ✅                 |
@@ -70,7 +70,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 系统代理                          | Linux/Windows     |
 | 系统代理分流                        | ❌❌                |
 | VPN on Linux                  | ❓                 |
-| VPN on Windows                | ❌❌                |
+| VPN on Windows                | ❓                 |
 | 检查更新                          | ✅                 |
 | 主题样式                          | ✅                 |
 

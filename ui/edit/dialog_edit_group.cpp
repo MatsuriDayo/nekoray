@@ -18,8 +18,14 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     ui->url->setText(ent->url);
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
+    ui->copy_links->setVisible(false);
+    ui->copy_links_nkr->setVisible(false);
     if (ent->id >= 0) { // already a group
         ui->type->setDisabled(true);
+        if (!ent->Profiles().isEmpty()) {
+            ui->copy_links->setVisible(true);
+            ui->copy_links_nkr->setVisible(true);
+        }
     }
 
     connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=] {
@@ -40,6 +46,15 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
         for (const auto &profile: NekoRay::profileManager->profiles) {
             if (profile->gid != ent->id) continue;
             links += profile->bean->ToShareLink();
+        }
+        QApplication::clipboard()->setText(links.join("\n"));
+        MessageBoxInfo("NekoRay", tr("Copied"));
+    });
+    connect(ui->copy_links_nkr, &QPushButton::clicked, this, [=] {
+        QStringList links;
+        for (const auto &profile: NekoRay::profileManager->profiles) {
+            if (profile->gid != ent->id) continue;
+            links += profile->bean->ToNekorayShareLink(profile->type);
         }
         QApplication::clipboard()->setText(links.join("\n"));
         MessageBoxInfo("NekoRay", tr("Copied"));

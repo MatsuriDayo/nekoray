@@ -88,7 +88,7 @@ private slots:
 
     void on_menu_export_config_triggered();
 
-    void on_menu_qr_triggered();
+    void display_qr_link(bool nkrFormat = false);
 
     void on_menu_scan_qr_triggered();
 

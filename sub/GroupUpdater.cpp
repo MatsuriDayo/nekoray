@@ -43,58 +43,69 @@ namespace NekoRay::sub {
 
         QSharedPointer<ProxyEntity> ent;
 
+        // Nekoray format
+        if (str.startsWith("nekoray://")) {
+            auto link = QUrl(str);
+            if (!link.isValid()) return;
+            ent = ProfileManager::NewProxyEntity(link.host());
+            if (ent->bean->version == -114514) return;
+            auto j = DecodeB64IfValid(link.fragment().toUtf8(), QByteArray::Base64UrlEncoding);
+            if (j.isEmpty()) return;
+            ent->bean->FromJsonBytes(j.toUtf8());
+        }
+
         // SOCKS
         if (str.startsWith("socks5://") || str.startsWith("socks4://") ||
             str.startsWith("socks4a://") || str.startsWith("socks://")) {
             ent = ProfileManager::NewProxyEntity("socks");
             auto ok = ent->SocksHTTPBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // HTTP
         if (str.startsWith("http://") || str.startsWith("https://")) {
             ent = ProfileManager::NewProxyEntity("http");
             auto ok = ent->SocksHTTPBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // ShadowSocks
         if (str.startsWith("ss://")) {
             ent = ProfileManager::NewProxyEntity("shadowsocks");
             auto ok = ent->ShadowSocksBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // VMess
         if (str.startsWith("vmess://")) {
             ent = ProfileManager::NewProxyEntity("vmess");
             auto ok = ent->VMessBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // VMess
         if (str.startsWith("vless://")) {
             ent = ProfileManager::NewProxyEntity("vless");
             auto ok = ent->TrojanVLESSBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // Trojan
         if (str.startsWith("trojan://")) {
             ent = ProfileManager::NewProxyEntity("trojan");
             auto ok = ent->TrojanVLESSBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // Naive
         if (str.startsWith("https+naive://")) {
             ent = ProfileManager::NewProxyEntity("naive");
             auto ok = ent->NaiveBean()->TryParseLink(str);
-            if (!ok) ent = nullptr;
+            if (!ok) return;
         }
 
         // End
-        if (ent.get() == nullptr) return;
+        if (ent == nullptr) return;
         profileManager->AddProfile(ent, gid_add_to);
         update_counter++;
     }

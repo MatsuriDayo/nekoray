@@ -265,6 +265,8 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->menu_system_proxy_enabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(true); });
     connect(ui->menu_system_proxy_disabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(false); });
+    connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
+    connect(ui->menu_qr_nkr, &QAction::triggered, this, [=]() { display_qr_link(true); });
     refresh_status();
 
 #ifndef NKR_NO_GRPC
@@ -811,11 +813,15 @@ void MainWindow::on_menu_export_config_triggered() {
     MessageBoxWarning(tr("Config copied"), config_core);
 }
 
-void MainWindow::on_menu_qr_triggered() {
+void MainWindow::display_qr_link(bool nkrFormat) {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
 
     auto link = ents.first()->bean->ToShareLink();
+    if (nkrFormat) {
+        link = ents.first()->bean->ToNekorayShareLink(ents.first()->type);
+    }
+
     qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link.toUtf8().data(),
                                                          qrcodegen::QrCode::Ecc::MEDIUM);
     qint32 sz = qr.getSize();

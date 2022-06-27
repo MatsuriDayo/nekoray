@@ -92,6 +92,7 @@ set(PROJECT_SOURCES
         db/TrafficLooper.cpp
         db/ProfileFilter.cpp
 
+        fmt/AbstractBean.cpp
         fmt/Bean2CoreObj.cpp
         fmt/Bean2External.cpp
         fmt/Bean2Link.cpp

@@ -424,6 +424,7 @@
       <string>Share</string>
      </property>
      <addaction name="menu_qr"/>
+     <addaction name="menu_qr_nkr"/>
      <addaction name="menu_export_config"/>
     </widget>
     <widget class="QMenu" name="menuSpeedtest">
@@ -516,7 +517,7 @@
   </action>
   <action name="menu_qr">
    <property name="text">
-    <string>QR Code &amp; share link</string>
+    <string>QR Code and link</string>
    </property>
   </action>
   <action name="menu_copy_link">
@@ -541,7 +542,7 @@
   </action>
   <action name="menu_export_config">
    <property name="text">
-    <string>Export Config</string>
+    <string>Export V2ray config</string>
    </property>
   </action>
   <action name="menu_reset_traffic">
@@ -630,6 +631,11 @@
   <action name="menu_select_all">
    <property name="text">
     <string>Select all</string>
+   </property>
+  </action>
+  <action name="menu_qr_nkr">
+   <property name="text">
+    <string>QR Code and link (Nekoray)</string>
    </property>
   </action>
  </widget>

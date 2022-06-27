@@ -182,6 +182,10 @@
         <source>Copied</source>
         <translation>复制成功</translation>
     </message>
+    <message>
+        <source>Copy profile share links (Nekoray)</source>
+        <translation>复制所有配置的分享链接 (Nekoray)</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
@@ -705,10 +709,6 @@
         <translation>清理测试结果</translation>
     </message>
     <message>
-        <source>Export Config</source>
-        <translation>导出配置</translation>
-    </message>
-    <message>
         <source>Scan QR Code</source>
         <translation>扫描 QR Code</translation>
     </message>
@@ -943,8 +943,16 @@ End: %2</source>
         <translation>全选</translation>
     </message>
     <message>
-        <source>QR Code &amp; share link</source>
+        <source>QR Code and link</source>
         <translation>显示 QR Code 和分享链接</translation>
+    </message>
+    <message>
+        <source>Export V2ray config</source>
+        <translation>导出 V2ray 配置</translation>
+    </message>
+    <message>
+        <source>QR Code and link (Nekoray)</source>
+        <translation>显示 QR Code 和分享链接 (Nekoray)</translation>
     </message>
 </context>
 <context>
