@@ -238,10 +238,23 @@ namespace NekoRay {
 
     QList<QSharedPointer<ProxyEntity>> Group::Profiles() const {
         QList<QSharedPointer<ProxyEntity>> ret;
-        for (const auto &profile: profileManager->profiles) {
-            if (id == profile->gid) ret += profile;
+        for (const auto &ent: profileManager->profiles) {
+            if (id == ent->gid) ret += ent;
         }
         return ret;
+    }
+
+    QList<QSharedPointer<ProxyEntity>> Group::ProfilesWithOrder() const {
+        if (order.isEmpty()) {
+            return Profiles();
+        } else {
+            QList<QSharedPointer<ProxyEntity>> ret;
+            for (auto _id: order) {
+                auto ent = profileManager->GetProfile(_id);
+                if (ent != nullptr) ret += ent;
+            }
+            return ret;
+        }
     }
 
 }

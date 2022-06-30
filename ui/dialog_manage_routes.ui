@@ -275,6 +275,13 @@
          <item row="1" column="1">
           <layout class="QGridLayout" name="directIPLayout"/>
          </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="active_routing">
+           <property name="text">
+            <string/>
+           </property>
+          </widget>
+         </item>
         </layout>
        </item>
       </layout>
@@ -298,6 +305,20 @@
         <widget class="QPushButton" name="custom_route_edit">
          <property name="text">
           <string>Custom</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="custom_route_global_edit">
+         <property name="text">
+          <string>Custom (global)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="load_save">
+         <property name="text">
+          <string>Mange route set</string>
          </property>
         </widget>
        </item>
@@ -337,7 +358,7 @@
  <connections>
   <connection>
    <sender>buttonBox</sender>
-   <signal>clicked(QAbstractButton*)</signal>
+   <signal>accepted()</signal>
    <receiver>DialogManageRoutes</receiver>
    <slot>accept()</slot>
    <hints>

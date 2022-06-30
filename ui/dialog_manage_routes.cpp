@@ -4,11 +4,29 @@
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
 
-#include <QInputDialog>
+#include <QFile>
+#include <QMessageBox>
+#include <QListWidget>
+
+#define REFRESH_ACTIVE_ROUTING(a, r) \
+active_routing = a; \
+ui->active_routing->setText("[" + active_routing + "]"); \
+setWindowTitle(title_base + " [" + a + "]"); \
+SetRouteConfig(*r);
+
+#define SAVE_TO_ROUTING(r) \
+r->direct_ip = directIPTxt->toPlainText(); \
+r->direct_domain = directDomainTxt->toPlainText(); \
+r->proxy_ip = proxyIPTxt->toPlainText(); \
+r->proxy_domain = proxyDomainTxt->toPlainText(); \
+r->block_ip = blockIPTxt->toPlainText(); \
+r->block_domain = blockDomainTxt->toPlainText(); \
+r->custom = CACHE.custom_route;
 
 DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogManageRoutes) {
     ui->setupUi(this);
+    title_base = windowTitle();
 
     ui->sniffing_mode->setCurrentIndex(NekoRay::dataStore->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
@@ -19,10 +37,13 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
     ui->enhance_resolve_server_domain->setChecked(NekoRay::dataStore->enhance_resolve_server_domain);
-    D_C_LOAD_STRING(custom_route)
+    D_C_LOAD_STRING(custom_route_global)
 
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_route)
+    });
+    connect(ui->custom_route_global_edit, &QPushButton::clicked, this, [=] {
+        C_EDIT_JSON_ALLOW_EMPTY(custom_route_global)
     });
 
     //
@@ -46,13 +67,8 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->directIPLayout->addWidget(directIPTxt, 0, 0);
     ui->proxyIPLayout->addWidget(proxyIPTxt, 0, 0);
     ui->blockIPLayout->addWidget(blockIPTxt, 0, 0);
-
-    directIPTxt->setPlainText(NekoRay::dataStore->routing->direct_ip);
-    directDomainTxt->setPlainText(NekoRay::dataStore->routing->direct_domain);
-    proxyIPTxt->setPlainText(NekoRay::dataStore->routing->proxy_ip);
-    proxyDomainTxt->setPlainText(NekoRay::dataStore->routing->proxy_domain);
-    blockIPTxt->setPlainText(NekoRay::dataStore->routing->block_ip);
-    blockDomainTxt->setPlainText(NekoRay::dataStore->routing->block_domain);
+    //
+    REFRESH_ACTIVE_ROUTING(NekoRay::dataStore->active_routing, NekoRay::dataStore->routing)
 }
 
 DialogManageRoutes::~DialogManageRoutes() {
@@ -69,14 +85,13 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
     NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
-    D_C_SAVE_STRING(custom_route)
+    D_C_SAVE_STRING(custom_route_global)
 
-    NekoRay::dataStore->routing->direct_ip = directIPTxt->toPlainText();
-    NekoRay::dataStore->routing->direct_domain = directDomainTxt->toPlainText();
-    NekoRay::dataStore->routing->proxy_ip = proxyIPTxt->toPlainText();
-    NekoRay::dataStore->routing->proxy_domain = proxyDomainTxt->toPlainText();
-    NekoRay::dataStore->routing->block_ip = blockIPTxt->toPlainText();
-    NekoRay::dataStore->routing->block_domain = blockDomainTxt->toPlainText();
+    //
+    SAVE_TO_ROUTING(NekoRay::dataStore->routing)
+    NekoRay::dataStore->active_routing = active_routing;
+    NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
+    NekoRay::dataStore->routing->Save();
 
     dialog_message(Dialog_DialogManageRoutes, "SaveDataStore");
     QDialog::accept();
@@ -107,4 +122,86 @@ void DialogManageRoutes::SetRouteConfig(const NekoRay::Routing &conf) {
     blockIPTxt->setPlainText(conf.block_ip);
     directIPTxt->setPlainText(conf.direct_ip);
     proxyIPTxt->setPlainText(conf.proxy_ip);
+    //
+    CACHE.custom_route = conf.custom;
+}
+
+void DialogManageRoutes::on_load_save_clicked() {
+    auto w = new QDialog;
+    auto layout = new QVBoxLayout;
+    w->setLayout(layout);
+    auto lineEdit = new QLineEdit;
+    layout->addWidget(lineEdit);
+    auto list = new QListWidget;
+    layout->addWidget(list);
+    for (const auto &name: NekoRay::Routing::List()) {
+        list->addItem(name);
+    }
+    connect(list, &QListWidget::currentTextChanged, lineEdit, &QLineEdit::setText);
+    auto bottom = new QHBoxLayout;
+    layout->addLayout(bottom);
+    auto load = new QPushButton;
+    load->setText(tr("Load"));
+    bottom->addWidget(load);
+    auto save = new QPushButton;
+    save->setText(tr("Save"));
+    bottom->addWidget(save);
+    auto remove = new QPushButton;
+    remove->setText(tr("Remove"));
+    bottom->addWidget(remove);
+    auto cancel = new QPushButton;
+    cancel->setText(tr("Cancel"));
+    bottom->addWidget(cancel);
+    connect(load, &QPushButton::clicked, w, [=] {
+        auto fn = lineEdit->text();
+        if (!fn.isEmpty()) {
+            auto r = std::make_unique<NekoRay::Routing>();
+            r->load_control_force = true;
+            r->fn = "routes/" + fn;
+            if (r->Load()) {
+                auto btn = QMessageBox::question(nullptr,
+                                                 "NekoRay", tr("Load routing: %1").arg(fn) + "\n" + r->toString());
+                if (btn == QMessageBox::Yes) {
+                    REFRESH_ACTIVE_ROUTING(fn, r)
+                    w->accept();
+                }
+            }
+        }
+    });
+    connect(save, &QPushButton::clicked, w, [=] {
+        auto fn = lineEdit->text();
+        if (!fn.isEmpty()) {
+            auto r = std::make_unique<NekoRay::Routing>();
+            SAVE_TO_ROUTING(r)
+            r->fn = "routes/" + fn;
+            auto btn = QMessageBox::question(nullptr, "NekoRay", tr("Save routing: %1").arg(fn) + "\n" + r->toString());
+            if (btn == QMessageBox::Yes) {
+                r->Save();
+                REFRESH_ACTIVE_ROUTING(fn, r)
+                w->accept();
+            }
+        }
+    });
+    connect(remove, &QPushButton::clicked, w, [=] {
+        auto fn = lineEdit->text();
+        if (!fn.isEmpty() && NekoRay::Routing::List().length() > 1) {
+            auto btn = QMessageBox::question(nullptr, "NekoRay", tr("Remove routing: %1").arg(fn));
+            if (btn == QMessageBox::Yes) {
+                QFile f("routes/" + fn);
+                f.remove();
+                if (NekoRay::dataStore->active_routing == fn) {
+                    NekoRay::Routing::SetToActive(NekoRay::Routing::List().first());
+                    REFRESH_ACTIVE_ROUTING(NekoRay::dataStore->active_routing, NekoRay::dataStore->routing)
+                }
+                w->accept();
+            }
+        }
+    });
+    connect(cancel, &QPushButton::clicked, w, &QDialog::accept);
+    connect(list, &QListWidget::itemDoubleClicked, this, [=](QListWidgetItem *item) {
+        lineEdit->setText(item->text());
+        emit load->clicked();
+    });
+    w->exec();
+    w->deleteLater();
 }

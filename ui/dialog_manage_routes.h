@@ -23,6 +23,7 @@ private:
 
     struct {
         QString custom_route;
+        QString custom_route_global;
     } CACHE;
 
 
@@ -37,6 +38,9 @@ private:
     //
     NekoRay::Routing routing_cn_lan = NekoRay::Routing(1);
     NekoRay::Routing routing_global = NekoRay::Routing(0);
+    //
+    QString title_base;
+    QString active_routing;
 public slots:
 
     void accept() override;
@@ -46,6 +50,8 @@ public slots:
     QAction *schemeToAction(const QString &name, const NekoRay::Routing &scheme);
 
     void SetRouteConfig(const NekoRay::Routing &conf);
+
+    void on_load_save_clicked();
 };
 
 

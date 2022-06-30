@@ -1,6 +1,7 @@
 #include "NekoRay.hpp"
 
 #include <QFile>
+#include <QDir>
 
 namespace NekoRay {
 
@@ -9,7 +10,6 @@ namespace NekoRay {
     // datastore
 
     DataStore::DataStore() : JsonStore("groups/nekoray.json") {
-        _add(new configItem("routing", dynamic_cast<JsonStore *>(routing), itemType::jsonStore));
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
 
         _add(new configItem("core_path", &core_path, itemType::string));
@@ -33,7 +33,7 @@ namespace NekoRay {
         _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
         _add(new configItem("theme", &theme, itemType::string));
         _add(new configItem("custom_inbound", &custom_inbound, itemType::string));
-        _add(new configItem("custom_route", &custom_route, itemType::string));
+        _add(new configItem("custom_route", &custom_route_global, itemType::string));
         _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
         _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
@@ -48,6 +48,7 @@ namespace NekoRay {
         _add(new configItem("hk_group", &hotkey_group, itemType::string));
         _add(new configItem("hk_route", &hotkey_route, itemType::string));
         _add(new configItem("fakedns", &fake_dns, itemType::boolean));
+        _add(new configItem("active_routing", &active_routing, itemType::string));
     }
 
     void DataStore::UpdateStartedId(int id) {
@@ -83,6 +84,34 @@ namespace NekoRay {
         _add(new configItem("proxy_domain", &this->proxy_domain, itemType::string));
         _add(new configItem("block_ip", &this->block_ip, itemType::string));
         _add(new configItem("block_domain", &this->block_domain, itemType::string));
+        _add(new configItem("custom", &this->custom, itemType::string));
+    }
+
+    QString Routing::toString() const {
+        return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6")
+                .arg(SplitLines(proxy_domain).join(","))
+                .arg(SplitLines(proxy_ip).join(","))
+                .arg(SplitLines(direct_domain).join(","))
+                .arg(SplitLines(direct_ip).join(","))
+                .arg(SplitLines(block_domain).join(","))
+                .arg(SplitLines(block_ip).join(","));
+    }
+
+    QStringList Routing::List() {
+        QStringList l;
+        QDir d;
+        if (d.exists("routes")) {
+            QDir dr("routes");
+            return dr.entryList(QDir::Files);
+        }
+        return l;
+    }
+
+    void Routing::SetToActive(const QString &name) {
+        dataStore->routing->fn = "routes/" + name;
+        dataStore->routing->Load();
+        dataStore->active_routing = name;
+        dataStore->Save();
     }
 
     // NO default extra core

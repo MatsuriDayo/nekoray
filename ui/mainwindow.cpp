@@ -240,6 +240,57 @@ MainWindow::MainWindow(QWidget *parent)
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
         ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
         ui->actionStart_minimal->setChecked(NekoRay::dataStore->start_minimal);
+        // active server
+        for (const auto &old: ui->menuActive_Server->actions()) {
+            ui->menuActive_Server->removeAction(old);
+        }
+        for (const auto &pf: NekoRay::profileManager->CurrentGroup()->ProfilesWithOrder()) {
+            auto a = new QAction(pf->bean->DisplayTypeAndName());
+            a->setProperty("id", pf->id);
+            a->setCheckable(true);
+            if (NekoRay::dataStore->started_id == pf->id) a->setChecked(true);
+            ui->menuActive_Server->addAction(a);
+        }
+        // active routing
+        for (const auto &old: ui->menuActive_Routing->actions()) {
+            ui->menuActive_Routing->removeAction(old);
+        }
+        for (const auto &name: NekoRay::Routing::List()) {
+            auto a = new QAction(name);
+            a->setCheckable(true);
+            a->setChecked(name == NekoRay::dataStore->active_routing);
+            ui->menuActive_Routing->addAction(a);
+        }
+    });
+    connect(ui->menuActive_Server, &QMenu::triggered, this, [=](QAction *a) {
+        bool ok;
+        auto id = a->property("id").toInt(&ok);
+        if (!ok) return;
+        if (NekoRay::dataStore->started_id == id) {
+            neko_stop();
+        } else {
+            neko_start(id);
+        }
+    });
+    connect(ui->menuActive_Routing, &QMenu::triggered, this, [=](QAction *a) {
+        auto fn = a->text();
+        if (!fn.isEmpty()) {
+            NekoRay::Routing r;
+            r.load_control_force = true;
+            r.fn = "routes/" + fn;
+            if (r.Load()) {
+                auto btn = QMessageBox::question(nullptr, "NekoRay",
+                                                 tr("Load routing and apply: %1").arg(fn) + "\n" + r.toString());
+                if (btn == QMessageBox::Yes) {
+                    NekoRay::Routing::SetToActive(fn);
+                    if (NekoRay::dataStore->started_id >= 0) {
+                        neko_start(NekoRay::dataStore->started_id);
+                    } else {
+                        refresh_status();
+                    }
+                }
+            }
+        }
     });
     connect(ui->actionRemember_last_proxy, &QAction::triggered, this, [=](bool checked) {
         NekoRay::dataStore->remember_enable = checked;
@@ -516,6 +567,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (!title_system_proxy.isEmpty()) tt << "[" + title_system_proxy + "]";
         tt << title_base;
         if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
+        if (!NekoRay::dataStore->active_routing.isEmpty() && NekoRay::dataStore->active_routing != "Default") {
+            tt << "[" + NekoRay::dataStore->active_routing + "]";
+        }
         if (!running.isNull()) tt << running->bean->DisplayTypeAndName();
         return tt.join(isTray ? "\n" : " ");
     };

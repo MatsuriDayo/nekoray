@@ -17,5 +17,8 @@ namespace NekoRay {
 
         // 按 id 顺序
         [[nodiscard]] QList<QSharedPointer<ProxyEntity>> Profiles() const;
+
+        // 按 显示 顺序
+        [[nodiscard]] QList<QSharedPointer<ProxyEntity>> ProfilesWithOrder() const;
     };
 }

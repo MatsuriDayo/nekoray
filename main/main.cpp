@@ -54,6 +54,9 @@ int main(int argc, char *argv[]) {
     if (!dir.exists("groups")) {
         dir_success = dir_success && dir.mkdir("groups");
     }
+    if (!dir.exists("routes")) {
+        dir_success = dir_success && dir.mkdir("routes");
+    }
     if (!dir_success) {
         QMessageBox::warning(nullptr, "Error", "No permission to write " + dir.absolutePath());
         return 1;
@@ -63,6 +66,13 @@ int main(int argc, char *argv[]) {
     auto isLoaded = NekoRay::dataStore->Load();
     if (!isLoaded) {
         NekoRay::dataStore->Save();
+    }
+
+    // load routing
+    NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
+    isLoaded = NekoRay::dataStore->routing->Load();
+    if (!isLoaded) {
+        NekoRay::dataStore->routing->Save();
     }
 
     // Translate

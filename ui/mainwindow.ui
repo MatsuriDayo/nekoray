@@ -449,12 +449,26 @@
      </property>
      <addaction name="actionfake"/>
     </widget>
+    <widget class="QMenu" name="menuActive_Server">
+     <property name="title">
+      <string>Active Server</string>
+     </property>
+     <addaction name="actionfake_2"/>
+    </widget>
+    <widget class="QMenu" name="menuActive_Routing">
+     <property name="title">
+      <string>Active Routing</string>
+     </property>
+     <addaction name="actionfake_3"/>
+    </widget>
     <addaction name="menu_add_from_clipboard2"/>
     <addaction name="menu_scan_qr"/>
     <addaction name="separator"/>
     <addaction name="actionStart_with_system"/>
     <addaction name="actionStart_minimal"/>
     <addaction name="actionRemember_last_proxy"/>
+    <addaction name="menuActive_Server"/>
+    <addaction name="menuActive_Routing"/>
     <addaction name="menu_system_proxy"/>
     <addaction name="menu_program_preference"/>
     <addaction name="separator"/>
@@ -690,6 +704,22 @@
   <action name="menu_qr_nkr">
    <property name="text">
     <string>QR Code and link (Nekoray)</string>
+   </property>
+  </action>
+  <action name="actionfake_2">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionfake_3">
+   <property name="text">
+    <string>fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

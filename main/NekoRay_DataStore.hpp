@@ -10,8 +10,15 @@ namespace NekoRay {
         QString proxy_domain;
         QString block_ip;
         QString block_domain;
+        QString custom = "{\"rules\": []}";
 
         explicit Routing(int preset = 0);
+
+        QString toString() const;
+
+        static QStringList List();
+
+        static void SetToActive(const QString &name);
     };
 
     class ExtraCore : public JsonStore {
@@ -66,9 +73,7 @@ namespace NekoRay {
         QString inbound_address = "127.0.0.1";
         int inbound_socks_port = 2080;
         int inbound_http_port = -2081;
-        QString custom_inbound = "{\n"
-                                 "    \"inbounds\": []\n"
-                                 "}";
+        QString custom_inbound = "{\"inbounds\": []}";
 
         // DNS
         QString remote_dns = "https://1.0.0.1/dns-query";
@@ -82,10 +87,8 @@ namespace NekoRay {
         QString outbound_domain_strategy = "AsIs";
         int sniffing_mode = SniffingMode::DISABLE;
         int domain_matcher = DomainMatcher::MPH;
-        QString custom_route = "{\n"
-                               "    \"rules\": []\n"
-                               "}";
-        Routing *routing = new Routing;
+        QString custom_route_global = "{\"rules\": []}";
+        QString active_routing = "Default";
 
         // Hotkey
         QString hotkey_mainwindow = "";
@@ -97,6 +100,7 @@ namespace NekoRay {
 
         // Running Cache
 
+        Routing *routing = new Routing;
         int imported_count = 0;
         bool refreshing_group_list = false;
 

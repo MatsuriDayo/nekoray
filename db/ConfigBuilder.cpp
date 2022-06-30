@@ -265,7 +265,8 @@ namespace NekoRay {
 
         // final add routing rule
         // custom routing rule
-        auto routingRules = QString2QJsonObject(dataStore->custom_route)["rules"].toArray();
+        auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
+        QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
         QJSONARRAY_ADD(routingRules, status->routingRules)
         routing["rules"] = routingRules;
         result->coreConfig.insert("routing", routing);

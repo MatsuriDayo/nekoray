@@ -398,6 +398,42 @@
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>加载</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Save routing: %1</source>
+        <translation>保存路由: %1</translation>
+    </message>
+    <message>
+        <source>Load routing: %1</source>
+        <translation>加载路由: %1</translation>
+    </message>
+    <message>
+        <source>Remove routing: %1</source>
+        <translation>删除路由: %1</translation>
+    </message>
+    <message>
+        <source>Mange route set</source>
+        <translation>管理路由规则</translation>
+    </message>
+    <message>
+        <source>Custom (global)</source>
+        <translation>自定义 (全局)</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>
@@ -945,6 +981,18 @@ End: %2</source>
     <message>
         <source>QR Code and link (Nekoray)</source>
         <translation>显示 QR Code 和分享链接 (Nekoray)</translation>
+    </message>
+    <message>
+        <source>Active Routing</source>
+        <translation>当前路由规则</translation>
+    </message>
+    <message>
+        <source>Active Server</source>
+        <translation>当前服务器</translation>
+    </message>
+    <message>
+        <source>Load routing and apply: %1</source>
+        <translation>加载路由规则并应用: %1</translation>
     </message>
 </context>
 <context>
