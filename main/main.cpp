@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QTranslator>
+#include <QMessageBox>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoRay.hpp"

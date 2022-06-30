@@ -9,8 +9,10 @@
 
 #include <QInputDialog>
 #include <QListWidgetItem>
+#include <QMessageBox>
 
-#define AddGroupToListIfExist(_id) auto __ent = NekoRay::profileManager->GetGroup(_id); \
+#define AddGroupToListIfExist(_id) \
+auto __ent = NekoRay::profileManager->GetGroup(_id); \
 if (__ent != nullptr) { \
 auto wI = new QListWidgetItem(); \
 auto w = new GroupItem(this, __ent, wI); \

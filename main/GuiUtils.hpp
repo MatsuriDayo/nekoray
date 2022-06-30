@@ -2,10 +2,10 @@
 
 #include <QMenu>
 #include <QWidget>
-#include <QRegularExpression>
-#include <QRegularExpressionValidator>
 
 // Dialogs
+
+inline QWidget *mainwindow;
 
 #define Dialog_DialogBasicSettings "DialogBasicSettings"
 #define Dialog_DialogEditProfile "DialogEditProfile"

@@ -15,7 +15,7 @@ public:
 
     // cached editor
 
-    std::function<void()> dialog_editor_cache_updated;
+    std::function<void()> editor_cache_updated;
 
     virtual QList<QPair<QPushButton *, QString>> get_editor_cached() { return {}; };
 };

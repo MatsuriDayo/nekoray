@@ -1,7 +1,8 @@
-#include "ConfigBuilder.hpp"
+#include "db/ConfigBuilder.hpp"
 #include "db/Database.hpp"
+#include "fmt/includes.h"
 
-namespace NekoRay::fmt {
+namespace NekoRay {
 
     void ApplyCustomOutboundJsonSettings(const QJsonObject &custom, QJsonObject &outbound) {
         // 合并
@@ -25,7 +26,7 @@ namespace NekoRay::fmt {
     }
 
     QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest) {
-        auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult());
+        auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult);
         auto status = QSharedPointer<BuildConfigStatus>(new BuildConfigStatus);
         status->result = result;
 
@@ -287,17 +288,6 @@ namespace NekoRay::fmt {
         return result;
     }
 
-//    QString genDomainStrategy(bool noAsIs) {
-//        if (dataStore->outbound_domain_strategy != "AsIs") return dataStore->outbound_domain_strategy;
-//        QString ret;
-//        if (!dataStore->destination_override && !noAsIs) ret = "AsIs";
-//        if (dataStore->ipv6_mode == IPv6Mode::DISABLE) ret = "UseIPv4";
-//        if (dataStore->ipv6_mode == IPv6Mode::PREFER)ret = "PreferIPv6";
-//        if (dataStore->ipv6_mode == IPv6Mode::ONLY)ret = "UseIPv6";
-//        if (ret.isEmpty()) ret = "PreferIPv4";
-//        return ret;
-//    }
-
     QString BuildChain(bool extra, const QList<QSharedPointer<ProxyEntity>> &ents,
                        const QSharedPointer<BuildConfigStatus> &status) {
         QString chainOutboundTag;
@@ -380,8 +370,8 @@ namespace NekoRay::fmt {
             // Outbound
 
             QJsonObject outbound;
-            CoreObjOutboundBuildResult coreR;
-            ExternalBuildResult extR;
+            fmt::CoreObjOutboundBuildResult coreR;
+            fmt::ExternalBuildResult extR;
 
             if (ent->bean->NeedExternal()) {
                 auto ext_socks_port = MkPort();

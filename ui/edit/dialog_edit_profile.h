@@ -46,7 +46,7 @@ private:
 
     void typeSelected(const QString &newType);
 
-    void dialog_editor_cache_updated();
+    void editor_cache_updated_impl();
 };
 
 #endif // DIALOG_EDIT_PROFILE_H

@@ -1,4 +1,9 @@
 #include "db/ProxyEntity.hpp"
+#include "fmt/includes.h"
+
+#include <QFile>
+#include <QDir>
+#include <QFileInfo>
 
 #define WriteTempFile(fn, data) \
 QDir dir; \

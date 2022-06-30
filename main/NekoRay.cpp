@@ -1,5 +1,7 @@
 #include "NekoRay.hpp"
 
+#include <QFile>
+
 namespace NekoRay {
 
     DataStore *dataStore = new DataStore();
@@ -59,7 +61,7 @@ namespace NekoRay {
         }
     }
 
-    // default routing
+    // preset routing
     Routing::Routing(int preset) : JsonStore() {
         if (preset == 1) {
             direct_ip = "geoip:cn\n"
@@ -163,9 +165,8 @@ namespace NekoRay {
     void JsonStore::FromJson(QJsonObject object) {
         for (const auto &key: object.keys()) {
             if (_map.count(key) == 0) {
-                if (debug_messagebox_verbose) {
-                    MessageBoxWarning("提示",
-                                      QString("unknown key\n%1\n%2").arg(key).arg(QJsonObject2QString(object, false)));
+                if (debug_verbose) {
+                    qDebug() << QString("unknown key\n%1\n%2").arg(key, QJsonObject2QString(object, false));
                 }
                 continue;
             }
@@ -242,7 +243,7 @@ namespace NekoRay {
         auto document = QJsonDocument::fromJson(data, &error);
 
         if (error.error != error.NoError) {
-            if (debug_messagebox_verbose) MessageBoxWarning("QJsonParseError", error.errorString());
+            if (debug_verbose) qDebug() << "QJsonParseError" << error.errorString();
             return;
         }
 

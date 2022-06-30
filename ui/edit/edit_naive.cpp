@@ -1,6 +1,8 @@
 #include "edit_naive.h"
 #include "ui_edit_naive.h"
 
+#include "fmt/NaiveBean.hpp"
+
 #include <QInputDialog>
 
 EditNaive::EditNaive(QWidget *parent) :
@@ -51,7 +53,7 @@ void EditNaive::on_certificate_clicked() {
     auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", CACHE.certificate, &ok);
     if (ok) {
         CACHE.certificate = txt;
-        dialog_editor_cache_updated();
+        editor_cache_updated();
     }
 }
 
@@ -60,6 +62,6 @@ void EditNaive::on_extra_headers_clicked() {
     auto txt = QInputDialog::getMultiLineText(this, tr("Extra headers"), "", CACHE.extra_headers, &ok);
     if (ok) {
         CACHE.extra_headers = txt;
-        dialog_editor_cache_updated();
+        editor_cache_updated();
     }
 }

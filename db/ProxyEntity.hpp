@@ -1,22 +1,29 @@
 #pragma once
 
-#include <utility>
-
 #include "main/NekoRay.hpp"
 #include "TrafficData.hpp"
 #include "fmt/AbstractBean.hpp"
-#include "fmt/SocksHttpBean.hpp"
-#include "fmt/ShadowSocksBean.hpp"
-#include "fmt/ChainBean.hpp"
-#include "fmt/VMessBean.hpp"
-#include "fmt/TrojanVLESSBean.hpp"
-#include "fmt/NaiveBean.hpp"
-#include "fmt/CustomBean.hpp"
 
 namespace NekoRay {
+    namespace fmt {
+        class SocksHttpBean;
+
+        class ShadowSocksBean;
+
+        class VMessBean;
+
+        class TrojanVLESSBean;
+
+        class NaiveBean;
+
+        class CustomBean;
+
+        class ChainBean;
+    };
+
     class ProxyEntity : public JsonStore {
     public:
-        QString type = "";
+        QString type;
 
         int id = -1;
         int gid = 0;
@@ -26,9 +33,9 @@ namespace NekoRay {
 
         // Cache
         int latency = 0;
-        QString full_test_report = "";
+        QString full_test_report;
 
-        ProxyEntity(fmt::AbstractBean *bean, QString type);
+        ProxyEntity(fmt::AbstractBean *bean, QString _type);
 
         [[nodiscard]] QString DisplayLatency() const;
 

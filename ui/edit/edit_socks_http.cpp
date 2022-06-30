@@ -1,6 +1,8 @@
 #include "edit_socks_http.h"
 #include "ui_edit_socks_http.h"
 
+#include "fmt/SocksHttpBean.hpp"
+
 EditSocksHttp::EditSocksHttp(QWidget *parent) : QWidget(parent),
                                                 ui(new Ui::EditSocksHttp) {
     ui->setupUi(this);

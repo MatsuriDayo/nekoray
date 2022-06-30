@@ -1,26 +1,12 @@
 // DO NOT INCLUDE THIS
 
-#include <random>
-#include <utility>
-#include <functional>
-
 #include <QString>
-#include <QWidget>
-#include <QVariant>
-#include <QMessageBox>
 #include <QJsonObject>
 #include <QJsonDocument>
 #include <QJsonArray>
-#include <QTimer>
-#include <QMetaObject>
-#include <QThread>
-#include <QUrlQuery>
-#include <QHostAddress>
-#include <QTcpServer>
 
 // Dialogs
 
-inline QWidget *mainwindow;
 inline std::function<void(QString)> showLog;
 inline std::function<void(QString, QString)> showLog_ext;
 inline std::function<void(QString)> showLog_ext_vt100;
@@ -50,37 +36,15 @@ DecodeB64IfValid(const QString &input, QByteArray::Base64Option options = QByteA
     return "";
 }
 
-inline QUrlQuery GetQuery(const QUrl &url) {
-    return QUrlQuery(url.query(QUrl::ComponentFormattingOption::FullyDecoded));
-}
+#define GetQuery(url) QUrlQuery((url).query(QUrl::ComponentFormattingOption::FullyDecoded));
 
-inline QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def = "") {
-    auto a = q.queryItemValue(key);
-    if (a.isEmpty()) {
-        return def;
-    }
-    return a;
-}
+QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def = "");
 
 inline QString Int2String(int i) {
     return QVariant(i).toString();
 }
 
-inline QString GetRandomString(int randomStringLength) {
-    std::random_device rd;
-    std::mt19937 mt(rd());
-
-    const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
-
-    std::uniform_int_distribution<int> dist(0, possibleCharacters.count() - 1);
-
-    QString randomString;
-    for (int i = 0; i < randomStringLength; ++i) {
-        QChar nextChar = possibleCharacters.at(dist(mt));
-        randomString.append(nextChar);
-    }
-    return randomString;
-}
+QString GetRandomString(int randomStringLength);
 
 // QString >> QJson
 inline QJsonObject QString2QJsonObject(const QString &jsonString) {
@@ -130,36 +94,15 @@ inline QStringList SplitLines(const QString &_string) {
 
 // Net
 
-inline int MkPort() {
-    QTcpServer s;
-    s.listen();
-    auto port = s.serverPort();
-    s.close();
-    return port;
-}
+int MkPort();
 
 // Validators
 
-inline bool IsIpAddress(const QString &str) {
-    auto address = QHostAddress(str);
-    if (address.protocol() == QAbstractSocket::IPv4Protocol || address.protocol() == QAbstractSocket::IPv6Protocol)
-        return true;
-    return false;
-}
+bool IsIpAddress(const QString &str);
 
-inline bool IsIpAddressV4(const QString &str) {
-    auto address = QHostAddress(str);
-    if (address.protocol() == QAbstractSocket::IPv4Protocol)
-        return true;
-    return false;
-}
+bool IsIpAddressV4(const QString &str);
 
-inline bool IsIpAddressV6(const QString &str) {
-    auto address = QHostAddress(str);
-    if (address.protocol() == QAbstractSocket::IPv6Protocol)
-        return true;
-    return false;
-}
+bool IsIpAddressV6(const QString &str);
 
 // [2001:4860:4860::8888] -> 2001:4860:4860::8888
 inline QString UnwrapIPV6Host(QString &str) {
@@ -208,30 +151,13 @@ inline QString ReadableSize(const qint64 &size) {
 
 // UI
 
-inline int MessageBoxWarning(const QString &title, const QString &text) {
-    return QMessageBox::warning(nullptr, title, text);
-}
+int MessageBoxWarning(const QString &title, const QString &text);
 
-inline int MessageBoxInfo(const QString &title, const QString &text) {
-    return QMessageBox::information(nullptr, title, text);
-}
+int MessageBoxInfo(const QString &title, const QString &text);
 
-inline void runOnUiThread(const std::function<void()> &callback, QObject *parent = nullptr) {
-    // any thread
-    auto *timer = new QTimer();
-    timer->moveToThread(parent == nullptr ? mainwindow->thread() : parent->thread());
-    timer->setSingleShot(true);
-    QObject::connect(timer, &QTimer::timeout, [=]() {
-        // main thread
-        callback();
-        timer->deleteLater();
-    });
-    QMetaObject::invokeMethod(timer, "start", Qt::QueuedConnection, Q_ARG(int, 0));
-}
+void runOnUiThread(const std::function<void()> &callback, QObject *parent = nullptr);
 
-inline void runOnNewThread(const std::function<void()> &callback) {
-    QThread::create(callback)->start();
-}
+void runOnNewThread(const std::function<void()> &callback);
 
 template<typename EMITTER, typename SIGNAL, typename RECEIVER, typename ReceiverFunc>
 inline void connectOnce(EMITTER *emitter, SIGNAL signal, RECEIVER *receiver, ReceiverFunc f,

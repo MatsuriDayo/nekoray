@@ -2,6 +2,7 @@
 
 #include "db/Database.hpp"
 #include "db/ProfileFilter.hpp"
+#include "fmt/includes.h"
 
 #include "GroupUpdater.hpp"
 

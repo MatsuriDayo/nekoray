@@ -15,6 +15,7 @@ namespace NekoRay {
 
         Group();
 
+        // 按 id 顺序
         [[nodiscard]] QList<QSharedPointer<ProxyEntity>> Profiles() const;
     };
 }

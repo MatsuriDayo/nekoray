@@ -3,7 +3,9 @@
 
 #include "ui/mainwindow.h"
 #include "ui/widget/ProxyItem.h"
+
 #include "db/Database.hpp"
+#include "fmt/ChainBean.hpp"
 
 EditChain::EditChain(QWidget *parent) : QWidget(parent), ui(new Ui::EditChain) {
     ui->setupUi(this);

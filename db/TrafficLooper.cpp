@@ -1,4 +1,6 @@
 #include "TrafficLooper.hpp"
+
+#include "rpc/gRPC.h"
 #include "ui/mainwindow.h"
 
 #include <QThread>

@@ -1,5 +1,7 @@
-#include <QUrlQuery>
 #include "db/ProxyEntity.hpp"
+#include "fmt/includes.h"
+
+#include <QUrlQuery>
 
 namespace NekoRay::fmt {
 

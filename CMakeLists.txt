@@ -31,6 +31,8 @@ list(APPEND CMAKE_PREFIX_PATH ${MY_DEPS_DIR})
 # NKR
 include("cmake/nkr.cmake")
 
+find_package(Threads)
+
 if (NKR_NO_EXTERNAL)
     add_compile_definitions(NKR_NO_EXTERNAL)
 else ()
@@ -72,6 +74,7 @@ set(PROJECT_SOURCES
 
         main/main.cpp
         main/NekoRay.cpp
+        main/NekoRay_Utils.cpp
 
         3rdparty/qrcodegen.cpp
         3rdparty/QtExtKeySequenceEdit.cpp
@@ -98,7 +101,7 @@ set(PROJECT_SOURCES
         fmt/Bean2Link.cpp
         fmt/InsecureHint.cpp
         fmt/Link2Bean.cpp
-        fmt/ConfigBuilder.cpp
+        db/ConfigBuilder.cpp
         fmt/ChainBean.hpp # translate
 
         sub/GroupUpdater.cpp
@@ -106,9 +109,9 @@ set(PROJECT_SOURCES
         sys/ExternalProcess.cpp
         sys/AutoRun.cpp
 
-        ui/CheckUpdate.cpp
         ui/ThemeManager.cpp
 
+        ui/mainwindow_grpc.cpp
         ui/mainwindow.cpp
         ui/mainwindow.h
         ui/mainwindow.ui
@@ -214,6 +217,7 @@ set_property(TARGET nekoray PROPERTY AUTORCC ON)
 
 target_link_libraries(nekoray PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
+        Threads::Threads
         ${NKR_EXTERNAL_TARGETS}
         ${PLATFORM_FUCKING_LIBRARIES}
         )

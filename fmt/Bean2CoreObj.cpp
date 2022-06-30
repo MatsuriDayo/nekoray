@@ -1,4 +1,5 @@
 #include "db/ProxyEntity.hpp"
+#include "fmt/includes.h"
 
 #define MAKE_SETTINGS_STREAM_SETTINGS \
 if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \

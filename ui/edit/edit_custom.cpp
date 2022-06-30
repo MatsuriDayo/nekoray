@@ -2,6 +2,7 @@
 #include "ui_edit_custom.h"
 
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
+#include "fmt/CustomBean.hpp"
 
 EditCustom::EditCustom(QWidget *parent) :
         QWidget(parent), ui(new Ui::EditCustom) {

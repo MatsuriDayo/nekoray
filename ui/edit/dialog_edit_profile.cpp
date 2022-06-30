@@ -9,6 +9,7 @@
 #include "ui/edit/edit_naive.h"
 #include "ui/edit/edit_custom.h"
 
+#include "fmt/includes.h"
 #include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
 
@@ -197,8 +198,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     innerEditor->get_edit_dialog = [&]() {
         return (QWidget *) this;
     };
-    innerEditor->dialog_editor_cache_updated = [=] {
-        dialog_editor_cache_updated();
+    innerEditor->editor_cache_updated = [=] {
+        editor_cache_updated_impl();
     };
     innerEditor->onStart(ent);
 
@@ -208,7 +209,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port->setText(Int2String(ent->bean->serverPort));
     ui->port->setValidator(QRegExpValidator_Number, this));
 
-    dialog_editor_cache_updated();
+    editor_cache_updated_impl();
     ADJUST_SIZE
 
     // 第一次显示
@@ -260,7 +261,7 @@ void DialogEditProfile::accept() {
 
 // cached editor (dialog)
 
-void DialogEditProfile::dialog_editor_cache_updated() {
+void DialogEditProfile::editor_cache_updated_impl() {
     if (CACHE.certificate.isEmpty()) {
         ui->certificate_edit->setText(tr("Not set"));
     } else {
@@ -284,7 +285,7 @@ void DialogEditProfile::dialog_editor_cache_updated() {
 
 void DialogEditProfile::on_custom_edit_clicked() {
     C_EDIT_JSON_ALLOW_EMPTY(custom)
-    dialog_editor_cache_updated();
+    editor_cache_updated_impl();
 }
 
 void DialogEditProfile::on_certificate_edit_clicked() {
@@ -292,6 +293,6 @@ void DialogEditProfile::on_certificate_edit_clicked() {
     auto txt = QInputDialog::getMultiLineText(this, tr("Certificate"), "", CACHE.certificate, &ok);
     if (ok) {
         CACHE.certificate = txt;
-        dialog_editor_cache_updated();
+        editor_cache_updated_impl();
     }
 }

@@ -1,9 +1,9 @@
 #pragma once
 
-#include "db/ProxyEntity.hpp"
+#include "ProxyEntity.hpp"
 #include "sys/ExternalProcess.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoRay {
     class BuildConfigResult {
     public:
         QString error;

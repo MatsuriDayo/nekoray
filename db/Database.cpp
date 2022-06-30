@@ -1,5 +1,9 @@
 #include "Database.hpp"
 
+#include "fmt/includes.h"
+
+#include <QFile>
+
 namespace NekoRay {
 
     ProfileManager *profileManager = new ProfileManager();
@@ -25,7 +29,7 @@ namespace NekoRay {
 
     QSharedPointer<ProxyEntity> ProfileManager::LoadProxyEntity(const QString &jsonPath) {
         // Load type
-        auto ent0 = ProxyEntity(nullptr, nullptr);
+        ProxyEntity ent0(nullptr, nullptr);
         ent0.fn = jsonPath;
         auto validJson = ent0.Load();
         auto type = ent0.type;
@@ -58,11 +62,9 @@ namespace NekoRay {
         fmt::AbstractBean *bean;
 
         if (type == "socks") {
-            bean = new fmt::SocksHttpBean();
+            bean = new fmt::SocksHttpBean(NekoRay::fmt::SocksHttpBean::type_Socks5);
         } else if (type == "http") {
-            auto _bean = new fmt::SocksHttpBean();
-            _bean->socks_http_type = NekoRay::fmt::SocksHttpBean::type_HTTP;
-            bean = _bean;
+            bean = new fmt::SocksHttpBean(NekoRay::fmt::SocksHttpBean::type_HTTP);
         } else if (type == "shadowsocks") {
             bean = new fmt::ShadowSocksBean();
         } else if (type == "chain") {
@@ -92,9 +94,9 @@ namespace NekoRay {
 
     // ProxyEntity
 
-    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, QString type) {
-        this->type = std::move(type);
-        _add(new configItem("type", &this->type, itemType::string));
+    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, QString _type) {
+        type = std::move(_type);
+        _add(new configItem("type", &type, itemType::string));
         _add(new configItem("id", &id, itemType::integer));
         _add(new configItem("gid", &gid, itemType::integer));
 

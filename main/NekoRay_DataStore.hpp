@@ -20,7 +20,7 @@ namespace NekoRay {
 
         explicit ExtraCore();
 
-        QString Get(const QString &id) const;
+        [[nodiscard]] QString Get(const QString &id) const;
 
         void Set(const QString &id, const QString &path);
 

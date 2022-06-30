@@ -1,6 +1,8 @@
 #include "edit_trojan_vless.h"
 #include "ui_edit_trojan_vless.h"
 
+#include "fmt/TrojanVLESSBean.hpp"
+
 EditTrojanVLESS::EditTrojanVLESS(QWidget *parent) :
         QWidget(parent), ui(new Ui::EditTrojanVLESS) {
     ui->setupUi(this);

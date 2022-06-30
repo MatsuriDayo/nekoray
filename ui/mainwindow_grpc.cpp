@@ -1,0 +1,349 @@
+#include "./ui_mainwindow.h"
+#include "mainwindow.h"
+
+#include "db/Database.hpp"
+#include "db/ConfigBuilder.hpp"
+#include "db/TrafficLooper.hpp"
+#include "rpc/gRPC.h"
+
+#include <QTimer>
+#include <QThread>
+#include <QInputDialog>
+#include <QPushButton>
+#include <QDesktopServices>
+#include <QMessageBox>
+
+#ifndef NKR_NO_GRPC
+using namespace NekoRay::rpc;
+#endif
+
+void MainWindow::setupGRPC() {
+#ifndef NKR_NO_GRPC
+    // Setup Connection
+    defaultClient = new Client([=](const QString &errStr) {
+        showLog("gRPC Error: " + errStr);
+    }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
+    auto t = new QTimer();
+    connect(t, &QTimer::timeout, this, [=]() {
+        bool ok = defaultClient->keepAlive();
+        runOnUiThread([=]() {
+            if (!ok) {
+                title_error = tr("Error");
+            } else {
+                title_error = "";
+            }
+            refresh_status();
+        });
+    });
+    t->start(2000);
+
+    // Looper
+    runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });
+#endif
+}
+
+// 测速
+
+inline bool speedtesting = false;
+
+void MainWindow::speedtest_current_group(int mode) {
+#ifndef NKR_NO_GRPC
+    if (speedtesting) return;
+
+    QStringList full_test_flags;
+    if (mode == libcore::FullTest) {
+        bool ok;
+        auto s = QInputDialog::getText(nullptr, tr("Input"),
+                                       tr("Please enter the items to be tested, separated by commas\n"
+                                          "1. Latency\n"
+                                          "2. Download speed\n"
+                                          "3. In and Out IP\n"
+                                          "4. NAT type"),
+                                       QLineEdit::Normal, "1,2,3,4", &ok);
+        full_test_flags = s.trimmed().split(",");
+        if (!ok) return;
+    }
+
+    speedtesting = true;
+
+    runOnNewThread([=]() {
+        auto group = NekoRay::profileManager->CurrentGroup();
+        if (group->archive) return;
+        auto order = ui->proxyListTable->order;//copy
+
+        QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
+        QMutex lock;
+        QMutex lock2;
+        int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
+        int threadN_finished = 0;
+
+        // 这个是按照显示的顺序
+        for (auto id: order) {
+            auto profile = NekoRay::profileManager->GetProfile(id);
+            if (profile != nullptr) profiles += profile;
+        }
+
+        // Threads
+        for (int i = 0; i < threadN; i++) {
+            runOnNewThread([&] {
+                forever {
+                    //
+                    lock.lock();
+                    if (profiles.isEmpty()) {
+                        threadN_finished++;
+                        if (threadN == threadN_finished) lock2.unlock();
+                        lock.unlock();
+                        return;
+                    }
+                    auto profile = profiles.takeFirst();
+                    lock.unlock();
+
+                    //
+                    libcore::TestReq req;
+                    req.set_mode((libcore::TestMode) mode);
+                    req.set_timeout(3000);
+                    req.set_url(NekoRay::dataStore->test_url.toStdString());
+
+                    //
+                    QList<NekoRay::sys::ExternalProcess *> ext;
+
+                    if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
+                        auto c = NekoRay::BuildConfig(profile, true);
+                        // external test ???
+                        if (!c->ext.isEmpty()) {
+                            ext = c->ext;
+                            for (auto extC: ext) {
+                                extC->Start();
+                            }
+                            QThread::msleep(500);
+                        }
+                        //
+                        auto config = new libcore::LoadConfigReq;
+                        config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
+                        req.set_allocated_config(config);
+                        req.set_in_address(profile->bean->serverAddress.toStdString());
+
+                        req.set_full_latency(full_test_flags.contains("1"));
+                        req.set_full_speed(full_test_flags.contains("2"));
+                        req.set_full_in_out(full_test_flags.contains("3"));
+                        req.set_full_nat(full_test_flags.contains("4"));
+                    } else if (mode == libcore::TcpPing) {
+                        req.set_address(profile->bean->DisplayAddress().toStdString());
+                    }
+
+                    bool rpcOK;
+                    auto result = defaultClient->Test(&rpcOK, req);
+                    for (auto extC: ext) {
+                        extC->Kill();
+                        extC->deleteLater();
+                    }
+                    if (!rpcOK) return;
+
+                    profile->latency = result.ms();
+                    if (profile->latency == 0) profile->latency = -1; // sn
+                    profile->full_test_report = result.full_report().c_str();
+
+                    runOnUiThread([=] {
+                        if (!result.error().empty()) {
+                            show_log_impl(
+                                    tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(),
+                                                                  result.error().c_str()));
+                        }
+                        refresh_proxy_list(profile->id);
+                    });
+                }
+            });
+        }
+
+        // Control
+        lock2.lock();
+        lock2.lock();
+        lock2.unlock();
+        speedtesting = false;
+    });
+#endif
+}
+
+void MainWindow::test_current() {
+#ifndef NKR_NO_GRPC
+    last_test_time = QTime::currentTime();
+    ui->label_running->setText(tr("Testing"));
+
+    runOnNewThread([=] {
+        libcore::TestReq req;
+        req.set_mode(libcore::UrlTest);
+        req.set_timeout(3000);
+        req.set_url(NekoRay::dataStore->test_url.toStdString());
+
+        bool rpcOK;
+        auto result = defaultClient->Test(&rpcOK, req);
+        if (!rpcOK) return;
+
+        auto latency = result.ms();
+        last_test_time = QTime::currentTime();
+
+        runOnUiThread([=] {
+            if (latency <= 0) {
+                ui->label_running->setText(tr("Test Result") + ": " + tr("Unavailable"));
+            } else if (latency > 0) {
+                ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
+            }
+        });
+    });
+#endif
+}
+
+void MainWindow::exit_nekoray_core() {
+#ifndef NKR_NO_GRPC
+    NekoRay::rpc::defaultClient->Exit();
+#endif
+}
+
+void MainWindow::neko_start(int _id) {
+    auto ents = GetNowSelected();
+    auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoRay::profileManager->GetProfile(_id);
+    if (ent == nullptr) return;
+
+    if (select_mode) {
+        emit profile_selected(ent->id);
+        select_mode = false;
+        refresh_status();
+        return;
+    }
+
+    if (NekoRay::profileManager->GetGroup(ent->gid)->archive) return;
+
+    auto result = NekoRay::BuildConfig(ent, false);
+    if (!result->error.isEmpty()) {
+        MessageBoxWarning("BuildConfig return error", result->error);
+        return;
+    }
+
+    if (NekoRay::dataStore->started_id >= 0) neko_stop();
+    show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
+    auto insecure_hint = DisplayInsecureHint(ent->bean);
+    if (!insecure_hint.isEmpty()) show_log_impl(">>>>>>>> " + tr("Profile is insecure: %1").arg(insecure_hint));
+
+#ifndef NKR_NO_GRPC
+    bool rpcOK;
+    QString error = defaultClient->Start(&rpcOK,
+                                         QJsonObject2QString(result->coreConfig, true),
+                                         result->tryDomains
+    );
+    if (rpcOK && !error.isEmpty()) {
+        MessageBoxWarning("LoadConfig return error", error);
+        return;
+    }
+
+    NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
+    NekoRay::traffic::trafficLooper->items = result->outboundStats;
+    NekoRay::traffic::trafficLooper->loop_enabled = true;
+#endif
+
+    for (auto extC: result->ext) {
+        extC->Start();
+    }
+
+    NekoRay::dataStore->UpdateStartedId(ent->id);
+    running = ent;
+    refresh_status();
+    refresh_proxy_list(ent->id);
+}
+
+void MainWindow::neko_stop(bool crash) {
+    auto id = NekoRay::dataStore->started_id;
+    if (id < 0) return;
+    show_log_impl(">>>>>>>> " + tr("Stopping profile %1").arg(running->bean->DisplayTypeAndName()));
+
+    while (!NekoRay::sys::running_ext.isEmpty()) {
+        auto extC = NekoRay::sys::running_ext.takeFirst();
+        extC->Kill();
+        extC->deleteLater();
+    }
+
+#ifndef NKR_NO_GRPC
+    NekoRay::traffic::trafficLooper->loop_enabled = false;
+    NekoRay::traffic::trafficLooper->loop_mutex.lock();
+    if (NekoRay::dataStore->traffic_loop_interval != 0) {
+        for (const auto &item: NekoRay::traffic::trafficLooper->items) {
+            NekoRay::traffic::TrafficLooper::update(item.get());
+            NekoRay::profileManager->GetProfile(item->id)->Save();
+            refresh_proxy_list(item->id);
+        }
+    }
+    NekoRay::traffic::trafficLooper->loop_mutex.unlock();
+
+    if (!crash) {
+        bool rpcOK;
+        QString error = defaultClient->Stop(&rpcOK);
+        if (rpcOK && !error.isEmpty()) {
+            MessageBoxWarning("Stop return error", error);
+            return;
+        }
+    }
+#endif
+
+    NekoRay::dataStore->UpdateStartedId(-1919);
+    running = nullptr;
+    refresh_status();
+    refresh_proxy_list(id);
+}
+
+void MainWindow::CheckUpdate() {
+#ifndef NKR_NO_GRPC
+    bool ok;
+    libcore::UpdateReq request;
+    request.set_action(libcore::UpdateAction::Check);
+    auto response = NekoRay::rpc::defaultClient->Update(&ok, request);
+    if (!ok) return;
+
+    auto err = response.error();
+    if (!err.empty()) {
+        runOnUiThread([=] {
+            MessageBoxWarning(QObject::tr("Update"), err.c_str());
+        });
+        return;
+    }
+
+    if (response.release_download_url() == nullptr) {
+        runOnUiThread([=] {
+            MessageBoxInfo(QObject::tr("Update"), QObject::tr("No update"));
+        });
+        return;
+    }
+
+    runOnUiThread([=] {
+        QMessageBox box(QMessageBox::Question, QObject::tr("Update"),
+                        QObject::tr("Update found: %1\nRelease note:\n%2")
+                                .arg(response.assets_name().c_str(), response.release_note().c_str()));
+        QAbstractButton *btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
+        QAbstractButton *btn2 = box.addButton(QObject::tr("Open in browser"), QMessageBox::AcceptRole);
+        box.addButton(QObject::tr("Close"), QMessageBox::RejectRole);
+        box.exec();
+
+        if (btn1 == box.clickedButton()) {
+            // Download Update
+            runOnNewThread([=] {
+                bool ok2;
+                libcore::UpdateReq request2;
+                request2.set_action(libcore::UpdateAction::Download);
+                auto response2 = NekoRay::rpc::defaultClient->Update(&ok2, request2);
+                runOnUiThread([=] {
+                    if (response2.error().empty()) {
+                        auto q = QMessageBox::question(nullptr, QObject::tr("Update"),
+                                                       QObject::tr("Update is ready, restart to install?"));
+                        if (q == QMessageBox::StandardButton::Yes) {
+                            this->exit_update = true;
+                            on_menu_exit_triggered();
+                        }
+                    } else {
+                        MessageBoxWarning(QObject::tr("Update"), response2.error().c_str());
+                    }
+                });
+            });
+        } else if (btn2 == box.clickedButton()) {
+            QDesktopServices::openUrl(QUrl(response.release_url().c_str()));
+        }
+    });
+#endif
+}

@@ -1,15 +1,5 @@
 // DO NOT INCLUDE THIS
 
-#include <QString>
-#include <QJsonObject>
-#include <QJsonDocument>
-#include <QMap>
-#include <QList>
-#include <QFile>
-#include <QDir>
-#include <QCoreApplication>
-#include <utility>
-
 namespace NekoRay {
     // config 工具
     enum itemType {
@@ -42,7 +32,7 @@ namespace NekoRay {
         QList<std::function<void()>> _hooks_after_load;
         QList<std::function<void()>> _hooks_before_save;
         QString fn;
-        bool debug_messagebox_verbose = false;
+        bool debug_verbose = false;
         bool load_control_force = false;
         bool load_control_no_jsonStore = false; //不加载 json object
         bool save_control_compact = false;
@@ -56,7 +46,7 @@ namespace NekoRay {
 
         void _add(configItem *item);
 
-        QSharedPointer<configItem> _get(const QString& name);
+        QSharedPointer<configItem> _get(const QString &name);
 
         QJsonObject ToJson();
 

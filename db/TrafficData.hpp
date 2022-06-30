@@ -1,7 +1,5 @@
 #pragma once
 
-#include <utility>
-
 #include "main/NekoRay.hpp"
 
 namespace NekoRay::traffic {

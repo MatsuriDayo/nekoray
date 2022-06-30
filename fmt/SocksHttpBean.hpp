@@ -17,7 +17,8 @@ namespace NekoRay::fmt {
         QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
         QString custom = "";
 
-        SocksHttpBean() : AbstractBean(0) {
+        explicit SocksHttpBean(int _socks_http_type) : AbstractBean(0) {
+            this->socks_http_type = _socks_http_type;
             _add(new configItem("v", &socks_http_type, itemType::integer));
             _add(new configItem("username", &username, itemType::string));
             _add(new configItem("password", &password, itemType::string));

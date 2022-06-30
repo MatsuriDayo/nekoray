@@ -13,7 +13,7 @@ namespace NekoRay::rpc {
         this->token = token;
     }
 
-#define MAKE_CONTEXT auto context = grpc::ClientContext(); context.AddMetadata("nekoray_auth", token.toStdString());
+#define MAKE_CONTEXT grpc::ClientContext context; context.AddMetadata("nekoray_auth", token.toStdString());
 #define NOT_OK *rpcOK = false; \
     onError( \
             QString("error code: %1, error message: %2\n").arg(status.error_code()).arg( \

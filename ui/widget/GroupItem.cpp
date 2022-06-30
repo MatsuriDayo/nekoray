@@ -5,6 +5,8 @@
 #include "main/GuiUtils.hpp"
 #include "sub/GroupUpdater.hpp"
 
+#include <QMessageBox>
+
 QString ParseSubInfo(const QString &info) {
     if (info.trimmed().isEmpty()) return "";
 

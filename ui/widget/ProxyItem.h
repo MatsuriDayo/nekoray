@@ -17,10 +17,13 @@ public:
 
     ~ProxyItem() override;
 
+    void refresh_data();
+
+    QSharedPointer<NekoRay::ProxyEntity> ent;
+    QListWidgetItem *item;
+
 private:
     Ui::ProxyItem *ui;
-    QListWidgetItem *item;
-    QSharedPointer<NekoRay::ProxyEntity> ent;
 
 private slots:
 

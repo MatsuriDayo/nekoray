@@ -8,11 +8,11 @@
 #include <QTextDocument>
 #include <QShortcut>
 
+#include "GroupSort.hpp"
+
 #include "db/ProxyEntity.hpp"
 #include "db/Group.hpp"
-#include "rpc/gRPC.h"
-#include "qv2ray/ui/LogHighlighter.hpp"
-#include "GroupSort.hpp"
+#include "main/GuiUtils.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -92,12 +92,6 @@ private slots:
 
     void on_menu_scan_qr_triggered();
 
-    void on_menu_tcp_ping_triggered();
-
-    void on_menu_url_test_triggered();
-
-    void on_menu_full_test_triggered();
-
     void on_menu_clear_test_result_triggered();
 
     void on_menu_manage_groups_triggered();
@@ -126,7 +120,6 @@ private:
     //
     bool qvLogAutoScoll = true;
     QTextDocument *qvLogDocument = new QTextDocument(this);
-    SyntaxHighlighter *qvLogHighlighter;
     //
     QString title_base;
     QString title_error;
@@ -144,13 +137,19 @@ private:
 
     void closeEvent(QCloseEvent *event) override;
 
-#ifndef NKR_NO_GRPC
-
-    void speedtest_current_group(libcore::TestMode mode);
-
-#endif
-
     void show_group(int gid);
+
+    // grpc and ...
+
+    static void exit_nekoray_core();
+
+    void speedtest_current_group(int mode);
+
+    void test_current();
+
+    void setupGRPC();
+
+    void CheckUpdate();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
