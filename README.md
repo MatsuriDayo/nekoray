@@ -27,7 +27,6 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | Socks        | ✅      | ✅    | ✅      | ✅         | ✅          | 
 | HTTP         | ✅      | ✅    | ✅      | ✅         | ✅          | 
 | Shadowsocks  | ✅ (经典) | ✅    | ✅      | 常见格式      | ✅          |
-| ShadowsocksR | ❌❌     |      |        |           |            |
 | VMess        | ✅      | ✅    | ✅      | v2rayN 格式 | ✅          |
 | Trojan       | ✅      | ✅    | ✅      | 标准&常见格式   | ✅          |
 | VLESS        | ✅      | ✅    | ✅      | ✅         | 不适用        |
@@ -46,6 +45,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 自定义 v2ray outbound object     | ✅                 |
 | 外部 socks 接入 (类似 SagerNet 的插件) | ✅                 |
 | 自定义配置接入 (类似 Matsuri 的高级插件)    | ❓                 |
+| 切换路由                          | ❓                 |
 | 自定义 v2ray 路由                  | ✅                 |
 | “多节点分流”                       | ❌❌                |
 | “负载均衡”                        | ❌❌                |
@@ -55,18 +55,16 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | 搜索配置                          | ✅                 |
 | 分组                            | ✅                 |
 | 订阅                            | ✅                 |
-| 剪切板导入                         | ✅                 |
-| QR Code 扫描                    | ✅                 |
-| 剪切板导出                         | ✅                 |
-| QR Code 生成                    | ✅                 |
+| 剪辑板导入 / QR Code 扫描            | ✅                 |
+| 分享配置                          | ✅                 |
 | 流量/速度统计                       | ✅                 |
 | 链式代理                          | ✅                 |
-| TCPing/URLTest                | ✅                 |
+| TCPing / URLTest              | ✅                 |
 | 中文界面                          | ✅                 |
 | (系统类↓)                        |                   |
 | 平台可用性                         | 64位 Linux/Windows |
-| 预编译 amd64 Linux 二进制文件         | ✅ (不能用则需自己编译)     |
-| 预编译 amd64 Windows 二进制文件       | ✅                 |
+| 预编译 Linux amd64 二进制文件         | ✅ (不能用则需自己编译)     |
+| 预编译 Windows amd64 二进制文件       | ✅                 |
 | 系统代理                          | Linux/Windows     |
 | 系统代理分流                        | ❌❌                |
 | VPN on Linux                  | ❓                 |
@@ -82,7 +80,7 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 
 运行： `./launcher`
 
-已知部分 Linux 系统上使用发布的二进制文件，进入主界面后容易闪退，可以尝试自行编译。
+已知部分 x86_64 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
 
 ### 编译
 
@@ -101,13 +99,17 @@ git submodule update
 
 ### 简单编译法
 
-C++ 依赖： `qt5 grpc yaml-cpp zxing-cpp` 包管理器安装， Qt 版本必须大于等于 5.15
+条件：
+
+1. C++ 依赖： `qt5 grpc yaml-cpp zxing-cpp` 已用包管理器安装，并符合版本要求
+2. Qt 版本必须大于等于 5.15
+3. 系统为 `x86-64-linux-gnu`
 
 ```
 mkdir build
 cd build
-cmake ..
-make -j
+cmake -GNinja ..
+ninja
 ```
 
 编译完成后得到 `nekoray`
@@ -126,9 +128,10 @@ C++ 部分
 
 Go 部分
 
-把 `Matsuridayo/Matsuri` `Matsuridayo/v2ray-core` 置于 `../` ，进入 `go` 文件夹 `go build` 得到 `nekoray_core`。
+1. 把 `Matsuridayo/Matsuri` `Matsuridayo/v2ray-core` 置于 `../`
+2. 进入 `go` 文件夹 `go build` 得到 `nekoray_core`。
 
-非官方构建无需编译 `update` `launcher`
+非官方构建无需编译 `updater` `launcher`
 
 ## Credits
 
@@ -138,10 +141,12 @@ Nekoray 的诞生离不开 v2ray 开源项目以及其他开源软件。
 
 - [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
 - [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri)
-- Qt
-- gRPC
-- yaml-cpp
-- zxing-cpp
+- [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core)
+- [Qt](https://www.qt.io/)
+- [gRPC](https://grpc.io/)
+- [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+- [zxing-cpp](https://github.com/nu-book/zxing-cpp)
+- [QHotkey](https://github.com/Skycoder42/QHotkey)
 
 参考：
 
