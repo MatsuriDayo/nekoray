@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 )
 
 func Launcher() {
@@ -28,6 +29,7 @@ func Launcher() {
 	cmd.Env = append(cmd.Env, "LD_LIBRARY_PATH="+filepath.Join(wd, "./usr/lib"))
 
 	if *_debug {
+		cmd.Env = append(cmd.Env, "QT_DEBUG_PLUGINS=1")
 		cmd.Run()
 	} else {
 		cmd.Start()
@@ -37,11 +39,16 @@ func Launcher() {
 func tryLink(sub string) {
 	wd_plugins := filepath.Join("./usr/plugins", sub)
 
+	arch := "x86_64"
+	if runtime.GOARCH == "arm64" {
+		arch = "aarch64"
+	}
+
 	if !Exist(wd_plugins) {
 		paths := []string{
 			filepath.Join("/usr/lib/qt5/plugins", sub),
 			filepath.Join("/usr/lib64/qt5/plugins", sub),
-			filepath.Join("/usr/lib/x86_64-linux-gnu/qt5/plugins", sub),
+			filepath.Join("/usr/lib/"+arch+"-linux-gnu/qt5/plugins", sub),
 			filepath.Join("/usr/lib/qt/plugins", sub),
 		}
 		path := FindExist(paths)

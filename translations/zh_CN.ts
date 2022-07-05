@@ -1134,6 +1134,10 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
         <source>This profile is cleartext, don&apos;t use it if the server is not in your local network.</source>
         <translation>该配置为明文传输，如果服务器不在本地局域网，请不要使用。</translation>
     </message>
+    <message>
+        <source>Another program is running.</source>
+        <translation>另一个 Nekoray 实例正在运行。</translation>
+    </message>
 </context>
 <context>
     <name>Qv2ray::ui::widgets::AutoCompleteTextEdit</name>

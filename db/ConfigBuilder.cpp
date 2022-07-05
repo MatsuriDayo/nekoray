@@ -36,7 +36,7 @@ namespace NekoRay {
 
         // Inbounds
         QJsonObject sniffing{{"destOverride", dataStore->fake_dns ?
-                                              QJsonArray{"fakedns", "http", "tls"} : QJsonArray{"http", "tls"}},
+                                              QJsonArray{"fakedns", "http", "tls", "quic"} : QJsonArray{"http", "tls", "quic"}},
                              {"enabled",      true},
                              {"metadataOnly", false},
                              {"routeOnly",    dataStore->sniffing_mode == SniffingMode::TO_DNS},};

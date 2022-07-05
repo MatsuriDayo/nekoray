@@ -12,6 +12,7 @@ cp build/*.dll build/nekoray.exe $DEST
 #### deploy qt & msvc runtime ####
 pushd $DEST
 windeployqt nekoray.exe --no-compiler-runtime --no-system-d3d-compiler --no-opengl-sw --verbose 2
+rm -rf translations
 popd
 
 #### pack zip ####

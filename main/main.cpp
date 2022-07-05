@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QTranslator>
 #include <QMessageBox>
+#include <QStandardPaths>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoRay.hpp"
@@ -30,9 +31,23 @@ int main(int argc, char *argv[]) {
 
     // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
+#ifdef NKR_USE_APPDATA
+    QApplication::setApplicationName("nekoray");
+    wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+#endif
+    if (!wd.exists()) wd.mkdir(wd.absolutePath());
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
     QDir("temp").removeRecursively();
+
+    // RunGuard
+    RunGuard guard("nekoray" + wd.absolutePath());
+    if (!QApplication::arguments().contains("-many")) {
+        if (!guard.tryToRun()) {
+            QMessageBox::warning(nullptr, "NekoRay", QObject::tr("Another program is running."));
+            return 0;
+        }
+    }
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{
@@ -76,7 +91,6 @@ int main(int argc, char *argv[]) {
     }
 
     // Translate
-    QTranslator trans;
     QString locale;
     switch (NekoRay::dataStore->language) {
         case 1: // English
@@ -87,13 +101,14 @@ int main(int argc, char *argv[]) {
         default:
             locale = QLocale().name();
     }
+    QTranslator trans;
     if (trans.load(":/translations/" + locale + ".qm")) {
         QCoreApplication::installTranslator(&trans);
     }
-
-    RunGuard guard("nekoray" + wd.absolutePath());
-    if (!guard.tryToRun())
-        return 0;
+    QTranslator trans_qt;
+    if (trans_qt.load(QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm")) {
+        QCoreApplication::installTranslator(&trans_qt);
+    }
 
     MainWindow w;
     return QApplication::exec();
