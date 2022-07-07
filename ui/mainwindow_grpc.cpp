@@ -316,7 +316,10 @@ void MainWindow::CheckUpdate() {
         QMessageBox box(QMessageBox::Question, QObject::tr("Update"),
                         QObject::tr("Update found: %1\nRelease note:\n%2")
                                 .arg(response.assets_name().c_str(), response.release_note().c_str()));
-        QAbstractButton *btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
+        QAbstractButton *btn1;
+        if (!NekoRay::dataStore->flag_use_appdata) {
+            btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
+        }
         QAbstractButton *btn2 = box.addButton(QObject::tr("Open in browser"), QMessageBox::AcceptRole);
         box.addButton(QObject::tr("Close"), QMessageBox::RejectRole);
         box.exec();

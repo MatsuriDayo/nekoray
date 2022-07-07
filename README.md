@@ -8,6 +8,11 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 
 便携格式，无安装器。转到 Releases 下载预编译的二进制文件，解压后即可使用。
 
+### 运行参数
+
+- (0.11+) -many 无视同目录正在运行的实例，强行开启新的实例
+- (0.11+) -appdata 开启后配置文件会放在共享目录，无法多开和自动升级
+
 ## 进度
 
 功能逐渐完善中。
@@ -100,7 +105,6 @@ git submodule update
 | NKR_NO_GRPC             |     | 不包含gRPC                 |
 | NKR_PROTOBUF_USE_CONFIG |     |                         |
 | NKR_PROTOBUF_NO_AUTOGEN |     |                         |
-| NKR_USE_APPDATA         |     |                         |
 | NKR_CROSS               |     |                         |
 
 ### 简单编译法

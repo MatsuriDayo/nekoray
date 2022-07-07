@@ -331,17 +331,26 @@ MainWindow::MainWindow(QWidget *parent)
         core_process = new QProcess;
         QString starting_info;
 
-#ifdef Q_OS_LINUX
+#ifndef Q_OS_WIN
         auto core_path = NekoRay::dataStore->core_cap_path;
         if (QFile(core_path).exists()) {
             starting_info = "with cap_net_admin";
         } else {
             starting_info = "as normal user";
             core_path = NekoRay::dataStore->core_path;
+            if (!QFile(core_path).exists()) {
+                core_path = QApplication::applicationDirPath() + "/nekoray_core";
+            }
         }
 #else
         auto core_path = NekoRay::dataStore->core_path;
+        if (!core_path.endsWith(".exe")) core_path += ".exe";
 #endif
+
+        if (!QFile(core_path).exists()) {
+            starting_info = "(not found)";
+            core_path = "";
+        }
 
         connect(core_process, &QProcess::readyReadStandardOutput, this,
                 [&]() {
@@ -368,6 +377,7 @@ MainWindow::MainWindow(QWidget *parent)
         for (int retry = 0; retry < 10; retry++) {
 //            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
             showLog("Starting nekoray core " + starting_info + "\n");
+            if (core_path.isEmpty()) break;
             if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
                 core_process->setEnvironment(QStringList{
                         "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir

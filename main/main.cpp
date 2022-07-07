@@ -29,12 +29,17 @@ int main(int argc, char *argv[]) {
     QDir::setCurrent(QApplication::applicationDirPath());
     QFile::remove("updater.old");
 
+    // Flags
+    auto args = QApplication::arguments();
+    if (args.contains("-many")) NekoRay::dataStore->flag_many = true;
+    if (args.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
+
     // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
-#ifdef NKR_USE_APPDATA
-    QApplication::setApplicationName("nekoray");
-    wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
-#endif
+    if (NekoRay::dataStore->flag_use_appdata) {
+        QApplication::setApplicationName("nekoray");
+        wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+    }
     if (!wd.exists()) wd.mkdir(wd.absolutePath());
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
@@ -42,7 +47,7 @@ int main(int argc, char *argv[]) {
 
     // RunGuard
     RunGuard guard("nekoray" + wd.absolutePath());
-    if (!QApplication::arguments().contains("-many")) {
+    if (!NekoRay::dataStore->flag_many) {
         if (!guard.tryToRun()) {
             QMessageBox::warning(nullptr, "NekoRay", QObject::tr("Another program is running."));
             return 0;

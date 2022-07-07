@@ -104,6 +104,11 @@ namespace NekoRay {
         int imported_count = 0;
         bool refreshing_group_list = false;
 
+        // Running Flags
+
+        bool flag_use_appdata = false;
+        bool flag_many = false;
+
         //
 
         DataStore();
