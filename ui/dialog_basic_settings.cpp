@@ -8,6 +8,45 @@
 
 #include <QStyleFactory>
 #include <QFileDialog>
+#include <QInputDialog>
+
+class ExtraCoreWidget : public QWidget {
+public:
+    QString coreName;
+
+    QLabel *label_name;
+    MyLineEdit *lineEdit_path;
+    QPushButton *pushButton_pick;
+
+    explicit ExtraCoreWidget(QJsonObject *extraCore, const QString &coreName_,
+                             QWidget *parent = nullptr)
+            : QWidget(parent) {
+        coreName = coreName_;
+        label_name = new QLabel;
+        label_name->setText(coreName);
+        lineEdit_path = new MyLineEdit;
+        lineEdit_path->setText(extraCore->value(coreName).toString());
+        pushButton_pick = new QPushButton;
+        pushButton_pick->setText(QObject::tr("Select"));
+        auto layout = new QHBoxLayout;
+        layout->addWidget(label_name);
+        layout->addWidget(lineEdit_path);
+        layout->addWidget(pushButton_pick);
+        setLayout(layout);
+        setContentsMargins(0, 0, 0, 0);
+        //
+        connect(pushButton_pick, &QPushButton::clicked, this, [=] {
+            auto fn = QFileDialog::getOpenFileName(this, QObject::tr("Select"), QDir::currentPath(),
+                                                   "", nullptr, QFileDialog::Option::ReadOnly);
+            if (!fn.isEmpty()) {
+                lineEdit_path->setText(fn);
+            }
+        });
+        connect(lineEdit_path, &QLineEdit::textChanged, this, [=](const QString &newTxt) {
+            extraCore->insert(coreName, newTxt);
+        });
+    }
+};
 
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         : QDialog(parent), ui(new Ui::DialogBasicSettings) {
@@ -75,9 +114,15 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Core
 
     ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
-    CACHE.core_map = NekoRay::dataStore->extraCore->core_map;
-    ui->core_naive->setText(NekoRay::dataStore->extraCore->Get("naive"));
-    ui->core_hysteria->setText(NekoRay::dataStore->extraCore->Get("hysteria"));
+    //
+    CACHE.extraCore = QString2QJsonObject(NekoRay::dataStore->extraCore->core_map);
+    if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
+    if (!CACHE.extraCore.contains("hysteria")) CACHE.extraCore.insert("hysteria", "");
+    //
+    auto extra_core_layout = ui->extra_core_box->layout();
+    for (const auto &s: CACHE.extraCore.keys()) {
+        extra_core_layout->addWidget(new ExtraCoreWidget(&CACHE.extraCore, s));
+    }
 
     connect(ui->core_v2ray_asset, &QLineEdit::textChanged, this, [=] {
         CACHE.needRestart = true;
@@ -89,22 +134,31 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             ui->core_v2ray_asset->setText(fn);
         }
     });
-    connect(ui->core_naive_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath(),
-                                               "", nullptr, QFileDialog::Option::ReadOnly);
-        if (!fn.isEmpty()) {
-            ui->core_naive->setText(fn);
-        }
+    connect(ui->extra_core_add, &QPushButton::clicked, this, [=] {
+        bool ok;
+        auto s = QInputDialog::getText(nullptr, tr("Add"),
+                                       tr("Please input the core name."),
+                                       QLineEdit::Normal, "", &ok).trimmed();
+        if (s.isEmpty() || !ok) return;
+        if (CACHE.extraCore.contains(s)) return;
+        extra_core_layout->addWidget(new ExtraCoreWidget(&CACHE.extraCore, s));
+        CACHE.extraCore.insert(s, "");
     });
-    connect(ui->core_hysteria_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getOpenFileName(this, tr("Select"), QDir::currentPath(),
-                                               "", nullptr, QFileDialog::Option::ReadOnly);
-        if (!fn.isEmpty()) {
-            ui->core_hysteria->setText(fn);
+    connect(ui->extra_core_del, &QPushButton::clicked, this, [=] {
+        bool ok;
+        auto s = QInputDialog::getItem(nullptr, tr("Delete"),
+                                       tr("Please select the core name."),
+                                       CACHE.extraCore.keys(), 0, false, &ok);
+        if (s.isEmpty() || !ok) return;
+        for (int i = 0; i < extra_core_layout->count(); i++) {
+            auto item = extra_core_layout->itemAt(i);
+            auto ecw = dynamic_cast<ExtraCoreWidget *>(item->widget());
+            if (ecw != nullptr && ecw->coreName == s) {
+                ecw->deleteLater();
+                CACHE.extraCore.remove(s);
+                return;
+            }
         }
-    });
-    connect(ui->core_edit, &QPushButton::clicked, this, [=] {
-        C_EDIT_JSON_ALLOW_EMPTY(core_map)
     });
 
     // Security
@@ -151,15 +205,13 @@ void DialogBasicSettings::accept() {
     // Core
 
     NekoRay::dataStore->v2ray_asset_dir = ui->core_v2ray_asset->text();
-    NekoRay::dataStore->extraCore->core_map = CACHE.core_map;
-    NekoRay::dataStore->extraCore->Set("naive", ui->core_naive->text());
-    NekoRay::dataStore->extraCore->Set("hysteria", ui->core_hysteria->text());
+    NekoRay::dataStore->extraCore->core_map = QJsonObject2QString(CACHE.extraCore, true);
 
     // Security
 
     NekoRay::dataStore->insecure_hint = ui->insecure_hint->isChecked();
     NekoRay::dataStore->skip_cert = ui->skip_cert->isChecked();
 
-    dialog_message(Dialog_DialogBasicSettings, "SaveDataStore");
+    dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();
 }

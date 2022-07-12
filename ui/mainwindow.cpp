@@ -455,7 +455,7 @@ void MainWindow::show_group(int gid) {
 // callback
 
 void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
-    if (info.contains("SaveDataStore")) {
+    if (info.contains("UpdateDataStore")) {
         auto changed = NekoRay::dataStore->Save();
         refresh_proxy_list();
         if (changed && NekoRay::dataStore->started_id >= 0 &&

@@ -60,10 +60,6 @@
         <translation>其他核心</translation>
     </message>
     <message>
-        <source>Custom</source>
-        <translation>自定义</translation>
-    </message>
-    <message>
         <source>Select</source>
         <translation>选择</translation>
     </message>
@@ -134,6 +130,22 @@
     <message>
         <source>Off</source>
         <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>添加</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Please input the core name.</source>
+        <translation>请输入核心名.</translation>
+    </message>
+    <message>
+        <source>Please select the core name.</source>
+        <translation>请选择核心名.</translation>
     </message>
 </context>
 <context>
@@ -1137,6 +1149,10 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
     <message>
         <source>Another program is running.</source>
         <translation>另一个 Nekoray 实例正在运行。</translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation>选择</translation>
     </message>
 </context>
 <context>

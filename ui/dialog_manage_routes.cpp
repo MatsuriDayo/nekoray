@@ -93,7 +93,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
     NekoRay::dataStore->routing->Save();
 
-    dialog_message(Dialog_DialogManageRoutes, "SaveDataStore");
+    dialog_message(Dialog_DialogManageRoutes, "UpdateDataStore");
     QDialog::accept();
 }
 
