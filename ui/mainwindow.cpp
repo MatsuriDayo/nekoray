@@ -73,6 +73,14 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label_running->installEventFilter(this);
     ui->label_inbound->installEventFilter(this);
     RegisterHotkey(false);
+    auto last_size = NekoRay::dataStore->mw_size.split("x");
+    if (last_size.length() == 2) {
+        auto w = last_size[0].toInt();
+        auto h = last_size[1].toInt();
+        if (w > 0 && h > 0) {
+            resize(w, h);
+        }
+    }
 
     // top bar
     ui->toolButton_program->setMenu(ui->menu_program);
@@ -520,6 +528,15 @@ void MainWindow::on_menu_exit_triggered() {
     ClearSystemProxy();
     RegisterHotkey(true);
 #endif
+
+    if (!isMaximized()) {
+        auto olds = NekoRay::dataStore->mw_size;
+        auto news = QString("%1x%2").arg(size().width()).arg(size().height());
+        if (olds != news) {
+            NekoRay::dataStore->mw_size = news;
+            NekoRay::dataStore->Save();
+        }
+    }
 
     auto last_id = NekoRay::dataStore->started_id;
     neko_stop();
