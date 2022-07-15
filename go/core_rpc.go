@@ -237,10 +237,14 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 				if err == nil {
 					stunClient := stun.NewClientWithConnection(pc)
 					stunClient.SetServerAddr(stunServer)
-					nat, host, err, _ := stunClient.Discover()
+					nat, host, err, fake := stunClient.Discover()
 					if err == nil {
 						if host != nil {
-							result <- fmt.Sprint(nat)
+							if fake {
+								result <- fmt.Sprint("No Endpoint", nat)
+							} else {
+								result <- fmt.Sprint(nat)
+							}
 						}
 					} else {
 						result <- "Discover Error"
