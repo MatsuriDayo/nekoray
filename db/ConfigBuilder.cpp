@@ -295,6 +295,7 @@ namespace NekoRay {
     QString BuildChain(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
                        const QSharedPointer<BuildConfigStatus> &status) {
         QString chainTag = "c-" + Int2String(chainId);
+        bool muxApplied = false;
 
         QString pastTag;
         int index = 0;
@@ -415,8 +416,8 @@ namespace NekoRay {
             status->result->outboundStats += ent->traffic_data;
 
             // apply mux
-            if (dataStore->mux_cool > 0) {
-                //常见的*ray后端
+            if (dataStore->mux_cool > 0 && !muxApplied) {
+                // TODO refactor mux settings
                 if (ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless") {
                     auto muxObj = QJsonObject{
                             {"enabled",     true},
@@ -427,6 +428,7 @@ namespace NekoRay {
                         muxObj["packetEncoding"] = stream->packet_encoding;
                     }
                     outbound["mux"] = muxObj;
+                    muxApplied = true;
                 }
             }
 

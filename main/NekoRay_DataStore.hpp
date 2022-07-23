@@ -54,7 +54,7 @@ namespace NekoRay {
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
         int current_group = 0; //group id
-        int mux_cool = 8;
+        int mux_cool = -8;
         QString theme = "0";
         QString v2ray_asset_dir = "";
         int language = 0;
