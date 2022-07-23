@@ -23,6 +23,21 @@
       </sizepolicy>
      </property>
      <layout class="QGridLayout" name="main">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>0</number>
+      </property>
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
