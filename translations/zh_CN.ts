@@ -347,11 +347,11 @@
         <translation>流量探测</translation>
     </message>
     <message>
-        <source>Sniffing to DNS</source>
-        <translation>探测结果用于 DNS 解析</translation>
+        <source>The sniffing result is used for routing</source>
+        <translation>探测结果用于路由判断</translation>
     </message>
     <message>
-        <source>Sniffing to destination</source>
+        <source>The sniffing result is used for destination</source>
         <translation>探测结果用于目标地址</translation>
     </message>
     <message>

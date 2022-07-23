@@ -11,8 +11,8 @@ namespace NekoRay {
     namespace SniffingMode {
         enum SniffingMode {
             DISABLE,
-            TO_DNS,
-            TO_DESTINATION,
+            FOR_ROUTING,
+            FOR_DESTINATION,
         };
     }
 }

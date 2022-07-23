@@ -34,12 +34,12 @@
          </item>
          <item>
           <property name="text">
-           <string>Sniffing to DNS</string>
+           <string>The sniffing result is used for routing</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Sniffing to destination</string>
+           <string>The sniffing result is used for destination</string>
           </property>
          </item>
         </widget>

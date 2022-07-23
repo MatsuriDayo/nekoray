@@ -36,10 +36,11 @@ namespace NekoRay {
 
         // Inbounds
         QJsonObject sniffing{{"destOverride", dataStore->fake_dns ?
-                                              QJsonArray{"fakedns", "http", "tls", "quic"} : QJsonArray{"http", "tls", "quic"}},
+                                              QJsonArray{"fakedns", "http", "tls", "quic"}
+                                                                  : QJsonArray{"http", "tls", "quic"}},
                              {"enabled",      true},
                              {"metadataOnly", false},
-                             {"routeOnly",    dataStore->sniffing_mode == SniffingMode::TO_DNS},};
+                             {"routeOnly",    dataStore->sniffing_mode == SniffingMode::FOR_ROUTING},};
 
         // socks-in
         if (InRange(dataStore->inbound_socks_port, 0, 65535) && !forTest) {
@@ -62,7 +63,9 @@ namespace NekoRay {
             socksInbound["protocol"] = "http";
             socksInbound["listen"] = dataStore->inbound_address;
             socksInbound["port"] = dataStore->inbound_http_port;
-            if (dataStore->sniffing_mode != SniffingMode::DISABLE) socksInbound["sniffing"] = sniffing;
+            if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
+                socksInbound["sniffing"] = sniffing;
+            }
             status->inbounds += socksInbound;
         }
 
