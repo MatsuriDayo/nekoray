@@ -25,9 +25,6 @@ namespace NekoRay::fmt {
         QString serverAddress = "127.0.0.1";
         int serverPort = 1080;
 
-        // hidden
-        bool isFirstProfile = false;
-
         explicit AbstractBean(int version);
 
         QString ToNekorayShareLink(const QString &type);

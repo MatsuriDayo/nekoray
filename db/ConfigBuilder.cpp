@@ -89,7 +89,7 @@ namespace NekoRay {
             ents += ent;
         }
 
-        BuildChain(false, ents, status);
+        QString tagProxy = BuildChain(0, ents, status);
         if (!result->error.isEmpty()) return result;
 
         // direct & bypass & block
@@ -231,7 +231,7 @@ namespace NekoRay {
         }
 
         // proxy
-        routingRule_tmp["outboundTag"] = "proxy";
+        routingRule_tmp["outboundTag"] = tagProxy;
         for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {
             if (line.startsWith("#")) continue;
             status->ipListRemote += line;
@@ -292,29 +292,27 @@ namespace NekoRay {
         return result;
     }
 
-    QString BuildChain(bool extra, const QList<QSharedPointer<ProxyEntity>> &ents,
+    QString BuildChain(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
                        const QSharedPointer<BuildConfigStatus> &status) {
-        QString chainOutboundTag;
+        QString chainTag = "c-" + Int2String(chainId);
+
         QString pastTag;
         int index = 0;
 
         for (const auto &ent: ents) {
-            // tagOut: v2ray outbound tagOut for a profile
-            // profile1 (in)  tagOut=global-proxy-(id)
-            // profile2       tagOut=proxy-(id)
-            // profile3 (out) tagOut=proxy / proxy-(chainID)
-            auto tagOut = index == 0 && !extra ? "proxy" : QString("proxy-%1").arg(ent->id);
+            // tagOut: v2ray outbound tag for a profile
+            // profile2 (in) (global)   tag g-(id)
+            // profile1                 tag (chainTag)-(id)
+            // profile0 (out)           tag (chainTag)-(id) / single: chainTag=g-(id)
+            auto tagOut = chainTag + "-" + Int2String(ent->id);
 
             // needGlobal: can only contain one?
             bool needGlobal = false;
 
             // first profile set as global
             if (index == ents.length() - 1) {
-                ent->bean->isFirstProfile = true;
                 needGlobal = true;
-                if (index != 0) tagOut = "global-" + tagOut;
-            } else {
-                ent->bean->isFirstProfile = false;
+                tagOut = "g-" + Int2String(ent->id);
             }
 
             if (needGlobal) {
@@ -343,7 +341,7 @@ namespace NekoRay {
                 }
             } else {
                 // index == 0 means last profile in chain / not chain
-                chainOutboundTag = tagOut;
+                chainTag = tagOut;
                 status->result->outboundStat = ent->traffic_data;
             }
 
@@ -362,7 +360,7 @@ namespace NekoRay {
                         }},
                 };
                 // no chain rule and not outbound, so need to set to direct
-                if (ent->bean->isFirstProfile) {
+                if (index == ents.length() - 1) {
                     status->routingRules += QJsonObject{
                             {"type",        "field"},
                             {"inboundTag",  QJsonArray{tagOut + "-mapping"}},
@@ -439,7 +437,7 @@ namespace NekoRay {
             }
 
             // Bypass Lookup for the first profile
-            if (ent->bean->isFirstProfile && !IsIpAddress(ent->bean->serverAddress)) {
+            if (index == ents.length() - 1 && !IsIpAddress(ent->bean->serverAddress)) {
                 if (dataStore->enhance_resolve_server_domain) {
                     status->result->tryDomains += ent->bean->serverAddress;
                 } else {
@@ -452,7 +450,7 @@ namespace NekoRay {
             index++;
         }
 
-        return chainOutboundTag;
+        return chainTag;
     }
 
 }

@@ -41,6 +41,6 @@ namespace NekoRay {
 
     QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest);
 
-    QString BuildChain(bool extra, const QList<QSharedPointer<ProxyEntity>> &ents,
+    QString BuildChain(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
                        const QSharedPointer<BuildConfigStatus> &status);
 }
