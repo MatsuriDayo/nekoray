@@ -16,7 +16,6 @@ func ToolBox(tool []string) {
 			for _, intf := range intfs {
 				log.Println(intf)
 			}
-
 			routes, err := NewRouteTable().getRoutes()
 			if err != nil {
 				log.Fatalln(err)
@@ -24,7 +23,7 @@ func ToolBox(tool []string) {
 			for _, route := range routes {
 				log.Println(route)
 			}
-			log.Println("Upstream:", windows_Protect_BindInterfaceIndex())
+			log.Println("Upstream:", getBindInterfaceIndex())
 		}
 	}
 }

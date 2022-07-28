@@ -31,9 +31,8 @@ func (f *fwmarkProtector) Protect(fd int32) bool {
 
 	// find bypass rule
 	// TODO hardcoded fwmark 514
-	fwmark := find_fwmark(514)
-	if fwmark > 0 {
-		if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, fwmark); err != nil {
+	if is_fwmark_exist(514) {
+		if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, 514); err != nil {
 			log.Println("syscall.SetsockoptInt:", err.Error())
 			return false
 		}
@@ -41,7 +40,7 @@ func (f *fwmarkProtector) Protect(fd int32) bool {
 	return true
 }
 
-func find_fwmark(number int) int {
+func is_fwmark_exist(number int) bool {
 	var err error
 
 	if rtnetlink_conn == nil {
@@ -49,23 +48,22 @@ func find_fwmark(number int) int {
 		if err != nil {
 			log.Println(err)
 		}
-		return 0
+		return false
 	}
 
 	rules, err := rtnetlink_conn.Rule.List()
 	if err != nil {
 		rtnetlink_conn = nil
-		return find_fwmark(number)
+		return false
 	}
 
 	for _, rule := range rules {
 		if rule.Attributes != nil && rule.Attributes.FwMark != nil && uint32(number) == *rule.Attributes.FwMark {
-			return number
+			return true
 		}
 	}
 
-	return 0
-
+	return false
 }
 
 func init() {
