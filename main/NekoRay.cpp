@@ -50,6 +50,7 @@ namespace NekoRay {
         _add(new configItem("fakedns", &fake_dns, itemType::boolean));
         _add(new configItem("active_routing", &active_routing, itemType::string));
         _add(new configItem("mw_size", &mw_size, itemType::string));
+        _add(new configItem("conn_stat", &connection_statistics, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {

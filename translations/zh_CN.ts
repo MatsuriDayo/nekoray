@@ -147,6 +147,10 @@
         <source>Please select the core name.</source>
         <translation>请选择核心名.</translation>
     </message>
+    <message>
+        <source>Connection statistics</source>
+        <translation>连接统计</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

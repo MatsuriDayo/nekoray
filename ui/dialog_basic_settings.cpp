@@ -56,7 +56,9 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
+    ui->connection_statistics->setChecked(NekoRay::dataStore->connection_statistics);
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
+
     if (NekoRay::dataStore->traffic_loop_interval == 500) {
         ui->rfsh_r->setCurrentIndex(0);
     } else if (NekoRay::dataStore->traffic_loop_interval == 1000) {
@@ -178,7 +180,9 @@ void DialogBasicSettings::accept() {
 
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
     NekoRay::dataStore->log_level = ui->log_level->currentText();
+    NekoRay::dataStore->connection_statistics = ui->connection_statistics->isChecked();
     NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
+
     if (ui->rfsh_r->currentIndex() == 0) {
         NekoRay::dataStore->traffic_loop_interval = 500;
     } else if (ui->rfsh_r->currentIndex() == 1) {

@@ -68,7 +68,10 @@ namespace NekoRay::traffic {
             update(bypass);
 
             // do conn list update
-            auto conn_list = get_connection_list();
+            QJsonArray conn_list;
+            if (dataStore->connection_statistics) {
+                conn_list = get_connection_list();
+            }
 
             loop_mutex.unlock();
 
@@ -83,7 +86,9 @@ namespace NekoRay::traffic {
                     if (item->id < 0) continue;
                     m->refresh_proxy_list(item->id);
                 }
-                m->refresh_connection_list(conn_list);
+                if (dataStore->connection_statistics) {
+                    m->refresh_connection_list(conn_list);
+                }
             });
         }
     }

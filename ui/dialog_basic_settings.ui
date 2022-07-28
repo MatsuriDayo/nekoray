@@ -39,98 +39,244 @@
       <attribute name="title">
        <string>Common</string>
       </attribute>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_2">
-         <property name="text">
-          <string>Socks Listen Port</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string notr="true">Loglevel</string>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="8,1,1">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <widget class="QLineEdit" name="test_url"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_14">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Concurrent</string>
-           </property>
+          <widget class="QGroupBox" name="horizontalGroupBox_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_19">
+            <item>
+             <widget class="QLabel" name="label">
+              <property name="text">
+               <string>Listen Address</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="socks_ip"/>
+            </item>
+           </layout>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="test_concurrent"/>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_10">
-         <item>
-          <widget class="QLineEdit" name="socks_ip"/>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_11">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Custom Inbound</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="custom_inbound_edit">
-           <property name="text">
-            <string>Edit</string>
-           </property>
+          <widget class="QGroupBox" name="horizontalGroupBox_4">
+           <layout class="QHBoxLayout" name="horizontalLayout_10">
+            <item>
+             <widget class="QLabel" name="label_11">
+              <property name="text">
+               <string>Custom Inbound</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="custom_inbound_edit">
+              <property name="text">
+               <string>Edit</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="11" column="0">
-        <widget class="QLabel" name="label_6">
-         <property name="text">
-          <string notr="true">mux.cool</string>
-         </property>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_14">
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_13">
+            <item>
+             <widget class="QLabel" name="label_2">
+              <property name="text">
+               <string>Socks Listen Port</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inbound_socks_port"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_8">
+           <layout class="QHBoxLayout" name="horizontalLayout_16">
+            <item>
+             <widget class="QLabel" name="label_5">
+              <property name="text">
+               <string>HTTP Listen Port</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="inbound_http_port"/>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="http_enable">
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,8,1,1">
+          <item>
+           <widget class="QLabel" name="label_13">
+            <property name="text">
+             <string>Test URL</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="test_url"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_14">
+            <property name="text">
+             <string>Concurrent</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="test_concurrent"/>
+          </item>
+         </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Listen Address</string>
-         </property>
-        </widget>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_11">
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_5">
+           <layout class="QHBoxLayout" name="horizontalLayout">
+            <item>
+             <widget class="QLabel" name="label_3">
+              <property name="text">
+               <string notr="true">Loglevel</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="log_level">
+              <item>
+               <property name="text">
+                <string notr="true">debug</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">info</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">warning</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">none</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_7">
+           <layout class="QHBoxLayout" name="horizontalLayout_17">
+            <item>
+             <widget class="QLabel" name="label_6">
+              <property name="text">
+               <string notr="true">mux.cool</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="mux_cool_enable">
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="label_7">
+              <property name="text">
+               <string>concurrency</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="mux_cool"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
        </item>
-       <item row="11" column="2">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_6">
+           <layout class="QHBoxLayout" name="horizontalLayout_3">
+            <item>
+             <widget class="QLabel" name="label_16">
+              <property name="text">
+               <string>Traffic statistics refresh rate</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="rfsh_r">
+              <item>
+               <property name="text">
+                <string>Fast</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Slow</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Off</string>
+               </property>
+              </item>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QGroupBox" name="horizontalGroupBox_1">
+           <layout class="QHBoxLayout" name="horizontalLayout_15">
+            <item>
+             <widget class="QLabel" name="label_9">
+              <property name="text">
+               <string>Connection statistics</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QCheckBox" name="connection_statistics">
+              <property name="text">
+               <string>Enable</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
         <widget class="QWidget" name="horizontalWidget_1" native="true">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -151,154 +297,8 @@
           <property name="bottomMargin">
            <number>0</number>
           </property>
-          <item>
-           <widget class="QLabel" name="label_7">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>concurrency</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="mux_cool"/>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="mux_cool_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QWidget" name="horizontalWidget" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_3">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <item>
-           <widget class="QLineEdit" name="inbound_socks_port"/>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>HTTP Listen Port</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="inbound_http_port"/>
-          </item>
-          <item>
-           <widget class="QCheckBox" name="http_enable">
-            <property name="text">
-             <string>Enable</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_13">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Test URL</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_11">
-         <item>
-          <widget class="QComboBox" name="log_level">
-           <item>
-            <property name="text">
-             <string notr="true">debug</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">info</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">warning</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">none</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_16">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Traffic statistics refresh rate</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="rfsh_r">
-           <item>
-            <property name="text">
-             <string>Fast</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Slow</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string>Off</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>
@@ -540,17 +540,20 @@
   <tabstop>test_url</tabstop>
   <tabstop>test_concurrent</tabstop>
   <tabstop>log_level</tabstop>
-  <tabstop>rfsh_r</tabstop>
-  <tabstop>mux_cool</tabstop>
   <tabstop>mux_cool_enable</tabstop>
+  <tabstop>mux_cool</tabstop>
+  <tabstop>rfsh_r</tabstop>
+  <tabstop>connection_statistics</tabstop>
+  <tabstop>theme</tabstop>
+  <tabstop>language</tabstop>
+  <tabstop>user_agent</tabstop>
+  <tabstop>sub_use_proxy</tabstop>
   <tabstop>core_v2ray_asset</tabstop>
   <tabstop>core_v2ray_asset_pick</tabstop>
-  <tabstop>user_agent</tabstop>
-  <tabstop>language</tabstop>
-  <tabstop>sub_use_proxy</tabstop>
+  <tabstop>extra_core_add</tabstop>
+  <tabstop>extra_core_del</tabstop>
   <tabstop>insecure_hint</tabstop>
   <tabstop>skip_cert</tabstop>
-  <tabstop>theme</tabstop>
  </tabstops>
  <resources/>
  <connections>

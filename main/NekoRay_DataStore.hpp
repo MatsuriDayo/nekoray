@@ -53,6 +53,7 @@ namespace NekoRay {
         QString test_url = "truehttp://cp.cloudflare.com/";
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
+        bool connection_statistics = false;
         int current_group = 0; //group id
         int mux_cool = -8;
         QString theme = "0";
