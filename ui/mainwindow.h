@@ -114,6 +114,7 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray;
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
+    QShortcut *shortcut_ctrl_v = new QShortcut(QKeySequence("Ctrl+V"), this);
     QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
     bool core_process_killed = false;
