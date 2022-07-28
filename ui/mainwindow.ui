@@ -500,6 +500,7 @@
      <addaction name="menu_qr"/>
      <addaction name="menu_qr_nkr"/>
      <addaction name="menu_export_config"/>
+     <addaction name="menu_copy_links"/>
     </widget>
     <widget class="QMenu" name="menuSpeedtest">
      <property name="title">
@@ -726,6 +727,11 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="menu_copy_links">
+   <property name="text">
+    <string>Copy links of selected</string>
    </property>
   </action>
  </widget>

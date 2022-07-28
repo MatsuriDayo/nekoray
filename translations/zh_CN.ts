@@ -1006,6 +1006,14 @@ End: %2</source>
         <source>Load routing and apply: %1</source>
         <translation>加载路由规则并应用: %1</translation>
     </message>
+    <message>
+        <source>Copy links of selected</source>
+        <translation>复制选中的分享链接</translation>
+    </message>
+    <message>
+        <source>Copied %1 item(s)</source>
+        <translation>复制了%1 个项目</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

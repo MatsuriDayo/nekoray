@@ -869,6 +869,16 @@ void MainWindow::on_menu_profile_debug_info_triggered() {
     }
 }
 
+void MainWindow::on_menu_copy_links_triggered() {
+    auto ents = GetNowSelected();
+    QStringList links;
+    for (const auto &ent: ents) {
+        links += ent->bean->ToShareLink();
+    }
+    QApplication::clipboard()->setText(links.join("\n"));
+    MessageBoxInfo("NekoRay", tr("Copied %1 item(s)").arg(links.length()));
+}
+
 void MainWindow::on_menu_export_config_triggered() {
     auto ents = GetNowSelected();
     if (ents.count() != 1) return;
