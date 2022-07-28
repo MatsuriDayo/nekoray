@@ -717,10 +717,6 @@
         <translation>分享</translation>
     </message>
     <message>
-        <source>Speedtest</source>
-        <translation>测速</translation>
-    </message>
-    <message>
         <source>Exit</source>
         <translation>退出</translation>
     </message>
@@ -955,32 +951,8 @@ End: %2</source>
         <translation>删除 [ Delete ]</translation>
     </message>
     <message>
-        <source>Tcp Ping this group</source>
-        <translation>TCP Ping 此分组</translation>
-    </message>
-    <message>
-        <source>Url Test this group</source>
-        <translation>URL Test 此分组</translation>
-    </message>
-    <message>
-        <source>Reset traffic</source>
-        <translation>重置流量</translation>
-    </message>
-    <message>
-        <source>Delete repeat</source>
-        <translation>删除重复</translation>
-    </message>
-    <message>
-        <source>Full Test this group</source>
-        <translation>完整测试此分组</translation>
-    </message>
-    <message>
         <source>Hot key</source>
         <translation>热键</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation>全选</translation>
     </message>
     <message>
         <source>QR Code and link</source>
@@ -1013,6 +985,30 @@ End: %2</source>
     <message>
         <source>Copied %1 item(s)</source>
         <translation>复制了%1 个项目</translation>
+    </message>
+    <message>
+        <source>New profile from clipboard</source>
+        <translation>从剪切板添加</translation>
+    </message>
+    <message>
+        <source>Full Test</source>
+        <translation>完整测试</translation>
+    </message>
+    <message>
+        <source>Current Group</source>
+        <translation>当前分组</translation>
+    </message>
+    <message>
+        <source>Reset Traffic</source>
+        <translation>重置流量</translation>
+    </message>
+    <message>
+        <source>Delete Repeat</source>
+        <translation>删除重复</translation>
+    </message>
+    <message>
+        <source>Select All</source>
+        <translation>全选</translation>
     </message>
 </context>
 <context>

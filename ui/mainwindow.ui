@@ -500,12 +500,14 @@
      <addaction name="menu_qr"/>
      <addaction name="menu_qr_nkr"/>
      <addaction name="menu_export_config"/>
+     <addaction name="separator"/>
      <addaction name="menu_copy_links"/>
     </widget>
-    <widget class="QMenu" name="menuSpeedtest">
+    <widget class="QMenu" name="menugroup">
      <property name="title">
-      <string>Speedtest</string>
+      <string>Current Group</string>
      </property>
+     <addaction name="menu_delete_repeat"/>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
@@ -521,12 +523,11 @@
     <addaction name="menu_select_all"/>
     <addaction name="menu_move"/>
     <addaction name="menu_reset_traffic"/>
-    <addaction name="menu_delete_repeat"/>
     <addaction name="menu_delete"/>
     <addaction name="separator"/>
     <addaction name="menuShare_Item"/>
     <addaction name="separator"/>
-    <addaction name="menuSpeedtest"/>
+    <addaction name="menugroup"/>
     <addaction name="separator"/>
     <addaction name="menu_profile_debug_info"/>
     <addaction name="separator"/>
@@ -572,7 +573,7 @@
   </action>
   <action name="menu_add_from_clipboard">
    <property name="text">
-    <string>Add profile from clipboard</string>
+    <string>New profile from clipboard</string>
    </property>
   </action>
   <action name="menu_delete">
@@ -602,12 +603,12 @@
   </action>
   <action name="menu_tcp_ping">
    <property name="text">
-    <string>Tcp Ping this group</string>
+    <string notr="true">Tcp Ping</string>
    </property>
   </action>
   <action name="menu_url_test">
    <property name="text">
-    <string>Url Test this group</string>
+    <string notr="true">Url Test</string>
    </property>
   </action>
   <action name="menu_clear_test_result">
@@ -622,7 +623,7 @@
   </action>
   <action name="menu_reset_traffic">
    <property name="text">
-    <string>Reset traffic</string>
+    <string>Reset Traffic</string>
    </property>
   </action>
   <action name="menu_scan_qr">
@@ -648,7 +649,7 @@
   </action>
   <action name="menu_delete_repeat">
    <property name="text">
-    <string>Delete repeat</string>
+    <string>Delete Repeat</string>
    </property>
   </action>
   <action name="actionfake">
@@ -695,7 +696,7 @@
   </action>
   <action name="menu_full_test">
    <property name="text">
-    <string>Full Test this group</string>
+    <string>Full Test</string>
    </property>
   </action>
   <action name="menu_hotkey_settings">
@@ -705,7 +706,7 @@
   </action>
   <action name="menu_select_all">
    <property name="text">
-    <string>Select all</string>
+    <string>Select All</string>
    </property>
   </action>
   <action name="menu_qr_nkr">
