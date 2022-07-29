@@ -48,7 +48,7 @@ QString GetRandomString(int randomStringLength);
 
 // QString >> QJson
 inline QJsonObject QString2QJsonObject(const QString &jsonString) {
-    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toLocal8Bit().data());
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
     QJsonObject jsonObject = jsonDocument.object();
     return jsonObject;
 }
