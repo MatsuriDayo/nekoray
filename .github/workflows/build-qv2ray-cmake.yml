@@ -60,36 +60,29 @@ jobs:
         with:
           # ninja version to download. Default: 1.10.0
           version: 1.10.0
-      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Other install
+      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
         shell: bash
         if: matrix.platform == 'ubuntu-18.04'
         run: |
           sudo apt-get update
-          sudo apt-get install -y build-essential autoconf libtool ninja-build cmake
+          sudo apt-get install -y ninja-build 
       - name: Install Golang
         uses: actions/setup-go@v2
         with:
           stable: false
-          go-version: 1.18.3
+          go-version: 1.18.4
       # ========================================================================================================= 编译与 Qt 无关的依赖
-      - name: Cache Download & Build Dependencies
+      - name: Cache Download
         id: cache-deps
         uses: actions/cache@v2
         with:
           path: libs/deps
-          key: ${{ hashFiles('libs/build*.sh', 'libs/download*.sh') }}
-      - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
+          key: ${{ hashFiles('libs/build*.sh') }}
+      - name: Build Dependencies
         shell: bash
-        if: matrix.platform == 'windows-2022' && steps.cache-deps.outputs.cache-hit != 'true'
-        run: |
-          ./libs/download_windows64.sh
-          ./libs/build_deps_all.sh
-      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Download & Build Dependencies
-        shell: bash
-        if: matrix.platform == 'ubuntu-18.04' && steps.cache-deps.outputs.cache-hit != 'true'
+        if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
           ./libs/build_deps_all.sh
-          ./libs/build_deps_linux.sh
       # ========================================================================================================= Generate MakeFile and Build
       - name: Windows - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
@@ -101,7 +94,6 @@ jobs:
           mkdir build
           cd build
           cmake .. -GNinja \
-            -DCMAKE_TOOLCHAIN_FILE=./libs/deps/windows-x64/scripts/buildsystems/vcpkg.cmake \
             -DCMAKE_PREFIX_PATH=./libs/deps/built \
             -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build . --parallel $(nproc)

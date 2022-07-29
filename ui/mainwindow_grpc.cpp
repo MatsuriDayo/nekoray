@@ -25,7 +25,7 @@ void MainWindow::setupGRPC() {
     }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
     connect(t, &QTimer::timeout, this, [=]() {
-        bool ok = defaultClient->keepAlive();
+        bool ok = defaultClient->KeepAlive();
         runOnUiThread([=]() {
             if (!ok) {
                 title_error = tr("Error");
@@ -35,7 +35,12 @@ void MainWindow::setupGRPC() {
             refresh_status();
         });
     });
-    t->start(2000);
+    auto tt = new QThread;
+    tt->start();
+    t->moveToThread(tt);
+    runOnUiThread([=] {
+        t->start(2000);
+    }, t);
 
     // Looper
     runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });

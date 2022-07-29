@@ -103,8 +103,6 @@ git submodule update
 | QT_VERSION_MAJOR        | 5   | QT版本                    |
 | NKR_NO_EXTERNAL         |     | 不包含外部C++依赖(如ZXing/gRPC) |
 | NKR_NO_GRPC             |     | 不包含gRPC                 |
-| NKR_PROTOBUF_USE_CONFIG |     |                         |
-| NKR_PROTOBUF_NO_AUTOGEN |     |                         |
 | NKR_CROSS               |     |                         |
 
 ### 简单编译法

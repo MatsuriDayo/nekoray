@@ -6,20 +6,21 @@
 
 #ifndef NKR_NO_GRPC
 
-#include "go/gen/libcore.grpc.pb.h"
-#include <grpc++/grpc++.h>
+#include "go/gen/libcore.pb.h"
 #include <QString>
+
+namespace QtGrpc {
+    class Http2GrpcChannelPrivate;
+}
 
 namespace NekoRay::rpc {
     class Client {
     public:
         explicit Client(std::function<void(const QString &)> onError, const QString &target, const QString &token);
 
-        libcore::UpdateResp Update(bool *rpcOK, const libcore::UpdateReq &request);
-
         void Exit();
 
-        bool keepAlive();
+        bool KeepAlive();
 
         // QString returns is error string
 
@@ -27,19 +28,20 @@ namespace NekoRay::rpc {
 
         QString Stop(bool *rpcOK);
 
-        libcore::TestResp Test(bool *rpcOK, const libcore::TestReq &request);
-
         long long QueryStats(const std::string &tag, const std::string &direct);
 
         std::string ListV2rayConnections();
 
+        libcore::TestResp Test(bool *rpcOK, const libcore::TestReq &request);
+
+        libcore::UpdateResp Update(bool *rpcOK, const libcore::UpdateReq &request);
+
     private:
-        std::unique_ptr<libcore::LibcoreService::Stub> _stub;
+        std::unique_ptr<QtGrpc::Http2GrpcChannelPrivate> grpc_channel;
         std::function<void(const QString &)> onError;
-        QString token;
     };
 
     inline Client *defaultClient;
-};
+}
 #endif
 

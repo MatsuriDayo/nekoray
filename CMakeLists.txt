@@ -28,8 +28,6 @@ if (NKR_CROSS)
     set_property(TARGET Qt5::rcc PROPERTY IMPORTED_LOCATION /usr/bin/rcc)
     set_property(TARGET Qt5::lrelease PROPERTY IMPORTED_LOCATION /usr/bin/lrelease)
     set_property(TARGET Qt5::lupdate PROPERTY IMPORTED_LOCATION /usr/bin/lupdate)
-    set(NKR_PROTOBUF_USE_CONFIG 1)
-    set(NKR_PROTOBUF_NO_AUTOGEN 1)
 endif ()
 
 # Windows
