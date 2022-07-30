@@ -50,7 +50,7 @@ namespace NekoRay {
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.9.premium";
         bool sub_use_proxy = false;
-        QString test_url = "truehttp://cp.cloudflare.com/";
+        QString test_url = "http://cp.cloudflare.com/";
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
         bool connection_statistics = false;

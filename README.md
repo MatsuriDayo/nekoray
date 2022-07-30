@@ -2,28 +2,32 @@
 
 基于 Qt/C++ 的跨平台代理配置管理器（ 使用 Matsuri 定制版 v2ray-core ）
 
+目前支持 Windows / Linux amd64 开箱即用
+
 Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom version of v2ray-core )
 
-## 下载
+Support Windows / Linux amd64 out of the box now.
+
+## 下载 Download
 
 便携格式，无安装器。转到 Releases 下载预编译的二进制文件，解压后即可使用。
+
+### GitHub Releases 下载
+
+[![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases)
+
+## 更改记录 & 发布频道 Changelog & Telegram channel
+
+https://t.me/Matsuridayo
+
+## 项目主页 & 文档 Homepage & Documents
+
+https://matsuridayo.github.io
 
 ### 运行参数
 
 - (0.11+) -many 无视同目录正在运行的实例，强行开启新的实例
 - (0.11+) -appdata 开启后配置文件会放在共享目录，无法多开和自动升级
-
-## 进度
-
-功能逐渐完善中。
-
-✅ = 已完成
-
-❌ = 未完成
-
-❌❌ = 暂无计划
-
-❓ = 未知 or 半成品
 
 ### 代理
 
@@ -37,45 +41,6 @@ Qt/C++ based cross-platform proxy configuration manager ( Use Matsuri custom ver
 | VLESS        | ✅      | ✅    | ✅      | ✅         | 不适用        |
 | NaïveProxy   | ✅      | ✅    | ✅      | ✅         | 不适用        |
 | Hysteria     | ✅      | ❌    | ❌      | ❌         | 不适用        |
-
-### 功能
-
-| 功能                            | 状态                |
-|-------------------------------|-------------------|
-| (协议类↓)                        |                   |
-| socks/http 入站                 | ✅                 |
-| 自定义 v2ray 入站                  | ✅                 |
-| v2ray mux.cool                | ✅                 |
-| 自定义 v2ray stream settings     | ✅                 |
-| 自定义 v2ray outbound object     | ✅                 |
-| 外部 socks 接入 (类似 SagerNet 的插件) | ✅                 |
-| 自定义配置接入 (类似 Matsuri 的高级插件)    | ❓                 |
-| 切换路由                          | ❓                 |
-| 自定义 v2ray 路由                  | ✅                 |
-| “多节点分流”                       | ❌❌                |
-| “负载均衡”                        | ❌❌                |
-| (实用类↓)                        |                   |
-| 日志显示                          | ✅                 |
-| 连接显示                          | ✅                 |
-| 搜索配置                          | ✅                 |
-| 分组                            | ✅                 |
-| 订阅                            | ✅                 |
-| 剪辑板导入 / QR Code 扫描            | ✅                 |
-| 分享配置                          | ✅                 |
-| 流量/速度统计                       | ✅                 |
-| 链式代理                          | ✅                 |
-| TCPing / URLTest              | ✅                 |
-| 中文界面                          | ✅                 |
-| (系统类↓)                        |                   |
-| 平台可用性                         | 64位 Linux/Windows |
-| 预编译 Linux amd64 二进制文件         | ✅ (不能用则需自己编译)     |
-| 预编译 Windows amd64 二进制文件       | ✅                 |
-| 系统代理                          | Linux/Windows     |
-| 系统代理分流                        | ❌❌                |
-| VPN on Linux                  | ❓                 |
-| VPN on Windows                | ❓                 |
-| 检查更新                          | ✅                 |
-| 主题样式                          | ✅                 |
 
 ## Linux 运行 & 简易编译教程
 
@@ -109,7 +74,7 @@ git submodule update
 
 条件：
 
-1. C++ 依赖： `qt5 grpc yaml-cpp zxing-cpp` 已用包管理器安装，并符合版本要求
+1. C++ 依赖： `qt5 protobuf yaml-cpp zxing-cpp` 已用包管理器安装，并符合版本要求
 2. Qt 版本必须大于等于 5.15
 3. 系统为 `x86-64-linux-gnu`
 
@@ -151,7 +116,7 @@ Nekoray 的诞生离不开 v2ray 开源项目以及其他开源软件。
 - [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri)
 - [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core)
 - [Qt](https://www.qt.io/)
-- [gRPC](https://grpc.io/)
+- [protobuf](https://github.com/protocolbuffers/protobuf)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
