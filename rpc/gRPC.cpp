@@ -37,8 +37,8 @@ namespace QtGrpc {
 //        setCachingEnabled:  5  bytesDownloaded
 //        QNetworkReplyImpl: backend error: caching was enabled after some bytes had been written
 
-        QNetworkReply *
-        post(const QString &method, const QString &service, const QByteArray &args, int timeout_ms) {
+        // async
+        QNetworkReply *post(const QString &method, const QString &service, const QByteArray &args) {
             QUrl callUrl = url_base + "/" + service + "/" + method;
 //            qDebug() << "Service call url: " << callUrl;
 
@@ -59,20 +59,7 @@ namespace QtGrpc {
             // qDebug() << "SEND: " << msg.size();
 
             QNetworkReply *networkReply = nm->post(request, msg);
-
-            if (timeout_ms > 0) {
-                QTimer::singleShot(timeout_ms, networkReply,
-                                   [networkReply]() { Http2GrpcChannelPrivate::abortNetworkReply(networkReply); });
-            }
             return networkReply;
-        }
-
-        static void abortNetworkReply(QNetworkReply *networkReply) {
-            if (networkReply->isRunning()) {
-                networkReply->abort();
-            } else {
-                networkReply->deleteLater();
-            }
         }
 
         static QByteArray processReply(QNetworkReply *networkReply, QNetworkReply::NetworkError &statusCode) {
@@ -99,7 +86,18 @@ namespace QtGrpc {
         QNetworkReply::NetworkError
         call(const QString &method, const QString &service, const QByteArray &args, QByteArray &qByteArray,
              int timeout_ms) {
-            QNetworkReply *networkReply = post(method, service, args, timeout_ms);
+            QNetworkReply *networkReply = post(method, service, args);
+
+            QTimer *abortTimer = nullptr;
+            if (timeout_ms > 0) {
+                abortTimer = new QTimer;
+                abortTimer->setSingleShot(true);
+                abortTimer->setInterval(timeout_ms);
+                connect(abortTimer, &QTimer::timeout, abortTimer, [=]() {
+                    networkReply->abort();
+                });
+                abortTimer->start();
+            }
 
             {
                 QEventLoop loop;
@@ -107,11 +105,16 @@ namespace QtGrpc {
                 loop.exec();
             }
 
+            if (abortTimer != nullptr) {
+                abortTimer->stop();
+                abortTimer->deleteLater();
+            }
+
             auto grpcStatus = QNetworkReply::NetworkError::ProtocolUnknownError;
             qByteArray = processReply(networkReply, grpcStatus);
+            // qDebug() << __func__ << "RECV: " << qByteArray.toHex() << "grpcStatus" << grpcStatus;
 
             networkReply->deleteLater();
-            // qDebug() << __func__ << "RECV: " << qByteArray.toHex() << "grpcStatus" << grpcStatus;
             return grpcStatus;
         }
 
