@@ -21,6 +21,7 @@ public:
 
     QSharedPointer<NekoRay::ProxyEntity> ent;
     QListWidgetItem *item;
+    bool remove_confirm = false;
 
 private:
     Ui::ProxyItem *ui;

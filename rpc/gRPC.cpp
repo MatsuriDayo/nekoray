@@ -215,7 +215,7 @@ namespace NekoRay::rpc {
     bool Client::KeepAlive() {
         libcore::EmptyReq request;
         libcore::EmptyResp reply;
-        auto status = grpc_channel->Call("KeepAlive", request, &reply);
+        auto status = grpc_channel->Call("KeepAlive", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
             return true;
@@ -242,7 +242,7 @@ namespace NekoRay::rpc {
     std::string Client::ListV2rayConnections() {
         libcore::EmptyReq request;
         libcore::ListV2rayConnectionsResp reply;
-        auto status = grpc_channel->Call("ListV2rayConnections", request, &reply);
+        auto status = grpc_channel->Call("ListV2rayConnections", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
             return reply.matsuri_connections_json();

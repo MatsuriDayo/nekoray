@@ -337,7 +337,6 @@ MainWindow::MainWindow(QWidget *parent)
     if (NekoRay::dataStore->core_port <= 0) NekoRay::dataStore->core_port = 19810;
 
     runOnNewThread([=]() {
-        core_process = new QProcess;
         QString starting_info;
 
 #ifndef Q_OS_WIN
@@ -361,20 +360,6 @@ MainWindow::MainWindow(QWidget *parent)
             core_path = "";
         }
 
-        connect(core_process, &QProcess::readyReadStandardOutput, this,
-                [&]() {
-                    showLog(core_process->readAllStandardOutput().trimmed());
-                });
-        connect(core_process, &QProcess::readyReadStandardError, this,
-                [&]() {
-                    auto log = core_process->readAllStandardError().trimmed();
-                    if (log.contains("token is set")) {
-                        core_process_show_stderr = true;
-                        return;
-                    }
-                    if (core_process_show_stderr) showLog(log);
-                });
-
         QStringList args;
         args.push_back("nekoray");
         args.push_back("-port");
@@ -384,21 +369,35 @@ MainWindow::MainWindow(QWidget *parent)
 #endif
 
         for (int retry = 0; retry < 10; retry++) {
-//            core_process.setProcessChannelMode(QProcess::ForwardedChannels);
             showLog("Starting nekoray core " + starting_info + "\n");
+            core_process = new QProcess;
+            core_process_show_stderr = false;
+            connect(core_process, &QProcess::readyReadStandardOutput, this,
+                    [&]() {
+                        showLog(core_process->readAllStandardOutput().trimmed());
+                    });
+            connect(core_process, &QProcess::readyReadStandardError, this,
+                    [&]() {
+                        auto log = core_process->readAllStandardError().trimmed();
+                        if (log.contains("token is set")) {
+                            core_process_show_stderr = true;
+                            return;
+                        }
+                        if (core_process_show_stderr) showLog(log);
+                    });
             if (core_path.isEmpty()) break;
             if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
                 core_process->setEnvironment(QStringList{
                         "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir
                 });
             }
-            core_process_show_stderr = false;
             core_process->start(core_path, args);
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
             if (core_process_killed) return;
             runOnUiThread([=] { neko_stop(true); });
             QThread::sleep(2);
+            core_process->deleteLater();
         }
     });
 
