@@ -10,7 +10,7 @@ namespace NekoRay {
         QJsonObject coreConfig;
         QStringList tryDomains;
 
-        QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including direct
+        QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
         QSharedPointer<traffic::TrafficData> outboundStat; // main
 
         QList<sys::ExternalProcess *> ext;
@@ -37,6 +37,8 @@ namespace NekoRay {
         QJsonArray outbounds;
 
         QList<int> globalProfiles;
+
+        ProxyEntity *currentEnt;
     };
 
     QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest);

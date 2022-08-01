@@ -88,7 +88,7 @@ namespace NekoRay {
         } else {
             ents += ent;
         }
-
+        status->currentEnt = ent.get();
         QString tagProxy = BuildChain(0, ents, status);
         if (!result->error.isEmpty()) return result;
 
@@ -450,6 +450,14 @@ namespace NekoRay {
             status->outbounds += outbound;
             pastTag = tagOut;
             index++;
+        }
+
+        // this is a chain
+        if (ents.length() > 1) {
+            // Chain ent traffic stat
+            status->currentEnt->traffic_data->id = status->currentEnt->id;
+            status->currentEnt->traffic_data->tag = chainTag.toStdString();
+            status->result->outboundStats += status->currentEnt->traffic_data;
         }
 
         return chainTag;

@@ -34,12 +34,5 @@ namespace NekoRay::traffic {
             if (downlink + uplink == 0) return "";
             return QString("%1↑ %2↓").arg(ReadableSize(uplink), ReadableSize(downlink));
         }
-
-        void Add(TrafficData *other) {
-            downlink += other->downlink;
-            uplink += other->uplink;
-            downlink_rate += other->downlink_rate;
-            uplink_rate += other->uplink_rate;
-        }
     };
 }

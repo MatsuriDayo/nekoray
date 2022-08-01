@@ -51,7 +51,19 @@ namespace NekoRay::fmt {
             return result;
         }
 
-        result.arguments = command; // TODO ?
+        result.arguments = command; // TODO split?
+
+        for (int i = 0; i < result.arguments.length(); i++) {
+            auto arg = result.arguments[i];
+            if (arg.contains("%mapping_port%")) {
+                arg = arg.replace("%mapping_port%", Int2String(mapping_port));
+            } else if (arg.contains("%socks_port%")) {
+                arg = arg.replace("%socks_port%", Int2String(socks_port));
+            } else {
+                continue;
+            }
+            result.arguments[i] = arg;
+        }
 
         if (!config_simple.trimmed().isEmpty()) {
             auto config = config_simple;

@@ -18,9 +18,11 @@ namespace NekoRay::traffic {
         TrafficData *bypass = new TrafficData("bypass");
         TrafficData *proxy = nullptr;
 
-        static void update(TrafficData *item);
+        static std::unique_ptr<TrafficData> update_stats(TrafficData *item);
 
         static QJsonArray get_connection_list();
+
+        void update_all();
 
         [[noreturn]] void loop();
     };

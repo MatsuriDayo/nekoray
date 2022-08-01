@@ -270,8 +270,8 @@ void MainWindow::neko_stop(bool crash) {
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
     if (NekoRay::dataStore->traffic_loop_interval != 0) {
+        NekoRay::traffic::trafficLooper->update_all();
         for (const auto &item: NekoRay::traffic::trafficLooper->items) {
-            NekoRay::traffic::TrafficLooper::update(item.get());
             NekoRay::profileManager->GetProfile(item->id)->Save();
             refresh_proxy_list(item->id);
         }

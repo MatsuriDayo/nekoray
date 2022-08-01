@@ -9,7 +9,7 @@ namespace NekoRay::traffic {
 
     TrafficLooper *trafficLooper = new TrafficLooper;
 
-    void TrafficLooper::update(TrafficData *item) {
+    std::unique_ptr<TrafficData> TrafficLooper::update_stats(TrafficData *item) {
 #ifndef NKR_NO_GRPC
         auto uplink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "uplink");
         auto downlink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "downlink");
@@ -20,9 +20,17 @@ namespace NekoRay::traffic {
         //?
         item->downlink_rate = downlink * 1000 / dataStore->traffic_loop_interval;
         item->uplink_rate = uplink * 1000 / dataStore->traffic_loop_interval;
-#endif
-    }
 
+        // return diff
+        auto ret = std::make_unique<TrafficData>(item->tag);
+        ret->downlink = downlink;
+        ret->uplink = uplink;
+        ret->downlink_rate = item->downlink_rate;
+        ret->uplink_rate = item->uplink_rate;
+        return ret;
+#endif
+        return nullptr;
+    }
 
     QJsonArray TrafficLooper::get_connection_list() {
 #ifndef NKR_NO_GRPC
@@ -32,6 +40,25 @@ namespace NekoRay::traffic {
 #else
         return QJsonArray{};
 #endif
+    }
+
+    void TrafficLooper::update_all() {
+        std::map<std::string, std::unique_ptr<TrafficData>> updated; // tag to diff
+        for (const auto &item: items) {
+            auto data = item.get();
+            auto diff = std::move(updated[data->tag]);
+            // 避免重复查询一个 outbound tag
+            if (diff == nullptr) {
+                diff = update_stats(data);
+                updated[data->tag] = std::move(diff);
+            } else {
+                data->uplink += diff->uplink;
+                data->downlink += diff->downlink;
+                data->uplink_rate = diff->uplink_rate;
+                data->downlink_rate = diff->downlink_rate;
+            }
+        }
+        update_stats(bypass);
     }
 
     [[noreturn]] void TrafficLooper::loop() {
@@ -62,10 +89,7 @@ namespace NekoRay::traffic {
             // do update
             loop_mutex.lock();
 
-            for (const auto &item: items) {
-                update(item.get());
-            }
-            update(bypass);
+            update_all();
 
             // do conn list update
             QJsonArray conn_list;
@@ -92,4 +116,5 @@ namespace NekoRay::traffic {
             });
         }
     }
+
 }
