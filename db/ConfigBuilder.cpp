@@ -118,7 +118,7 @@ namespace NekoRay {
             QJsonObject dnsOut_settings;
             dnsOut_settings["network"] = "tcp";
             dnsOut_settings["port"] = 53;
-            dnsOut_settings["address"] = "1.0.0.1";
+            dnsOut_settings["address"] = "8.8.8.8";
             dnsOut_settings["userLevel"] = 1;
             dnsOut["settings"] = dnsOut_settings;
 
