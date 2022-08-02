@@ -25,6 +25,10 @@
 
 #endif
 
+#ifdef Q_OS_WIN
+#include "3rdparty/WinCommander.hpp"
+#endif
+
 #include <QClipboard>
 #include <QLabel>
 #include <QTextBlock>
@@ -313,17 +317,20 @@ MainWindow::MainWindow(QWidget *parent)
         NekoRay::dataStore->Save();
     });
     //
-    connect(ui->menu_system_proxy, &QMenu::aboutToShow, this, [=]() {
-        if (NekoRay::dataStore->system_proxy) {
-            ui->menu_system_proxy_enabled->setChecked(true);
-            ui->menu_system_proxy_disabled->setChecked(false);
-        } else {
-            ui->menu_system_proxy_enabled->setChecked(false);
-            ui->menu_system_proxy_disabled->setChecked(true);
-        }
+    connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) {
+        neko_set_spmode(checked ? NekoRay::SystemProxyMode::VPN : NekoRay::SystemProxyMode::DISABLE);
     });
-    connect(ui->menu_system_proxy_enabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(true); });
-    connect(ui->menu_system_proxy_disabled, &QAction::triggered, this, [=]() { neko_set_system_proxy(false); });
+    connect(ui->menu_spmode, &QMenu::aboutToShow, this, [=]() {
+        ui->menu_spmode_disabled->setChecked(title_spmode == NekoRay::SystemProxyMode::DISABLE);
+        ui->menu_spmode_system_proxy->setChecked(title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
+        ui->menu_spmode_vpn->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
+    });
+    connect(ui->menu_spmode_system_proxy, &QAction::triggered, this,
+            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::SYSTEM_PROXY); });
+    connect(ui->menu_spmode_vpn, &QAction::triggered, this,
+            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::VPN); });
+    connect(ui->menu_spmode_disabled, &QAction::triggered, this,
+            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::DISABLE); });
     connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
     connect(ui->menu_qr_nkr, &QAction::triggered, this, [=]() { display_qr_link(true); });
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0); });
@@ -339,22 +346,10 @@ MainWindow::MainWindow(QWidget *parent)
     runOnNewThread([=]() {
         QString starting_info;
 
-#ifndef Q_OS_WIN
-        auto core_path = NekoRay::dataStore->core_cap_path;
-        if (QFile(core_path).exists()) {
-            starting_info = "with cap_net_admin";
-        } else {
-            starting_info = "as normal user";
-            core_path = NekoRay::dataStore->core_path;
-            if (!QFile(core_path).exists()) {
-                core_path = QApplication::applicationDirPath() + "/nekoray_core";
-            }
-        }
-#else
         auto core_path = NekoRay::dataStore->core_path;
+#ifdef Q_OS_WIN
         if (!core_path.endsWith(".exe")) core_path += ".exe";
 #endif
-
         if (!QFile(core_path).exists()) {
             starting_info = "(not found)";
             core_path = "";
@@ -405,7 +400,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Start last
     if (NekoRay::dataStore->remember_enable) {
-        neko_set_system_proxy(NekoRay::dataStore->system_proxy);
+        if (NekoRay::dataStore->system_proxy_mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+            neko_set_spmode(NekoRay::dataStore->system_proxy_mode, false);
+        }
         if (NekoRay::dataStore->remember_id >= 0) {
             runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
         }
@@ -449,7 +446,7 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
 void MainWindow::show_group(int gid) {
     auto group = NekoRay::profileManager->GetGroup(gid);
     if (group == nullptr) {
-        MessageBoxWarning("Error", QString("No such group: %1").arg(gid));
+        MessageBoxWarning(tr("Error"), QString("No such group: %1").arg(gid));
         return;
     }
     if (NekoRay::dataStore->current_group != gid) {
@@ -524,10 +521,9 @@ void MainWindow::on_menu_hotkey_settings_triggered() {
 }
 
 void MainWindow::on_menu_exit_triggered() {
-#ifndef NKR_NO_EXTERNAL
-    ClearSystemProxy();
+    neko_set_spmode(NekoRay::SystemProxyMode::DISABLE, false);
+    if (title_spmode == NekoRay::SystemProxyMode::VPN) return;
     RegisterHotkey(true);
-#endif
 
     if (!isMaximized()) {
         auto olds = NekoRay::dataStore->mw_size;
@@ -586,12 +582,17 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     if (select_mode) {
         ui->label_running->setText("[" + tr("Select") + "]");
     }
+    ui->checkBox_VPN->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
-        if (!title_system_proxy.isEmpty()) tt << "[" + title_system_proxy + "]";
+        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+            tt << "[" + tr("System Proxy") + "]";
+        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+            tt << "[" + tr("VPN Mode") + "]";
+        }
         tt << title_base;
         if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
         if (!NekoRay::dataStore->active_routing.isEmpty() && NekoRay::dataStore->active_routing != "Default") {
@@ -1060,11 +1061,9 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
     return map;
 }
 
-// 按键
-
-void MainWindow::neko_set_system_proxy(bool enable) {
+void MainWindow::neko_set_spmode(int mode, bool save) {
 #ifdef Q_OS_WIN
-    if (enable && !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
+    if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
         auto btn = QMessageBox::warning(this, "NekoRay", tr("Http inbound is not enabled, can't set system proxy."),
                                         "OK", tr("Settings"), "", 0, 0);
         if (btn == 1) {
@@ -1073,19 +1072,37 @@ void MainWindow::neko_set_system_proxy(bool enable) {
         return;
     }
 #endif
-    NekoRay::dataStore->system_proxy = enable;
-    NekoRay::dataStore->Save();
+
+    if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
 #ifndef NKR_NO_EXTERNAL
-    if (enable) {
         SetSystemProxy("127.0.0.1",
                        NekoRay::dataStore->inbound_http_port,
                        NekoRay::dataStore->inbound_socks_port);
-        title_system_proxy = tr("System Proxy");
-    } else {
-        ClearSystemProxy();
-        title_system_proxy = "";
-    }
 #endif
+    } else if (mode == NekoRay::SystemProxyMode::VPN) {
+        if (!RunVPNProcess()) {
+            refresh_status();
+            return;
+        }
+    } else {
+        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+#ifndef NKR_NO_EXTERNAL
+            ClearSystemProxy();
+#endif
+        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+            if (!StopVPNProcess()) {
+                refresh_status();
+                return;
+            }
+        }
+    }
+
+    if (save) {
+        NekoRay::dataStore->system_proxy_mode = mode;
+        NekoRay::dataStore->Save();
+    }
+    title_spmode = mode;
+    refresh_status();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -1294,3 +1311,81 @@ void MainWindow::RegisterHotkey(bool unregister) {}
 void MainWindow::HotkeyEvent(const QString &key) {}
 
 #endif
+
+// VPN Launcher
+
+//inline QString mshta_exec_uac = R"(vbscript:CreateObject("Shell.Application").ShellExecute("%1","%2","","runas",1)(window.close))";
+
+bool MainWindow::RunVPNProcess() {
+    //
+    if (vpn_pid != 0) {
+        return true;
+    }
+#ifdef Q_OS_WIN
+    auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
+    auto config = ReadFileText(configFn).replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
+#else
+    auto configFn = ":/nekoray/vpn/vpn-run-root.sh";
+    auto config = ReadFileText(configFn)
+            .replace("$PORT", Int2String(NekoRay::dataStore->inbound_socks_port))
+            .replace("./tun2socks", QApplication::applicationDirPath() + "/tun2socks")
+            .replace("$PROTECT_LISTEN_PATH", QDir::currentPath() + "/protect")
+            .replace("$PROTECT_FWMARK", "514");
+#endif
+    //
+    QFile file;
+    file.setFileName(QFileInfo(configFn).fileName());
+    file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+    file.write(config.toUtf8());
+    file.close();
+    auto config_path = QFileInfo(file).absoluteFilePath();
+    //
+#ifdef Q_OS_WIN
+    runOnNewThread([=] {
+        vpn_pid = 1; //TODO get pid?
+        WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/sing-box.exe",
+                                         {"run", "-c", config_path}); // blocking
+        vpn_pid = 0;
+        runOnUiThread([=] {
+            neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
+        });
+    });
+#else
+    auto vpn_process = new QProcess;
+    QProcess::connect(vpn_process, &QProcess::stateChanged, mainwindow, [=](QProcess::ProcessState state) {
+        if (state == QProcess::NotRunning) {
+            vpn_pid = 0;
+            vpn_process->deleteLater();
+            GetMainWindow()->neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
+        }
+    });
+    vpn_process->setWorkingDirectory(QDir::currentPath());
+    vpn_process->setProcessChannelMode(QProcess::ForwardedChannels);
+    vpn_process->start("pkexec", {"bash", config_path});
+    vpn_process->waitForStarted();
+    vpn_pid = vpn_process->processId();
+#endif
+    return true;
+}
+
+bool MainWindow::StopVPNProcess() {
+    if (vpn_pid != 0) {
+        bool ok;
+#ifdef Q_OS_WIN
+        auto ret = WinCommander::runProcessElevated("taskkill", {"/IM", "sing-box.exe"});
+        ok = ret == 0;
+#else
+        QProcess p;
+        p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+        p.waitForFinished();
+        ok = p.exitCode() == 0;
+#endif
+        if (ok) {
+            vpn_pid = 0;
+        } else {
+            MessageBoxWarning(tr("Error"), tr("Failed to stop VPN process"));
+        }
+        return ok;
+    }
+    return true;
+}

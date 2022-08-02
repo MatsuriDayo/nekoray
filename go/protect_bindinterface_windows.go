@@ -12,35 +12,33 @@ import (
 )
 
 func init() {
-	setupCore_platforms = append(setupCore_platforms, func() {
-		internet.RegisterListenerController(func(network, address string, fd uintptr) error {
-			bindInterfaceIndex := getBindInterfaceIndex()
-			if bindInterfaceIndex != 0 {
-				if err := bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
-					log.Println("bind inbound interface", err)
-					return err
-				}
+	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
+		bindInterfaceIndex := getBindInterfaceIndex()
+		if bindInterfaceIndex != 0 {
+			if err := bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
+				log.Println("bind inbound interface", err)
+				return err
 			}
-			return nil
-		})
-		internet.RegisterDialerController(func(network, address string, fd uintptr) error {
-			bindInterfaceIndex := getBindInterfaceIndex()
-			if bindInterfaceIndex != 0 {
-				var v4, v6 bool
-				if strings.HasSuffix(network, "6") {
-					v4 = false
-					v6 = true
-				} else {
-					v4 = true
-					v6 = false
-				}
-				if err := bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
-					log.Println("bind outbound interface", err)
-					return err
-				}
+		}
+		return nil
+	})
+	internet.RegisterDialerController(func(network, address string, fd uintptr) error {
+		bindInterfaceIndex := getBindInterfaceIndex()
+		if bindInterfaceIndex != 0 {
+			var v4, v6 bool
+			if strings.HasSuffix(network, "6") {
+				v4 = false
+				v6 = true
+			} else {
+				v4 = true
+				v6 = false
 			}
-			return nil
-		})
+			if err := bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
+				log.Println("bind outbound interface", err)
+				return err
+			}
+		}
+		return nil
 	})
 }
 
@@ -49,9 +47,8 @@ func getBindInterfaceIndex() uint32 {
 	if err != nil {
 		return 0
 	}
-	// TODO hardcoded tun name "wintun"
 	if len(intfs) > 1 {
-		if intfs[0].Name == "wintun" || intfs[0].Name == "TunMax" {
+		if intfs[0].Name == "nekoray-tun" || intfs[0].Name == "wintun" || intfs[0].Name == "TunMax" {
 			return uint32(intfs[1].Index)
 		}
 	}

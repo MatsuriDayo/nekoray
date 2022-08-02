@@ -19,16 +19,11 @@ import (
 )
 
 var instance *libcore.V2RayInstance
-var setupCore_platforms = make([]func(), 0)
 
 func setupCore() {
 	device.IsNekoray = true
 	libcore.SetConfig("", false, true)
 	libcore.InitCore("", "", "", nil, ".", "moe.nekoray.pc:bg", true, 50)
-
-	for _, f := range setupCore_platforms {
-		f()
-	}
 }
 
 func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.ErrorResp, _ error) {

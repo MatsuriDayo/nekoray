@@ -15,5 +15,14 @@ namespace NekoRay {
             FOR_DESTINATION,
         };
     }
+
+    namespace SystemProxyMode {
+        enum SystemProxyMode {
+            DISABLE,
+            SYSTEM_PROXY,
+            VPN,
+        };
+    }
+
 }
 

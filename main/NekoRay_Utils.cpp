@@ -9,6 +9,7 @@
 #include <QTcpServer>
 #include <QTimer>
 #include <QMessageBox>
+#include <QFile>
 
 QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def) {
     auto a = q.queryItemValue(key);
@@ -34,6 +35,18 @@ QString GetRandomString(int randomStringLength) {
     return randomString;
 }
 
+QByteArray ReadFile(const QString &path) {
+    QFile file(path);
+    file.open(QFile::ReadOnly);
+    return file.readAll();
+}
+
+QString ReadFileText(const QString &path) {
+    QFile file(path);
+    file.open(QFile::ReadOnly | QFile::Text);
+    QTextStream stream(&file);
+    return stream.readAll();
+}
 
 int MkPort() {
     QTcpServer s;

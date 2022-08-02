@@ -1,10 +1,10 @@
 #include "ThemeManager.hpp"
 
 #include <QStyleFactory>
-#include <QFile>
-#include <QTextStream>
 
 ThemeManager *themeManager = new ThemeManager;
+
+extern QString ReadFileText(const QString &path);
 
 void ThemeManager::ApplyTheme(const QString &theme) {
     auto internal = [=] {
@@ -41,11 +41,7 @@ void ThemeManager::ApplyTheme(const QString &theme) {
                     default:
                         return;
                 }
-
-                QFile file(path);
-                file.open(QFile::ReadOnly | QFile::Text);
-                QTextStream stream(&file);
-                qss = stream.readAll();
+                qss = ReadFileText(path);
                 for (auto const &[a, b]: replace) {
                     qss = qss.replace(a, b);
                 }
@@ -83,8 +79,6 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     };
     internal();
 
-    QFile file(":nekoray/nekoray.css");
-    file.open(QFile::ReadOnly | QFile::Text);
-    QTextStream stream(&file);
-    qApp->setStyleSheet(qApp->styleSheet().append("\n").append(stream.readAll()));
+    auto nekoray_css = ReadFileText(":nekoray/nekoray.css");
+    qApp->setStyleSheet(qApp->styleSheet().append("\n").append(nekoray_css));
 }

@@ -121,6 +121,10 @@ namespace NekoRay {
             dnsOut_settings["address"] = "8.8.8.8";
             dnsOut_settings["userLevel"] = 1;
             dnsOut["settings"] = dnsOut_settings;
+            dnsOut["proxySettings"] = QJsonObject{
+                    {"tag",            tagProxy},
+                    {"transportLayer", true}
+            };
 
             status->outbounds += dnsOut;
             status->routingRules += QJsonObject{

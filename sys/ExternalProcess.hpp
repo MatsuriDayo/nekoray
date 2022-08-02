@@ -12,6 +12,9 @@ namespace NekoRay::sys {
         QStringList arguments;
         QStringList env;
 
+        bool show_log = true;
+        QList<ExternalProcess *> *running_list;
+
         ExternalProcess(const QString &tag,
                         const QString &program,
                         const QStringList &arguments,

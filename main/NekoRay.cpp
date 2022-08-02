@@ -13,7 +13,6 @@ namespace NekoRay {
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
 
         _add(new configItem("core_path", &core_path, itemType::string));
-        _add(new configItem("core_cap_path", &core_cap_path, itemType::string));
         _add(new configItem("user_agent", &user_agent, itemType::string));
         _add(new configItem("test_url", &test_url, itemType::string));
         _add(new configItem("current_group", &current_group, itemType::integer));
@@ -41,7 +40,7 @@ namespace NekoRay {
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
         _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
-        _add(new configItem("system_proxy", &system_proxy, itemType::boolean));
+        _add(new configItem("spmode", &system_proxy_mode, itemType::integer));
         _add(new configItem("insecure_hint", &insecure_hint, itemType::boolean));
         _add(new configItem("skip_cert", &skip_cert, itemType::boolean));
         _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));

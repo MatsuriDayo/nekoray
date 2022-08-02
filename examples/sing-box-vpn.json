@@ -1,0 +1,43 @@
+{
+    "dns": {
+        "servers": [],
+        "rules": [],
+        "strategy": "ipv4_only"
+    },
+    "inbounds": [
+        {
+            "type": "tun",
+            "interface_name": "nekoray-tun",
+            "inet4_address": "172.19.0.1/30",
+            "auto_route": true,
+            "sniff": false
+        }
+    ],
+    "outbounds": [
+        {
+            "type": "socks",
+            "tag": "nekoray-socks",
+            "server": "127.0.0.1",
+            "server_port": %PORT%
+        },
+        {
+            "type": "block",
+            "tag": "block"
+        }
+    ],
+    "route": {
+        "rules": [
+            {
+                "network": "udp",
+                "port": [
+                    135,
+                    137,
+                    138,
+                    139,
+                    5353
+                ],
+                "outbound": "block"
+            }
+        ]
+    }
+}

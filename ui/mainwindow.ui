@@ -162,6 +162,19 @@
        </widget>
       </item>
       <item>
+       <widget class="QCheckBox" name="checkBox_VPN">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="text">
+         <string>VPN Mode</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <spacer name="horizontalSpacer">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
@@ -442,12 +455,13 @@
     <property name="title">
      <string>Program</string>
     </property>
-    <widget class="QMenu" name="menu_system_proxy">
+    <widget class="QMenu" name="menu_spmode">
      <property name="title">
       <string>System Proxy</string>
      </property>
-     <addaction name="menu_system_proxy_enabled"/>
-     <addaction name="menu_system_proxy_disabled"/>
+     <addaction name="menu_spmode_system_proxy"/>
+     <addaction name="menu_spmode_vpn"/>
+     <addaction name="menu_spmode_disabled"/>
     </widget>
     <widget class="QMenu" name="menu_program_preference">
      <property name="title">
@@ -475,7 +489,7 @@
     <addaction name="actionRemember_last_proxy"/>
     <addaction name="menuActive_Server"/>
     <addaction name="menuActive_Routing"/>
-    <addaction name="menu_system_proxy"/>
+    <addaction name="menu_spmode"/>
     <addaction name="menu_program_preference"/>
     <addaction name="separator"/>
     <addaction name="menu_exit"/>
@@ -631,7 +645,7 @@
     <string>Scan QR Code</string>
    </property>
   </action>
-  <action name="menu_system_proxy_enabled">
+  <action name="menu_spmode_system_proxy">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -639,7 +653,7 @@
     <string>Enable</string>
    </property>
   </action>
-  <action name="menu_system_proxy_disabled">
+  <action name="menu_spmode_disabled">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -733,6 +747,14 @@
   <action name="menu_copy_links">
    <property name="text">
     <string>Copy links of selected</string>
+   </property>
+  </action>
+  <action name="menu_spmode_vpn">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string notr="true">VPN</string>
    </property>
   </action>
  </widget>

@@ -1014,6 +1014,14 @@ End: %2</source>
         <source>Select All</source>
         <translation>全选</translation>
     </message>
+    <message>
+        <source>VPN Mode</source>
+        <translation>VPN 模式</translation>
+    </message>
+    <message>
+        <source>Failed to stop VPN process</source>
+        <translation>停止 VPN 失败</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

@@ -92,6 +92,10 @@ inline QStringList SplitLines(const QString &_string) {
     return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
 }
 
+QByteArray ReadFile(const QString &path);
+
+QString ReadFileText(const QString &path);
+
 // Net
 
 int MkPort();

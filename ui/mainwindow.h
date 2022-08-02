@@ -42,7 +42,7 @@ public:
 
     void neko_stop(bool crash = false);
 
-    void neko_set_system_proxy(bool enable);
+    void neko_set_spmode(int mode, bool save = true);
 
     void show_log_impl(const QString &log);
 
@@ -119,14 +119,15 @@ private:
     //
     bool core_process_killed = false;
     bool core_process_show_stderr = false;
-    QProcess *core_process;
+    QProcess *core_process = nullptr;
+    int vpn_pid = 0;
     //
     bool qvLogAutoScoll = true;
     QTextDocument *qvLogDocument = new QTextDocument(this);
     //
     QString title_base;
     QString title_error;
-    QString title_system_proxy;
+    int title_spmode = NekoRay::SystemProxyMode::DISABLE;
     QSharedPointer<NekoRay::ProxyEntity> running;
     QString traffic_update_cache;
     QTime last_test_time;
@@ -153,6 +154,10 @@ private:
     void setupGRPC();
 
     void CheckUpdate();
+
+    bool RunVPNProcess();
+
+    bool StopVPNProcess();
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

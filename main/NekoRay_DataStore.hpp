@@ -46,7 +46,6 @@ namespace NekoRay {
 
         // Misc
         QString core_path = "../nekoray_core";
-        QString core_cap_path = "../nekoray_core_cap";
         QString log_level = "warning";
         QString user_agent = "ClashForAndroid/2.5.9.premium";
         bool sub_use_proxy = false;
@@ -66,7 +65,7 @@ namespace NekoRay {
         bool skip_cert = false;
 
         // Remember
-        bool system_proxy = false;
+        int system_proxy_mode = NekoRay::SystemProxyMode::DISABLE;
         int remember_id = -1919;
         bool remember_enable = false;
         bool start_minimal = false;

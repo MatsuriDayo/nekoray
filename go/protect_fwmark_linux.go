@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"libcore/protect"
 	"log"
 	"strings"
@@ -24,20 +25,53 @@ func (f *fwmarkProtector) Protect(fd int32) bool {
 			cap_net_admin = -1
 		}
 	}
-	if cap_net_admin != 1 {
-		//  no permission to set sockopt
-		return true
-	}
 
-	// find bypass rule
-	// TODO hardcoded fwmark 514
+	// check is in VPN mode
 	if is_fwmark_exist(514) {
-		if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, 514); err != nil {
-			log.Println("syscall.SetsockoptInt:", err.Error())
-			return false
+		if cap_net_admin == 1 {
+			if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, 514); err != nil {
+				log.Println("syscall.SetsockoptInt:", err)
+				return false
+			}
+		} else {
+			if err := cmsgProtect(int(fd), "./protect"); err != nil {
+				log.Println("cmsgProtect:", err)
+				return false
+			}
 		}
 	}
 	return true
+}
+
+func cmsgProtect(fd int, unixPath string) error {
+	socket, err := syscall.Socket(syscall.AF_UNIX, syscall.SOCK_STREAM, 0)
+	if err != nil {
+		return err
+	}
+	defer syscall.Close(socket)
+
+	syscall.SetsockoptTimeval(socket, syscall.SOL_SOCKET, syscall.SO_RCVTIMEO, &syscall.Timeval{Sec: 3})
+	syscall.SetsockoptTimeval(socket, syscall.SOL_SOCKET, syscall.SO_SNDTIMEO, &syscall.Timeval{Sec: 3})
+
+	err = syscall.Connect(socket, &syscall.SockaddrUnix{Name: unixPath})
+	if err != nil {
+		return err
+	}
+
+	err = syscall.Sendmsg(socket, nil, syscall.UnixRights(fd), nil, 0)
+	if err != nil {
+		return err
+	}
+
+	dummy := []byte{1}
+	n, err := syscall.Read(socket, dummy)
+	if err != nil {
+		return err
+	}
+	if n != 1 {
+		return fmt.Errorf("cmsgProtect protect failed")
+	}
+	return nil
 }
 
 func is_fwmark_exist(number int) bool {
@@ -67,7 +101,5 @@ func is_fwmark_exist(number int) bool {
 }
 
 func init() {
-	setupCore_platforms = append(setupCore_platforms, func() {
-		protect.FdProtector = &fwmarkProtector{}
-	})
+	protect.FdProtector = &fwmarkProtector{}
 }
