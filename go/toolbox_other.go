@@ -2,8 +2,5 @@
 
 package main
 
-import "flag"
-
-func ToolBox(tool []string) {
-	flag.Parse()
+func ToolBox() {
 }

@@ -3,15 +3,23 @@ package main
 import (
 	"flag"
 	"log"
+	"nekoray_core/protect_server"
+	"os"
 
 	"github.com/jsimonetti/rtnetlink"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"
 )
 
-func ToolBox(tool []string) {
-	flag.Parse()
-
-	switch tool[0] {
+func ToolBox() {
+	//
+	var protectListenPath string
+	var protectFwMark int
+	//
+	flag.StringVar(&protectListenPath, "protect-listen-path", "", "Set unix protect server listen path (Linux ROOT only)")
+	flag.IntVar(&protectFwMark, "protect-fwmark", 0, "Set unix protect fwmark (Linux ROOT only)")
+	flag.CommandLine.Parse(os.Args[3:])
+	//
+	switch os.Args[2] {
 	case "rule":
 		{
 			// Dial a connection to the rtnetlink socket
@@ -45,6 +53,15 @@ func ToolBox(tool []string) {
 			if set != nil {
 				log.Println(set)
 			}
+		}
+	case "protect":
+		{
+			if protectListenPath == "" {
+				log.Println("missing protect-listen-path")
+				return
+			}
+			log.Println(protectListenPath, protectFwMark)
+			protect_server.ServeProtect(protectListenPath, protectFwMark)
 		}
 	}
 }

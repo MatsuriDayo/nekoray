@@ -650,7 +650,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Enable</string>
+    <string>Enable System Proxy</string>
    </property>
   </action>
   <action name="menu_spmode_disabled">
@@ -754,7 +754,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string notr="true">VPN</string>
+    <string>Enable VPN</string>
    </property>
   </action>
  </widget>

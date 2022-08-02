@@ -761,10 +761,6 @@
         <translation>扫描 QR Code</translation>
     </message>
     <message>
-        <source>Enable</source>
-        <translation>启用</translation>
-    </message>
-    <message>
         <source>Disable</source>
         <translation>禁用</translation>
     </message>
@@ -1021,6 +1017,14 @@ End: %2</source>
     <message>
         <source>Failed to stop VPN process</source>
         <translation>停止 VPN 失败</translation>
+    </message>
+    <message>
+        <source>Enable System Proxy</source>
+        <translation>启用系统代理</translation>
+    </message>
+    <message>
+        <source>Enable VPN</source>
+        <translation>启用 VPN</translation>
     </message>
 </context>
 <context>

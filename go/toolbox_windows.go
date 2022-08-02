@@ -3,10 +3,11 @@ package main
 import (
 	"log"
 	"net"
+	"os"
 )
 
-func ToolBox(tool []string) {
-	switch tool[0] {
+func ToolBox() {
+	switch os.Args[2] {
 	case "if":
 		{
 			intfs, err := net.Interfaces()

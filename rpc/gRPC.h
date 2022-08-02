@@ -24,7 +24,9 @@ namespace NekoRay::rpc {
 
         // QString returns is error string
 
-        QString Start(bool *rpcOK, const QString &coreConfig, const QStringList &tryDomains);
+        QString Start(bool *rpcOK, const libcore::LoadConfigReq &request);
+
+        QString SetTun(bool *rpcOK, const libcore::SetTunReq &request);
 
         QString Stop(bool *rpcOK);
 

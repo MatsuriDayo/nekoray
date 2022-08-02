@@ -230,16 +230,17 @@ void MainWindow::neko_start(int _id) {
     if (!insecure_hint.isEmpty()) show_log_impl(">>>>>>>> " + tr("Profile is insecure: %1").arg(insecure_hint));
 
 #ifndef NKR_NO_GRPC
+    libcore::LoadConfigReq req;
+    req.set_coreconfig(QJsonObject2QString(result->coreConfig, true).toStdString());
+    req.set_trydomains(result->tryDomains.join(",").toStdString());
+    //
     bool rpcOK;
-    QString error = defaultClient->Start(&rpcOK,
-                                         QJsonObject2QString(result->coreConfig, true),
-                                         result->tryDomains
-    );
+    QString error = defaultClient->Start(&rpcOK, req);
     if (rpcOK && !error.isEmpty()) {
         MessageBoxWarning("LoadConfig return error", error);
         return;
     }
-
+    //
     NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
     NekoRay::traffic::trafficLooper->items = result->outboundStats;
     NekoRay::traffic::trafficLooper->loop_enabled = true;
@@ -354,4 +355,30 @@ void MainWindow::CheckUpdate() {
         }
     });
 #endif
+}
+
+bool MainWindow::Tun2rayStartStop(bool start) {
+#ifndef NKR_NO_GRPC
+    // For Linux only currently (check in go)
+    bool ok;
+    if (start) {
+        libcore::SetTunReq req;
+        req.set_name("nekoray-tun");
+        req.set_mtu(1500);
+        req.set_implementation(0);
+        req.set_fakedns(NekoRay::dataStore->fake_dns);
+        auto error = defaultClient->SetTun(&ok, req);
+        if (!ok) return false;
+        if (!error.isEmpty()) {
+            MessageBoxWarning("Error", "Failed to start Tun2ray: " + error);
+            return false;
+        }
+    } else {
+        libcore::SetTunReq req;
+        req.set_implementation(-1);
+        defaultClient->SetTun(&ok, req);
+        if (!ok) return false;
+    }
+#endif
+    return true;
 }

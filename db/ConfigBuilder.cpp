@@ -133,6 +133,11 @@ namespace NekoRay {
                     {"inboundTag",  QJsonArray{"socks-in", "http-in"}},
                     {"outboundTag", "dns-out"},
             };
+            status->routingRules += QJsonObject{
+                    {"type",        "field"},
+                    {"inboundTag",  QJsonArray{"dns-in"}},
+                    {"outboundTag", "dns-out"},
+            };
         }
 
         // custom inbound

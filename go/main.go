@@ -27,7 +27,7 @@ func main() {
 
 	// toolbox
 	if len(os.Args) > 1 && os.Args[1] == "tool" {
-		ToolBox(os.Args[2:])
+		ToolBox()
 		return
 	}
 

@@ -9,6 +9,7 @@ service LibcoreService {
   rpc Update(UpdateReq) returns (UpdateResp) {}
   //
   rpc Start(LoadConfigReq) returns (ErrorResp) {}
+  rpc SetTun(SetTunReq) returns (ErrorResp) {}
   rpc Stop(EmptyReq) returns (ErrorResp) {}
   rpc Test(TestReq) returns (TestResp) {}
   rpc QueryStats(QueryStatsReq) returns (QueryStatsResp) {}
@@ -26,6 +27,13 @@ message ErrorResp {
 message LoadConfigReq {
   string coreConfig = 1;
   string tryDomains = 2;
+}
+
+message SetTunReq {
+  string name = 1;
+  int32 mtu = 2;
+  int32 implementation = 3;
+  bool fakedns = 4;
 }
 
 enum TestMode {

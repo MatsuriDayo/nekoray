@@ -181,13 +181,22 @@ namespace NekoRay::rpc {
         grpc_channel->Call("Exit", request, &reply, 500);
     }
 
-    QString Client::Start(bool *rpcOK, const QString &coreConfig, const QStringList &tryDomains) {
-        libcore::LoadConfigReq request;
-        request.set_coreconfig(coreConfig.toStdString());
-        request.set_trydomains(tryDomains.join(",").toStdString());
-
+    QString Client::Start(bool *rpcOK, const libcore::LoadConfigReq &request) {
         libcore::ErrorResp reply;
         auto status = grpc_channel->Call("Start", request, &reply);
+
+        if (status == QNetworkReply::NoError) {
+            *rpcOK = true;
+            return {reply.error().c_str()};
+        } else {
+            NOT_OK
+            return "";
+        }
+    }
+
+    QString Client::SetTun(bool *rpcOK, const libcore::SetTunReq &request) {
+        libcore::ErrorResp reply;
+        auto status = grpc_channel->Call("SetTun", request, &reply);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;

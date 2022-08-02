@@ -120,7 +120,7 @@ private:
     bool core_process_killed = false;
     bool core_process_show_stderr = false;
     QProcess *core_process = nullptr;
-    int vpn_pid = 0;
+    qint64 vpn_pid = 0;
     //
     bool qvLogAutoScoll = true;
     QTextDocument *qvLogDocument = new QTextDocument(this);
@@ -155,9 +155,11 @@ private:
 
     void CheckUpdate();
 
-    bool RunVPNProcess();
+    bool StartVPNProcess();
 
     bool StopVPNProcess();
+
+    bool Tun2rayStartStop(bool start);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

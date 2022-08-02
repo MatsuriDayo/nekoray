@@ -39,11 +39,11 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 	}()
 
 	if nekoray_debug {
-		logrus.Println("Start:", in.CoreConfig)
+		logrus.Println("Start:", in)
 	}
 
 	if instance != nil {
-		err = errors.New("Already started...")
+		err = errors.New("instance already started")
 		return
 	}
 
@@ -61,6 +61,28 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		return
 	}
 
+	TunSetV2ray(instance)
+
+	return
+}
+
+func (s *server) SetTun(ctx context.Context, in *gen.SetTunReq) (out *gen.ErrorResp, _ error) {
+	var err error
+
+	// only error use this
+	defer func() {
+		out = &gen.ErrorResp{}
+		if err != nil {
+			out.Error = err.Error()
+		}
+	}()
+
+	if in.Implementation >= 0 { //Start
+		err = TunStart(in)
+	} else { //Stop
+		TunStop()
+	}
+
 	return
 }
 
@@ -75,10 +97,14 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 		}
 	}()
 
-	if instance != nil {
-		err = instance.Close()
-		instance = nil
+	if instance == nil {
+		return
 	}
+
+	TunSetV2ray(nil)
+
+	err = instance.Close()
+	instance = nil
 
 	return
 }
