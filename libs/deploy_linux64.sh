@@ -6,10 +6,10 @@ source libs/deploy_common.sh
 #### updater to launcher ####
 mv $DEST/updater $DEST/launcher
 
-#### copy exe ####
-cp build/nekoray $DEST
+#### copy binary ####
+cp $BUILD/nekoray $DEST
 
-#### prebuilt runtime ####
+#### Download: prebuilt runtime ####
 curl -Lso usr.zip https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/20220705-5.15.2-linux64.zip
 unzip usr.zip
 mv usr $DEST
@@ -21,4 +21,4 @@ LIB=$SRC_ROOT/libs/deps/built/lib
 #### pack tar ####
 chmod +x $DEST/nekoray $DEST/nekoray_core $DEST/launcher
 tar cvzf $SRC_ROOT/deployment/$version_standalone-linux64.tar.gz -C $SRC_ROOT/deployment nekoray
-rm -rf $DEST
+rm -rf $DEST $BUILD
