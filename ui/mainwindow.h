@@ -14,6 +14,8 @@
 #include "db/Group.hpp"
 #include "main/GuiUtils.hpp"
 
+class QFileSystemWatcher;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
@@ -121,6 +123,7 @@ private:
     bool core_process_show_stderr = false;
     QProcess *core_process = nullptr;
     qint64 vpn_pid = 0;
+    QFileSystemWatcher *watcher = nullptr;
     //
     bool qvLogAutoScoll = true;
     QTextDocument *qvLogDocument = new QTextDocument(this);

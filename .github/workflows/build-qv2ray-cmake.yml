@@ -70,7 +70,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           stable: false
-          go-version: 1.18.4
+          go-version: 1.18.5
       # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Cache Download
         id: cache-deps

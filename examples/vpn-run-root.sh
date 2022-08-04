@@ -34,6 +34,11 @@ start() {
   ip rule add fwmark $TABLE_FWMARK table main || return
   ip -6 rule add fwmark $TABLE_FWMARK table main || return
 
+  # set bypass: LAN
+  for local in $BYPASS_IPS; do
+    ip rule add to $local table main
+  done
+
   if [ ! -z $USE_NEKORAY ]; then
     "./nekoray_core" tool protect --protect-listen-path "$PROTECT_LISTEN_PATH" --protect-fwmark $TABLE_FWMARK
   else
@@ -47,6 +52,9 @@ start() {
 }
 
 stop() {
+  for local in $BYPASS_IPS; do
+    ip rule del to $local table main
+  done
   ip rule del table $TABLE_FWMARK
   ip rule del fwmark $TABLE_FWMARK
   ip route del table $TABLE_FWMARK default

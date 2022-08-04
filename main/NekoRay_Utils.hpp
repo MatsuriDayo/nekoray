@@ -44,6 +44,10 @@ inline QString Int2String(int i) {
     return QVariant(i).toString();
 }
 
+inline QString Int2String(qint64 i) {
+    return QVariant(i).toString();
+}
+
 QString GetRandomString(int randomStringLength);
 
 // QString >> QJson

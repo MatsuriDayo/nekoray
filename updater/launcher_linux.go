@@ -9,42 +9,54 @@ import (
 	"runtime"
 )
 
+var local_qt_theme bool
+
 func Launcher() {
 	log.Println("Running as launcher")
-
-	_debug := flag.Bool("debug", false, "debug")
-	flag.Parse()
-
 	wd, _ := filepath.Abs(".")
 
+	_debug := flag.Bool("debug", false, "Debug mode")
+	flag.BoolVar(&local_qt_theme, "theme", false, "Use local QT theme (unstable)")
+	flag.Parse()
+
 	// Find & symlink some Qt Plugin to enable system theme
-	tryLink("styles")
-	tryLink("platformthemes")
+	tryLinkQtPlugin("styles", !local_qt_theme)
+	tryLinkQtPlugin("platformthemes", !local_qt_theme)
 
-	// updater
-	exec.Command("sh", "-c", "ln -sf launcher updater").Run()
-
-	cmd := exec.Command("./nekoray")
+	cmd := exec.Command("./nekoray", flag.Args()...)
 	cmd.Env = os.Environ()
-	cmd.Env = append(cmd.Env, "LD_LIBRARY_PATH="+filepath.Join(wd, "./usr/lib"))
+	ld_env := "LD_LIBRARY_PATH=" + filepath.Join(wd, "./usr/lib")
+	cmd.Env = append(cmd.Env, ld_env)
+	log.Println(ld_env, cmd)
 
 	if *_debug {
 		cmd.Env = append(cmd.Env, "QT_DEBUG_PLUGINS=1")
+		cmd.Stdin = os.Stdin
+		cmd.Stderr = os.Stderr
+		cmd.Stdout = os.Stdout
 		cmd.Run()
 	} else {
 		cmd.Start()
 	}
 }
 
-func tryLink(sub string) {
-	wd_plugins := filepath.Join("./usr/plugins", sub)
+func tryLinkQtPlugin(sub string, remove bool) {
+	wd_plugins_sub := filepath.Join("./usr/plugins", sub)
 
-	arch := "x86_64"
-	if runtime.GOARCH == "arm64" {
-		arch = "aarch64"
-	}
+	if Exist(wd_plugins_sub) {
+		if remove {
+			os.RemoveAll(wd_plugins_sub)
+		}
+	} else {
+		if remove {
+			return
+		}
 
-	if !Exist(wd_plugins) {
+		arch := "x86_64"
+		if runtime.GOARCH == "arm64" {
+			arch = "aarch64"
+		}
+
 		paths := []string{
 			filepath.Join("/usr/lib/qt5/plugins", sub),
 			filepath.Join("/usr/lib64/qt5/plugins", sub),
@@ -53,14 +65,13 @@ func tryLink(sub string) {
 		}
 		path := FindExist(paths)
 		if path == "" {
-			log.Println(sub, "not found")
+			log.Println("warning:", sub, "not found")
 			return
 		}
 
-		err := os.Symlink(path, wd_plugins)
+		err := os.Symlink(path, wd_plugins_sub)
 		if err != nil {
 			log.Println("symlink failed:", err.Error())
 		}
 	}
-
 }

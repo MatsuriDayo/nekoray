@@ -5,7 +5,7 @@ source libs/deploy_common.sh
 
 #### Go: sing-box ####
 pushd $BUILD
-curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/archive/44068500bf8842c8849068676a61ecca8f127a33.zip
+curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/archive/64dbac813837bbadfaeec1a6e0d064875a123e5e.zip
 unzip sing-box.zip
 pushd sing-box-*/cmd/sing-box
 go build -o $DEST -trimpath -ldflags "-w -s"

@@ -26,8 +26,8 @@ https://matsuridayo.github.io
 
 ### 运行参数
 
-- (0.11+) -many 无视同目录正在运行的实例，强行开启新的实例
-- (0.11+) -appdata 开启后配置文件会放在共享目录，无法多开和自动升级
+- `-many` 无视同目录正在运行的实例，强行开启新的实例 (0.11+)
+- `-appdata` 开启后配置文件会放在共享目录，无法多开和自动升级 (0.11+)
 
 ### 代理
 
@@ -44,13 +44,20 @@ https://matsuridayo.github.io
 
 ## Linux 运行 & 简易编译教程
 
-**使用 Linux 系统相信您已具备基本的排错能力，本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
+**使用 Linux 系统相信您已具备基本的排错能力，
+本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
 
 系统要求： Qt5 运行环境，一般桌面 Linux 已经安装，如果没有请用包管理器安装，如
 
 `apt install libqt5gui5 libqt5x11extras5`
 
-运行： `./launcher`
+运行： `./launcher` 或 部分系统可双击打开
+
+launcher 参数
+
+* `./launcher -- -appdata` `--` 后的参数传递给主程序
+* `-debug` Debug mode
+* `-theme` Use local QT theme (unstable) (1.0+)
 
 已知部分 x86_64 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
 
@@ -108,21 +115,12 @@ Go 部分
 
 ## Credits
 
-Nekoray 的诞生离不开 v2ray 开源项目以及其他开源软件。
-
-依赖:
-
 - [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
 - [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri)
 - [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core)
+- [SagerNet/sing-box](https://github.com/SagerNet/sing-box)
 - [Qt](https://www.qt.io/)
 - [protobuf](https://github.com/protocolbuffers/protobuf)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
-
-参考：
-
-- [Qv2ray/Qv2ray](https://github.com/Qv2ray/Qv2ray)
-- [2dust/v2rayN](https://github.com/2dust/v2rayN)
-- [SagerNet/SagerNet](https://github.com/SagerNet/SagerNet)

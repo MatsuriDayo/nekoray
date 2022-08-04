@@ -28,6 +28,11 @@ int main(int argc, char *argv[]) {
     // Clean
     QDir::setCurrent(QApplication::applicationDirPath());
     QFile::remove("updater.old");
+#ifndef Q_OS_WIN
+    if (!QFile::exists("updater")) {
+        QFile::link("launcher", "updater");
+    }
+#endif
 
     // Flags
     auto args = QApplication::arguments();

@@ -263,6 +263,7 @@ MainWindow::MainWindow(QWidget *parent)
         // active server
         for (const auto &old: ui->menuActive_Server->actions()) {
             ui->menuActive_Server->removeAction(old);
+            old->deleteLater();
         }
         for (const auto &pf: NekoRay::profileManager->CurrentGroup()->ProfilesWithOrder()) {
             auto a = new QAction(pf->bean->DisplayTypeAndName());
@@ -274,6 +275,7 @@ MainWindow::MainWindow(QWidget *parent)
         // active routing
         for (const auto &old: ui->menuActive_Routing->actions()) {
             ui->menuActive_Routing->removeAction(old);
+            old->deleteLater();
         }
         for (const auto &name: NekoRay::Routing::List()) {
             auto a = new QAction(name);
@@ -381,11 +383,13 @@ MainWindow::MainWindow(QWidget *parent)
             connect(core_process, &QProcess::readyReadStandardError, this,
                     [&]() {
                         auto log = core_process->readAllStandardError().trimmed();
-                        if (log.contains("token is set")) {
-                            core_process_show_stderr = true;
+                        if (core_process_show_stderr) {
+                            showLog(log);
                             return;
                         }
-                        if (core_process_show_stderr) showLog(log);
+                        if (log.contains("token is set")) {
+                            core_process_show_stderr = true;
+                        }
                     });
             if (core_path.isEmpty()) break;
             if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
@@ -675,7 +679,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             row = ui->proxyListTable->id2Row[id];
         }
 
-        auto *f0 = new QTableWidgetItem("");
+        auto f0 = std::make_unique<QTableWidgetItem>();
 //        auto font = f0->font();
 //        font.setPointSize(9);
 //        f0->setFont(font);
@@ -1329,10 +1333,12 @@ bool MainWindow::StartVPNProcess() {
     }
 #ifdef Q_OS_WIN
     auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
+    if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
     auto config = ReadFileText(configFn).replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
 #else
     auto protectPath = QDir::currentPath() + "/protect";
     auto configFn = ":/nekoray/vpn/vpn-run-root.sh";
+    if (QFile::exists("vpn/vpn-run-root.sh")) configFn = "vpn/vpn-run-root.sh";
     auto config = ReadFileText(configFn)
             .replace("$PORT", Int2String(NekoRay::dataStore->inbound_socks_port))
             .replace("$USE_NEKORAY", "1")
@@ -1340,7 +1346,7 @@ bool MainWindow::StartVPNProcess() {
             .replace("./tun2socks", QApplication::applicationDirPath() + "/tun2socks")
             .replace("$PROTECT_LISTEN_PATH", protectPath)
             .replace("$TUN_NAME", "nekoray-tun")
-            .replace("$USER_ID", Int2String(getuid()))
+            .replace("$USER_ID", Int2String((int) getuid()))
             .replace("$TABLE_FWMARK", "514");
 #endif
     //
@@ -1371,18 +1377,29 @@ bool MainWindow::StartVPNProcess() {
     auto vpn_process = new QProcess;
     QProcess::connect(vpn_process, &QProcess::stateChanged, mainwindow, [=](QProcess::ProcessState state) {
         if (state == QProcess::NotRunning) {
+            if (watcher != nullptr) {
+                watcher->deleteLater();
+                watcher = nullptr;
+            }
             vpn_pid = 0;
             vpn_process->deleteLater();
             GetMainWindow()->neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
         }
     });
-    auto watcher = new QFileSystemWatcher({QDir::currentPath()});
+    if (watcher != nullptr) {
+        watcher->deleteLater();
+        watcher = nullptr;
+    }
+    watcher = new QFileSystemWatcher({QDir::currentPath()});
     connect(watcher, &QFileSystemWatcher::directoryChanged, this, [=] {
         if (!QFile::exists(protectPath)) return;
         if (!Tun2rayStartStop(true)) {
             neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
         }
-        watcher->deleteLater();
+        if (watcher != nullptr) {
+            watcher->deleteLater();
+            watcher = nullptr;
+        }
     });
     //
     vpn_process->setProcessChannelMode(QProcess::ForwardedChannels);

@@ -11,15 +11,16 @@ import (
 )
 
 func Updater() {
-	if runtime.GOOS == "linux" {
-		os.RemoveAll("./usr")
+	pre_cleanup := func() {
+		if runtime.GOOS == "linux" {
+			os.RemoveAll("./usr")
+		}
+		os.RemoveAll("./nekoray_update")
 	}
-
-	// temporary dir ./nekoray_update
-	os.RemoveAll("./nekoray_update")
 
 	// update extract
 	if Exist("./nekoray.zip") {
+		pre_cleanup()
 		log.Println("updating from zip")
 
 		f, err := os.Open("./nekoray.zip")
@@ -32,6 +33,7 @@ func Updater() {
 		}
 		f.Close()
 	} else if Exist("./nekoray.tar.gz") {
+		pre_cleanup()
 		log.Println("updating from tar.gz")
 
 		f, err := os.Open("./nekoray.tar.gz")
