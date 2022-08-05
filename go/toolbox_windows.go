@@ -17,10 +17,6 @@ func ToolBox() {
 			for _, intf := range intfs {
 				log.Println(intf)
 			}
-			routes, err := NewRouteTable().getRoutes()
-			if err != nil {
-				log.Fatalln(err)
-			}
 			for _, route := range routes {
 				log.Println(route)
 			}

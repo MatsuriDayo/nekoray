@@ -1,9 +1,8 @@
-package main
+package iphlpapi
 
 import (
 	"fmt"
 	"net"
-	"syscall"
 	"unsafe"
 )
 
@@ -20,13 +19,6 @@ import (
 
 // 太低的值添加路由时会返回 106 错误
 const routeMetric = 93
-
-type routeTable struct {
-	iphlpapi             *syscall.LazyDLL
-	getIpForwardTable    *syscall.LazyProc
-	createIpForwardEntry *syscall.LazyProc
-	deleteIpForwardEntry *syscall.LazyProc
-}
 
 type RouteRow struct {
 	ForwardDest      [4]byte //目标网络
@@ -55,31 +47,17 @@ func (rr *RouteRow) GetForwardNextHop() net.IP {
 	return net.IP(rr.ForwardNextHop[:])
 }
 
-func NewRouteTable() *routeTable {
-	iphlpapi := syscall.NewLazyDLL("iphlpapi.dll")
-	getIpForwardTable := iphlpapi.NewProc("GetIpForwardTable")
-	createIpForwardEntry := iphlpapi.NewProc("CreateIpForwardEntry")
-	deleteIpForwardEntry := iphlpapi.NewProc("DeleteIpForwardEntry")
-
-	return &routeTable{
-		iphlpapi:             iphlpapi,
-		getIpForwardTable:    getIpForwardTable,
-		createIpForwardEntry: createIpForwardEntry,
-		deleteIpForwardEntry: deleteIpForwardEntry,
-	}
-}
-
-func (rt *routeTable) getRoutes() ([]RouteRow, error) {
+func GetRoutes() ([]RouteRow, error) {
 	buf := make([]byte, 4+unsafe.Sizeof(RouteRow{}))
 	buf_len := uint32(len(buf))
 
-	rt.getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
+	proc_getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
 		uintptr(unsafe.Pointer(&buf_len)), 0)
 
 	var r1 uintptr
 	for i := 0; i < 5; i++ {
 		buf = make([]byte, buf_len)
-		r1, _, _ = rt.getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
+		r1, _, _ = proc_getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
 			uintptr(unsafe.Pointer(&buf_len)), 0)
 		if r1 == 122 {
 			continue
