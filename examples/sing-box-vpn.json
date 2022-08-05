@@ -1,14 +1,11 @@
 {
-    "dns": {
-        "servers": [],
-        "rules": [],
-        "strategy": "ipv4_only"
-    },
     "inbounds": [
         {
             "type": "tun",
             "interface_name": "nekoray-tun",
             "inet4_address": "172.19.0.1/30",
+            %IPV6_ADDRESS%
+            "mtu": %MTU%,
             "auto_route": true,
             "sniff": false
         }

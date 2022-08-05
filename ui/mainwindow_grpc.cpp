@@ -364,8 +364,8 @@ bool MainWindow::Tun2rayStartStop(bool start) {
     if (start) {
         libcore::SetTunReq req;
         req.set_name("nekoray-tun");
-        req.set_mtu(1500);
-        req.set_implementation(0);
+        req.set_mtu(NekoRay::dataStore->vpn_mtu);
+        req.set_implementation(NekoRay::dataStore->vpn_implementation);
         req.set_fakedns(NekoRay::dataStore->fake_dns);
         auto error = defaultClient->SetTun(&ok, req);
         if (!ok) return false;

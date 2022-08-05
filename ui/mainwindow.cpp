@@ -472,10 +472,13 @@ void MainWindow::show_group(int gid) {
 void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
     if (info.contains("UpdateDataStore")) {
         auto changed = NekoRay::dataStore->Save();
+        if (info.contains("RouteChanged")) changed = true;
         refresh_proxy_list();
-        if (changed && NekoRay::dataStore->started_id >= 0 &&
-            QMessageBox::question(this, tr("Confirmation"), tr("Settings changed, restart proxy?")
-            ) == QMessageBox::StandardButton::Yes) {
+        if (info.contains("VPNChanged") && title_spmode == NekoRay::SystemProxyMode::VPN) {
+            MessageBoxWarning(tr("VPN settings changed"), tr("Restart VPN to take effect."));
+        } else if (changed && NekoRay::dataStore->started_id >= 0 &&
+                   QMessageBox::question(this, tr("Confirmation"), tr("Settings changed, restart proxy?")
+                   ) == QMessageBox::StandardButton::Yes) {
             neko_start(NekoRay::dataStore->started_id);
         }
         refresh_status();
@@ -1336,7 +1339,10 @@ bool MainWindow::StartVPNProcess() {
 #ifdef Q_OS_WIN
     auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
     if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
-    auto config = ReadFileText(configFn).replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
+    auto config = ReadFileText(configFn)
+            .replace("%IPV6_ADDRESS%", NekoRay::dataStore->vpn_ipv6 ? "\"inet6_address\": \"fdfe:dcba:9876::1/128\"," : "")
+            .replace("%MTU%", Int2String(NekoRay::dataStore->vpn_mtu))
+            .replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
 #else
     auto protectPath = QDir::currentPath() + "/protect";
     auto configFn = ":/nekoray/vpn/vpn-run-root.sh";
@@ -1344,11 +1350,13 @@ bool MainWindow::StartVPNProcess() {
     auto config = ReadFileText(configFn)
             .replace("$PORT", Int2String(NekoRay::dataStore->inbound_socks_port))
             .replace("$USE_NEKORAY", "1")
+            .replace("$ENABLE_IPV6", NekoRay::dataStore->vpn_ipv6 ? "1" : "")
             .replace("./nekoray_core", QApplication::applicationDirPath() + "/nekoray_core")
             .replace("./tun2socks", QApplication::applicationDirPath() + "/tun2socks")
             .replace("$PROTECT_LISTEN_PATH", protectPath)
             .replace("$TUN_NAME", "nekoray-tun")
             .replace("$USER_ID", Int2String((int) getuid()))
+            .replace("$MTU", Int2String(NekoRay::dataStore->vpn_mtu))
             .replace("$TABLE_FWMARK", "514");
 #endif
     //

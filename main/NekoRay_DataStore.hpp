@@ -42,6 +42,14 @@ namespace NekoRay {
         int core_port = 19810;
         int started_id = -1919;
 
+        Routing *routing = new Routing;
+        int imported_count = 0;
+        bool refreshing_group_list = false;
+
+        // Flags
+        bool flag_use_appdata = false;
+        bool flag_many = false;
+
         // Saved
 
         // Misc
@@ -91,6 +99,11 @@ namespace NekoRay {
         QString custom_route_global = "{\"rules\": []}";
         QString active_routing = "Default";
 
+        // VPN
+        int vpn_implementation = 0;
+        int vpn_mtu = 9000;
+        bool vpn_ipv6 = false;
+
         // Hotkey
         QString hotkey_mainwindow = "";
         QString hotkey_group = "";
@@ -98,19 +111,6 @@ namespace NekoRay {
 
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
-
-        // Running Cache
-
-        Routing *routing = new Routing;
-        int imported_count = 0;
-        bool refreshing_group_list = false;
-
-        // Running Flags
-
-        bool flag_use_appdata = false;
-        bool flag_many = false;
-
-        //
 
         DataStore();
 

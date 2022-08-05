@@ -17,117 +17,227 @@
    <item row="0" column="0">
     <layout class="QVBoxLayout" name="verticalLayout">
      <item>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_3">
-         <property name="text">
-          <string>Outbound Domain Strategy</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QComboBox" name="sniffing_mode">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <property name="text">
-           <string>Disable</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>The sniffing result is used for routing</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>The sniffing result is used for destination</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="label_8">
-         <property name="text">
-          <string>Direct DNS</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Sniffing Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_9">
-         <property name="text">
-          <string>Remote DNS</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="2">
-        <widget class="QComboBox" name="outbound_domain_strategy">
-         <property name="editable">
-          <bool>false</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true">AsIs</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">UseIP</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">UseIPv4</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">UseIPv6</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">PreferIPv4</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">PreferIPv6</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLineEdit" name="dns_direct"/>
-         </item>
-         <item>
-          <widget class="QCheckBox" name="enhance_resolve_server_domain">
-           <property name="toolTip">
-            <string notr="true">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</string>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
            <property name="text">
-            <string notr="true">增强域名解析</string>
+            <string>Sniffing Mode</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="sniffing_mode">
+           <item>
+            <property name="text">
+             <string>Disable</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>The sniffing result is used for routing</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>The sniffing result is used for destination</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="Line" name="line_4">
+           <property name="orientation">
+            <enum>Qt::Vertical</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Outbound Domain Strategy</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="outbound_domain_strategy">
+           <property name="editable">
+            <bool>false</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string notr="true">AsIs</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">UseIP</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">UseIPv4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">UseIPv6</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">PreferIPv4</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">PreferIPv6</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>VPN Implementation</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="vpn_implementation">
+           <item>
+            <property name="text">
+             <string notr="true">gVisor</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">System NAT</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">Tun2Socket</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_10">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string notr="true">MTU</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QComboBox" name="vpn_mtu">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string notr="true">9000</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">1500</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="vpn_ipv6">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>VPN Enable IPv6</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="fake_dns">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string notr="true">FakeDNS</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
-       <item row="2" column="2">
-        <layout class="QHBoxLayout" name="horizontalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="text">
+            <string>Remote DNS</string>
+           </property>
+          </widget>
+         </item>
          <item>
           <widget class="QLineEdit" name="dns_remote"/>
          </item>
          <item>
-          <widget class="QCheckBox" name="fake_dns">
+          <widget class="QLabel" name="label_8">
            <property name="text">
-            <string notr="true">FakeDNS</string>
+            <string>Direct DNS</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="dns_direct"/>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="enhance_resolve_server_domain">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string notr="true">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</string>
+           </property>
+           <property name="text">
+            <string notr="true">增强域名解析</string>
            </property>
           </widget>
          </item>
@@ -141,6 +251,12 @@
         <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0">
          <item>
           <widget class="QCheckBox" name="dns_routing">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>Enable DNS Routing</string>
            </property>
@@ -344,8 +460,10 @@
  <tabstops>
   <tabstop>sniffing_mode</tabstop>
   <tabstop>outbound_domain_strategy</tabstop>
-  <tabstop>dns_remote</tabstop>
+  <tabstop>vpn_implementation</tabstop>
+  <tabstop>vpn_mtu</tabstop>
   <tabstop>fake_dns</tabstop>
+  <tabstop>dns_remote</tabstop>
   <tabstop>dns_direct</tabstop>
   <tabstop>enhance_resolve_server_domain</tabstop>
   <tabstop>dns_routing</tabstop>
@@ -353,6 +471,8 @@
   <tabstop>domainMatcherCombo</tabstop>
   <tabstop>preset</tabstop>
   <tabstop>custom_route_edit</tabstop>
+  <tabstop>custom_route_global_edit</tabstop>
+  <tabstop>load_save</tabstop>
  </tabstops>
  <resources/>
  <connections>

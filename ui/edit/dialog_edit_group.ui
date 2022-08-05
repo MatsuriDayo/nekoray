@@ -35,9 +35,6 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <property name="horizontalSpacing">
-       <number>0</number>
-      </property>
       <item row="1" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
@@ -92,9 +89,6 @@
       </sizepolicy>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout_3">
-      <property name="spacing">
-       <number>6</number>
-      </property>
       <property name="leftMargin">
        <number>0</number>
       </property>

@@ -38,14 +38,22 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
     ui->enhance_resolve_server_domain->setChecked(NekoRay::dataStore->enhance_resolve_server_domain);
     D_C_LOAD_STRING(custom_route_global)
-
+    //
+    ui->vpn_implementation->setCurrentIndex(NekoRay::dataStore->vpn_implementation);
+    ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
+    ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
+#ifdef Q_OS_WIN
+    ui->vpn_implementation->setEditable(true);
+    ui->vpn_implementation->setCurrentText("Windows: sing-box gVisor");
+    ui->vpn_implementation->setDisabled(true);
+#endif
+    //
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_route)
     });
     connect(ui->custom_route_global_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_route_global)
     });
-
     //
     builtInSchemesMenu = new QMenu(this);
     builtInSchemesMenu->addActions(this->getBuiltInSchemes());
@@ -81,19 +89,39 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->domain_strategy = ui->domainStrategyCombo->currentText();
     NekoRay::dataStore->outbound_domain_strategy = ui->outbound_domain_strategy->currentText();
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();
-    NekoRay::dataStore->fake_dns = ui->fake_dns->isChecked();
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
     NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
     D_C_SAVE_STRING(custom_route_global)
-
     //
+    bool vpnChanged = false;
+    auto fakedns = ui->fake_dns->isChecked();
+    auto mtu = ui->vpn_mtu->currentText().toInt();
+    if (mtu > 10000 || mtu < 1000) mtu = 9000;
+    auto ipv6 = ui->vpn_ipv6->isChecked();
+#ifndef Q_OS_WIN
+    auto impl = ui->vpn_implementation->currentIndex();
+    vpnChanged |= NekoRay::dataStore->vpn_implementation != impl;
+    NekoRay::dataStore->vpn_implementation = impl;
+#endif
+    vpnChanged |= NekoRay::dataStore->fake_dns != fakedns;
+    vpnChanged |= NekoRay::dataStore->vpn_mtu != mtu;
+    vpnChanged |= NekoRay::dataStore->vpn_ipv6 != ipv6;
+    NekoRay::dataStore->fake_dns = fakedns;
+    NekoRay::dataStore->vpn_mtu = mtu;
+    NekoRay::dataStore->vpn_ipv6 = ipv6;
+    //
+    bool routeChanged = false;
+    if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;
     SAVE_TO_ROUTING(NekoRay::dataStore->routing)
     NekoRay::dataStore->active_routing = active_routing;
     NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
-    NekoRay::dataStore->routing->Save();
-
-    dialog_message(Dialog_DialogManageRoutes, "UpdateDataStore");
+    if (NekoRay::dataStore->routing->Save()) routeChanged = true;
+    //
+    QString info = "UpdateDataStore";
+    if (routeChanged) info += "RouteChanged";
+    if (vpnChanged) info += "VPNChanged";
+    dialog_message(Dialog_DialogManageRoutes, info);
     QDialog::accept();
 }
 

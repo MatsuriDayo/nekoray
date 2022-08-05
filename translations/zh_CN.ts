@@ -450,6 +450,14 @@
         <source>Custom (global)</source>
         <translation>自定义 (全局)</translation>
     </message>
+    <message>
+        <source>VPN Implementation</source>
+        <translation>VPN 实现</translation>
+    </message>
+    <message>
+        <source>VPN Enable IPv6</source>
+        <translation>启用 VPN IPv6</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>
@@ -1025,6 +1033,14 @@ End: %2</source>
     <message>
         <source>Enable VPN</source>
         <translation>启用 VPN</translation>
+    </message>
+    <message>
+        <source>VPN settings changed</source>
+        <translation>VPN 设置改变</translation>
+    </message>
+    <message>
+        <source>Restart VPN to take effect.</source>
+        <translation>重启 VPN 生效。</translation>
     </message>
 </context>
 <context>

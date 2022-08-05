@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"libcore"
+	"libcore/comm"
 	"nekoray_core/gen"
 	"sync"
 	"syscall"
@@ -33,6 +34,7 @@ func TunStart(config *gen.SetTunReq) (err error) {
 		V2Ray:          instance, // use current if started
 		Implementation: config.Implementation,
 		Sniffing:       true,
+		IPv6Mode:       comm.IPv6Prefer,
 		FakeDNS:        config.Fakedns,
 	})
 	return
