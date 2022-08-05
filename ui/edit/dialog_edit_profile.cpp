@@ -10,7 +10,8 @@
 #include "ui/edit/edit_custom.h"
 
 #include "fmt/includes.h"
-#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
+
+#include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
 
 #include <QInputDialog>

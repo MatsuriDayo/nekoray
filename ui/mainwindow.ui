@@ -498,8 +498,8 @@
     <property name="title">
      <string>Preferences</string>
     </property>
-    <addaction name="menu_basic_settings"/>
     <addaction name="menu_manage_groups"/>
+    <addaction name="menu_basic_settings"/>
     <addaction name="menu_routing_settings"/>
     <addaction name="menu_hotkey_settings"/>
    </widget>
@@ -582,7 +582,7 @@
   </action>
   <action name="menu_routing_settings">
    <property name="text">
-    <string>Routes</string>
+    <string>Routing VPN Settings</string>
    </property>
   </action>
   <action name="menu_add_from_clipboard">
@@ -715,7 +715,7 @@
   </action>
   <action name="menu_hotkey_settings">
    <property name="text">
-    <string>Hot key</string>
+    <string>Hotkey Settings</string>
    </property>
   </action>
   <action name="menu_select_all">
@@ -746,7 +746,7 @@
   </action>
   <action name="menu_copy_links">
    <property name="text">
-    <string>Copy links of selected</string>
+    <string>Copy links of selected [ Ctrl+C ]</string>
    </property>
   </action>
   <action name="menu_spmode_vpn">

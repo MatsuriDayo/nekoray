@@ -1,7 +1,7 @@
 #include "dialog_basic_settings.h"
 #include "ui_dialog_basic_settings.h"
 
-#include "qv2ray/ui/widgets/editors/w_JsonEditor.hpp"
+#include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "ui/ThemeManager.hpp"
 #include "main/GuiUtils.hpp"
 #include "main/NekoRay.hpp"

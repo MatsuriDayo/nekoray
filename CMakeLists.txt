@@ -89,15 +89,17 @@ set(PROJECT_SOURCES
         3rdparty/qrcodegen.cpp
         3rdparty/QtExtKeySequenceEdit.cpp
 
-        qv2ray/ui/LogHighlighter.cpp
-        qv2ray/ui/QvAutoCompleteTextEdit.cpp
-        qv2ray/utils/HTTPRequestHelper.cpp
-        qv2ray/components/proxy/QvProxyConfigurator.cpp
-        qv2ray/ui/widgets/common/QJsonModel.cpp
+        qv2ray/v2/ui/LogHighlighter.cpp
+        qv2ray/v2/ui/QvAutoCompleteTextEdit.cpp
+        qv2ray/v2/utils/HTTPRequestHelper.cpp
+        qv2ray/v2/components/proxy/QvProxyConfigurator.cpp
+        qv2ray/v2/ui/widgets/common/QJsonModel.cpp
+        qv2ray/v2/ui/widgets/editors/w_JsonEditor.cpp
+        qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp
+        qv2ray/v2/ui/widgets/editors/w_JsonEditor.ui
 
-        qv2ray/ui/widgets/editors/w_JsonEditor.cpp
-        qv2ray/ui/widgets/editors/w_JsonEditor.hpp
-        qv2ray/ui/widgets/editors/w_JsonEditor.ui
+        qv2ray/v3/components/GeositeReader/GeositeReader.cpp
+        qv2ray/v3/components/GeositeReader/picoproto.cpp
 
         rpc/gRPC.cpp
 

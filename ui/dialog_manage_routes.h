@@ -3,7 +3,7 @@
 #include <QDialog>
 #include <QMenu>
 
-#include "qv2ray/ui/QvAutoCompleteTextEdit.hpp"
+#include "qv2ray/v2/ui/QvAutoCompleteTextEdit.hpp"
 #include "main/NekoRay.hpp"
 
 QT_BEGIN_NAMESPACE

@@ -192,7 +192,7 @@
     </message>
     <message>
         <source>Copy profile share links</source>
-        <translation>复制所有配置的分享链接</translation>
+        <translation>复制分组内配置的分享链接</translation>
     </message>
     <message>
         <source>Copied</source>
@@ -200,7 +200,7 @@
     </message>
     <message>
         <source>Copy profile share links (Nekoray)</source>
-        <translation>复制所有配置的分享链接 (Nekoray)</translation>
+        <translation>复制分组内配置的分享链接 (Nekoray)</translation>
     </message>
 </context>
 <context>
@@ -293,7 +293,7 @@
 <context>
     <name>DialogHotkey</name>
     <message>
-        <source>Hot key</source>
+        <source>Hotkey</source>
         <translation>热键</translation>
     </message>
     <message>
@@ -745,8 +745,8 @@
         <translation>停止</translation>
     </message>
     <message>
-        <source>Routes</source>
-        <translation>路由</translation>
+        <source>Routing VPN Settings</source>
+        <translation>路由 VPN 设置</translation>
     </message>
     <message>
         <source>Add profile from clipboard</source>
@@ -924,7 +924,7 @@ End: %2</source>
     </message>
     <message>
         <source>Remove Unavailable</source>
-        <translation>删除不可用</translation>
+        <translation>删除不可用的配置</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -959,8 +959,8 @@ End: %2</source>
         <translation>删除 [ Delete ]</translation>
     </message>
     <message>
-        <source>Hot key</source>
-        <translation>热键</translation>
+        <source>Hotkey Settings</source>
+        <translation>热键设置</translation>
     </message>
     <message>
         <source>QR Code and link</source>
@@ -987,12 +987,12 @@ End: %2</source>
         <translation>加载路由规则并应用: %1</translation>
     </message>
     <message>
-        <source>Copy links of selected</source>
-        <translation>复制选中的分享链接</translation>
+        <source>Copy links of selected [ Ctrl+C ]</source>
+        <translation>批量复制选中项目的分享链接 [ Ctrl+C ]</translation>
     </message>
     <message>
         <source>Copied %1 item(s)</source>
-        <translation>复制了%1 个项目</translation>
+        <translation>复制了 %1 个项目</translation>
     </message>
     <message>
         <source>New profile from clipboard</source>
@@ -1012,7 +1012,7 @@ End: %2</source>
     </message>
     <message>
         <source>Delete Repeat</source>
-        <translation>删除重复</translation>
+        <translation>删除重复的配置</translation>
     </message>
     <message>
         <source>Select All</source>

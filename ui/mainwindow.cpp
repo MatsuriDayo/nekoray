@@ -16,12 +16,12 @@
 
 #include "3rdparty/qrcodegen.hpp"
 #include "3rdparty/VT100Parser.hpp"
-#include "qv2ray/ui/LogHighlighter.hpp"
+#include "qv2ray/v2/ui/LogHighlighter.hpp"
 
 #ifndef NKR_NO_EXTERNAL
 
 #include "3rdparty/ZxingQtReader.hpp"
-#include "qv2ray/components/proxy/QvProxyConfigurator.hpp"
+#include "qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
 
 #endif
 
@@ -254,6 +254,7 @@ MainWindow::MainWindow(QWidget *parent)
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
+    connect(shortcut_ctrl_c, &QShortcut::activated, ui->menu_copy_links, &QAction::trigger);
     connect(shortcut_ctrl_v, &QShortcut::activated, ui->menu_add_from_clipboard, &QAction::trigger);
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
@@ -938,6 +939,7 @@ void MainWindow::on_menu_copy_links_triggered() {
     for (const auto &ent: ents) {
         links += ent->bean->ToShareLink();
     }
+    if (links.length() == 0) return;
     QApplication::clipboard()->setText(links.join("\n"));
     MessageBoxInfo("NekoRay", tr("Copied %1 item(s)").arg(links.length()));
 }
