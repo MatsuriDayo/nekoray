@@ -73,12 +73,19 @@ void GroupItem::refresh_data() {
         ui->update_sub->hide();
     } else {
         ui->url->setText(ent->url);
+        QStringList info;
+        if (ent->last_update != 0) {
+            info << tr("Last update: %1").arg(DisplayTime(ent->last_update, QLocale::ShortFormat));
+        }
         auto subinfo = ParseSubInfo(ent->info);
-        if (subinfo.isEmpty()) {
+        if (!ent->info.isEmpty()) {
+            info << subinfo;
+        }
+        if (info.isEmpty()) {
             ui->subinfo->hide();
         } else {
             ui->subinfo->show();
-            ui->subinfo->setText(subinfo);
+            ui->subinfo->setText(info.join(" | "));
         }
     }
     runOnUiThread([=] {

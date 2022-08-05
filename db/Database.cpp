@@ -182,6 +182,7 @@ namespace NekoRay {
         _add(new configItem("order", &order, itemType::integerList));
         _add(new configItem("url", &url, itemType::string));
         _add(new configItem("info", &info, itemType::string));
+        _add(new configItem("lastup", &last_update, itemType::integer64));
     }
 
     QSharedPointer<Group> ProfileManager::LoadGroup(const QString &jsonPath) {

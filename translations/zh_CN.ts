@@ -634,6 +634,10 @@
         <source>Update %1?</source>
         <translation>更新 %1 ?</translation>
     </message>
+    <message>
+        <source>Last update: %1</source>
+        <translation>最后更新 %1</translation>
+    </message>
 </context>
 <context>
     <name>JsonEditor</name>

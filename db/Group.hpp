@@ -12,6 +12,7 @@ namespace NekoRay {
         QList<int> order;
         QString url = "";
         QString info = "";
+        qint64 last_update = 0;
 
         Group();
 

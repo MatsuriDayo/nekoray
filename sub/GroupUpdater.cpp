@@ -306,6 +306,7 @@ namespace NekoRay::sub {
         // 订阅解析前
         if (group != nullptr) {
             in = group->Profiles();
+            group->last_update = QDateTime::currentSecsSinceEpoch();
             group->info = sub_user_info;
             group->order.clear();
             group->Save();
