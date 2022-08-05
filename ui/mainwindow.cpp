@@ -407,7 +407,7 @@ MainWindow::MainWindow(QWidget *parent)
         }
     });
 
-    setupGRPC();
+    setup_grpc();
 
     // Start last
     if (NekoRay::dataStore->remember_enable) {
@@ -447,7 +447,6 @@ inline int groupId2TabIndex(int gid) {
     return 0;
 }
 
-// changed
 void MainWindow::on_tabWidget_currentChanged(int index) {
     if (NekoRay::dataStore->refreshing_group_list) return;
     if (tabIndex2GroupId(index) == NekoRay::dataStore->current_group) return;
@@ -503,7 +502,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     }
 }
 
-// menu
+// top bar & tray menu
 
 inline bool dialog_is_using = false;
 
@@ -552,13 +551,64 @@ void MainWindow::on_menu_exit_triggered() {
 
     core_process_killed = true;
     hide();
-    exit_nekoray_core();
+    ExitNekorayCore();
 
     if (exit_update) {
         QDir::setCurrent(QApplication::applicationDirPath());
         QProcess::startDetached("./updater", QStringList{});
     }
     qApp->quit();
+}
+
+void MainWindow::neko_set_spmode(int mode, bool save) {
+    if (mode != title_spmode) {
+        // DISABLE
+
+        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+#ifndef NKR_NO_EXTERNAL
+            ClearSystemProxy();
+#endif
+        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+            if (!StopVPNProcess()) {
+                refresh_status();
+                return;
+            }
+        }
+
+        // ENABLE
+
+        if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+#ifndef NKR_NO_EXTERNAL
+#ifdef Q_OS_WIN
+            if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY &&
+                !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
+                auto btn = QMessageBox::warning(this, "NekoRay", tr("Http inbound is not enabled, can't set system proxy."),
+                                                "OK", tr("Settings"), "", 0, 0);
+                if (btn == 1) {
+                    on_menu_basic_settings_triggered();
+                }
+                return;
+            }
+#endif
+            SetSystemProxy("127.0.0.1",
+                           NekoRay::dataStore->inbound_http_port,
+                           NekoRay::dataStore->inbound_socks_port);
+#endif
+        } else if (mode == NekoRay::SystemProxyMode::VPN) {
+            if (!StartVPNProcess()) {
+                refresh_status();
+                return;
+            }
+        }
+    }
+
+    if (save) {
+        NekoRay::dataStore->system_proxy_mode = mode;
+        NekoRay::dataStore->Save();
+    }
+
+    title_spmode = mode;
+    refresh_status();
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
@@ -572,14 +622,15 @@ void MainWindow::refresh_status(const QString &traffic_update) {
             return;
         }
     }
+    ui->label_speed->setText(traffic_update_cache);
 
     // From UI
-    ui->label_speed->setText(traffic_update_cache);
-    if (last_test_time.addSecs(1) < QTime::currentTime()) {
+    if (last_test_time.addSecs(2) < QTime::currentTime()) {
         ui->label_running->setText(tr("Running: %1").arg(running.isNull()
                                                          ? tr("None")
                                                          : running->bean->DisplayName().left(50)));
     }
+    //
     auto display_http = tr("None");
     if (InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
         display_http = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port);
@@ -589,10 +640,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
             display_http
     );
     ui->label_inbound->setText(inbound_txt);
-    if (select_mode) {
-        ui->label_running->setText("[" + tr("Select") + "]");
-    }
+    //
     ui->checkBox_VPN->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
+    if (select_mode) ui->label_running->setText("[" + tr("Select") + "]");
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
@@ -618,8 +668,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
 // table显示
 
-// update tab_index_GroupId
-// refresh proxy list
+// refresh_groups -> show_group -> refresh_proxy_list
 void MainWindow::refresh_groups() {
     NekoRay::dataStore->refreshing_group_list = true;
 
@@ -818,7 +867,7 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
 }
 
 void MainWindow::on_menu_move_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.isEmpty()) return;
 
     auto items = QStringList{};
@@ -840,7 +889,7 @@ void MainWindow::on_menu_move_triggered() {
 }
 
 void MainWindow::on_menu_delete_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.count() == 0) return;
     if (QMessageBox::question(this, tr("Confirmation"), QString(tr("Remove %1 item(s) ?")).arg(ents.count())) ==
         QMessageBox::StandardButton::Yes) {
@@ -852,7 +901,7 @@ void MainWindow::on_menu_delete_triggered() {
 }
 
 void MainWindow::on_menu_reset_traffic_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.count() == 0) return;
     if (QMessageBox::question(this,
                               tr("Confirmation"),
@@ -867,7 +916,7 @@ void MainWindow::on_menu_reset_traffic_triggered() {
 }
 
 void MainWindow::on_menu_profile_debug_info_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.count() != 1) return;
     auto btn = QMessageBox::information(nullptr, "NekoRay", ents.first()->ToJsonBytes(), "OK", "Edit", "Reload", 0, 0);
     if (btn == 1) {
@@ -881,7 +930,7 @@ void MainWindow::on_menu_profile_debug_info_triggered() {
 }
 
 void MainWindow::on_menu_copy_links_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     QStringList links;
     for (const auto &ent: ents) {
         links += ent->bean->ToShareLink();
@@ -891,7 +940,7 @@ void MainWindow::on_menu_copy_links_triggered() {
 }
 
 void MainWindow::on_menu_export_config_triggered() {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.count() != 1) return;
     auto ent = ents.first();
     auto result = NekoRay::BuildConfig(ent, false);
@@ -901,7 +950,7 @@ void MainWindow::on_menu_export_config_triggered() {
 }
 
 void MainWindow::display_qr_link(bool nkrFormat) {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     if (ents.count() != 1) return;
 
     auto link = ents.first()->bean->ToShareLink();
@@ -1054,13 +1103,11 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
     }
 }
 
-// table 菜单弹出
-
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
     ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); //弹出菜单
 }
 
-QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
+QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::get_now_selected() {
     auto items = ui->proxyListTable->selectedItems();
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> map;
     for (auto item: items) {
@@ -1069,50 +1116,6 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::GetNowSelected() {
         if (ent != nullptr) map[id] = ent;
     }
     return map;
-}
-
-void MainWindow::neko_set_spmode(int mode, bool save) {
-#ifdef Q_OS_WIN
-    if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
-        auto btn = QMessageBox::warning(this, "NekoRay", tr("Http inbound is not enabled, can't set system proxy."),
-                                        "OK", tr("Settings"), "", 0, 0);
-        if (btn == 1) {
-            on_menu_basic_settings_triggered();
-        }
-        return;
-    }
-#endif
-
-    if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-#ifndef NKR_NO_EXTERNAL
-        SetSystemProxy("127.0.0.1",
-                       NekoRay::dataStore->inbound_http_port,
-                       NekoRay::dataStore->inbound_socks_port);
-#endif
-    } else if (mode == NekoRay::SystemProxyMode::VPN) {
-        if (!StartVPNProcess()) {
-            refresh_status();
-            return;
-        }
-    } else {
-        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-#ifndef NKR_NO_EXTERNAL
-            ClearSystemProxy();
-#endif
-        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
-            if (!StopVPNProcess()) {
-                refresh_status();
-                return;
-            }
-        }
-    }
-
-    if (save) {
-        NekoRay::dataStore->system_proxy_mode = mode;
-        NekoRay::dataStore->Save();
-    }
-    title_spmode = mode;
-    refresh_status();
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {
@@ -1162,7 +1165,6 @@ void MainWindow::show_log_impl(const QString &log) {
             cursor.removeSelectedText();
             continue;
         }
-
         break;
     }
 }

@@ -17,7 +17,7 @@
 using namespace NekoRay::rpc;
 #endif
 
-void MainWindow::setupGRPC() {
+void MainWindow::setup_grpc() {
 #ifndef NKR_NO_GRPC
     // Setup Connection
     defaultClient = new Client([=](const QString &errStr) {
@@ -198,14 +198,14 @@ void MainWindow::test_current() {
 #endif
 }
 
-void MainWindow::exit_nekoray_core() {
+void MainWindow::ExitNekorayCore() {
 #ifndef NKR_NO_GRPC
     NekoRay::rpc::defaultClient->Exit();
 #endif
 }
 
 void MainWindow::neko_start(int _id) {
-    auto ents = GetNowSelected();
+    auto ents = get_now_selected();
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoRay::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
 

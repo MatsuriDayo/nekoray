@@ -30,11 +30,9 @@ public:
 
     ~MainWindow();
 
-    void dialog_message_impl(const QString &sender, const QString &info);
-
-    void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
-
     void refresh_proxy_list(const int &id = -1) { refresh_proxy_list_impl(id, {}); };
+
+    void show_group(int gid);
 
     void refresh_groups();
 
@@ -53,10 +51,6 @@ public:
     void refresh_connection_list(const QJsonArray &arr);
 
     void RegisterHotkey(bool unregister);
-
-    void HotkeyEvent(const QString &key);
-
-    bool exit_update = false;
 
 signals:
 
@@ -137,30 +131,38 @@ private:
     //
     int proxy_last_order = -1;
     bool select_mode = false;
+    bool exit_update = false;
 
-    QMap<int, QSharedPointer<NekoRay::ProxyEntity>> GetNowSelected();
+    QMap<int, QSharedPointer<NekoRay::ProxyEntity>> get_now_selected();
+
+    void dialog_message_impl(const QString &sender, const QString &info);
+
+    void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
 
     void keyPressEvent(QKeyEvent *event) override;
 
     void closeEvent(QCloseEvent *event) override;
 
-    void show_group(int gid);
+    //
+
+    void HotkeyEvent(const QString &key);
+
+    bool StartVPNProcess();
+
+    bool StopVPNProcess();
+
 
     // grpc and ...
 
-    static void exit_nekoray_core();
+    static void ExitNekorayCore();
 
     void speedtest_current_group(int mode);
 
     void test_current();
 
-    void setupGRPC();
+    void setup_grpc();
 
     void CheckUpdate();
-
-    bool StartVPNProcess();
-
-    bool StopVPNProcess();
 
     bool Tun2rayStartStop(bool start);
 
