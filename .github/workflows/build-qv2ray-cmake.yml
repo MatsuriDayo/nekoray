@@ -10,12 +10,35 @@ on:
         description: 'Publish: If want ignore'
         required: false
 jobs:
-  build:
+  build-go:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v2
+      - name: Install Golang
+        uses: actions/setup-go@v2
+        with:
+          stable: false
+          go-version: 1.18.5
+      - name: Build golang and common parts
+        shell: bash
+        run: |
+          ./libs/get_source.sh
+          GOOS=linux GOARCH=amd64 ./libs/build_go.sh
+          GOOS=windows GOARCH=amd64 ./libs/build_go.sh
+          ./libs/build_asset.sh
+      - name: Tar files
+        run: tar czvf artifacts.tgz ./deployment
+      - name: Uploading Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: NekoRay-${{ github.sha }}-Common
+          path: artifacts.tgz
+  build-cpp:
     strategy:
       matrix:
         platform: [ windows-2022, ubuntu-18.04 ]
         arch: [ x64 ]
-        build_type: [ Release ]
         qt_version: [ 5.15.2 ]
         include:
           - platform: windows-2022
@@ -66,11 +89,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build 
-      - name: Install Golang
-        uses: actions/setup-go@v2
-        with:
-          stable: false
-          go-version: 1.18.5
       # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Cache Download
         id: cache-deps
@@ -93,9 +111,7 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -GNinja \
-            -DCMAKE_PREFIX_PATH=./libs/deps/built \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --parallel $(nproc)
           cd ..
           ./libs/deploy_windows64.sh
@@ -105,26 +121,34 @@ jobs:
         run: |
           mkdir build
           cd build
-          cmake .. -GNinja \
-            -DCMAKE_PREFIX_PATH=./libs/deps/built \
-            -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
           cmake --build . --parallel $(nproc)
           cd ..
           ./libs/deploy_linux64.sh
       # ========================================================================================================= Deployments
+      - name: Tar files
+        shell: bash
+        run: tar czvf artifacts.tgz ./deployment
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:
           name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
-          path: ./deployment/
+          path: artifacts.tgz
   publish:
     name: Publish Release
     if: github.event.inputs.publish != 'y'
     runs-on: ubuntu-latest
-    needs: build
+    needs:
+      - build-cpp
+      - build-go
     steps:
-      - name: Checkout
+      - name: Checking out sources
         uses: actions/checkout@v2
+      - name: Donwload Artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: NekoRay-${{ github.sha }}-Common
+          path: artifacts-common
       - name: Donwload Artifacts
         uses: actions/download-artifact@v2
         with:
@@ -137,10 +161,21 @@ jobs:
           path: artifacts-windows
       - name: Release
         run: |
-          wget -O ghr.tar.gz https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz
-          tar -xvf ghr.tar.gz
+          source libs/deploy_common.sh
+          curl -Lo - https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar xzv
           mv ghr*linux_amd64/ghr .
-          mkdir apks
-          find artifacts-linux -name "*.tar.gz" -exec cp {} apks \;
-          find artifacts-windows -name "*.zip" -exec cp {} apks \;
-          ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" apks
+          tar xzvf artifacts-linux/artifacts.tgz
+          tar xzvf artifacts-windows/artifacts.tgz
+          tar xzvf artifacts-common/artifacts.tgz
+          cd deployment
+          cp -r assets/* linux64
+          cp -r assets/* windows64
+          rm -rf assets
+          mv linux64 nekoray
+          zip -r $version_standalone-linux64.zip nekoray
+          rm -rf nekoray
+          mv windows64 nekoray
+          zip -r $version_standalone-windows64.zip nekoray
+          rm -rf nekoray
+          cd ..
+          ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" deployment

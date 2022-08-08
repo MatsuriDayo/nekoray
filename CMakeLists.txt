@@ -33,12 +33,16 @@ endif ()
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
 
-# My dependencies
-include("cmake/print.cmake")
-set(MY_DEPS_DIR "${CMAKE_SOURCE_DIR}/libs/deps/built")
-list(APPEND CMAKE_PREFIX_PATH ${MY_DEPS_DIR})
+# default prefix path
+list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/built)
+message("[CMAKE_PREFIX_PATH] ${CMAKE_PREFIX_PATH}")
+
+# for some cross toolchain
+list(APPEND CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
+message("[CMAKE_FIND_ROOT_PATH] ${CMAKE_FIND_ROOT_PATH}")
 
 # NKR
+include("cmake/print.cmake")
 include("cmake/nkr.cmake")
 
 find_package(Threads)
@@ -64,6 +68,7 @@ else ()
 
     # QHotkey (static submodule)
     set(QHOTKEY_INSTALL OFF)
+    set(BUILD_SHARED_LIBS OFF)
     add_subdirectory(3rdparty/QHotkey)
     list(APPEND NKR_EXTERNAL_TARGETS qhotkey)
 endif ()

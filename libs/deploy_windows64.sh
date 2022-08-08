@@ -2,15 +2,9 @@
 set -e
 
 source libs/deploy_common.sh
-
-#### Go: sing-box ####
-pushd $BUILD
-curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/archive/64dbac813837bbadfaeec1a6e0d064875a123e5e.zip
-unzip sing-box.zip
-pushd sing-box-*/cmd/sing-box
-go build -o $DEST -trimpath -ldflags "-w -s"
-popd
-popd
+DEST=$DEPLOYMENT/windows64
+rm -rf $DEST
+mkdir -p $DEST
 
 #### copy exe ####
 cp $BUILD/nekoray.exe $DEST
@@ -23,7 +17,5 @@ curl -LSsO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/2
 rm -rf translations
 popd
 
-#### pack zip ####
-7z a $SRC_ROOT/deployment/$version_standalone-windows64.zip $DEST
-cp $BUILD/*.pdb $SRC_ROOT/deployment/
-rm -rf $DEST $BUILD
+#### prepare deployment ####
+cp $BUILD/*.pdb $DEPLOYMENT

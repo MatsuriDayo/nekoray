@@ -1,12 +1,10 @@
-#ifndef __MINGW32__
-
 #include "QvProxyConfigurator.hpp"
 
 #ifdef Q_OS_WIN
 //
-#include <Windows.h>
+#include <windows.h>
 //
-#include <WinInet.h>
+#include <wininet.h>
 #include <ras.h>
 #include <raserror.h>
 #include <vector>
@@ -480,5 +478,3 @@ namespace Qv2ray::components::proxy {
 #endif
     }
 } // namespace Qv2ray::components::proxy
-
-#endif
