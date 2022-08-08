@@ -122,7 +122,7 @@ func getProxyHttpClient(_instance *libcore.V2RayInstance) *http.Client {
 
 // UPDATE
 
-var update_download_url, update_download_as string
+var update_download_url string
 
 func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
 	ret := &gen.UpdateResp{}
@@ -161,10 +161,8 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 		var search string
 		if runtime.GOOS == "windows" && runtime.GOARCH == "amd64" {
 			search = "windows64"
-			update_download_as = "nekoray.zip"
 		} else if runtime.GOOS == "linux" && runtime.GOARCH == "amd64" {
 			search = "linux64"
-			update_download_as = "nekoray.tar.gz"
 		} else {
 			ret.Error = "Not official support platform"
 			return ret, nil
@@ -191,7 +189,7 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 			}
 		}
 	} else { // Download update
-		if update_download_url == "" || update_download_as == "" {
+		if update_download_url == "" {
 			ret.Error = "?"
 			return ret, nil
 		}
@@ -204,7 +202,7 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 		}
 		defer resp.Body.Close()
 
-		f, err := os.OpenFile("../"+update_download_as, os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0644)
+		f, err := os.OpenFile("../nekoray.zip", os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0644)
 		if err != nil {
 			ret.Error = err.Error()
 			return ret, nil
