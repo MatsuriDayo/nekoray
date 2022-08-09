@@ -666,10 +666,6 @@
         <translation>归档</translation>
     </message>
     <message>
-        <source>Update %1?</source>
-        <translation>更新 %1 ?</translation>
-    </message>
-    <message>
         <source>Last update: %1</source>
         <translation>最后更新 %1</translation>
     </message>
@@ -990,14 +986,6 @@ End: %2</source>
         <translation>手动输入配置</translation>
     </message>
     <message>
-        <source>Start [ Enter ]</source>
-        <translation>启动 [ Enter ]</translation>
-    </message>
-    <message>
-        <source>Delete [ Delete ]</source>
-        <translation>删除 [ Delete ]</translation>
-    </message>
-    <message>
         <source>Hotkey Settings</source>
         <translation>热键设置</translation>
     </message>
@@ -1026,16 +1014,8 @@ End: %2</source>
         <translation>加载路由规则并应用: %1</translation>
     </message>
     <message>
-        <source>Copy links of selected [ Ctrl+C ]</source>
-        <translation>批量复制选中项目的分享链接 [ Ctrl+C ]</translation>
-    </message>
-    <message>
         <source>Copied %1 item(s)</source>
         <translation>复制了 %1 个项目</translation>
-    </message>
-    <message>
-        <source>Add profile from clipboard [ Ctrl+V ]</source>
-        <translation>从剪切板添加 [ Ctrl+V ]</translation>
     </message>
     <message>
         <source>Full Test</source>
@@ -1080,6 +1060,30 @@ End: %2</source>
     <message>
         <source>Restart VPN to take effect.</source>
         <translation>重启 VPN 生效。</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>启动</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
+        <source>Copy links of selected</source>
+        <translation>批量复制选中项目的分享链接</translation>
+    </message>
+    <message>
+        <source>Clone</source>
+        <translation>克隆</translation>
+    </message>
+    <message>
+        <source>Update subscripton</source>
+        <translation>更新订阅</translation>
+    </message>
+    <message>
+        <source>Clone %1 item(s)</source>
+        <translation>克隆 %1 个项目</translation>
     </message>
 </context>
 <context>

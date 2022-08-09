@@ -279,15 +279,16 @@ namespace NekoRay::sub {
         bool asURL = _sub_gid >= 0 || _not_sub_as_url; // 把 _str 当作 url 处理（下载内容）
         auto content = _str.trimmed();
         auto group = profileManager->GetGroup(_sub_gid);
+        if (group != nullptr && group->archive) return;
 
         // 网络请求
         if (asURL) {
             auto groupName = group == nullptr ? content : group->name;
-            showLog(">>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
+            showLog(">>>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
 
             auto resp = NetworkRequestHelper::HttpGet(content);
             if (!resp.error.isEmpty()) {
-                showLog(">>>>>>> " + QObject::tr("Requesting subscription %1 error: %2")
+                showLog("<<<<<<<< " + QObject::tr("Requesting subscription %1 error: %2")
                         .arg(groupName, resp.error + "\n" + resp.data));
                 return;
             }
@@ -342,7 +343,7 @@ namespace NekoRay::sub {
                         .arg(only_out.length()).arg(notice_added)
                         .arg(only_in.length()).arg(notice_deleted);
                 if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
-                showLog(">>>>>>> " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
+                showLog("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
                 dialog_message("SubUpdater", "finish-dingyue");
             });
         } else {

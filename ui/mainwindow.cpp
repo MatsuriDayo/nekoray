@@ -254,8 +254,6 @@ MainWindow::MainWindow(QWidget *parent)
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
-    connect(shortcut_ctrl_c, &QShortcut::activated, ui->menu_copy_links, &QAction::trigger);
-    connect(shortcut_ctrl_v, &QShortcut::activated, ui->menu_add_from_clipboard, &QAction::trigger);
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
@@ -870,6 +868,23 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
     NekoRay::sub::groupUpdater->AsyncUpdate(clipboard);
 }
 
+void MainWindow::on_menu_clone_triggered() {
+    auto ents = get_now_selected();
+    if (ents.isEmpty()) return;
+
+    auto btn = QMessageBox::question(nullptr,
+                                     tr("Clone"),
+                                     tr("Clone %1 item(s)").arg(ents.count()));
+    if (btn != QMessageBox::Yes) return;
+
+    QStringList sls;
+    for (const auto &ent: ents) {
+        sls << ent->bean->ToNekorayShareLink(ent->type);
+    }
+
+    NekoRay::sub::groupUpdater->AsyncUpdate(sls.join("\n"));
+}
+
 void MainWindow::on_menu_move_triggered() {
     auto ents = get_now_selected();
     if (ents.isEmpty()) return;
@@ -1083,6 +1098,18 @@ void MainWindow::on_menu_delete_repeat_triggered() {
     }
 }
 
+bool mw_sub_updating = false;
+
+void MainWindow::on_menu_update_subscripton_triggered() {
+    auto group = NekoRay::profileManager->CurrentGroup();
+    if (group->url.isEmpty()) return;
+    if (mw_sub_updating) return;
+    mw_sub_updating = true;
+    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, this, [=] {
+        mw_sub_updating = false;
+    });
+}
+
 void MainWindow::on_menu_remove_unavailable_triggered() {
     QList<QSharedPointer<NekoRay::ProxyEntity>> out_del;
 
@@ -1128,14 +1155,6 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
         case Qt::Key_Escape:
             // take over by shortcut_esc
             break;
-        case Qt::Key_Return: {
-            neko_start();
-            break;
-        }
-        case Qt::Key_Delete: {
-            on_menu_delete_triggered();
-            break;
-        }
         default:
             QMainWindow::keyPressEvent(event);
     }

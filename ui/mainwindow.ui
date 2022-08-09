@@ -522,17 +522,19 @@
       <string>Current Group</string>
      </property>
      <addaction name="menu_delete_repeat"/>
+     <addaction name="menu_remove_unavailable"/>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
      <addaction name="menu_clear_test_result"/>
-     <addaction name="menu_remove_unavailable"/>
+     <addaction name="menu_update_subscripton"/>
     </widget>
     <addaction name="menu_add_from_input"/>
     <addaction name="menu_add_from_clipboard"/>
     <addaction name="separator"/>
     <addaction name="menu_start"/>
     <addaction name="menu_stop"/>
+    <addaction name="menu_clone"/>
     <addaction name="separator"/>
     <addaction name="menu_select_all"/>
     <addaction name="menu_move"/>
@@ -572,7 +574,10 @@
   </action>
   <action name="menu_start">
    <property name="text">
-    <string>Start [ Enter ]</string>
+    <string>Start</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Return</string>
    </property>
   </action>
   <action name="menu_stop">
@@ -587,12 +592,18 @@
   </action>
   <action name="menu_add_from_clipboard">
    <property name="text">
-    <string>Add profile from clipboard [ Ctrl+V ]</string>
+    <string>Add profile from clipboard</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+V</string>
    </property>
   </action>
   <action name="menu_delete">
    <property name="text">
-    <string>Delete [ Delete ]</string>
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Del</string>
    </property>
   </action>
   <action name="menu_add_from_clipboard2">
@@ -609,6 +620,9 @@
    <property name="text">
     <string>QR Code and link</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Q</string>
+   </property>
   </action>
   <action name="menu_copy_link">
    <property name="text">
@@ -619,15 +633,24 @@
    <property name="text">
     <string notr="true">Tcp Ping</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+T</string>
+   </property>
   </action>
   <action name="menu_url_test">
    <property name="text">
     <string notr="true">Url Test</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+U</string>
+   </property>
   </action>
   <action name="menu_clear_test_result">
    <property name="text">
     <string>Clear Test Result</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+C</string>
    </property>
   </action>
   <action name="menu_export_config">
@@ -638,6 +661,9 @@
   <action name="menu_reset_traffic">
    <property name="text">
     <string>Reset Traffic</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+R</string>
    </property>
   </action>
   <action name="menu_scan_qr">
@@ -712,6 +738,9 @@
    <property name="text">
     <string>Full Test</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+F</string>
+   </property>
   </action>
   <action name="menu_hotkey_settings">
    <property name="text">
@@ -721,6 +750,9 @@
   <action name="menu_select_all">
    <property name="text">
     <string>Select All</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+A</string>
    </property>
   </action>
   <action name="menu_qr_nkr">
@@ -746,7 +778,10 @@
   </action>
   <action name="menu_copy_links">
    <property name="text">
-    <string>Copy links of selected [ Ctrl+C ]</string>
+    <string>Copy links of selected</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+C</string>
    </property>
   </action>
   <action name="menu_spmode_vpn">
@@ -755,6 +790,22 @@
    </property>
    <property name="text">
     <string>Enable VPN</string>
+   </property>
+  </action>
+  <action name="menu_clone">
+   <property name="text">
+    <string>Clone</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+D</string>
+   </property>
+  </action>
+  <action name="menu_update_subscripton">
+   <property name="text">
+    <string>Update subscripton</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+U</string>
    </property>
   </action>
  </widget>

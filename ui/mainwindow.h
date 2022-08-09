@@ -74,6 +74,8 @@ private slots:
 
     void on_menu_add_from_clipboard_triggered();
 
+    void on_menu_clone_triggered();
+
     void on_menu_move_triggered();
 
     void on_menu_delete_triggered();
@@ -100,6 +102,8 @@ private slots:
 
     void on_menu_remove_unavailable_triggered();
 
+    void on_menu_update_subscripton_triggered();
+
     void on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item);
 
     void on_proxyListTable_customContextMenuRequested(const QPoint &pos);
@@ -110,8 +114,6 @@ private:
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray;
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
-    QShortcut *shortcut_ctrl_c = new QShortcut(QKeySequence("Ctrl+C"), this);
-    QShortcut *shortcut_ctrl_v = new QShortcut(QKeySequence("Ctrl+V"), this);
     QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
     bool core_process_killed = false;

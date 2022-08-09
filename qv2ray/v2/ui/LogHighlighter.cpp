@@ -104,6 +104,10 @@ namespace Qv2ray::ui {
         rule.pattern = QRegularExpression(">>>>+");
         rule.format = warningFormat;
         highlightingRules.append(rule);
+        //
+        rule.pattern = QRegularExpression("<<<<+");
+        rule.format = warningFormat;
+        highlightingRules.append(rule);
 
         {
             // IP IPv6 Host;
