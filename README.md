@@ -29,19 +29,6 @@ https://matsuridayo.github.io
 - `-many` 无视同目录正在运行的实例，强行开启新的实例 (0.11+)
 - `-appdata` 开启后配置文件会放在共享目录，无法多开和自动升级 (0.11+)
 
-### 代理
-
-| 协议           | 状态     | 配置编辑 | 分享链接生成 | 分享链接解析    | Clash 配置解析 |
-|--------------|--------|------|--------|-----------|------------|
-| Socks        | ✅      | ✅    | ✅      | ✅         | ✅          | 
-| HTTP         | ✅      | ✅    | ✅      | ✅         | ✅          | 
-| Shadowsocks  | ✅ (经典) | ✅    | ✅      | 常见格式      | ✅          |
-| VMess        | ✅      | ✅    | ✅      | v2rayN 格式 | ✅          |
-| Trojan       | ✅      | ✅    | ✅      | 标准&常见格式   | ✅          |
-| VLESS        | ✅      | ✅    | ✅      | ✅         | 不适用        |
-| NaïveProxy   | ✅      | ✅    | ✅      | ✅         | 不适用        |
-| Hysteria     | ✅      | ❌    | ❌      | ❌         | 不适用        |
-
 ## Linux 运行 & 简易编译教程
 
 **使用 Linux 系统相信您已具备基本的排错能力，
@@ -85,7 +72,7 @@ git submodule update
 2. Qt 版本必须大于等于 5.15
 3. 系统为 `x86-64-linux-gnu`
 
-```
+```shell
 mkdir build
 cd build
 cmake -GNinja ..
@@ -103,6 +90,16 @@ C++ 部分
 当您的发行版没有上面几个 C++ 依赖包，或者版本不符合要求时，可以参考 libs 文件夹内的默认编译脚本自行编译。
 
 依赖搜寻 prefix 为 `libs/deps/bulit`
+
+示例
+
+```shell
+./libs/build_deps_all.sh
+mkdir build
+cd build
+cmake -GNinja ..
+ninja
+```
 
 编译完成后得到 `nekoray`
 

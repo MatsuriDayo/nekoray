@@ -155,6 +155,9 @@ set(PROJECT_SOURCES
         ui/edit/edit_trojan_vless.h
         ui/edit/edit_trojan_vless.cpp
         ui/edit/edit_trojan_vless.ui
+        ui/edit/gen_hysteria.h
+        ui/edit/gen_hysteria.cpp
+        ui/edit/gen_hysteria.ui
 
         ui/edit/edit_naive.h
         ui/edit/edit_naive.cpp

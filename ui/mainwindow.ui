@@ -587,7 +587,7 @@
   </action>
   <action name="menu_add_from_clipboard">
    <property name="text">
-    <string>New profile from clipboard</string>
+    <string>Add profile from clipboard [ Ctrl+V ]</string>
    </property>
   </action>
   <action name="menu_delete">

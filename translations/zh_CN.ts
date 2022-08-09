@@ -492,6 +492,10 @@
         <source>Command</source>
         <translation>命令</translation>
     </message>
+    <message>
+        <source>Generator</source>
+        <translation>生成器</translation>
+    </message>
 </context>
 <context>
     <name>EditNaive</name>
@@ -594,6 +598,37 @@
     <message>
         <source>UUID</source>
         <translation></translation>
+    </message>
+</context>
+<context>
+    <name>GenHysteria</name>
+    <message>
+        <source>Generate</source>
+        <translation>生成配置</translation>
+    </message>
+    <message>
+        <source>Allow Insecure</source>
+        <translation>不检查服务器证书（不安全）</translation>
+    </message>
+    <message>
+        <source>Certificate Path</source>
+        <translation>证书路径</translation>
+    </message>
+    <message>
+        <source>Obfs Password</source>
+        <translation>混淆密码</translation>
+    </message>
+    <message>
+        <source>Auth String</source>
+        <translation>字符串验证密钥</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/HyNetwork/hysteria/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Document&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/HyNetwork/hysteria/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;文档&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -999,8 +1034,8 @@ End: %2</source>
         <translation>复制了 %1 个项目</translation>
     </message>
     <message>
-        <source>New profile from clipboard</source>
-        <translation>从剪切板添加</translation>
+        <source>Add profile from clipboard [ Ctrl+V ]</source>
+        <translation>从剪切板添加 [ Ctrl+V ]</translation>
     </message>
     <message>
         <source>Full Test</source>

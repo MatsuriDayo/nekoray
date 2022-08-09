@@ -127,8 +127,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-        // I don't want to write a settings
-        if (type == "hysteria") {
+        if (type == "hysteria" || ent->CustomBean()->core == "hysteria") {
             _innerWidget->preset_core = type;
             _innerWidget->preset_command = "-c %config%";
             _innerWidget->preset_config = "{\n"
@@ -141,8 +140,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
                                           "    \"listen\": \"127.0.0.1:%socks_port%\"\n"
                                           "  }\n"
                                           "}";
-            type = "custom";
         }
+        type = "custom";
     } else {
         validType = false;
     }

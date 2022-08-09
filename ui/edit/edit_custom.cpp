@@ -3,6 +3,7 @@
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "fmt/CustomBean.hpp"
+#include "ui/edit/gen_hysteria.h"
 
 EditCustom::EditCustom(QWidget *parent) :
         QWidget(parent), ui(new Ui::EditCustom) {
@@ -34,17 +35,27 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         ui->core->addItem(key);
     }
 
-    if (!preset_core.isEmpty()) {
-        bean->core = preset_core;
-        ui->core->setCurrentText(preset_core);
+    if (!bean->core.isEmpty()) {
         ui->core->setDisabled(true);
+    } else if (!preset_core.isEmpty()) {
+        bean->core = preset_core;
+        ui->core->setDisabled(true);
+        ui->core->setCurrentText(preset_core);
         ui->command->setText(preset_command);
         ui->config_simple->setText(preset_config);
     }
-    if (!bean->core.isEmpty()) {
-        ui->core->setDisabled(true);
-    }
 
+    // Generators
+    if (bean->core == "hysteria") {
+        ui->generator->setVisible(true);
+        auto genHy = new GenHysteria(ent, preset_config);
+        ui->generator->layout()->addWidget(genHy);
+        connect(genHy, &GenHysteria::config_generated, this, [=](const QString &result) {
+            ui->config_simple->setText(result);
+        });
+    } else {
+        ui->generator->setVisible(false);
+    }
 }
 
 bool EditCustom::onEnd() {

@@ -113,6 +113,7 @@ void MainWindow::speedtest_current_group(int mode) {
                     QList<NekoRay::sys::ExternalProcess *> ext;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
+                        // TODO refactor: use only 1 instance
                         auto c = NekoRay::BuildConfig(profile, true);
                         // external test ???
                         if (!c->ext.isEmpty()) {
