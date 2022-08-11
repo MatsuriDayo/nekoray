@@ -23,6 +23,8 @@ namespace QtGrpc {
     const char *GrpcStatusMessage = "grpc-message";
     const int GrpcMessageSizeHeaderSize = 5;
 
+    bool core_crashed = false;
+
     class Http2GrpcChannelPrivate : public QObject {
     private:
         QString url_base;
@@ -133,6 +135,8 @@ namespace QtGrpc {
         QNetworkReply::NetworkError Call(const QString &methodName,
                                          const google::protobuf::Message &req, google::protobuf::Message *rsp,
                                          int timeout_ms = 0) {
+            if (core_crashed) return QNetworkReply::NetworkError(-1919);
+
             std::string reqStr;
             req.SerializeToString(&reqStr);
             auto requestArray = QByteArray::fromStdString(reqStr);

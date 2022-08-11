@@ -45,7 +45,7 @@ namespace NekoRay::sys {
                         } else if (!crashed) {
                             crashed = true;
                             Kill();
-                            showLog_ext(tag, "[Error] Crashed?");
+                            showLog_ext(tag, "[Error] Program exited accidentally");
                             dialog_message("ExternalProcess", "Crashed");
                         }
                     }

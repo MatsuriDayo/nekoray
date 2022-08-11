@@ -170,7 +170,7 @@ jobs:
           cd deployment
           cp -r assets/* linux64
           cp -r assets/* windows64
-          rm -rf assets
+          rm -rf assets *.pdb
           mv linux64 nekoray
           zip -r $version_standalone-linux64.zip nekoray
           rm -rf nekoray

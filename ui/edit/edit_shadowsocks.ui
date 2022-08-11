@@ -90,12 +90,12 @@
      </item>
      <item>
       <property name="text">
-       <string notr="true">chacha20-poly1305</string>
+       <string notr="true">chacha20-ietf-poly1305</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string notr="true">xchacha20-poly1305</string>
+       <string notr="true">xchacha20-ieft-poly1305</string>
       </property>
      </item>
      <item>

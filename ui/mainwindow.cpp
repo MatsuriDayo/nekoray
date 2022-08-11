@@ -16,12 +16,12 @@
 
 #include "3rdparty/qrcodegen.hpp"
 #include "3rdparty/VT100Parser.hpp"
+#include "qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
 #include "qv2ray/v2/ui/LogHighlighter.hpp"
 
 #ifndef NKR_NO_EXTERNAL
 
 #include "3rdparty/ZxingQtReader.hpp"
-#include "qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
 
 #endif
 
@@ -49,6 +49,10 @@
 #include <QDir>
 #include <QFileInfo>
 #include <QFileSystemWatcher>
+
+namespace QtGrpc {
+    extern bool core_crashed;
+}
 
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
@@ -358,7 +362,9 @@ MainWindow::MainWindow(QWidget *parent)
 #ifdef Q_OS_WIN
         if (!core_path.endsWith(".exe")) core_path += ".exe";
 #endif
-        if (!QFile(core_path).exists()) {
+        if (NekoRay::dataStore->flag_use_appdata) {
+            core_path = QApplication::applicationDirPath() + "/nekoray_core";
+        } else if (!QFile(core_path).exists()) {
             starting_info = "(not found)";
             core_path = "";
         }
@@ -400,9 +406,11 @@ MainWindow::MainWindow(QWidget *parent)
             core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
             core_process->waitForFinished(-1);
             if (core_process_killed) return;
-            runOnUiThread([=] { neko_stop(true); });
-            QThread::sleep(2);
+            // TODO Not retrying can avoid crash?
             core_process->deleteLater();
+            QtGrpc::core_crashed = true;
+            showLog("[ERROR] nekoray_core crashed, please restart the program.");
+            return;
         }
     });
 
@@ -567,9 +575,7 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
         // DISABLE
 
         if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-#ifndef NKR_NO_EXTERNAL
             ClearSystemProxy();
-#endif
         } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
             if (!StopVPNProcess()) {
                 refresh_status();
@@ -580,7 +586,6 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
         // ENABLE
 
         if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-#ifndef NKR_NO_EXTERNAL
 #ifdef Q_OS_WIN
             if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY &&
                 !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
@@ -595,7 +600,6 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
             SetSystemProxy("127.0.0.1",
                            NekoRay::dataStore->inbound_http_port,
                            NekoRay::dataStore->inbound_socks_port);
-#endif
         } else if (mode == NekoRay::SystemProxyMode::VPN) {
             if (!StartVPNProcess()) {
                 refresh_status();

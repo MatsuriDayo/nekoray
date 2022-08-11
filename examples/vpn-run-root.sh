@@ -18,7 +18,7 @@ BASEDIR=$(dirname "$0")
 cd $BASEDIR
 
 start() {
-  # add tun (TODO the ip must be the same as matsuri)
+  # add tun
   ip tuntap add $TUN_NAME mode tun user $USER_ID || return
   ip link set dev nekoray-tun mtu $MTU || return
   ip link set dev $TUN_NAME up || return

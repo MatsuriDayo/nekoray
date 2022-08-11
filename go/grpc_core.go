@@ -137,6 +137,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		if in.Config != nil {
 			// Test instance
 			i = libcore.NewV2rayInstance()
+			i.ForTest = true
 			defer i.Close()
 
 			err = i.LoadConfig(in.Config.CoreConfig)
@@ -161,8 +162,19 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		t, err = libcore.UrlTestV2ray(i, in.Inbound, in.Url, in.Timeout)
 		out.Ms = t // sn: ms==0 是错误
 	} else if in.Mode == gen.TestMode_TcpPing {
+		host, port, err := net.SplitHostPort(in.Address)
+		if err != nil {
+			out.Error = err.Error()
+			return
+		}
+		ip, err := net.ResolveIPAddr("ip", host)
+		if err != nil {
+			out.Error = err.Error()
+			return
+		}
+		//
 		startTime := time.Now()
-		_, err = net.DialTimeout("tcp", in.Address, time.Duration(in.Timeout)*time.Millisecond)
+		_, err = net.DialTimeout("tcp", net.JoinHostPort(ip.String(), port), time.Duration(in.Timeout)*time.Millisecond)
 		endTime := time.Now()
 		if err == nil {
 			out.Ms = int32(endTime.Sub(startTime).Milliseconds())
@@ -174,6 +186,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 		// Test instance
 		i := libcore.NewV2rayInstance()
+		i.ForTest = true
 		defer i.Close()
 
 		err = i.LoadConfig(in.Config.CoreConfig)
