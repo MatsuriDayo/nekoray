@@ -37,7 +37,7 @@ jobs:
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-18.04 ]
+        platform: [ windows-2022, ubuntu-20.04 ]
         arch: [ x64 ]
         qt_version: [ 5.15.2 ]
         include:
@@ -85,7 +85,7 @@ jobs:
           version: 1.10.0
       - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
         shell: bash
-        if: matrix.platform == 'ubuntu-18.04'
+        if: matrix.platform == 'ubuntu-20.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y ninja-build 
@@ -117,7 +117,7 @@ jobs:
           ./libs/deploy_windows64.sh
       - name: Linux - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
-        if: matrix.platform == 'ubuntu-18.04'
+        if: matrix.platform == 'ubuntu-20.04'
         run: |
           mkdir build
           cd build
@@ -152,7 +152,7 @@ jobs:
       - name: Donwload Artifacts
         uses: actions/download-artifact@v2
         with:
-          name: NekoRay-${{ github.sha }}-ubuntu-18.04-x64
+          name: NekoRay-${{ github.sha }}-ubuntu-20.04-x64
           path: artifacts-linux
       - name: Donwload Artifacts
         uses: actions/download-artifact@v2
