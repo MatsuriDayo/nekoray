@@ -166,19 +166,13 @@ namespace NekoRay {
         QJsonObject dns;
         QJsonArray dnsServers;
 
-        // FakeDNS
-        QJsonObject dnsServerFake;
-        dnsServerFake["address"] = "fakedns";
-        dnsServerFake["domains"] = status->domainListDNSRemote;
-        if (dataStore->fake_dns && !forTest) dnsServers += dnsServerFake;
-
-        // remote
+        // Remote or FakeDNS
         QJsonObject dnsServerRemote;
-        dnsServerRemote["address"] = dataStore->remote_dns;
+        dnsServerRemote["address"] = dataStore->fake_dns ? "fakedns" : dataStore->remote_dns;
         dnsServerRemote["domains"] = status->domainListDNSRemote;
         if (!forTest) dnsServers += dnsServerRemote;
 
-        //direct
+        // Direct
         auto directDnsAddress = dataStore->direct_dns;
         if (directDnsAddress.contains("://")) {
             auto directDnsIp = SubStrBefore(SubStrAfter(directDnsAddress, "://"), "/");
