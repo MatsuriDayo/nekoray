@@ -24,19 +24,21 @@ https://t.me/Matsuridayo
 
 https://matsuridayo.github.io
 
-### 运行参数
+## 运行参数
 
 - `-many` 无视同目录正在运行的实例，强行开启新的实例 (0.11+)
 - `-appdata` 开启后配置文件会放在共享目录，无法多开和自动升级 (0.11+)
 
-## Linux 运行 & 简易编译教程
+## Windows 运行
+
+若提示 DLL 缺失，无法运行，请下载 安装 [微软 C++ 运行库](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+
+## Linux 运行
 
 **使用 Linux 系统相信您已具备基本的排错能力，
 本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
 
-系统要求： Qt5 运行环境，一般桌面 Linux 已经安装，如果没有请用包管理器安装，如
-
-`apt install libqt5gui5 libqt5x11extras5`
+要求：已安装主流的发行版和 xcb 桌面环境。
 
 运行： `./launcher` 或 部分系统可双击打开
 
@@ -46,69 +48,13 @@ launcher 参数
 * `-debug` Debug mode
 * `-theme` Use local QT theme (unstable) (1.0+)
 
-已知部分 x86_64 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
+已知部分 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
 
-### 编译
+## 编译教程
 
-准备工作
+[Linux](examples/docs/Build_Linux.md)
 
-```
-git submodule init
-git submodule update
-```
-
-| CMake 参数                | 默认值 | 含义                      |
-|-------------------------|-----|-------------------------|
-| QT_VERSION_MAJOR        | 5   | QT版本                    |
-| NKR_NO_EXTERNAL         |     | 不包含外部C++依赖(如ZXing/gRPC) |
-| NKR_NO_GRPC             |     | 不包含gRPC                 |
-| NKR_CROSS               |     |                         |
-
-### 简单编译法
-
-条件：
-
-1. C++ 依赖： `qt5 protobuf yaml-cpp zxing-cpp` 已用包管理器安装，并符合版本要求
-2. Qt 版本必须大于等于 5.15
-3. 系统为 `x86-64-linux-gnu`
-
-```shell
-mkdir build
-cd build
-cmake -GNinja ..
-ninja
-```
-
-编译完成后得到 `nekoray`
-
-解压 Release 的压缩包，替换其中的 `nekoray`，删除 `launcher` 即可使用。
-
-### 复杂编译法
-
-C++ 部分
-
-当您的发行版没有上面几个 C++ 依赖包，或者版本不符合要求时，可以参考 libs 文件夹内的默认编译脚本自行编译。
-
-依赖搜寻 prefix 为 `libs/deps/bulit`
-
-示例
-
-```shell
-./libs/build_deps_all.sh
-mkdir build
-cd build
-cmake -GNinja ..
-ninja
-```
-
-编译完成后得到 `nekoray`
-
-Go 部分
-
-1. 把 `Matsuridayo/Matsuri` `Matsuridayo/v2ray-core` 置于 `../`
-2. 进入 `go` 文件夹 `go build` 得到 `nekoray_core`。
-
-非官方构建无需编译 `updater` `launcher`
+Windows
 
 ## Credits
 
