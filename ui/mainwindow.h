@@ -86,6 +86,8 @@ private slots:
 
     void on_menu_copy_links_triggered();
 
+    void on_menu_copy_links_nkr_triggered();
+
     void on_menu_export_config_triggered();
 
     void display_qr_link(bool nkrFormat = false);

@@ -205,8 +205,6 @@ namespace NekoRay::sub {
                             }
                         }
                         bean->stream->path = Node2QString(ws["path"]);
-                        bean->stream->max_early_data = Node2Int(proxy["max-early-data"]);
-                        bean->stream->early_data_header_name = Node2QString(ws["early-data-header-name"]);
                     }
 
                     auto grpc = proxy["grpc-opts"];

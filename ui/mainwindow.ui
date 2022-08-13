@@ -512,10 +512,10 @@
       <string>Share</string>
      </property>
      <addaction name="menu_qr"/>
-     <addaction name="menu_qr_nkr"/>
      <addaction name="menu_export_config"/>
      <addaction name="separator"/>
      <addaction name="menu_copy_links"/>
+     <addaction name="menu_copy_links_nkr"/>
     </widget>
     <widget class="QMenu" name="menugroup">
      <property name="title">
@@ -755,9 +755,12 @@
     <string notr="true">Ctrl+A</string>
    </property>
   </action>
-  <action name="menu_qr_nkr">
+  <action name="menu_copy_links_nkr">
    <property name="text">
-    <string>QR Code and link (Nekoray)</string>
+    <string>Copy links of selected (Nekoray)</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Alt+C</string>
    </property>
   </action>
   <action name="actionfake_2">

@@ -157,6 +157,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string/>
+        </property>
         <layout class="QVBoxLayout" name="right_layout">
          <property name="sizeConstraint">
           <enum>QLayout::SetDefaultConstraint</enum>
@@ -365,27 +368,17 @@
             </item>
             <item>
              <layout class="QGridLayout" name="_3">
-              <item row="1" column="1">
+              <item row="2" column="1">
                <widget class="QPushButton" name="certificate_edit">
                 <property name="text">
                  <string notr="true">PushButton</string>
                 </property>
                </widget>
               </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="toolTip">
-                 <string notr="true">服务器名称指示，明文。</string>
-                </property>
-                <property name="text">
-                 <string>SNI</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
+              <item row="2" column="0">
                <widget class="QLabel" name="label_6">
                 <property name="toolTip">
-                 <string notr="true">固定证书</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Certificate</string>
@@ -394,6 +387,29 @@
               </item>
               <item row="0" column="1">
                <widget class="MyLineEdit" name="sni"/>
+              </item>
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_5">
+                <property name="toolTip">
+                 <string notr="true">服务器名称指示，明文。</string>
+                </property>
+                <property name="text">
+                 <string notr="true">SNI</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_8">
+                <property name="toolTip">
+                 <string notr="true">应用层协议协商，明文。多个请以英文逗号分隔。</string>
+                </property>
+                <property name="text">
+                 <string notr="true">ALPN</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="MyLineEdit" name="alpn"/>
               </item>
              </layout>
             </item>

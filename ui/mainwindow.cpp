@@ -344,7 +344,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_spmode_disabled, &QAction::triggered, this,
             [=]() { neko_set_spmode(NekoRay::SystemProxyMode::DISABLE); });
     connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
-    connect(ui->menu_qr_nkr, &QAction::triggered, this, [=]() { display_qr_link(true); });
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0); });
     connect(ui->menu_url_test, &QAction::triggered, this, [=]() { speedtest_current_group(1); });
     connect(ui->menu_full_test, &QAction::triggered, this, [=]() { speedtest_current_group(2); });
@@ -957,6 +956,17 @@ void MainWindow::on_menu_copy_links_triggered() {
     QStringList links;
     for (const auto &ent: ents) {
         links += ent->bean->ToShareLink();
+    }
+    if (links.length() == 0) return;
+    QApplication::clipboard()->setText(links.join("\n"));
+    MessageBoxInfo("NekoRay", tr("Copied %1 item(s)").arg(links.length()));
+}
+
+void MainWindow::on_menu_copy_links_nkr_triggered() {
+    auto ents = get_now_selected();
+    QStringList links;
+    for (const auto &ent: ents) {
+        links += ent->bean->ToNekorayShareLink(ent->type);
     }
     if (links.length() == 0) return;
     QApplication::clipboard()->setText(links.join("\n"));

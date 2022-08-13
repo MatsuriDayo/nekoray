@@ -173,6 +173,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->path->setText(stream->path);
         ui->host->setText(stream->host);
         ui->sni->setText(stream->sni);
+        ui->alpn->setText(stream->alpn);
         ui->insecure->setChecked(stream->allow_insecure);
         CACHE.certificate = stream->certificate;
     } else {
@@ -209,6 +210,14 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port->setText(Int2String(ent->bean->serverPort));
     ui->port->setValidator(QRegExpValidator_Number, this));
 
+    // 星号
+    for (auto label: findChildren<QLabel *>()) {
+        auto text = label->text();
+        if (!label->toolTip().isEmpty() && !text.endsWith("*")) {
+            label->setText(text + "*");
+        }
+    }
+
     editor_cache_updated_impl();
     ADJUST_SIZE
 
@@ -238,6 +247,7 @@ void DialogEditProfile::accept() {
         stream->path = ui->path->text();
         stream->host = ui->host->text();
         stream->sni = ui->sni->text();
+        stream->alpn = ui->alpn->text();
         stream->allow_insecure = ui->insecure->isChecked();
         stream->certificate = CACHE.certificate;
     }

@@ -274,10 +274,6 @@
         <translation>主机(Host)</translation>
     </message>
     <message>
-        <source>SNI</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Custom</source>
         <translation>自定义</translation>
     </message>
@@ -998,10 +994,6 @@ End: %2</source>
         <translation>导出 V2ray 配置</translation>
     </message>
     <message>
-        <source>QR Code and link (Nekoray)</source>
-        <translation>显示 QR Code 和分享链接 (Nekoray)</translation>
-    </message>
-    <message>
         <source>Active Routing</source>
         <translation>当前路由规则</translation>
     </message>
@@ -1084,6 +1076,10 @@ End: %2</source>
     <message>
         <source>Clone %1 item(s)</source>
         <translation>克隆 %1 个项目</translation>
+    </message>
+    <message>
+        <source>Copy links of selected (Nekoray)</source>
+        <translation>批量复制选中项目的分享链接 (Nekoray)</translation>
     </message>
 </context>
 <context>
