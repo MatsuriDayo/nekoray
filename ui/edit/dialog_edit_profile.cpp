@@ -10,6 +10,7 @@
 #include "ui/edit/edit_custom.h"
 
 #include "fmt/includes.h"
+#include "fmt/Preset.hpp"
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
@@ -129,17 +130,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         innerEditor = _innerWidget;
         if (type == "hysteria" || ent->CustomBean()->core == "hysteria") {
             _innerWidget->preset_core = type;
-            _innerWidget->preset_command = "-c %config%";
-            _innerWidget->preset_config = "{\n"
-                                          "  \"server\": \"127.0.0.1:%mapping_port%\",\n"
-                                          "  \"obfs\": \"fuck me till the daylight\",\n"
-                                          "  \"up_mbps\": 10,\n"
-                                          "  \"down_mbps\": 50,\n"
-                                          "  \"server_name\": \"real.name.com\",\n"
-                                          "  \"socks5\": {\n"
-                                          "    \"listen\": \"127.0.0.1:%socks_port%\"\n"
-                                          "  }\n"
-                                          "}";
+            _innerWidget->preset_command = Preset::Hysteria::command;
+            _innerWidget->preset_config = Preset::Hysteria::config;
         }
         type = "custom";
     } else {

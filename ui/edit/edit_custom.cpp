@@ -48,7 +48,7 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     // Generators
     if (bean->core == "hysteria") {
         ui->generator->setVisible(true);
-        auto genHy = new GenHysteria(ent, preset_config);
+        auto genHy = new GenHysteria(ent);
         ui->generator->layout()->addWidget(genHy);
         connect(genHy, &GenHysteria::config_generated, this, [=](const QString &result) {
             ui->config_simple->setText(result);

@@ -3,10 +3,12 @@
 #include "db/Database.hpp"
 #include "db/ProfileFilter.hpp"
 #include "fmt/includes.h"
+#include "fmt/Preset.hpp"
 
 #include "GroupUpdater.hpp"
 
 #include <QInputDialog>
+#include <QUrlQuery>
 
 #ifndef NKR_NO_EXTERNAL
 
@@ -103,6 +105,31 @@ namespace NekoRay::sub {
             ent = ProfileManager::NewProxyEntity("naive");
             auto ok = ent->NaiveBean()->TryParseLink(str);
             if (!ok) return;
+        }
+
+        // Hysteria
+        if (str.startsWith("hysteria://")) {
+            // https://github.com/HyNetwork/hysteria/wiki/URI-Scheme
+            ent = ProfileManager::NewProxyEntity("custom");
+            auto bean = ent->CustomBean();
+            auto url = QUrl(str);
+            auto query = QUrlQuery(url.query());
+            if (url.host().isEmpty() || url.port() == -1 || !query.hasQueryItem("upmbps")) return;
+            bean->name = url.fragment();
+            bean->serverAddress = url.host();
+            bean->serverPort = url.port();
+            bean->core = "hysteria";
+            bean->command = QString(Preset::Hysteria::command).split(" ");
+            auto result = QString2QJsonObject(Preset::Hysteria::config);
+            result["obfs"] = query.queryItemValue("obfsParam");
+            result["insecure"] = query.queryItemValue("insecure") == "1";
+            result["up_mbps"] = query.queryItemValue("upmbps").toInt();
+            result["down_mbps"] = query.queryItemValue("downmbps").toInt();
+            result["protocol"] = query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp";
+            if (query.hasQueryItem("auth")) result["auth_str"] = query.queryItemValue("auth");
+            if (query.hasQueryItem("alpn")) result["alpn"] = query.queryItemValue("alpn");
+            if (query.hasQueryItem("peer")) result["server_name"] = query.queryItemValue("peer");
+            bean->config_simple = QJsonObject2QString(result, false);
         }
 
         // End

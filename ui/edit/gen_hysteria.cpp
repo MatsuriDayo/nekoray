@@ -2,13 +2,12 @@
 #include "ui_gen_hysteria.h"
 
 #include "fmt/CustomBean.hpp"
+#include "fmt/Preset.hpp"
 
-GenHysteria::GenHysteria(const QSharedPointer<NekoRay::ProxyEntity> &ent, const QString &preset_config,
-                         QWidget *parent) :
+GenHysteria::GenHysteria(const QSharedPointer<NekoRay::ProxyEntity> &ent, QWidget *parent) :
         QWidget(parent), ui(new Ui::GenHysteria) {
     ui->setupUi(this);
     this->ent = ent;
-    this->preset_config = preset_config;
 }
 
 GenHysteria::~GenHysteria() {
@@ -16,7 +15,7 @@ GenHysteria::~GenHysteria() {
 }
 
 void GenHysteria::on_gen_clicked() {
-    auto result = QString2QJsonObject(preset_config);
+    auto result = QString2QJsonObject(Preset::Hysteria::config);
     result["obfs"] = ui->obfs_password->text();
     result["insecure"] = ui->allow_insecure->isChecked();
     result["protocol"] = ui->protocol->currentText();

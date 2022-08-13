@@ -11,15 +11,13 @@ class GenHysteria : public QWidget {
 Q_OBJECT
 
 public:
-    explicit GenHysteria(const QSharedPointer<NekoRay::ProxyEntity> &ent, const QString &preset_config,
-                         QWidget *parent = nullptr);
+    explicit GenHysteria(const QSharedPointer<NekoRay::ProxyEntity> &ent, QWidget *parent = nullptr);
 
     ~GenHysteria() override;
 
 private:
     Ui::GenHysteria *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
-    QString preset_config;
 
 signals:
 
