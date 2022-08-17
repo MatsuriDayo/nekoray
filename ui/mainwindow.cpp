@@ -378,14 +378,14 @@ MainWindow::MainWindow(QWidget *parent)
 
         for (int retry = 0; retry < 10; retry++) {
             showLog("Starting nekoray core " + starting_info + "\n");
-            core_process = new QProcess;
+            auto core_process = new QProcess;
             core_process_show_stderr = false;
             connect(core_process, &QProcess::readyReadStandardOutput, this,
-                    [&]() {
+                    [=]() {
                         showLog(core_process->readAllStandardOutput().trimmed());
                     });
             connect(core_process, &QProcess::readyReadStandardError, this,
-                    [&]() {
+                    [=]() {
                         auto log = core_process->readAllStandardError().trimmed();
                         if (core_process_show_stderr) {
                             showLog(log);
