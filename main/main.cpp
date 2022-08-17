@@ -1,5 +1,7 @@
 #include "ui/mainwindow.h"
 
+#include <csignal>
+
 #include <QApplication>
 #include <QDir>
 #include <QTranslator>
@@ -12,6 +14,13 @@
 #ifdef Q_OS_WIN
 #include "sys/windows/MiniDump.h"
 #endif
+
+void signal_handler(int signum) {
+    if (qApp) {
+        GetMainWindow()->on_commitDataRequest();
+        qApp->exit();
+    }
+}
 
 int main(int argc, char *argv[]) {
     // Core dump
@@ -119,6 +128,10 @@ int main(int argc, char *argv[]) {
     if (trans_qt.load(QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm")) {
         QCoreApplication::installTranslator(&trans_qt);
     }
+
+    //Signals
+    signal(SIGTERM, signal_handler);
+    signal(SIGINT, signal_handler);
 
     MainWindow w;
     return QApplication::exec();

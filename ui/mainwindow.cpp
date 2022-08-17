@@ -425,6 +425,8 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    connect(qApp, &QGuiApplication::commitDataRequest, this, &MainWindow::on_commitDataRequest);
+
     if (!NekoRay::dataStore->start_minimal) show();
 }
 
@@ -538,11 +540,8 @@ void MainWindow::on_menu_hotkey_settings_triggered() {
     USE_DIALOG(DialogHotkey)
 }
 
-void MainWindow::on_menu_exit_triggered() {
-    neko_set_spmode(NekoRay::SystemProxyMode::DISABLE, false);
-    if (title_spmode == NekoRay::SystemProxyMode::VPN) return;
-    RegisterHotkey(true);
-
+void MainWindow::on_commitDataRequest() {
+    qDebug() << "Start of data save";
     if (!isMaximized()) {
         auto olds = NekoRay::dataStore->mw_size;
         auto news = QString("%1x%2").arg(size().width()).arg(size().height());
@@ -551,17 +550,26 @@ void MainWindow::on_menu_exit_triggered() {
             NekoRay::dataStore->Save();
         }
     }
-
+    //
     auto last_id = NekoRay::dataStore->started_id;
     neko_stop();
     if (NekoRay::dataStore->remember_enable && last_id >= 0) {
         NekoRay::dataStore->UpdateStartedId(last_id);
     }
+    qDebug() << "End of data save";
+}
 
+void MainWindow::on_menu_exit_triggered() {
+    neko_set_spmode(NekoRay::SystemProxyMode::DISABLE, false);
+    if (title_spmode == NekoRay::SystemProxyMode::VPN) return;
+    RegisterHotkey(true);
+    //
+    on_commitDataRequest();
+    //
     core_process_killed = true;
     hide();
     ExitNekorayCore();
-
+    //
     if (exit_update) {
         QDir::setCurrent(QApplication::applicationDirPath());
         QProcess::startDetached("./updater", QStringList{});
