@@ -113,7 +113,8 @@ namespace NekoRay::fmt {
             serverPort = objN["port"].toVariant().toInt();
             // OPTIONAL
             name = objN["ps"].toString();
-            aid = objN["aid"].toInt();
+            auto aid_ = objN["aid"];
+            aid = aid_.isString() ? aid_.toString().toInt() : aid_.toInt();
             stream->host = objN["host"].toString();
             stream->path = objN["path"].toString();
             stream->sni = objN["sni"].toString();
