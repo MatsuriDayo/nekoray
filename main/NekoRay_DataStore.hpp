@@ -55,7 +55,7 @@ namespace NekoRay {
         // Misc
         QString core_path = "../nekoray_core";
         QString log_level = "warning";
-        QString user_agent = "ClashForAndroid/2.5.9.premium";
+        QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
         bool sub_use_proxy = false;
         QString test_url = "http://cp.cloudflare.com/";
         int test_concurrent = 5;

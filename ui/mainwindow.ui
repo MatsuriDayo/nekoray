@@ -534,10 +534,10 @@
     <addaction name="separator"/>
     <addaction name="menu_start"/>
     <addaction name="menu_stop"/>
-    <addaction name="menu_clone"/>
     <addaction name="separator"/>
     <addaction name="menu_select_all"/>
     <addaction name="menu_move"/>
+    <addaction name="menu_clone"/>
     <addaction name="menu_reset_traffic"/>
     <addaction name="menu_delete"/>
     <addaction name="separator"/>
@@ -583,6 +583,9 @@
   <action name="menu_stop">
    <property name="text">
     <string>Stop</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+S</string>
    </property>
   </action>
   <action name="menu_routing_settings">
