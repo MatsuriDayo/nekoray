@@ -467,12 +467,16 @@ void MainWindow::show_group(int gid) {
         MessageBoxWarning(tr("Error"), QString("No such group: %1").arg(gid));
         return;
     }
+
     if (NekoRay::dataStore->current_group != gid) {
         NekoRay::dataStore->current_group = gid;
         NekoRay::dataStore->Save();
     }
     ui->tabWidget->widget(groupId2TabIndex(gid))->layout()->addWidget(ui->proxyListTable);
-    refresh_proxy_list();
+
+    NekoRay::GroupSortAction gsa;
+    gsa.scroll_to_started = true;
+    refresh_proxy_list_impl(-1, gsa);
 }
 
 // callback
@@ -727,6 +731,8 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         ui->proxyListTable->setRowCount(0);
     }
 
+    QTableWidgetItem *started_item = nullptr;
+
     // 绘制或更新item(s)
     int row = -1;
     for (const auto &profile: NekoRay::profileManager->profiles) {
@@ -751,6 +757,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         auto f = f0->clone();
         if (profile->id == NekoRay::dataStore->started_id) {
             f->setText("✓");
+            if (groupSortAction.scroll_to_started) started_item = f;
         } else {
             f->setText("　");
         }
@@ -850,6 +857,12 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             }
         }
         ui->proxyListTable->update_order(groupSortAction.save_sort);
+    }
+
+    if (started_item != nullptr) {
+        runOnUiThread([=] {
+            ui->proxyListTable->verticalScrollBar()->setSliderPosition(started_item->row());
+        });
     }
 }
 
