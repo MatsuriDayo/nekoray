@@ -217,7 +217,8 @@ void MainWindow::neko_start(int _id) {
         return;
     }
 
-    if (NekoRay::profileManager->GetGroup(ent->gid)->archive) return;
+    auto group = NekoRay::profileManager->GetGroup(ent->gid);
+    if (group == nullptr || group->archive) return;
 
     auto result = NekoRay::BuildConfig(ent, false);
     if (!result->error.isEmpty()) {
