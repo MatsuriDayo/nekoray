@@ -2,9 +2,13 @@ package main
 
 import (
 	"flag"
+	"io"
 	"log"
 	"nekoray_core/protect_server"
+	"net"
+	"net/http"
 	"os"
+	"syscall"
 
 	"github.com/jsimonetti/rtnetlink"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"
@@ -62,6 +66,28 @@ func ToolBox() {
 			}
 			log.Println(protectListenPath, protectFwMark)
 			protect_server.ServeProtect(protectListenPath, protectFwMark)
+		}
+	case "btd": // Test the permission
+		{
+			d := &net.Dialer{
+				Control: func(network, address string, c syscall.RawConn) (err error) {
+					c.Control(func(fd uintptr) {
+						err = syscall.BindToDevice(int(fd), os.Args[3])
+					})
+					return
+				},
+			}
+			c := http.Client{
+				Transport: &http.Transport{
+					DialContext: d.DialContext,
+				},
+			}
+			resp, err := c.Get(os.Args[4])
+			if err != nil {
+				log.Fatalln(err)
+			}
+			io.Copy(os.Stdout, resp.Body)
+			resp.Body.Close()
 		}
 	}
 }

@@ -72,6 +72,7 @@ func ServeProtect(path string, fwmark int) {
 					log.Println("getOneFd:", err)
 					return
 				}
+				defer syscall.Close(fd)
 
 				if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, fwmark); err != nil {
 					log.Println("syscall.SetsockoptInt:", err)
