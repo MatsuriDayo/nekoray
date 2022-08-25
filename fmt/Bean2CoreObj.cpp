@@ -38,7 +38,7 @@ namespace NekoRay::fmt {
             if (!certificate.trimmed().isEmpty()) {
                 tls["certificates"] = QJsonArray{
                         QJsonObject{
-                                {"certificate", certificate},
+                                {"certificate", QList2QJsonArray(SplitLines(certificate.trimmed()))},
                         },
                 };
             }
