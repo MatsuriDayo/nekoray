@@ -32,12 +32,8 @@ if [ "$GOOS" != "windows" ]; then
   exit
 fi
 
-#### Go: sing-box ####
-pushd $DEST
-curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/archive/64dbac813837bbadfaeec1a6e0d064875a123e5e.zip
+#### Go ext: sing-box ####
+curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/releases/download/v1.0-beta1/sing-box-1.0-beta1-windows-amd64.zip
 unzip sing-box.zip
-pushd sing-box-*/cmd/sing-box
-go build -o $DEST -trimpath -ldflags "-w -s"
-popd
+mv sing-box-*/sing-box.exe $DEST
 rm -rf sing-box.zip sing-box-*
-popd
