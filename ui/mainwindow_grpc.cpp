@@ -302,6 +302,7 @@ void MainWindow::CheckUpdate() {
     bool ok;
     libcore::UpdateReq request;
     request.set_action(libcore::UpdateAction::Check);
+    request.set_check_pre_release(NekoRay::dataStore->check_include_pre);
     auto response = NekoRay::rpc::defaultClient->Update(&ok, request);
     if (!ok) return;
 
@@ -321,10 +322,11 @@ void MainWindow::CheckUpdate() {
     }
 
     runOnUiThread([=] {
-        QMessageBox box(QMessageBox::Question, QObject::tr("Update"),
+        auto note_pre_release = response.is_pre_release() ? " (Pre-release)" : "";
+        QMessageBox box(QMessageBox::Question, QObject::tr("Update") + note_pre_release,
                         QObject::tr("Update found: %1\nRelease note:\n%2")
                                 .arg(response.assets_name().c_str(), response.release_note().c_str()));
-        QAbstractButton *btn1;
+        QAbstractButton *btn1 = nullptr;
         if (!NekoRay::dataStore->flag_use_appdata) {
             btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
         }

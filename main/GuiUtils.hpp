@@ -64,6 +64,8 @@ inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, const std
 #define D_SAVE_INT(a) NekoRay::dataStore->a = ui->a->text().toInt();
 #define P_LOAD_COMBO(a) ui->a->setCurrentText(bean->a);
 #define P_SAVE_COMBO(a) bean->a = ui->a->currentText();
+#define D_LOAD_BOOL(a) ui->a->setChecked(NekoRay::dataStore->a);
+#define D_SAVE_BOOL(a) NekoRay::dataStore->a = ui->a->isChecked();
 
 #define D_LOAD_INT_ENABLE(i, e) \
 if (NekoRay::dataStore->i > 0) { \

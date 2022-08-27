@@ -56,17 +56,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
-    ui->connection_statistics->setChecked(NekoRay::dataStore->connection_statistics);
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
-
-    if (NekoRay::dataStore->traffic_loop_interval == 500) {
-        ui->rfsh_r->setCurrentIndex(0);
-    } else if (NekoRay::dataStore->traffic_loop_interval == 1000) {
-        ui->rfsh_r->setCurrentIndex(1);
-    } else {
-        ui->rfsh_r->setCurrentIndex(2);
-    }
-
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
     D_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
@@ -79,12 +69,24 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Style
 
+    //
+    D_LOAD_BOOL(start_minimal)
+    D_LOAD_BOOL(check_include_pre)
+    D_LOAD_BOOL(connection_statistics)
+    //
+    if (NekoRay::dataStore->traffic_loop_interval == 500) {
+        ui->rfsh_r->setCurrentIndex(0);
+    } else if (NekoRay::dataStore->traffic_loop_interval == 1000) {
+        ui->rfsh_r->setCurrentIndex(1);
+    } else {
+        ui->rfsh_r->setCurrentIndex(2);
+    }
+    //
     ui->language->setCurrentIndex(NekoRay::dataStore->language);
     connect(ui->language, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
         CACHE.needRestart = true;
     });
-    ui->start_minimal->setChecked(NekoRay::dataStore->start_minimal);
-
+    //
     int built_in_len = ui->theme->count();
     ui->theme->addItems(QStyleFactory::keys());
     //
@@ -112,7 +114,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Subscription
 
     ui->user_agent->setText(NekoRay::dataStore->user_agent);
-    ui->sub_use_proxy->setChecked(NekoRay::dataStore->sub_use_proxy);
+    D_LOAD_BOOL(sub_use_proxy)
 
     // Core
 
@@ -126,7 +128,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     for (const auto &s: CACHE.extraCore.keys()) {
         extra_core_layout->addWidget(new ExtraCoreWidget(&CACHE.extraCore, s));
     }
-
+    //
     connect(ui->core_v2ray_asset, &QLineEdit::textChanged, this, [=] {
         CACHE.needRestart = true;
     });
@@ -166,8 +168,8 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Security
 
-    ui->insecure_hint->setChecked(NekoRay::dataStore->insecure_hint);
-    ui->skip_cert->setChecked(NekoRay::dataStore->skip_cert);
+    D_LOAD_BOOL(insecure_hint)
+    D_LOAD_BOOL(skip_cert)
 }
 
 DialogBasicSettings::~DialogBasicSettings() {
@@ -181,17 +183,7 @@ void DialogBasicSettings::accept() {
 
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
     NekoRay::dataStore->log_level = ui->log_level->currentText();
-    NekoRay::dataStore->connection_statistics = ui->connection_statistics->isChecked();
     NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
-
-    if (ui->rfsh_r->currentIndex() == 0) {
-        NekoRay::dataStore->traffic_loop_interval = 500;
-    } else if (ui->rfsh_r->currentIndex() == 1) {
-        NekoRay::dataStore->traffic_loop_interval = 1000;
-    } else {
-        NekoRay::dataStore->traffic_loop_interval = 0;
-    }
-
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
     D_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
@@ -201,12 +193,22 @@ void DialogBasicSettings::accept() {
     // Style
 
     NekoRay::dataStore->language = ui->language->currentIndex();
-    NekoRay::dataStore->start_minimal = ui->start_minimal->isChecked();
+    D_SAVE_BOOL(start_minimal)
+    D_SAVE_BOOL(connection_statistics)
+    D_SAVE_BOOL(check_include_pre)
+
+    if (ui->rfsh_r->currentIndex() == 0) {
+        NekoRay::dataStore->traffic_loop_interval = 500;
+    } else if (ui->rfsh_r->currentIndex() == 1) {
+        NekoRay::dataStore->traffic_loop_interval = 1000;
+    } else {
+        NekoRay::dataStore->traffic_loop_interval = 0;
+    }
 
     // Subscription
 
     NekoRay::dataStore->user_agent = ui->user_agent->text();
-    NekoRay::dataStore->sub_use_proxy = ui->sub_use_proxy->isChecked();
+    D_SAVE_BOOL(sub_use_proxy)
 
     // Core
 
@@ -215,8 +217,8 @@ void DialogBasicSettings::accept() {
 
     // Security
 
-    NekoRay::dataStore->insecure_hint = ui->insecure_hint->isChecked();
-    NekoRay::dataStore->skip_cert = ui->skip_cert->isChecked();
+    D_SAVE_BOOL(insecure_hint)
+    D_SAVE_BOOL(skip_cert)
 
     dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();

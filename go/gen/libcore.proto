@@ -81,6 +81,7 @@ enum UpdateAction {
 
 message UpdateReq {
   UpdateAction action = 1;
+  bool check_pre_release = 2;
 }
 
 message UpdateResp {
@@ -89,6 +90,7 @@ message UpdateResp {
   string download_url = 3;
   string release_url = 4;
   string release_note = 5;
+  bool is_pre_release = 6;
 }
 
 message ListV2rayConnectionsResp {

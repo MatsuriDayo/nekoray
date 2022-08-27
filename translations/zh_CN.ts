@@ -155,6 +155,10 @@
         <source>Minimize to tray icon on startup</source>
         <translation>启动时最小化到托盘图标</translation>
     </message>
+    <message>
+        <source>Include Pre-release when checking update</source>
+        <translation>检查更新时包括 Pre-release</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

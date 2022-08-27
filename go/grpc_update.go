@@ -98,7 +98,7 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 						return ret, nil // No update
 					}
 					if strings.Contains(asset.Name, search) {
-						if release.Prerelease {
+						if release.Prerelease && !in.CheckPreRelease {
 							continue
 						}
 						update_download_url = asset.BrowserDownloadUrl
@@ -106,6 +106,7 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 						ret.DownloadUrl = asset.BrowserDownloadUrl
 						ret.ReleaseUrl = release.HtmlUrl
 						ret.ReleaseNote = release.Body
+						ret.IsPreRelease = release.Prerelease
 						return ret, nil // update
 					}
 				}

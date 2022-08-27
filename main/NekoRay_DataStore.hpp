@@ -67,6 +67,7 @@ namespace NekoRay {
         QString v2ray_asset_dir = "";
         int language = 0;
         QString mw_size = "";
+        bool check_include_pre = false;
 
         // Security
         bool insecure_hint = true;

@@ -221,6 +221,88 @@
         </layout>
        </item>
        <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_18">
+          <item>
+           <widget class="QCheckBox" name="check_include_pre">
+            <property name="text">
+             <string>Include Pre-release when checking update</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QWidget" name="horizontalWidget_1" native="true">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_2">
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>0</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>0</number>
+          </property>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Style</string>
+      </attribute>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_7">
+          <item>
+           <widget class="QLabel" name="label_15">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Language</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="language">
+            <item>
+             <property name="text">
+              <string>System</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">English</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">简体中文</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
           <widget class="QGroupBox" name="horizontalGroupBox_6">
@@ -276,124 +358,65 @@
          </item>
         </layout>
        </item>
-       <item>
-        <widget class="QWidget" name="horizontalWidget_1" native="true">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_2">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Theme</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="theme">
+            <item>
+             <property name="text">
+              <string>System</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">flatgray</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">lightblue</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">blacksoft</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <item>
+           <widget class="QCheckBox" name="start_minimal">
+            <property name="text">
+             <string>Minimize to tray icon on startup</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
-      <attribute name="title">
-       <string>Style</string>
-      </attribute>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="0" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QLabel" name="label_8">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Theme</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="theme">
-           <item>
-            <property name="text">
-             <string>System</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">flatgray</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">lightblue</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">blacksoft</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_7">
-         <item>
-          <widget class="QLabel" name="label_15">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Language</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="language">
-           <item>
-            <property name="text">
-             <string>System</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">English</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">简体中文</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="start_minimal">
-         <property name="text">
-          <string>Minimize to tray icon on startup</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_3">
       <attribute name="title">
        <string>Subscription</string>
       </attribute>
@@ -417,13 +440,19 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tab_4">
       <attribute name="title">
        <string>Core</string>
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QGroupBox" name="groupBox_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="title">
           <string notr="true">V2Ray</string>
          </property>
@@ -505,7 +534,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="QWidget" name="tab_5">
       <attribute name="title">
        <string>Security</string>
       </attribute>
@@ -549,10 +578,12 @@
   <tabstop>log_level</tabstop>
   <tabstop>mux_cool_enable</tabstop>
   <tabstop>mux_cool</tabstop>
-  <tabstop>rfsh_r</tabstop>
-  <tabstop>connection_statistics</tabstop>
+  <tabstop>check_include_pre</tabstop>
   <tabstop>theme</tabstop>
   <tabstop>language</tabstop>
+  <tabstop>rfsh_r</tabstop>
+  <tabstop>connection_statistics</tabstop>
+  <tabstop>start_minimal</tabstop>
   <tabstop>user_agent</tabstop>
   <tabstop>sub_use_proxy</tabstop>
   <tabstop>core_v2ray_asset</tabstop>
