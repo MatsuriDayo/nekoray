@@ -77,12 +77,18 @@ bool IsIpAddressV6(const QString &str) {
     return false;
 }
 
+QWidget *GetMessageBoxParent() {
+    if (mainwindow == nullptr) return nullptr;
+    if (mainwindow->isVisible()) return mainwindow;
+    return nullptr;
+}
+
 int MessageBoxWarning(const QString &title, const QString &text) {
-    return QMessageBox::warning(nullptr, title, text);
+    return QMessageBox::warning(GetMessageBoxParent(), title, text);
 }
 
 int MessageBoxInfo(const QString &title, const QString &text) {
-    return QMessageBox::information(nullptr, title, text);
+    return QMessageBox::information(GetMessageBoxParent(), title, text);
 }
 
 void runOnUiThread(const std::function<void()> &callback, QObject *parent) {

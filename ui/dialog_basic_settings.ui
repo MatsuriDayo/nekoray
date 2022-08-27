@@ -384,6 +384,13 @@
          </item>
         </layout>
        </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="start_minimal">
+         <property name="text">
+          <string>Minimize to tray icon on startup</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="tab_2">

@@ -83,6 +83,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     connect(ui->language, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
         CACHE.needRestart = true;
     });
+    ui->start_minimal->setChecked(NekoRay::dataStore->start_minimal);
 
     int built_in_len = ui->theme->count();
     ui->theme->addItems(QStyleFactory::keys());
@@ -200,6 +201,7 @@ void DialogBasicSettings::accept() {
     // Style
 
     NekoRay::dataStore->language = ui->language->currentIndex();
+    NekoRay::dataStore->start_minimal = ui->start_minimal->isChecked();
 
     // Subscription
 

@@ -159,6 +159,8 @@ inline QString ReadableSize(const qint64 &size) {
 
 // UI
 
+QWidget *GetMessageBoxParent();
+
 int MessageBoxWarning(const QString &title, const QString &text);
 
 int MessageBoxInfo(const QString &title, const QString &text);

@@ -482,8 +482,8 @@
     <addaction name="menu_scan_qr"/>
     <addaction name="separator"/>
     <addaction name="actionStart_with_system"/>
-    <addaction name="actionStart_minimal"/>
     <addaction name="actionRemember_last_proxy"/>
+    <addaction name="actionAllow_LAN"/>
     <addaction name="menuActive_Server"/>
     <addaction name="menuActive_Routing"/>
     <addaction name="menu_spmode"/>
@@ -704,6 +704,9 @@
    <property name="text">
     <string>Move</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+M</string>
+   </property>
   </action>
   <action name="actionStart_with_system">
    <property name="checkable">
@@ -721,12 +724,12 @@
     <string>Remember last profile</string>
    </property>
   </action>
-  <action name="actionStart_minimal">
+  <action name="actionAllow_LAN">
    <property name="checkable">
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Start minimal</string>
+    <string>Allow connections from the LAN</string>
    </property>
   </action>
   <action name="menu_remove_unavailable">

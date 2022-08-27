@@ -151,6 +151,10 @@
         <source>Connection statistics</source>
         <translation>连接统计</translation>
     </message>
+    <message>
+        <source>Minimize to tray icon on startup</source>
+        <translation>启动时最小化到托盘图标</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -942,10 +946,6 @@ End: %2</source>
         <translation>记住最后的配置</translation>
     </message>
     <message>
-        <source>Start minimal</source>
-        <translation>最小化启动</translation>
-    </message>
-    <message>
         <source>Move %1 item(s)</source>
         <translation>移动 %1 个项目</translation>
     </message>
@@ -1080,6 +1080,14 @@ End: %2</source>
     <message>
         <source>Copy links of selected (Nekoray)</source>
         <translation>批量复制选中项目的分享链接 (Nekoray)</translation>
+    </message>
+    <message>
+        <source>Allow connections from the LAN</source>
+        <translation>允许来自局域网的连接</translation>
+    </message>
+    <message>
+        <source>Manual addition of profiles is not allowed in subscription groupings.</source>
+        <translation>订阅分组中不允许手动添加配置。</translation>
     </message>
 </context>
 <context>
