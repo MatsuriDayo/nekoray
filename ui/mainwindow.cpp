@@ -326,7 +326,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->actionAllow_LAN, &QAction::triggered, this, [=](bool checked) {
         NekoRay::dataStore->inbound_address = checked ? "0.0.0.0" : "127.0.0.1";
-        dialog_message(Dialog_DialogManageRoutes, "UpdateDataStore,RouteChanged");
+        dialog_message("", "UpdateDataStore");
     });
     //
     connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) {
