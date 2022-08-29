@@ -17,18 +17,23 @@ namespace NekoRay::fmt {
 
         if (network == "ws") {
             QJsonObject ws;
-            if (!path.trimmed().isEmpty()) ws["path"] = path;
-            if (!host.trimmed().isEmpty()) ws["headers"] = QJsonObject{{"Host", host}};
+            if (!path.isEmpty()) ws["path"] = path;
+            if (!host.isEmpty()) ws["headers"] = QJsonObject{{"Host", host}};
             streamSettings["wsSettings"] = ws;
         } else if (network == "h2") {
             QJsonObject h2;
-            if (!path.trimmed().isEmpty()) h2["path"] = path;
-            if (!host.trimmed().isEmpty()) h2["host"] = QList2QJsonArray(host.split(","));
+            if (!path.isEmpty()) h2["path"] = path;
+            if (!host.isEmpty()) h2["host"] = QList2QJsonArray(host.split(","));
             streamSettings["httpSettings"] = h2;
         } else if (network == "grpc") {
             QJsonObject grpc;
-            if (!path.trimmed().isEmpty()) grpc["serviceName"] = path;
+            if (!path.isEmpty()) grpc["serviceName"] = path;
             streamSettings["grpcSettings"] = grpc;
+        } else if (network == "quic") {
+            QJsonObject quic;
+            if (!path.isEmpty()) quic["key"] = path;
+            if (!host.isEmpty()) quic["security"] = host;
+            streamSettings["quicSettings"] = quic;
         }
 
         if (security == "tls") {
@@ -46,6 +51,18 @@ namespace NekoRay::fmt {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
             streamSettings["tlsSettings"] = tls;
+        }
+
+        if (!header_type.isEmpty()) {
+            QJsonObject header{{"type", header_type}};
+            if (header_type == "http") {
+                QJsonObject request{
+                        {"path", QList2QJsonArray(path.split(","))},
+                        {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
+                };
+                header["request"] = request;
+            }
+            streamSettings["header"] = header;
         }
 
         return streamSettings;

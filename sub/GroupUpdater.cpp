@@ -164,6 +164,15 @@ namespace NekoRay::sub {
         }
     }
 
+    // NodeChild returns the first defined children or Null Node
+    YAML::Node NodeChild(const YAML::Node &n, const std::list<std::string> &keys) {
+        for (const auto &key: keys) {
+            auto child = n[key];
+            if (child.IsDefined()) return child;
+        }
+        return {};
+    }
+
 #endif
 
 // https://github.com/Dreamacro/clash/wiki/configuration
@@ -223,7 +232,7 @@ namespace NekoRay::sub {
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
 
-                    auto ws = proxy["ws-opts"];
+                    auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
                     if (ws.IsMap()) {
                         auto headers = ws["headers"];
                         for (auto header: headers) {
@@ -234,12 +243,12 @@ namespace NekoRay::sub {
                         bean->stream->path = Node2QString(ws["path"]);
                     }
 
-                    auto grpc = proxy["grpc-opts"];
+                    auto grpc = NodeChild(proxy, {"grpc-opts", "grpc-opt"});
                     if (grpc.IsMap()) {
                         bean->stream->path = Node2QString(grpc["grpc-service-name"]);
                     }
 
-                    auto h2 = proxy["h2-opts"];
+                    auto h2 = NodeChild(proxy, {"h2-opts", "h2-opt"});
                     if (h2.IsMap()) {
                         auto hosts = ws["host"];
                         for (auto host: hosts) {
@@ -247,6 +256,24 @@ namespace NekoRay::sub {
                             break;
                         }
                         bean->stream->path = Node2QString(h2["path"]);
+                    }
+
+                    auto tcp_http = NodeChild(proxy, {"http-opts", "http-opt"});
+                    if (tcp_http.IsMap()) {
+                        bean->stream->network = "tcp";
+                        bean->stream->header_type = "http";
+                        auto headers = tcp_http["headers"];
+                        for (auto header: headers) {
+                            if (Node2QString(header.first).toLower() == "host") {
+                                bean->stream->host = Node2QString(header.second[0]);
+                            }
+                            break;
+                        }
+                        auto paths = tcp_http["path"];
+                        for (auto path: paths) {
+                            bean->stream->path = Node2QString(path);
+                            break;
+                        }
                     }
                 } else {
                     continue;

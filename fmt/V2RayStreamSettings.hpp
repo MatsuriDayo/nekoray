@@ -8,10 +8,10 @@ namespace NekoRay::fmt {
         QString network = "tcp";
         QString security = "none";
         QString packet_encoding = "";
-        // ws/h2/grpc
+        // ws/h2/grpc/tcp-http
         QString path = "";
         QString host = "";
-        // QUIC & KCP
+        // kcp/quic/tcp-http
         QString header_type = "";
         // tls
         QString sni = "";
