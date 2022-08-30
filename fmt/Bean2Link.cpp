@@ -81,7 +81,7 @@ namespace NekoRay::fmt {
 
     QString NaiveBean::ToShareLink() {
         QUrl url;
-        url.setScheme("https+naive");
+        url.setScheme("naive+" + protocol);
         url.setUserName(username);
         url.setPassword(password);
         url.setHost(serverAddress);

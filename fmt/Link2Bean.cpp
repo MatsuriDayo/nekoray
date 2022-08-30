@@ -136,6 +136,9 @@ namespace NekoRay::fmt {
         auto url = QUrl(link);
         if (!url.isValid()) return false;
 
+        protocol = url.scheme().replace("naive+", "");
+        if (protocol != "https" && protocol != "quic") return false;
+
         name = url.fragment(QUrl::FullyDecoded);
         serverAddress = url.host();
         serverPort = url.port();
