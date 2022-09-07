@@ -25,15 +25,15 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->CustomBean();
 
-    P_LOAD_COMBO(core)
-    ui->command->setText(bean->command.join(" "));
-    P_LOAD_STRING(config_simple)
-
     // load known core
     auto core_map = QString2QJsonObject(NekoRay::dataStore->extraCore->core_map);
     for (const auto &key: core_map.keys()) {
         ui->core->addItem(key);
     }
+
+    P_LOAD_COMBO(core)
+    ui->command->setText(bean->command.join(" "));
+    P_LOAD_STRING(config_simple)
 
     if (!bean->core.isEmpty()) {
         ui->core->setDisabled(true);

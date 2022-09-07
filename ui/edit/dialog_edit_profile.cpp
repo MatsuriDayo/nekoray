@@ -145,7 +145,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-        if (type == "hysteria" || ent->CustomBean()->core == "hysteria") {
+        if (type == "hysteria" || (!newEnt && ent->CustomBean()->core == "hysteria")) {
             _innerWidget->preset_core = type;
             _innerWidget->preset_command = Preset::Hysteria::command;
             _innerWidget->preset_config = Preset::Hysteria::config;
