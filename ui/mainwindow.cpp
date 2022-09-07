@@ -1,6 +1,7 @@
 #include "./ui_mainwindow.h"
 #include "mainwindow.h"
 
+#include "fmt/Preset.hpp"
 #include "db/ProfileFilter.hpp"
 #include "db/ConfigBuilder.hpp"
 #include "sub/GroupUpdater.hpp"
@@ -1401,6 +1402,7 @@ bool MainWindow::StartVPNProcess() {
     auto config = ReadFileText(configFn)
             .replace("%IPV6_ADDRESS%", NekoRay::dataStore->vpn_ipv6 ? "\"inet6_address\": \"fdfe:dcba:9876::1/128\"," : "")
             .replace("%MTU%", Int2String(NekoRay::dataStore->vpn_mtu))
+            .replace("%STACK%", Preset::SingBox::VpnImplementation[NekoRay::dataStore->vpn_implementation])
             .replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
 #else
     auto protectPath = QDir::currentPath() + "/protect";

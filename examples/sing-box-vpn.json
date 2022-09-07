@@ -7,6 +7,8 @@
             %IPV6_ADDRESS%
             "mtu": %MTU%,
             "auto_route": true,
+            "stack": "%STACK%",
+            "endpoint_independent_nat": true,
             "sniff": false
         }
     ],

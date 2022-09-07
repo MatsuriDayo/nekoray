@@ -3,6 +3,7 @@
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "qv2ray/v3/components/GeositeReader/GeositeReader.hpp"
+#include "fmt/Preset.hpp"
 #include "main/GuiUtils.hpp"
 
 #include <QFile>
@@ -43,10 +44,11 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->vpn_implementation->setCurrentIndex(NekoRay::dataStore->vpn_implementation);
     ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
     ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
+    //
 #ifdef Q_OS_WIN
-    ui->vpn_implementation->setEditable(true);
-    ui->vpn_implementation->setCurrentText("Windows: sing-box gVisor");
-    ui->vpn_implementation->setDisabled(true);
+    ui->vpn_implementation->setItemText(0, Preset::SingBox::VpnImplementation[0]);
+    ui->vpn_implementation->setItemText(1, Preset::SingBox::VpnImplementation[1]);
+    ui->vpn_implementation->setItemText(2, Preset::SingBox::VpnImplementation[2]);
 #endif
     //
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
@@ -109,11 +111,11 @@ void DialogManageRoutes::accept() {
     auto mtu = ui->vpn_mtu->currentText().toInt();
     if (mtu > 10000 || mtu < 1000) mtu = 9000;
     auto ipv6 = ui->vpn_ipv6->isChecked();
-#ifndef Q_OS_WIN
+    //
     auto impl = ui->vpn_implementation->currentIndex();
     vpnChanged |= NekoRay::dataStore->vpn_implementation != impl;
     NekoRay::dataStore->vpn_implementation = impl;
-#endif
+    //
     vpnChanged |= NekoRay::dataStore->fake_dns != fakedns;
     vpnChanged |= NekoRay::dataStore->vpn_mtu != mtu;
     vpnChanged |= NekoRay::dataStore->vpn_ipv6 != ipv6;

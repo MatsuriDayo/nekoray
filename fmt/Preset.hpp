@@ -14,4 +14,8 @@ namespace Preset {
                                     "  }\n"
                                     "}";
     }
+
+    namespace SingBox {
+        inline QStringList VpnImplementation = {"gvisor", "lwip", "system"};
+    }
 }

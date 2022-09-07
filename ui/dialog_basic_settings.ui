@@ -124,7 +124,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBox1">
          <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,8,1,1">
           <item>
            <widget class="QLabel" name="label_13">
@@ -221,7 +221,7 @@
         </layout>
        </item>
        <item>
-        <widget class="QGroupBox" name="horizontalGroupBox">
+        <widget class="QGroupBox" name="horizontalGroupBox1">
          <layout class="QHBoxLayout" name="horizontalLayout_18">
           <item>
            <widget class="QCheckBox" name="check_include_pre">
@@ -265,7 +265,7 @@
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
        <item row="1" column="0">
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBox2">
          <layout class="QHBoxLayout" name="horizontalLayout_7">
           <item>
            <widget class="QLabel" name="label_15">
@@ -402,7 +402,7 @@
         </widget>
        </item>
        <item row="3" column="0">
-        <widget class="QGroupBox" name="horizontalGroupBox">
+        <widget class="QGroupBox" name="horizontalGroupBox2">
          <layout class="QHBoxLayout" name="horizontalLayout_20">
           <item>
            <widget class="QCheckBox" name="start_minimal">
