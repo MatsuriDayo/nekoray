@@ -3,7 +3,7 @@
         {
             "type": "tun",
             "interface_name": "nekoray-tun",
-            "inet4_address": "172.19.0.1/30",
+            "inet4_address": "172.19.0.1/28",
             %IPV6_ADDRESS%
             "mtu": %MTU%,
             "auto_route": true,

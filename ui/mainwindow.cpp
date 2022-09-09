@@ -1409,7 +1409,7 @@ bool MainWindow::StartVPNProcess() {
     auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
     if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
     auto config = ReadFileText(configFn)
-            .replace("%IPV6_ADDRESS%", NekoRay::dataStore->vpn_ipv6 ? "\"inet6_address\": \"fdfe:dcba:9876::1/128\"," : "")
+            .replace("%IPV6_ADDRESS%", NekoRay::dataStore->vpn_ipv6 ? "\"inet6_address\": \"fdfe:dcba:9876::1/126\"," : "")
             .replace("%MTU%", Int2String(NekoRay::dataStore->vpn_mtu))
             .replace("%STACK%", Preset::SingBox::VpnImplementation[NekoRay::dataStore->vpn_implementation])
             .replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
@@ -1441,7 +1441,7 @@ bool MainWindow::StartVPNProcess() {
     runOnNewThread([=] {
         vpn_pid = 1; //TODO get pid?
         WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/sing-box.exe",
-                                         {"run", "-c", configPath}); // blocking
+                                         {"--disable-color", "run", "-c", configPath}); // blocking
         vpn_pid = 0;
         runOnUiThread([=] {
             neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
