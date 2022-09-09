@@ -159,6 +159,26 @@
         <source>Include Pre-release when checking update</source>
         <translation>检查更新时包括 Pre-release</translation>
     </message>
+    <message>
+        <source>Set custom icon</source>
+        <translation>自定义图标</translation>
+    </message>
+    <message>
+        <source>Please select a PNG file.</source>
+        <translation>请选择一个 PNG 文件。</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
+        <source>Please select a valid square image.</source>
+        <translation>请选择有效的正方形图像。</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

@@ -127,6 +127,7 @@ set(PROJECT_SOURCES
         sys/AutoRun.cpp
 
         ui/ThemeManager.cpp
+        ui/TrayIcon.cpp
 
         ui/mainwindow_grpc.cpp
         ui/mainwindow.cpp

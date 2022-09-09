@@ -9,6 +9,7 @@
 #include <QStyleFactory>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QMessageBox>
 
 class ExtraCoreWidget : public QWidget {
 public:
@@ -222,4 +223,27 @@ void DialogBasicSettings::accept() {
 
     dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();
+}
+
+void DialogBasicSettings::on_set_custom_icon_clicked() {
+    auto title = ui->set_custom_icon->text();
+    auto c = QMessageBox::question(this, title, tr("Please select a PNG file."),
+                                   tr("Select"), tr("Reset"), tr("Cancel"), 2, 2);
+    if (c == 0) {
+        auto fn = QFileDialog::getOpenFileName(this, QObject::tr("Select"), QDir::currentPath(),
+                                               "*.png", nullptr, QFileDialog::Option::ReadOnly);
+        if (!fn.isEmpty()) {
+            QImage img(fn);
+            if (img.isNull() || img.height() != img.width()) {
+                MessageBoxWarning(title, tr("Please select a valid square image."));
+                return;
+            }
+            QFile::copy(fn, "./nekoray.png");
+        }
+    } else if (c == 1) {
+        QFile::remove("./nekoray.png");
+    } else {
+        return;
+    }
+    dialog_message(Dialog_DialogBasicSettings, "UpdateIcon");
 }

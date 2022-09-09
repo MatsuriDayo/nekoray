@@ -264,6 +264,49 @@
        <string>Style</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
+       <item row="0" column="0">
+        <widget class="QGroupBox" name="groupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <item>
+           <widget class="QLabel" name="label_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Theme</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="theme">
+            <item>
+             <property name="text">
+              <string>System</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">flatgray</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">lightblue</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">blacksoft</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
        <item row="1" column="0">
         <widget class="QGroupBox" name="groupBox2">
          <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -297,6 +340,33 @@
               <string notr="true">简体中文</string>
              </property>
             </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QGroupBox" name="horizontalGroupBox2">
+         <layout class="QHBoxLayout" name="horizontalLayout_20">
+          <item>
+           <widget class="QCheckBox" name="start_minimal">
+            <property name="text">
+             <string>Minimize to tray icon on startup</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="set_custom_icon">
+            <property name="text">
+             <string>Set custom icon</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -357,62 +427,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item row="0" column="0">
-        <widget class="QGroupBox" name="groupBox">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
-          <item>
-           <widget class="QLabel" name="label_8">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="text">
-             <string>Theme</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QComboBox" name="theme">
-            <item>
-             <property name="text">
-              <string>System</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">flatgray</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">lightblue</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">blacksoft</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QGroupBox" name="horizontalGroupBox2">
-         <layout class="QHBoxLayout" name="horizontalLayout_20">
-          <item>
-           <widget class="QCheckBox" name="start_minimal">
-            <property name="text">
-             <string>Minimize to tray icon on startup</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
        </item>
       </layout>
      </widget>

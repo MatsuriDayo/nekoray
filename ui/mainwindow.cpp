@@ -9,6 +9,7 @@
 #include "sys/AutoRun.hpp"
 
 #include "ui/ThemeManager.hpp"
+#include "ui/TrayIcon.hpp"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
@@ -228,15 +229,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->refresh_groups();
 
     // Setup Tray
-    auto icon = QIcon::fromTheme("nekoray");
-    auto pixmap = QPixmap("../nekoray.png");
-    if (!pixmap.isNull()) icon = QIcon(pixmap);
-    pixmap = QPixmap("./nekoray.png");
-    if (!pixmap.isNull()) icon = QIcon(pixmap);
-    setWindowIcon(icon);
-
     tray = new QSystemTrayIcon(this);//初始化托盘对象tray
-    tray->setIcon(icon);//设定托盘图标，引号内是自定义的png图片路径
     tray->setContextMenu(ui->menu_program);//创建托盘菜单
     tray->show();//让托盘图标显示在系统托盘上
     connect(tray, &QSystemTrayIcon::activated, this,
@@ -483,6 +476,10 @@ void MainWindow::show_group(int gid) {
 // callback
 
 void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
+    if (info.contains("UpdateIcon")) {
+        icon_status = -1;
+        refresh_status();
+    }
     if (info.contains("UpdateDataStore")) {
         auto changed = NekoRay::dataStore->Save();
         if (info.contains("RouteChanged")) changed = true;
@@ -679,8 +676,24 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         return tt.join(isTray ? "\n" : " ");
     };
 
+    auto icon_status_new = TrayIcon::NONE;
+    if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+        icon_status_new = TrayIcon::SYSTEM_PROXY;
+    } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+        icon_status_new = TrayIcon::VPN;
+    } else if (!running.isNull()) {
+        icon_status_new = TrayIcon::RUNNING;
+    }
+
     setWindowTitle(make_title(false));
-    if (tray != nullptr) tray->setToolTip(make_title(true));
+    if (icon_status_new != icon_status) setWindowIcon(TrayIcon::GetIcon(TrayIcon::NONE));
+
+    if (tray != nullptr) {
+        tray->setToolTip(make_title(true));
+        if (icon_status_new != icon_status) tray->setIcon(TrayIcon::GetIcon(icon_status_new));
+    }
+
+    icon_status = icon_status_new;
 }
 
 // table显示

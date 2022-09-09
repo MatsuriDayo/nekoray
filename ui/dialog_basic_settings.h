@@ -28,6 +28,11 @@ private:
         QString custom_inbound;
         bool needRestart = false;
     } CACHE;
+
+private slots:
+
+    void on_set_custom_icon_clicked();
+
 };
 
 #endif // DIALOG_BASIC_SETTINGS_H
