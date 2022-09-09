@@ -120,7 +120,8 @@ private:
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
     QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
-    bool core_process_killed = false;
+    QProcess *core_process;
+    bool prepare_exit_core = false;
     bool core_process_show_stderr = false;
     qint64 vpn_pid = 0;
     QFileSystemWatcher *watcher = nullptr;

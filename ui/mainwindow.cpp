@@ -348,64 +348,60 @@ MainWindow::MainWindow(QWidget *parent)
     NekoRay::dataStore->core_port = MkPort();
     if (NekoRay::dataStore->core_port <= 0) NekoRay::dataStore->core_port = 19810;
 
-    runOnNewThread([=]() {
-        QString starting_info;
-
-        auto core_path = NekoRay::dataStore->core_path;
+    QString starting_info;
+    auto core_path = NekoRay::dataStore->core_path;
 #ifdef Q_OS_WIN
-        if (!core_path.endsWith(".exe")) core_path += ".exe";
+    if (!core_path.endsWith(".exe")) core_path += ".exe";
 #endif
-        if (NekoRay::dataStore->flag_use_appdata) {
-            core_path = QApplication::applicationDirPath() + "/nekoray_core";
-        } else if (!QFile(core_path).exists()) {
-            starting_info = "(not found)";
-            core_path = "";
-        }
+    if (NekoRay::dataStore->flag_use_appdata) {
+        core_path = QApplication::applicationDirPath() + "/nekoray_core";
+    } else if (!QFile(core_path).exists()) {
+        starting_info = "(not found)";
+        core_path = "";
+    }
 
-        QStringList args;
-        args.push_back("nekoray");
-        args.push_back("-port");
-        args.push_back(Int2String(NekoRay::dataStore->core_port));
+    QStringList args;
+    args.push_back("nekoray");
+    args.push_back("-port");
+    args.push_back(Int2String(NekoRay::dataStore->core_port));
 #ifdef NKR_DEBUG
-        args.push_back("-debug");
+    args.push_back("-debug");
 #endif
 
-        for (int retry = 0; retry < 10; retry++) {
-            showLog("Starting nekoray core " + starting_info + "\n");
-            auto core_process = new QProcess;
-            core_process_show_stderr = false;
-            connect(core_process, &QProcess::readyReadStandardOutput, this,
-                    [=]() {
-                        showLog(core_process->readAllStandardOutput().trimmed());
-                    });
-            connect(core_process, &QProcess::readyReadStandardError, this,
-                    [=]() {
-                        auto log = core_process->readAllStandardError().trimmed();
-                        if (core_process_show_stderr) {
-                            showLog(log);
-                            return;
-                        }
-                        if (log.contains("token is set")) {
-                            core_process_show_stderr = true;
-                        }
-                    });
-            if (core_path.isEmpty()) break;
-            if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
-                core_process->setEnvironment(QStringList{
-                        "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir
-                });
+    showLog("Starting nekoray core " + starting_info + "\n");
+
+    if (!core_path.isEmpty()) {
+        core_process = new QProcess;
+        core_process_show_stderr = false;
+
+        connect(core_process, &QProcess::readyReadStandardOutput, this, [&]() {
+            showLog(core_process->readAllStandardOutput().trimmed());
+        });
+        connect(core_process, &QProcess::readyReadStandardError, this, [&]() {
+            auto log = core_process->readAllStandardError().trimmed();
+            if (core_process_show_stderr) {
+                showLog(log);
+                return;
             }
-            core_process->start(core_path, args);
-            core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
-            core_process->waitForFinished(-1);
-            if (core_process_killed) return;
-            // TODO Not retrying can avoid crash?
-            core_process->deleteLater();
-            QtGrpc::core_crashed = true;
-            showLog("[ERROR] nekoray_core crashed, please restart the program.");
-            return;
+            if (log.contains("token is set")) {
+                core_process_show_stderr = true;
+            }
+        });
+        connect(core_process, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
+            if (!prepare_exit_core && state == QProcess::NotRunning) {
+                QtGrpc::core_crashed = true;
+                showLog("[Error] nekoray_core crashed, please restart the program.");
+            }
+        });
+
+        if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
+            core_process->setEnvironment(QStringList{
+                    "V2RAY_LOCATION_ASSET=" + NekoRay::dataStore->v2ray_asset_dir
+            });
         }
-    });
+        core_process->start(core_path, args);
+        core_process->write((NekoRay::dataStore->core_token + "\n").toUtf8());
+    }
 
     setup_grpc();
 
@@ -567,7 +563,7 @@ void MainWindow::on_menu_exit_triggered() {
     //
     on_commitDataRequest();
     //
-    core_process_killed = true;
+    prepare_exit_core = true;
     hide();
     ExitNekorayCore();
     //
