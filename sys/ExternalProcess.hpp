@@ -12,24 +12,32 @@ namespace NekoRay::sys {
         QStringList arguments;
         QStringList env;
 
+        bool managed = true; // running_ext & stateChanged
         bool show_log = true;
-        QList<ExternalProcess *> *running_list;
 
-        ExternalProcess(const QString &tag,
-                        const QString &program,
-                        const QStringList &arguments,
-                        const QStringList &env);
+        ExternalProcess();
 
         // start & kill is one time
 
-        void Start();
+        virtual void Start();
 
         void Kill();
 
-    private:
+    protected:
         bool started = false;
         bool killed = false;
         bool crashed = false;
+    };
+
+    class CoreProcess : public ExternalProcess {
+    public:
+        CoreProcess(const QString &core_path, const QStringList &args);
+
+        void Start() override;
+
+    private:
+        bool show_stderr = false;
+        bool failed_to_start = false;
     };
 
     // start & kill change this list

@@ -41,6 +41,8 @@ namespace NekoRay {
         QString core_token;
         int core_port = 19810;
         int started_id = -1919;
+        bool core_running = false;
+        bool core_prepare_exit = false;
 
         Routing *routing = new Routing;
         int imported_count = 0;

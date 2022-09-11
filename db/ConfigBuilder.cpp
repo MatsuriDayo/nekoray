@@ -399,8 +399,11 @@ namespace NekoRay {
                 outbound["settings"] = settings;
 
                 // EXTERNAL PROCESS
-                auto extC = new sys::ExternalProcess(ent->bean->DisplayType(),
-                                                     extR.program, extR.arguments, extR.env);
+                auto extC = new sys::ExternalProcess();
+                extC->tag = ent->bean->DisplayType();
+                extC->program = extR.program;
+                extC->arguments = extR.arguments;
+                extC->env = extR.env;
                 status->result->ext += extC;
             } else {
                 coreR = ent->bean->BuildCoreObj();

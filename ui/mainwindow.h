@@ -15,6 +15,7 @@
 #include "main/GuiUtils.hpp"
 
 class QFileSystemWatcher;
+namespace NekoRay::sys { class CoreProcess; }
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -120,9 +121,7 @@ private:
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
     QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
-    QProcess *core_process;
-    bool prepare_exit_core = false;
-    bool core_process_show_stderr = false;
+    NekoRay::sys::CoreProcess *core_process;
     qint64 vpn_pid = 0;
     QFileSystemWatcher *watcher = nullptr;
     //
