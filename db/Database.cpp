@@ -3,6 +3,7 @@
 #include "fmt/includes.h"
 
 #include <QFile>
+#include <QColor>
 
 namespace NekoRay {
 
@@ -99,6 +100,7 @@ namespace NekoRay {
         _add(new configItem("type", &type, itemType::string));
         _add(new configItem("id", &id, itemType::integer));
         _add(new configItem("gid", &gid, itemType::integer));
+        _add(new configItem("yc", &latency, itemType::integer));
 
         // 可以不关联 bean，只加载 ProxyEntity 的信息
         if (bean != nullptr) {
@@ -116,6 +118,22 @@ namespace NekoRay {
             return QString("%1 ms").arg(latency);
         } else {
             return "";
+        }
+    }
+
+    QColor ProxyEntity::DisplayLatencyColor() const {
+        if (latency < 0) {
+            return Qt::red;
+        } else if (latency > 0) {
+            if (latency < 100) {
+                return Qt::darkGreen;
+            } else if (latency < 200) {
+                return Qt::darkYellow;
+            } else {
+                return Qt::darkRed;
+            }
+        } else {
+            return {};
         }
     }
 

@@ -148,6 +148,7 @@ void MainWindow::speedtest_current_group(int mode) {
                     profile->latency = result.ms();
                     if (profile->latency == 0) profile->latency = -1; // sn
                     profile->full_test_report = result.full_report().c_str();
+                    profile->Save();
 
                     runOnUiThread([=] {
                         if (!result.error().empty()) {

@@ -752,8 +752,13 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
 
         // C4: Test Result
         f = f0->clone();
-        f->setText(profile->DisplayLatency());
-        if (!profile->full_test_report.isEmpty()) f->setText(profile->full_test_report);
+        if (profile->full_test_report.isEmpty()) {
+            auto color = profile->DisplayLatencyColor();
+            if (color.isValid()) f->setForeground(color);
+            f->setText(profile->DisplayLatency());
+        } else {
+            f->setText(profile->full_test_report);
+        }
         ui->proxyListTable->setItem(row, 4, f);
 
         // C5: Traffic
@@ -1072,6 +1077,7 @@ void MainWindow::on_menu_clear_test_result_triggered() {
         if (NekoRay::dataStore->current_group != profile->gid) continue;
         profile->latency = 0;
         profile->full_test_report = "";
+        profile->Save();
     }
     refresh_proxy_list();
 }

@@ -27,17 +27,19 @@ namespace NekoRay {
 
         int id = -1;
         int gid = 0;
+        int latency = 0;
         QSharedPointer<fmt::AbstractBean> bean;
         QSharedPointer<traffic::TrafficData> traffic_data = QSharedPointer<traffic::TrafficData>(
                 new traffic::TrafficData(""));
 
         // Cache
-        int latency = 0;
         QString full_test_report;
 
         ProxyEntity(fmt::AbstractBean *bean, QString _type);
 
         [[nodiscard]] QString DisplayLatency() const;
+
+        [[nodiscard]] QColor DisplayLatencyColor() const;
 
         [[nodiscard]] fmt::ChainBean *ChainBean() const {
             return (fmt::ChainBean *) bean.get();
