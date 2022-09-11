@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           stable: false
-          go-version: 1.18.5
+          go-version: 1.18.6
       - name: Build golang and common parts
         shell: bash
         run: |
@@ -95,7 +95,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: libs/deps
-          key: ${{ hashFiles('libs/build*.sh') }}
+          key: ${{ hashFiles('libs/build_deps_*.sh') }}
       - name: Build Dependencies
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true'

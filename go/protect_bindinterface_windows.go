@@ -20,7 +20,7 @@ var lock sync.Mutex
 
 func init() {
 	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
-		bindInterfaceIndex := getBindInterfaceIndex()
+		bindInterfaceIndex := getBindInterfaceIndex(address)
 		if bindInterfaceIndex != 0 {
 			if err := bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
 				log.Println("bind inbound interface", err)
@@ -30,7 +30,7 @@ func init() {
 		return nil
 	})
 	internet.RegisterDialerController(func(network, address string, fd uintptr) error {
-		bindInterfaceIndex := getBindInterfaceIndex()
+		bindInterfaceIndex := getBindInterfaceIndex(address)
 		if bindInterfaceIndex != 0 {
 			var v4, v6 bool
 			if strings.HasSuffix(network, "6") {
@@ -68,7 +68,12 @@ func updateRoutes() {
 	}
 }
 
-func getBindInterfaceIndex() uint32 {
+func getBindInterfaceIndex(address string) uint32 {
+	host, _, _ := net.SplitHostPort(address)
+	if !net.ParseIP(host).IsGlobalUnicast() {
+		return 0
+	}
+
 	lock.Lock()
 	defer lock.Unlock()
 

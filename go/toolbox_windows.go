@@ -20,7 +20,7 @@ func ToolBox() {
 			for _, route := range routes {
 				log.Println(route)
 			}
-			log.Println("Upstream:", getBindInterfaceIndex())
+			log.Println("Upstream:", getBindInterfaceIndex("8.8.8.8:8888"))
 		}
 	}
 }
