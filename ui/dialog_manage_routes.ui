@@ -176,6 +176,19 @@
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="hide_console">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Hide Console</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QCheckBox" name="vpn_ipv6">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">

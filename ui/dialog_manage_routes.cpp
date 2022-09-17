@@ -44,6 +44,10 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->vpn_implementation->setCurrentIndex(NekoRay::dataStore->vpn_implementation);
     ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
     ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
+    ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_consloe);
+#ifndef Q_OS_WIN
+    ui->hide_console->setVisible(false);
+#endif
     //
 #ifdef Q_OS_WIN
     ui->vpn_implementation->setItemText(0, Preset::SingBox::VpnImplementation[0]);
@@ -122,6 +126,7 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->fake_dns = fakedns;
     NekoRay::dataStore->vpn_mtu = mtu;
     NekoRay::dataStore->vpn_ipv6 = ipv6;
+    NekoRay::dataStore->vpn_hide_consloe = ui->hide_console->isChecked();
     //
     bool routeChanged = false;
     if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;

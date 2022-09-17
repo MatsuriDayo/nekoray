@@ -482,6 +482,10 @@
         <source>VPN Enable IPv6</source>
         <translation>启用 VPN IPv6</translation>
     </message>
+    <message>
+        <source>Hide Console</source>
+        <translation>隐藏控制台</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>

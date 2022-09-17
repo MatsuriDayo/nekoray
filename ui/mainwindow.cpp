@@ -1405,7 +1405,10 @@ bool MainWindow::StartVPNProcess() {
     runOnNewThread([=] {
         vpn_pid = 1; //TODO get pid?
         WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/sing-box.exe",
-                                         {"--disable-color", "run", "-c", configPath}); // blocking
+                                         {"--disable-color", "run", "-c", configPath},
+                                         "",
+                                         NekoRay::dataStore->vpn_hide_consloe
+        ); // blocking
         vpn_pid = 0;
         runOnUiThread([=] {
             neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
