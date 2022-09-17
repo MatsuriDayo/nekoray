@@ -52,6 +52,7 @@ namespace NekoRay {
             return ent;
         } else {
             // 返回一个假的？
+            ent = NewProxyEntity("socks");
             ent->bean->name = "[Load Error]";
             return ent;
         }
