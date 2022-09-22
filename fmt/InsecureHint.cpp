@@ -8,7 +8,7 @@ namespace NekoRay::fmt {
     QString DisplayInsecureHint(const QSharedPointer<AbstractBean> &bean) {
         if (!dataStore->insecure_hint) return {};
         auto insecure_hint = bean->InsecureHint();
-        auto stream = GetStreamSettings(bean);
+        auto stream = GetStreamSettings(bean.data());
         if (stream != nullptr) insecure_hint += "\n" + stream->InsecureHint();
         return insecure_hint.trimmed();
     }

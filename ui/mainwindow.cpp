@@ -1147,6 +1147,32 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
     }
 }
 
+void MainWindow::on_menu_resolve_domain_triggered() {
+    if (QMessageBox::question(this,
+                              tr("Confirmation"),
+                              tr("Resolving current group domain to IP, if support.")
+    ) != QMessageBox::StandardButton::Yes) {
+        return;
+    }
+    if (mw_sub_updating) return;
+    mw_sub_updating = true;
+
+    auto group = NekoRay::profileManager->CurrentGroup();
+    if (group == nullptr) return;
+
+    auto profiles = group->ProfilesWithOrder();
+    NekoRay::dataStore->resolve_count = profiles.length();
+
+    for (const auto &profile: profiles) {
+        profile->bean->ResolveDomainToIP([=] {
+            profile->Save();
+            if (--NekoRay::dataStore->resolve_count != 0) return;
+            refresh_proxy_list();
+            mw_sub_updating = false;
+        });
+    }
+}
+
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
     ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); //弹出菜单
 }

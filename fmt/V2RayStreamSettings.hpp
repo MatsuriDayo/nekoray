@@ -37,7 +37,7 @@ namespace NekoRay::fmt {
         [[nodiscard]] QString InsecureHint() const;
     };
 
-    inline V2rayStreamSettings *GetStreamSettings(const QSharedPointer<AbstractBean> &bean) {
+    inline V2rayStreamSettings *GetStreamSettings(AbstractBean *bean) {
         if (bean == nullptr) return nullptr;
         auto stream_item = bean->_get("stream");
         if (stream_item != nullptr) {

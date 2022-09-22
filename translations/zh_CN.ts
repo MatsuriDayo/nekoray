@@ -1117,6 +1117,14 @@ End: %2</source>
         <source>Manual addition of profiles is not allowed in subscription groupings.</source>
         <translation>订阅分组中不允许手动添加配置。</translation>
     </message>
+    <message>
+        <source>Resolve domain</source>
+        <translation>将服务器域名解析为 IP</translation>
+    </message>
+    <message>
+        <source>Resolving current group domain to IP, if support.</source>
+        <translation>将当前分组内服务器域名解析为 IP（如果支持）。</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

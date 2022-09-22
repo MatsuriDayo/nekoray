@@ -47,6 +47,7 @@ namespace NekoRay {
         Routing *routing = new Routing;
         int imported_count = 0;
         bool refreshing_group_list = false;
+        int resolve_count = 0;
 
         // Flags
         bool flag_use_appdata = false;

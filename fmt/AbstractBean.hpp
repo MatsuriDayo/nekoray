@@ -27,7 +27,13 @@ namespace NekoRay::fmt {
 
         explicit AbstractBean(int version);
 
+        //
+
         QString ToNekorayShareLink(const QString &type);
+
+        void ResolveDomainToIP(const std::function<void()> &onFinished);
+
+        //
 
         [[nodiscard]] virtual QString DisplayAddress();
 
@@ -36,6 +42,8 @@ namespace NekoRay::fmt {
         virtual QString DisplayType() { return {}; };
 
         virtual QString DisplayTypeAndName();
+
+        //
 
         virtual bool NeedExternal() { return false; };
 

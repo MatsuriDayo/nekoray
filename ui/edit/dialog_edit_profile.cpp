@@ -173,7 +173,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port_l->setVisible(notChain);
 
     // 右边 Outbound: settings
-    auto stream = GetStreamSettings(ent->bean);
+    auto stream = GetStreamSettings(ent->bean.data());
     if (stream != nullptr) {
         ui->right_all_w->setVisible(true);
         ui->network->setCurrentText(stream->network);
@@ -249,7 +249,7 @@ void DialogEditProfile::accept() {
     }
 
     // 右边
-    auto stream = GetStreamSettings(ent->bean);
+    auto stream = GetStreamSettings(ent->bean.data());
     if (stream != nullptr) {
         stream->network = ui->network->currentText();
         stream->security = ui->security->currentText();

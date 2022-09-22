@@ -519,11 +519,15 @@
       <string>Current Group</string>
      </property>
      <addaction name="menu_delete_repeat"/>
-     <addaction name="menu_remove_unavailable"/>
+     <addaction name="separator"/>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
+     <addaction name="menu_remove_unavailable"/>
      <addaction name="menu_clear_test_result"/>
+     <addaction name="separator"/>
+     <addaction name="menu_resolve_domain"/>
+     <addaction name="separator"/>
      <addaction name="menu_update_subscripton"/>
     </widget>
     <addaction name="menu_add_from_input"/>
@@ -812,6 +816,11 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+U</string>
+   </property>
+  </action>
+  <action name="menu_resolve_domain">
+   <property name="text">
+    <string>Resolve domain</string>
    </property>
   </action>
  </widget>

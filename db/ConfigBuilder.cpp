@@ -429,7 +429,7 @@ namespace NekoRay {
                             {"enabled",     true},
                             {"concurrency", dataStore->mux_cool},
                     };
-                    auto stream = GetStreamSettings(ent->bean);
+                    auto stream = GetStreamSettings(ent->bean.data());
                     if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
                         muxObj["packetEncoding"] = stream->packet_encoding;
                     }
