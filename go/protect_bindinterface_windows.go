@@ -47,6 +47,7 @@ func init() {
 		}
 		return nil
 	})
+	updateRoutes()
 	iphlpapi.RegisterNotifyRouteChange2(func(callerContext uintptr, row uintptr, notificationType uint32) uintptr {
 		updateRoutes()
 		return 0
@@ -77,10 +78,6 @@ func getBindInterfaceIndex(address string) uint32 {
 	lock.Lock()
 	defer lock.Unlock()
 
-	if routes == nil {
-		log.Println("warning: no routes info")
-		return 0
-	}
 	if interfaces == nil {
 		log.Println("warning: no interfaces info")
 		return 0
@@ -98,6 +95,11 @@ func getBindInterfaceIndex(address string) uint32 {
 
 	// Not in VPN mode
 	if nextInterface == 0 {
+		return 0
+	}
+
+	if routes == nil {
+		log.Println("warning: no routes info")
 		return 0
 	}
 

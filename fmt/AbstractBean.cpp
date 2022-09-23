@@ -36,7 +36,7 @@ namespace NekoRay::fmt {
     }
 
     QString AbstractBean::DisplayTypeAndName() {
-        return QString(" [%1] %2").arg(DisplayType(), DisplayName());
+        return QString("[%1] %2").arg(DisplayType(), DisplayName());
     }
 
     void AbstractBean::ResolveDomainToIP(const std::function<void()> &onFinished) {
