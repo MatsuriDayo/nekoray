@@ -3,15 +3,22 @@
 #include <QPainter>
 
 QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
-    auto icon = QIcon::fromTheme("nekoray");
-    auto pixmap = QPixmap("../nekoray.png");
-    if (!pixmap.isNull()) icon = QIcon(pixmap);
-    pixmap = QPixmap("./nekoray.png");
-    if (!pixmap.isNull()) icon = QIcon(pixmap);
+    QPixmap pixmap;
 
-    if (status == TrayIconStatus::NONE) return icon;
+    // software embedded icon
+    auto pixmap_read = QPixmap(":/nekoray/nekoray.png");
+    if (!pixmap_read.isNull()) pixmap = pixmap_read;
 
-    pixmap = icon.pixmap(icon.availableSizes().first());
+    // software pack icon
+    pixmap_read = QPixmap("../nekoray.png");
+    if (!pixmap_read.isNull()) pixmap = pixmap_read;
+
+    // user icon
+    pixmap_read = QPixmap("./nekoray.png");
+    if (!pixmap_read.isNull()) pixmap = pixmap_read;
+
+    if (status == TrayIconStatus::NONE) return pixmap;
+
     auto p = QPainter(&pixmap);
 
     auto side = pixmap.width();
