@@ -4,7 +4,7 @@ import (
 	"flag"
 	"io"
 	"log"
-	"nekoray_core/protect_server"
+	"neko/pkg/protect_server"
 	"net"
 	"net/http"
 	"os"
@@ -64,7 +64,6 @@ func ToolBox() {
 				log.Println("missing protect-listen-path")
 				return
 			}
-			log.Println(protectListenPath, protectFwMark)
 			protect_server.ServeProtect(protectListenPath, protectFwMark)
 		}
 	case "btd": // Test the permission

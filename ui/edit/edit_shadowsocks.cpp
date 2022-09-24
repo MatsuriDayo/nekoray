@@ -6,6 +6,9 @@
 EditShadowSocks::EditShadowSocks(QWidget *parent) : QWidget(parent),
                                                     ui(new Ui::EditShadowSocks) {
     ui->setupUi(this);
+    if (IS_NEKO_BOX) {
+        ui->method->addItems({"2022-blake3-aes-128-gcm", "2022-blake3-aes-256-gcm", "2022-blake3-chacha20-poly1305"});
+    }
 }
 
 EditShadowSocks::~EditShadowSocks() {

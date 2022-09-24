@@ -1,56 +1,24 @@
-package main
+package grpc_server
 
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
-	"libcore"
-	"nekoray_core/gen"
-	"net"
+	"neko/gen"
+	"neko/pkg/neko_common"
 	"net/http"
 	"os"
 	"runtime"
 	"strings"
 	"time"
-
-	v2rayNet "github.com/v2fly/v2ray-core/v5/common/net"
 )
-
-// PROXY
-
-func getProxyHttpClient(_instance *libcore.V2RayInstance) *http.Client {
-	dailContext := func(ctx context.Context, network, addr string) (net.Conn, error) {
-		dest, err := v2rayNet.ParseDestination(fmt.Sprintf("%s:%s", network, addr))
-		if err != nil {
-			return nil, err
-		}
-		return _instance.DialContext(ctx, dest)
-	}
-
-	transport := &http.Transport{
-		TLSHandshakeTimeout:   time.Second * 3,
-		ResponseHeaderTimeout: time.Second * 3,
-	}
-	if _instance != nil {
-		transport.DialContext = dailContext
-	}
-
-	client := &http.Client{
-		Transport: transport,
-	}
-
-	return client
-}
-
-// UPDATE
 
 var update_download_url string
 
-func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
+func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
 	ret := &gen.UpdateResp{}
 
-	client := getProxyHttpClient(instance)
+	client := neko_common.GetProxyHttpClient()
 
 	if in.Action == gen.UpdateAction_Check { // Check update
 		ctx, cancel := context.WithTimeout(ctx, time.Second*10)
@@ -79,7 +47,7 @@ func (s *server) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp
 			return ret, nil
 		}
 
-		nowVer := strings.TrimLeft(version_standalone, "nekoray-")
+		nowVer := strings.TrimLeft(neko_common.Version_neko, "nekoray-")
 
 		var search string
 		if runtime.GOOS == "windows" && runtime.GOARCH == "amd64" {

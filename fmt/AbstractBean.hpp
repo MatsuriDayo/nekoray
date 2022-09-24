@@ -3,7 +3,6 @@
 #include "main/NekoRay.hpp"
 
 namespace NekoRay::fmt {
-
     struct CoreObjOutboundBuildResult {
     public:
         QJsonObject outbound;
@@ -47,7 +46,9 @@ namespace NekoRay::fmt {
 
         virtual bool NeedExternal() { return false; };
 
-        virtual CoreObjOutboundBuildResult BuildCoreObj() { return {}; };
+        virtual CoreObjOutboundBuildResult BuildCoreObjV2Ray() { return {}; };
+
+        virtual CoreObjOutboundBuildResult BuildCoreObjSingBox() { return {}; };
 
         virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port) { return {}; };
 
@@ -58,5 +59,4 @@ namespace NekoRay::fmt {
     };
 
     QString DisplayInsecureHint(const QSharedPointer<AbstractBean> &);
-
 }

@@ -113,7 +113,8 @@ set(PROJECT_SOURCES
         db/ProfileFilter.cpp
 
         fmt/AbstractBean.cpp
-        fmt/Bean2CoreObj.cpp
+        fmt/Bean2CoreObj_ray.cpp
+        fmt/Bean2CoreObj_box.cpp
         fmt/Bean2External.cpp
         fmt/Bean2Link.cpp
         fmt/InsecureHint.cpp

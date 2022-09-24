@@ -113,7 +113,6 @@ void MainWindow::speedtest_current_group(int mode) {
                     QList<NekoRay::sys::ExternalProcess *> ext;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
-                        // TODO refactor: use only 1 instance
                         auto c = NekoRay::BuildConfig(profile, true);
                         // external test ???
                         if (!c->ext.isEmpty()) {
@@ -347,7 +346,7 @@ void MainWindow::CheckUpdate() {
                         auto q = QMessageBox::question(nullptr, QObject::tr("Update"),
                                                        QObject::tr("Update is ready, restart to install?"));
                         if (q == QMessageBox::StandardButton::Yes) {
-                            this->exit_update = true;
+                            this->exit_reason = 1;
                             on_menu_exit_triggered();
                         }
                     } else {
@@ -360,30 +359,4 @@ void MainWindow::CheckUpdate() {
         }
     });
 #endif
-}
-
-bool MainWindow::Tun2rayStartStop(bool start) {
-#ifndef NKR_NO_GRPC
-    // For Linux only currently (check in go)
-    bool ok;
-    if (start) {
-        libcore::SetTunReq req;
-        req.set_name("nekoray-tun");
-        req.set_mtu(NekoRay::dataStore->vpn_mtu);
-        req.set_implementation(NekoRay::dataStore->vpn_implementation);
-        req.set_fakedns(NekoRay::dataStore->fake_dns);
-        auto error = defaultClient->SetTun(&ok, req);
-        if (!ok) return false;
-        if (!error.isEmpty()) {
-            MessageBoxWarning("Error", "Failed to start Tun2ray: " + error);
-            return false;
-        }
-    } else {
-        libcore::SetTunReq req;
-        req.set_implementation(-1);
-        defaultClient->SetTun(&ok, req);
-        if (!ok) return false;
-    }
-#endif
-    return true;
 }

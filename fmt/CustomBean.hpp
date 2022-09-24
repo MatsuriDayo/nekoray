@@ -19,8 +19,13 @@ namespace NekoRay::fmt {
 
         QString DisplayType() override { return core; };
 
-        bool NeedExternal() override { return true; };
+        bool NeedExternal() override {
+            if (IS_NEKO_BOX && core == "hysteria") return false;
+            return true;
+        };
 
         ExternalBuildResult BuildExternal(int mapping_port, int socks_port) override;
+
+        CoreObjOutboundBuildResult BuildCoreObjSingBox() override;
     };
 }

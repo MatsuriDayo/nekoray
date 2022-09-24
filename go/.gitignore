@@ -3,4 +3,6 @@
 *.json
 *.exe
 *.dat
-/nekoray_core
+/cmd/nekoray_core/nekoray_core
+/cmd/nekobox_core/nekobox_core
+*.db

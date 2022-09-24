@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>600</height>
+    <height>678</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -116,342 +116,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QDialogButtonBox" name="buttonBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-   </item>
-   <item>
-    <widget class="QWidget" name="right_all_w" native="true">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>400</width>
-       <height>0</height>
-      </size>
-     </property>
-     <layout class="QVBoxLayout" name="right_all">
-      <item>
-       <widget class="QWidget" name="stream_box_2" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="toolTip">
-         <string/>
-        </property>
-        <layout class="QVBoxLayout" name="right_layout">
-         <property name="sizeConstraint">
-          <enum>QLayout::SetDefaultConstraint</enum>
-         </property>
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QGroupBox" name="stream_box">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="title">
-            <string>Settings</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout">
-            <item>
-             <layout class="QGridLayout" name="_2">
-              <item row="1" column="1">
-               <widget class="QComboBox" name="security">
-                <item>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">none</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">tls</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_2">
-                <property name="toolTip">
-                 <string notr="true">底层传输方式。必须与服务器一致，否则无法建立连接。</string>
-                </property>
-                <property name="text">
-                 <string>Network</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="network">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <item>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">tcp</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">ws</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">h2</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">grpc</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">quic</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="toolTip">
-                 <string notr="true">传输层安全。必须与服务器一致，否则无法建立连接。</string>
-                </property>
-                <property name="text">
-                 <string>Security</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_4">
-                <property name="toolTip">
-                 <string notr="true">包编码，用于实现 UDP FullCone 等特性。需要服务器支持，选错无法连接。不懂请留空。</string>
-                </property>
-                <property name="text">
-                 <string>Packet Encoding</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="1">
-               <widget class="QComboBox" name="packet_encoding">
-                <item>
-                 <property name="text">
-                  <string notr="true"/>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">packet</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string notr="true">xudp</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="network_box">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="title">
-            <string>Network Settings (%1)</string>
-           </property>
-           <layout class="QGridLayout" name="gridLayout">
-            <item row="1" column="1">
-             <widget class="MyLineEdit" name="path"/>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="path_l">
-              <property name="toolTip">
-               <string notr="true">http path (ws/h2/伪装http)
-serviceName (gRPC)
-key (QUIC)</string>
-              </property>
-              <property name="text">
-               <string>Path</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="MyLineEdit" name="host"/>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="host_l">
-              <property name="toolTip">
-               <string notr="true">http host (ws/h2/伪装http)
-security (QUIC)</string>
-              </property>
-              <property name="text">
-               <string>Host</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="header_type_l">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="toolTip">
-               <string notr="true">伪装头部 (tcp/quic)</string>
-              </property>
-              <property name="text">
-               <string notr="true">headerType</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QComboBox" name="header_type">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="editable">
-               <bool>true</bool>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="security_box">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="title">
-            <string>Security Settings</string>
-           </property>
-           <layout class="QVBoxLayout" name="verticalLayout_2">
-            <item>
-             <widget class="QCheckBox" name="insecure">
-              <property name="toolTip">
-               <string notr="true">开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</string>
-              </property>
-              <property name="text">
-               <string>Allow insecure</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <layout class="QGridLayout" name="_3">
-              <item row="2" column="1">
-               <widget class="QPushButton" name="certificate_edit">
-                <property name="text">
-                 <string notr="true">PushButton</string>
-                </property>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QLabel" name="label_6">
-                <property name="toolTip">
-                 <string notr="true"/>
-                </property>
-                <property name="text">
-                 <string>Certificate</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="MyLineEdit" name="sni"/>
-              </item>
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_5">
-                <property name="toolTip">
-                 <string notr="true">服务器名称指示，明文。</string>
-                </property>
-                <property name="text">
-                 <string notr="true">SNI</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_8">
-                <property name="toolTip">
-                 <string notr="true">应用层协议协商，明文。多个请以英文逗号分隔。</string>
-                </property>
-                <property name="text">
-                 <string notr="true">ALPN</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="MyLineEdit" name="alpn"/>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </widget>
-      </item>
-      <item>
        <widget class="QGroupBox" name="custom_box">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -473,6 +137,348 @@ security (QUIC)</string>
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QDialogButtonBox" name="buttonBox">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="standardButtons">
+         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QWidget" name="right_all_w" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>400</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <layout class="QVBoxLayout" name="right_layout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="stream_box">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Settings</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <layout class="QGridLayout" name="_2">
+           <item row="1" column="1">
+            <widget class="QComboBox" name="security">
+             <item>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">none</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">tls</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="network_l">
+             <property name="toolTip">
+              <string notr="true">底层传输方式。必须与服务器一致，否则无法建立连接。</string>
+             </property>
+             <property name="text">
+              <string>Network</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QComboBox" name="network">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">tcp</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">ws</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">h2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">grpc</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">quic</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="security_l">
+             <property name="toolTip">
+              <string notr="true">传输层安全。必须与服务器一致，否则无法建立连接。</string>
+             </property>
+             <property name="text">
+              <string>Security</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="packet_encoding_l">
+             <property name="toolTip">
+              <string notr="true">包编码，用于实现 UDP FullCone 等特性。需要服务器支持，选错无法连接。不懂请留空。</string>
+             </property>
+             <property name="text">
+              <string>Packet Encoding</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QComboBox" name="packet_encoding">
+             <item>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">packet</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">xudp</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="network_box">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Network Settings (%1)</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout">
+         <item row="1" column="0">
+          <widget class="QLabel" name="path_l">
+           <property name="toolTip">
+            <string notr="true">http path (ws/h2/伪装http)
+serviceName (gRPC)
+key (QUIC)</string>
+           </property>
+           <property name="text">
+            <string>Path</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="MyLineEdit" name="host"/>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="host_l">
+           <property name="toolTip">
+            <string notr="true">http host (ws/h2/伪装http)
+security (QUIC)</string>
+           </property>
+           <property name="text">
+            <string>Host</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="header_type_l">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="toolTip">
+            <string notr="true">伪装头部 (tcp/quic)</string>
+           </property>
+           <property name="text">
+            <string notr="true">headerType</string>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="1">
+          <widget class="MyLineEdit" name="path"/>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="header_type">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <item>
+            <property name="text">
+             <string notr="true"/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string notr="true">http</string>
+            </property>
+           </item>
+          </widget>
+         </item>
+         <item row="3" column="1">
+          <widget class="MyLineEdit" name="ws_early_data_length"/>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLabel" name="ws_early_data_length_l">
+           <property name="text">
+            <string notr="true">EarlyData Length</string>
+           </property>
+          </widget>
+         </item>
+         <item row="4" column="1">
+          <widget class="MyLineEdit" name="ws_early_data_name"/>
+         </item>
+         <item row="4" column="0">
+          <widget class="QLabel" name="ws_early_data_name_l">
+           <property name="text">
+            <string notr="true">EarlyData Name</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="security_box">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="title">
+         <string>Security Settings</string>
+        </property>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QCheckBox" name="insecure">
+           <property name="toolTip">
+            <string notr="true">开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</string>
+           </property>
+           <property name="text">
+            <string>Allow insecure</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="_3">
+           <item row="2" column="1">
+            <widget class="QPushButton" name="certificate_edit">
+             <property name="text">
+              <string notr="true">PushButton</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="toolTip">
+              <string notr="true"/>
+             </property>
+             <property name="text">
+              <string>Certificate</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="MyLineEdit" name="sni"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="toolTip">
+              <string notr="true">服务器名称指示，明文。</string>
+             </property>
+             <property name="text">
+              <string notr="true">SNI</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="label_8">
+             <property name="toolTip">
+              <string notr="true">应用层协议协商，明文。多个请以英文逗号分隔。</string>
+             </property>
+             <property name="text">
+              <string notr="true">ALPN</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="MyLineEdit" name="alpn"/>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -490,14 +496,19 @@ security (QUIC)</string>
   <tabstop>name</tabstop>
   <tabstop>address</tabstop>
   <tabstop>port</tabstop>
+  <tabstop>custom_edit</tabstop>
   <tabstop>network</tabstop>
   <tabstop>security</tabstop>
+  <tabstop>packet_encoding</tabstop>
+  <tabstop>header_type</tabstop>
   <tabstop>path</tabstop>
   <tabstop>host</tabstop>
+  <tabstop>ws_early_data_length</tabstop>
+  <tabstop>ws_early_data_name</tabstop>
   <tabstop>insecure</tabstop>
   <tabstop>sni</tabstop>
+  <tabstop>alpn</tabstop>
   <tabstop>certificate_edit</tabstop>
-  <tabstop>custom_edit</tabstop>
  </tabstops>
  <resources/>
  <connections>

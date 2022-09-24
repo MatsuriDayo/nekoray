@@ -68,8 +68,18 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
     });
 
-    // Style
+    if (IS_NEKO_BOX) {
+        ui->groupBox_mux->hide();
+        ui->groupBox_http->hide();
+        ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
+        ui->hlayout_l2->addWidget(ui->groupBox_log);
+    }
 
+    // Style
+    if (IS_NEKO_BOX) {
+        ui->traffic_statistics_box->setDisabled(true);
+        ui->connection_statistics_box->setDisabled(true);
+    }
     //
     D_LOAD_BOOL(start_minimal)
     D_LOAD_BOOL(check_include_pre)
@@ -119,6 +129,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
+    ui->groupBox_core->setTitle(software_core_name);
     ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
     //
     CACHE.extraCore = QString2QJsonObject(NekoRay::dataStore->extraCore->core_map);
@@ -166,6 +177,31 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             }
         }
     });
+
+    // switch core
+    ui->switch_core_v2ray->setChecked(!IS_NEKO_BOX);
+    ui->switch_core_sing_box->setChecked(IS_NEKO_BOX);
+    auto switch_core_on_click = [=] {
+        int neko_core_new;
+        if (sender() == ui->switch_core_sing_box) {
+            if (IS_NEKO_BOX) return;
+            neko_core_new = NekoRay::CoreType::SING_BOX;
+        } else {
+            if (!IS_NEKO_BOX) return;
+            neko_core_new = NekoRay::CoreType::V2RAY;
+        }
+        QString core_name_new = dynamic_cast<QRadioButton *>(sender())->text();
+        if (QMessageBox::question(this, tr("Confirmation"),
+                                  tr("Switching the core to %1, click \"Yes\" to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.")
+                                          .arg(core_name_new)
+        ) == QMessageBox::StandardButton::Yes) {
+            NekoRay::dataStore->neko_core = neko_core_new;
+            NekoRay::dataStore->Save();
+            dialog_message("", "SwitchCore");
+        }
+    };
+    connect(ui->switch_core_v2ray, &QRadioButton::clicked, this, switch_core_on_click);
+    connect(ui->switch_core_sing_box, &QRadioButton::clicked, this, switch_core_on_click);
 
     // Security
 

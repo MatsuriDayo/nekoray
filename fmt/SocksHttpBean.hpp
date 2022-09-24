@@ -28,7 +28,9 @@ namespace NekoRay::fmt {
 
         QString DisplayType() override { return socks_http_type == type_HTTP ? "HTTP" : "Socks"; };
 
-        CoreObjOutboundBuildResult BuildCoreObj() override;
+        CoreObjOutboundBuildResult BuildCoreObjV2Ray() override;
+
+        CoreObjOutboundBuildResult BuildCoreObjSingBox() override;
 
         bool TryParseLink(const QString &link);
 

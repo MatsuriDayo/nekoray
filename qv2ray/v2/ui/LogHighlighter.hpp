@@ -49,26 +49,24 @@
 ****************************************************************************/
 
 #pragma once
+
 #include <QRegularExpression>
 #include <QSyntaxHighlighter>
 #include <QTextCharFormat>
 #include <QTextDocument>
 
-namespace Qv2ray::ui
-{
-    class SyntaxHighlighter : public QSyntaxHighlighter
-    {
-        Q_OBJECT
+namespace Qv2ray::ui {
+    class SyntaxHighlighter : public QSyntaxHighlighter {
+    Q_OBJECT
 
-      public:
+    public:
         explicit SyntaxHighlighter(bool darkMode, QTextDocument *parent = nullptr);
 
-      protected:
+    protected:
         void highlightBlock(const QString &text) override;
 
-      private:
-        struct HighlightingRule
-        {
+    private:
+        struct HighlightingRule {
             QRegularExpression pattern;
             QTextCharFormat format;
         };
@@ -86,9 +84,6 @@ namespace Qv2ray::ui
         QTextCharFormat timeFormat;
         QTextCharFormat ipHostFormat;
         QTextCharFormat v2rayComponentFormat;
-        //
-        QTextCharFormat qvAppLogFormat;
-        QTextCharFormat qvAppDebugLogFormat;
     };
 } // namespace Qv2ray::ui
 

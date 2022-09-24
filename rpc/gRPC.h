@@ -26,13 +26,11 @@ namespace NekoRay::rpc {
 
         QString Start(bool *rpcOK, const libcore::LoadConfigReq &request);
 
-        QString SetTun(bool *rpcOK, const libcore::SetTunReq &request);
-
         QString Stop(bool *rpcOK);
 
         long long QueryStats(const std::string &tag, const std::string &direct);
 
-        std::string ListV2rayConnections();
+        std::string ListConnections();
 
         libcore::TestResp Test(bool *rpcOK, const libcore::TestReq &request);
 

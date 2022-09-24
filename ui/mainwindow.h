@@ -14,7 +14,6 @@
 #include "db/Group.hpp"
 #include "main/GuiUtils.hpp"
 
-class QFileSystemWatcher;
 namespace NekoRay::sys { class CoreProcess; }
 
 QT_BEGIN_NAMESPACE
@@ -125,12 +124,10 @@ private:
     //
     NekoRay::sys::CoreProcess *core_process;
     qint64 vpn_pid = 0;
-    QFileSystemWatcher *watcher = nullptr;
     //
     bool qvLogAutoScoll = true;
     QTextDocument *qvLogDocument = new QTextDocument(this);
     //
-    QString title_base;
     QString title_error;
     int title_spmode = NekoRay::SystemProxyMode::DISABLE;
     int icon_status = -1;
@@ -140,7 +137,7 @@ private:
     //
     int proxy_last_order = -1;
     bool select_mode = false;
-    bool exit_update = false;
+    int exit_reason = 0;
 
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> get_now_selected();
 
@@ -172,8 +169,6 @@ private:
     void setup_grpc();
 
     void CheckUpdate();
-
-    bool Tun2rayStartStop(bool start);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;

@@ -8,7 +8,6 @@ namespace Preset {
                                     "  \"obfs\": \"fuck me till the daylight\",\n"
                                     "  \"up_mbps\": 10,\n"
                                     "  \"down_mbps\": 50,\n"
-                                    "  \"server_name\": \"real.name.com\",\n"
                                     "  \"socks5\": {\n"
                                     "    \"listen\": \"127.0.0.1:%socks_port%\"\n"
                                     "  }\n"
@@ -16,6 +15,6 @@ namespace Preset {
     }
 
     namespace SingBox {
-        inline QStringList VpnImplementation = {"gvisor", "lwip", "system"};
+        inline QStringList VpnImplementation = {"gvisor", "system"};
     }
 }

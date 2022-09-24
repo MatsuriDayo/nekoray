@@ -1,4 +1,4 @@
-package main
+package grpc_server
 
 import (
 	"bufio"
@@ -6,7 +6,9 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"nekoray_core/gen"
+	"neko/gen"
+	"neko/pkg/neko_auth"
+	"neko/pkg/neko_common"
 	"net"
 	"os"
 	"strconv"
@@ -17,25 +19,32 @@ import (
 	"google.golang.org/grpc"
 )
 
-type server struct {
+type BaseServer struct {
 	gen.LibcoreServiceServer
 }
 
 var last time.Time
-var nekoray_debug bool
 
-func (s *server) KeepAlive(ctx context.Context, in *gen.EmptyReq) (*gen.EmptyResp, error) {
+func (s *BaseServer) KeepAlive(ctx context.Context, in *gen.EmptyReq) (*gen.EmptyResp, error) {
 	last = time.Now()
 	return &gen.EmptyResp{}, nil
 }
 
-func NekorayCore() {
+func (s *BaseServer) Exit(ctx context.Context, in *gen.EmptyReq) (out *gen.EmptyResp, _ error) {
+	out = &gen.EmptyResp{}
+
+	// Connection closed
+	os.Exit(0)
+	return
+}
+
+func RunCore(setupCore func(), server gen.LibcoreServiceServer) {
 	_token := flag.String("token", "", "")
 	_port := flag.Int("port", 19810, "")
 	_debug := flag.Bool("debug", false, "")
 	flag.CommandLine.Parse(os.Args[2:])
 
-	nekoray_debug = *_debug
+	neko_common.Debug = *_debug
 
 	go func() {
 		t := time.NewTicker(time.Second * 10)
@@ -71,7 +80,7 @@ func NekorayCore() {
 	}
 	os.Stderr.WriteString("token is set\n")
 
-	auther := Authenticator{
+	auther := neko_auth.Authenticator{
 		Token: token,
 	}
 
@@ -79,9 +88,14 @@ func NekorayCore() {
 		grpc.StreamInterceptor(grpc_auth.StreamServerInterceptor(auther.Authenticate)),
 		grpc.UnaryInterceptor(grpc_auth.UnaryServerInterceptor(auther.Authenticate)),
 	)
-	gen.RegisterLibcoreServiceServer(s, &server{})
+	gen.RegisterLibcoreServiceServer(s, server)
 
-	log.Printf("neokray grpc server listening at %v", lis.Addr())
+	name := "nekoray_core"
+	if neko_common.RunMode == neko_common.RunMode_NekoBox_Core {
+		name = "nekobox_core"
+	}
+
+	log.Printf("%s grpc server listening at %v\n", name, lis.Addr())
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve: %v", err)
 	}

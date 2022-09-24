@@ -100,16 +100,3 @@ uint WinCommander::runProcessElevated(const QString &path,
 #endif
     return result;
 }
-
-/*!
-Executes a command elevated specified by \apath , using paramters \aparameters.
-\n
-Parameter /aaWait decides if the function should return immediatelly after it's\n
-execution or wait for the exit of the launched process
-\n
-Returns the return value of the executed command
-*/
-uint WinCommander::runProcessElevated(const QString &path, const QString &parameters, const QString &workingDir,
-                                      bool hide, bool aWait) {
-    return runProcessElevated(path, QStringList() << parameters, workingDir, hide, aWait);
-}

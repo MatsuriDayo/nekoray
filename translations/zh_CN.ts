@@ -76,8 +76,8 @@
         <translation>资源文件路径</translation>
     </message>
     <message>
-        <source>Default: dir of &quot;nekoray-core&quot;</source>
-        <translation>默认值：和 nekoray_core 同路径</translation>
+        <source>Default: dir of &quot;nekoray&quot;</source>
+        <translation>默认值：和 nekoray 同路径</translation>
     </message>
     <message>
         <source>Settings changed</source>
@@ -178,6 +178,18 @@
     <message>
         <source>Cancel</source>
         <translation>取消</translation>
+    </message>
+    <message>
+        <source>Switch core</source>
+        <translation>切换核心</translation>
+    </message>
+    <message>
+        <source>Confirmation</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
+        <translation>将核心切换到 %1，点击 &quot;是 &quot;完成切换，程序将重新启动。此功能可能不稳定，请不要频繁切换。</translation>
     </message>
 </context>
 <context>
@@ -513,16 +525,16 @@
         <translation>核心</translation>
     </message>
     <message>
-        <source>Json</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Command</source>
         <translation>命令</translation>
     </message>
     <message>
         <source>Generator</source>
         <translation>生成器</translation>
+    </message>
+    <message>
+        <source>Json Editor</source>
+        <translation>JSON 编辑器</translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1031,7 @@ End: %2</source>
     </message>
     <message>
         <source>Export V2ray config</source>
-        <translation>导出 V2ray 配置</translation>
+        <translation type="vanished">导出 V2ray 配置</translation>
     </message>
     <message>
         <source>Active Routing</source>
@@ -1124,6 +1136,10 @@ End: %2</source>
     <message>
         <source>Resolving current group domain to IP, if support.</source>
         <translation>将当前分组内服务器域名解析为 IP（如果支持）。</translation>
+    </message>
+    <message>
+        <source>Export %1 config</source>
+        <translation>导出 %1 配置</translation>
     </message>
 </context>
 <context>

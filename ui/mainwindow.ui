@@ -504,7 +504,7 @@
     <property name="title">
      <string>Server</string>
     </property>
-    <widget class="QMenu" name="menuShare_Item">
+    <widget class="QMenu" name="menu_share_item">
      <property name="title">
       <string>Share</string>
      </property>
@@ -518,14 +518,13 @@
      <property name="title">
       <string>Current Group</string>
      </property>
-     <addaction name="menu_delete_repeat"/>
-     <addaction name="separator"/>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
      <addaction name="menu_remove_unavailable"/>
      <addaction name="menu_clear_test_result"/>
      <addaction name="separator"/>
+     <addaction name="menu_delete_repeat"/>
      <addaction name="menu_resolve_domain"/>
      <addaction name="separator"/>
      <addaction name="menu_update_subscripton"/>
@@ -542,7 +541,7 @@
     <addaction name="menu_reset_traffic"/>
     <addaction name="menu_delete"/>
     <addaction name="separator"/>
-    <addaction name="menuShare_Item"/>
+    <addaction name="menu_share_item"/>
     <addaction name="separator"/>
     <addaction name="menugroup"/>
     <addaction name="separator"/>
@@ -659,7 +658,7 @@
   </action>
   <action name="menu_export_config">
    <property name="text">
-    <string>Export V2ray config</string>
+    <string>Export %1 config</string>
    </property>
   </action>
   <action name="menu_reset_traffic">

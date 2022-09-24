@@ -32,11 +32,6 @@ public:
                                    const QStringList &parameters = QStringList(),
                                    const QString &workingDir = QString(),
                                    bool hide = false, bool aWait = true);
-
-    static uint runProcessElevated(const QString &path,
-                                   const QString &parameters = QString(),
-                                   const QString &workingDir = QString(),
-                                   bool hide = false, bool aWait = true);
 };
 
 #endif // WINCOMMANDER_H

@@ -24,7 +24,9 @@ namespace NekoRay::fmt {
 
         QString DisplayType() override { return proxy_type == proxy_VLESS ? "VLESS" : "Trojan"; };
 
-        CoreObjOutboundBuildResult BuildCoreObj() override;
+        CoreObjOutboundBuildResult BuildCoreObjV2Ray() override;
+
+        CoreObjOutboundBuildResult BuildCoreObjSingBox() override;
 
         bool TryParseLink(const QString &link);
 

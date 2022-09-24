@@ -1,6 +1,8 @@
 #include "ExternalProcess.hpp"
 
 #include <QTimer>
+#include <QDir>
+#include <QApplication>
 
 namespace NekoRay::sys {
     ExternalProcess::ExternalProcess() : QProcess() {}
@@ -79,7 +81,7 @@ namespace NekoRay::sys {
         connect(this, &QProcess::errorOccurred, this, [&](QProcess::ProcessError error) {
             if (error == QProcess::ProcessError::FailedToStart) {
                 failed_to_start = true;
-                showLog("start nekoray_core errorOccurred: " + errorString() + "\n");
+                showLog("start core error occurred: " + errorString() + "\n");
             }
         });
         connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
@@ -88,7 +90,7 @@ namespace NekoRay::sys {
             if (!dataStore->core_prepare_exit && state == QProcess::NotRunning) {
                 if (failed_to_start) return; // no retry
 
-                showLog("[Error] nekoray_core exited, restarting.\n");
+                showLog("[Error] core exited, restarting.\n");
 
                 // Restart
                 auto t = new QTimer;
@@ -107,11 +109,13 @@ namespace NekoRay::sys {
 
     void CoreProcess::Start() {
         show_stderr = false;
-        if (!dataStore->v2ray_asset_dir.isEmpty()) {
-            setEnvironment(QStringList{
-                    "V2RAY_LOCATION_ASSET=" + dataStore->v2ray_asset_dir
-            });
+        auto v2ray_asset_dir = dataStore->v2ray_asset_dir;
+        if (v2ray_asset_dir.isEmpty() || QDir(v2ray_asset_dir).exists()) {
+            v2ray_asset_dir = QApplication::applicationDirPath();
         }
+        env = QStringList{
+                "V2RAY_LOCATION_ASSET=" + v2ray_asset_dir
+        };
         ExternalProcess::Start();
         write((dataStore->core_token + "\n").toUtf8());
     }

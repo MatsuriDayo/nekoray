@@ -44,6 +44,8 @@ func GetFdFromConn(l net.Conn) int {
 }
 
 func ServeProtect(path string, fwmark int) {
+	fmt.Println("ServeProtect", path, fwmark)
+
 	os.Remove(path)
 	defer os.Remove(path)
 

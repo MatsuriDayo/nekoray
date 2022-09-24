@@ -23,17 +23,11 @@ popd
 pushd ../v2ray-core
 version_v2ray=$(git log --pretty=format:'%h' -n 1)
 popd
-pushd go
-go build -v -o $DEST -trimpath -ldflags "-w -s -X main.version_v2ray=$version_v2ray -X main.version_standalone=$version_standalone"
+pushd go/cmd/nekoray_core
+go build -v -o $DEST -trimpath -ldflags "-w -s -X neko/pkg/neko_common.Version_v2ray=$version_v2ray -X neko/pkg/neko_common.Version_neko=$version_standalone"
 popd
 
-#### Windows only ####
-if [ "$GOOS" != "windows" ]; then
-  exit
-fi
-
-#### Go ext: sing-box ####
-curl -Lso sing-box.zip https://github.com/SagerNet/sing-box/releases/download/v1.1-beta7/sing-box-1.1-beta7-windows-amd64.zip
-unzip sing-box.zip
-mv sing-box-*/sing-box.exe $DEST
-rm -rf sing-box.zip sing-box-*
+#### Go: nekobox_core ####
+pushd go/cmd/nekobox_core
+go build -v -o $DEST -trimpath -ldflags "-w -s -X neko/pkg/neko_common.Version_neko=$version_standalone" -tags "with_gvisor,with_quic,with_wireguard"
+popd

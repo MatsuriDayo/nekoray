@@ -18,7 +18,12 @@ namespace NekoRay {
 
     class BuildConfigStatus {
     public:
+        QList<int> globalProfiles;
+
         QSharedPointer<BuildConfigResult> result;
+        QSharedPointer<ProxyEntity> ent;
+
+        // xxList is V2Ray format string list
 
         QJsonArray domainListDNSRemote;
         QJsonArray domainListDNSDirect;
@@ -26,23 +31,24 @@ namespace NekoRay {
         QJsonArray domainListDirect;
         QJsonArray ipListRemote;
         QJsonArray ipListDirect;
-
         QJsonArray domainListBlock;
         QJsonArray ipListBlock;
 
-        QJsonArray routingRules;
-        QJsonObject hosts;
+        // config format
 
+        QJsonArray routingRules;
         QJsonArray inbounds;
         QJsonArray outbounds;
-
-        QList<int> globalProfiles;
-
-        ProxyEntity *currentEnt;
     };
 
     QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest);
 
-    QString BuildChain(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
-                       const QSharedPointer<BuildConfigStatus> &status);
+    QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent, bool forTest);
+
+    QSharedPointer<BuildConfigResult> BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent, bool forTest);
+
+    QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status);
+
+    QString BuildChainInternal(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
+                               const QSharedPointer<BuildConfigStatus> &status);
 }

@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"neko/pkg/grpc_server"
+	"neko/pkg/neko_common"
 	"os"
 	_ "unsafe"
 
@@ -12,25 +14,24 @@ import (
 //go:linkname build github.com/v2fly/v2ray-core/v5.build
 var build string
 
-var version_v2ray string = "N/A"
-var version_standalone string = "N/A"
-
 func main() {
-	fmt.Println("V2Ray:", version_v2ray, "Version:", version_standalone)
+	fmt.Println("V2Ray:", neko_common.Version_v2ray, "Neko:", neko_common.Version_neko)
 	fmt.Println()
 
-	// nekoray
+	// nekoray_core
 	if len(os.Args) > 1 && os.Args[1] == "nekoray" {
-		NekorayCore()
+		neko_common.RunMode = neko_common.RunMode_NekoRay_Core
+		grpc_server.RunCore(setupCore, &server{})
 		return
 	}
 
-	// toolbox
+	// tool
 	if len(os.Args) > 1 && os.Args[1] == "tool" {
 		ToolBox()
 		return
 	}
 
+	// v2ray
 	build = "Matsuridayo/Nekoray"
 	main_v2ray_v5()
 }

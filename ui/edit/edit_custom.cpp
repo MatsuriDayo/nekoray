@@ -15,6 +15,12 @@ EditCustom::EditCustom(QWidget *parent) :
                                           "  host: your-domain.com\n"
                                           "  sni: your-domain.com\n"
     );
+    if (IS_NEKO_BOX) {
+        ui->core->hide();
+        ui->core_l->hide();
+        ui->command->hide();
+        ui->command_l->hide();
+    }
 }
 
 EditCustom::~EditCustom() {

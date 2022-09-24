@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package libcore;
-option go_package = "nekoray_core/gen";
+option go_package = "neko/gen";
 
 service LibcoreService {
   rpc Exit(EmptyReq) returns (EmptyResp) {}
@@ -9,11 +9,10 @@ service LibcoreService {
   rpc Update(UpdateReq) returns (UpdateResp) {}
   //
   rpc Start(LoadConfigReq) returns (ErrorResp) {}
-  rpc SetTun(SetTunReq) returns (ErrorResp) {}
   rpc Stop(EmptyReq) returns (ErrorResp) {}
   rpc Test(TestReq) returns (TestResp) {}
   rpc QueryStats(QueryStatsReq) returns (QueryStatsResp) {}
-  rpc ListV2rayConnections(EmptyReq) returns (ListV2rayConnectionsResp) {}
+  rpc ListConnections(EmptyReq) returns (ListConnectionsResp) {}
 }
 
 message EmptyReq {}
@@ -27,13 +26,6 @@ message ErrorResp {
 message LoadConfigReq {
   string coreConfig = 1;
   string tryDomains = 2;
-}
-
-message SetTunReq {
-  string name = 1;
-  int32 mtu = 2;
-  int32 implementation = 3;
-  bool fakedns = 4;
 }
 
 enum TestMode {
@@ -93,6 +85,6 @@ message UpdateResp {
   bool is_pre_release = 6;
 }
 
-message ListV2rayConnectionsResp {
+message ListConnectionsResp {
   string matsuri_connections_json = 1;
 }

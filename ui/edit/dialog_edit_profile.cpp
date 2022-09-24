@@ -26,7 +26,6 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     // setup UI
     ui->setupUi(this);
     ui->dialog_layout->setAlignment(ui->left, Qt::AlignTop);
-    ui->dialog_layout->setAlignment(ui->right_all, Qt::AlignTop);
 
     // network changed
     network_title_base = ui->network_box->title();
@@ -60,6 +59,17 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->path_l->setVisible(false);
             ui->host->setVisible(false);
             ui->host_l->setVisible(false);
+        }
+        if (txt == "ws") {
+            ui->ws_early_data_length->setVisible(true);
+            ui->ws_early_data_length_l->setVisible(true);
+            ui->ws_early_data_name->setVisible(true);
+            ui->ws_early_data_name_l->setVisible(true);
+        } else {
+            ui->ws_early_data_length->setVisible(false);
+            ui->ws_early_data_length_l->setVisible(false);
+            ui->ws_early_data_name->setVisible(false);
+            ui->ws_early_data_name_l->setVisible(false);
         }
         ADJUST_SIZE
     });
@@ -185,10 +195,14 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->alpn->setText(stream->alpn);
         ui->insecure->setChecked(stream->allow_insecure);
         ui->header_type->setCurrentText(stream->header_type);
+        ui->ws_early_data_name->setText(stream->ws_early_data_name);
+        ui->ws_early_data_length->setText(Int2String(stream->ws_early_data_length));
         CACHE.certificate = stream->certificate;
     } else {
         ui->right_all_w->setVisible(false);
     }
+
+    // left: custom
     auto custom_item = ent->bean->_get("custom");
     if (custom_item != nullptr) {
         ui->custom_box->setVisible(true);
@@ -228,6 +242,46 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         }
     }
 
+    if (IS_NEKO_BOX) {
+        ui->header_type->hide();
+        ui->header_type_l->hide();
+        //
+        if (type == "vmess" || type == "vless") {
+            ui->packet_encoding->setVisible(true);
+            ui->packet_encoding_l->setVisible(true);
+        } else {
+            ui->packet_encoding->setVisible(false);
+            ui->packet_encoding_l->setVisible(false);
+        }
+        if (type == "vmess" || type == "vless" || type == "trojan") {
+            ui->network_l->setVisible(true);
+            ui->network->setVisible(true);
+            ui->network_box->setVisible(true);
+        } else {
+            ui->network_l->setVisible(false);
+            ui->network->setVisible(false);
+            ui->network_box->setVisible(false);
+        }
+        if (type == "vmess" || type == "vless" || type == "trojan" || type == "http") {
+            ui->security->setVisible(true);
+            ui->security_l->setVisible(true);
+        } else {
+            ui->security->setVisible(false);
+            ui->security_l->setVisible(false);
+        }
+        //
+        int streamBoxVisible = 0;
+        for (auto label: ui->stream_box->findChildren<QLabel *>()) {
+            if (!label->isHidden()) streamBoxVisible++;
+        }
+        ui->stream_box->setVisible(streamBoxVisible);
+    }
+
+    auto rightNoBox = (ui->stream_box->isHidden() && ui->security_box->isHidden() && ui->network_box->isHidden());
+    if (rightNoBox && !ui->right_all_w->isHidden()) {
+        ui->right_all_w->setVisible(false);
+    }
+
     editor_cache_updated_impl();
     ADJUST_SIZE
 
@@ -260,6 +314,8 @@ void DialogEditProfile::accept() {
         stream->alpn = ui->alpn->text();
         stream->allow_insecure = ui->insecure->isChecked();
         stream->header_type = ui->header_type->currentText();
+        stream->ws_early_data_name = ui->ws_early_data_name->text();
+        stream->ws_early_data_length = ui->ws_early_data_length->text().toInt();
         stream->certificate = CACHE.certificate;
     }
     auto custom_item = ent->bean->_get("custom");

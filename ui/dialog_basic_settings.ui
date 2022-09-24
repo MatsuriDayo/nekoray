@@ -81,12 +81,12 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_14">
+        <layout class="QHBoxLayout" name="hlayout_l2">
          <item>
           <widget class="QGroupBox" name="horizontalGroupBox_2">
            <layout class="QHBoxLayout" name="horizontalLayout_13">
             <item>
-             <widget class="QLabel" name="label_2">
+             <widget class="QLabel" name="inbound_socks_port_l">
               <property name="text">
                <string>Socks Listen Port</string>
               </property>
@@ -99,7 +99,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_8">
+          <widget class="QGroupBox" name="groupBox_http">
            <layout class="QHBoxLayout" name="horizontalLayout_16">
             <item>
              <widget class="QLabel" name="label_5">
@@ -152,7 +152,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_11">
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_5">
+          <widget class="QGroupBox" name="groupBox_log">
            <layout class="QHBoxLayout" name="horizontalLayout">
             <item>
              <widget class="QLabel" name="label_3">
@@ -189,7 +189,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_7">
+          <widget class="QGroupBox" name="groupBox_mux">
            <layout class="QHBoxLayout" name="horizontalLayout_17">
             <item>
              <widget class="QLabel" name="label_6">
@@ -375,7 +375,7 @@
        <item row="2" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_12">
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_6">
+          <widget class="QGroupBox" name="traffic_statistics_box">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
              <widget class="QLabel" name="label_16">
@@ -407,7 +407,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_1">
+          <widget class="QGroupBox" name="connection_statistics_box">
            <layout class="QHBoxLayout" name="horizontalLayout_15">
             <item>
              <widget class="QLabel" name="label_9">
@@ -460,7 +460,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <widget class="QGroupBox" name="groupBox_3">
+        <widget class="QGroupBox" name="groupBox_core">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
@@ -468,7 +468,7 @@
           </sizepolicy>
          </property>
          <property name="title">
-          <string notr="true">V2Ray</string>
+          <string notr="true">core_name</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
@@ -483,7 +483,7 @@
             <item>
              <widget class="MyLineEdit" name="core_v2ray_asset">
               <property name="placeholderText">
-               <string>Default: dir of &quot;nekoray-core&quot;</string>
+               <string>Default: dir of &quot;nekoray&quot;</string>
               </property>
              </widget>
             </item>
@@ -491,6 +491,31 @@
              <widget class="QPushButton" name="core_v2ray_asset_pick">
               <property name="text">
                <string>Select</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_21">
+            <item>
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>Switch core</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="switch_core_v2ray">
+              <property name="text">
+               <string notr="true">V2Ray</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="switch_core_sing_box">
+              <property name="text">
+               <string notr="true">sing-box</string>
               </property>
              </widget>
             </item>

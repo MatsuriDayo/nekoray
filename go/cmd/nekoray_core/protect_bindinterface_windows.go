@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/binary"
 	"log"
-	"nekoray_core/iphlpapi"
+	"neko/pkg/iphlpapi"
 	"net"
 	"strings"
 	"sync"

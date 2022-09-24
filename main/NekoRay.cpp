@@ -12,7 +12,6 @@ namespace NekoRay {
     DataStore::DataStore() : JsonStore("groups/nekoray.json") {
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
 
-        _add(new configItem("core_path", &core_path, itemType::string));
         _add(new configItem("user_agent", &user_agent, itemType::string));
         _add(new configItem("test_url", &test_url, itemType::string));
         _add(new configItem("current_group", &current_group, itemType::integer));
@@ -55,6 +54,7 @@ namespace NekoRay {
         _add(new configItem("vpn_ipv6", &vpn_ipv6, itemType::boolean));
         _add(new configItem("vpn_hide_console", &vpn_hide_consloe, itemType::boolean));
         _add(new configItem("check_include_pre", &check_include_pre, itemType::boolean));
+        _add(new configItem("neko_core", &neko_core, itemType::integer));
     }
 
     void DataStore::UpdateStartedId(int id) {

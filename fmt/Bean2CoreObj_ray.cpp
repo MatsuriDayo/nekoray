@@ -4,12 +4,11 @@
 #define MAKE_SETTINGS_STREAM_SETTINGS \
 if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
 outbound["settings"] = settings; \
-auto streamSettings = stream->BuildStreamSettings(); \
+auto streamSettings = stream->BuildStreamSettingsV2Ray(); \
 outbound["streamSettings"] = streamSettings;
 
 namespace NekoRay::fmt {
-
-    QJsonObject V2rayStreamSettings::BuildStreamSettings() {
+    QJsonObject V2rayStreamSettings::BuildStreamSettingsV2Ray() {
         QJsonObject streamSettings{
                 {"network",  network},
                 {"security", security},
@@ -19,6 +18,10 @@ namespace NekoRay::fmt {
             QJsonObject ws;
             if (!path.isEmpty()) ws["path"] = path;
             if (!host.isEmpty()) ws["headers"] = QJsonObject{{"Host", host}};
+            if (ws_early_data_length > 0) {
+                ws["maxEarlyData"] = ws_early_data_length;
+                ws["earlyDataHeaderName"] = ws_early_data_name;
+            }
             streamSettings["wsSettings"] = ws;
         } else if (network == "h2") {
             QJsonObject h2;
@@ -57,7 +60,7 @@ namespace NekoRay::fmt {
             QJsonObject header{{"type", header_type}};
             if (header_type == "http") {
                 QJsonObject request{
-                        {"path", QList2QJsonArray(path.split(","))},
+                        {"path",    QList2QJsonArray(path.split(","))},
                         {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
                 };
                 header["request"] = request;
@@ -68,7 +71,7 @@ namespace NekoRay::fmt {
         return streamSettings;
     }
 
-    CoreObjOutboundBuildResult SocksHttpBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult SocksHttpBean::BuildCoreObjV2Ray() {
         CoreObjOutboundBuildResult result;
 
         QJsonObject outbound;
@@ -97,11 +100,10 @@ namespace NekoRay::fmt {
         return result;
     }
 
-    CoreObjOutboundBuildResult ShadowSocksBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult ShadowSocksBean::BuildCoreObjV2Ray() {
         CoreObjOutboundBuildResult result;
 
-        QJsonObject outbound;
-        outbound["protocol"] = "shadowsocks";
+        QJsonObject outbound{{"protocol", "shadowsocks"}};
 
         QJsonObject settings;
         QJsonArray servers;
@@ -126,11 +128,9 @@ namespace NekoRay::fmt {
         return result;
     }
 
-    CoreObjOutboundBuildResult VMessBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult VMessBean::BuildCoreObjV2Ray() {
         CoreObjOutboundBuildResult result;
-        QJsonObject outbound{
-                {"protocol", "vmess"},
-        };
+        QJsonObject outbound{{"protocol", "vmess"}};
 
         QJsonObject settings{
                 {"vnext", QJsonArray{
@@ -154,7 +154,7 @@ namespace NekoRay::fmt {
         return result;
     }
 
-    CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObj() {
+    CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObjV2Ray() {
         CoreObjOutboundBuildResult result;
         QJsonObject outbound{
                 {"protocol", proxy_type == proxy_VLESS ? "vless" : "trojan"},

@@ -24,9 +24,8 @@ namespace NekoRay::traffic {
 
         void update_all();
 
-        [[noreturn]] void loop();
+        void loop();
     };
 
     extern TrafficLooper *trafficLooper;
 }
-

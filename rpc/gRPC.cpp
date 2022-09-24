@@ -196,19 +196,6 @@ namespace NekoRay::rpc {
         }
     }
 
-    QString Client::SetTun(bool *rpcOK, const libcore::SetTunReq &request) {
-        libcore::ErrorResp reply;
-        auto status = grpc_channel->Call("SetTun", request, &reply);
-
-        if (status == QNetworkReply::NoError) {
-            *rpcOK = true;
-            return {reply.error().c_str()};
-        } else {
-            NOT_OK
-            return "";
-        }
-    }
-
     QString Client::Stop(bool *rpcOK) {
         libcore::EmptyReq request;
         libcore::ErrorResp reply;
@@ -250,10 +237,10 @@ namespace NekoRay::rpc {
         }
     }
 
-    std::string Client::ListV2rayConnections() {
+    std::string Client::ListConnections() {
         libcore::EmptyReq request;
-        libcore::ListV2rayConnectionsResp reply;
-        auto status = grpc_channel->Call("ListV2rayConnections", request, &reply, 500);
+        libcore::ListConnectionsResp reply;
+        auto status = grpc_channel->Call("ListConnections", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
             return reply.matsuri_connections_json();

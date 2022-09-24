@@ -30,6 +30,16 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->setupUi(this);
     title_base = windowTitle();
 
+    if (IS_NEKO_BOX) {
+        ui->fake_dns->setVisible(false);
+        ui->enhance_resolve_server_domain->setVisible(false);
+        ui->domain_v2ray->setVisible(false);
+    } else {
+        ui->fake_dns->setVisible(true);
+        ui->enhance_resolve_server_domain->setVisible(true);
+        ui->domain_v2ray->setVisible(true);
+    }
+    //
     ui->sniffing_mode->setCurrentIndex(NekoRay::dataStore->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
     ui->domainMatcherCombo->setCurrentIndex(NekoRay::dataStore->domain_matcher);
@@ -47,12 +57,6 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_consloe);
 #ifndef Q_OS_WIN
     ui->hide_console->setVisible(false);
-#endif
-    //
-#ifdef Q_OS_WIN
-    ui->vpn_implementation->setItemText(0, Preset::SingBox::VpnImplementation[0]);
-    ui->vpn_implementation->setItemText(1, Preset::SingBox::VpnImplementation[1]);
-    ui->vpn_implementation->setItemText(2, Preset::SingBox::VpnImplementation[2]);
 #endif
     //
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
@@ -205,7 +209,7 @@ void DialogManageRoutes::on_load_save_clicked() {
             r->fn = "routes/" + fn;
             if (r->Load()) {
                 auto btn = QMessageBox::question(nullptr,
-                                                 "NekoRay", tr("Load routing: %1").arg(fn) + "\n" + r->toString());
+                                                 software_name, tr("Load routing: %1").arg(fn) + "\n" + r->toString());
                 if (btn == QMessageBox::Yes) {
                     REFRESH_ACTIVE_ROUTING(fn, r)
                     w->accept();
@@ -219,7 +223,8 @@ void DialogManageRoutes::on_load_save_clicked() {
             auto r = std::make_unique<NekoRay::Routing>();
             SAVE_TO_ROUTING(r)
             r->fn = "routes/" + fn;
-            auto btn = QMessageBox::question(nullptr, "NekoRay", tr("Save routing: %1").arg(fn) + "\n" + r->toString());
+            auto btn = QMessageBox::question(nullptr, software_name,
+                                             tr("Save routing: %1").arg(fn) + "\n" + r->toString());
             if (btn == QMessageBox::Yes) {
                 r->Save();
                 REFRESH_ACTIVE_ROUTING(fn, r)
@@ -230,7 +235,7 @@ void DialogManageRoutes::on_load_save_clicked() {
     connect(remove, &QPushButton::clicked, w, [=] {
         auto fn = lineEdit->text();
         if (!fn.isEmpty() && NekoRay::Routing::List().length() > 1) {
-            auto btn = QMessageBox::question(nullptr, "NekoRay", tr("Remove routing: %1").arg(fn));
+            auto btn = QMessageBox::question(nullptr, software_name, tr("Remove routing: %1").arg(fn));
             if (btn == QMessageBox::Yes) {
                 QFile f("routes/" + fn);
                 f.remove();

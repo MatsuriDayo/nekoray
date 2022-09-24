@@ -135,12 +135,7 @@
            </item>
            <item>
             <property name="text">
-             <string notr="true">System NAT</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Tun2Socket</string>
+             <string notr="true">System</string>
             </property>
            </item>
           </widget>
@@ -261,78 +256,80 @@
      <item>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="0,0,0,1,0,0">
-         <item>
-          <widget class="QCheckBox" name="dns_routing">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Enable DNS Routing</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>Domain Strategy</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="domainStrategyCombo">
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">AsIs</string>
+        <widget class="QWidget" name="domain_v2ray" native="true">
+         <layout class="QHBoxLayout" name="_2" stretch="0,0,0,1,0,0">
+          <item>
+           <widget class="QCheckBox" name="dns_routing">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-           </item>
-           <item>
             <property name="text">
-             <string notr="true">IPIfNonMatch</string>
+             <string>Enable DNS Routing</string>
             </property>
-           </item>
-           <item>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_6">
             <property name="text">
-             <string notr="true">IPOnDemand</string>
+             <string>Domain Strategy</string>
             </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Matcher</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="domainMatcherCombo">
-           <item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="domainStrategyCombo">
+            <property name="editable">
+             <bool>false</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">AsIs</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">IPIfNonMatch</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">IPOnDemand</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_5">
             <property name="text">
-             <string notr="true">Original</string>
+             <string>Matcher</string>
             </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Minimal Perfect Hash Matcher</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="domainMatcherCombo">
+            <item>
+             <property name="text">
+              <string notr="true">Original</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Minimal Perfect Hash Matcher</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
        <item>
         <layout class="QGridLayout" name="gridLayout_3" rowstretch="0,1,1" columnstretch="0,1,1,1">

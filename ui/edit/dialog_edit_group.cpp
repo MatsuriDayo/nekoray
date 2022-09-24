@@ -48,7 +48,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
             links += profile->bean->ToShareLink();
         }
         QApplication::clipboard()->setText(links.join("\n"));
-        MessageBoxInfo("NekoRay", tr("Copied"));
+        MessageBoxInfo(software_name, tr("Copied"));
     });
     connect(ui->copy_links_nkr, &QPushButton::clicked, this, [=] {
         QStringList links;
@@ -57,7 +57,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
             links += profile->bean->ToNekorayShareLink(profile->type);
         }
         QApplication::clipboard()->setText(links.join("\n"));
-        MessageBoxInfo("NekoRay", tr("Copied"));
+        MessageBoxInfo(software_name, tr("Copied"));
     });
 }
 

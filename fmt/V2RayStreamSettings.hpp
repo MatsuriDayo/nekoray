@@ -7,7 +7,7 @@ namespace NekoRay::fmt {
     public:
         QString network = "tcp";
         QString security = "none";
-        QString packet_encoding = "";
+        QString packet_encoding = ""; // sing-box only vmess
         // ws/h2/grpc/tcp-http
         QString path = "";
         QString host = "";
@@ -18,6 +18,9 @@ namespace NekoRay::fmt {
         QString alpn = "";
         QString certificate = "";
         bool allow_insecure = false;
+        // ws early data
+        QString ws_early_data_name = "";
+        int ws_early_data_length = 0;
 
         V2rayStreamSettings() : JsonStore() {
             _add(new configItem("net", &network, itemType::string));
@@ -30,9 +33,13 @@ namespace NekoRay::fmt {
             _add(new configItem("cert", &certificate, itemType::string));
             _add(new configItem("insecure", &allow_insecure, itemType::boolean));
             _add(new configItem("h_type", &header_type, itemType::string));
+            _add(new configItem("ed_name", &ws_early_data_name, itemType::string));
+            _add(new configItem("ed_len", &ws_early_data_length, itemType::integer));
         }
 
-        QJsonObject BuildStreamSettings();
+        QJsonObject BuildStreamSettingsV2Ray();
+
+        void BuildStreamSettingsSingBox(QJsonObject *outbound);
 
         [[nodiscard]] QString InsecureHint() const;
     };

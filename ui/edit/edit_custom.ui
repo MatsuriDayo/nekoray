@@ -19,7 +19,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QLabel" name="label">
+        <widget class="QLabel" name="core_l">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -41,7 +41,7 @@
        <item>
         <widget class="QPushButton" name="as_json">
          <property name="text">
-          <string>Json</string>
+          <string>Json Editor</string>
          </property>
         </widget>
        </item>
@@ -50,7 +50,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QLabel" name="label_2">
+        <widget class="QLabel" name="command_l">
          <property name="text">
           <string>Command</string>
          </property>

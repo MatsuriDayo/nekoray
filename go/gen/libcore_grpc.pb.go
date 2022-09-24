@@ -26,11 +26,10 @@ type LibcoreServiceClient interface {
 	KeepAlive(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error)
 	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
 	Start(ctx context.Context, in *LoadConfigReq, opts ...grpc.CallOption) (*ErrorResp, error)
-	SetTun(ctx context.Context, in *SetTunReq, opts ...grpc.CallOption) (*ErrorResp, error)
 	Stop(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ErrorResp, error)
 	Test(ctx context.Context, in *TestReq, opts ...grpc.CallOption) (*TestResp, error)
 	QueryStats(ctx context.Context, in *QueryStatsReq, opts ...grpc.CallOption) (*QueryStatsResp, error)
-	ListV2RayConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListV2RayConnectionsResp, error)
+	ListConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListConnectionsResp, error)
 }
 
 type libcoreServiceClient struct {
@@ -77,15 +76,6 @@ func (c *libcoreServiceClient) Start(ctx context.Context, in *LoadConfigReq, opt
 	return out, nil
 }
 
-func (c *libcoreServiceClient) SetTun(ctx context.Context, in *SetTunReq, opts ...grpc.CallOption) (*ErrorResp, error) {
-	out := new(ErrorResp)
-	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/SetTun", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *libcoreServiceClient) Stop(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ErrorResp, error) {
 	out := new(ErrorResp)
 	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/Stop", in, out, opts...)
@@ -113,9 +103,9 @@ func (c *libcoreServiceClient) QueryStats(ctx context.Context, in *QueryStatsReq
 	return out, nil
 }
 
-func (c *libcoreServiceClient) ListV2RayConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListV2RayConnectionsResp, error) {
-	out := new(ListV2RayConnectionsResp)
-	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/ListV2rayConnections", in, out, opts...)
+func (c *libcoreServiceClient) ListConnections(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ListConnectionsResp, error) {
+	out := new(ListConnectionsResp)
+	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/ListConnections", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -130,11 +120,10 @@ type LibcoreServiceServer interface {
 	KeepAlive(context.Context, *EmptyReq) (*EmptyResp, error)
 	Update(context.Context, *UpdateReq) (*UpdateResp, error)
 	Start(context.Context, *LoadConfigReq) (*ErrorResp, error)
-	SetTun(context.Context, *SetTunReq) (*ErrorResp, error)
 	Stop(context.Context, *EmptyReq) (*ErrorResp, error)
 	Test(context.Context, *TestReq) (*TestResp, error)
 	QueryStats(context.Context, *QueryStatsReq) (*QueryStatsResp, error)
-	ListV2RayConnections(context.Context, *EmptyReq) (*ListV2RayConnectionsResp, error)
+	ListConnections(context.Context, *EmptyReq) (*ListConnectionsResp, error)
 	mustEmbedUnimplementedLibcoreServiceServer()
 }
 
@@ -154,9 +143,6 @@ func (UnimplementedLibcoreServiceServer) Update(context.Context, *UpdateReq) (*U
 func (UnimplementedLibcoreServiceServer) Start(context.Context, *LoadConfigReq) (*ErrorResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Start not implemented")
 }
-func (UnimplementedLibcoreServiceServer) SetTun(context.Context, *SetTunReq) (*ErrorResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SetTun not implemented")
-}
 func (UnimplementedLibcoreServiceServer) Stop(context.Context, *EmptyReq) (*ErrorResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Stop not implemented")
 }
@@ -166,8 +152,8 @@ func (UnimplementedLibcoreServiceServer) Test(context.Context, *TestReq) (*TestR
 func (UnimplementedLibcoreServiceServer) QueryStats(context.Context, *QueryStatsReq) (*QueryStatsResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method QueryStats not implemented")
 }
-func (UnimplementedLibcoreServiceServer) ListV2RayConnections(context.Context, *EmptyReq) (*ListV2RayConnectionsResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method ListV2RayConnections not implemented")
+func (UnimplementedLibcoreServiceServer) ListConnections(context.Context, *EmptyReq) (*ListConnectionsResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ListConnections not implemented")
 }
 func (UnimplementedLibcoreServiceServer) mustEmbedUnimplementedLibcoreServiceServer() {}
 
@@ -254,24 +240,6 @@ func _LibcoreService_Start_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LibcoreService_SetTun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SetTunReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LibcoreServiceServer).SetTun(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/libcore.LibcoreService/SetTun",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibcoreServiceServer).SetTun(ctx, req.(*SetTunReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _LibcoreService_Stop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyReq)
 	if err := dec(in); err != nil {
@@ -326,20 +294,20 @@ func _LibcoreService_QueryStats_Handler(srv interface{}, ctx context.Context, de
 	return interceptor(ctx, in, info, handler)
 }
 
-func _LibcoreService_ListV2RayConnections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _LibcoreService_ListConnections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmptyReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LibcoreServiceServer).ListV2RayConnections(ctx, in)
+		return srv.(LibcoreServiceServer).ListConnections(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/libcore.LibcoreService/ListV2rayConnections",
+		FullMethod: "/libcore.LibcoreService/ListConnections",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibcoreServiceServer).ListV2RayConnections(ctx, req.(*EmptyReq))
+		return srv.(LibcoreServiceServer).ListConnections(ctx, req.(*EmptyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -368,10 +336,6 @@ var LibcoreService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LibcoreService_Start_Handler,
 		},
 		{
-			MethodName: "SetTun",
-			Handler:    _LibcoreService_SetTun_Handler,
-		},
-		{
 			MethodName: "Stop",
 			Handler:    _LibcoreService_Stop_Handler,
 		},
@@ -384,8 +348,8 @@ var LibcoreService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _LibcoreService_QueryStats_Handler,
 		},
 		{
-			MethodName: "ListV2rayConnections",
-			Handler:    _LibcoreService_ListV2RayConnections_Handler,
+			MethodName: "ListConnections",
+			Handler:    _LibcoreService_ListConnections_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -56,7 +56,8 @@ namespace NekoRay {
         // Saved
 
         // Misc
-        QString core_path = "../nekoray_core";
+        int neko_core = CoreType::V2RAY;
+
         QString log_level = "warning";
         QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
         bool sub_use_proxy = false;
@@ -125,3 +126,5 @@ namespace NekoRay {
     extern DataStore *dataStore;
 
 }
+
+#define IS_NEKO_BOX (NekoRay::dataStore->neko_core == NekoRay::CoreType::SING_BOX)

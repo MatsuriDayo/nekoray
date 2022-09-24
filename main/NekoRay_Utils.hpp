@@ -5,6 +5,13 @@
 #include <QJsonDocument>
 #include <QJsonArray>
 
+//
+
+inline QString software_name = "NekoRay";
+inline QString software_core_name = "V2Ray";
+
+inline std::function<void()> release_runguard;
+
 // Dialogs
 
 inline std::function<void(QString)> showLog;
@@ -15,6 +22,8 @@ inline std::function<void(QString, QString)> dialog_message;
 // Utils
 
 #define QJSONARRAY_ADD(arr, add) for(const auto &a: (add)) { (arr) += a; }
+#define QJSONOBJECT_COPY(src, dst, key) if (src.contains(key)) dst[key] = src[key];
+#define QJSONOBJECT_COPY2(src, dst, src_key, dst_key) if (src.contains(src_key)) dst[dst_key] = src[src_key];
 
 inline QString SubStrBefore(QString str, const QString &sub) {
     if (!str.contains(sub)) return str;

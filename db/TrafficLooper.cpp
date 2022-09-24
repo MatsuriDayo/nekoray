@@ -34,7 +34,7 @@ namespace NekoRay::traffic {
 
     QJsonArray TrafficLooper::get_connection_list() {
 #ifndef NKR_NO_GRPC
-        auto str = NekoRay::rpc::defaultClient->ListV2rayConnections();
+        auto str = NekoRay::rpc::defaultClient->ListConnections();
         QJsonDocument jsonDocument = QJsonDocument::fromJson(str.c_str());
         return jsonDocument.array();
 #else
@@ -61,7 +61,8 @@ namespace NekoRay::traffic {
         update_stats(bypass);
     }
 
-    [[noreturn]] void TrafficLooper::loop() {
+    void TrafficLooper::loop() {
+        if (IS_NEKO_BOX) return; // TODO upstream api
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
             auto user_disabled = sleep_ms == 0;
