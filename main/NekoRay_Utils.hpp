@@ -35,6 +35,15 @@ inline QString SubStrAfter(QString str, const QString &sub) {
     return str.right(str.length() - str.indexOf(sub) - sub.length());
 }
 
+inline QString QStringList2Command(const QStringList &list) {
+    QStringList new_list;
+    for (auto str: list) {
+        auto q = "\"" + str.replace("\"", "\\\"") + "\"";
+        new_list << q;
+    }
+    return new_list.join(" ");
+}
+
 inline QString
 DecodeB64IfValid(const QString &input, QByteArray::Base64Option options = QByteArray::Base64Option::Base64Encoding) {
     auto result = QByteArray::fromBase64Encoding(input.toUtf8(),

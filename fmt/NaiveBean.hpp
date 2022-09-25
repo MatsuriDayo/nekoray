@@ -23,6 +23,8 @@ namespace NekoRay::fmt {
             _add(new configItem("insecure_concurrency", &insecure_concurrency, itemType::integer));
         };
 
+        QString DisplayCoreType() override { return "Naive"; };
+
         QString DisplayType() override { return "Naive"; };
 
         bool NeedExternal() override { return true; };

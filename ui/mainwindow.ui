@@ -498,6 +498,7 @@
     <addaction name="menu_manage_groups"/>
     <addaction name="menu_basic_settings"/>
     <addaction name="menu_routing_settings"/>
+    <addaction name="menu_vpn_settings"/>
     <addaction name="menu_hotkey_settings"/>
    </widget>
    <widget class="QMenu" name="menu_server">
@@ -590,7 +591,7 @@
   </action>
   <action name="menu_routing_settings">
    <property name="text">
-    <string>Routing VPN Settings</string>
+    <string>Routing Settings</string>
    </property>
   </action>
   <action name="menu_add_from_clipboard">
@@ -820,6 +821,11 @@
   <action name="menu_resolve_domain">
    <property name="text">
     <string>Resolve domain</string>
+   </property>
+  </action>
+  <action name="menu_vpn_settings">
+   <property name="text">
+    <string>VPN Settings</string>
    </property>
   </action>
  </widget>

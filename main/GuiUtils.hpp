@@ -54,6 +54,7 @@ inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, const std
 #define P_SAVE_STRING_QTEXTEDIT(a) bean->a = ui->a->toPlainText();
 #define D_LOAD_STRING(a) ui->a->setText(NekoRay::dataStore->a);
 #define D_SAVE_STRING(a) NekoRay::dataStore->a = ui->a->text();
+#define D_SAVE_STRING_QTEXTEDIT(a) NekoRay::dataStore->a = ui->a->toPlainText();
 #define P_C_LOAD_STRING(a) CACHE.a = bean->a;
 #define P_C_SAVE_STRING(a) bean->a = CACHE.a;
 #define D_C_LOAD_STRING(a) CACHE.a = NekoRay::dataStore->a;

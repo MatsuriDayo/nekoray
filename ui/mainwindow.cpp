@@ -1,7 +1,6 @@
 #include "./ui_mainwindow.h"
 #include "mainwindow.h"
 
-#include "fmt/Preset.hpp"
 #include "db/ProfileFilter.hpp"
 #include "db/ConfigBuilder.hpp"
 #include "sub/GroupUpdater.hpp"
@@ -14,6 +13,7 @@
 #include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
 #include "ui/dialog_manage_routes.h"
+#include "ui/dialog_vpn_settings.h"
 #include "ui/dialog_hotkey.h"
 
 #include "3rdparty/qrcodegen.hpp"
@@ -97,7 +97,6 @@ MainWindow::MainWindow(QWidget *parent)
     if (IS_NEKO_BOX) {
         software_name = "NekoBox";
         software_core_name = "sing-box";
-        ui->menu_export_config->setText(ui->menu_export_config->text().arg(software_core_name));
     }
 
     // top bar
@@ -342,6 +341,16 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0); });
     connect(ui->menu_url_test, &QAction::triggered, this, [=]() { speedtest_current_group(1); });
     connect(ui->menu_full_test, &QAction::triggered, this, [=]() { speedtest_current_group(2); });
+    //
+    connect(ui->menu_share_item, &QMenu::aboutToShow, this, [=] {
+        auto name = software_core_name;
+        auto selected = get_now_selected();
+        if (!selected.isEmpty()) {
+            auto ent = selected.first();
+            name = ent->bean->DisplayCoreType();
+        }
+        ui->menu_export_config->setText(tr("Export %1 config").arg(name));
+    });
     refresh_status();
 
     // Prepare core
@@ -497,6 +506,10 @@ void MainWindow::on_menu_manage_groups_triggered() {
 
 void MainWindow::on_menu_routing_settings_triggered() {
     USE_DIALOG(DialogManageRoutes)
+}
+
+void MainWindow::on_menu_vpn_settings_triggered() {
+    USE_DIALOG(DialogVPNSettings)
 }
 
 void MainWindow::on_menu_hotkey_settings_triggered() {
@@ -987,8 +1000,16 @@ void MainWindow::on_menu_export_config_triggered() {
     auto ents = get_now_selected();
     if (ents.count() != 1) return;
     auto ent = ents.first();
-    auto result = NekoRay::BuildConfig(ent, false);
-    auto config_core = QJsonObject2QString(result->coreConfig, true);
+    QString config_core;
+
+    if (ent->bean->NeedExternal()) {
+        auto result = ent->bean->BuildExternal(114514, MkPort());
+        config_core = result.config_export.replace("127.0.0.1:114514", ent->bean->DisplayAddress());
+    } else {
+        auto result = NekoRay::BuildConfig(ent, false);
+        config_core = QJsonObject2QString(result->coreConfig, true);
+    }
+
     QApplication::clipboard()->setText(config_core);
     MessageBoxWarning(tr("Config copied"), config_core);
 }
@@ -1406,39 +1427,10 @@ bool MainWindow::StartVPNProcess() {
     if (vpn_pid != 0) {
         return true;
     }
-    // gen config
-    auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
-    if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
-    auto config = ReadFileText(configFn)
-            .replace("%IPV6_ADDRESS%",
-                     NekoRay::dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
-            .replace("%MTU%", Int2String(NekoRay::dataStore->vpn_mtu))
-            .replace("%STACK%", Preset::SingBox::VpnImplementation.value(NekoRay::dataStore->vpn_implementation))
-            .replace("%PORT%", Int2String(NekoRay::dataStore->inbound_socks_port));
-    // write config
-    QFile file;
-    file.setFileName(QFileInfo(configFn).fileName());
-    file.open(QIODevice::ReadWrite | QIODevice::Truncate);
-    file.write(config.toUtf8());
-    file.close();
-    auto configPath = QFileInfo(file).absoluteFilePath();
-    // gen script
+    //
     auto protectPath = QDir::currentPath() + "/protect";
-    auto scriptFn = ":/nekoray/vpn/vpn-run-root.sh";
-    if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
-    auto script = ReadFileText(scriptFn)
-            .replace("$PORT", Int2String(NekoRay::dataStore->inbound_socks_port))
-            .replace("./nekobox_core", QApplication::applicationDirPath() + "/nekobox_core")
-            .replace("$PROTECT_LISTEN_PATH", protectPath)
-            .replace("$CONFIG_PATH", configPath)
-            .replace("$TABLE_FWMARK", "514");
-    // write script
-    QFile file2;
-    file2.setFileName(QFileInfo(scriptFn).fileName());
-    file2.open(QIODevice::ReadWrite | QIODevice::Truncate);
-    file2.write(script.toUtf8());
-    file2.close();
-    auto scriptPath = QFileInfo(file2).absoluteFilePath();
+    auto configPath = NekoRay::WriteVPNSingBoxConfig();
+    auto scriptPath = NekoRay::WriteVPNLinuxScript(protectPath, configPath);
     //
 #ifdef Q_OS_WIN
     runOnNewThread([=] {

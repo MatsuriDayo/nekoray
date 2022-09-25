@@ -80,3 +80,4 @@ CMakeLists.txt.user*
 
 # Deploy
 /deployment
+/neko*.sh

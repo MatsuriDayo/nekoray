@@ -19,6 +19,8 @@ namespace NekoRay::fmt {
 
         QString DisplayType() override { return core; };
 
+        QString DisplayCoreType() override { return NeedExternal() ? core : software_core_name; };
+
         bool NeedExternal() override {
             if (IS_NEKO_BOX && core == "hysteria") return false;
             return true;

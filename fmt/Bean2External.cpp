@@ -26,20 +26,27 @@ namespace NekoRay::fmt {
             return result;
         }
 
-        auto _serverAddress = sni.isEmpty() ? serverAddress : sni;
+        auto is_export = mapping_port == 114514;
+        auto domain_address = sni.isEmpty() ? serverAddress : sni;
+        auto connect_address = is_export ? serverAddress : "127.0.0.1";
+        auto connect_port = is_export ? serverPort : mapping_port;
 
         result.arguments += "--log";
         result.arguments += "--listen=socks://127.0.0.1:" + Int2String(socks_port);
-        result.arguments += "--proxy=" + protocol + "://" +
-                            username + ":" + password + "@" +
-                            _serverAddress + ":" + Int2String(mapping_port);
-        result.arguments += "--host-resolver-rules=MAP " + _serverAddress + " 127.0.0.1";
+        result.arguments += "--proxy=" + protocol + "://" + username + ":" + password + "@" +
+                            domain_address + ":" + Int2String(connect_port);
+        if (domain_address != connect_address)
+            result.arguments += "--host-resolver-rules=MAP " + domain_address + " " + connect_address;
         if (insecure_concurrency > 0) result.arguments += "--insecure-concurrency=" + Int2String(insecure_concurrency);
         if (!extra_headers.isEmpty()) result.arguments += "--extra-headers=" + extra_headers;
         if (!certificate.isEmpty()) {
             WriteTempFile("naive_" + GetRandomString(10) + ".crt", certificate.toUtf8());
             result.env += "SSL_CERT_FILE=" + TempFile;
         }
+
+        auto config_export = QStringList{result.program};
+        config_export += result.arguments;
+        result.config_export = QStringList2Command(config_export);
 
         return result;
     }
@@ -74,6 +81,8 @@ namespace NekoRay::fmt {
             for (int i = 0; i < result.arguments.count(); i++) {
                 result.arguments[i] = result.arguments[i].replace("%config%", TempFile);
             }
+
+            result.config_export = config;
         }
 
         return result;

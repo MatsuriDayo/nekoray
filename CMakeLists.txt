@@ -181,6 +181,10 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.h
         ui/dialog_manage_routes.ui
 
+        ui/dialog_vpn_settings.cpp
+        ui/dialog_vpn_settings.h
+        ui/dialog_vpn_settings.ui
+
         ui/dialog_hotkey.cpp
         ui/dialog_hotkey.h
         ui/dialog_hotkey.ui

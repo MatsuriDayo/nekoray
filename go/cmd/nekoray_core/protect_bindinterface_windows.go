@@ -71,7 +71,7 @@ func updateRoutes() {
 
 func getBindInterfaceIndex(address string) uint32 {
 	host, _, _ := net.SplitHostPort(address)
-	if !net.ParseIP(host).IsGlobalUnicast() {
+	if net.ParseIP(host).IsLoopback() {
 		return 0
 	}
 

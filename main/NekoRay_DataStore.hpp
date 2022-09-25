@@ -109,6 +109,8 @@ namespace NekoRay {
         int vpn_mtu = 9000;
         bool vpn_ipv6 = false;
         bool vpn_hide_consloe = false;
+        QString vpn_bypass_process = "";
+        QString vpn_bypass_cidr = "";
 
         // Hotkey
         QString hotkey_mainwindow = "";

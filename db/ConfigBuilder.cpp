@@ -1,9 +1,11 @@
 #include "db/ConfigBuilder.hpp"
 #include "db/Database.hpp"
 #include "fmt/includes.h"
+#include "fmt/Preset.hpp"
 
 #include <QApplication>
 #include <QFile>
+#include <QFileInfo>
 
 namespace NekoRay {
 
@@ -694,7 +696,7 @@ namespace NekoRay {
                                     {"outbound", "dns-out"}};
 
         // geopath
-        auto geopath = NekoRay::dataStore->v2ray_asset_dir;
+        auto geopath = dataStore->v2ray_asset_dir;
         if (geopath.isEmpty()) geopath = QApplication::applicationDirPath();
         auto geoip = geopath + "/geoip.db";
         auto geosite = geopath + "/geosite.db";
@@ -712,6 +714,60 @@ namespace NekoRay {
         });
 
         return result;
+    }
+
+    QString WriteVPNSingBoxConfig() {
+        //
+        QString process_name_rule = dataStore->vpn_bypass_process.trimmed();
+        if (!process_name_rule.isEmpty()) {
+            auto arr = SplitLines(process_name_rule);
+            QJsonObject rule{{"outbound",     "direct"},
+                             {"process_name", QList2QJsonArray(arr)}};
+            process_name_rule = "," + QJsonObject2QString(rule, false);
+        }
+        QString cidr_rule = dataStore->vpn_bypass_cidr.trimmed();
+        if (!cidr_rule.isEmpty()) {
+            auto arr = SplitLines(cidr_rule);
+            QJsonObject rule{{"outbound", "direct"},
+                             {"ip_cidr",  QList2QJsonArray(arr)}};
+            cidr_rule = "," + QJsonObject2QString(rule, false);
+        }
+        // gen config
+        auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
+        if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
+        auto config = ReadFileText(configFn)
+                .replace("%IPV6_ADDRESS%", dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
+                .replace("%MTU%", Int2String(dataStore->vpn_mtu))
+                .replace("%STACK%", Preset::SingBox::VpnImplementation.value(dataStore->vpn_implementation))
+                .replace("%PROCESS_NAME_RULE%", process_name_rule)
+                .replace("%CIDR_RULE%", cidr_rule)
+                .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
+        // write config
+        QFile file;
+        file.setFileName(QFileInfo(configFn).fileName());
+        file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        file.write(config.toUtf8());
+        file.close();
+        return QFileInfo(file).absoluteFilePath();
+    }
+
+    QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath) {
+        // gen script
+        auto scriptFn = ":/nekoray/vpn/vpn-run-root.sh";
+        if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
+        auto script = ReadFileText(scriptFn)
+                .replace("$PORT", Int2String(dataStore->inbound_socks_port))
+                .replace("./nekobox_core", QApplication::applicationDirPath() + "/nekobox_core")
+                .replace("$PROTECT_LISTEN_PATH", protectPath)
+                .replace("$CONFIG_PATH", configPath)
+                .replace("$TABLE_FWMARK", "514");
+        // write script
+        QFile file2;
+        file2.setFileName(QFileInfo(scriptFn).fileName());
+        file2.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        file2.write(script.toUtf8());
+        file2.close();
+        return QFileInfo(file2).absoluteFilePath();
     }
 
 }

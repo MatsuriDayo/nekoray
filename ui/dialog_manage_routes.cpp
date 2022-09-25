@@ -3,7 +3,6 @@
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "qv2ray/v3/components/GeositeReader/GeositeReader.hpp"
-#include "fmt/Preset.hpp"
 #include "main/GuiUtils.hpp"
 
 #include <QFile>
@@ -31,11 +30,9 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     title_base = windowTitle();
 
     if (IS_NEKO_BOX) {
-        ui->fake_dns->setVisible(false);
         ui->enhance_resolve_server_domain->setVisible(false);
         ui->domain_v2ray->setVisible(false);
     } else {
-        ui->fake_dns->setVisible(true);
         ui->enhance_resolve_server_domain->setVisible(true);
         ui->domain_v2ray->setVisible(true);
     }
@@ -44,20 +41,11 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
     ui->domainMatcherCombo->setCurrentIndex(NekoRay::dataStore->domain_matcher);
     ui->domainStrategyCombo->setCurrentText(NekoRay::dataStore->domain_strategy);
-    ui->fake_dns->setChecked(NekoRay::dataStore->fake_dns);
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
     ui->enhance_resolve_server_domain->setChecked(NekoRay::dataStore->enhance_resolve_server_domain);
     D_C_LOAD_STRING(custom_route_global)
-    //
-    ui->vpn_implementation->setCurrentIndex(NekoRay::dataStore->vpn_implementation);
-    ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
-    ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
-    ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_consloe);
-#ifndef Q_OS_WIN
-    ui->hide_console->setVisible(false);
-#endif
     //
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_route)
@@ -113,25 +101,6 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
     NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
     D_C_SAVE_STRING(custom_route_global)
-    //
-    bool vpnChanged = false;
-    auto fakedns = ui->fake_dns->isChecked();
-    auto mtu = ui->vpn_mtu->currentText().toInt();
-    if (mtu > 10000 || mtu < 1000) mtu = 9000;
-    auto ipv6 = ui->vpn_ipv6->isChecked();
-    //
-    auto impl = ui->vpn_implementation->currentIndex();
-    vpnChanged |= NekoRay::dataStore->vpn_implementation != impl;
-    NekoRay::dataStore->vpn_implementation = impl;
-    //
-    vpnChanged |= NekoRay::dataStore->fake_dns != fakedns;
-    vpnChanged |= NekoRay::dataStore->vpn_mtu != mtu;
-    vpnChanged |= NekoRay::dataStore->vpn_ipv6 != ipv6;
-    NekoRay::dataStore->fake_dns = fakedns;
-    NekoRay::dataStore->vpn_mtu = mtu;
-    NekoRay::dataStore->vpn_ipv6 = ipv6;
-    NekoRay::dataStore->vpn_hide_consloe = ui->hide_console->isChecked();
-    //
     bool routeChanged = false;
     if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;
     SAVE_TO_ROUTING(NekoRay::dataStore->routing)
@@ -141,7 +110,6 @@ void DialogManageRoutes::accept() {
     //
     QString info = "UpdateDataStore";
     if (routeChanged) info += "RouteChanged";
-    if (vpnChanged) info += "VPNChanged";
     dialog_message(Dialog_DialogManageRoutes, info);
     QDialog::accept();
 }

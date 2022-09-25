@@ -51,4 +51,8 @@ namespace NekoRay {
 
     QString BuildChainInternal(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
                                const QSharedPointer<BuildConfigStatus> &status);
+
+    QString WriteVPNSingBoxConfig();
+
+    QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath);
 }

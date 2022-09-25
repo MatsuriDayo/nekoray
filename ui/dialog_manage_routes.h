@@ -26,7 +26,6 @@ private:
         QString custom_route_global;
     } CACHE;
 
-
     QMenu *builtInSchemesMenu;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *directDomainTxt;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *proxyDomainTxt;
@@ -41,6 +40,7 @@ private:
     //
     QString title_base;
     QString active_routing;
+
 public slots:
 
     void accept() override;

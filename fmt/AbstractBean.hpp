@@ -15,6 +15,7 @@ namespace NekoRay::fmt {
         QStringList env;
         QStringList arguments;
         QString error;
+        QString config_export;
     };
 
     class AbstractBean : public JsonStore {
@@ -37,6 +38,8 @@ namespace NekoRay::fmt {
         [[nodiscard]] virtual QString DisplayAddress();
 
         [[nodiscard]] virtual QString DisplayName();
+
+        virtual QString DisplayCoreType() { return software_core_name; };
 
         virtual QString DisplayType() { return {}; };
 

@@ -486,17 +486,32 @@
         <source>Custom (global)</source>
         <translation>自定义 (全局)</translation>
     </message>
+</context>
+<context>
+    <name>DialogVPNSettings</name>
+    <message>
+        <source>VPN Settings</source>
+        <translation>VPN 设置</translation>
+    </message>
     <message>
         <source>VPN Implementation</source>
         <translation>VPN 实现</translation>
+    </message>
+    <message>
+        <source>Hide Console</source>
+        <translation>隐藏控制台</translation>
     </message>
     <message>
         <source>VPN Enable IPv6</source>
         <translation>启用 VPN IPv6</translation>
     </message>
     <message>
-        <source>Hide Console</source>
-        <translation>隐藏控制台</translation>
+        <source>Bypass CIDR</source>
+        <translation>绕过 CIDR</translation>
+    </message>
+    <message>
+        <source>Bypass Process Name</source>
+        <translation>绕过进程名</translation>
     </message>
 </context>
 <context>
@@ -820,10 +835,6 @@
         <translation>停止</translation>
     </message>
     <message>
-        <source>Routing VPN Settings</source>
-        <translation>路由 VPN 设置</translation>
-    </message>
-    <message>
         <source>Add profile from clipboard</source>
         <translation>从剪切板添加</translation>
     </message>
@@ -1030,10 +1041,6 @@ End: %2</source>
         <translation>显示 QR Code 和分享链接</translation>
     </message>
     <message>
-        <source>Export V2ray config</source>
-        <translation type="vanished">导出 V2ray 配置</translation>
-    </message>
-    <message>
         <source>Active Routing</source>
         <translation>当前路由规则</translation>
     </message>
@@ -1140,6 +1147,14 @@ End: %2</source>
     <message>
         <source>Export %1 config</source>
         <translation>导出 %1 配置</translation>
+    </message>
+    <message>
+        <source>Routing Settings</source>
+        <translation>路由设置</translation>
+    </message>
+    <message>
+        <source>VPN Settings</source>
+        <translation>VPN 设置</translation>
     </message>
 </context>
 <context>
