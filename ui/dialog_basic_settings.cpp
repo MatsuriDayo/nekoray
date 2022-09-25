@@ -263,6 +263,7 @@ void DialogBasicSettings::accept() {
 
 void DialogBasicSettings::on_set_custom_icon_clicked() {
     auto title = ui->set_custom_icon->text();
+    QString user_icon_path = "./" + software_name.toLower() + ".png";
     auto c = QMessageBox::question(this, title, tr("Please select a PNG file."),
                                    tr("Select"), tr("Reset"), tr("Cancel"), 2, 2);
     if (c == 0) {
@@ -274,10 +275,10 @@ void DialogBasicSettings::on_set_custom_icon_clicked() {
                 MessageBoxWarning(title, tr("Please select a valid square image."));
                 return;
             }
-            QFile::copy(fn, "./nekoray.png");
+            QFile::copy(fn, user_icon_path);
         }
     } else if (c == 1) {
-        QFile::remove("./nekoray.png");
+        QFile::remove(user_icon_path);
     } else {
         return;
     }

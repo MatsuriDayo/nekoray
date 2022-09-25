@@ -1,20 +1,22 @@
 #include "TrayIcon.hpp"
 
+#include "main/NekoRay.hpp"
+
 #include <QPainter>
 
 QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
     QPixmap pixmap;
 
     // software embedded icon
-    auto pixmap_read = QPixmap(":/nekoray/nekoray.png");
+    auto pixmap_read = QPixmap(":/neko/" + software_name.toLower() + ".png");
     if (!pixmap_read.isNull()) pixmap = pixmap_read;
 
     // software pack icon
-    pixmap_read = QPixmap("../nekoray.png");
+    pixmap_read = QPixmap("../" + software_name.toLower() + ".png");
     if (!pixmap_read.isNull()) pixmap = pixmap_read;
 
     // user icon
-    pixmap_read = QPixmap("./nekoray.png");
+    pixmap_read = QPixmap("./" + software_name.toLower() + ".png");
     if (!pixmap_read.isNull()) pixmap = pixmap_read;
 
     if (status == TrayIconStatus::NONE) return pixmap;

@@ -733,7 +733,7 @@ namespace NekoRay {
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
         // gen config
-        auto configFn = ":/nekoray/vpn/sing-box-vpn.json";
+        auto configFn = ":/neko/vpn/sing-box-vpn.json";
         if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
         auto config = ReadFileText(configFn)
                 .replace("%IPV6_ADDRESS%", dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
@@ -753,7 +753,7 @@ namespace NekoRay {
 
     QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath) {
         // gen script
-        auto scriptFn = ":/nekoray/vpn/vpn-run-root.sh";
+        auto scriptFn = ":/neko/vpn/vpn-run-root.sh";
         if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
         auto script = ReadFileText(scriptFn)
                 .replace("$PORT", Int2String(dataStore->inbound_socks_port))

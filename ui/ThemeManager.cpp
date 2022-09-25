@@ -79,6 +79,6 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     };
     internal();
 
-    auto nekoray_css = ReadFileText(":nekoray/nekoray.css");
+    auto nekoray_css = ReadFileText(":/neko/neko.css");
     qApp->setStyleSheet(qApp->styleSheet().append("\n").append(nekoray_css));
 }
