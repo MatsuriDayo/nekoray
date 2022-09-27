@@ -16,6 +16,7 @@ import (
 var instance *libcore.V2RayInstance
 
 func setupCore() {
+	// TODO del
 	device.IsNekoray = true
 	libcore.SetConfig("", false, true)
 	libcore.InitCore("", "", "", nil, ".", "moe.nekoray.pc:bg", true, 50)

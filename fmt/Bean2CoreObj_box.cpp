@@ -52,12 +52,10 @@ namespace NekoRay::fmt {
         outbound["server"] = serverAddress;
         outbound["server_port"] = serverPort;
 
-        QJsonArray users;
-        QJsonObject user;
-        user["username"] = username;
-        user["password"] = password;
-        users.push_back(user);
-        if (!username.isEmpty() && !password.isEmpty()) outbound["users"] = users;
+        if (!username.isEmpty() && !password.isEmpty()) {
+            outbound["username"] = username;
+            outbound["password"] = password;
+        }
 
         stream->BuildStreamSettingsSingBox(&outbound);
         result.outbound = outbound;

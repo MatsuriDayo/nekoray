@@ -36,7 +36,10 @@ int main(int argc, char *argv[]) {
 
     // Clean
     QDir::setCurrent(QApplication::applicationDirPath());
-    QFile::remove("updater.old");
+    if (QFile::exists("updater.old")) {
+        QFile::remove("updater.old");
+        QFile::remove("sing-box.exe"); // v1.11
+    }
 #ifndef Q_OS_WIN
     if (!QFile::exists("updater")) {
         QFile::link("launcher", "updater");

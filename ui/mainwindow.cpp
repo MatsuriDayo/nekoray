@@ -585,9 +585,13 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
                 return;
             }
 #endif
-            SetSystemProxy("127.0.0.1",
-                           NekoRay::dataStore->inbound_http_port,
-                           NekoRay::dataStore->inbound_socks_port);
+            auto socks_port = NekoRay::dataStore->inbound_socks_port;
+            auto http_port = NekoRay::dataStore->inbound_http_port;
+            if (IS_NEKO_BOX) {
+                http_port = socks_port;
+                socks_port = -1;
+            }
+            SetSystemProxy("127.0.0.1", http_port, socks_port);
         } else if (mode == NekoRay::SystemProxyMode::VPN) {
             if (!StartVPNProcess()) {
                 refresh_status();
@@ -974,7 +978,10 @@ void MainWindow::on_menu_profile_debug_info_triggered() {
 }
 
 void MainWindow::on_menu_copy_links_triggered() {
-    if (ui->masterLogBrowser->hasFocus()) return;
+    if (ui->masterLogBrowser->hasFocus()) {
+        ui->masterLogBrowser->copy();
+        return;
+    };
     auto ents = get_now_selected();
     QStringList links;
     for (const auto &ent: ents) {
@@ -1226,6 +1233,9 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
     switch (event->key()) {
         case Qt::Key_Escape:
             // take over by shortcut_esc
+            break;
+        case Qt::Key_Enter:
+            neko_start();
             break;
         default:
             QMainWindow::keyPressEvent(event);

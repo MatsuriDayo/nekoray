@@ -85,7 +85,7 @@ namespace NekoRay {
 
         // Socks & HTTP Inbound
         QString inbound_address = "127.0.0.1";
-        int inbound_socks_port = 2080;
+        int inbound_socks_port = 2080; // or Mixed
         int inbound_http_port = -2081;
         QString custom_inbound = "{\"inbounds\": []}";
 

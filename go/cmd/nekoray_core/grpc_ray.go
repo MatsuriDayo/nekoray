@@ -11,6 +11,7 @@ import (
 	"neko/gen"
 	"neko/pkg/grpc_server"
 	"neko/pkg/neko_common"
+	"neko/pkg/speedtest"
 	"net"
 	"strings"
 	"time"
@@ -121,31 +122,15 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 		// Latency
 		var t int32
-		t, err = libcore.UrlTestV2ray(i, in.Inbound, in.Url, in.Timeout)
+		t, err = speedtest.UrlTest(getProxyHttpClient(i), in.Address, in.Timeout)
 		out.Ms = t // sn: ms==0 是错误
 	} else if in.Mode == gen.TestMode_TcpPing {
-		host, port, err := net.SplitHostPort(in.Address)
-		if err != nil {
-			out.Error = err.Error()
-			return
-		}
-		ip, err := net.ResolveIPAddr("ip", host)
-		if err != nil {
-			out.Error = err.Error()
-			return
-		}
-		//
-		startTime := time.Now()
-		_, err = net.DialTimeout("tcp", net.JoinHostPort(ip.String(), port), time.Duration(in.Timeout)*time.Millisecond)
-		endTime := time.Now()
-		if err == nil {
-			out.Ms = int32(endTime.Sub(startTime).Milliseconds())
-		}
+		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
 	} else if in.Mode == gen.TestMode_FullTest {
 		if in.Config == nil {
 			return
 		}
-
+		// TODO del
 		// Test instance
 		i := libcore.NewV2rayInstance()
 		i.ForTest = true
@@ -164,7 +149,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		// Latency
 		var latency string
 		if in.FullLatency {
-			t, _ := libcore.UrlTestV2ray(i, in.Inbound, in.Url, in.Timeout)
+			t, _ := speedtest.UrlTest(getProxyHttpClient(i), in.Address, in.Timeout)
 			out.Ms = t
 			if t > 0 {
 				latency = fmt.Sprint(t, "ms")

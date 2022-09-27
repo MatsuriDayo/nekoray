@@ -21,7 +21,7 @@ void MainWindow::setup_grpc() {
 #ifndef NKR_NO_GRPC
     // Setup Connection
     defaultClient = new Client([=](const QString &errStr) {
-        showLog("gRPC Error: " + errStr);
+        showLog("[Error] gRPC: " + errStr);
     }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
     connect(t, &QTimer::timeout, this, [=]() {

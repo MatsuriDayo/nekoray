@@ -2,15 +2,13 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"io"
 	"log"
-	"math/rand"
 	"neko/pkg/neko_common"
+	"neko/pkg/neko_log"
 	"net"
 	"net/http"
-	"os"
 	"reflect"
-	"strings"
 	"time"
 	"unsafe"
 
@@ -27,8 +25,10 @@ var instance_cancel context.CancelFunc
 // Use sing-box instead of libcore & v2ray
 
 func setupCore() {
+	neko_log.SetupLog(50*1024, "./neko.log")
+	//
 	log.SetFlags(log.LstdFlags)
-	log.SetOutput(os.Stdout)
+	log.SetOutput(neko_log.LogWriter)
 	//
 	neko_common.GetProxyHttpClient = func() *http.Client {
 		return getProxyHttpClient(instance)
@@ -67,45 +67,19 @@ func getProxyHttpClient(box *box.Box) *http.Client {
 	return client
 }
 
-// TODO move
-func UrlTestSingBox(box *box.Box, link string, timeout int32) (int32, error) {
-	client := getProxyHttpClient(box)
-	if client == nil {
-		return 0, fmt.Errorf("no client")
-	}
+type logWriter struct {
+	files []io.Writer
+}
 
-	// Test handshake time
-	var time_start time.Time
-	var times = 1
-	var rtt_times = 1
-
-	// Test RTT "true delay"
-	if link2 := strings.TrimLeft(link, "true"); link != link2 {
-		link = link2
-		times = 3
-		rtt_times = 2
-	}
-
-	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Millisecond)
-	defer cancel()
-	req, err := http.NewRequestWithContext(ctx, "GET", link, nil)
-	req.Header.Set("User-Agent", fmt.Sprintf("curl/7.%d.%d", rand.Int()%84, rand.Int()%2))
-	if err != nil {
-		return 0, err
-	}
-
-	for i := 0; i < times; i++ {
-		if i == 1 || times == 1 {
-			time_start = time.Now()
+func (w *logWriter) Write(p []byte) (n int, err error) {
+	for _, file := range w.files {
+		if file == nil {
+			continue
 		}
-
-		resp, err := client.Do(req)
+		n, err = file.Write(p)
 		if err != nil {
-			fmt.Println("Url test failed:", err)
-			return 0, err
+			return
 		}
-		resp.Body.Close()
 	}
-
-	return int32(time.Since(time_start).Milliseconds() / int64(rtt_times)), nil
+	return
 }

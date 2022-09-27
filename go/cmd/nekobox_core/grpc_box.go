@@ -3,13 +3,16 @@ package main
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"neko/gen"
 	"neko/pkg/grpc_server"
 	"neko/pkg/neko_common"
+	"neko/pkg/neko_log"
+	"neko/pkg/speedtest"
 	"nekobox_core/box_main"
-	"net"
-	"time"
+	"reflect"
+	"unsafe"
 
 	box "github.com/sagernet/sing-box"
 )
@@ -39,6 +42,17 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 	}
 
 	instance, instance_cancel, err = box_main.Create([]byte(in.CoreConfig), true)
+
+	// Logger
+	if instance != nil {
+		logFactory_ := reflect.Indirect(reflect.ValueOf(instance)).FieldByName("logFactory")
+		logFactory_ = reflect.NewAt(logFactory_.Type(), unsafe.Pointer(logFactory_.UnsafeAddr())).Elem() // get unexported logFactory
+		logFactory_ = logFactory_.Elem().Elem()                                                          // get struct
+		writer_ := logFactory_.FieldByName("writer")
+		writer_ = reflect.NewAt(writer_.Type(), unsafe.Pointer(writer_.UnsafeAddr())).Elem() // get unexported io.Writer
+		writer_.Set(reflect.ValueOf(neko_log.LogWriter))
+	}
+
 	return
 }
 
@@ -93,27 +107,11 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 		// Latency
-		out.Ms, err = UrlTestSingBox(i, in.Url, in.Timeout)
+		out.Ms, err = speedtest.UrlTest(getProxyHttpClient(i), in.Url, in.Timeout)
 	} else if in.Mode == gen.TestMode_TcpPing {
-		host, port, err := net.SplitHostPort(in.Address)
-		if err != nil {
-			out.Error = err.Error()
-			return
-		}
-		ip, err := net.ResolveIPAddr("ip", host)
-		if err != nil {
-			out.Error = err.Error()
-			return
-		}
-		//
-		startTime := time.Now()
-		_, err = net.DialTimeout("tcp", net.JoinHostPort(ip.String(), port), time.Duration(in.Timeout)*time.Millisecond)
-		endTime := time.Now()
-		if err == nil {
-			out.Ms = int32(endTime.Sub(startTime).Milliseconds())
-		}
+		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
 	} else {
-		// TODO copy
+		err = fmt.Errorf("not available")
 	}
 
 	return
