@@ -2,6 +2,8 @@
 
 #include <QFile>
 #include <QDir>
+#include <QApplication>
+#include <QFileInfo>
 
 namespace NekoRay {
 
@@ -322,6 +324,24 @@ namespace NekoRay {
 
         file.close();
         return ok;
+    }
+
+    //
+
+    QString FindCoreAsset(const QString &name) {
+        QStringList search{dataStore->v2ray_asset_dir};
+        search << QApplication::applicationDirPath();
+        search << "/usr/share/v2ray";
+        search << "/usr/local/share/v2ray";
+        search << "/opt/v2ray";
+        for (const auto &dir: search) {
+            if (dir.isEmpty()) continue;
+            QFileInfo asset(dir + "/" + name);
+            if (asset.exists()) {
+                return asset.absoluteFilePath();
+            }
+        }
+        return {};
     }
 
 }

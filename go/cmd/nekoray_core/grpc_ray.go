@@ -122,7 +122,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 		// Latency
 		var t int32
-		t, err = speedtest.UrlTest(getProxyHttpClient(i), in.Address, in.Timeout)
+		t, err = speedtest.UrlTest(getProxyHttpClient(i), in.Url, in.Timeout)
 		out.Ms = t // sn: ms==0 是错误
 	} else if in.Mode == gen.TestMode_TcpPing {
 		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
@@ -149,7 +149,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		// Latency
 		var latency string
 		if in.FullLatency {
-			t, _ := speedtest.UrlTest(getProxyHttpClient(i), in.Address, in.Timeout)
+			t, _ := speedtest.UrlTest(getProxyHttpClient(i), in.Url, in.Timeout)
 			out.Ms = t
 			if t > 0 {
 				latency = fmt.Sprint(t, "ms")

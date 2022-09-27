@@ -109,13 +109,11 @@ namespace NekoRay::sys {
 
     void CoreProcess::Start() {
         show_stderr = false;
-        auto v2ray_asset_dir = dataStore->v2ray_asset_dir;
-        if (v2ray_asset_dir.isEmpty() || QDir(v2ray_asset_dir).exists()) {
-            v2ray_asset_dir = QApplication::applicationDirPath();
+        auto v2ray_asset_dir = FindCoreAsset("geoip.dat");
+        if (!v2ray_asset_dir.isEmpty()) {
+            v2ray_asset_dir = QFileInfo(v2ray_asset_dir).absolutePath();
+            env = QStringList{"V2RAY_LOCATION_ASSET=" + v2ray_asset_dir};
         }
-        env = QStringList{
-                "V2RAY_LOCATION_ASSET=" + v2ray_asset_dir
-        };
         ExternalProcess::Start();
         write((dataStore->core_token + "\n").toUtf8());
     }

@@ -47,6 +47,10 @@ include("cmake/nkr.cmake")
 
 find_package(Threads)
 
+if (NKR_PACKAGE)
+    add_compile_definitions(NKR_PACKAGE)
+endif()
+
 if (NKR_NO_EXTERNAL)
     add_compile_definitions(NKR_NO_EXTERNAL)
 else ()

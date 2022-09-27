@@ -696,12 +696,10 @@ namespace NekoRay {
                                     {"outbound", "dns-out"}};
 
         // geopath
-        auto geopath = dataStore->v2ray_asset_dir;
-        if (geopath.isEmpty()) geopath = QApplication::applicationDirPath();
-        auto geoip = geopath + "/geoip.db";
-        auto geosite = geopath + "/geosite.db";
-        if (!QFile::exists(geoip)) result->error = geoip + " not found";
-        if (!QFile::exists(geosite)) result->error = geosite + " not found";
+        auto geoip = FindCoreAsset("geoip.db");
+        auto geosite = FindCoreAsset("geosite.db");
+        if (geoip.isEmpty()) result->error = geoip + " not found";
+        if (geosite.isEmpty()) result->error = geosite + " not found";
 
         // final add routing rule
         QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())

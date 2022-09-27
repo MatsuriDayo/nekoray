@@ -2,6 +2,8 @@
 
 namespace NekoRay {
 
+    QString FindCoreAsset(const QString& name);
+
     class Routing : public JsonStore {
     public:
         QString direct_ip;
@@ -14,7 +16,7 @@ namespace NekoRay {
 
         explicit Routing(int preset = 0);
 
-        QString toString() const;
+        [[nodiscard]] QString toString() const;
 
         static QStringList List();
 

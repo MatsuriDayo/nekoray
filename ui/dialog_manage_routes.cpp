@@ -58,12 +58,8 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     builtInSchemesMenu->addActions(this->getBuiltInSchemes());
     ui->preset->setMenu(builtInSchemesMenu);
 
-    QString geoipFn = QApplication::applicationDirPath() + "/geoip.dat";
-    QString geositeFn = QApplication::applicationDirPath() + +"/geosite.dat";
-    if (!NekoRay::dataStore->v2ray_asset_dir.isEmpty()) {
-        geoipFn = NekoRay::dataStore->v2ray_asset_dir + "/geoip.dat";
-        geositeFn = NekoRay::dataStore->v2ray_asset_dir + "/geosite.dat";
-    }
+    QString geoipFn = NekoRay::FindCoreAsset("geoip.dat");
+    QString geositeFn = NekoRay::FindCoreAsset("geosite.dat");
     //
     const auto sourceStringsDomain = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geoipFn);
     directDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
