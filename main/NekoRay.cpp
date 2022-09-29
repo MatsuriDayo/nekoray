@@ -334,6 +334,9 @@ namespace NekoRay {
         search << "/usr/share/v2ray";
         search << "/usr/local/share/v2ray";
         search << "/opt/v2ray";
+        search << "/usr/share/xray";
+        search << "/usr/local/share/xray";
+        search << "/opt/xray";
         for (const auto &dir: search) {
             if (dir.isEmpty()) continue;
             QFileInfo asset(dir + "/" + name);
