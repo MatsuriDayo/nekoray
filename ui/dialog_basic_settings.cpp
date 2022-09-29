@@ -77,7 +77,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Style
     if (IS_NEKO_BOX) {
-        ui->traffic_statistics_box->setDisabled(true);
         ui->connection_statistics_box->setDisabled(true);
     }
     //

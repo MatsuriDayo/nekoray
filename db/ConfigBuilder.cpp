@@ -698,8 +698,8 @@ namespace NekoRay {
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
         auto geosite = FindCoreAsset("geosite.db");
-        if (geoip.isEmpty()) result->error = geoip + " not found";
-        if (geosite.isEmpty()) result->error = geosite + " not found";
+        if (geoip.isEmpty()) result->error = + "geoip.db not found";
+        if (geosite.isEmpty()) result->error = + "geosite.db not found";
 
         // final add routing rule
         QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
@@ -709,6 +709,19 @@ namespace NekoRay {
                 {"auto_detect_interface", true},
                 {"geoip",                 QJsonObject{{"path", geoip},},},
                 {"geosite",               QJsonObject{{"path", geosite},},}
+        });
+
+        // api
+        result->coreConfig.insert("experimental", QJsonObject{
+                {"v2ray_api", QJsonObject{
+                        {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
+                        {"stats", QJsonObject{
+                                {"enabled",   true},
+                                {"outbounds", QJsonArray{
+                                        tagProxy, "bypass", "block"
+                                }},
+                        }}
+                }},
         });
 
         return result;

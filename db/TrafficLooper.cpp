@@ -62,7 +62,6 @@ namespace NekoRay::traffic {
     }
 
     void TrafficLooper::loop() {
-        if (IS_NEKO_BOX) return; // TODO upstream api
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
             auto user_disabled = sleep_ms == 0;

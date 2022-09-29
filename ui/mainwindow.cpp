@@ -104,6 +104,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolButton_preferences->setMenu(ui->menu_preferences);
     ui->toolButton_server->setMenu(ui->menu_server);
     ui->menubar->setVisible(false);
+#ifdef NKR_PACKAGE
+    ui->toolButton_update->hide();
+#endif
     connect(ui->toolButton_document, &QToolButton::clicked, this,
             [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
     connect(ui->toolButton_ads, &QToolButton::clicked, this,

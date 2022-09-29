@@ -76,9 +76,9 @@ void MainWindow::speedtest_current_group(int mode) {
         if (group->archive) return;
         auto order = ui->proxyListTable->order;//copy
 
+        QMutex lock_write;
+        QMutex lock_return;
         QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
-        QMutex lock;
-        QMutex lock2;
         int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
         int threadN_finished = 0;
 
@@ -89,19 +89,20 @@ void MainWindow::speedtest_current_group(int mode) {
         }
 
         // Threads
+        lock_return.lock();
         for (int i = 0; i < threadN; i++) {
             runOnNewThread([&] {
                 forever {
                     //
-                    lock.lock();
+                    lock_write.lock();
                     if (profiles.isEmpty()) {
                         threadN_finished++;
-                        if (threadN == threadN_finished) lock2.unlock();
-                        lock.unlock();
+                        if (threadN == threadN_finished) lock_return.unlock();
+                        lock_write.unlock();
                         return;
                     }
                     auto profile = profiles.takeFirst();
-                    lock.unlock();
+                    lock_write.unlock();
 
                     //
                     libcore::TestReq req;
@@ -162,9 +163,8 @@ void MainWindow::speedtest_current_group(int mode) {
         }
 
         // Control
-        lock2.lock();
-        lock2.lock();
-        lock2.unlock();
+        lock_return.lock();
+        lock_return.unlock();
         speedtesting = false;
     });
 #endif

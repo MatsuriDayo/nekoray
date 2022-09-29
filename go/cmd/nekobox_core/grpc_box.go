@@ -15,6 +15,8 @@ import (
 	"unsafe"
 
 	box "github.com/sagernet/sing-box"
+	"github.com/sagernet/sing-box/adapter"
+	"github.com/sagernet/sing-box/experimental/v2rayapi"
 )
 
 type server struct {
@@ -43,14 +45,23 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 
 	instance, instance_cancel, err = box_main.Create([]byte(in.CoreConfig), true)
 
-	// Logger
 	if instance != nil {
+		// Logger
 		logFactory_ := reflect.Indirect(reflect.ValueOf(instance)).FieldByName("logFactory")
 		logFactory_ = reflect.NewAt(logFactory_.Type(), unsafe.Pointer(logFactory_.UnsafeAddr())).Elem() // get unexported logFactory
 		logFactory_ = logFactory_.Elem().Elem()                                                          // get struct
 		writer_ := logFactory_.FieldByName("writer")
 		writer_ = reflect.NewAt(writer_.Type(), unsafe.Pointer(writer_.UnsafeAddr())).Elem() // get unexported io.Writer
 		writer_.Set(reflect.ValueOf(neko_log.LogWriter))
+		// V2ray Service
+		v2ray_ := reflect.Indirect(reflect.ValueOf(instance)).FieldByName("v2rayServer")
+		v2ray_ = reflect.NewAt(v2ray_.Type(), unsafe.Pointer(v2ray_.UnsafeAddr())).Elem()
+
+		if v2ray, ok := v2ray_.Interface().(adapter.V2RayServer); ok {
+			if s, ok := v2ray.StatsService().(*v2rayapi.StatsService); ok {
+				box_v2ray_service = s
+			}
+		}
 	}
 
 	return
@@ -70,10 +81,11 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 		return
 	}
 
-	instance_cancel()
-	err = instance.Close()
 	instance = nil
+	box_v2ray_service = nil
 
+	instance_cancel()
+	instance.Close() // xx closed
 	return
 }
 
@@ -119,7 +131,18 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *gen.QueryStatsResp, _ error) {
 	out = &gen.QueryStatsResp{}
-	// TODO upstream api
+
+	if box_v2ray_service != nil {
+		req := &v2rayapi.GetStatsRequest{
+			Name:   fmt.Sprintf("outbound>>>%s>>>traffic>>>%s", in.Tag, in.Direct),
+			Reset_: true,
+		}
+		resp, err := box_v2ray_service.GetStats(ctx, req)
+		if err == nil {
+			out.Traffic = resp.Stat.Value
+		}
+	}
+
 	return
 }
 
