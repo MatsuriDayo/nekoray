@@ -648,7 +648,7 @@ namespace NekoRay {
             dnsServers += QJsonObject{{"tag",              "dns-direct"},
                                       {"address_resolver", "dns-local"},
                                       {"address",          directDNSAddress.replace("+local://", "://")},
-                                      {"detour",           "bypass"},};
+                                      {"detour",           "direct"},};
 
         // local
         dnsServers += QJsonObject{{"tag",     "dns-local"},
@@ -671,8 +671,12 @@ namespace NekoRay {
 
         // Routing
 
-        // custom routing rule
+        // custom routing rule (top)
         auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
+
+        // dns hijack
+        routingRules += QJsonObject{{"protocol", "dns"},
+                                    {"outbound", "dns-out"}};
 
         auto add_rule_route = [&](const QJsonArray &arr, bool isIP, const QString &out) {
             auto rule = make_rule(arr, isIP);
@@ -682,6 +686,18 @@ namespace NekoRay {
         };
 
         // ip user rule
+        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
+            if (line.startsWith("#")) continue;
+            status->ipListBlock += line;
+        }
+        for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {
+            if (line.startsWith("#")) continue;
+            status->ipListRemote += line;
+        }
+        for (const auto &line: SplitLines(dataStore->routing->direct_ip)) {
+            if (line.startsWith("#")) continue;
+            status->ipListDirect += line;
+        }
         add_rule_route(status->ipListBlock, true, "block");
         add_rule_route(status->ipListRemote, true, tagProxy);
         add_rule_route(status->ipListDirect, true, "bypass");
@@ -691,15 +707,11 @@ namespace NekoRay {
         add_rule_route(status->domainListRemote, false, tagProxy);
         add_rule_route(status->domainListDirect, false, "bypass");
 
-        // dns hijack
-        routingRules += QJsonObject{{"protocol", "dns"},
-                                    {"outbound", "dns-out"}};
-
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
         auto geosite = FindCoreAsset("geosite.db");
-        if (geoip.isEmpty()) result->error = + "geoip.db not found";
-        if (geosite.isEmpty()) result->error = + "geosite.db not found";
+        if (geoip.isEmpty()) result->error = +"geoip.db not found";
+        if (geosite.isEmpty()) result->error = +"geosite.db not found";
 
         // final add routing rule
         QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
@@ -715,7 +727,7 @@ namespace NekoRay {
         result->coreConfig.insert("experimental", QJsonObject{
                 {"v2ray_api", QJsonObject{
                         {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
-                        {"stats", QJsonObject{
+                        {"stats",  QJsonObject{
                                 {"enabled",   true},
                                 {"outbounds", QJsonArray{
                                         tagProxy, "bypass", "block"

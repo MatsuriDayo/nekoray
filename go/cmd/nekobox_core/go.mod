@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/dustin/go-humanize v1.0.0
-	github.com/sagernet/sing v0.0.0-20220926054900-7209937cc235
-	github.com/sagernet/sing-box v1.0.2-0.20220929011213-aa613cba7362
+	github.com/sagernet/sing v0.0.0-20221001030341-348376220066
+	github.com/sagernet/sing-box v1.0.2-0.20221001030427-2dc8acea5c1a
 	github.com/spf13/cobra v1.5.0
 	neko v1.0.0
 )
@@ -51,7 +51,7 @@ require (
 	github.com/sagernet/quic-go v0.0.0-20220818150011-de611ab3e2bb // indirect
 	github.com/sagernet/sing-dns v0.0.0-20220929010544-ee843807aae3 // indirect
 	github.com/sagernet/sing-shadowsocks v0.0.0-20220819002358-7461bb09a8f6 // indirect
-	github.com/sagernet/sing-tun v0.0.0-20220925112147-6bad0c2380ca // indirect
+	github.com/sagernet/sing-tun v0.0.0-20220929163559-a93592a9b581 // indirect
 	github.com/sagernet/sing-vmess v0.0.0-20220925083655-063bc85ea685 // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
@@ -62,11 +62,11 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.22.0 // indirect
 	go4.org/netipx v0.0.0-20220925034521-797b0c90d8ab // indirect
-	golang.org/x/crypto v0.0.0-20220924013350-4ba4fb4dd9e7 // indirect
+	golang.org/x/crypto v0.0.0-20220926161630-eccd6366d1be // indirect
 	golang.org/x/exp v0.0.0-20220722155223-a9213eeb770e // indirect
 	golang.org/x/mod v0.6.0-dev.0.20220419223038-86c51ed26bb4 // indirect
-	golang.org/x/net v0.0.0-20220923203811-8be639271d50 // indirect
-	golang.org/x/sys v0.0.0-20220919091848-fb04ddd9f9c8 // indirect
+	golang.org/x/net v0.0.0-20220927171203-f486391704dc // indirect
+	golang.org/x/sys v0.0.0-20220928140112-f11e5e49a4ec // indirect
 	golang.org/x/text v0.3.7 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	golang.org/x/tools v0.1.11-0.20220513221640-090b14e8501f // indirect

@@ -199,7 +199,7 @@ namespace NekoRay::rpc {
     QString Client::Stop(bool *rpcOK) {
         libcore::EmptyReq request;
         libcore::ErrorResp reply;
-        auto status = grpc_channel->Call("Stop", request, &reply);
+        auto status = grpc_channel->Call("Stop", request, &reply, 3000);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;

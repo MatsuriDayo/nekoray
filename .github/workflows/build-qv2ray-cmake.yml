@@ -19,7 +19,7 @@ jobs:
         uses: actions/setup-go@v2
         with:
           stable: false
-          go-version: 1.18.6
+          go-version: 1.19.1
       - name: Build golang and common parts
         shell: bash
         run: |

@@ -81,11 +81,12 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 		return
 	}
 
+	instance_cancel()
+	instance.Close() // xx closed
+
 	instance = nil
 	box_v2ray_service = nil
 
-	instance_cancel()
-	instance.Close() // xx closed
 	return
 }
 

@@ -50,40 +50,9 @@ func Updater() {
 	}
 
 	// remove old file
+	removeAll("./*.exe")
 	removeAll("./*.dll")
 	removeAll("./*.dmp")
-
-	// nekoray_list_old := make([]string, 0)
-	// nekoray_list_new := make([]string, 0)
-
-	// // delete old file from list
-	// if f, _ := os.Open("./files.json"); f != nil {
-	// 	err := json.NewDecoder(f).Decode(&nekoray_list_old)
-	// 	if err == nil {
-	// 		for _, fn := range nekoray_list_old {
-	// 			log.Println("del", fn, os.RemoveAll(fn))
-	// 		}
-	// 	}
-	// 	f.Close()
-	// }
-
-	// // walk the new file list
-	// if os.Chdir("./nekoray_update/nekoray/") == nil {
-	// 	filepath.Walk(".",
-	// 		func(path string, info os.FileInfo, err error) error {
-	// 			if path != "." {
-	// 				nekoray_list_new = append([]string{path}, nekoray_list_new...)
-	// 			}
-	// 			return nil
-	// 		})
-	// 	os.Chdir("../../")
-
-	// 	// store new file list
-	// 	if f, _ := os.OpenFile("./files.json", os.O_CREATE|os.O_TRUNC|os.O_RDWR, 0644); f != nil {
-	// 		json.NewEncoder(f).Encode(&nekoray_list_new)
-	// 		f.Close()
-	// 	}
-	// }
 
 	// update move
 	err := Mv("./nekoray_update/nekoray", "./")
@@ -141,9 +110,7 @@ func Mv(src, dst string) error {
 
 func removeAll(glob string) {
 	files, _ := filepath.Glob(glob)
-	if files != nil {
-		for _, f := range files {
-			os.Remove(f)
-		}
+	for _, f := range files {
+		os.Remove(f)
 	}
 }
