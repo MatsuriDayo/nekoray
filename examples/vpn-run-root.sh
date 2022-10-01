@@ -16,8 +16,8 @@ cd $BASEDIR
 
 start() {
   # set bypass: fwmark
-  ip rule add fwmark $TABLE_FWMARK table main || return
-  ip -6 rule add fwmark $TABLE_FWMARK table main || return
+  ip rule add pref 8999 fwmark $TABLE_FWMARK table main || return
+  ip -6 rule add pref 8999 fwmark $TABLE_FWMARK table main || return
 
   # for Tun2Socket
   iptables -I INPUT -s 172.19.0.2 -d 172.19.0.1 -p tcp -j ACCEPT

@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/sagernet/sing v0.0.0-20221001030341-348376220066
-	github.com/sagernet/sing-box v1.0.2-0.20221001030427-2dc8acea5c1a
+	github.com/sagernet/sing-box v1.0.2-0.20221001115151-77508a9c6a0a
 	github.com/spf13/cobra v1.5.0
 	neko v1.0.0
 )
@@ -51,7 +51,7 @@ require (
 	github.com/sagernet/quic-go v0.0.0-20220818150011-de611ab3e2bb // indirect
 	github.com/sagernet/sing-dns v0.0.0-20220929010544-ee843807aae3 // indirect
 	github.com/sagernet/sing-shadowsocks v0.0.0-20220819002358-7461bb09a8f6 // indirect
-	github.com/sagernet/sing-tun v0.0.0-20220929163559-a93592a9b581 // indirect
+	github.com/sagernet/sing-tun v0.0.0-20221001115016-6335837b6402 // indirect
 	github.com/sagernet/sing-vmess v0.0.0-20220925083655-063bc85ea685 // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
