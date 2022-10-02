@@ -34,7 +34,11 @@ endif ()
 include("cmake/fuck_windows/fuck.cmake")
 
 # default prefix path
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/built)
+if (NKR_PACKAGE)
+    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/package)
+else ()
+    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/built)
+endif ()
 message("[CMAKE_PREFIX_PATH] ${CMAKE_PREFIX_PATH}")
 
 # for some cross toolchain
@@ -49,7 +53,7 @@ find_package(Threads)
 
 if (NKR_PACKAGE)
     add_compile_definitions(NKR_PACKAGE)
-endif()
+endif ()
 
 if (NKR_NO_EXTERNAL)
     add_compile_definitions(NKR_NO_EXTERNAL)
@@ -115,6 +119,7 @@ set(PROJECT_SOURCES
         db/Database.cpp
         db/TrafficLooper.cpp
         db/ProfileFilter.cpp
+        db/ConfigBuilder.cpp
 
         fmt/AbstractBean.cpp
         fmt/Bean2CoreObj_ray.cpp
@@ -123,7 +128,6 @@ set(PROJECT_SOURCES
         fmt/Bean2Link.cpp
         fmt/InsecureHint.cpp
         fmt/Link2Bean.cpp
-        db/ConfigBuilder.cpp
         fmt/ChainBean.hpp # translate
 
         sub/GroupUpdater.cpp

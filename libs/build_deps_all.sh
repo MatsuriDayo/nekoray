@@ -4,30 +4,49 @@ set -e
 cd libs
 
 # libs/deps/...
-mkdir -p deps; cd deps
-INSTLL_PREFIX=$PWD/built
-mkdir -p $INSTLL_PREFIX
+mkdir -p deps
+cd deps
+if [ -z $NKR_PACKAGE ]; then
+  INSTALL_PREFIX=$PWD/built
+else
+  INSTALL_PREFIX=$PWD/package
+fi
+rm -rf $INSTALL_PREFIX
+mkdir -p $INSTALL_PREFIX
+
+#### clean ####
+clean() {
+  rm -rf dl.zip yaml-* zxing-* protobuf
+}
+
+#### ZXing 1.3.0 ####
+curl -L -o dl.zip https://github.com/nu-book/zxing-cpp/archive/refs/tags/v1.3.0.zip
+unzip dl.zip
+
+cd zxing-*
+mkdir -p build
+cd build
+
+cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_BLACKBOX_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
+ninja && ninja install
+
+cd ../..
+
+#### exit if NKR_PACKAGE ####
+if [ ! -z $NKR_PACKAGE ]; then
+  clean
+  exit
+fi
 
 #### yaml-cpp ####
 curl -L -o dl.zip https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.zip
 unzip dl.zip
 
 cd yaml-*
-mkdir -p build; cd build
+mkdir -p build
+cd build
 
-cmake .. -GNinja -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTLL_PREFIX
-ninja && ninja install
-
-cd ../..
-
-#### ZXing ####
-curl -L -o dl.zip https://github.com/nu-book/zxing-cpp/archive/refs/tags/v1.3.0.zip
-unzip dl.zip
-
-cd zxing-*
-mkdir -p build; cd build
-
-cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_BLACKBOX_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTLL_PREFIX
+cmake .. -GNinja -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
 ninja && ninja install
 
 cd ../..
@@ -41,14 +60,14 @@ mkdir -p protobuf/build
 cd protobuf/build
 
 cmake .. -GNinja \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DBUILD_SHARED_LIBS=OFF \
-      -Dprotobuf_MSVC_STATIC_RUNTIME=OFF \
-      -Dprotobuf_BUILD_TESTS=OFF \
-      -DCMAKE_INSTALL_PREFIX=$INSTLL_PREFIX
+  -DCMAKE_BUILD_TYPE=Release \
+  -DBUILD_SHARED_LIBS=OFF \
+  -Dprotobuf_MSVC_STATIC_RUNTIME=OFF \
+  -Dprotobuf_BUILD_TESTS=OFF \
+  -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
 ninja && ninja install
 
 cd ../..
 
-#### clean ####
-rm -rf dl.zip yaml-* zxing-* protobuf
+####
+clean

@@ -337,6 +337,8 @@ namespace NekoRay {
         search << "/usr/share/xray";
         search << "/usr/local/share/xray";
         search << "/opt/xray";
+        search << "/usr/share/sing-geoip";
+        search << "/usr/share/sing-geosite";
         for (const auto &dir: search) {
             if (dir.isEmpty()) continue;
             QFileInfo asset(dir + "/" + name);
