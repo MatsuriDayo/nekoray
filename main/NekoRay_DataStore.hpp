@@ -2,7 +2,7 @@
 
 namespace NekoRay {
 
-    QString FindCoreAsset(const QString& name);
+    QString FindCoreAsset(const QString &name);
 
     class Routing : public JsonStore {
     public:
@@ -58,8 +58,6 @@ namespace NekoRay {
         // Saved
 
         // Misc
-        int neko_core = CoreType::V2RAY;
-
         QString log_level = "warning";
         QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
         bool sub_use_proxy = false;
@@ -129,6 +127,10 @@ namespace NekoRay {
 
     extern DataStore *dataStore;
 
+    inline int coreType = NekoRay::CoreType::V2RAY;
+
 }
 
-#define IS_NEKO_BOX (NekoRay::dataStore->neko_core == NekoRay::CoreType::SING_BOX)
+#define IS_NEKO_BOX (NekoRay::coreType == NekoRay::CoreType::SING_BOX)
+#define ROUTES_PREFIX_NAME QString( IS_NEKO_BOX ? "routes_box" : "routes" )
+#define ROUTES_PREFIX QString( ROUTES_PREFIX_NAME + "/" )

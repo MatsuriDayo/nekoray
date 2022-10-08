@@ -101,7 +101,7 @@ void DialogManageRoutes::accept() {
     if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;
     SAVE_TO_ROUTING(NekoRay::dataStore->routing)
     NekoRay::dataStore->active_routing = active_routing;
-    NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
+    NekoRay::dataStore->routing->fn = ROUTES_PREFIX + NekoRay::dataStore->active_routing;
     if (NekoRay::dataStore->routing->Save()) routeChanged = true;
     //
     QString info = "UpdateDataStore";
@@ -170,7 +170,7 @@ void DialogManageRoutes::on_load_save_clicked() {
         if (!fn.isEmpty()) {
             auto r = std::make_unique<NekoRay::Routing>();
             r->load_control_force = true;
-            r->fn = "routes/" + fn;
+            r->fn = ROUTES_PREFIX + fn;
             if (r->Load()) {
                 auto btn = QMessageBox::question(nullptr,
                                                  software_name, tr("Load routing: %1").arg(fn) + "\n" + r->toString());
@@ -186,7 +186,7 @@ void DialogManageRoutes::on_load_save_clicked() {
         if (!fn.isEmpty()) {
             auto r = std::make_unique<NekoRay::Routing>();
             SAVE_TO_ROUTING(r)
-            r->fn = "routes/" + fn;
+            r->fn = ROUTES_PREFIX + fn;
             auto btn = QMessageBox::question(nullptr, software_name,
                                              tr("Save routing: %1").arg(fn) + "\n" + r->toString());
             if (btn == QMessageBox::Yes) {
@@ -201,7 +201,7 @@ void DialogManageRoutes::on_load_save_clicked() {
         if (!fn.isEmpty() && NekoRay::Routing::List().length() > 1) {
             auto btn = QMessageBox::question(nullptr, software_name, tr("Remove routing: %1").arg(fn));
             if (btn == QMessageBox::Yes) {
-                QFile f("routes/" + fn);
+                QFile f(ROUTES_PREFIX + fn);
                 f.remove();
                 if (NekoRay::dataStore->active_routing == fn) {
                     NekoRay::Routing::SetToActive(NekoRay::Routing::List().first());

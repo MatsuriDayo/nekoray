@@ -194,8 +194,11 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
                                   tr("Switching the core to %1, click \"Yes\" to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.")
                                           .arg(core_name_new)
         ) == QMessageBox::StandardButton::Yes) {
-            NekoRay::dataStore->neko_core = neko_core_new;
-            NekoRay::dataStore->Save();
+            QFile file;
+            file.setFileName("groups/coreType");
+            file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+            file.write(Int2String(neko_core_new).toUtf8());
+            file.close();
             dialog_message("", "SwitchCore");
         }
     };
@@ -268,14 +271,12 @@ void DialogBasicSettings::on_set_custom_icon_clicked() {
     if (c == 0) {
         auto fn = QFileDialog::getOpenFileName(this, QObject::tr("Select"), QDir::currentPath(),
                                                "*.png", nullptr, QFileDialog::Option::ReadOnly);
-        if (!fn.isEmpty()) {
-            QImage img(fn);
-            if (img.isNull() || img.height() != img.width()) {
-                MessageBoxWarning(title, tr("Please select a valid square image."));
-                return;
-            }
-            QFile::copy(fn, user_icon_path);
+        QImage img(fn);
+        if (img.isNull() || img.height() != img.width()) {
+            MessageBoxWarning(title, tr("Please select a valid square image."));
+            return;
         }
+        QFile::copy(fn, user_icon_path);
     } else if (c == 1) {
         QFile::remove(user_icon_path);
     } else {

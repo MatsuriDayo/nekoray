@@ -86,6 +86,9 @@ int main(int argc, char *argv[]) {
         QIcon::setThemeName("breeze");
     }
 
+    // Load coreType
+    NekoRay::coreType = ReadFileText("groups/coreType").toInt(); // default to 0
+
     // Dir
     QDir dir;
     bool dir_success = true;
@@ -95,8 +98,8 @@ int main(int argc, char *argv[]) {
     if (!dir.exists("groups")) {
         dir_success = dir_success && dir.mkdir("groups");
     }
-    if (!dir.exists("routes")) {
-        dir_success = dir_success && dir.mkdir("routes");
+    if (!dir.exists(ROUTES_PREFIX_NAME)) {
+        dir_success = dir_success && dir.mkdir(ROUTES_PREFIX_NAME);
     }
     if (!dir_success) {
         QMessageBox::warning(nullptr, "Error", "No permission to write " + dir.absolutePath());
@@ -104,13 +107,24 @@ int main(int argc, char *argv[]) {
     }
 
     // Load dataStore
+    switch (NekoRay::coreType) {
+        case NekoRay::CoreType::V2RAY:
+            NekoRay::dataStore->fn = "groups/nekoray.json";
+            break;
+        case NekoRay::CoreType::SING_BOX:
+            NekoRay::dataStore->fn = "groups/nekobox.json";
+            break;
+        default:
+            MessageBoxWarning("Error", "Unknown coreType.");
+            return 0;
+    }
     auto isLoaded = NekoRay::dataStore->Load();
     if (!isLoaded) {
         NekoRay::dataStore->Save();
     }
 
     // load routing
-    NekoRay::dataStore->routing->fn = "routes/" + NekoRay::dataStore->active_routing;
+    NekoRay::dataStore->routing->fn = ROUTES_PREFIX + NekoRay::dataStore->active_routing;
     isLoaded = NekoRay::dataStore->routing->Load();
     if (!isLoaded) {
         NekoRay::dataStore->routing->Save();

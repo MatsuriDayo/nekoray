@@ -11,7 +11,7 @@ namespace NekoRay {
 
     // datastore
 
-    DataStore::DataStore() : JsonStore("groups/nekoray.json") {
+    DataStore::DataStore() : JsonStore() {
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
 
         _add(new configItem("user_agent", &user_agent, itemType::string));
@@ -58,7 +58,6 @@ namespace NekoRay {
         _add(new configItem("vpn_bypass_process", &vpn_bypass_process, itemType::string));
         _add(new configItem("vpn_bypass_cidr", &vpn_bypass_cidr, itemType::string));
         _add(new configItem("check_include_pre", &check_include_pre, itemType::boolean));
-        _add(new configItem("neko_core", &neko_core, itemType::integer));
     }
 
     void DataStore::UpdateStartedId(int id) {
@@ -110,15 +109,15 @@ namespace NekoRay {
     QStringList Routing::List() {
         QStringList l;
         QDir d;
-        if (d.exists("routes")) {
-            QDir dr("routes");
+        if (d.exists(ROUTES_PREFIX)) {
+            QDir dr(ROUTES_PREFIX);
             return dr.entryList(QDir::Files);
         }
         return l;
     }
 
     void Routing::SetToActive(const QString &name) {
-        dataStore->routing->fn = "routes/" + name;
+        dataStore->routing->fn = ROUTES_PREFIX + name;
         dataStore->routing->Load();
         dataStore->active_routing = name;
         dataStore->Save();

@@ -299,7 +299,7 @@ MainWindow::MainWindow(QWidget *parent)
         if (!fn.isEmpty()) {
             NekoRay::Routing r;
             r.load_control_force = true;
-            r.fn = "routes/" + fn;
+            r.fn = ROUTES_PREFIX + fn;
             if (r.Load()) {
                 auto btn = QMessageBox::question(GetMessageBoxParent(), software_name,
                                                  tr("Load routing and apply: %1").arg(fn) + "\n" + r.toString());

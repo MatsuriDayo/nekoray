@@ -66,6 +66,7 @@ launcher 参数
 - [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri)
 - [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core)
 - [SagerNet/sing-box](https://github.com/SagerNet/sing-box)
+- [Qv2ray](https://github.com/Qv2ray/Qv2ray)
 - [Qt](https://www.qt.io/)
 - [protobuf](https://github.com/protocolbuffers/protobuf)
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)

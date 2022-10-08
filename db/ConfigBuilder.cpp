@@ -724,17 +724,17 @@ namespace NekoRay {
         });
 
         // api
-        result->coreConfig.insert("experimental", QJsonObject{
-                {"v2ray_api", QJsonObject{
-                        {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
-                        {"stats",  QJsonObject{
-                                {"enabled",   true},
-                                {"outbounds", QJsonArray{
-                                        tagProxy, "bypass", "block"
-                                }},
-                        }}
-                }},
-        });
+        if (dataStore->traffic_loop_interval > 0) {
+            result->coreConfig.insert("experimental", QJsonObject{
+                    {"v2ray_api", QJsonObject{
+                            {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
+                            {"stats",  QJsonObject{
+                                    {"enabled",   true},
+                                    {"outbounds", QJsonArray{tagProxy, "bypass"}},
+                            }}
+                    }},
+            });
+        }
 
         return result;
     }
