@@ -26,7 +26,7 @@ QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
     auto side = pixmap.width();
     auto radius = side * 0.4;
     auto d = side * 0.3;
-    auto margin = side * 0.1;
+    auto margin = side * 0.05;
 
     if (status == TrayIconStatus::RUNNING) {
         p.setBrush(QBrush(Qt::darkGreen));
