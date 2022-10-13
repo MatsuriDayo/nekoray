@@ -50,7 +50,6 @@ func Updater() {
 	}
 
 	// remove old file
-	removeAll("./*.exe")
 	removeAll("./*.dll")
 	removeAll("./*.dmp")
 

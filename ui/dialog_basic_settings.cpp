@@ -55,6 +55,16 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Common
 
+    if (IS_NEKO_BOX) {
+        ui->groupBox_mux->hide();
+        ui->groupBox_http->hide();
+        ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
+        ui->hlayout_l2->addWidget(ui->groupBox_log);
+        ui->log_level->addItems(QString("trace debug info warn error fatal panic").split(" "));
+    } else {
+        ui->log_level->addItems({"debug", "info", "warning", "none"});
+    }
+
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
@@ -67,13 +77,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
     });
-
-    if (IS_NEKO_BOX) {
-        ui->groupBox_mux->hide();
-        ui->groupBox_http->hide();
-        ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
-        ui->hlayout_l2->addWidget(ui->groupBox_log);
-    }
 
     // Style
     if (IS_NEKO_BOX) {

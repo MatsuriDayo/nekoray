@@ -162,28 +162,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QComboBox" name="log_level">
-              <item>
-               <property name="text">
-                <string notr="true">debug</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">info</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">warning</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">none</string>
-               </property>
-              </item>
-             </widget>
+             <widget class="QComboBox" name="log_level"/>
             </item>
            </layout>
           </widget>
