@@ -87,7 +87,7 @@ namespace NekoRay::fmt {
                 {"type",        "vmess"},
                 {"server",      serverAddress},
                 {"server_port", serverPort},
-                {"uuid",        uuid},
+                {"uuid",        uuid.trimmed()},
                 {"alter_id",    aid},
                 {"security",    security},
         };
@@ -107,7 +107,7 @@ namespace NekoRay::fmt {
 
         QJsonObject settings;
         if (proxy_type == proxy_VLESS) {
-            outbound["uuid"] = password;
+            outbound["uuid"] = password.trimmed();
         } else {
             outbound["password"] = password;
         }

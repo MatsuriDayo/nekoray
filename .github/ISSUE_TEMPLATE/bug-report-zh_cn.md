@@ -1,6 +1,6 @@
 ---
-name: Bug report zh_CN
-about: 问题反馈
+name: Bug Report zh_CN
+about: 问题反馈，在提出问题前请先自行排除服务器端问题和升级到最新客户端。
 title: ''
 labels: ''
 assignees: ''
@@ -19,4 +19,4 @@ assignees: ''
 
 **日志**
 
-如果有日志，请上传。导出日志的详细步骤在文档有。
+如果有日志，请上传。请在文档内查看导出日志的详细步骤。

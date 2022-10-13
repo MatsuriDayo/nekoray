@@ -139,7 +139,7 @@ namespace NekoRay::fmt {
                                 {"port",    serverPort},
                                 {"users",   QJsonArray{
                                         QJsonObject{
-                                                {"id",       uuid},
+                                                {"id",       uuid.trimmed()},
                                                 {"alterId",  aid},
                                                 {"security", security},
                                         }
@@ -169,7 +169,7 @@ namespace NekoRay::fmt {
                                     {"port",    serverPort},
                                     {"users",   QJsonArray{
                                             QJsonObject{
-                                                    {"id",         password},
+                                                    {"id",         password.trimmed()},
                                                     {"encryption", "none"},
                                             }
                                     }},

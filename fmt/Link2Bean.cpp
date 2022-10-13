@@ -28,6 +28,7 @@ namespace NekoRay::fmt {
 
             if (link.startsWith("socks4")) socks_http_type = type_Socks4;
             if (link.startsWith("http")) socks_http_type = type_HTTP;
+            name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             username = url.userName();

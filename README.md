@@ -16,9 +16,9 @@ Support Windows / Linux amd64 out of the box now.
 
 便携格式，无安装器。转到 Releases 下载预编译的二进制文件，解压后即可使用。
 
-### GitHub Releases 下载
+### GitHub Releases
 
-[![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases) [Download](https://github.com/Matsuridayo/nekoray/releases)
 
 ## 更改记录 & 发布频道 Changelog & Telegram channel
 
@@ -53,6 +53,8 @@ launcher 参数
 * `-theme` Use local QT theme (unstable) (1.0+)
 
 已知部分 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
+
+Ubuntu 22.04: `sudo apt install libxcb-xinerama0`
 
 ## 编译教程
 
