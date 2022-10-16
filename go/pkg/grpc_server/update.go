@@ -54,6 +54,8 @@ func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.Update
 			search = "windows64"
 		} else if runtime.GOOS == "linux" && runtime.GOARCH == "amd64" {
 			search = "linux64"
+		} else if runtime.GOOS == "darwin" {
+			search = "macos-" + runtime.GOARCH
 		} else {
 			ret.Error = "Not official support platform"
 			return ret, nil

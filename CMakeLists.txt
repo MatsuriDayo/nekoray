@@ -30,6 +30,11 @@ if (NKR_CROSS)
     set_property(TARGET Qt5::lupdate PROPERTY IMPORTED_LOCATION /usr/bin/lupdate)
 endif ()
 
+if (NKR_PACKAGE OR NKR_PACKAGE_MACOS)
+    message("[add_compile_definitions] NKR_PACKAGE")
+    add_compile_definitions(NKR_PACKAGE)
+endif ()
+
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
 
@@ -50,10 +55,6 @@ include("cmake/print.cmake")
 include("cmake/nkr.cmake")
 
 find_package(Threads)
-
-if (NKR_PACKAGE)
-    add_compile_definitions(NKR_PACKAGE)
-endif ()
 
 if (NKR_NO_EXTERNAL)
     add_compile_definitions(NKR_NO_EXTERNAL)

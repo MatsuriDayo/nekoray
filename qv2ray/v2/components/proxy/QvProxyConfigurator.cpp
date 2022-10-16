@@ -14,6 +14,7 @@
 #include <QProcess>
 
 #include "qv2ray/wrapper.hpp"
+#include "main/NekoRay_Utils.hpp"
 
 #define QV_MODULE_NAME "SystemProxy"
 

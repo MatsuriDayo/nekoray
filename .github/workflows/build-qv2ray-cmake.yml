@@ -11,6 +11,14 @@ on:
         required: false
 jobs:
   build-go:
+    strategy:
+      matrix:
+        cross_os: [ windows, linux, darwin ]
+        cross_arch: [ amd64 ]
+        include:
+          - cross_os: asset
+            cross_arch: asset
+      fail-fast: false
     runs-on: ubuntu-latest
     steps:
       - name: Checking out sources
@@ -20,30 +28,26 @@ jobs:
         with:
           stable: false
           go-version: 1.19.2
-      - name: Build golang and common parts
+      - name: Build golang parts
         shell: bash
         run: |
-          ./libs/get_source.sh
-          GOOS=linux GOARCH=amd64 ./libs/build_go.sh
-          GOOS=windows GOARCH=amd64 ./libs/build_go.sh
+          [ ${{ matrix.cross_os }} == asset ] || ./libs/get_source.sh
+          [ ${{ matrix.cross_os }} == asset ] || GOOS=${{ matrix.cross_os }} GOARCH=${{ matrix.cross_arch }} ./libs/build_go.sh
+          [ ${{ matrix.cross_os }} == asset ] || exit 0
           ./libs/build_asset.sh
       - name: Tar files
         run: tar czvf artifacts.tgz ./deployment
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NekoRay-${{ github.sha }}-Common
+          name: NekoRay-${{ github.sha }}-Common-${{ matrix.cross_os }}-${{ matrix.cross_arch }}
           path: artifacts.tgz
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-20.04 ]
+        platform: [ windows-2022, ubuntu-20.04, macos-11 ]
         arch: [ x64 ]
         qt_version: [ 5.15.2 ]
-        include:
-          - platform: windows-2022
-            arch: x64
-            qtarch: win64_msvc2019_64
       fail-fast: false
 
     runs-on: ${{ matrix.platform }}
@@ -77,25 +81,15 @@ jobs:
           setup-python: false
           cached: ${{ steps.cache-qt.outputs.cache-hit }}
       # ========================================================================================================= Other install
-      - name: Windows - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
-        if: matrix.platform == 'windows-2022'
-        uses: ashutoshvarma/setup-ninja@master
-        with:
-          # ninja version to download. Default: 1.10.0
-          version: 1.10.0
-      - name: Linux - ${{ matrix.arch }} - ${{ matrix.qt_version }} - Setup Ninja
-        shell: bash
-        if: matrix.platform == 'ubuntu-20.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y ninja-build 
+      - name: Install ninja-build tool
+        uses: seanmiddleditch/gha-setup-ninja@v3
       # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Cache Download
         id: cache-deps
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: libs/deps
-          key: ${{ hashFiles('libs/build_deps_*.sh') }}
+          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}-${{ hashFiles('libs/build_deps_*.sh') }}
       - name: Build Dependencies
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true'
@@ -112,7 +106,7 @@ jobs:
           mkdir build
           cd build
           cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build . --parallel $(nproc)
+          ninja
           cd ..
           ./libs/deploy_windows64.sh
       - name: Linux - ${{ matrix.qt_version }} - Generate MakeFile and Build
@@ -122,9 +116,19 @@ jobs:
           mkdir build
           cd build
           cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
-          cmake --build . --parallel $(nproc)
+          ninja
           cd ..
           ./libs/deploy_linux64.sh
+      - name: macOS - ${{ matrix.qt_version }} - Generate MakeFile and Build
+        shell: bash
+        if: matrix.platform == 'macos-11'
+        run: |
+          mkdir build
+          cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DNKR_PACKAGE_MACOS=1 ..
+          ninja
+          cd ..
+          ./libs/deploy_macos.sh
       # ========================================================================================================= Deployments
       - name: Tar files
         shell: bash
@@ -145,37 +149,32 @@ jobs:
       - name: Checking out sources
         uses: actions/checkout@v2
       - name: Donwload Artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
-          name: NekoRay-${{ github.sha }}-Common
-          path: artifacts-common
-      - name: Donwload Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: NekoRay-${{ github.sha }}-ubuntu-20.04-x64
-          path: artifacts-linux
-      - name: Donwload Artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: NekoRay-${{ github.sha }}-windows-2022-x64
-          path: artifacts-windows
+          path: download-artifact
       - name: Release
         run: |
           source libs/deploy_common.sh
           curl -Lo - https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar xzv
           mv ghr*linux_amd64/ghr .
-          tar xzvf artifacts-linux/artifacts.tgz
-          tar xzvf artifacts-windows/artifacts.tgz
-          tar xzvf artifacts-common/artifacts.tgz
+          find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r assets/* linux64
           cp -r assets/* windows64
+          cp -r assets/* macos-amd64
           rm -rf assets *.pdb
+          ####
           mv linux64 nekoray
           zip -r $version_standalone-linux64.zip nekoray
           rm -rf nekoray
+          ####
           mv windows64 nekoray
           zip -r $version_standalone-windows64.zip nekoray
           rm -rf nekoray
+          ####
+          mv macos-amd64 nekoray
+          zip -r $version_standalone-macos-amd64.zip nekoray
+          rm -rf nekoray
+          ####
           cd ..
           ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" deployment

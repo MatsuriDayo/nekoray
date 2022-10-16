@@ -4,9 +4,11 @@ set -e
 source libs/deploy_common.sh
 [ "$GOOS" == "windows" ] && [ "$GOARCH" == "amd64" ] && DEST=$DEPLOYMENT/windows64 || true
 [ "$GOOS" == "linux" ] && [ "$GOARCH" == "amd64" ] && DEST=$DEPLOYMENT/linux64 || true
+[ "$GOOS" == "darwin" ] && [ "$GOARCH" == "amd64" ] && DEST=$DEPLOYMENT/mac-amd64 || true
+[ "$GOOS" == "darwin" ] && [ "$GOARCH" == "arm64" ] && DEST=$DEPLOYMENT/mac-arm64 || true
 if [ -z $DEST ]; then
   echo "Please set GOOS GOARCH"
-  exit
+  exit 1
 fi
 rm -rf $DEST
 mkdir -p $DEST
