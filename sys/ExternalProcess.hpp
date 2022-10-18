@@ -38,6 +38,7 @@ namespace NekoRay::sys {
     private:
         bool show_stderr = false;
         bool failed_to_start = false;
+        int restart_id = -1;
     };
 
     // start & kill change this list

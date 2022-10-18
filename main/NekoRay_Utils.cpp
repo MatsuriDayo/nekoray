@@ -107,3 +107,14 @@ void runOnUiThread(const std::function<void()> &callback, QObject *parent) {
 void runOnNewThread(const std::function<void()> &callback) {
     createQThread(callback)->start();
 }
+
+void setTimeout(const std::function<void()> &callback, QObject *obj, int timeout) {
+    auto t = new QTimer;
+    QObject::connect(t, &QTimer::timeout, obj, [=] {
+        callback();
+        t->deleteLater();
+    });
+    t->setSingleShot(true);
+    t->setInterval(timeout);
+    t->start();
+}

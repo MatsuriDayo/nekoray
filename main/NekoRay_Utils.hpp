@@ -198,3 +198,5 @@ inline void connectOnce(EMITTER *emitter, SIGNAL signal, RECEIVER *receiver, Rec
 
     *connection = QObject::connect(emitter, signal, receiver, onTriggered, connectionType);
 }
+
+void setTimeout(const std::function<void()> &callback, QObject *obj, int timeout = 0);

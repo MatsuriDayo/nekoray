@@ -55,6 +55,15 @@
                     "ff00::/8"
                 ],
                 "outbound": "block"
+            },
+            {
+                "process_name": [
+                    "nekoray_core",
+                    "nekoray_core.exe",
+                    "nekobox_core",
+                    "nekobox_core.exe"
+                ],
+                "outbound": "direct"
             }
             %PROCESS_NAME_RULE%
             %CIDR_RULE%
