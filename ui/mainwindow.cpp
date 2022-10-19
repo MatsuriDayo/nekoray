@@ -112,6 +112,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup log UI
     new SyntaxHighlighter(false, qvLogDocument);
+    qvLogDocument->setUndoRedoEnabled(false);
+    ui->masterLogBrowser->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setDocument(qvLogDocument);
     ui->masterLogBrowser->setFont(QFontDatabase::systemFont(QFontDatabase::FixedFont));
     {
@@ -1289,6 +1291,7 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     action_clear->setData(-1);
     connect(action_clear, &QAction::triggered, this, [=] {
         qvLogDocument->clear();
+        ui->masterLogBrowser->clear();
     });
     menu->addAction(action_clear);
 

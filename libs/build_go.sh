@@ -17,8 +17,8 @@ export CGO_ENABLED=0
 
 #### Go: updater ####
 pushd updater
-go build -o $DEST -trimpath -ldflags "-w -s"
-[ "$GOOS" == "linux" ] && mv $DEST/updater $DEST/launcher
+[ "$GOOS" == "darwin" ] || go build -o $DEST -trimpath -ldflags "-w -s"
+[ "$GOOS" == "linux" ] && mv $DEST/updater $DEST/launcher || true
 popd
 
 #### Go: nekoray_core ####
