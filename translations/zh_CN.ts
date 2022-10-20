@@ -282,6 +282,30 @@
         <translation>传输设置 (%1)</translation>
     </message>
     <message>
+        <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
+        <translation>底层传输方式。必须与服务器一致，否则无法建立连接。</translation>
+    </message>
+    <message>
+        <source>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</source>
+        <translation>传输层安全。必须与服务器一致，否则无法建立连接。</translation>
+    </message>
+    <message>
+        <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
+        <translation>包编码，用于实现 UDP FullCone 等特性。需要服务器支持，选错无法连接。不懂请留空。</translation>
+    </message>
+    <message>
+        <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
+        <translation>开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</translation>
+    </message>
+    <message>
+        <source>Server name indication, clear text.</source>
+        <translation>服务器名称指示，明文。</translation>
+    </message>
+    <message>
+        <source>Application layer protocol negotiation, clear text. Please separate them with commas.</source>
+        <translation>应用层协议协商，明文。多个请以英文逗号分隔。</translation>
+    </message>
+    <message>
         <source>Security Settings</source>
         <translation>安全设置</translation>
     </message>
@@ -324,6 +348,10 @@
     <message>
         <source>Settings</source>
         <translation>设置</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation type="obsolete">无</translation>
     </message>
 </context>
 <context>
@@ -401,6 +429,14 @@
     <message>
         <source>Remote DNS</source>
         <translation>远程 DNS</translation>
+    </message>
+    <message>
+        <source>Enhanced domain name resolution</source>
+        <translation>增强域名解析</translation>
+    </message>
+    <message>
+        <source>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</source>
+        <translation>使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</translation>
     </message>
     <message>
         <source>Enable DNS Routing</source>

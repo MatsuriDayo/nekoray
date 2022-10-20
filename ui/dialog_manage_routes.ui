@@ -142,10 +142,10 @@
             </sizepolicy>
            </property>
            <property name="toolTip">
-            <string notr="true">Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</string>
+            <string>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</string>
            </property>
            <property name="text">
-            <string notr="true">Enhanced domain name resolution</string>
+            <string>Enhanced domain name resolution</string>
            </property>
           </widget>
          </item>
