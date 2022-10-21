@@ -63,7 +63,7 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     // custom internal
     if (preset_core == "internal") {
         ui->core->hide();
-        ui->core_l->hide();
+        ui->core_l->setText(tr("Outbound JSON, please read the documentation."));
         ui->command->hide();
         ui->command_l->hide();
     }

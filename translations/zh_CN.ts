@@ -591,6 +591,10 @@
         <source>Please pick a core.</source>
         <translation>请选择一个核心。</translation>
     </message>
+    <message>
+        <source>Outbound JSON, please read the documentation.</source>
+        <translation>填写出站 JSON 对象，详细请看文档。</translation>
+    </message>
 </context>
 <context>
     <name>EditNaive</name>
