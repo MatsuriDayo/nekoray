@@ -254,6 +254,7 @@ MainWindow::MainWindow(QWidget *parent)
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
+    connect(ui->actionRestart_Program, &QAction::triggered, this, [=] { dialog_message("", "RestartProgram"); });
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
@@ -461,7 +462,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         }
         refresh_status();
     }
-    if (info == "SwitchCore") {
+    if (info == "RestartProgram") {
         this->exit_reason = 2;
         on_menu_exit_triggered();
     }

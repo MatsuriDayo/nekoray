@@ -1192,6 +1192,10 @@ End: %2</source>
         <source>VPN Settings</source>
         <translation>VPN 设置</translation>
     </message>
+    <message>
+        <source>Restart Program</source>
+        <translation>重启程序</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

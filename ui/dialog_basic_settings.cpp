@@ -202,7 +202,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             file.open(QIODevice::ReadWrite | QIODevice::Truncate);
             file.write(Int2String(neko_core_new).toUtf8());
             file.close();
-            dialog_message("", "SwitchCore");
+            dialog_message("", "RestartProgram");
         }
     };
     connect(ui->switch_core_v2ray, &QRadioButton::clicked, this, switch_core_on_click);

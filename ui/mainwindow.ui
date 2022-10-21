@@ -489,6 +489,7 @@
     <addaction name="menu_spmode"/>
     <addaction name="menu_program_preference"/>
     <addaction name="separator"/>
+    <addaction name="actionRestart_Program"/>
     <addaction name="menu_exit"/>
    </widget>
    <widget class="QMenu" name="menu_preferences">
@@ -826,6 +827,11 @@
   <action name="menu_vpn_settings">
    <property name="text">
     <string>VPN Settings</string>
+   </property>
+  </action>
+  <action name="actionRestart_Program">
+   <property name="text">
+    <string>Restart Program</string>
    </property>
   </action>
  </widget>
