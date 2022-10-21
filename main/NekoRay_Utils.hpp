@@ -142,6 +142,7 @@ inline QString WrapIPV6Host(QString &str) {
 }
 
 inline QString DisplayAddress(QString serverAddress, int serverPort) {
+    if (serverAddress.isEmpty() && serverPort == 0) return {};
     return WrapIPV6Host(serverAddress) + ":" + Int2String(serverPort);
 };
 

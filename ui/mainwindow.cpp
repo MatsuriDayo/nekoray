@@ -346,13 +346,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_full_test, &QAction::triggered, this, [=]() { speedtest_current_group(2); });
     //
     connect(ui->menu_share_item, &QMenu::aboutToShow, this, [=] {
-        auto name = software_core_name;
+        QString name;
         auto selected = get_now_selected();
         if (!selected.isEmpty()) {
             auto ent = selected.first();
             name = ent->bean->DisplayCoreType();
         }
+        ui->menu_export_config->setVisible(name == software_core_name);
         ui->menu_export_config->setText(tr("Export %1 config").arg(name));
+    });
+    connect(ui->menugroup, &QMenu::aboutToShow, this, [=] {
+        ui->menu_full_test->setVisible(!IS_NEKO_BOX);
     });
     refresh_status();
 
@@ -1014,13 +1018,8 @@ void MainWindow::on_menu_export_config_triggered() {
     auto ent = ents.first();
     QString config_core;
 
-    if (ent->bean->NeedExternal()) {
-        auto result = ent->bean->BuildExternal(114514, MkPort());
-        config_core = result.config_export.replace("127.0.0.1:114514", ent->bean->DisplayAddress());
-    } else {
-        auto result = NekoRay::BuildConfig(ent, false);
-        config_core = QJsonObject2QString(result->coreConfig, true);
-    }
+    auto result = NekoRay::BuildConfig(ent, false);
+    config_core = QJsonObject2QString(result->coreConfig, true);
 
     QApplication::clipboard()->setText(config_core);
     MessageBoxWarning(tr("Config copied"), config_core);

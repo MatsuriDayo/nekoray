@@ -189,7 +189,7 @@
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation>将核心切换到 %1，点击 &quot;是 &quot;完成切换，程序将重新启动。此功能可能不稳定，请不要频繁切换。</translation>
+        <translation>将核心切换到 %1。点击 &quot;是&quot; 完成切换，程序将重新启动。此功能可能不稳定，请不要频繁切换。</translation>
     </message>
 </context>
 <context>
@@ -338,10 +338,6 @@
         <translation>主机(Host)</translation>
     </message>
     <message>
-        <source>Custom</source>
-        <translation>自定义</translation>
-    </message>
-    <message>
         <source>Packet Encoding</source>
         <translation>包编码</translation>
     </message>
@@ -350,8 +346,12 @@
         <translation>设置</translation>
     </message>
     <message>
-        <source>None</source>
-        <translation type="obsolete">无</translation>
+        <source>Custom (Extra Core)</source>
+        <translation>自定义 (其他核心)</translation>
+    </message>
+    <message>
+        <source>Custom (%1)</source>
+        <translation>自定义 (%1)</translation>
     </message>
 </context>
 <context>
@@ -586,6 +586,10 @@
     <message>
         <source>Json Editor</source>
         <translation>JSON 编辑器</translation>
+    </message>
+    <message>
+        <source>Please pick a core.</source>
+        <translation>请选择一个核心。</translation>
     </message>
 </context>
 <context>
@@ -1254,7 +1258,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Core not found: %1</source>
-        <translation>找不到 %1 核心</translation>
+        <translation>找不到 &quot;%1&quot; 核心。请前往设置</translation>
     </message>
     <message>
         <source>Update</source>

@@ -193,4 +193,14 @@ namespace NekoRay::fmt {
         result.outbound = outbound;
         return result;
     }
+
+    CoreObjOutboundBuildResult CustomBean::BuildCoreObjV2Ray() {
+        CoreObjOutboundBuildResult result;
+
+        if (core == "internal") {
+            result.outbound = QString2QJsonObject(config_simple);
+        }
+
+        return result;
+    }
 }

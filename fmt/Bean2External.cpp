@@ -21,10 +21,6 @@ auto TempFile = QFileInfo(f).absoluteFilePath();
 namespace NekoRay::fmt {
     ExternalBuildResult NaiveBean::BuildExternal(int mapping_port, int socks_port) {
         ExternalBuildResult result{dataStore->extraCore->Get("naive")};
-        if (result.program.isEmpty()) {
-            result.error = QObject::tr("Core not found: %1").arg(DisplayType());
-            return result;
-        }
 
         auto is_export = mapping_port == 114514;
         auto domain_address = sni.isEmpty() ? serverAddress : sni;
@@ -53,10 +49,6 @@ namespace NekoRay::fmt {
 
     ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port) {
         ExternalBuildResult result{dataStore->extraCore->Get(core)};
-        if (result.program.isEmpty()) {
-            result.error = QObject::tr("Core not found: %1").arg(DisplayType());
-            return result;
-        }
 
         result.arguments = command; // TODO split?
 

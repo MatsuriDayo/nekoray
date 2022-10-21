@@ -420,9 +420,13 @@ namespace NekoRay {
             if (ent->bean->NeedExternal()) {
                 auto ext_socks_port = MkPort();
                 extR = ent->bean->BuildExternal(mapping_port, ext_socks_port);
+                if (extR.program.isEmpty()) {
+                    status->result->error = QObject::tr("Core not found: %1").arg(ent->bean->DisplayType());
+                    return {};
+                }
                 if (!extR.error.isEmpty()) { // rejected
                     status->result->error = extR.error;
-                    return "";
+                    return {};
                 }
 
                 // SOCKS OUTBOUND
@@ -528,7 +532,9 @@ namespace NekoRay {
         status->result = result;
 
         // Log
-        result->coreConfig["log"] = QJsonObject{{"level", dataStore->log_level}};
+        auto level = dataStore->log_level;
+        level = level.replace("warning", "warn");
+        result->coreConfig["log"] = QJsonObject{{"level", level}};
 
         // Inbounds
 
@@ -723,7 +729,7 @@ namespace NekoRay {
         });
 
         // api
-        if (dataStore->traffic_loop_interval > 0) {
+        if (!forTest && dataStore->traffic_loop_interval > 0) {
             result->coreConfig.insert("experimental", QJsonObject{
                     {"v2ray_api", QJsonObject{
                             {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},

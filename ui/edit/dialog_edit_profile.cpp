@@ -10,7 +10,6 @@
 #include "ui/edit/edit_custom.h"
 
 #include "fmt/includes.h"
-#include "fmt/Preset.hpp"
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
@@ -101,7 +100,8 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vless");
         LOAD_TYPE("naive");
         ui->type->addItem("Hysteria", "hysteria");
-        ui->type->addItem(tr("Custom"), "custom");
+        ui->type->addItem(tr("Custom (%1)").arg(software_core_name), "internal");
+        ui->type->addItem(tr("Custom (Extra Core)"), "custom");
         LOAD_TYPE("chain");
 
         // type changed
@@ -124,6 +124,7 @@ DialogEditProfile::~DialogEditProfile() {
 }
 
 void DialogEditProfile::typeSelected(const QString &newType) {
+    QString customType;
     type = newType;
     bool validType = true;
 
@@ -151,15 +152,12 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-    } else if (type == "custom" || type == "hysteria") {
+    } else if (type == "custom" || type == "internal" || type == "hysteria") {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-        if (type == "hysteria" || (!newEnt && ent->CustomBean()->core == "hysteria")) {
-            _innerWidget->preset_core = type;
-            _innerWidget->preset_command = Preset::Hysteria::command;
-            _innerWidget->preset_config = Preset::Hysteria::config;
-        }
+        customType = newEnt ? type : ent->CustomBean()->core;
+        if (customType != "custom") _innerWidget->preset_core = customType;
         type = "custom";
     } else {
         validType = false;
@@ -176,11 +174,11 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 
     // hide some widget
-    auto notChain = type != "chain";
-    ui->address->setVisible(notChain);
-    ui->address_l->setVisible(notChain);
-    ui->port->setVisible(notChain);
-    ui->port_l->setVisible(notChain);
+    auto showAddressPort = type != "chain" && customType != "internal";
+    ui->address->setVisible(showAddressPort);
+    ui->address_l->setVisible(showAddressPort);
+    ui->port->setVisible(showAddressPort);
+    ui->port_l->setVisible(showAddressPort);
 
     // 右边 Outbound: settings
     auto stream = GetStreamSettings(ent->bean.data());

@@ -104,14 +104,13 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		var i *box.Box
 		if in.Config != nil {
 			// Test instance
-			instance, instance_cancel, err = box_main.Create([]byte(in.Config.CoreConfig), true)
+			i, instance_cancel, err = box_main.Create([]byte(in.Config.CoreConfig), true)
 			if instance_cancel != nil {
 				defer instance_cancel()
 			}
 			if err != nil {
 				return
 			}
-			i = instance
 		} else {
 			// Test running instance
 			i = instance
