@@ -142,10 +142,10 @@
             </sizepolicy>
            </property>
            <property name="toolTip">
-            <string notr="true">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</string>
+            <string>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</string>
            </property>
            <property name="text">
-            <string notr="true">增强域名解析</string>
+            <string>Enhanced domain name resolution</string>
            </property>
           </widget>
          </item>

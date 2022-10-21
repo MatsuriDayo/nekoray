@@ -213,7 +213,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="network_l">
              <property name="toolTip">
-              <string notr="true">底层传输方式。必须与服务器一致，否则无法建立连接。</string>
+              <string>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</string>
              </property>
              <property name="text">
               <string>Network</string>
@@ -263,7 +263,7 @@
            <item row="1" column="0">
             <widget class="QLabel" name="security_l">
              <property name="toolTip">
-              <string notr="true">传输层安全。必须与服务器一致，否则无法建立连接。</string>
+              <string>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</string>
              </property>
              <property name="text">
               <string>Security</string>
@@ -273,7 +273,7 @@
            <item row="2" column="0">
             <widget class="QLabel" name="packet_encoding_l">
              <property name="toolTip">
-              <string notr="true">包编码，用于实现 UDP FullCone 等特性。需要服务器支持，选错无法连接。不懂请留空。</string>
+              <string>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</string>
              </property>
              <property name="text">
               <string>Packet Encoding</string>
@@ -422,7 +422,7 @@ security (QUIC)</string>
          <item>
           <widget class="QCheckBox" name="insecure">
            <property name="toolTip">
-            <string notr="true">开启后 V2Ray 不会检查远端主机所提供的 TLS 证书的有效性（安全性相当于明文）</string>
+            <string>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</string>
            </property>
            <property name="text">
             <string>Allow insecure</string>
@@ -454,7 +454,7 @@ security (QUIC)</string>
            <item row="0" column="0">
             <widget class="QLabel" name="label_5">
              <property name="toolTip">
-              <string notr="true">服务器名称指示，明文。</string>
+              <string>Server name indication, clear text.</string>
              </property>
              <property name="text">
               <string notr="true">SNI</string>
@@ -464,7 +464,7 @@ security (QUIC)</string>
            <item row="1" column="0">
             <widget class="QLabel" name="label_8">
              <property name="toolTip">
-              <string notr="true">应用层协议协商，明文。多个请以英文逗号分隔。</string>
+              <string>Application layer protocol negotiation, clear text. Please separate them with commas.</string>
              </property>
              <property name="text">
               <string notr="true">ALPN</string>
