@@ -760,6 +760,11 @@ namespace NekoRay {
                              {"ip_cidr",  QList2QJsonArray(arr)}};
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
+        //
+        auto tun_name = "nekoray_tun";
+#ifdef Q_OS_MACOS
+        tun_name = "utun9";
+#endif
         // gen config
         auto configFn = ":/neko/vpn/sing-box-vpn.json";
         if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
@@ -769,6 +774,7 @@ namespace NekoRay {
                 .replace("%STACK%", Preset::SingBox::VpnImplementation.value(dataStore->vpn_implementation))
                 .replace("%PROCESS_NAME_RULE%", process_name_rule)
                 .replace("%CIDR_RULE%", cidr_rule)
+                .replace("%TUN_NAME%", tun_name)
                 .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // write config
         QFile file;

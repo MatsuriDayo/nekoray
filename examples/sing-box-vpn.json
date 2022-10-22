@@ -2,7 +2,7 @@
     "inbounds": [
         {
             "type": "tun",
-            "interface_name": "nekoray-tun",
+            "interface_name": "%TUN_NAME%",
             "inet4_address": "172.19.0.1/28",
             %IPV6_ADDRESS%
             "mtu": %MTU%,

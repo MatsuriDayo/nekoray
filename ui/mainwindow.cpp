@@ -1477,7 +1477,12 @@ bool MainWindow::StartVPNProcess() {
     });
     //
     vpn_process->setProcessChannelMode(QProcess::ForwardedChannels);
+#ifdef Q_OS_MACOS
+    vpn_process->start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
+            .arg("bash " + scriptPath)});
+#else
     vpn_process->start("pkexec", {"bash", scriptPath});
+#endif
     vpn_process->waitForStarted();
     vpn_pid = vpn_process->processId(); // actually it's pkexec or bash PID
 #endif
@@ -1495,7 +1500,12 @@ bool MainWindow::StopVPNProcess() {
         ok = ret == 0;
 #else
         QProcess p;
+#ifdef Q_OS_MACOS
+        p.start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
+                .arg("pkill -2 -U 0 nekobox_core")});
+#else
         p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+#endif
         p.waitForFinished();
         ok = p.exitCode() == 0;
 #endif
