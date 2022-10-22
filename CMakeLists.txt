@@ -31,8 +31,8 @@ if (NKR_CROSS)
 endif ()
 
 if (NKR_PACKAGE OR NKR_PACKAGE_MACOS)
-    message("[add_compile_definitions] NKR_PACKAGE")
-    add_compile_definitions(NKR_PACKAGE)
+    message("[add_compile_definitions] NKR_CPP_USE_APPDATA")
+    add_compile_definitions(NKR_CPP_USE_APPDATA)
 endif ()
 
 # Windows
@@ -257,10 +257,17 @@ target_link_libraries(nekoray PRIVATE
         ${PLATFORM_FUCKING_LIBRARIES}
         )
 
+set(MACOSX_ICON ${CMAKE_SOURCE_DIR}/res/nekoray.icns)
+
+if (APPLE)
+    target_sources(nekoray PRIVATE ${MACOSX_ICON})
+endif ()
+
 set_target_properties(nekoray PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-        MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+        MACOSX_BUNDLE_ICON_FILE "nekoray.icns"
+        RESOURCE ${MACOSX_ICON}
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/res/MacOSXBundleInfo.plist
+        MACOSX_BUNDLE_GUI_IDENTIFIER moe.nekoray.macosx
         MACOSX_BUNDLE TRUE
         WIN32_EXECUTABLE TRUE
         )

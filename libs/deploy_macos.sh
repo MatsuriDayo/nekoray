@@ -19,10 +19,11 @@ mv deployment/assets/* deployment/macos-$ARCH
 mv deployment/macos-$ARCH/* $BUILD/nekoray.app/Contents/MacOS
 popd
 
-#### deploy qt & DLL runtime => dmg ####
+#### deploy qt & DLL runtime => .app ####
 pushd $BUILD
-macdeployqt nekoray.app -dmg -verbose=3
+macdeployqt nekoray.app -verbose=3
 popd
 
-#### copy dmg ####
-cp $BUILD/*.dmg $DEST
+#### pack dmg ###
+sudo npm install -g appdmg
+appdmg appdmg.json $DEST/nekoray.dmg

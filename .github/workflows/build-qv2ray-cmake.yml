@@ -23,12 +23,22 @@ jobs:
     steps:
       - name: Checking out sources
         uses: actions/checkout@v2
+      - name: Go Status
+        run: git ls-files go | xargs cat | sha1sum > go_status
+      - name: Cache Common Download
+        id: cache-common
+        uses: actions/cache@v3
+        with:
+          path: artifacts.tgz
+          key: CommonCache-${{ matrix.cross_os }}-${{ matrix.cross_arch }}-${{ hashFiles('libs/*.sh', 'go_status') }}
       - name: Install Golang
+        if: steps.cache-common.outputs.cache-hit != 'true'
         uses: actions/setup-go@v2
         with:
           stable: false
           go-version: 1.19.2
       - name: Build golang parts
+        if: steps.cache-common.outputs.cache-hit != 'true'
         shell: bash
         run: |
           [ ${{ matrix.cross_os }} == asset ] || ./libs/get_source.sh
@@ -36,6 +46,7 @@ jobs:
           [ ${{ matrix.cross_os }} == asset ] || exit 0
           ./libs/build_asset.sh
       - name: Tar files
+        if: steps.cache-common.outputs.cache-hit != 'true'
         run: tar czvf artifacts.tgz ./deployment
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
@@ -45,7 +56,7 @@ jobs:
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-20.04, macos-11 ]
+        platform: [ windows-2022, ubuntu-20.04, macos-10.15 ]
         arch: [ x64 ]
         qt_version: [ 5.15.2 ]
       fail-fast: false
@@ -68,7 +79,7 @@ jobs:
           toolset: 14.2
           arch: ${{ matrix.arch }}
       - name: Download Artifacts
-        if: matrix.platform == 'macos-11'
+        if: matrix.platform == 'macos-10.15'
         uses: actions/download-artifact@v3
         with:
           path: download-artifact
@@ -127,7 +138,7 @@ jobs:
           ./libs/deploy_linux64.sh
       - name: macOS - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
-        if: matrix.platform == 'macos-11'
+        if: matrix.platform == 'macos-10.15'
         run: |
           mkdir build
           cd build
