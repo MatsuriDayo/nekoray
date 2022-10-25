@@ -532,9 +532,7 @@ namespace NekoRay {
         status->result = result;
 
         // Log
-        auto level = dataStore->log_level;
-        level = level.replace("warning", "warn");
-        result->coreConfig["log"] = QJsonObject{{"level", level}};
+        result->coreConfig["log"] = QJsonObject{{"level", dataStore->log_level}};
 
         // Inbounds
 

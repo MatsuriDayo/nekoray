@@ -1,16 +1,12 @@
 # NekoRay
 
-基于 Qt/C++ 的跨平台 GUI 代理配置管理器
-
-后端 1. v2ray 2. sing-box
-
-目前支持 Windows / Linux amd64 开箱即用
-
-Qt/C++ based cross-platform GUI proxy configuration manager
-
-backend: 1. v2ray 2.sing-box
+Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 
 Support Windows / Linux amd64 out of the box now.
+
+基于 Qt 的跨平台代理配置管理器 (后端 v2ray / sing-box)
+
+目前支持 Windows / Linux / macOS amd64 开箱即用
 
 ## 下载 Download
 

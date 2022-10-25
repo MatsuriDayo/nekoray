@@ -97,6 +97,9 @@ MainWindow::MainWindow(QWidget *parent)
     if (IS_NEKO_BOX) {
         software_name = "NekoBox";
         software_core_name = "sing-box";
+        if (NekoRay::dataStore->log_level == "warning") {
+            NekoRay::dataStore->log_level = "info";
+        }
     }
 
     // top bar
@@ -328,6 +331,9 @@ MainWindow::MainWindow(QWidget *parent)
     //
     connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) {
         neko_set_spmode(checked ? NekoRay::SystemProxyMode::VPN : NekoRay::SystemProxyMode::DISABLE);
+    });
+    connect(ui->checkBox_SystemProxy, &QCheckBox::clicked, this, [=](bool checked) {
+        neko_set_spmode(checked ? NekoRay::SystemProxyMode::SYSTEM_PROXY : NekoRay::SystemProxyMode::DISABLE);
     });
     connect(ui->menu_spmode, &QMenu::aboutToShow, this, [=]() {
         ui->menu_spmode_disabled->setChecked(title_spmode == NekoRay::SystemProxyMode::DISABLE);
@@ -648,6 +654,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     ui->label_inbound->setText(inbound_txt);
     //
     ui->checkBox_VPN->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
+    ui->checkBox_SystemProxy->setChecked(title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
     if (select_mode) ui->label_running->setText("[" + tr("Select") + "]");
 
     auto make_title = [=](bool isTray) {
