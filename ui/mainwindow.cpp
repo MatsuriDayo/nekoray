@@ -262,7 +262,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
         ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
-        ui->actionAllow_LAN->setChecked(NekoRay::dataStore->inbound_address == "::");
+        ui->actionAllow_LAN->setChecked(QStringList{"::", "0.0.0.0"}.contains(NekoRay::dataStore->inbound_address));
         // active server
         for (const auto &old: ui->menuActive_Server->actions()) {
             ui->menuActive_Server->removeAction(old);
