@@ -262,7 +262,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
         ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
-        ui->actionAllow_LAN->setChecked(NekoRay::dataStore->inbound_address == "0.0.0.0");
+        ui->actionAllow_LAN->setChecked(QStringList{"::", "0.0.0.0"}.contains(NekoRay::dataStore->inbound_address));
         // active server
         for (const auto &old: ui->menuActive_Server->actions()) {
             ui->menuActive_Server->removeAction(old);
@@ -325,7 +325,7 @@ MainWindow::MainWindow(QWidget *parent)
         SetProcessAutoRunSelf(checked);
     });
     connect(ui->actionAllow_LAN, &QAction::triggered, this, [=](bool checked) {
-        NekoRay::dataStore->inbound_address = checked ? "0.0.0.0" : "127.0.0.1";
+        NekoRay::dataStore->inbound_address = checked ? "::" : "127.0.0.1";
         dialog_message("", "UpdateDataStore");
     });
     //
