@@ -2,7 +2,7 @@
 
 Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 
-Support Windows / Linux amd64 out of the box now.
+Support Windows / Linux / macOS amd64 out of the box now.
 
 基于 Qt 的跨平台代理配置管理器 (后端 v2ray / sing-box)
 

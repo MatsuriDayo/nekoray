@@ -1025,7 +1025,7 @@ void MainWindow::on_menu_export_config_triggered() {
     auto ent = ents.first();
     QString config_core;
 
-    auto result = NekoRay::BuildConfig(ent, false);
+    auto result = NekoRay::BuildConfig(ent, false, true);
     config_core = QJsonObject2QString(result->coreConfig, true);
 
     QApplication::clipboard()->setText(config_core);

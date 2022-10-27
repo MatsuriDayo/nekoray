@@ -114,7 +114,7 @@ void MainWindow::speedtest_current_group(int mode) {
                     QList<NekoRay::sys::ExternalProcess *> ext;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
-                        auto c = NekoRay::BuildConfig(profile, true);
+                        auto c = NekoRay::BuildConfig(profile, true, false);
                         // external test ???
                         if (!c->ext.isEmpty()) {
                             ext = c->ext;
@@ -220,7 +220,7 @@ void MainWindow::neko_start(int _id) {
     auto group = NekoRay::profileManager->GetGroup(ent->gid);
     if (group == nullptr || group->archive) return;
 
-    auto result = NekoRay::BuildConfig(ent, false);
+    auto result = NekoRay::BuildConfig(ent, false, false);
     if (!result->error.isEmpty()) {
         MessageBoxWarning("BuildConfig return error", result->error);
         return;

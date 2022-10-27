@@ -41,11 +41,14 @@ namespace NekoRay {
         QJsonArray outbounds;
     };
 
-    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest);
+    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent,
+                                                  bool forTest, bool forExport);
 
-    QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent, bool forTest);
+    QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent,
+                                                       bool forTest, bool forExport);
 
-    QSharedPointer<BuildConfigResult> BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent, bool forTest);
+    QSharedPointer<BuildConfigResult> BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent,
+                                                         bool forTest, bool forExport);
 
     QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status);
 

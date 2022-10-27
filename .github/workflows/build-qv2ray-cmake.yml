@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checking out sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Go Status
         run: git ls-files go | xargs cat | sha1sum > go_status
       - name: Cache Common Download
@@ -33,7 +33,7 @@ jobs:
           key: CommonCache-${{ matrix.cross_os }}-${{ matrix.cross_arch }}-${{ hashFiles('libs/*.sh', 'go_status') }}
       - name: Install Golang
         if: steps.cache-common.outputs.cache-hit != 'true'
-        uses: actions/setup-go@v2
+        uses: actions/setup-go@v3
         with:
           stable: false
           go-version: 1.19.2
@@ -68,7 +68,7 @@ jobs:
       - build-go
     steps:
       - name: Checking out sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           submodules: "recursive"
       - name: Install MSVC compiler
@@ -90,7 +90,7 @@ jobs:
           path: ${{ runner.workspace }}/Qt
           key: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
       - name: Install Qt
-        uses: jurplel/install-qt-action@v2.14.0
+        uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.qt_version }}
           py7zrversion: ' '
@@ -163,7 +163,7 @@ jobs:
       - build-go
     steps:
       - name: Checking out sources
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Download Artifacts
         uses: actions/download-artifact@v3
         with:

@@ -11,11 +11,12 @@ namespace NekoRay {
 
     // Common
 
-    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest) {
+    QSharedPointer<BuildConfigResult>
+    BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
         if (IS_NEKO_BOX) {
-            return BuildConfigSingBox(ent, forTest);
+            return BuildConfigSingBox(ent, forTest, forExport);
         }
-        return BuildConfigV2Ray(ent, forTest);
+        return BuildConfigV2Ray(ent, forTest, forExport);
     }
 
     QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status) {
@@ -78,7 +79,8 @@ namespace NekoRay {
         }
     }
 
-    QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent, bool forTest) {
+    QSharedPointer<BuildConfigResult>
+    BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
         auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult);
         auto status = QSharedPointer<BuildConfigStatus>(new BuildConfigStatus);
         status->ent = ent;
@@ -525,7 +527,8 @@ namespace NekoRay {
 
     // SingBox
 
-    QSharedPointer<BuildConfigResult> BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent, bool forTest) {
+    QSharedPointer<BuildConfigResult>
+    BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
         auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult);
         auto status = QSharedPointer<BuildConfigStatus>(new BuildConfigStatus);
         status->ent = ent;
@@ -719,15 +722,21 @@ namespace NekoRay {
         // final add routing rule
         QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
         QJSONARRAY_ADD(routingRules, status->routingRules)
-        result->coreConfig.insert("route", QJsonObject{
+        auto routeObj = QJsonObject{
                 {"rules",                 routingRules},
                 {"auto_detect_interface", true},
                 {"geoip",                 QJsonObject{{"path", geoip},},},
                 {"geosite",               QJsonObject{{"path", geosite},},}
-        });
+        };
+        if (forExport) {
+            routeObj.remove("geoip");
+            routeObj.remove("geosite");
+            routeObj.remove("auto_detect_interface");
+        }
+        result->coreConfig.insert("route", routeObj);
 
         // api
-        if (!forTest && dataStore->traffic_loop_interval > 0) {
+        if (!forTest && !forExport && dataStore->traffic_loop_interval > 0) {
             result->coreConfig.insert("experimental", QJsonObject{
                     {"v2ray_api", QJsonObject{
                             {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
