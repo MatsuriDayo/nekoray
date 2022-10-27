@@ -321,6 +321,7 @@ namespace NekoRay {
     QString BuildChainInternal(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
                                const QSharedPointer<BuildConfigStatus> &status) {
         QString chainTag = "c-" + Int2String(chainId);
+        QString chainTagOut;
         bool muxApplied = false;
 
         QString pastTag;
@@ -340,9 +341,11 @@ namespace NekoRay {
             if (index == ents.length() - 1) {
                 needGlobal = true;
                 tagOut = "g-" + Int2String(ent->id);
-                if (chainId == 0) {
-                    tagOut = "proxy";
-                }
+            }
+
+            // last profile set as "proxy"
+            if (chainId == 0 && index == 0) {
+                tagOut = "proxy";
             }
 
             if (needGlobal) {
@@ -376,7 +379,7 @@ namespace NekoRay {
                 }
             } else {
                 // index == 0 means last profile in chain / not chain
-                chainTag = tagOut;
+                chainTagOut = tagOut;
                 status->result->outboundStat = ent->traffic_data;
             }
 
@@ -522,7 +525,7 @@ namespace NekoRay {
             index++;
         }
 
-        return chainTag;
+        return chainTagOut;
     }
 
     // SingBox
