@@ -22,11 +22,13 @@ public:
 private:
     Ui::DialogManageGroups *ui;
 
-    void _update_one_group(int _order);
-
 private slots:
 
     void on_add_clicked();
 
     void on_update_all_clicked();
 };
+
+// 更新所有订阅 关闭分组窗口时 更新动作继续执行
+
+void UI_update_one_group(int _order);

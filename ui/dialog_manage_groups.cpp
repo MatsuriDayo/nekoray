@@ -58,13 +58,13 @@ void DialogManageGroups::on_update_all_clicked() {
         for (const auto &gid: NekoRay::profileManager->_groups) {
             auto group = NekoRay::profileManager->GetGroup(gid);
             if (group == nullptr || group->url.isEmpty()) continue;
-            _update_one_group(NekoRay::profileManager->_groups.indexOf(gid));
+            UI_update_one_group(NekoRay::profileManager->_groups.indexOf(gid));
             return;
         }
     }
 }
 
-void DialogManageGroups::_update_one_group(int _order) {
+void UI_update_one_group(int _order) {
     // calculate next group
     int nextOrder = _order;
     QSharedPointer<NekoRay::Group> nextGroup;
@@ -81,17 +81,8 @@ void DialogManageGroups::_update_one_group(int _order) {
     auto group = NekoRay::profileManager->GetGroup(NekoRay::profileManager->_groups[_order]);
     if (group == nullptr) return;
 
-    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, this, [=] {
-        // refresh ui
-        for (int i = 0; i < ui->listWidget->count(); i++) {
-            auto w = ui->listWidget->itemWidget(ui->listWidget->item(i));
-            if (w == nullptr) return;
-            auto item = dynamic_cast<GroupItem *>(w);
-            if (item->ent->id == group->id) {
-                item->refresh_data();
-            }
-        }
-        //
-        if (nextGroup != nullptr) _update_one_group(nextOrder);
+    // v2.2: listener is moved to GroupItem, no refresh here.
+    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
+        if (nextGroup != nullptr) UI_update_one_group(nextOrder);
     });
 }

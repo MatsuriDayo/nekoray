@@ -1169,9 +1169,7 @@ void MainWindow::on_menu_update_subscripton_triggered() {
     if (group->url.isEmpty()) return;
     if (mw_sub_updating) return;
     mw_sub_updating = true;
-    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, this, [=] {
-        mw_sub_updating = false;
-    });
+    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, [&] { mw_sub_updating = false; });
 }
 
 void MainWindow::on_menu_remove_unavailable_triggered() {

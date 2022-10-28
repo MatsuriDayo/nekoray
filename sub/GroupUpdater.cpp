@@ -55,6 +55,7 @@ namespace NekoRay::sub {
             auto j = DecodeB64IfValid(link.fragment().toUtf8(), QByteArray::Base64UrlEncoding);
             if (j.isEmpty()) return;
             ent->bean->FromJsonBytes(j.toUtf8());
+            showLog("nekoray format: " + ent->bean->DisplayTypeAndName());
         }
 
         // SOCKS
@@ -290,16 +291,8 @@ namespace NekoRay::sub {
 #endif
     }
 
-    // 不要刷新，下载导入完会自己刷新
-    void GroupUpdater::AsyncUpdate(const QString &str, int _sub_gid,
-                                   QObject *caller, const std::function<void()> &callback) {
-        if (caller != nullptr && callback != nullptr) {
-            connectOnce(this, &GroupUpdater::AsyncUpdateCallback, caller,
-                        [=](QObject *receiver) {
-                            if (receiver == caller) callback();
-                        });
-        }
-
+    // 在新的 thread 运行
+    void GroupUpdater::AsyncUpdate(const QString &str, int _sub_gid, const std::function<void()> &finish) {
         auto content = str.trimmed();
         bool asURL = false;
 
@@ -316,7 +309,8 @@ namespace NekoRay::sub {
 
         runOnNewThread([=] {
             Update(str, _sub_gid, asURL);
-            emit AsyncUpdateCallback(caller);
+            emit asyncUpdateCallback(_sub_gid);
+            if (finish != nullptr) finish();
         });
     }
 

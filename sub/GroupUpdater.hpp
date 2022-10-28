@@ -18,14 +18,13 @@ namespace NekoRay::sub {
     Q_OBJECT
 
     public:
-        void AsyncUpdate(const QString &str, int _sub_gid = -1,
-                         QObject *caller = nullptr, const std::function<void()> &callback = nullptr);
+        void AsyncUpdate(const QString &str, int _sub_gid = -1, const std::function<void()> &finish = nullptr);
 
         void Update(const QString &_str, int _sub_gid = -1, bool _not_sub_as_url = false);
 
     signals:
 
-        void AsyncUpdateCallback(QObject *caller);
+        void asyncUpdateCallback(int gid);
     };
 
     extern GroupUpdater *groupUpdater;

@@ -51,6 +51,8 @@ GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent,
     if (ent == nullptr) return;
 
     connect(this, &GroupItem::edit_clicked, this, &GroupItem::on_edit_clicked);
+    connect(NekoRay::sub::groupUpdater, &NekoRay::sub::GroupUpdater::asyncUpdateCallback,
+            this, [=](int gid) { if (gid == this->ent->id) refresh_data(); });
 
     refresh_data();
 }
@@ -96,9 +98,7 @@ void GroupItem::refresh_data() {
 }
 
 void GroupItem::on_update_sub_clicked() {
-    NekoRay::sub::groupUpdater->AsyncUpdate(ent->url, ent->id, this, [=] {
-        refresh_data();
-    });
+    NekoRay::sub::groupUpdater->AsyncUpdate(ent->url, ent->id);
 }
 
 void GroupItem::on_edit_clicked() {
