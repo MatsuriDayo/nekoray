@@ -209,6 +209,13 @@
             </property>
            </widget>
           </item>
+          <item>
+           <widget class="QPushButton" name="sys_proxy_format">
+            <property name="text">
+             <string>System proxy format</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>

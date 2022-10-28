@@ -58,6 +58,7 @@ namespace NekoRay {
         _add(new configItem("vpn_bypass_process", &vpn_bypass_process, itemType::string));
         _add(new configItem("vpn_bypass_cidr", &vpn_bypass_cidr, itemType::string));
         _add(new configItem("check_include_pre", &check_include_pre, itemType::boolean));
+        _add(new configItem("sp_format", &system_proxy_format, itemType::string));
     }
 
     void DataStore::UpdateStartedId(int id) {

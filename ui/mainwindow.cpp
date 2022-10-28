@@ -588,7 +588,7 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
         // ENABLE
 
         if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
             if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !IS_NEKO_BOX &&
                 !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
                 auto btn = QMessageBox::warning(this, software_name,
@@ -604,9 +604,8 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
             auto http_port = NekoRay::dataStore->inbound_http_port;
             if (IS_NEKO_BOX) {
                 http_port = socks_port;
-                socks_port = -1;
             }
-            SetSystemProxy("127.0.0.1", http_port, socks_port);
+            SetSystemProxy(http_port, socks_port);
         } else if (mode == NekoRay::SystemProxyMode::VPN) {
             if (!StartVPNProcess()) {
                 refresh_status();

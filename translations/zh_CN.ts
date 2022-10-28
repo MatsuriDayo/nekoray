@@ -191,6 +191,14 @@
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
         <translation>将核心切换到 %1。点击 &quot;是&quot; 完成切换，程序将重新启动。此功能可能不稳定，请不要频繁切换。</translation>
     </message>
+    <message>
+        <source>System proxy format</source>
+        <translation>系统代理格式</translation>
+    </message>
+    <message>
+        <source>Advanced system proxy settings. Please select a format.</source>
+        <translation>高级系统代理设置。请选择一种格式。</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

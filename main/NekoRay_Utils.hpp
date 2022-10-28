@@ -25,6 +25,8 @@ inline std::function<void(QString, QString)> dialog_message;
 #define QJSONOBJECT_COPY(src, dst, key) if (src.contains(key)) dst[key] = src[key];
 #define QJSONOBJECT_COPY2(src, dst, src_key, dst_key) if (src.contains(src_key)) dst[dst_key] = src[src_key];
 
+#define Int2String(num) QString::number(num)
+
 inline QString SubStrBefore(QString str, const QString &sub) {
     if (!str.contains(sub)) return str;
     return str.left(str.indexOf(sub));
@@ -57,14 +59,6 @@ DecodeB64IfValid(const QString &input, QByteArray::Base64Option options = QByteA
 #define GetQuery(url) QUrlQuery((url).query(QUrl::ComponentFormattingOption::FullyDecoded));
 
 QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def = "");
-
-inline QString Int2String(int i) {
-    return QVariant(i).toString();
-}
-
-inline QString Int2String(qint64 i) {
-    return QVariant(i).toString();
-}
 
 QString GetRandomString(int randomStringLength);
 
@@ -113,6 +107,8 @@ inline bool InRange(unsigned x, unsigned low, unsigned high) {
 inline QStringList SplitLines(const QString &_string) {
     return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
 }
+
+// Files
 
 QByteArray ReadFile(const QString &path);
 

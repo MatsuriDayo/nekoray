@@ -72,6 +72,7 @@ namespace NekoRay {
         int language = 0;
         QString mw_size = "";
         bool check_include_pre = false;
+        QString system_proxy_format = "";
 
         // Security
         bool insecure_hint = true;

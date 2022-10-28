@@ -14,7 +14,8 @@
 #include <QProcess>
 
 #include "qv2ray/wrapper.hpp"
-#include "main/NekoRay_Utils.hpp"
+#include "fmt/Preset.hpp"
+#include "main/NekoRay.hpp"
 
 #define QV_MODULE_NAME "SystemProxy"
 
@@ -250,8 +251,8 @@ namespace Qv2ray::components::proxy {
     }
 #endif
 
-    void SetSystemProxy(const QString &address, int httpPort, int socksPort) {
-        LOG("Setting up System Proxy");
+void SetSystemProxy(int httpPort, int socksPort) {
+        const QString &address = "127.0.0.1";
         bool hasHTTP = (httpPort > 0 && httpPort < 65536);
         bool hasSOCKS = (socksPort > 0 && socksPort < 65536);
 
@@ -281,23 +282,15 @@ namespace Qv2ray::components::proxy {
 #endif
 
 #ifdef Q_OS_WIN
-        QString __a;
-        const QHostAddress ha(address);
-        const auto type = ha.protocol();
-        if (type == QAbstractSocket::IPv6Protocol)
-        {
-            // many software do not recognize IPv6 proxy server string though
-            const auto str = ha.toString(); // RFC5952
-            __a = "[" + str + "]:" + QSTRN(httpPort);
-        }
-        else
-        {
-             __a = address + ":" + QSTRN(httpPort);
-        }
-
-        LOG("Windows proxy string: " + __a);
-        auto proxyStrW = new WCHAR[__a.length() + 1];
-        wcscpy(proxyStrW, __a.toStdWString().c_str());
+        QString str = NekoRay::dataStore->system_proxy_format;
+        if (str.isEmpty()) str = Preset::Windows::system_proxy_format[0];
+        str = str.replace("{ip}", address)
+                .replace("{http_port}", Int2String(httpPort))
+                .replace("{socks_port}", Int2String(socksPort));
+        //
+        LOG("Windows proxy string: " + str);
+        auto proxyStrW = new WCHAR[str.length() + 1];
+        wcscpy(proxyStrW, str.toStdWString().c_str());
         //
         __QueryProxyOptions();
 

@@ -2,6 +2,7 @@
 #include "ui_dialog_basic_settings.h"
 
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
+#include "fmt/Preset.hpp"
 #include "ui/ThemeManager.hpp"
 #include "main/GuiUtils.hpp"
 #include "main/NekoRay.hpp"
@@ -77,6 +78,22 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
     });
+
+#ifdef Q_OS_WIN
+    connect(ui->sys_proxy_format, &QPushButton::clicked, this, [=] {
+        bool ok;
+        auto str = QInputDialog::getItem(this, ui->sys_proxy_format->text() + " (Windows)",
+                                         tr("Advanced system proxy settings. Please select a format."),
+                                         Preset::Windows::system_proxy_format,
+                                         Preset::Windows::system_proxy_format.indexOf(
+                                                 NekoRay::dataStore->system_proxy_format),
+                                         false, &ok
+        );
+        if (ok) NekoRay::dataStore->system_proxy_format = str;
+    });
+#else
+    ui->sys_proxy_format->hide();
+#endif
 
     // Style
     if (IS_NEKO_BOX) {
