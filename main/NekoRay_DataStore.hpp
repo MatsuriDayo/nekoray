@@ -59,8 +59,6 @@ namespace NekoRay {
 
         // Misc
         QString log_level = "warning";
-        QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
-        bool sub_use_proxy = false;
         QString test_url = "http://cp.cloudflare.com/";
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
@@ -73,6 +71,11 @@ namespace NekoRay {
         QString mw_size = "";
         bool check_include_pre = false;
         QString system_proxy_format = "";
+
+        // Subscription
+        QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
+        bool sub_use_proxy = false;
+        bool sub_clear = false;
 
         // Security
         bool insecure_hint = true;

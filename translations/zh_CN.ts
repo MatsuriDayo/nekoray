@@ -199,6 +199,10 @@
         <source>Advanced system proxy settings. Please select a format.</source>
         <translation>高级系统代理设置。请选择一种格式。</translation>
     </message>
+    <message>
+        <source>Clear servers before updating subscription</source>
+        <translation>更新订阅前清除服务器</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -1359,6 +1363,10 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
     <message>
         <source>Select</source>
         <translation>选择</translation>
+    </message>
+    <message>
+        <source>Clearing servers...</source>
+        <translation>正在清理服务器...</translation>
     </message>
 </context>
 <context>

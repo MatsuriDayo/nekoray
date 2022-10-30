@@ -357,6 +357,14 @@ namespace NekoRay::sub {
             group->info = sub_user_info;
             group->order.clear();
             group->Save();
+            //
+            if (dataStore->sub_clear) {
+                showLog(QObject::tr("Clearing servers..."));
+                for (const auto &profile: in) {
+                    profileManager->DeleteProfile(profile->id);
+                }
+                in = {};
+            }
         }
 
         // 解析并添加 profile

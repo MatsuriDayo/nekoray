@@ -421,6 +421,13 @@
        <string>Subscription</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_3">
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="sub_use_proxy">
+         <property name="text">
+          <string>Use proxy when updating subscription</string>
+         </property>
+        </widget>
+       </item>
        <item row="0" column="1">
         <widget class="MyLineEdit" name="user_agent"/>
        </item>
@@ -431,10 +438,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QCheckBox" name="sub_use_proxy">
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="sub_clear">
          <property name="text">
-          <string>Use proxy when updating subscription</string>
+          <string>Clear servers before updating subscription</string>
          </property>
         </widget>
        </item>

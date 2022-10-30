@@ -145,6 +145,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     ui->user_agent->setText(NekoRay::dataStore->user_agent);
     D_LOAD_BOOL(sub_use_proxy)
+    D_LOAD_BOOL(sub_clear)
 
     // Core
 
@@ -268,6 +269,7 @@ void DialogBasicSettings::accept() {
 
     NekoRay::dataStore->user_agent = ui->user_agent->text();
     D_SAVE_BOOL(sub_use_proxy)
+    D_SAVE_BOOL(sub_clear)
 
     // Core
 
