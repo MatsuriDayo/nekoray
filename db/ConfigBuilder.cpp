@@ -771,7 +771,7 @@ namespace NekoRay {
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
         //
-        auto tun_name = "nekoray_tun";
+        auto tun_name = "nekoray-tun";
 #ifdef Q_OS_MACOS
         tun_name = "utun9";
 #endif

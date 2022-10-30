@@ -363,7 +363,6 @@ namespace NekoRay::sub {
                 for (const auto &profile: in) {
                     profileManager->DeleteProfile(profile->id);
                 }
-                in = {};
             }
         }
 
@@ -378,6 +377,7 @@ namespace NekoRay::sub {
             ProfileFilter::OnlyInSrc(out, in, only_out);
             ProfileFilter::Common(in, out, update_del, false, true);
             update_del += only_in;
+            if (dataStore->sub_clear) update_del = {};
 
             for (const auto &ent: update_del) {
                 profileManager->DeleteProfile(ent->id);

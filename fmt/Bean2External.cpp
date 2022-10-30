@@ -69,7 +69,13 @@ namespace NekoRay::fmt {
             config = config.replace("%mapping_port%", Int2String(mapping_port));
             config = config.replace("%socks_port%", Int2String(socks_port));
 
-            WriteTempFile("custom_cfg_" + GetRandomString(10) + ".tmp", config.toUtf8());
+            // trojan-go: unsupported config format: xxx.tmp. use .yaml or .json instead.
+            auto suffix = ".tmp";
+            if (!QString2QJsonObject(config).isEmpty()) {
+                suffix = ".json";
+            }
+
+            WriteTempFile("custom_" + GetRandomString(10) + suffix, config.toUtf8());
             for (int i = 0; i < result.arguments.count(); i++) {
                 result.arguments[i] = result.arguments[i].replace("%config%", TempFile);
             }
