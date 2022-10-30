@@ -1,4 +1,13 @@
 {
+    "dns": {
+        "servers": [
+            {
+                "tag": "dns-direct",
+                "address": "local",
+                "detour": "direct"
+            }
+        ]
+    },
     "inbounds": [
         {
             "type": "tun",
@@ -16,6 +25,7 @@
         {
             "type": "socks",
             "tag": "nekoray-socks",
+            "udp_fragment": true,
             "server": "127.0.0.1",
             "server_port": %PORT%
         },
@@ -26,11 +36,19 @@
         {
             "type": "direct",
             "tag": "direct"
+        },
+        {
+            "type": "dns",
+            "tag": "dns-out"
         }
     ],
     "route": {
         "auto_detect_interface": true,
         "rules": [
+            {
+                "inbound": "dns-in",
+                "outbound": "dns-out"
+            },
             {
                 "network": "udp",
                 "port": [
@@ -44,17 +62,25 @@
             },
             {
                 "ip_cidr": [
-                    "224.0.0.0/4",
+                    "224.0.0.0/3",
                     "ff00::/8"
                 ],
                 "outbound": "block"
             },
             {
                 "source_ip_cidr": [
-                    "224.0.0.0/4",
+                    "224.0.0.0/3",
                     "ff00::/8"
                 ],
                 "outbound": "block"
+            },
+            {
+                "port": 53,
+                "process_name": [
+                    "nekoray_core",
+                    "nekoray_core.exe"
+                ],
+                "outbound": "dns-out"
             },
             {
                 "process_name": [
