@@ -4,7 +4,6 @@
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "fmt/CustomBean.hpp"
 #include "fmt/Preset.hpp"
-#include "ui/edit/gen_hysteria.h"
 
 EditCustom::EditCustom(QWidget *parent) :
         QWidget(parent), ui(new Ui::EditCustom) {
@@ -36,6 +35,9 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         preset_command = Preset::Hysteria::command;
         preset_config = Preset::Hysteria::config;
         ui->config_simple->setPlaceholderText("");
+        ui->core->hide();
+        ui->core_l->setText(
+                tr("Please read the documentation. If you don't understand, use a share link instead."));
     } else if (preset_core == "internal") {
         preset_command = preset_config = "";
         ui->config_simple->setPlaceholderText("{\n"
@@ -69,16 +71,7 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     }
 
     // Generators
-    if (bean->core == "hysteria") {
-        ui->generator->setVisible(true);
-        auto genHy = new GenHysteria(ent);
-        ui->generator->layout()->addWidget(genHy);
-        connect(genHy, &GenHysteria::config_generated, this, [=](const QString &result) {
-            ui->config_simple->setText(result);
-        });
-    } else {
-        ui->generator->setVisible(false);
-    }
+    ui->generator->setVisible(false);
 }
 
 bool EditCustom::onEnd() {

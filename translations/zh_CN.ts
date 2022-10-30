@@ -607,6 +607,10 @@
         <source>Outbound JSON, please read the documentation.</source>
         <translation>填写出站 JSON 对象，详细请看文档。</translation>
     </message>
+    <message>
+        <source>Please read the documentation. If you don&apos;t understand, use a share link instead.</source>
+        <translation>格式请看文档。如果不懂，直接导入 hysteria:// 链接。</translation>
+    </message>
 </context>
 <context>
     <name>EditNaive</name>
@@ -709,37 +713,6 @@
     <message>
         <source>UUID</source>
         <translation></translation>
-    </message>
-</context>
-<context>
-    <name>GenHysteria</name>
-    <message>
-        <source>Generate</source>
-        <translation>生成配置</translation>
-    </message>
-    <message>
-        <source>Allow Insecure</source>
-        <translation>不检查服务器证书（不安全）</translation>
-    </message>
-    <message>
-        <source>Certificate Path</source>
-        <translation>证书路径</translation>
-    </message>
-    <message>
-        <source>Obfs Password</source>
-        <translation>混淆密码</translation>
-    </message>
-    <message>
-        <source>Auth String</source>
-        <translation>字符串验证密钥</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>协议</translation>
-    </message>
-    <message>
-        <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/HyNetwork/hysteria/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;Document&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;a href=&quot;https://github.com/HyNetwork/hysteria/wiki&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#2980b9;&quot;&gt;文档&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
