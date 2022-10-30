@@ -52,6 +52,8 @@ launcher 参数
 
 Ubuntu 22.04: `sudo apt install libxcb-xinerama0`
 
+If you are using Arch Linux, you can install via [AUR](https://aur.archlinux.org/packages/nekoray)
+
 ## 编译教程
 
 [Linux](examples/docs/Build_Linux.md)
