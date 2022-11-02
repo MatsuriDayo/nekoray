@@ -268,12 +268,14 @@ MainWindow::MainWindow(QWidget *parent)
             ui->menuActive_Server->removeAction(old);
             old->deleteLater();
         }
+        int active_server_item_count = 0;
         for (const auto &pf: NekoRay::profileManager->CurrentGroup()->ProfilesWithOrder()) {
             auto a = new QAction(pf->bean->DisplayTypeAndName());
             a->setProperty("id", pf->id);
             a->setCheckable(true);
             if (NekoRay::dataStore->started_id == pf->id) a->setChecked(true);
             ui->menuActive_Server->addAction(a);
+            if (++active_server_item_count == 50) break;
         }
         // active routing
         for (const auto &old: ui->menuActive_Routing->actions()) {
@@ -996,7 +998,7 @@ void MainWindow::on_menu_copy_links_triggered() {
     if (ui->masterLogBrowser->hasFocus()) {
         ui->masterLogBrowser->copy();
         return;
-    };
+    }
     auto ents = get_now_selected();
     QStringList links;
     for (const auto &ent: ents) {
@@ -1134,6 +1136,10 @@ void MainWindow::on_menu_clear_test_result_triggered() {
 }
 
 void MainWindow::on_menu_select_all_triggered() {
+    if (ui->masterLogBrowser->hasFocus()) {
+        ui->masterLogBrowser->selectAll();
+        return;
+    }
     ui->proxyListTable->selectAll();
 }
 
@@ -1144,10 +1150,16 @@ void MainWindow::on_menu_delete_repeat_triggered() {
     NekoRay::ProfileFilter::Uniq(NekoRay::profileManager->CurrentGroup()->Profiles(), out, true, false);
     NekoRay::ProfileFilter::OnlyInSrc_ByPointer(NekoRay::profileManager->CurrentGroup()->Profiles(), out, out_del);
 
+    int remove_display_count = 0;
     QString remove_display;
     for (const auto &ent: out_del) {
         remove_display += ent->bean->DisplayTypeAndName() + "\n";
+        if (++remove_display_count == 20) {
+            remove_display += "...";
+            break;
+        }
     }
+
     if (out_del.length() > 0 &&
         QMessageBox::question(this,
                               tr("Confirmation"),
