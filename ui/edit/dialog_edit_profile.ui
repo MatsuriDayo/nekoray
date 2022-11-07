@@ -200,11 +200,6 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">none</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string notr="true">tls</string>
               </property>
              </item>

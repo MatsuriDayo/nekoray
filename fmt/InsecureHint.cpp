@@ -35,7 +35,7 @@ namespace NekoRay::fmt {
 
     QString VMessBean::InsecureHint() {
         if (security == "none" || security == "zero") {
-            if (stream->security.isEmpty() || stream->security == "none") {
+            if (stream->security.isEmpty()) {
                 return QObject::tr(
                         "This profile is cleartext, don't use it if the server is not in your local network.");
             }
@@ -51,14 +51,14 @@ namespace NekoRay::fmt {
     }
 
     QString TrojanVLESSBean::InsecureHint() {
-        if (stream->security.isEmpty() || stream->security == "none") {
+        if (stream->security.isEmpty()) {
             return QObject::tr("This profile is cleartext, don't use it if the server is not in your local network.");
         }
         return {};
     }
 
     QString SocksHttpBean::InsecureHint() {
-        if (stream->security.isEmpty() || stream->security == "none") {
+        if (stream->security.isEmpty()) {
             return QObject::tr("This profile is cleartext, don't use it if the server is not in your local network.");
         }
         return {};

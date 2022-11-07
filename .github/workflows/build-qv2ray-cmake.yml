@@ -82,12 +82,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           path: download-artifact
-      - name: Cache Qt
-        id: cache-qt
-        uses: actions/cache@v3
-        with:
-          path: ${{ runner.workspace }}/Qt
-          key: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -95,7 +89,8 @@ jobs:
           py7zrversion: ' '
           aqtversion: ' '
           setup-python: false
-          cached: ${{ steps.cache-qt.outputs.cache-hit }}
+          cache: true
+          cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
       # ========================================================================================================= Other install
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v3

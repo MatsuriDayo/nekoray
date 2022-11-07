@@ -10,8 +10,7 @@ outbound["streamSettings"] = streamSettings;
 namespace NekoRay::fmt {
     QJsonObject V2rayStreamSettings::BuildStreamSettingsV2Ray() {
         QJsonObject streamSettings{
-                {"network",  network},
-                {"security", security},
+                {"network", network},
         };
 
         if (network == "ws") {
@@ -54,6 +53,7 @@ namespace NekoRay::fmt {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
             streamSettings["tlsSettings"] = tls;
+            streamSettings["security"] = "tls";
         }
 
         if (!header_type.isEmpty()) {

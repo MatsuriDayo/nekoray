@@ -83,7 +83,6 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         }
         ADJUST_SIZE
     });
-    ui->security->removeItem(0);
 
     // 确定模式和 ent
     newEnt = _type != "";

@@ -45,9 +45,11 @@ namespace NekoRay::sub {
         }
 
         QSharedPointer<ProxyEntity> ent;
+        bool needFix = true;
 
         // Nekoray format
         if (str.startsWith("nekoray://")) {
+            needFix = false;
             auto link = QUrl(str);
             if (!link.isValid()) return;
             ent = ProfileManager::NewProxyEntity(link.host());
@@ -87,7 +89,7 @@ namespace NekoRay::sub {
             if (!ok) return;
         }
 
-        // VMess
+        // VLESS
         if (str.startsWith("vless://")) {
             ent = ProfileManager::NewProxyEntity("vless");
             auto ok = ent->TrojanVLESSBean()->TryParseLink(str);
@@ -103,6 +105,7 @@ namespace NekoRay::sub {
 
         // Naive
         if (str.startsWith("naive+")) {
+            needFix = false;
             ent = ProfileManager::NewProxyEntity("naive");
             auto ok = ent->NaiveBean()->TryParseLink(str);
             if (!ok) return;
@@ -110,6 +113,7 @@ namespace NekoRay::sub {
 
         // Hysteria
         if (str.startsWith("hysteria://")) {
+            needFix = false;
             // https://github.com/HyNetwork/hysteria/wiki/URI-Scheme
             ent = ProfileManager::NewProxyEntity("custom");
             auto bean = ent->CustomBean();
@@ -122,6 +126,7 @@ namespace NekoRay::sub {
             bean->core = "hysteria";
             bean->command = QString(Preset::Hysteria::command).split(" ");
             auto result = QString2QJsonObject(Preset::Hysteria::config);
+            result["server_name"] = url.host(); // default sni
             result["obfs"] = query.queryItemValue("obfsParam");
             result["insecure"] = query.queryItemValue("insecure") == "1";
             result["up_mbps"] = query.queryItemValue("upmbps").toInt();
@@ -131,6 +136,22 @@ namespace NekoRay::sub {
             if (query.hasQueryItem("alpn")) result["alpn"] = query.queryItemValue("alpn");
             if (query.hasQueryItem("peer")) result["server_name"] = query.queryItemValue("peer");
             bean->config_simple = QJsonObject2QString(result, false);
+        }
+
+        // Fix
+        auto stream = fmt::GetStreamSettings(ent->bean.get());
+        if (needFix && stream != nullptr) {
+            // 1. "security"
+            if (stream->security == "none" || stream->security == "0" || stream->security == "false") {
+                stream->security = "";
+            } else if (stream->security == "xtls" || stream->security == "1" || stream->security == "true") {
+                stream->security = "tls";
+            }
+            // 2. TLS SNI: v2rayN config builder generate sni like this, so set sni here for their format.
+            if (stream->security == "tls" && IsIpAddress(ent->bean->serverAddress)
+                && (!stream->host.isEmpty()) && stream->sni.isEmpty()) {
+                stream->sni = stream->host;
+            }
         }
 
         // End
