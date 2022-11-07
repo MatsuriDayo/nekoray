@@ -57,7 +57,7 @@ namespace NekoRay::sub {
             auto j = DecodeB64IfValid(link.fragment().toUtf8(), QByteArray::Base64UrlEncoding);
             if (j.isEmpty()) return;
             ent->bean->FromJsonBytes(j.toUtf8());
-            showLog("nekoray format: " + ent->bean->DisplayTypeAndName());
+            MW_show_log("nekoray format: " + ent->bean->DisplayTypeAndName());
         }
 
         // SOCKS
@@ -138,6 +138,8 @@ namespace NekoRay::sub {
             bean->config_simple = QJsonObject2QString(result, false);
         }
 
+        if (ent == nullptr) return;
+
         // Fix
         auto stream = fmt::GetStreamSettings(ent->bean.get());
         if (needFix && stream != nullptr) {
@@ -155,7 +157,6 @@ namespace NekoRay::sub {
         }
 
         // End
-        if (ent == nullptr) return;
         profileManager->AddProfile(ent, gid_add_to);
         update_counter++;
     }
@@ -351,11 +352,11 @@ namespace NekoRay::sub {
         // 网络请求
         if (asURL) {
             auto groupName = group == nullptr ? content : group->name;
-            showLog(">>>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
+            MW_show_log(">>>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
 
             auto resp = NetworkRequestHelper::HttpGet(content);
             if (!resp.error.isEmpty()) {
-                showLog("<<<<<<<< " + QObject::tr("Requesting subscription %1 error: %2")
+                MW_show_log("<<<<<<<< " + QObject::tr("Requesting subscription %1 error: %2")
                         .arg(groupName, resp.error + "\n" + resp.data));
                 return;
             }
@@ -380,7 +381,7 @@ namespace NekoRay::sub {
             group->Save();
             //
             if (dataStore->sub_clear) {
-                showLog(QObject::tr("Clearing servers..."));
+                MW_show_log(QObject::tr("Clearing servers..."));
                 for (const auto &profile: in) {
                     profileManager->DeleteProfile(profile->id);
                 }
@@ -413,19 +414,15 @@ namespace NekoRay::sub {
                 notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
             }
 
-            runOnUiThread([=] {
-                auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
-                        .arg(only_out.length()).arg(notice_added)
-                        .arg(only_in.length()).arg(notice_deleted);
-                if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
-                showLog("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
-                dialog_message("SubUpdater", "finish-dingyue");
-            });
+            auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
+                    .arg(only_out.length()).arg(notice_added)
+                    .arg(only_in.length()).arg(notice_deleted);
+            if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
+            MW_show_log("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
+            MW_dialog_message("SubUpdater", "finish-dingyue");
         } else {
             NekoRay::dataStore->imported_count = rawUpdater->update_counter;
-            runOnUiThread([=] {
-                dialog_message("SubUpdater", "finish");
-            });
+            MW_dialog_message("SubUpdater", "finish");
         }
     }
 }

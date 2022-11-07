@@ -6,8 +6,8 @@ namespace NekoRay::fmt {
     class V2rayStreamSettings : public JsonStore {
     public:
         QString network = "tcp";
-        QString security = "none";
-        QString packet_encoding = ""; // sing-box only vmess
+        QString security = "";
+        QString packet_encoding = "";
         // ws/h2/grpc/tcp-http
         QString path = "";
         QString host = "";

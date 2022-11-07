@@ -1,11 +1,8 @@
 #pragma once
 
-#include <QMenu>
 #include <QWidget>
 
 // Dialogs
-
-inline QWidget *mainwindow;
 
 #define Dialog_DialogBasicSettings "DialogBasicSettings"
 #define Dialog_DialogEditProfile "DialogEditProfile"
@@ -13,37 +10,6 @@ inline QWidget *mainwindow;
 #define Dialog_DialogManageRoutes "DialogManageRoutes"
 
 // Utils
-
-inline QList<QAction *>
-CreateActions(QWidget *parent, const QList<QString> &texts, const std::function<void(QAction *)> &slot) {
-    QList<QAction *> acts;
-
-    for (const auto &text: texts) {
-        acts.push_back(new QAction(text, parent)); //按顺序来
-    }
-
-    for (int i = 0; i < acts.size(); i++) {
-        if (acts[i]->text() == "[Separator]") {
-            acts[i]->setSeparator(true);
-            acts[i]->setText("");
-            acts[i]->setDisabled(true);
-            acts[i]->setData(-1);
-        } else {
-            acts[i]->setData(i);
-            QObject::connect(acts[i], &QAction::triggered, parent, [=] {
-                slot(acts[i]);
-            });
-        }
-    }
-
-    return acts;
-}
-
-inline QMenu *CreateMenu(QWidget *parent, const QList<QString> &texts, const std::function<void(QAction *)> &slot) {
-    auto menu = new QMenu(parent);
-    menu->addActions(CreateActions(parent, texts, slot));
-    return menu;
-}
 
 #define QRegExpValidator_Number new QRegularExpressionValidator(QRegularExpression("^[0-9]+$")
 

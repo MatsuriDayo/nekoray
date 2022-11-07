@@ -59,7 +59,8 @@ namespace NekoRay::fmt {
 
         virtual QString InsecureHint() { return {}; };
 
+        QString DisplayInsecureHint();
+
     };
 
-    QString DisplayInsecureHint(const QSharedPointer<AbstractBean> &);
 }

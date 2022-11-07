@@ -220,7 +220,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             file.open(QIODevice::ReadWrite | QIODevice::Truncate);
             file.write(Int2String(neko_core_new).toUtf8());
             file.close();
-            dialog_message("", "RestartProgram");
+            MW_dialog_message("", "RestartProgram");
         }
     };
     connect(ui->switch_core_v2ray, &QRadioButton::clicked, this, switch_core_on_click);
@@ -281,7 +281,7 @@ void DialogBasicSettings::accept() {
     D_SAVE_BOOL(insecure_hint)
     D_SAVE_BOOL(skip_cert)
 
-    dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
+    MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();
 }
 
@@ -304,5 +304,5 @@ void DialogBasicSettings::on_set_custom_icon_clicked() {
     } else {
         return;
     }
-    dialog_message(Dialog_DialogBasicSettings, "UpdateIcon");
+    MW_dialog_message(Dialog_DialogBasicSettings, "UpdateIcon");
 }

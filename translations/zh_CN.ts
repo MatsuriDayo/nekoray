@@ -1146,7 +1146,7 @@ End: %2</source>
         <translation>克隆</translation>
     </message>
     <message>
-        <source>Update subscripton</source>
+        <source>Update subscription</source>
         <translation>更新订阅</translation>
     </message>
     <message>
@@ -1158,8 +1158,8 @@ End: %2</source>
         <translation>批量复制选中项目的分享链接 (Nekoray)</translation>
     </message>
     <message>
-        <source>Allow connections from the LAN</source>
-        <translation>允许来自局域网的连接</translation>
+        <source>Allow other devices to connect</source>
+        <translation>允许其他设备连接</translation>
     </message>
     <message>
         <source>Manual addition of profiles is not allowed in subscription groupings.</source>
@@ -1188,6 +1188,10 @@ End: %2</source>
     <message>
         <source>Restart Program</source>
         <translation>重启程序</translation>
+    </message>
+    <message>
+        <source>Not Running</source>
+        <translation>未启动</translation>
     </message>
 </context>
 <context>

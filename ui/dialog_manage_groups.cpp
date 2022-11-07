@@ -48,7 +48,7 @@ void DialogManageGroups::on_add_clicked() {
     if (ret == QDialog::Accepted) {
         NekoRay::profileManager->AddGroup(ent);
         AddGroupToListIfExist(ent->id)
-        dialog_message(Dialog_DialogManageGroups, "refresh-1");
+        MW_dialog_message(Dialog_DialogManageGroups, "refresh-1");
     }
 }
 

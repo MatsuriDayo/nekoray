@@ -5,10 +5,10 @@
 #include "SocksHttpBean.hpp"
 
 namespace NekoRay::fmt {
-    QString DisplayInsecureHint(const QSharedPointer<AbstractBean> &bean) {
+    QString AbstractBean::DisplayInsecureHint() {
         if (!dataStore->insecure_hint) return {};
-        auto insecure_hint = bean->InsecureHint();
-        auto stream = GetStreamSettings(bean.data());
+        auto insecure_hint = InsecureHint();
+        auto stream = GetStreamSettings(this);
         if (stream != nullptr) insecure_hint += "\n" + stream->InsecureHint();
         return insecure_hint.trimmed();
     }

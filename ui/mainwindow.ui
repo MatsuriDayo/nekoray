@@ -540,7 +540,7 @@
      <addaction name="menu_delete_repeat"/>
      <addaction name="menu_resolve_domain"/>
      <addaction name="separator"/>
-     <addaction name="menu_update_subscripton"/>
+     <addaction name="menu_update_subscription"/>
     </widget>
     <addaction name="menu_add_from_input"/>
     <addaction name="menu_add_from_clipboard"/>
@@ -745,7 +745,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Allow connections from the LAN</string>
+    <string>Allow other devices to connect</string>
    </property>
   </action>
   <action name="menu_remove_unavailable">
@@ -822,9 +822,9 @@
     <string notr="true">Ctrl+D</string>
    </property>
   </action>
-  <action name="menu_update_subscripton">
+  <action name="menu_update_subscription">
    <property name="text">
-    <string>Update subscripton</string>
+    <string>Update subscription</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+U</string>

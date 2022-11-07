@@ -21,7 +21,7 @@ void MainWindow::setup_grpc() {
 #ifndef NKR_NO_GRPC
     // Setup Connection
     defaultClient = new Client([=](const QString &errStr) {
-        showLog("[Error] gRPC: " + errStr);
+        MW_show_log("[Error] gRPC: " + errStr);
     }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
     connect(t, &QTimer::timeout, this, [=]() {
@@ -228,7 +228,7 @@ void MainWindow::neko_start(int _id) {
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
     show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
-    auto insecure_hint = DisplayInsecureHint(ent->bean);
+    auto insecure_hint = ent->bean->DisplayInsecureHint();
     if (!insecure_hint.isEmpty()) show_log_impl(">>>>>>>> " + tr("Profile is insecure: %1").arg(insecure_hint));
 
 #ifndef NKR_NO_GRPC

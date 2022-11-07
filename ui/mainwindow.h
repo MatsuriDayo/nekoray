@@ -1,6 +1,11 @@
 #pragma once
 
 #include <QMainWindow>
+
+#include "main/NekoRay.hpp"
+
+#ifndef MW_INTERFACE
+
 #include <QTableWidgetItem>
 #include <QKeyEvent>
 #include <QSystemTrayIcon>
@@ -11,8 +16,9 @@
 #include "GroupSort.hpp"
 
 #include "db/ProxyEntity.hpp"
-#include "db/Group.hpp"
 #include "main/GuiUtils.hpp"
+
+#endif
 
 namespace NekoRay::sys { class CoreProcess; }
 
@@ -26,11 +32,11 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
 
-    ~MainWindow();
+    ~MainWindow() override;
 
-    void refresh_proxy_list(const int &id = -1) { refresh_proxy_list_impl(id, {}); };
+    void refresh_proxy_list(const int &id = -1);
 
     void show_group(int gid);
 
@@ -61,6 +67,8 @@ public slots:
     void on_commitDataRequest();
 
     void on_menu_exit_triggered();
+
+#ifndef MW_INTERFACE
 
 private slots:
 
@@ -108,7 +116,7 @@ private slots:
 
     void on_menu_remove_unavailable_triggered();
 
-    void on_menu_update_subscripton_triggered();
+    void on_menu_update_subscription_triggered();
 
     void on_menu_resolve_domain_triggered();
 
@@ -174,6 +182,8 @@ private:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
+
+#endif // MW_INTERFACE
 };
 
 inline MainWindow *GetMainWindow() {

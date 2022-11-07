@@ -14,10 +14,10 @@ namespace NekoRay::sys {
 
         if (show_log) {
             connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-                showLog_ext_vt100(readAllStandardOutput().trimmed());
+                MW_show_log_ext_vt100(readAllStandardOutput().trimmed());
             });
             connect(this, &QProcess::readyReadStandardError, this, [&]() {
-                showLog_ext_vt100(readAllStandardError().trimmed());
+                MW_show_log_ext_vt100(readAllStandardError().trimmed());
             });
         }
 
@@ -25,23 +25,23 @@ namespace NekoRay::sys {
             connect(this, &QProcess::errorOccurred, this, [&](QProcess::ProcessError error) {
                 if (!killed) {
                     crashed = true;
-                    showLog_ext(tag, "errorOccurred:" + errorString());
-                    dialog_message("ExternalProcess", "Crashed");
+                    MW_show_log_ext(tag, "errorOccurred:" + errorString());
+                    MW_dialog_message("ExternalProcess", "Crashed");
                 }
             });
             connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
                 if (state == QProcess::NotRunning) {
                     if (killed) { // 用户命令退出
-                        showLog_ext(tag, "Stopped");
+                        MW_show_log_ext(tag, "Stopped");
                     } else if (!crashed) { // 异常退出
                         crashed = true;
-                        showLog_ext(tag, "[Error] Program exited accidentally: " + errorString());
+                        MW_show_log_ext(tag, "[Error] Program exited accidentally: " + errorString());
                         Kill();
-                        dialog_message("ExternalProcess", "Crashed");
+                        MW_dialog_message("ExternalProcess", "Crashed");
                     }
                 }
             });
-            showLog_ext(tag, "[Starting] " + env.join(" ") + " " + program + " " + arguments.join(" "));
+            MW_show_log_ext(tag, "[Starting] " + env.join(" ") + " " + program + " " + arguments.join(" "));
         }
 
         QProcess::setEnvironment(env);
@@ -66,12 +66,12 @@ namespace NekoRay::sys {
         ExternalProcess::arguments = args;
 
         connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-            showLog(readAllStandardOutput().trimmed());
+            MW_show_log(readAllStandardOutput().trimmed());
         });
         connect(this, &QProcess::readyReadStandardError, this, [&]() {
             auto log = readAllStandardError().trimmed();
             if (show_stderr) {
-                showLog(log);
+                MW_show_log(log);
                 return;
             }
             if (log.contains("token is set")) {
@@ -81,7 +81,7 @@ namespace NekoRay::sys {
         connect(this, &QProcess::errorOccurred, this, [&](QProcess::ProcessError error) {
             if (error == QProcess::ProcessError::FailedToStart) {
                 failed_to_start = true;
-                showLog("start core error occurred: " + errorString() + "\n");
+                MW_show_log("start core error occurred: " + errorString() + "\n");
             }
         });
         connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
@@ -91,8 +91,8 @@ namespace NekoRay::sys {
                 if (failed_to_start) return; // no retry
 
                 restart_id = NekoRay::dataStore->started_id;
-                dialog_message("ExternalProcess", "Crashed");
-                showLog("[Error] core exited, restarting.\n");
+                MW_dialog_message("ExternalProcess", "Crashed");
+                MW_show_log("[Error] core exited, restarting.\n");
 
                 // Restart
                 setTimeout([=] {
@@ -103,7 +103,7 @@ namespace NekoRay::sys {
             } else if (state == QProcess::Running && restart_id >= 0) {
                 // Restart profile
                 setTimeout([=] {
-                    dialog_message("ExternalProcess", "CoreRestarted," + Int2String(restart_id));
+                    MW_dialog_message("ExternalProcess", "CoreRestarted," + Int2String(restart_id));
                     restart_id = -1;
                 }, this, 1000);
             }

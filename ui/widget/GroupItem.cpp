@@ -109,7 +109,7 @@ void GroupItem::on_edit_clicked() {
     if (ret == QDialog::Accepted) {
         ent->Save();
         refresh_data();
-        dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(ent->id));
+        MW_dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(ent->id));
     }
 }
 
@@ -118,7 +118,7 @@ void GroupItem::on_remove_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->name)) ==
         QMessageBox::StandardButton::Yes) {
         NekoRay::profileManager->DeleteGroup(ent->id);
-        dialog_message(Dialog_DialogManageGroups, "refresh-1");
+        MW_dialog_message(Dialog_DialogManageGroups, "refresh-1");
         delete item;
     }
 }

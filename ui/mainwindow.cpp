@@ -54,7 +54,7 @@
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
-    dialog_message = [=](const QString &a, const QString &b) {
+    MW_dialog_message = [=](const QString &a, const QString &b) {
         runOnUiThread([=] {
             dialog_message_impl(a, b);
         });
@@ -137,17 +137,17 @@ MainWindow::MainWindow(QWidget *parent)
         auto bar = ui->masterLogBrowser->verticalScrollBar();
         bar->setValue(bar->maximum());
     });
-    showLog = [=](const QString &log) {
+    MW_show_log = [=](const QString &log) {
         runOnUiThread([=] {
             show_log_impl(log);
         });
     };
-    showLog_ext = [=](const QString &tag, const QString &log) {
+    MW_show_log_ext = [=](const QString &tag, const QString &log) {
         runOnUiThread([=] {
             show_log_impl("[" + tag + "] " + log);
         });
     };
-    showLog_ext_vt100 = [=](const QString &log) {
+    MW_show_log_ext_vt100 = [=](const QString &log) {
         runOnUiThread([=] {
             show_log_impl(cleanVT100String(log));
         });
@@ -257,7 +257,7 @@ MainWindow::MainWindow(QWidget *parent)
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
-    connect(ui->actionRestart_Program, &QAction::triggered, this, [=] { dialog_message("", "RestartProgram"); });
+    connect(ui->actionRestart_Program, &QAction::triggered, this, [=] { MW_dialog_message("", "RestartProgram"); });
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
@@ -328,7 +328,7 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->actionAllow_LAN, &QAction::triggered, this, [=](bool checked) {
         NekoRay::dataStore->inbound_address = checked ? "::" : "127.0.0.1";
-        dialog_message("", "UpdateDataStore");
+        MW_dialog_message("", "UpdateDataStore");
     });
     //
     connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) {
@@ -491,7 +491,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         // 订阅完毕
         refresh_proxy_list();
         if (!info.contains("dingyue")) {
-            showLog(tr("Imported %1 profile(s)").arg(NekoRay::dataStore->imported_count));
+            show_log_impl(tr("Imported %1 profile(s)").arg(NekoRay::dataStore->imported_count));
         }
     } else if (sender == "ExternalProcess") {
         if (info == "Crashed") {
@@ -563,7 +563,7 @@ void MainWindow::on_menu_exit_triggered() {
     hide();
     ExitNekorayCore();
     //
-    release_runguard();
+    MF_release_runguard();
     if (exit_reason == 1) {
         QDir::setCurrent(QApplication::applicationDirPath());
         QProcess::startDetached("./updater", QStringList{});
@@ -640,9 +640,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
     // From UI
     if (last_test_time.addSecs(2) < QTime::currentTime()) {
-        ui->label_running->setText(tr("Running: %1").arg(running.isNull()
-                                                         ? tr("None")
-                                                         : running->bean->DisplayName().left(50)));
+        auto txt = running == nullptr ? tr("Not Running")
+                                      : tr("Running: %1").arg(running->bean->DisplayName().left(50));
+        ui->label_running->setText(txt);
     }
     //
     auto display_http = tr("None");
@@ -737,6 +737,9 @@ void MainWindow::refresh_groups() {
     NekoRay::dataStore->refreshing_group_list = false;
 }
 
+void MainWindow::refresh_proxy_list(const int &id) {
+    refresh_proxy_list_impl(id, {});
+}
 
 void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction groupSortAction) {
     if (id < 0) {
@@ -761,9 +764,6 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         }
 
         auto f0 = std::make_unique<QTableWidgetItem>();
-//        auto font = f0->font();
-//        font.setPointSize(9);
-//        f0->setFont(font);
         f0->setData(114514, profile->id);
 
         // C0: is Running
@@ -779,7 +779,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         // C1: Type
         f = f0->clone();
         f->setText(profile->bean->DisplayType());
-        auto insecure_hint = DisplayInsecureHint(profile->bean);
+        auto insecure_hint = profile->bean->DisplayInsecureHint();
         if (!insecure_hint.isEmpty()) {
             f->setBackground(Qt::red);
             f->setToolTip(insecure_hint);
@@ -1006,7 +1006,7 @@ void MainWindow::on_menu_copy_links_triggered() {
     }
     if (links.length() == 0) return;
     QApplication::clipboard()->setText(links.join("\n"));
-    showLog(tr("Copied %1 item(s)").arg(links.length()));
+    show_log_impl(tr("Copied %1 item(s)").arg(links.length()));
 }
 
 void MainWindow::on_menu_copy_links_nkr_triggered() {
@@ -1017,7 +1017,7 @@ void MainWindow::on_menu_copy_links_nkr_triggered() {
     }
     if (links.length() == 0) return;
     QApplication::clipboard()->setText(links.join("\n"));
-    showLog(tr("Copied %1 item(s)").arg(links.length()));
+    show_log_impl(tr("Copied %1 item(s)").arg(links.length()));
 }
 
 void MainWindow::on_menu_export_config_triggered() {
@@ -1175,7 +1175,7 @@ void MainWindow::on_menu_delete_repeat_triggered() {
 
 bool mw_sub_updating = false;
 
-void MainWindow::on_menu_update_subscripton_triggered() {
+void MainWindow::on_menu_update_subscription_triggered() {
     auto group = NekoRay::profileManager->CurrentGroup();
     if (group->url.isEmpty()) return;
     if (mw_sub_updating) return;

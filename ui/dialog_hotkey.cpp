@@ -1,7 +1,7 @@
 #include "dialog_hotkey.h"
 #include "ui_dialog_hotkey.h"
 
-#include "ui/mainwindow.h"
+#include "ui/mainwindow_interface.h"
 
 DialogHotkey::DialogHotkey(QWidget *parent) :
         QDialog(parent), ui(new Ui::DialogHotkey) {

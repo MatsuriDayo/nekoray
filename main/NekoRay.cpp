@@ -170,7 +170,10 @@ namespace NekoRay {
             auto item = _item.get();
             switch (item->type) {
                 case itemType::string:
-                    object.insert(item->name, *(QString *) item->ptr);
+                    // Allow Empty
+                    if (!((QString *) item->ptr)->isEmpty()) {
+                        object.insert(item->name, *(QString *) item->ptr);
+                    }
                     break;
                 case itemType::integer:
                     object.insert(item->name, *(int *) item->ptr);

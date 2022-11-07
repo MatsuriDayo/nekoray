@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
             return 0;
         }
     }
-    release_runguard = [&] { guard.release(); };
+    MF_release_runguard = [&] { guard.release(); };
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{

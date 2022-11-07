@@ -1,7 +1,7 @@
 #include "TrafficLooper.hpp"
 
 #include "rpc/gRPC.h"
-#include "ui/mainwindow.h"
+#include "ui/mainwindow_interface.h"
 
 #include <QThread>
 

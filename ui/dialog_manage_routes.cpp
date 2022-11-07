@@ -67,7 +67,6 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
     blockDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
     //
     const auto sourceStringsIP = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geositeFn);
-    qDebug() << sourceStringsIP;
     directIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
     proxyIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
     blockIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
@@ -106,7 +105,7 @@ void DialogManageRoutes::accept() {
     //
     QString info = "UpdateDataStore";
     if (routeChanged) info += "RouteChanged";
-    dialog_message(Dialog_DialogManageRoutes, info);
+    MW_dialog_message(Dialog_DialogManageRoutes, info);
     QDialog::accept();
 }
 

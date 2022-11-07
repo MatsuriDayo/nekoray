@@ -40,6 +40,6 @@ void DialogVPNSettings::accept() {
     D_SAVE_STRING_QTEXTEDIT(vpn_bypass_cidr)
     D_SAVE_STRING_QTEXTEDIT(vpn_bypass_process)
     //
-    dialog_message("", "UpdateDataStore,VPNChanged");
+    MW_dialog_message("", "UpdateDataStore,VPNChanged");
     QDialog::accept();
 }

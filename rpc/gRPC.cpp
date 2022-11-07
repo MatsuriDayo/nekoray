@@ -75,7 +75,7 @@ namespace QtGrpc {
                 QStringList errstr;
                 errstr << "grpc-status error code:" << Int2String(errCode) << ", error msg:"
                        << QLatin1String(networkReply->rawHeader(GrpcStatusMessage));
-                showLog(errstr.join(" "));
+                MW_show_log(errstr.join(" "));
                 statusCode = QNetworkReply::NetworkError::ProtocolUnknownError;
                 return {};
             }

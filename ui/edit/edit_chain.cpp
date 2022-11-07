@@ -1,7 +1,7 @@
 #include "edit_chain.h"
 #include "ui_edit_chain.h"
 
-#include "ui/mainwindow.h"
+#include "ui/mainwindow_interface.h"
 #include "ui/widget/ProxyItem.h"
 
 #include "db/Database.hpp"

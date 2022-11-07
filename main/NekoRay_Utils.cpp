@@ -1,7 +1,6 @@
 #include "NekoRay_Utils.hpp"
 
 #include "3rdparty/QThreadCreateThread.hpp"
-#include "main/GuiUtils.hpp"
 
 #include <random>
 
@@ -25,7 +24,7 @@ QString GetRandomString(int randomStringLength) {
 
     const QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
 
-    std::uniform_int_distribution<int> dist(0, possibleCharacters.count() - 1);
+    std::uniform_int_distribution<int> dist(0, possibleCharacters.length() - 1);
 
     QString randomString;
     for (int i = 0; i < randomStringLength; ++i) {

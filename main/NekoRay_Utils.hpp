@@ -10,14 +10,17 @@
 inline QString software_name = "NekoRay";
 inline QString software_core_name = "V2Ray";
 
-inline std::function<void()> release_runguard;
+// Main Functions
 
-// Dialogs
+inline std::function<void()> MF_release_runguard;
 
-inline std::function<void(QString)> showLog;
-inline std::function<void(QString, QString)> showLog_ext;
-inline std::function<void(QString)> showLog_ext_vt100;
-inline std::function<void(QString, QString)> dialog_message;
+// MainWindow functions
+
+inline QWidget *mainwindow;
+inline std::function<void(QString)> MW_show_log;
+inline std::function<void(QString, QString)> MW_show_log_ext;
+inline std::function<void(QString)> MW_show_log_ext_vt100;
+inline std::function<void(QString, QString)> MW_dialog_message;
 
 // Utils
 

@@ -329,7 +329,7 @@ void DialogEditProfile::accept() {
         ent->Save();
     }
 
-    dialog_message(Dialog_DialogEditProfile, "accept");
+    MW_dialog_message(Dialog_DialogEditProfile, "accept");
     QDialog::accept();
 }
 
