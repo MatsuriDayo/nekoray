@@ -1028,9 +1028,18 @@ void MainWindow::on_menu_export_config_triggered() {
 
     auto result = NekoRay::BuildConfig(ent, false, true);
     config_core = QJsonObject2QString(result->coreConfig, true);
-
     QApplication::clipboard()->setText(config_core);
-    MessageBoxWarning(tr("Config copied"), config_core);
+
+    QMessageBox msg(QMessageBox::Information, tr("Config copied"), config_core);
+    msg.addButton("Copy core config", QMessageBox::YesRole);
+    msg.addButton(QMessageBox::Ok);
+    msg.setDefaultButton(QMessageBox::Ok);
+    auto ret = msg.exec();
+    if (ret == 0) {
+        result = NekoRay::BuildConfig(ent, false, false);
+        config_core = QJsonObject2QString(result->coreConfig, true);
+        QApplication::clipboard()->setText(config_core);
+    }
 }
 
 void MainWindow::display_qr_link(bool nkrFormat) {

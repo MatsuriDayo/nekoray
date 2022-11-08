@@ -51,13 +51,13 @@ func GetRoutes() ([]RouteRow, error) {
 	buf := make([]byte, 4+unsafe.Sizeof(RouteRow{}))
 	buf_len := uint32(len(buf))
 
-	proc_getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
+	proc_GetIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
 		uintptr(unsafe.Pointer(&buf_len)), 0)
 
 	var r1 uintptr
 	for i := 0; i < 5; i++ {
 		buf = make([]byte, buf_len)
-		r1, _, _ = proc_getIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
+		r1, _, _ = proc_GetIpForwardTable.Call(uintptr(unsafe.Pointer(&buf[0])),
 			uintptr(unsafe.Pointer(&buf_len)), 0)
 		if r1 == 122 {
 			continue

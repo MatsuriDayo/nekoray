@@ -56,7 +56,6 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		// V2ray Service
 		v2ray_ := reflect.Indirect(reflect.ValueOf(instance)).FieldByName("v2rayServer")
 		v2ray_ = reflect.NewAt(v2ray_.Type(), unsafe.Pointer(v2ray_.UnsafeAddr())).Elem()
-
 		if v2ray, ok := v2ray_.Interface().(adapter.V2RayServer); ok {
 			if s, ok := v2ray.StatsService().(*v2rayapi.StatsService); ok {
 				box_v2ray_service = s
@@ -86,7 +85,6 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 
 	instance = nil
 	box_v2ray_service = nil
-
 	return
 }
 

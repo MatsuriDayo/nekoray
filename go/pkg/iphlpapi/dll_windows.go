@@ -3,12 +3,16 @@ package iphlpapi
 import "syscall"
 
 var (
-	proc_getIpForwardTable  *syscall.LazyProc
-	proc_notifyRouteChange2 *syscall.LazyProc
+	proc_GetIpForwardTable           *syscall.LazyProc
+	proc_NotifyRouteChange2          *syscall.LazyProc
+	proc_ConvertInterfaceIndexToLuid *syscall.LazyProc
+	proc_ConvertInterfaceLuidToGuid  *syscall.LazyProc
 )
 
 func init() {
 	iphlpapi := syscall.NewLazyDLL("iphlpapi.dll")
-	proc_getIpForwardTable = iphlpapi.NewProc("GetIpForwardTable")
-	proc_notifyRouteChange2 = iphlpapi.NewProc("NotifyRouteChange2")
+	proc_GetIpForwardTable = iphlpapi.NewProc("GetIpForwardTable")
+	proc_NotifyRouteChange2 = iphlpapi.NewProc("NotifyRouteChange2")
+	proc_ConvertInterfaceIndexToLuid = iphlpapi.NewProc("ConvertInterfaceIndexToLuid")
+	proc_ConvertInterfaceLuidToGuid = iphlpapi.NewProc("ConvertInterfaceLuidToGuid")
 }

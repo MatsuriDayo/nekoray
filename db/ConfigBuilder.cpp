@@ -646,22 +646,26 @@ namespace NekoRay {
         // Remote
         if (!forTest)
             dnsServers += QJsonObject{{"tag",              "dns-remote"},
-                                      {"address_resolver", "dns-local"},
+                                      {"address_resolver", "dns-underlying"},
                                       {"address",          dataStore->remote_dns},
                                       {"detour",           tagProxy},};
 
+        // neko only
+        auto underlyingStr = forExport ? "local" : "underlying://0.0.0.0";
+
         // Direct
         auto directDNSAddress = dataStore->direct_dns;
-        if (directDNSAddress == "localhost") directDNSAddress = "local";
+        if (directDNSAddress == "localhost") directDNSAddress = underlyingStr;
         if (!forTest)
             dnsServers += QJsonObject{{"tag",              "dns-direct"},
-                                      {"address_resolver", "dns-local"},
+                                      {"address_resolver", "dns-underlying"},
                                       {"address",          directDNSAddress.replace("+local://", "://")},
                                       {"detour",           "direct"},};
 
-        // local
-        dnsServers += QJsonObject{{"tag",     "dns-local"},
-                                  {"address", "local"},};
+        // Underlying 100% Working DNS
+        dnsServers += QJsonObject{{"tag",     "dns-underlying"},
+                                  {"address", underlyingStr},
+                                  {"detour",  "direct"},};
 
         // DNS rules
         auto add_rule_dns = [&](const QJsonArray &arr, const QString &server) {

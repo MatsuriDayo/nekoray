@@ -44,7 +44,6 @@ func getProxyHttpClient(box *box.Box) *http.Client {
 	if box != nil {
 		router_ := reflect.Indirect(reflect.ValueOf(box)).FieldByName("router")
 		router_ = reflect.NewAt(router_.Type(), unsafe.Pointer(router_.UnsafeAddr())).Elem()
-
 		if router, ok := router_.Interface().(adapter.Router); ok {
 			d = dialer.NewRouter(router)
 		}
