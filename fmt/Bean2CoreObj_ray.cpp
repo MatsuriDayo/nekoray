@@ -36,6 +36,8 @@ namespace NekoRay::fmt {
             if (!path.isEmpty()) quic["key"] = path;
             if (!host.isEmpty()) quic["security"] = host;
             streamSettings["quicSettings"] = quic;
+        } else {
+            streamSettings["tcpSettings"] = QJsonObject{};
         }
 
         if (security == "tls") {
@@ -65,7 +67,7 @@ namespace NekoRay::fmt {
                 };
                 header["request"] = request;
             }
-            streamSettings["header"] = header;
+            streamSettings[streamSettings.keys()[1]] = QJsonObject{{"header", header}};
         }
 
         return streamSettings;
