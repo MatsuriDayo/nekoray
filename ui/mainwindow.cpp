@@ -1469,7 +1469,7 @@ bool MainWindow::StartVPNProcess() {
         WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/nekobox_core.exe",
                                          {"--disable-color", "run", "-c", configPath},
                                          "",
-                                         NekoRay::dataStore->vpn_hide_consloe
+                                         NekoRay::dataStore->vpn_hide_console
         ); // blocking
         vpn_pid = 0;
         runOnUiThread([=] {

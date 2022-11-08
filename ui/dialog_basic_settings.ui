@@ -598,33 +598,6 @@
    <header>ui/widget/MyLineEdit.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>tabWidget</tabstop>
-  <tabstop>socks_ip</tabstop>
-  <tabstop>custom_inbound_edit</tabstop>
-  <tabstop>inbound_socks_port</tabstop>
-  <tabstop>inbound_http_port</tabstop>
-  <tabstop>http_enable</tabstop>
-  <tabstop>test_url</tabstop>
-  <tabstop>test_concurrent</tabstop>
-  <tabstop>log_level</tabstop>
-  <tabstop>mux_cool_enable</tabstop>
-  <tabstop>mux_cool</tabstop>
-  <tabstop>check_include_pre</tabstop>
-  <tabstop>theme</tabstop>
-  <tabstop>language</tabstop>
-  <tabstop>rfsh_r</tabstop>
-  <tabstop>connection_statistics</tabstop>
-  <tabstop>start_minimal</tabstop>
-  <tabstop>user_agent</tabstop>
-  <tabstop>sub_use_proxy</tabstop>
-  <tabstop>core_v2ray_asset</tabstop>
-  <tabstop>core_v2ray_asset_pick</tabstop>
-  <tabstop>extra_core_add</tabstop>
-  <tabstop>extra_core_del</tabstop>
-  <tabstop>insecure_hint</tabstop>
-  <tabstop>skip_cert</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>

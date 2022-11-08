@@ -190,6 +190,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->host->setText(stream->host);
         ui->sni->setText(stream->sni);
         ui->alpn->setText(stream->alpn);
+        ui->utls->setCurrentText(stream->utls);
         ui->insecure->setChecked(stream->allow_insecure);
         ui->header_type->setCurrentText(stream->header_type);
         ui->ws_early_data_name->setText(stream->ws_early_data_name);
@@ -309,6 +310,7 @@ void DialogEditProfile::accept() {
         stream->host = ui->host->text();
         stream->sni = ui->sni->text();
         stream->alpn = ui->alpn->text();
+        stream->utls = ui->utls->currentText();
         stream->allow_insecure = ui->insecure->isChecked();
         stream->header_type = ui->header_type->currentText();
         stream->ws_early_data_name = ui->ws_early_data_name->text();

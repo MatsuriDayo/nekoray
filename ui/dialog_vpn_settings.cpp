@@ -14,10 +14,11 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) :
     ui->vpn_implementation->setCurrentIndex(NekoRay::dataStore->vpn_implementation);
     ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
     ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
-    ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_consloe);
+    ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_console);
 #ifndef Q_OS_WIN
     ui->hide_console->setVisible(false);
 #endif
+    ui->strict_route->setChecked(NekoRay::dataStore->vpn_strict_route);
     //
     D_LOAD_STRING(vpn_bypass_cidr)
     D_LOAD_STRING(vpn_bypass_process)
@@ -35,7 +36,8 @@ void DialogVPNSettings::accept() {
     NekoRay::dataStore->fake_dns = ui->fake_dns->isChecked();
     NekoRay::dataStore->vpn_mtu = mtu;
     NekoRay::dataStore->vpn_ipv6 = ui->vpn_ipv6->isChecked();
-    NekoRay::dataStore->vpn_hide_consloe = ui->hide_console->isChecked();
+    NekoRay::dataStore->vpn_hide_console = ui->hide_console->isChecked();
+    NekoRay::dataStore->vpn_strict_route = ui->strict_route->isChecked();
     //
     D_SAVE_STRING_QTEXTEDIT(vpn_bypass_cidr)
     D_SAVE_STRING_QTEXTEDIT(vpn_bypass_process)

@@ -107,6 +107,13 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="strict_route">
+        <property name="text">
+         <string notr="true">Strict Route</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -147,15 +154,6 @@
    </item>
   </layout>
  </widget>
- <tabstops>
-  <tabstop>vpn_implementation</tabstop>
-  <tabstop>vpn_mtu</tabstop>
-  <tabstop>hide_console</tabstop>
-  <tabstop>vpn_ipv6</tabstop>
-  <tabstop>fake_dns</tabstop>
-  <tabstop>vpn_bypass_cidr</tabstop>
-  <tabstop>vpn_bypass_process</tabstop>
- </tabstops>
  <resources/>
  <connections>
   <connection>

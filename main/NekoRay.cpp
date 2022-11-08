@@ -54,7 +54,8 @@ namespace NekoRay {
         _add(new configItem("vpn_impl", &vpn_implementation, itemType::integer));
         _add(new configItem("vpn_mtu", &vpn_mtu, itemType::integer));
         _add(new configItem("vpn_ipv6", &vpn_ipv6, itemType::boolean));
-        _add(new configItem("vpn_hide_console", &vpn_hide_consloe, itemType::boolean));
+        _add(new configItem("vpn_hide_console", &vpn_hide_console, itemType::boolean));
+        _add(new configItem("vpn_strict_route", &vpn_strict_route, itemType::boolean));
         _add(new configItem("vpn_bypass_process", &vpn_bypass_process, itemType::string));
         _add(new configItem("vpn_bypass_cidr", &vpn_bypass_cidr, itemType::string));
         _add(new configItem("check_include_pre", &check_include_pre, itemType::boolean));

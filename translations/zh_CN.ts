@@ -342,14 +342,6 @@
         <translation>已设置</translation>
     </message>
     <message>
-        <source>Path</source>
-        <translation>路径(Path)</translation>
-    </message>
-    <message>
-        <source>Host</source>
-        <translation>主机(Host)</translation>
-    </message>
-    <message>
         <source>Packet Encoding</source>
         <translation>包编码</translation>
     </message>

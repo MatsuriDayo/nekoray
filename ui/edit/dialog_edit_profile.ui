@@ -319,7 +319,7 @@ serviceName (gRPC)
 key (QUIC)</string>
            </property>
            <property name="text">
-            <string>Path</string>
+            <string notr="true">Path</string>
            </property>
           </widget>
          </item>
@@ -333,7 +333,7 @@ key (QUIC)</string>
 security (QUIC)</string>
            </property>
            <property name="text">
-            <string>Host</string>
+            <string notr="true">Host</string>
            </property>
           </widget>
          </item>
@@ -346,10 +346,10 @@ security (QUIC)</string>
             </sizepolicy>
            </property>
            <property name="toolTip">
-            <string notr="true">伪装头部 (tcp/quic)</string>
+            <string notr="true">伪装头部类型 (tcp/quic)</string>
            </property>
            <property name="text">
-            <string notr="true">headerType</string>
+            <string notr="true">header</string>
            </property>
           </widget>
          </item>
@@ -415,14 +415,104 @@ security (QUIC)</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QCheckBox" name="insecure">
-           <property name="toolTip">
-            <string>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</string>
-           </property>
-           <property name="text">
-            <string>Allow insecure</string>
-           </property>
-          </widget>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QCheckBox" name="insecure">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</string>
+             </property>
+             <property name="text">
+              <string>Allow insecure</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="Line" name="line">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="toolTip">
+              <string notr="true">Currently only supported in sing-box core.</string>
+             </property>
+             <property name="text">
+              <string notr="true">uTLS</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QComboBox" name="utls">
+             <property name="editable">
+              <bool>true</bool>
+             </property>
+             <item>
+              <property name="text">
+               <string notr="true"/>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">chrome</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">firefox</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">edge</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">safari</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">360</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">qq</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">ios</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">android</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string notr="true">random</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QGridLayout" name="_3">
@@ -501,6 +591,7 @@ security (QUIC)</string>
   <tabstop>ws_early_data_length</tabstop>
   <tabstop>ws_early_data_name</tabstop>
   <tabstop>insecure</tabstop>
+  <tabstop>utls</tabstop>
   <tabstop>sni</tabstop>
   <tabstop>alpn</tabstop>
   <tabstop>certificate_edit</tabstop>

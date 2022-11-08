@@ -785,6 +785,7 @@ namespace NekoRay {
                 .replace("%PROCESS_NAME_RULE%", process_name_rule)
                 .replace("%CIDR_RULE%", cidr_rule)
                 .replace("%TUN_NAME%", tun_name)
+                .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                 .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // write config
         QFile file;
