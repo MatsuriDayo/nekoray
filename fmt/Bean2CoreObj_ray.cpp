@@ -36,6 +36,15 @@ namespace NekoRay::fmt {
             if (!path.isEmpty()) quic["key"] = path;
             if (!host.isEmpty()) quic["security"] = host;
             streamSettings["quicSettings"] = quic;
+        } else if (network == "tcp" && !header_type.isEmpty()) {
+            QJsonObject header{{"type", header_type}};
+            if (header_type == "http") {
+                header["request"] = QJsonObject{
+                        {"path",    QList2QJsonArray(path.split(","))},
+                        {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
+                };
+            }
+            streamSettings["tcpSettings"] = QJsonObject{{"header", header}};
         }
 
         if (security == "tls") {
@@ -54,18 +63,6 @@ namespace NekoRay::fmt {
             }
             streamSettings["tlsSettings"] = tls;
             streamSettings["security"] = "tls";
-        }
-
-        if (!header_type.isEmpty()) {
-            QJsonObject header{{"type", header_type}};
-            if (header_type == "http") {
-                QJsonObject request{
-                        {"path",    QList2QJsonArray(path.split(","))},
-                        {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
-                };
-                header["request"] = request;
-            }
-            streamSettings["header"] = header;
         }
 
         return streamSettings;
