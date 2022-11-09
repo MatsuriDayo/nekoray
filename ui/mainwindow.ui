@@ -705,7 +705,7 @@
   </action>
   <action name="menu_delete_repeat">
    <property name="text">
-    <string>Delete Repeat</string>
+    <string>Remove Duplicates</string>
    </property>
   </action>
   <action name="actionfake">

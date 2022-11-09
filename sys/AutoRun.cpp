@@ -13,50 +13,41 @@
 
 #include <QSettings>
 
-//设置程序自启动 appPath程序路径
-void SetProcessAutoRunSelf(bool enable) {
+QString Windows_GenAutoRunString() {
     auto appPath = QApplication::applicationFilePath();
+    appPath = "\"" + QDir::toNativeSeparators(appPath) + "\"";
+    appPath += " -tray";
+    return appPath;
+}
+
+void AutoRun_SetEnabled(bool enable) {
+    //以程序名称作为注册表中的键
+    //根据键获取对应的值（程序路径）
+    auto appPath = QApplication::applicationFilePath();
+    QFileInfo fInfo(appPath);
+    QString name = fInfo.baseName();
 
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                        QSettings::NativeFormat);
 
-    //以程序名称作为注册表中的键
-    //根据键获取对应的值（程序路径）
-    QFileInfo fInfo(appPath);
-    QString name = fInfo.baseName();
-    QString path = settings.value(name).toString();
-
-    //如果注册表中的路径和当前程序路径不一样，
-    //则表示没有设置自启动或自启动程序已经更换了路径
-    //toNativeSeparators的意思是将"/"替换为"\"
-    QString newPath = QDir::toNativeSeparators(appPath);
-
     if (enable) {
-        if (path != newPath) {
-            settings.setValue(name, newPath);
-        }
+        settings.setValue(name, Windows_GenAutoRunString());
     } else {
         settings.remove(name);
     }
 }
 
-bool GetProcessAutoRunSelf() {
-    auto appPath = QApplication::applicationFilePath();
-
+bool AutoRun_IsEnabled() {
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run",
                        QSettings::NativeFormat);
 
     //以程序名称作为注册表中的键
     //根据键获取对应的值（程序路径）
+    auto appPath = QApplication::applicationFilePath();
     QFileInfo fInfo(appPath);
     QString name = fInfo.baseName();
-    QString path = settings.value(name).toString();
 
-    //如果注册表中的路径和当前程序路径不一样，
-    //则表示没有设置自启动或自启动程序已经更换了路径
-    //toNativeSeparators的意思是将"/"替换为"\"
-    QString newPath = QDir::toNativeSeparators(appPath);
-    return path == newPath;
+    return settings.value(name).toString() == Windows_GenAutoRunString();
 }
 
 
@@ -64,7 +55,7 @@ bool GetProcessAutoRunSelf() {
 
 #ifdef Q_OS_MACOS
 
-void SetProcessAutoRunSelf(bool enable) {
+void AutoRun_SetEnabled(bool enable) {
     // From
     // https://github.com/nextcloud/desktop/blob/master/src/common/utility_mac.cpp
     QString filePath = QDir(QCoreApplication::applicationDirPath() + QLatin1String("/../..")).absolutePath();
@@ -109,7 +100,7 @@ void SetProcessAutoRunSelf(bool enable) {
     CFRelease(urlRef);
 }
 
-bool GetProcessAutoRunSelf() {
+bool AutoRun_IsEnabled() {
     // From
     // https://github.com/nextcloud/desktop/blob/master/src/common/utility_mac.cpp
     // this is quite some duplicate code with setLaunchOnStartup, at some
@@ -171,17 +162,17 @@ QString getUserAutostartDir_private() {
     return config;
 }
 
-void SetProcessAutoRunSelf(bool enable) {
+void AutoRun_SetEnabled(bool enable) {
     // From https://github.com/nextcloud/desktop/blob/master/src/common/utility_unix.cpp
     QString appName = QCoreApplication::applicationName();
     QString userAutoStartPath = getUserAutostartDir_private();
     QString desktopFileLocation = userAutoStartPath + appName + QLatin1String(".desktop");
-    QStringList appCmdList = {QApplication::applicationFilePath()};
+    QStringList appCmdList = {QApplication::applicationFilePath(), "-tray"};
 
     // nekoray: launcher
     auto launcherPath = QApplication::applicationDirPath() + "/launcher";
     if (QFile::exists(launcherPath)) {
-        appCmdList = QStringList{launcherPath};
+        appCmdList = QStringList{launcherPath, "--", "-tray"};
     }
 
     if (enable) {
@@ -218,7 +209,7 @@ void SetProcessAutoRunSelf(bool enable) {
     }
 }
 
-bool GetProcessAutoRunSelf() {
+bool AutoRun_IsEnabled() {
     QString appName = QCoreApplication::applicationName();
     QString desktopFileLocation = getUserAutostartDir_private() + appName + QLatin1String(".desktop");
     return QFile::exists(desktopFileLocation);

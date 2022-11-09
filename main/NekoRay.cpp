@@ -39,7 +39,6 @@ namespace NekoRay {
         _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
         _add(new configItem("remember_id", &remember_id, itemType::integer));
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
-        _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
         _add(new configItem("spmode", &remember_spmode, itemType::integer));
         _add(new configItem("insecure_hint", &insecure_hint, itemType::boolean));

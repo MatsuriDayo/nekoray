@@ -100,7 +100,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         ui->connection_statistics_box->setDisabled(true);
     }
     //
-    D_LOAD_BOOL(start_minimal)
     D_LOAD_BOOL(check_include_pre)
     D_LOAD_BOOL(connection_statistics)
     //
@@ -253,7 +252,6 @@ void DialogBasicSettings::accept() {
     // Style
 
     NekoRay::dataStore->language = ui->language->currentIndex();
-    D_SAVE_BOOL(start_minimal)
     D_SAVE_BOOL(connection_statistics)
     D_SAVE_BOOL(check_include_pre)
 

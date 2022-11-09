@@ -188,3 +188,5 @@ protected:
 inline MainWindow *GetMainWindow() {
     return (MainWindow *) mainwindow;
 }
+
+void UI_InitMainWindow();

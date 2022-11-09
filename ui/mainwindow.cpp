@@ -51,6 +51,10 @@
 #include <QDir>
 #include <QFileInfo>
 
+void UI_InitMainWindow() {
+    mainwindow = new MainWindow;
+}
+
 MainWindow::MainWindow(QWidget *parent)
         : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
@@ -261,7 +265,7 @@ MainWindow::MainWindow(QWidget *parent)
     //
     connect(ui->menu_program, &QMenu::aboutToShow, this, [=]() {
         ui->actionRemember_last_proxy->setChecked(NekoRay::dataStore->remember_enable);
-        ui->actionStart_with_system->setChecked(GetProcessAutoRunSelf());
+        ui->actionStart_with_system->setChecked(AutoRun_IsEnabled());
         ui->actionAllow_LAN->setChecked(QStringList{"::", "0.0.0.0"}.contains(NekoRay::dataStore->inbound_address));
         // active server
         for (const auto &old: ui->menuActive_Server->actions()) {
@@ -324,7 +328,7 @@ MainWindow::MainWindow(QWidget *parent)
         NekoRay::dataStore->Save();
     });
     connect(ui->actionStart_with_system, &QAction::triggered, this, [=](bool checked) {
-        SetProcessAutoRunSelf(checked);
+        AutoRun_SetEnabled(checked);
     });
     connect(ui->actionAllow_LAN, &QAction::triggered, this, [=](bool checked) {
         NekoRay::dataStore->inbound_address = checked ? "::" : "127.0.0.1";
@@ -403,7 +407,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(qApp, &QGuiApplication::commitDataRequest, this, &MainWindow::on_commitDataRequest);
 
-    if (!NekoRay::dataStore->start_minimal) show();
+    if (!NekoRay::dataStore->flag_tray) show();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event) {
@@ -572,7 +576,8 @@ void MainWindow::on_menu_exit_triggered() {
         QDir::setCurrent(QApplication::applicationDirPath());
         QProcess::startDetached("./nekoray", QStringList{});
     }
-    qApp->quit();
+    tray->hide();
+    QCoreApplication::quit();
 }
 
 #define neko_set_spmode_FAILED refresh_status(); return;
@@ -612,7 +617,8 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
             SetSystemProxy(http_port, socks_port);
         } else if (mode == NekoRay::SystemProxyMode::VPN) {
             if (NekoRay::dataStore->need_keep_vpn_off) {
-                MessageBoxWarning(software_name, tr("Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart."));
+                MessageBoxWarning(software_name,
+                                  tr("Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart."));
                 neko_set_spmode_FAILED
             }
             if (!StartVPNProcess()) {
@@ -1498,7 +1504,7 @@ bool MainWindow::StartVPNProcess() {
     }
     //
     auto vpn_process = new QProcess;
-    QProcess::connect(vpn_process, &QProcess::stateChanged, mainwindow, [=](QProcess::ProcessState state) {
+    QProcess::connect(vpn_process, &QProcess::stateChanged, this, [=](QProcess::ProcessState state) {
         if (state == QProcess::NotRunning) {
             vpn_pid = 0;
             vpn_process->deleteLater();

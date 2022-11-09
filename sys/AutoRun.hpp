@@ -1,5 +1,5 @@
 #pragma once
 
-void SetProcessAutoRunSelf(bool enable);
+void AutoRun_SetEnabled(bool enable);
 
-bool GetProcessAutoRunSelf();
+bool AutoRun_IsEnabled();

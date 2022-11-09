@@ -152,10 +152,6 @@
         <translation>连接统计</translation>
     </message>
     <message>
-        <source>Minimize to tray icon on startup</source>
-        <translation>启动时最小化到托盘图标</translation>
-    </message>
-    <message>
         <source>Include Pre-release when checking update</source>
         <translation>检查更新时包括 Pre-release</translation>
     </message>
@@ -1090,7 +1086,7 @@ End: %2</source>
         <translation>重置流量</translation>
     </message>
     <message>
-        <source>Delete Repeat</source>
+        <source>Remove Duplicates</source>
         <translation>删除重复的配置</translation>
     </message>
     <message>

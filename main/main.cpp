@@ -1,4 +1,4 @@
-#include "ui/mainwindow.h"
+#include "ui/mainwindow_interface.h"
 
 #include <csignal>
 
@@ -51,6 +51,7 @@ int main(int argc, char *argv[]) {
     auto args = QApplication::arguments();
     if (args.contains("-many")) NekoRay::dataStore->flag_many = true;
     if (args.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
+    if (args.contains("-tray")) NekoRay::dataStore->flag_tray = true;
 #ifdef NKR_CPP_USE_APPDATA
     NekoRay::dataStore->flag_use_appdata = true;
 #endif
@@ -155,6 +156,6 @@ int main(int argc, char *argv[]) {
     signal(SIGTERM, signal_handler);
     signal(SIGINT, signal_handler);
 
-    MainWindow w;
+    UI_InitMainWindow();
     return QApplication::exec();
 }

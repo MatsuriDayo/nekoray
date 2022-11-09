@@ -335,20 +335,6 @@
         <widget class="QGroupBox" name="horizontalGroupBox2">
          <layout class="QHBoxLayout" name="horizontalLayout_20">
           <item>
-           <widget class="QCheckBox" name="start_minimal">
-            <property name="text">
-             <string>Minimize to tray icon on startup</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Vertical</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
            <widget class="QPushButton" name="set_custom_icon">
             <property name="text">
              <string>Set custom icon</string>
