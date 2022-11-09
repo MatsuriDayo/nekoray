@@ -20,6 +20,7 @@ func ToolBox() {
 			for _, route := range routes {
 				log.Println(route)
 			}
+			log.Println("TUN:", getNekorayTunIndex())
 			log.Println("Upstream:", getBindInterfaceIndex("8.8.8.8:8888"))
 		}
 	}

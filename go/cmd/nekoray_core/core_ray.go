@@ -11,15 +11,28 @@ import (
 	"time"
 
 	v2rayNet "github.com/v2fly/v2ray-core/v5/common/net"
+	"github.com/v2fly/v2ray-core/v5/features/dns/localdns"
 )
 
 var instance *libcore.V2RayInstance
+var getNekorayTunIndex = func() int { return 0 }
 
 func setupCore() {
 	// TODO del
 	device.IsNekoray = true
 	libcore.SetConfig("", false, true)
 	libcore.InitCore("", "", "", nil, ".", "moe.nekoray.pc:bg", true, 50)
+	// localdns setup
+	resolver_def := &net.Resolver{PreferGo: false}
+	resolver_go := &net.Resolver{PreferGo: true}
+	localdns.SetLookupFunc(func(network string, host string) ([]net.IP, error) {
+		// Normal mode use system resolver (go bug)
+		if getNekorayTunIndex() == 0 {
+			return resolver_def.LookupIP(context.Background(), network, host)
+		}
+		// VPN mode use Go resolver
+		return resolver_go.LookupIP(context.Background(), network, host)
+	})
 	//
 	neko_common.GetProxyHttpClient = func() *http.Client {
 		return getProxyHttpClient(instance)

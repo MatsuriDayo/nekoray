@@ -118,7 +118,6 @@ namespace NekoRay::sys {
             v2ray_asset_dir = QFileInfo(v2ray_asset_dir).absolutePath();
             env << "V2RAY_LOCATION_ASSET=" + v2ray_asset_dir;
         }
-        env << "GODEBUG=netdns=go";
         ExternalProcess::Start();
         write((dataStore->core_token + "\n").toUtf8());
     }

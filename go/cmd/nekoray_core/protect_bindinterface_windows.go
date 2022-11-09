@@ -47,11 +47,24 @@ func init() {
 		}
 		return nil
 	})
+	//
 	updateRoutes()
 	iphlpapi.RegisterNotifyRouteChange2(func(callerContext uintptr, row uintptr, notificationType uint32) uintptr {
 		updateRoutes()
 		return 0
-	}, true)
+	}, false)
+	//
+	getNekorayTunIndex = func() (index int) {
+		lock.Lock()
+		defer lock.Unlock()
+		for _, intf := range interfaces {
+			if intf.Name == "nekoray-tun" {
+				index = intf.Index
+				return
+			}
+		}
+		return
+	}
 }
 
 func updateRoutes() {
@@ -85,7 +98,7 @@ func getBindInterfaceIndex(address string) uint32 {
 
 	var nextInterface int
 	for i, intf := range interfaces {
-		if intf.Name == "nekoray-tun" || intf.Name == "wintun" || intf.Name == "TunMax" {
+		if intf.Name == "nekoray-tun" {
 			if len(interfaces) > i+1 {
 				nextInterface = interfaces[i+1].Index
 			}
