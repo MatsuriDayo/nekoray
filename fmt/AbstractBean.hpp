@@ -47,13 +47,13 @@ namespace NekoRay::fmt {
 
         //
 
-        virtual bool NeedExternal() { return false; };
+        virtual int NeedExternal(bool isFirstProfile, bool isVPN) { return 0; };
 
         virtual CoreObjOutboundBuildResult BuildCoreObjV2Ray() { return {}; };
 
         virtual CoreObjOutboundBuildResult BuildCoreObjSingBox() { return {}; };
 
-        virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port) { return {}; };
+        virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) { return {}; };
 
         virtual QString ToShareLink() { return {}; };
 

@@ -292,6 +292,7 @@ void MainWindow::neko_stop(bool crash) {
 #endif
 
     NekoRay::dataStore->UpdateStartedId(-1919);
+    NekoRay::dataStore->need_keep_vpn_off = false;
     running = nullptr;
     refresh_status();
     refresh_proxy_list(id);

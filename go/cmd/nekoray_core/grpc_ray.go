@@ -35,7 +35,7 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 	}()
 
 	if neko_common.Debug {
-		logrus.Println("Start:", in)
+		logrus.Println("Start:", in.CoreConfig, in.TryDomains)
 	}
 
 	if instance != nil {

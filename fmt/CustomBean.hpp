@@ -25,7 +25,7 @@ namespace NekoRay::fmt {
             return core;
         };
 
-        QString DisplayCoreType() override { return NeedExternal() ? core : software_core_name; };
+        QString DisplayCoreType() override { return NeedExternal(false, false) ? core : software_core_name; };
 
         QString DisplayAddress() override {
             if (core == "internal") {
@@ -39,13 +39,9 @@ namespace NekoRay::fmt {
             return AbstractBean::DisplayAddress();
         };
 
-        bool NeedExternal() override {
-            if (core == "internal") return false;
-            if (IS_NEKO_BOX && core == "hysteria") return false;
-            return true;
-        };
+        int NeedExternal(bool isFirstProfile, bool isVPN) override;
 
-        ExternalBuildResult BuildExternal(int mapping_port, int socks_port) override;
+        ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) override;
 
         CoreObjOutboundBuildResult BuildCoreObjSingBox() override;
 

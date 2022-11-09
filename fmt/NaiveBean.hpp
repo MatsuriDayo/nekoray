@@ -27,9 +27,9 @@ namespace NekoRay::fmt {
 
         QString DisplayType() override { return "Naive"; };
 
-        bool NeedExternal() override { return true; };
+        int NeedExternal(bool isFirstProfile, bool isVPN) override;
 
-        ExternalBuildResult BuildExternal(int mapping_port, int socks_port) override;
+        ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) override;
 
         bool TryParseLink(const QString &link);
 

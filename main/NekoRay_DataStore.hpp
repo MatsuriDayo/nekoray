@@ -45,6 +45,8 @@ namespace NekoRay {
         int started_id = -1919;
         bool core_running = false;
         bool core_prepare_exit = false;
+        int running_spmode = NekoRay::SystemProxyMode::DISABLE;
+        bool need_keep_vpn_off = false;
 
         Routing *routing = new Routing;
         int imported_count = 0;
@@ -82,7 +84,7 @@ namespace NekoRay {
         bool skip_cert = false;
 
         // Remember
-        int system_proxy_mode = NekoRay::SystemProxyMode::DISABLE;
+        int remember_spmode = NekoRay::SystemProxyMode::DISABLE;
         int remember_id = -1919;
         bool remember_enable = false;
         bool start_minimal = false;

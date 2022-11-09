@@ -338,9 +338,10 @@ MainWindow::MainWindow(QWidget *parent)
         neko_set_spmode(checked ? NekoRay::SystemProxyMode::SYSTEM_PROXY : NekoRay::SystemProxyMode::DISABLE);
     });
     connect(ui->menu_spmode, &QMenu::aboutToShow, this, [=]() {
-        ui->menu_spmode_disabled->setChecked(title_spmode == NekoRay::SystemProxyMode::DISABLE);
-        ui->menu_spmode_system_proxy->setChecked(title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
-        ui->menu_spmode_vpn->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
+        ui->menu_spmode_disabled->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::DISABLE);
+        ui->menu_spmode_system_proxy->setChecked(
+                NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
+        ui->menu_spmode_vpn->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN);
     });
     connect(ui->menu_spmode_system_proxy, &QAction::triggered, this,
             [=]() { neko_set_spmode(NekoRay::SystemProxyMode::SYSTEM_PROXY); });
@@ -392,8 +393,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Start last
     if (NekoRay::dataStore->remember_enable) {
-        if (NekoRay::dataStore->system_proxy_mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-            neko_set_spmode(NekoRay::dataStore->system_proxy_mode, false);
+        if (NekoRay::dataStore->remember_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+            neko_set_spmode(NekoRay::dataStore->remember_spmode, false);
         }
         if (NekoRay::dataStore->remember_id >= 0) {
             runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
@@ -465,7 +466,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         auto changed = NekoRay::dataStore->Save();
         if (info.contains("RouteChanged")) changed = true;
         refresh_proxy_list();
-        if (info.contains("VPNChanged") && title_spmode == NekoRay::SystemProxyMode::VPN) {
+        if (info.contains("VPNChanged") && NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
             MessageBoxWarning(tr("VPN settings changed"), tr("Restart VPN to take effect."));
         } else if (changed && NekoRay::dataStore->started_id >= 0 &&
                    QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"),
@@ -554,7 +555,7 @@ void MainWindow::on_commitDataRequest() {
 
 void MainWindow::on_menu_exit_triggered() {
     neko_set_spmode(NekoRay::SystemProxyMode::DISABLE, false);
-    if (title_spmode == NekoRay::SystemProxyMode::VPN) return;
+    if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) return;
     RegisterHotkey(true);
     //
     on_commitDataRequest();
@@ -574,16 +575,17 @@ void MainWindow::on_menu_exit_triggered() {
     qApp->quit();
 }
 
+#define neko_set_spmode_FAILED refresh_status(); return;
+
 void MainWindow::neko_set_spmode(int mode, bool save) {
-    if (mode != title_spmode) {
+    if (mode != NekoRay::dataStore->running_spmode) {
         // DISABLE
 
-        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+        if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
             ClearSystemProxy();
-        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+        } else if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
             if (!StopVPNProcess()) {
-                refresh_status();
-                return;
+                neko_set_spmode_FAILED
             }
         }
 
@@ -609,19 +611,22 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
             }
             SetSystemProxy(http_port, socks_port);
         } else if (mode == NekoRay::SystemProxyMode::VPN) {
+            if (NekoRay::dataStore->need_keep_vpn_off) {
+                MessageBoxWarning(software_name, tr("Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart."));
+                neko_set_spmode_FAILED
+            }
             if (!StartVPNProcess()) {
-                refresh_status();
-                return;
+                neko_set_spmode_FAILED
             }
         }
     }
 
     if (save) {
-        NekoRay::dataStore->system_proxy_mode = mode;
+        NekoRay::dataStore->remember_spmode = mode;
         NekoRay::dataStore->Save();
     }
 
-    title_spmode = mode;
+    NekoRay::dataStore->running_spmode = mode;
     refresh_status();
 }
 
@@ -654,17 +659,17 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     if (IS_NEKO_BOX) inbound_txt = QString("Mixed: %1").arg(display_socks);
     ui->label_inbound->setText(inbound_txt);
     //
-    ui->checkBox_VPN->setChecked(title_spmode == NekoRay::SystemProxyMode::VPN);
-    ui->checkBox_SystemProxy->setChecked(title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
+    ui->checkBox_VPN->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN);
+    ui->checkBox_SystemProxy->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
     if (select_mode) ui->label_running->setText("[" + tr("Select") + "]");
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
-        if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+        if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
             tt << "[" + tr("System Proxy") + "]";
-        } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+        } else if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
             tt << "[" + tr("VPN Mode") + "]";
         }
         tt << software_name;
@@ -677,9 +682,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     };
 
     auto icon_status_new = TrayIcon::NONE;
-    if (title_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
+    if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
         icon_status_new = TrayIcon::SYSTEM_PROXY;
-    } else if (title_spmode == NekoRay::SystemProxyMode::VPN) {
+    } else if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
         icon_status_new = TrayIcon::VPN;
     } else if (!running.isNull()) {
         icon_status_new = TrayIcon::RUNNING;

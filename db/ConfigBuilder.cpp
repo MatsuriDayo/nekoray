@@ -325,6 +325,7 @@ namespace NekoRay {
         bool muxApplied = false;
 
         QString pastTag;
+        int pastExternalStat = 0;
         int index = 0;
 
         for (const auto &ent: ents) {
@@ -338,13 +339,15 @@ namespace NekoRay {
             bool needGlobal = false;
 
             // first profile set as global
-            if (index == ents.length() - 1) {
+            auto isFirstProfile = index == ents.length() - 1;
+            if (isFirstProfile) {
                 needGlobal = true;
                 tagOut = "g-" + Int2String(ent->id);
             }
 
             // last profile set as "proxy"
             if (chainId == 0 && index == 0) {
+                needGlobal = false;
                 tagOut = "proxy";
             }
 
@@ -357,7 +360,7 @@ namespace NekoRay {
 
             if (index > 0) {
                 // chain rules: past
-                if (!ents[index - 1]->bean->NeedExternal()) {
+                if (pastExternalStat == 0) {
                     auto replaced = status->outbounds.last().toObject();
                     if (IS_NEKO_BOX) {
                         replaced["detour"] = tagOut;
@@ -385,7 +388,11 @@ namespace NekoRay {
 
             // chain rules: this
             auto mapping_port = MkPort();
-            if (ent->bean->NeedExternal()) {
+            auto thisExternalStat = ent->bean->NeedExternal(isFirstProfile,
+                                                        dataStore->running_spmode == SystemProxyMode::VPN);
+            if (thisExternalStat == 2) dataStore->need_keep_vpn_off = true;
+            if (thisExternalStat == 1) {
+                // mapping
                 if (IS_NEKO_BOX) {
                     status->inbounds += QJsonObject{{"type",             "direct"},
                                                     {"tag",              tagOut + "-mapping"},
@@ -404,7 +411,7 @@ namespace NekoRay {
                                                             {"network", "tcp,udp"},}},};
                 }
                 // no chain rule and not outbound, so need to set to direct
-                if (index == ents.length() - 1) {
+                if (isFirstProfile) {
                     if (IS_NEKO_BOX) {
                         status->routingRules += QJsonObject{{"inbound",  QJsonArray{tagOut + "-mapping"}},
                                                             {"outbound", "direct"},};
@@ -422,9 +429,9 @@ namespace NekoRay {
             fmt::CoreObjOutboundBuildResult coreR;
             fmt::ExternalBuildResult extR;
 
-            if (ent->bean->NeedExternal()) {
+            if (thisExternalStat > 0) {
                 auto ext_socks_port = MkPort();
-                extR = ent->bean->BuildExternal(mapping_port, ext_socks_port);
+                extR = ent->bean->BuildExternal(mapping_port, ext_socks_port, thisExternalStat);
                 if (extR.program.isEmpty()) {
                     status->result->error = QObject::tr("Core not found: %1").arg(ent->bean->DisplayType());
                     return {};
@@ -512,7 +519,7 @@ namespace NekoRay {
             }
 
             // Bypass Lookup for the first profile
-            if (index == ents.length() - 1 && !IsIpAddress(ent->bean->serverAddress)) {
+            if (isFirstProfile && !IsIpAddress(ent->bean->serverAddress)) {
                 if (dataStore->enhance_resolve_server_domain && !IS_NEKO_BOX) {
                     status->result->tryDomains += ent->bean->serverAddress;
                 } else {
@@ -522,6 +529,7 @@ namespace NekoRay {
 
             status->outbounds += outbound;
             pastTag = tagOut;
+            pastExternalStat = thisExternalStat;
             index++;
         }
 

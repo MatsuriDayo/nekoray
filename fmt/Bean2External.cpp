@@ -1,5 +1,7 @@
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
+#include "NaiveBean.hpp"
+
 
 #include <QFile>
 #include <QDir>
@@ -19,13 +21,37 @@ f.close(); \
 auto TempFile = QFileInfo(f).absoluteFilePath();
 
 namespace NekoRay::fmt {
-    ExternalBuildResult NaiveBean::BuildExternal(int mapping_port, int socks_port) {
+    // 0: no external
+    // 1: Mapping External
+    // 2: Direct External
+
+    int NaiveBean::NeedExternal(bool isFirstProfile, bool isVPN) {
+        if (isFirstProfile && !isVPN) {
+            return 2;
+        }
+        return 1;
+    }
+
+    int CustomBean::NeedExternal(bool isFirstProfile, bool isVPN) {
+        if (core == "internal") return 0;
+        if (IS_NEKO_BOX && core == "hysteria") return 0;
+        if (core == "hysteria") {
+            if (isFirstProfile && !isVPN) {
+                return 2;
+            }
+        }
+        return 1;
+    }
+
+    ExternalBuildResult NaiveBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
         ExternalBuildResult result{dataStore->extraCore->Get("naive")};
 
-        auto is_export = mapping_port == 114514;
+        auto is_direct = external_stat == 2;
         auto domain_address = sni.isEmpty() ? serverAddress : sni;
-        auto connect_address = is_export ? serverAddress : "127.0.0.1";
-        auto connect_port = is_export ? serverPort : mapping_port;
+        auto connect_address = is_direct ? serverAddress : "127.0.0.1";
+        auto connect_port = is_direct ? serverPort : mapping_port;
+        domain_address = WrapIPV6Host(domain_address);
+        connect_address = WrapIPV6Host(connect_address);
 
         result.arguments += "--log";
         result.arguments += "--listen=socks://127.0.0.1:" + Int2String(socks_port);
@@ -47,7 +73,7 @@ namespace NekoRay::fmt {
         return result;
     }
 
-    ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port) {
+    ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
         ExternalBuildResult result{dataStore->extraCore->Get(core)};
 
         result.arguments = command; // TODO split?
@@ -75,6 +101,15 @@ namespace NekoRay::fmt {
                 suffix = ".json";
             }
 
+            // known core direct out
+            if (external_stat == 2) {
+                if (core == "hysteria") {
+                    config = config.replace(QString("\"127.0.0.1:%1\"").arg(mapping_port),
+                                            "\"" + DisplayAddress() + "\"");
+                }
+            }
+
+            // write config
             WriteTempFile("custom_" + GetRandomString(10) + suffix, config.toUtf8());
             for (int i = 0; i < result.arguments.count(); i++) {
                 result.arguments[i] = result.arguments[i].replace("%config%", TempFile);

@@ -139,7 +139,6 @@ private:
     QTextDocument *qvLogDocument = new QTextDocument(this);
     //
     QString title_error;
-    int title_spmode = NekoRay::SystemProxyMode::DISABLE;
     int icon_status = -1;
     QSharedPointer<NekoRay::ProxyEntity> running;
     QString traffic_update_cache;
