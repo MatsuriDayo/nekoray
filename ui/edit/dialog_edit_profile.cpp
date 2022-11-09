@@ -30,7 +30,8 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     network_title_base = ui->network_box->title();
     connect(ui->network, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         ui->network_box->setTitle(network_title_base.arg(txt));
-        if (txt == "tcp" || txt == "quic") {
+        // 传输设置
+        if (txt == "tcp" || (!IS_NEKO_BOX && txt == "quic")) {
             ui->header_type->setVisible(true);
             ui->header_type_l->setVisible(true);
             ui->path->setVisible(true);
@@ -44,7 +45,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->path_l->setVisible(true);
             ui->host->setVisible(false);
             ui->host_l->setVisible(false);
-        } else if (txt == "ws" || txt == "h2") {
+        } else if (txt == "ws" || txt == "http") {
             ui->header_type->setVisible(false);
             ui->header_type_l->setVisible(false);
             ui->path->setVisible(true);
@@ -59,6 +60,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->host->setVisible(false);
             ui->host_l->setVisible(false);
         }
+        // 传输设置 ED
         if (txt == "ws") {
             ui->ws_early_data_length->setVisible(true);
             ui->ws_early_data_length_l->setVisible(true);
@@ -70,6 +72,17 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->ws_early_data_name->setVisible(false);
             ui->ws_early_data_name_l->setVisible(false);
         }
+        // 传输设置 for NekoBox
+        if (IS_NEKO_BOX) {
+            ui->header_type->setVisible(false);
+            ui->header_type_l->setVisible(false);
+        }
+        // 传输设置 是否可见
+        int networkBoxVisible = 0;
+        for (auto label: ui->network_box->findChildren<QLabel *>()) {
+            if (!label->isHidden()) networkBoxVisible++;
+        }
+        ui->network_box->setVisible(networkBoxVisible);
         ADJUST_SIZE
     });
     ui->network->removeItem(0);
@@ -83,6 +96,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         }
         ADJUST_SIZE
     });
+    emit ui->security->currentTextChanged(ui->security->currentText());
 
     // 确定模式和 ent
     newEnt = _type != "";
@@ -240,10 +254,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         }
     }
 
+    // 设置 for NekoBox
     if (IS_NEKO_BOX) {
-        ui->header_type->hide();
-        ui->header_type_l->hide();
-        //
         if (type == "vmess" || type == "vless") {
             ui->packet_encoding->setVisible(true);
             ui->packet_encoding_l->setVisible(true);
@@ -267,7 +279,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
             ui->security->setVisible(false);
             ui->security_l->setVisible(false);
         }
-        //
+        // 设置 是否可见
         int streamBoxVisible = 0;
         for (auto label: ui->stream_box->findChildren<QLabel *>()) {
             if (!label->isHidden()) streamBoxVisible++;
@@ -275,7 +287,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->stream_box->setVisible(streamBoxVisible);
     }
 
-    auto rightNoBox = (ui->stream_box->isHidden() && ui->security_box->isHidden() && ui->network_box->isHidden());
+    // 载入 type 之后，有些类型没有右边的设置
+    auto rightNoBox = (ui->stream_box->isHidden() && ui->network_box->isHidden() && ui->security_box->isHidden());
     if (rightNoBox && !ui->right_all_w->isHidden()) {
         ui->right_all_w->setVisible(false);
     }
@@ -285,7 +298,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
 
     // 第一次显示
     if (isHidden()) {
-        show();
+        runOnUiThread([=] { show(); }, this);
     }
 }
 

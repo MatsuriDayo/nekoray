@@ -22,11 +22,11 @@ namespace NekoRay::fmt {
                 ws["earlyDataHeaderName"] = ws_early_data_name;
             }
             streamSettings["wsSettings"] = ws;
-        } else if (network == "h2") {
-            QJsonObject h2;
-            if (!path.isEmpty()) h2["path"] = path;
-            if (!host.isEmpty()) h2["host"] = QList2QJsonArray(host.split(","));
-            streamSettings["httpSettings"] = h2;
+        } else if (network == "http") {
+            QJsonObject http;
+            if (!path.isEmpty()) http["path"] = path;
+            if (!host.isEmpty()) http["host"] = QList2QJsonArray(host.split(","));
+            streamSettings["httpSettings"] = http;
         } else if (network == "grpc") {
             QJsonObject grpc;
             if (!path.isEmpty()) grpc["serviceName"] = path;

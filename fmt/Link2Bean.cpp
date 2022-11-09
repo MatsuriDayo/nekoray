@@ -52,7 +52,7 @@ namespace NekoRay::fmt {
         password = url.userName();
         if (serverPort == -1) serverPort = 443;
 
-        stream->network = GetQueryValue(query, "type", "tcp").replace("http", "h2");
+        stream->network = GetQueryValue(query, "type", "tcp");
         stream->security = GetQueryValue(query, "security", "tls");
         auto sni1 = GetQueryValue(query, "sni");
         auto sni2 = GetQueryValue(query, "peer");
@@ -64,7 +64,7 @@ namespace NekoRay::fmt {
         if (stream->network == "ws") {
             stream->path = GetQueryValue(query, "path", "");
             stream->host = GetQueryValue(query, "host", "");
-        } else if (stream->network == "h2") {
+        } else if (stream->network == "http") {
             stream->path = GetQueryValue(query, "path", "");
             stream->host = GetQueryValue(query, "host", "").replace("|", ",");
         } else if (stream->network == "grpc") {
@@ -119,7 +119,7 @@ namespace NekoRay::fmt {
             stream->path = objN["path"].toString();
             stream->sni = objN["sni"].toString();
             stream->header_type = objN["type"].toString();
-            auto net = objN["net"].toString().replace("http", "h2");
+            auto net = objN["net"].toString();
             if (!net.isEmpty()) stream->network = net;
             auto scy = objN["scy"].toString();
             if (!scy.isEmpty()) security = scy;

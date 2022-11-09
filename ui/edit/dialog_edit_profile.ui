@@ -240,7 +240,7 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">h2</string>
+               <string notr="true">http</string>
               </property>
              </item>
              <item>
@@ -314,7 +314,7 @@
          <item row="1" column="0">
           <widget class="QLabel" name="path_l">
            <property name="toolTip">
-            <string notr="true">http path (ws/h2/伪装http)
+            <string notr="true">http path (ws/http/伪装http)
 serviceName (gRPC)
 key (QUIC)</string>
            </property>
@@ -329,7 +329,7 @@ key (QUIC)</string>
          <item row="2" column="0">
           <widget class="QLabel" name="host_l">
            <property name="toolTip">
-            <string notr="true">http host (ws/h2/伪装http)
+            <string notr="true">http host (ws/http/伪装http)
 security (QUIC)</string>
            </property>
            <property name="text">

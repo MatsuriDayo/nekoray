@@ -33,9 +33,9 @@ namespace NekoRay::fmt {
         if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
         query.addQueryItem("security", "tls");
-        query.addQueryItem("type", stream->network.replace("h2", "http"));
+        query.addQueryItem("type", stream->network);
 
-        if (stream->network == "ws" || stream->network == "h2") {
+        if (stream->network == "ws" || stream->network == "http") {
             if (!stream->path.isEmpty()) query.addQueryItem("path", stream->path);
             if (!stream->host.isEmpty()) query.addQueryItem("host", stream->host);
         } else if (stream->network == "grpc") {

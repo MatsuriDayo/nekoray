@@ -250,7 +250,7 @@ namespace NekoRay::sub {
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->aid = Node2Int(proxy["alterId"]);
                     bean->security = Node2QString(proxy["cipher"]);
-                    bean->stream->network = Node2QString(proxy["network"], "tcp");
+                    bean->stream->network = Node2QString(proxy["network"], "tcp").replace("h2", "http");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
@@ -273,7 +273,7 @@ namespace NekoRay::sub {
 
                     auto h2 = NodeChild(proxy, {"h2-opts", "h2-opt"});
                     if (h2.IsMap()) {
-                        auto hosts = ws["host"];
+                        auto hosts = h2["host"];
                         for (auto host: hosts) {
                             bean->stream->host = Node2QString(host);
                             break;
