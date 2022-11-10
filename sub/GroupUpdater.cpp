@@ -22,6 +22,23 @@ namespace NekoRay::sub {
 
     GroupUpdater *groupUpdater = new GroupUpdater;
 
+    void RawUpdater_FixEnt(const QSharedPointer<ProxyEntity> &ent) {
+        if (ent == nullptr) return;
+        auto stream = fmt::GetStreamSettings(ent->bean.get());
+        if (stream == nullptr) return;
+        // 1. "security"
+        if (stream->security == "none" || stream->security == "0" || stream->security == "false") {
+            stream->security = "";
+        } else if (stream->security == "xtls" || stream->security == "1" || stream->security == "true") {
+            stream->security = "tls";
+        }
+        // 2. TLS SNI: v2rayN config builder generate sni like this, so set sni here for their format.
+        if (stream->security == "tls" && IsIpAddress(ent->bean->serverAddress)
+            && (!stream->host.isEmpty()) && stream->sni.isEmpty()) {
+            stream->sni = stream->host;;
+        }
+    }
+
     void RawUpdater::update(const QString &str) {
         // Base64 encoded subscription
         if (auto str2 = DecodeB64IfValid(str);!str2.isEmpty()) {
@@ -141,20 +158,7 @@ namespace NekoRay::sub {
         if (ent == nullptr) return;
 
         // Fix
-        auto stream = fmt::GetStreamSettings(ent->bean.get());
-        if (needFix && stream != nullptr) {
-            // 1. "security"
-            if (stream->security == "none" || stream->security == "0" || stream->security == "false") {
-                stream->security = "";
-            } else if (stream->security == "xtls" || stream->security == "1" || stream->security == "true") {
-                stream->security = "tls";
-            }
-            // 2. TLS SNI: v2rayN config builder generate sni like this, so set sni here for their format.
-            if (stream->security == "tls" && IsIpAddress(ent->bean->serverAddress)
-                && (!stream->host.isEmpty()) && stream->sni.isEmpty()) {
-                stream->sni = stream->host;
-            }
-        }
+        if (needFix) RawUpdater_FixEnt(ent);
 
         // End
         profileManager->AddProfile(ent, gid_add_to);
@@ -210,6 +214,7 @@ namespace NekoRay::sub {
 
                 auto ent = ProfileManager::NewProxyEntity(type);
                 if (ent->bean->version == -114514) continue;
+                bool needFix = false;
 
                 // common
                 ent->bean->name = Node2QString(proxy["name"]);
@@ -239,6 +244,7 @@ namespace NekoRay::sub {
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "trojan") {
+                    needFix = true;
                     auto bean = ent->TrojanVLESSBean();
                     bean->password = Node2QString(proxy["password"]);
                     bean->stream->security = "tls";
@@ -246,6 +252,7 @@ namespace NekoRay::sub {
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
                 } else if (type == "vmess") {
+                    needFix = true;
                     auto bean = ent->VMessBean();
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->aid = Node2Int(proxy["alterId"]);
@@ -302,6 +309,7 @@ namespace NekoRay::sub {
                     continue;
                 }
 
+                if (needFix) RawUpdater_FixEnt(ent);
                 profileManager->AddProfile(ent, gid_add_to);
                 update_counter++;
             }

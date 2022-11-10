@@ -33,6 +33,7 @@ namespace NekoRay::fmt {
             streamSettings["grpcSettings"] = grpc;
         } else if (network == "quic") {
             QJsonObject quic;
+            if (!header_type.isEmpty()) quic["header"] = QJsonObject{{"type", header_type}};
             if (!path.isEmpty()) quic["key"] = path;
             if (!host.isEmpty()) quic["security"] = host;
             streamSettings["quicSettings"] = quic;
