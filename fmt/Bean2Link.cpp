@@ -32,7 +32,7 @@ namespace NekoRay::fmt {
         url.setPort(serverPort);
         if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
-        query.addQueryItem("security", "tls");
+        query.addQueryItem("security", stream->security);
         query.addQueryItem("type", stream->network);
 
         if (stream->network == "ws" || stream->network == "http") {

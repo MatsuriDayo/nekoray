@@ -239,6 +239,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Setup Tray
     tray = new QSystemTrayIcon(this);//初始化托盘对象tray
+    tray->setIcon(TrayIcon::GetIcon(TrayIcon::NONE));
     tray->setContextMenu(ui->menu_program);//创建托盘菜单
     tray->show();//让托盘图标显示在系统托盘上
     connect(tray, &QSystemTrayIcon::activated, this,
@@ -1057,61 +1058,76 @@ void MainWindow::display_qr_link(bool nkrFormat) {
     auto ents = get_now_selected();
     if (ents.count() != 1) return;
 
-    auto link = ents.first()->bean->ToShareLink();
-    if (nkrFormat) {
-        link = ents.first()->bean->ToNekorayShareLink(ents.first()->type);
-    }
-
-    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link.toUtf8().data(),
-                                                         qrcodegen::QrCode::Ecc::MEDIUM);
-    qint32 sz = qr.getSize();
-    QImage im(sz, sz, QImage::Format_RGB32);
-    QRgb black = qRgb(0, 0, 0);
-    QRgb white = qRgb(255, 255, 255);
-    for (int y = 0; y < sz; y++)
-        for (int x = 0; x < sz; x++)
-            im.setPixel(x, y, qr.getModule(x, y) ? black : white);
-
     class W : public QDialog {
     public:
         QLabel *l = nullptr;
+        QCheckBox *cb = nullptr;
+        //
         QPlainTextEdit *l2 = nullptr;
         QImage im;
+        //
+        QString link;
+        QString link_nk;
 
-        void set(QLabel *qLabel, QPlainTextEdit *pl, QImage qImage) {
-            this->l = qLabel;
-            this->l2 = pl;
-            this->im = std::move(qImage);
-        }
-
-        void resizeEvent(QResizeEvent *resizeEvent) override {
-            auto size = resizeEvent->size();
-            auto side = size.height() - 20 - l2->size().height();
+        void show_qr(const QSize &size) const {
+            auto side = size.height() - 20 - l2->size().height() - cb->size().height();
             l->setPixmap(QPixmap::fromImage(im.scaled(side, side, Qt::KeepAspectRatio, Qt::FastTransformation),
                                             Qt::MonoOnly));
             l->resize(side, side);
         }
+
+        void refresh(bool is_nk) {
+            auto link_display = is_nk ? link_nk : link;
+            l2->setPlainText(link_display);
+            //
+            qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link_display.toUtf8().data(),
+                                                                 qrcodegen::QrCode::Ecc::MEDIUM);
+            qint32 sz = qr.getSize();
+            im = QImage(sz, sz, QImage::Format_RGB32);
+            QRgb black = qRgb(0, 0, 0);
+            QRgb white = qRgb(255, 255, 255);
+            for (int y = 0; y < sz; y++)
+                for (int x = 0; x < sz; x++)
+                    im.setPixel(x, y, qr.getModule(x, y) ? black : white);
+            show_qr(size());
+        }
+
+        W(const QString &link_, const QString &link_nk_) {
+            link = link_;
+            link_nk = link_nk_;
+            //
+            setLayout(new QVBoxLayout);
+            setMinimumSize(256, 256);
+            QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+            sizePolicy.setHeightForWidth(true);
+            setSizePolicy(sizePolicy);
+            //
+            l = new QLabel();
+            l->setMinimumSize(256, 256);
+            l->setMargin(6);
+            l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+            l->setScaledContents(true);
+            layout()->addWidget(l);
+            cb = new QCheckBox;
+            cb->setText("Neko Links");
+            layout()->addWidget(cb);
+            l2 = new QPlainTextEdit();
+            l2->setReadOnly(true);
+            layout()->addWidget(l2);
+            //
+            connect(cb, &QCheckBox::toggled, this, &W::refresh);
+            refresh(false);
+        }
+
+        void resizeEvent(QResizeEvent *resizeEvent) override {
+            show_qr(resizeEvent->size());
+        }
     };
 
-    auto w = new W();
-    auto l = new QLabel(w);
-    w->setLayout(new QVBoxLayout);
-    w->setMinimumSize(256, 256);
-    l->setMinimumSize(256, 256);
-    l->setMargin(6);
-    l->setAlignment(Qt::AlignmentFlag::AlignCenter);
-    l->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
-    l->setScaledContents(true);
-    w->layout()->addWidget(l);
-    auto l2 = new QPlainTextEdit(w);
-    l2->setPlainText(link);
-    l2->setReadOnly(true);
-    w->layout()->addWidget(l2);
-    w->set(l, l2, im);
+    auto link = ents.first()->bean->ToShareLink();
+    auto link_nk = ents.first()->bean->ToNekorayShareLink(ents.first()->type);
+    auto w = new W(link, link_nk);
     w->setWindowTitle(ents.first()->bean->DisplayTypeAndName());
-    QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    sizePolicy.setHeightForWidth(true);
-    w->setSizePolicy(sizePolicy);
     w->exec();
     w->deleteLater();
 }

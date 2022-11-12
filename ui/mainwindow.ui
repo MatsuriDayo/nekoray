@@ -776,7 +776,7 @@
   </action>
   <action name="menu_copy_links_nkr">
    <property name="text">
-    <string>Copy links of selected (Nekoray)</string>
+    <string>Copy links of selected (Neko Links)</string>
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Alt+C</string>

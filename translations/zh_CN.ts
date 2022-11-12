@@ -247,8 +247,8 @@
         <translation>复制成功</translation>
     </message>
     <message>
-        <source>Copy profile share links (Nekoray)</source>
-        <translation>复制分组内配置的分享链接 (Nekoray)</translation>
+        <source>Copy profile share links (Neko Links)</source>
+        <translation>复制分组内配置的分享链接 (Neko Links)</translation>
     </message>
 </context>
 <context>
@@ -1142,8 +1142,8 @@ End: %2</source>
         <translation>克隆 %1 个项目</translation>
     </message>
     <message>
-        <source>Copy links of selected (Nekoray)</source>
-        <translation>批量复制选中项目的分享链接 (Nekoray)</translation>
+        <source>Copy links of selected (Neko Links)</source>
+        <translation>批量复制选中项目的分享链接 (Neko Links)</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
