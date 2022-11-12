@@ -10,11 +10,16 @@ Support Windows / Linux / macOS amd64 out of the box now.
 
 ## 下载 Download
 
+### GitHub Releases (Portable ZIP)
+
 便携格式，无安装器。转到 Releases 下载预编译的二进制文件，解压后即可使用。
 
-### GitHub Releases
-
 [![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases) [Download](https://github.com/Matsuridayo/nekoray/releases)
+
+### Package
+
+1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+2. Scoop extras for Windows: `scoop install nekoray`
 
 ## 更改记录 & 发布频道 Changelog & Telegram channel
 
@@ -51,8 +56,6 @@ launcher 参数
 已知部分 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
 
 Ubuntu 22.04: `sudo apt install libxcb-xinerama0`
-
-If you are using Arch Linux, you can install via [AUR](https://aur.archlinux.org/packages/nekoray)
 
 ## 编译教程
 

@@ -258,7 +258,6 @@ MainWindow::MainWindow(QWidget *parent)
                         break;
                 }
             });
-
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
