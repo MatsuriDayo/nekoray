@@ -599,6 +599,10 @@
         <source>Please read the documentation. If you don&apos;t understand, use a share link instead.</source>
         <translation>格式请看文档。如果不懂，直接导入 hysteria:// 链接。</translation>
     </message>
+    <message>
+        <source>Config Suffix</source>
+        <translation>配置文件后缀</translation>
+    </message>
 </context>
 <context>
     <name>EditNaive</name>

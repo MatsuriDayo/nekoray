@@ -92,10 +92,15 @@ namespace NekoRay::fmt {
             auto config = config_simple;
             config = config.replace("%mapping_port%", Int2String(mapping_port));
             config = config.replace("%socks_port%", Int2String(socks_port));
+            config = config.replace("%server_addr%", serverAddress);
+            config = config.replace("%server_port%", Int2String(serverPort));
 
-            // trojan-go: unsupported config format: xxx.tmp. use .yaml or .json instead.
-            auto suffix = ".tmp";
-            if (!QString2QJsonObject(config).isEmpty()) {
+            // suffix
+            QString suffix;
+            if (!config_suffix.isEmpty()) {
+                suffix = "." + config_suffix;
+            } else if (!QString2QJsonObject(config).isEmpty()) {
+                // trojan-go: unsupported config format: xxx.tmp. use .yaml or .json instead.
                 suffix = ".json";
             }
 

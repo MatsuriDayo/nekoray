@@ -63,6 +63,30 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLabel" name="config_suffix_l">
+         <property name="text">
+          <string>Config Suffix</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="config_suffix">
+         <property name="editable">
+          <bool>true</bool>
+         </property>
+         <item>
+          <property name="text">
+           <string notr="true"/>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">json</string>
+          </property>
+         </item>
+        </widget>
+       </item>
       </layout>
      </item>
      <item>

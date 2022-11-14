@@ -50,6 +50,7 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     P_LOAD_COMBO(core)
     ui->command->setText(bean->command.join(" "));
     P_LOAD_STRING(config_simple)
+    P_LOAD_COMBO(config_suffix)
 
     // custom external
     if (!bean->core.isEmpty()) {
@@ -68,6 +69,8 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         ui->core_l->setText(tr("Outbound JSON, please read the documentation."));
         ui->command->hide();
         ui->command_l->hide();
+        ui->config_suffix->hide();
+        ui->config_suffix_l->hide();
     }
 
     // Generators
@@ -80,6 +83,7 @@ bool EditCustom::onEnd() {
     P_SAVE_COMBO(core)
     bean->command = ui->command->text().split(" ");
     P_SAVE_STRING_QTEXTEDIT(config_simple)
+    P_SAVE_COMBO(config_suffix)
 
     if (bean->core.isEmpty()) {
         MessageBoxWarning(software_name, tr("Please pick a core."));
