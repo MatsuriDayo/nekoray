@@ -1,7 +1,5 @@
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
-#include "NaiveBean.hpp"
-
 
 #include <QFile>
 #include <QDir>

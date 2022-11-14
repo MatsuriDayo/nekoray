@@ -39,7 +39,6 @@ int main(int argc, char *argv[]) {
     QDir::setCurrent(QApplication::applicationDirPath());
     if (QFile::exists("updater.old")) {
         QFile::remove("updater.old");
-        QFile::remove("sing-box.exe"); // v1.11
     }
 #ifndef Q_OS_WIN
     if (!QFile::exists("updater")) {
@@ -52,8 +51,12 @@ int main(int argc, char *argv[]) {
     if (args.contains("-many")) NekoRay::dataStore->flag_many = true;
     if (args.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
     if (args.contains("-tray")) NekoRay::dataStore->flag_tray = true;
+    if (args.contains("-debug")) NekoRay::dataStore->flag_debug = true;
 #ifdef NKR_CPP_USE_APPDATA
     NekoRay::dataStore->flag_use_appdata = true;
+#endif
+#ifdef NKR_CPP_DEBUG
+    NekoRay::dataStore->flag_debug = true;
 #endif
 
     // dirs & clean
@@ -95,13 +98,13 @@ int main(int argc, char *argv[]) {
     QDir dir;
     bool dir_success = true;
     if (!dir.exists("profiles")) {
-        dir_success = dir_success && dir.mkdir("profiles");
+        dir_success &= dir.mkdir("profiles");
     }
     if (!dir.exists("groups")) {
-        dir_success = dir_success && dir.mkdir("groups");
+        dir_success &= dir.mkdir("groups");
     }
     if (!dir.exists(ROUTES_PREFIX_NAME)) {
-        dir_success = dir_success && dir.mkdir(ROUTES_PREFIX_NAME);
+        dir_success &= dir.mkdir(ROUTES_PREFIX_NAME);
     }
     if (!dir_success) {
         QMessageBox::warning(nullptr, "Error", "No permission to write " + dir.absolutePath());

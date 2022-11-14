@@ -1,6 +1,8 @@
-#include "ThemeManager.hpp"
-
+#include <QStyle>
+#include <QApplication>
 #include <QStyleFactory>
+
+#include "ThemeManager.hpp"
 
 ThemeManager *themeManager = new ThemeManager;
 

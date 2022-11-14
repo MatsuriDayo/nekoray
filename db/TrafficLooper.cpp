@@ -11,15 +11,16 @@ namespace NekoRay::traffic {
 
     std::unique_ptr<TrafficData> TrafficLooper::update_stats(TrafficData *item) {
 #ifndef NKR_NO_GRPC
+        auto interval = dataStore->traffic_loop_interval;
+        if (interval == 0) return nullptr;
         auto uplink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "uplink");
         auto downlink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "downlink");
 
+        // add diff
         item->downlink += downlink;
         item->uplink += uplink;
-
-        //?
-        item->downlink_rate = downlink * 1000 / dataStore->traffic_loop_interval;
-        item->uplink_rate = uplink * 1000 / dataStore->traffic_loop_interval;
+        item->downlink_rate = downlink * 1000 / interval;
+        item->uplink_rate = uplink * 1000 / interval;
 
         // return diff
         auto ret = std::make_unique<TrafficData>(item->tag);

@@ -1,8 +1,5 @@
 #pragma once
 
-#include <QStyle>
-#include <QApplication>
-
 class ThemeManager {
 public:
     QString system_style_name = "";

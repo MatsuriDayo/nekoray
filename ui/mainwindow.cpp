@@ -385,9 +385,7 @@ MainWindow::MainWindow(QWidget *parent)
     args.push_back(IS_NEKO_BOX ? "nekobox" : "nekoray");
     args.push_back("-port");
     args.push_back(Int2String(NekoRay::dataStore->core_port));
-#ifdef NKR_DEBUG
-    args.push_back("-debug");
-#endif
+    if (NekoRay::dataStore->flag_debug) args.push_back("-debug");
 
     // Start core
     core_process = new NekoRay::sys::CoreProcess(core_path, args);

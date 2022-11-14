@@ -57,6 +57,7 @@ namespace NekoRay {
         bool flag_use_appdata = false;
         bool flag_many = false;
         bool flag_tray = false;
+        bool flag_debug = false;
 
         // Saved
 

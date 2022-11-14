@@ -1,7 +1,5 @@
 #pragma once
 
-#include <QWidget>
-
 // Dialogs
 
 #define Dialog_DialogBasicSettings "DialogBasicSettings"
