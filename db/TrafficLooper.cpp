@@ -8,11 +8,17 @@
 namespace NekoRay::traffic {
 
     TrafficLooper *trafficLooper = new TrafficLooper;
+    QElapsedTimer trafficLooper_timer;
 
     std::unique_ptr<TrafficData> TrafficLooper::update_stats(TrafficData *item) {
 #ifndef NKR_NO_GRPC
-        auto interval = dataStore->traffic_loop_interval;
-        if (interval == 0) return nullptr;
+        // last update
+        auto now = trafficLooper_timer.elapsed();
+        auto interval = now - item->last_update;
+        item->last_update = now;
+        if (interval <= 0) return nullptr;
+
+        // query
         auto uplink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "uplink");
         auto downlink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "downlink");
 
@@ -63,6 +69,7 @@ namespace NekoRay::traffic {
     }
 
     void TrafficLooper::loop() {
+        trafficLooper_timer.start();
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
             auto user_disabled = sleep_ms == 0;
