@@ -20,9 +20,11 @@ using namespace NekoRay::rpc;
 void MainWindow::setup_grpc() {
 #ifndef NKR_NO_GRPC
     // Setup Connection
-    defaultClient = new Client([=](const QString &errStr) {
-        MW_show_log("[Error] gRPC: " + errStr);
-    }, "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
+    defaultClient = new Client(
+        [=](const QString &errStr) {
+            MW_show_log("[Error] gRPC: " + errStr);
+        },
+        "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
     auto t = new QTimer();
     connect(t, &QTimer::timeout, this, [=]() {
         bool ok = defaultClient->KeepAlive();
@@ -38,9 +40,7 @@ void MainWindow::setup_grpc() {
     auto tt = new QThread;
     tt->start();
     t->moveToThread(tt);
-    runOnUiThread([=] {
-        t->start(2000);
-    }, t);
+    runOnUiThread([=] { t->start(2000); }, t);
 
     // Looper
     runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });
@@ -74,7 +74,7 @@ void MainWindow::speedtest_current_group(int mode) {
     runOnNewThread([=]() {
         auto group = NekoRay::profileManager->CurrentGroup();
         if (group->archive) return;
-        auto order = ui->proxyListTable->order;//copy
+        auto order = ui->proxyListTable->order; // copy
 
         QMutex lock_write;
         QMutex lock_return;
@@ -152,9 +152,7 @@ void MainWindow::speedtest_current_group(int mode) {
 
                     runOnUiThread([=] {
                         if (!result.error().empty()) {
-                            show_log_impl(
-                                    tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(),
-                                                                  result.error().c_str()));
+                            show_log_impl(tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(), result.error().c_str()));
                         }
                         refresh_proxy_list(profile->id);
                     });
@@ -325,8 +323,8 @@ void MainWindow::CheckUpdate() {
     runOnUiThread([=] {
         auto note_pre_release = response.is_pre_release() ? " (Pre-release)" : "";
         QMessageBox box(QMessageBox::Question, QObject::tr("Update") + note_pre_release,
-                        QObject::tr("Update found: %1\nRelease note:\n%2")
-                                .arg(response.assets_name().c_str(), response.release_note().c_str()));
+                        QObject::tr("Update found: %1\nRelease note:\n%2").arg(response.assets_name().c_str(), response.release_note().c_str()));
+        //
         QAbstractButton *btn1 = nullptr;
         if (!NekoRay::dataStore->flag_use_appdata) {
             btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
@@ -334,7 +332,7 @@ void MainWindow::CheckUpdate() {
         QAbstractButton *btn2 = box.addButton(QObject::tr("Open in browser"), QMessageBox::AcceptRole);
         box.addButton(QObject::tr("Close"), QMessageBox::RejectRole);
         box.exec();
-
+        //
         if (btn1 == box.clickedButton()) {
             // Download Update
             runOnNewThread([=] {

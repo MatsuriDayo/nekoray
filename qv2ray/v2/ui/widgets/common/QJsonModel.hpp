@@ -34,9 +34,8 @@
 class QJsonModel;
 class QJsonItem;
 
-class QJsonTreeItem
-{
-  public:
+class QJsonTreeItem {
+public:
     QJsonTreeItem(QJsonTreeItem *parent = nullptr);
     ~QJsonTreeItem();
     void appendChild(QJsonTreeItem *item);
@@ -53,8 +52,8 @@ class QJsonTreeItem
 
     static QJsonTreeItem *load(const QJsonValue &value, QJsonTreeItem *parent = 0);
 
-  protected:
-  private:
+protected:
+private:
     QString mKey;
     QString mValue;
     QJsonValue::Type mType;
@@ -64,10 +63,9 @@ class QJsonTreeItem
 
 //---------------------------------------------------
 
-class QJsonModel : public QAbstractItemModel
-{
+class QJsonModel : public QAbstractItemModel {
     Q_OBJECT
-  public:
+public:
     explicit QJsonModel(QObject *parent = nullptr);
     QJsonModel(const QString &fileName, QObject *parent = nullptr);
     QJsonModel(QIODevice *device, QObject *parent = nullptr);
@@ -86,7 +84,7 @@ class QJsonModel : public QAbstractItemModel
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
     QJsonDocument json() const;
 
-  private:
+private:
     QJsonValue genJson(QJsonTreeItem *) const;
 
     QJsonTreeItem *mRootItem;

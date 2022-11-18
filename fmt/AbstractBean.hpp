@@ -60,7 +60,6 @@ namespace NekoRay::fmt {
         virtual QString InsecureHint() { return {}; };
 
         QString DisplayInsecureHint();
-
     };
 
-}
+} // namespace NekoRay::fmt

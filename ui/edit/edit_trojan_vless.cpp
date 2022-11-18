@@ -3,8 +3,7 @@
 
 #include "fmt/TrojanVLESSBean.hpp"
 
-EditTrojanVLESS::EditTrojanVLESS(QWidget *parent) :
-        QWidget(parent), ui(new Ui::EditTrojanVLESS) {
+EditTrojanVLESS::EditTrojanVLESS(QWidget *parent) : QWidget(parent), ui(new Ui::EditTrojanVLESS) {
     ui->setupUi(this);
 }
 

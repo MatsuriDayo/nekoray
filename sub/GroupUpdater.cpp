@@ -33,15 +33,14 @@ namespace NekoRay::sub {
             stream->security = "tls";
         }
         // 2. TLS SNI: v2rayN config builder generate sni like this, so set sni here for their format.
-        if (stream->security == "tls" && IsIpAddress(ent->bean->serverAddress)
-            && (!stream->host.isEmpty()) && stream->sni.isEmpty()) {
-            stream->sni = stream->host;;
+        if (stream->security == "tls" && IsIpAddress(ent->bean->serverAddress) && (!stream->host.isEmpty()) && stream->sni.isEmpty()) {
+            stream->sni = stream->host;
         }
     }
 
     void RawUpdater::update(const QString &str) {
         // Base64 encoded subscription
-        if (auto str2 = DecodeB64IfValid(str);!str2.isEmpty()) {
+        if (auto str2 = DecodeB64IfValid(str); !str2.isEmpty()) {
             update(str2);
             return;
         }
@@ -202,7 +201,7 @@ namespace NekoRay::sub {
 
 #endif
 
-// https://github.com/Dreamacro/clash/wiki/configuration
+    // https://github.com/Dreamacro/clash/wiki/configuration
     void RawUpdater::updateClash(const QString &str) {
 #ifndef NKR_NO_EXTERNAL
         try {
@@ -364,8 +363,7 @@ namespace NekoRay::sub {
 
             auto resp = NetworkRequestHelper::HttpGet(content);
             if (!resp.error.isEmpty()) {
-                MW_show_log("<<<<<<<< " + QObject::tr("Requesting subscription %1 error: %2")
-                        .arg(groupName, resp.error + "\n" + resp.data));
+                MW_show_log("<<<<<<<< " + QObject::tr("Requesting subscription %1 error: %2").arg(groupName, resp.error + "\n" + resp.data));
                 return;
             }
 
@@ -373,11 +371,11 @@ namespace NekoRay::sub {
             sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
         }
 
-        QList<QSharedPointer<ProxyEntity>> in; // 更新前
-        QList<QSharedPointer<ProxyEntity>> out_all; // 更新前 + 更新后
-        QList<QSharedPointer<ProxyEntity>> out; // 更新后
-        QList<QSharedPointer<ProxyEntity>> only_in; // 只在更新前有的
-        QList<QSharedPointer<ProxyEntity>> only_out; // 只在更新后有的
+        QList<QSharedPointer<ProxyEntity>> in;         // 更新前
+        QList<QSharedPointer<ProxyEntity>> out_all;    // 更新前 + 更新后
+        QList<QSharedPointer<ProxyEntity>> out;        // 更新后
+        QList<QSharedPointer<ProxyEntity>> only_in;    // 只在更新前有的
+        QList<QSharedPointer<ProxyEntity>> only_out;   // 只在更新后有的
         QList<QSharedPointer<ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
 
         // 订阅解析前
@@ -423,8 +421,10 @@ namespace NekoRay::sub {
             }
 
             auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
-                    .arg(only_out.length()).arg(notice_added)
-                    .arg(only_in.length()).arg(notice_deleted);
+                                     .arg(only_out.length())
+                                     .arg(notice_added)
+                                     .arg(only_in.length())
+                                     .arg(notice_deleted);
             if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
             MW_show_log("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
             MW_dialog_message("SubUpdater", "finish-dingyue");
@@ -433,4 +433,4 @@ namespace NekoRay::sub {
             MW_dialog_message("SubUpdater", "finish");
         }
     }
-}
+} // namespace NekoRay::sub

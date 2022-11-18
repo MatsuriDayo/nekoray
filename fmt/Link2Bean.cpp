@@ -5,10 +5,11 @@
 
 namespace NekoRay::fmt {
 
-#define DECODE_V2RAY_N_1 auto linkN = DecodeB64IfValid(SubStrBefore(SubStrAfter(link, "://"), "#"), QByteArray::Base64Option::Base64UrlEncoding); \
-    if (linkN.isEmpty()) return false; \
-    auto hasRemarks = link.contains("#"); \
-    if (hasRemarks) linkN += "#" + SubStrAfter(link, "#"); \
+#define DECODE_V2RAY_N_1                                                                                                     \
+    auto linkN = DecodeB64IfValid(SubStrBefore(SubStrAfter(link, "://"), "#"), QByteArray::Base64Option::Base64UrlEncoding); \
+    if (linkN.isEmpty()) return false;                                                                                       \
+    auto hasRemarks = link.contains("#");                                                                                    \
+    if (hasRemarks) linkN += "#" + SubStrAfter(link, "#");                                                                   \
     auto url = QUrl("https://" + linkN);
 
     bool SocksHttpBean::TryParseLink(const QString &link) {
@@ -149,4 +150,4 @@ namespace NekoRay::fmt {
         return !(username.isEmpty() || password.isEmpty());
     }
 
-}
+} // namespace NekoRay::fmt

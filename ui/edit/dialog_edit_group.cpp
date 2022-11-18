@@ -5,8 +5,8 @@
 
 #include <QClipboard>
 
-DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent) :
-        QDialog(parent), ui(new Ui::DialogEditGroup) {
+DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent)
+    : QDialog(parent), ui(new Ui::DialogEditGroup) {
     ui->setupUi(this);
 
     connect(ui->type, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {

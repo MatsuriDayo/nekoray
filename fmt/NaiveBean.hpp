@@ -35,4 +35,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-}
+} // namespace NekoRay::fmt

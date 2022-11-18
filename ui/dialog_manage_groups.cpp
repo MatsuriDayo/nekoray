@@ -11,18 +11,17 @@
 #include <QListWidgetItem>
 #include <QMessageBox>
 
-#define AddGroupToListIfExist(_id) \
-auto __ent = NekoRay::profileManager->GetGroup(_id); \
-if (__ent != nullptr) { \
-auto wI = new QListWidgetItem(); \
-auto w = new GroupItem(this, __ent, wI); \
-wI->setData(114514, _id); \
-ui->listWidget->addItem(wI); \
-ui->listWidget->setItemWidget(wI, w); \
-}
+#define AddGroupToListIfExist(_id)                       \
+    auto __ent = NekoRay::profileManager->GetGroup(_id); \
+    if (__ent != nullptr) {                              \
+        auto wI = new QListWidgetItem();                 \
+        auto w = new GroupItem(this, __ent, wI);         \
+        wI->setData(114514, _id);                        \
+        ui->listWidget->addItem(wI);                     \
+        ui->listWidget->setItemWidget(wI, w);            \
+    }
 
-DialogManageGroups::DialogManageGroups(QWidget *parent) :
-        QDialog(parent), ui(new Ui::DialogManageGroups) {
+DialogManageGroups::DialogManageGroups(QWidget *parent) : QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
 
     for (auto id: NekoRay::profileManager->_groups) {
@@ -47,14 +46,13 @@ void DialogManageGroups::on_add_clicked() {
 
     if (ret == QDialog::Accepted) {
         NekoRay::profileManager->AddGroup(ent);
-        AddGroupToListIfExist(ent->id)
+        AddGroupToListIfExist(ent->id);
         MW_dialog_message(Dialog_DialogManageGroups, "refresh-1");
     }
 }
 
 void DialogManageGroups::on_update_all_clicked() {
-    if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?"))
-        == QMessageBox::StandardButton::Yes) {
+    if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?")) == QMessageBox::StandardButton::Yes) {
         for (const auto &gid: NekoRay::profileManager->_groups) {
             auto group = NekoRay::profileManager->GetGroup(gid);
             if (group == nullptr || group->url.isEmpty()) continue;

@@ -95,17 +95,21 @@ namespace NekoRay::sys {
                 MW_show_log("[Error] core exited, restarting.\n");
 
                 // Restart
-                setTimeout([=] {
-                    Kill();
-                    ExternalProcess::started = false;
-                    Start();
-                }, this, 1000);
+                setTimeout(
+                    [=] {
+                        Kill();
+                        ExternalProcess::started = false;
+                        Start();
+                    },
+                    this, 1000);
             } else if (state == QProcess::Running && restart_id >= 0) {
                 // Restart profile
-                setTimeout([=] {
-                    MW_dialog_message("ExternalProcess", "CoreRestarted," + Int2String(restart_id));
-                    restart_id = -1;
-                }, this, 1000);
+                setTimeout(
+                    [=] {
+                        MW_dialog_message("ExternalProcess", "CoreRestarted," + Int2String(restart_id));
+                        restart_id = -1;
+                    },
+                    this, 1000);
             }
         });
     }
@@ -122,4 +126,4 @@ namespace NekoRay::sys {
         write((dataStore->core_token + "\n").toUtf8());
     }
 
-}
+} // namespace NekoRay::sys

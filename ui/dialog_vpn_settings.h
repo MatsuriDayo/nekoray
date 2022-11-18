@@ -3,13 +3,14 @@
 
 #include <QDialog>
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class DialogVPNSettings; }
+namespace Ui {
+    class DialogVPNSettings;
+}
 QT_END_NAMESPACE
 
 class DialogVPNSettings : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogVPNSettings(QWidget *parent = nullptr);
@@ -22,8 +23,6 @@ private:
 public slots:
 
     void accept() override;
-
 };
 
-
-#endif //NEKORAY_DIALOG_VPN_SETTINGS_H
+#endif // NEKORAY_DIALOG_VPN_SETTINGS_H

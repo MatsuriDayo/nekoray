@@ -3,8 +3,7 @@
 #include <QObject>
 #include <QString>
 //
-namespace Qv2ray::components::proxy
-{
+namespace Qv2ray::components::proxy {
     void ClearSystemProxy();
     void SetSystemProxy(int http_port, int socks_port);
 } // namespace Qv2ray::components::proxy

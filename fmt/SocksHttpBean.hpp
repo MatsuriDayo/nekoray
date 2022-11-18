@@ -38,4 +38,4 @@ namespace NekoRay::fmt {
 
         QString InsecureHint() override;
     };
-}
+} // namespace NekoRay::fmt

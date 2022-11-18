@@ -11,7 +11,7 @@ namespace NekoRay {
         QStringList tryDomains;
 
         QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
-        QSharedPointer<traffic::TrafficData> outboundStat; // main
+        QSharedPointer<traffic::TrafficData> outboundStat;         // main
 
         QList<sys::ExternalProcess *> ext;
     };
@@ -58,4 +58,4 @@ namespace NekoRay {
     QString WriteVPNSingBoxConfig();
 
     QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath);
-}
+} // namespace NekoRay

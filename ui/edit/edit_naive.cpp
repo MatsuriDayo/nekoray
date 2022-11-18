@@ -5,8 +5,7 @@
 
 #include <QInputDialog>
 
-EditNaive::EditNaive(QWidget *parent) :
-        QWidget(parent), ui(new Ui::EditNaive) {
+EditNaive::EditNaive(QWidget *parent) : QWidget(parent), ui(new Ui::EditNaive) {
     ui->setupUi(this);
 }
 
@@ -43,8 +42,8 @@ bool EditNaive::onEnd() {
 
 QList<QPair<QPushButton *, QString>> EditNaive::get_editor_cached() {
     return {
-            {ui->certificate,   CACHE.certificate},
-            {ui->extra_headers, CACHE.extra_headers},
+        {ui->certificate, CACHE.certificate},
+        {ui->extra_headers, CACHE.extra_headers},
     };
 }
 

@@ -20,7 +20,9 @@
 
 #endif
 
-namespace NekoRay::sys { class CoreProcess; }
+namespace NekoRay::sys {
+    class CoreProcess;
+}
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,7 +31,7 @@ namespace Ui {
 QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit MainWindow(QWidget *parent = nullptr);
@@ -165,7 +167,6 @@ private:
     bool StartVPNProcess();
 
     bool StopVPNProcess();
-
 
     // grpc and ...
 

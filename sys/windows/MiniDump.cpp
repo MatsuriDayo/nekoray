@@ -9,14 +9,14 @@
 #include <QDateTime>
 #include <QMessageBox>
 
-typedef BOOL( WINAPI *MINIDUMPWRITEDUMP )(
-HANDLE hProcess,
-DWORD dwPid,
-HANDLE hFile,
-MINIDUMP_TYPE DumpType,
-CONST PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
-CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
-CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
+typedef BOOL(WINAPI *MINIDUMPWRITEDUMP)(
+    HANDLE hProcess,
+    DWORD dwPid,
+    HANDLE hFile,
+    MINIDUMP_TYPE DumpType,
+    CONST PMINIDUMP_EXCEPTION_INFORMATION ExceptionParam,
+    CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
+    CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
 
 LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
     QDir::setCurrent(QApplication::applicationDirPath());
@@ -30,7 +30,7 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
             //创建 Dump 文件
             QDateTime CurDTime = QDateTime::currentDateTime();
             QString current_date = CurDTime.toString("yyyy_MM_dd_hh_mm_ss");
-            //dmp文件的命名
+            // dmp文件的命名
             QString dumpText = "Dump_" + current_date + ".dmp";
             EXCEPTION_RECORD *record = pException->ExceptionRecord;
             QString errCode(QString::number(record->ExceptionCode, 16));
@@ -46,7 +46,7 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
                 dumpInfo.ClientPointers = TRUE;
                 //将dump信息写入dmp文件
                 Dump(GetCurrentProcess(), GetCurrentProcessId(), DumpHandle, MiniDumpNormal, &dumpInfo,
-                                  NULL, NULL);
+                     NULL, NULL);
                 CloseHandle(DumpHandle);
             } else {
                 dumpText = "";
@@ -54,12 +54,16 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
             //创建消息提示
             QMessageBox::warning(NULL, "Application crashed",
                                  QString("ErrorCode: %1 ErrorAddr:%2 ErrorFlag: %3 ErrorPara: %4\nVersion: %5\nDump file at %6")
-                                         .arg(errCode).arg(errAddr).arg(errFlag).arg(errPara)
-                                         .arg(NKR_VERSION).arg(dumpText),
+                                     .arg(errCode)
+                                     .arg(errAddr)
+                                     .arg(errFlag)
+                                     .arg(errPara)
+                                     .arg(NKR_VERSION)
+                                     .arg(dumpText),
                                  QMessageBox::Ok);
-            return EXCEPTION_EXECUTE_HANDLER;
         }
     }
+    return EXCEPTION_EXECUTE_HANDLER;
 }
 
 void Windows_SetCrashHandler() {

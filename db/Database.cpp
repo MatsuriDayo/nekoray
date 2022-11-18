@@ -141,7 +141,11 @@ namespace NekoRay {
     // Profile
 
     int ProfileManager::NewProfileID() const {
-        if (profiles.empty()) { return 0; } else { return profiles.lastKey() + 1; }
+        if (profiles.empty()) {
+            return 0;
+        } else {
+            return profiles.lastKey() + 1;
+        }
     }
 
     bool ProfileManager::AddProfile(const QSharedPointer<ProxyEntity> &ent, int gid) {
@@ -192,7 +196,7 @@ namespace NekoRay {
         return nullptr;
     }
 
-    //Group
+    // Group
 
     Group::Group() {
         _add(new configItem("id", &id, itemType::integer));
@@ -212,7 +216,11 @@ namespace NekoRay {
     }
 
     int ProfileManager::NewGroupID() const {
-        if (groups.empty()) { return 0; } else { return groups.lastKey() + 1; }
+        if (groups.empty()) {
+            return 0;
+        } else {
+            return groups.lastKey() + 1;
+        }
     }
 
     bool ProfileManager::AddGroup(const QSharedPointer<Group> &ent) {
@@ -277,4 +285,4 @@ namespace NekoRay {
         }
     }
 
-}
+} // namespace NekoRay

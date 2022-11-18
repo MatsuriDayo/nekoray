@@ -60,4 +60,4 @@ namespace NekoRay {
 
         bool Load();
     };
-}
+} // namespace NekoRay

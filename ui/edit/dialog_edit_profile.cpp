@@ -20,8 +20,7 @@
 #define LOAD_TYPE(a) ui->type->addItem(NekoRay::ProfileManager::NewProxyEntity(a)->bean->DisplayType(), a);
 
 DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent)
-        : QDialog(parent),
-          ui(new Ui::DialogEditProfile) {
+    : QDialog(parent), ui(new Ui::DialogEditProfile) {
     // setup UI
     ui->setupUi(this);
     ui->dialog_layout->setAlignment(ui->left, Qt::AlignTop);
@@ -244,7 +243,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->name->setText(ent->bean->name);
     ui->address->setText(ent->bean->serverAddress);
     ui->port->setText(Int2String(ent->bean->serverPort));
-    ui->port->setValidator(QRegExpValidator_Number, this));
+    ui->port->setValidator(QRegExpValidator_Number);
 
     // 星号
     for (auto label: findChildren<QLabel *>()) {

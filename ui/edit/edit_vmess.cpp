@@ -3,8 +3,7 @@
 
 #include "fmt/VMessBean.hpp"
 
-EditVMess::EditVMess(QWidget *parent) :
-        QWidget(parent), ui(new Ui::EditVMess) {
+EditVMess::EditVMess(QWidget *parent) : QWidget(parent), ui(new Ui::EditVMess) {
     ui->setupUi(this);
 }
 

@@ -2,7 +2,7 @@
 
 #ifdef __MINGW32__
 
-void Windows_SetCrashHandler(){}
+void Windows_SetCrashHandler() {}
 
 #else
 

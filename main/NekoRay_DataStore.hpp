@@ -67,7 +67,7 @@ namespace NekoRay {
         int test_concurrent = 5;
         int traffic_loop_interval = 500;
         bool connection_statistics = false;
-        int current_group = 0; //group id
+        int current_group = 0; // group id
         int mux_cool = -8;
         QString theme = "0";
         QString v2ray_asset_dir = "";
@@ -137,8 +137,8 @@ namespace NekoRay {
 
     inline int coreType = NekoRay::CoreType::V2RAY;
 
-}
+} // namespace NekoRay
 
 #define IS_NEKO_BOX (NekoRay::coreType == NekoRay::CoreType::SING_BOX)
-#define ROUTES_PREFIX_NAME QString( IS_NEKO_BOX ? "routes_box" : "routes" )
-#define ROUTES_PREFIX QString( ROUTES_PREFIX_NAME + "/" )
+#define ROUTES_PREFIX_NAME QString(IS_NEKO_BOX ? "routes_box" : "routes")
+#define ROUTES_PREFIX QString(ROUTES_PREFIX_NAME + "/")

@@ -28,4 +28,4 @@ namespace NekoRay::traffic {
     };
 
     extern TrafficLooper *trafficLooper;
-}
+} // namespace NekoRay::traffic

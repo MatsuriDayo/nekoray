@@ -57,7 +57,7 @@
 
 namespace Qv2ray::ui {
     class SyntaxHighlighter : public QSyntaxHighlighter {
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         explicit SyntaxHighlighter(bool darkMode, QTextDocument *parent = nullptr);

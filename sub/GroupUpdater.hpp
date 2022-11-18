@@ -15,7 +15,7 @@ namespace NekoRay::sub {
     };
 
     class GroupUpdater : public QObject {
-    Q_OBJECT
+        Q_OBJECT
 
     public:
         void AsyncUpdate(const QString &str, int _sub_gid = -1, const std::function<void()> &finish = nullptr);
@@ -28,5 +28,4 @@ namespace NekoRay::sub {
     };
 
     extern GroupUpdater *groupUpdater;
-}
-
+} // namespace NekoRay::sub

@@ -43,4 +43,4 @@ namespace NekoRay::sys {
 
     // start & kill change this list
     inline QList<ExternalProcess *> running_ext;
-}
+} // namespace NekoRay::sys

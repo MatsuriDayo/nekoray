@@ -4,11 +4,13 @@
 #include "main/NekoRay.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class DialogHotkey; }
+namespace Ui {
+    class DialogHotkey;
+}
 QT_END_NAMESPACE
 
 class DialogHotkey : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogHotkey(QWidget *parent = nullptr);

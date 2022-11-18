@@ -9,7 +9,7 @@ namespace Ui {
 }
 
 class DialogBasicSettings : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogBasicSettings(QWidget *parent = nullptr);
@@ -32,7 +32,6 @@ private:
 private slots:
 
     void on_set_custom_icon_clicked();
-
 };
 
 #endif // DIALOG_BASIC_SETTINGS_H

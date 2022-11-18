@@ -36,12 +36,12 @@ QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
         p.setBrush(QBrush(Qt::red));
     }
     p.drawRoundedRect(
-            QRect(side - d - margin,
-                  side - d - margin,
-                  d,
-                  d),
-            radius,
-            radius);
+        QRect(side - d - margin,
+              side - d - margin,
+              d,
+              d),
+        radius,
+        radius);
     p.end();
 
     return pixmap;

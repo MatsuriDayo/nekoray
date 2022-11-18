@@ -42,6 +42,5 @@ namespace NekoRay::rpc {
     };
 
     inline Client *defaultClient;
-}
+} // namespace NekoRay::rpc
 #endif
-

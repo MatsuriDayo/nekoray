@@ -56,4 +56,4 @@ namespace NekoRay::fmt {
         }
         return nullptr;
     }
-}
+} // namespace NekoRay::fmt

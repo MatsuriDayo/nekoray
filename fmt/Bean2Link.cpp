@@ -62,19 +62,19 @@ namespace NekoRay::fmt {
 
     QString VMessBean::ToShareLink() {
         QJsonObject N{
-                {"v",    "2"},
-                {"ps",   name},
-                {"add",  serverAddress},
-                {"port", Int2String(serverPort)},
-                {"id",   uuid},
-                {"aid",  Int2String(aid)},
-                {"net",  stream->network},
-                {"host", stream->host},
-                {"path", stream->path},
-                {"type", stream->header_type},
-                {"scy",  security},
-                {"tls",  stream->security == "tls" ? "tls" : ""},
-                {"sni",  stream->sni},
+            {"v", "2"},
+            {"ps", name},
+            {"add", serverAddress},
+            {"port", Int2String(serverPort)},
+            {"id", uuid},
+            {"aid", Int2String(aid)},
+            {"net", stream->network},
+            {"host", stream->host},
+            {"path", stream->path},
+            {"type", stream->header_type},
+            {"scy", security},
+            {"tls", stream->security == "tls" ? "tls" : ""},
+            {"sni", stream->sni},
         };
         return "vmess://" + QJsonObject2QString(N, false).toUtf8().toBase64();
     }
@@ -90,4 +90,4 @@ namespace NekoRay::fmt {
         return url.toString();
     }
 
-}
+} // namespace NekoRay::fmt

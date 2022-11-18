@@ -5,18 +5,18 @@
 #include <QDir>
 #include <QFileInfo>
 
-#define WriteTempFile(fn, data) \
-QDir dir; \
-if (!dir.exists("temp")) dir.mkdir("temp"); \
-QFile f(QString("temp/") + fn); \
-bool ok = f.open(QIODevice::WriteOnly | QIODevice::Truncate); \
-if (ok) { \
-f.write(data); \
-} else { \
-result.error = f.errorString(); \
-} \
-f.close(); \
-auto TempFile = QFileInfo(f).absoluteFilePath();
+#define WriteTempFile(fn, data)                                   \
+    QDir dir;                                                     \
+    if (!dir.exists("temp")) dir.mkdir("temp");                   \
+    QFile f(QString("temp/") + fn);                               \
+    bool ok = f.open(QIODevice::WriteOnly | QIODevice::Truncate); \
+    if (ok) {                                                     \
+        f.write(data);                                            \
+    } else {                                                      \
+        result.error = f.errorString();                           \
+    }                                                             \
+    f.close();                                                    \
+    auto TempFile = QFileInfo(f).absoluteFilePath();
 
 namespace NekoRay::fmt {
     // 0: no external
@@ -123,4 +123,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-}
+} // namespace NekoRay::fmt

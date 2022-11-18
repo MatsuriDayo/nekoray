@@ -82,8 +82,8 @@ int main(int argc, char *argv[]) {
 
     // icons
     QIcon::setFallbackSearchPaths(QStringList{
-            ":/nekoray",
-            ":/icon",
+        ":/nekoray",
+        ":/icon",
     });
 
     // icon for no theme
@@ -155,7 +155,7 @@ int main(int argc, char *argv[]) {
         QCoreApplication::installTranslator(&trans_qt);
     }
 
-    //Signals
+    // Signals
     signal(SIGTERM, signal_handler);
     signal(SIGINT, signal_handler);
 

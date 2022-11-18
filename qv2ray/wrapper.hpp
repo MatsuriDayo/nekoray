@@ -9,11 +9,11 @@
 namespace Qv2ray::base {
     template<typename... T>
     inline void log_internal(T... v) {}
-}
+} // namespace Qv2ray::base
 
-#define JsonToString(a) QJsonObject2QString(a,false)
+#define JsonToString(a) QJsonObject2QString(a, false)
 #define JsonFromString(a) QString2QJsonObject(a)
-#define QvMessageBoxWarn(a, b, c) MessageBoxWarning(b,c)
+#define QvMessageBoxWarn(a, b, c) MessageBoxWarning(b, c)
 
 inline QString VerifyJsonString(const QString &source) {
     QJsonParseError error{};
@@ -23,16 +23,16 @@ inline QString VerifyJsonString(const QString &source) {
     if (error.error == QJsonParseError::NoError) {
         return "";
     } else {
-        //LOG("WARNING: Json parse returns: " + error.errorString());
+        // LOG("WARNING: Json parse returns: " + error.errorString());
         return error.errorString();
     }
 }
 
-#define RED(obj)                                                                                                                                     \
-    {                                                                                                                                                \
-        auto _temp = obj->palette();                                                                                                                 \
-        _temp.setColor(QPalette::Text, Qt::red);                                                                                                     \
-        obj->setPalette(_temp);                                                                                                                      \
+#define RED(obj)                                 \
+    {                                            \
+        auto _temp = obj->palette();             \
+        _temp.setColor(QPalette::Text, Qt::red); \
+        obj->setPalette(_temp);                  \
     }
 
 #define BLACK(obj) obj->setPalette(QWidget::palette());

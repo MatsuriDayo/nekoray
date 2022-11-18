@@ -5,16 +5,15 @@
 #include "fmt/CustomBean.hpp"
 #include "fmt/Preset.hpp"
 
-EditCustom::EditCustom(QWidget *parent) :
-        QWidget(parent), ui(new Ui::EditCustom) {
+EditCustom::EditCustom(QWidget *parent) : QWidget(parent), ui(new Ui::EditCustom) {
     ui->setupUi(this);
-    ui->config_simple->setPlaceholderText("example:\n"
-                                          "  server-address: \"127.0.0.1:%mapping_port%\"\n"
-                                          "  listen-address: \"127.0.0.1\"\n"
-                                          "  listen-port: %socks_port%\n"
-                                          "  host: your-domain.com\n"
-                                          "  sni: your-domain.com\n"
-    );
+    ui->config_simple->setPlaceholderText(
+        "example:\n"
+        "  server-address: \"127.0.0.1:%mapping_port%\"\n"
+        "  listen-address: \"127.0.0.1\"\n"
+        "  listen-port: %socks_port%\n"
+        "  host: your-domain.com\n"
+        "  sni: your-domain.com\n");
 }
 
 EditCustom::~EditCustom() {
@@ -36,14 +35,14 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         preset_config = Preset::Hysteria::config;
         ui->config_simple->setPlaceholderText("");
         ui->core->hide();
-        ui->core_l->setText(
-                tr("Please read the documentation. If you don't understand, use a share link instead."));
+        ui->core_l->setText(tr("Please read the documentation. If you don't understand, use a share link instead."));
     } else if (preset_core == "internal") {
         preset_command = preset_config = "";
-        ui->config_simple->setPlaceholderText("{\n"
-                                              "    \"type\": \"socks\",\n"
-                                              "    // ...\n"
-                                              "}");
+        ui->config_simple->setPlaceholderText(
+            "{\n"
+            "    \"type\": \"socks\",\n"
+            "    // ...\n"
+            "}");
     }
 
     // load core ui

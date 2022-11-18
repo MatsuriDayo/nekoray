@@ -2,9 +2,9 @@
 
 #include "main/NekoRay.hpp"
 
-JsonEditor::JsonEditor(const QJsonObject& rootObject, QWidget *parent) : QDialog(parent) {
+JsonEditor::JsonEditor(const QJsonObject& rootObject, QWidget* parent) : QDialog(parent) {
     setupUi(this);
-//    QvMessageBusConnect(JsonEditor);
+    //    QvMessageBusConnect(JsonEditor);
     //
     original = rootObject;
     final = rootObject;
@@ -23,17 +23,17 @@ JsonEditor::JsonEditor(const QJsonObject& rootObject, QWidget *parent) : QDialog
     jsonTree->resizeColumnToContents(0);
 }
 
-//QvMessageBusSlotImpl(JsonEditor)
-//        {
-//                switch (msg)
-//                {
-//                    MBShowDefaultImpl;
-//                    MBHideDefaultImpl;
-//                    MBRetranslateDefaultImpl;
-//                    case UPDATE_COLORSCHEME:
-//                        break;
-//                }
-//        }
+// QvMessageBusSlotImpl(JsonEditor)
+//         {
+//                 switch (msg)
+//                 {
+//                     MBShowDefaultImpl;
+//                     MBHideDefaultImpl;
+//                     MBRetranslateDefaultImpl;
+//                     case UPDATE_COLORSCHEME:
+//                         break;
+//                 }
+//         }
 
 QJsonObject JsonEditor::OpenEditor() {
     int resultCode = this->exec();

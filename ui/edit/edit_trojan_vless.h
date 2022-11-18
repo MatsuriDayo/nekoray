@@ -3,13 +3,14 @@
 #include <QWidget>
 #include "profile_editor.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditTrojanVLESS; }
+namespace Ui {
+    class EditTrojanVLESS;
+}
 QT_END_NAMESPACE
 
 class EditTrojanVLESS : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditTrojanVLESS(QWidget *parent = nullptr);
@@ -24,5 +25,3 @@ private:
     Ui::EditTrojanVLESS *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 };
-
-

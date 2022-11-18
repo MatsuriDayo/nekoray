@@ -3,8 +3,8 @@
 
 #include <QMessageBox>
 
-ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent, QListWidgetItem *item) :
-        QWidget(parent), ui(new Ui::ProxyItem) {
+ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent, QListWidgetItem *item)
+    : QWidget(parent), ui(new Ui::ProxyItem) {
     ui->setupUi(this);
     this->item = item;
     this->ent = ent;
@@ -24,17 +24,18 @@ void ProxyItem::refresh_data() {
     ui->traffic->setText(ent->traffic_data->DisplayTraffic());
     ui->test_result->setText(ent->DisplayLatency());
 
-    runOnUiThread([=] {
-        adjustSize();
-        item->setSizeHint(sizeHint());
-        dynamic_cast<QWidget *>(parent())->adjustSize();
-    }, this);
+    runOnUiThread(
+        [=] {
+            adjustSize();
+            item->setSizeHint(sizeHint());
+            dynamic_cast<QWidget *>(parent())->adjustSize();
+        },
+        this);
 }
 
 void ProxyItem::on_remove_clicked() {
     if (!this->remove_confirm ||
-        QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->bean->DisplayName()))
-        == QMessageBox::StandardButton::Yes) {
+        QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->bean->DisplayName())) == QMessageBox::StandardButton::Yes) {
         // TODO do remove (or not) -> callback
         delete item;
     }

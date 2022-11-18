@@ -39,4 +39,4 @@ namespace Qv2ray::components::GeositeReader {
         GeositeEntries[filepath] = list;
         return list;
     }
-} // namespace Qv2ray::components::geosite
+} // namespace Qv2ray::components::GeositeReader

@@ -7,11 +7,13 @@
 #include "main/NekoRay.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class DialogManageRoutes; }
+namespace Ui {
+    class DialogManageRoutes;
+}
 QT_END_NAMESPACE
 
 class DialogManageRoutes : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogManageRoutes(QWidget *parent = nullptr);
@@ -53,5 +55,3 @@ public slots:
 
     void on_load_save_clicked();
 };
-
-

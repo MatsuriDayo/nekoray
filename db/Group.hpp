@@ -22,4 +22,4 @@ namespace NekoRay {
         // 按 显示 顺序
         [[nodiscard]] QList<QSharedPointer<ProxyEntity>> ProfilesWithOrder() const;
     };
-}
+} // namespace NekoRay

@@ -8,7 +8,7 @@ namespace Ui {
 }
 
 class EditSocksHttp : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditSocksHttp(QWidget *parent = nullptr);

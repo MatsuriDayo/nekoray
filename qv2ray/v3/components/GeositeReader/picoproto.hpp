@@ -70,20 +70,18 @@
 #define PP_LOG_INFO std::cerr << __FILE__ << ":" << __LINE__ << " - INFO: "
 #define PP_LOG_WARN std::cerr << __FILE__ << ":" << __LINE__ << " - WARN: "
 #define PP_LOG_ERROR std::cerr << __FILE__ << ":" << __LINE__ << " - ERROR: "
-#define PP_CHECK(X)                                                                                                                                                      \
-    if (!(X))                                                                                                                                                            \
+#define PP_CHECK(X) \
+    if (!(X))       \
     PP_LOG(ERROR) << "PP_CHECK(" << #X << ") failed. "
 
-namespace picoproto
-{
+namespace picoproto {
 
     // These roughly correspond to the wire types used to save data in protobuf
     // files. The best reference to understand the full format is:
     // https://developers.google.com/protocol-buffers/docs/encoding
     // Because we don't know the bit-depth of VarInts, they're always stored as
     // uint64 values, which is why there's no specific type for them.
-    enum FieldType
-    {
+    enum FieldType {
         FIELD_UNSET,
         FIELD_UINT32,
         FIELD_UINT64,
@@ -100,9 +98,8 @@ namespace picoproto
     // data member, and handle all the allocation and deallocation of storage.
     // It's unlikely you'll want to access this class directly, since you'll
     // normally want to use Message below to pull typed values.
-    class Field
-    {
-      public:
+    class Field {
+    public:
         // You need to specify the type of a Field on creation, so that the right
         // storage can be set up for the values. You also need to indicate whether the
         // underlying memory will be around for the lifetime of the message (in which
@@ -117,8 +114,7 @@ namespace picoproto
         // and deciding how to initialize and access the data based on that persuaded
         // me this was the best approach. The `value` member contains whatever data
         // the field should be holding.
-        union
-        {
+        union {
             std::vector<uint32_t> *v_uint32;
             std::vector<uint64_t> *v_uint64;
             std::vector<std::pair<uint8_t *, size_t>> *v_bytes;
@@ -138,9 +134,8 @@ namespace picoproto
     };
 
     // The main interface for loading and accessing serialized protobuf data.
-    class Message
-    {
-      public:
+    class Message {
+    public:
         // If you're not sure about the lifetime of any binary data you're reading
         // from, just call this default constructor.
         Message();
@@ -195,7 +190,7 @@ namespace picoproto
         // hatch in case you do have to manipulate them more directly.
         Field *GetField(int32_t number);
 
-      private:
+    private:
         // Inserts a new field, updating all the internal data structures.
         Field *AddField(int32_t number, enum FieldType type);
 

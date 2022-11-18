@@ -51,4 +51,4 @@ namespace NekoRay {
     };
 
     extern ProfileManager *profileManager;
-}
+} // namespace NekoRay

@@ -3,13 +3,14 @@
 #include <QWidget>
 #include "profile_editor.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditCustom; }
+namespace Ui {
+    class EditCustom;
+}
 QT_END_NAMESPACE
 
 class EditCustom : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     QString preset_core;

@@ -8,11 +8,13 @@
 #include "db/Group.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class DialogManageGroups; }
+namespace Ui {
+    class DialogManageGroups;
+}
 QT_END_NAMESPACE
 
 class DialogManageGroups : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogManageGroups(QWidget *parent = nullptr);

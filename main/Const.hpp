@@ -30,5 +30,4 @@ namespace NekoRay {
             SING_BOX,
         };
     }
-}
-
+} // namespace NekoRay

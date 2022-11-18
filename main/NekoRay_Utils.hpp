@@ -24,9 +24,14 @@ inline std::function<void(QString, QString)> MW_dialog_message;
 
 // Utils
 
-#define QJSONARRAY_ADD(arr, add) for(const auto &a: (add)) { (arr) += a; }
-#define QJSONOBJECT_COPY(src, dst, key) if (src.contains(key)) dst[key] = src[key];
-#define QJSONOBJECT_COPY2(src, dst, src_key, dst_key) if (src.contains(src_key)) dst[dst_key] = src[src_key];
+#define QJSONARRAY_ADD(arr, add) \
+    for (const auto &a: (add)) { \
+        (arr) += a;              \
+    }
+#define QJSONOBJECT_COPY(src, dst, key) \
+    if (src.contains(key)) dst[key] = src[key];
+#define QJSONOBJECT_COPY2(src, dst, src_key, dst_key) \
+    if (src.contains(src_key)) dst[dst_key] = src[src_key];
 
 #define Int2String(num) QString::number(num)
 

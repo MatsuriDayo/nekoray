@@ -16,7 +16,6 @@ QString ParseSubInfo(const QString &info) {
     long long total = 0;
     long long expire = 0;
 
-
     auto re0m = QRegularExpression("total=([0-9]+)").match(info);
     if (re0m.lastCapturedIndex() >= 1) {
         total = re0m.captured(1).toLongLong();
@@ -37,13 +36,12 @@ QString ParseSubInfo(const QString &info) {
     }
 
     result = QObject::tr("Used: %1 Remain: %2 Expire: %3")
-            .arg(ReadableSize(used), ReadableSize(total - used), DisplayTime(expire, QLocale::ShortFormat));
+                 .arg(ReadableSize(used), ReadableSize(total - used), DisplayTime(expire, QLocale::ShortFormat));
 
     return result;
 }
 
-GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item) :
-        QWidget(parent), ui(new Ui::GroupItem) {
+GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item) : QWidget(parent), ui(new Ui::GroupItem) {
     ui->setupUi(this);
 
     this->ent = ent;
@@ -51,8 +49,7 @@ GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent,
     if (ent == nullptr) return;
 
     connect(this, &GroupItem::edit_clicked, this, &GroupItem::on_edit_clicked);
-    connect(NekoRay::sub::groupUpdater, &NekoRay::sub::GroupUpdater::asyncUpdateCallback,
-            this, [=](int gid) { if (gid == this->ent->id) refresh_data(); });
+    connect(NekoRay::sub::groupUpdater, &NekoRay::sub::GroupUpdater::asyncUpdateCallback, this, [=](int gid) { if (gid == this->ent->id) refresh_data(); });
 
     refresh_data();
 }
@@ -90,11 +87,13 @@ void GroupItem::refresh_data() {
             ui->subinfo->setText(info.join(" | "));
         }
     }
-    runOnUiThread([=] {
-        adjustSize();
-        item->setSizeHint(sizeHint());
-        dynamic_cast<QWidget *>(parent())->adjustSize();
-    }, this);
+    runOnUiThread(
+        [=] {
+            adjustSize();
+            item->setSizeHint(sizeHint());
+            dynamic_cast<QWidget *>(parent())->adjustSize();
+        },
+        this);
 }
 
 void GroupItem::on_update_sub_clicked() {

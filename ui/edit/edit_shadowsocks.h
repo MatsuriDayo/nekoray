@@ -9,7 +9,7 @@ namespace Ui {
 }
 
 class EditShadowSocks : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditShadowSocks(QWidget *parent = nullptr);

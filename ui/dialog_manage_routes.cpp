@@ -9,23 +9,22 @@
 #include <QMessageBox>
 #include <QListWidget>
 
-#define REFRESH_ACTIVE_ROUTING(a, r) \
-active_routing = a; \
-ui->active_routing->setText("[" + active_routing + "]"); \
-setWindowTitle(title_base + " [" + a + "]"); \
-SetRouteConfig(*r);
+#define REFRESH_ACTIVE_ROUTING(a, r)                         \
+    active_routing = a;                                      \
+    ui->active_routing->setText("[" + active_routing + "]"); \
+    setWindowTitle(title_base + " [" + a + "]");             \
+    SetRouteConfig(*r);
 
-#define SAVE_TO_ROUTING(r) \
-r->direct_ip = directIPTxt->toPlainText(); \
-r->direct_domain = directDomainTxt->toPlainText(); \
-r->proxy_ip = proxyIPTxt->toPlainText(); \
-r->proxy_domain = proxyDomainTxt->toPlainText(); \
-r->block_ip = blockIPTxt->toPlainText(); \
-r->block_domain = blockDomainTxt->toPlainText(); \
-r->custom = CACHE.custom_route;
+#define SAVE_TO_ROUTING(r)                             \
+    r->direct_ip = directIPTxt->toPlainText();         \
+    r->direct_domain = directDomainTxt->toPlainText(); \
+    r->proxy_ip = proxyIPTxt->toPlainText();           \
+    r->proxy_domain = proxyDomainTxt->toPlainText();   \
+    r->block_ip = blockIPTxt->toPlainText();           \
+    r->block_domain = blockDomainTxt->toPlainText();   \
+    r->custom = CACHE.custom_route;
 
-DialogManageRoutes::DialogManageRoutes(QWidget *parent) :
-        QDialog(parent), ui(new Ui::DialogManageRoutes) {
+DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(new Ui::DialogManageRoutes) {
     ui->setupUi(this);
     title_base = windowTitle();
 
@@ -171,9 +170,7 @@ void DialogManageRoutes::on_load_save_clicked() {
             r->load_control_force = true;
             r->fn = ROUTES_PREFIX + fn;
             if (r->Load()) {
-                auto btn = QMessageBox::question(nullptr,
-                                                 software_name, tr("Load routing: %1").arg(fn) + "\n" + r->toString());
-                if (btn == QMessageBox::Yes) {
+                if (QMessageBox::question(nullptr, software_name, tr("Load routing: %1").arg(fn) + "\n" + r->toString()) == QMessageBox::Yes) {
                     REFRESH_ACTIVE_ROUTING(fn, r)
                     w->accept();
                 }
@@ -186,9 +183,7 @@ void DialogManageRoutes::on_load_save_clicked() {
             auto r = std::make_unique<NekoRay::Routing>();
             SAVE_TO_ROUTING(r)
             r->fn = ROUTES_PREFIX + fn;
-            auto btn = QMessageBox::question(nullptr, software_name,
-                                             tr("Save routing: %1").arg(fn) + "\n" + r->toString());
-            if (btn == QMessageBox::Yes) {
+            if (QMessageBox::question(nullptr, software_name, tr("Save routing: %1").arg(fn) + "\n" + r->toString()) == QMessageBox::Yes) {
                 r->Save();
                 REFRESH_ACTIVE_ROUTING(fn, r)
                 w->accept();
@@ -198,8 +193,7 @@ void DialogManageRoutes::on_load_save_clicked() {
     connect(remove, &QPushButton::clicked, w, [=] {
         auto fn = lineEdit->text();
         if (!fn.isEmpty() && NekoRay::Routing::List().length() > 1) {
-            auto btn = QMessageBox::question(nullptr, software_name, tr("Remove routing: %1").arg(fn));
-            if (btn == QMessageBox::Yes) {
+            if (QMessageBox::question(nullptr, software_name, tr("Remove routing: %1").arg(fn)) == QMessageBox::Yes) {
                 QFile f(ROUTES_PREFIX + fn);
                 f.remove();
                 if (NekoRay::dataStore->active_routing == fn) {

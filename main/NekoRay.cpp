@@ -76,18 +76,20 @@ namespace NekoRay {
     // preset routing
     Routing::Routing(int preset) : JsonStore() {
         if (preset == 1) {
-            direct_ip = "geoip:cn\n"
-                        "geoip:private";
+            direct_ip =
+                "geoip:cn\n"
+                "geoip:private";
             direct_domain = "geosite:cn";
             proxy_ip = "";
             proxy_domain = "";
             block_ip = "";
-            block_domain = "geosite:category-ads-all\n"
-                           "domain:appcenter.ms\n"
-                           "domain:app-measurement.com\n"
-                           "domain:firebase.io\n"
-                           "domain:crashlytics.com\n"
-                           "domain:google-analytics.com";
+            block_domain =
+                "geosite:category-ads-all\n"
+                "domain:appcenter.ms\n"
+                "domain:app-measurement.com\n"
+                "domain:firebase.io\n"
+                "domain:crashlytics.com\n"
+                "domain:google-analytics.com";
         }
         _add(new configItem("direct_ip", &this->direct_ip, itemType::string));
         _add(new configItem("direct_domain", &this->direct_domain, itemType::string));
@@ -100,12 +102,12 @@ namespace NekoRay {
 
     QString Routing::toString() const {
         return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6")
-                .arg(SplitLines(proxy_domain).join(","))
-                .arg(SplitLines(proxy_ip).join(","))
-                .arg(SplitLines(direct_domain).join(","))
-                .arg(SplitLines(direct_ip).join(","))
-                .arg(SplitLines(block_domain).join(","))
-                .arg(SplitLines(block_ip).join(","));
+            .arg(SplitLines(proxy_domain).join(","))
+            .arg(SplitLines(proxy_ip).join(","))
+            .arg(SplitLines(direct_domain).join(","))
+            .arg(SplitLines(direct_ip).join(","))
+            .arg(SplitLines(block_domain).join(","))
+            .arg(SplitLines(block_ip).join(","));
     }
 
     QStringList Routing::List() {
@@ -353,4 +355,4 @@ namespace NekoRay {
         return {};
     }
 
-}
+} // namespace NekoRay

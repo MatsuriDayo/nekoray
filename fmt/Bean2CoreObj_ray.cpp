@@ -1,17 +1,15 @@
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
 
-#define MAKE_SETTINGS_STREAM_SETTINGS \
-if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
-outbound["settings"] = settings; \
-auto streamSettings = stream->BuildStreamSettingsV2Ray(); \
-outbound["streamSettings"] = streamSettings;
+#define MAKE_SETTINGS_STREAM_SETTINGS                                                             \
+    if (!stream->packet_encoding.isEmpty()) settings["packetEncoding"] = stream->packet_encoding; \
+    outbound["settings"] = settings;                                                              \
+    auto streamSettings = stream->BuildStreamSettingsV2Ray();                                     \
+    outbound["streamSettings"] = streamSettings;
 
 namespace NekoRay::fmt {
     QJsonObject V2rayStreamSettings::BuildStreamSettingsV2Ray() {
-        QJsonObject streamSettings{
-                {"network", network},
-        };
+        QJsonObject streamSettings{{"network", network}};
 
         if (network == "ws") {
             QJsonObject ws;
@@ -41,8 +39,8 @@ namespace NekoRay::fmt {
             QJsonObject header{{"type", header_type}};
             if (header_type == "http") {
                 header["request"] = QJsonObject{
-                        {"path",    QList2QJsonArray(path.split(","))},
-                        {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
+                    {"path", QList2QJsonArray(path.split(","))},
+                    {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
                 };
             }
             streamSettings["tcpSettings"] = QJsonObject{{"header", header}};
@@ -54,9 +52,9 @@ namespace NekoRay::fmt {
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
             if (!certificate.trimmed().isEmpty()) {
                 tls["certificates"] = QJsonArray{
-                        QJsonObject{
-                                {"certificate", QList2QJsonArray(SplitLines(certificate.trimmed()))},
-                        },
+                    QJsonObject{
+                        {"certificate", QList2QJsonArray(SplitLines(certificate.trimmed()))},
+                    },
                 };
             }
             if (!alpn.trimmed().isEmpty()) {
@@ -131,20 +129,17 @@ namespace NekoRay::fmt {
         QJsonObject outbound{{"protocol", "vmess"}};
 
         QJsonObject settings{
-                {"vnext", QJsonArray{
-                        QJsonObject{
-                                {"address", serverAddress},
-                                {"port",    serverPort},
-                                {"users",   QJsonArray{
-                                        QJsonObject{
-                                                {"id",       uuid.trimmed()},
-                                                {"alterId",  aid},
+            {"vnext", QJsonArray{
+                          QJsonObject{
+                              {"address", serverAddress},
+                              {"port", serverPort},
+                              {"users", QJsonArray{
+                                            QJsonObject{
+                                                {"id", uuid.trimmed()},
+                                                {"alterId", aid},
                                                 {"security", security},
-                                        }
-                                }},
-                        }
-                }}
-        };
+                                            }}},
+                          }}}};
 
         MAKE_SETTINGS_STREAM_SETTINGS
 
@@ -155,35 +150,30 @@ namespace NekoRay::fmt {
     CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObjV2Ray() {
         CoreObjOutboundBuildResult result;
         QJsonObject outbound{
-                {"protocol", proxy_type == proxy_VLESS ? "vless" : "trojan"},
+            {"protocol", proxy_type == proxy_VLESS ? "vless" : "trojan"},
         };
 
         QJsonObject settings;
         if (proxy_type == proxy_VLESS) {
             settings = QJsonObject{
-                    {"vnext", QJsonArray{
-                            QJsonObject{
-                                    {"address", serverAddress},
-                                    {"port",    serverPort},
-                                    {"users",   QJsonArray{
-                                            QJsonObject{
-                                                    {"id",         password.trimmed()},
+                {"vnext", QJsonArray{
+                              QJsonObject{
+                                  {"address", serverAddress},
+                                  {"port", serverPort},
+                                  {"users", QJsonArray{
+                                                QJsonObject{
+                                                    {"id", password.trimmed()},
                                                     {"encryption", "none"},
-                                            }
-                                    }},
-                            }
-                    }}
-            };
+                                                }}},
+                              }}}};
         } else {
             settings = QJsonObject{
-                    {"servers", QJsonArray{
-                            QJsonObject{
-                                    {"address",  serverAddress},
-                                    {"port",     serverPort},
+                {"servers", QJsonArray{
+                                QJsonObject{
+                                    {"address", serverAddress},
+                                    {"port", serverPort},
                                     {"password", password},
-                            }
-                    }}
-            };
+                                }}}};
         }
 
         MAKE_SETTINGS_STREAM_SETTINGS
@@ -201,4 +191,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-}
+} // namespace NekoRay::fmt

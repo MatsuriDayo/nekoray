@@ -3,13 +3,14 @@
 #include <QWidget>
 #include "profile_editor.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditVMess; }
+namespace Ui {
+    class EditVMess;
+}
 QT_END_NAMESPACE
 
 class EditVMess : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditVMess(QWidget *parent = nullptr);
@@ -24,5 +25,3 @@ private:
     Ui::EditVMess *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 };
-
-

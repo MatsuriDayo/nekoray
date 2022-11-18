@@ -4,11 +4,13 @@
 #include "profile_editor.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditChain; }
+namespace Ui {
+    class EditChain;
+}
 QT_END_NAMESPACE
 
 class EditChain : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditChain(QWidget *parent = nullptr);

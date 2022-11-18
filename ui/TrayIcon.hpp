@@ -13,4 +13,4 @@ namespace TrayIcon {
 
     QIcon GetIcon(TrayIconStatus status);
 
-}
+} // namespace TrayIcon

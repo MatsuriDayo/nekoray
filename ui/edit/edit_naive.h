@@ -3,13 +3,14 @@
 #include <QWidget>
 #include "profile_editor.h"
 
-
 QT_BEGIN_NAMESPACE
-namespace Ui { class EditNaive; }
+namespace Ui {
+    class EditNaive;
+}
 QT_END_NAMESPACE
 
 class EditNaive : public QWidget, public ProfileEditor {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit EditNaive(QWidget *parent = nullptr);

@@ -34,13 +34,13 @@ namespace QtGrpc {
 
         // TODO WTF
         // https://github.com/semlanik/qtprotobuf/issues/116
-//        setCachingEnabled:  5  bytesDownloaded
-//        QNetworkReplyImpl: backend error: caching was enabled after some bytes had been written
+        //        setCachingEnabled:  5  bytesDownloaded
+        //        QNetworkReplyImpl: backend error: caching was enabled after some bytes had been written
 
         // async
         QNetworkReply *post(const QString &method, const QString &service, const QByteArray &args) {
             QUrl callUrl = url_base + "/" + service + "/" + method;
-//            qDebug() << "Service call url: " << callUrl;
+            // qDebug() << "Service call url: " << callUrl;
 
             QNetworkRequest request(callUrl);
             request.setAttribute(QNetworkRequest::CacheSaveControlAttribute, false);
@@ -144,15 +144,17 @@ namespace QtGrpc {
             QMutex lock;
             lock.lock();
 
-            runOnUiThread([&] {
-                err = call(methodName, serviceName, requestArray, responseArray, timeout_ms);
-                lock.unlock();
-            }, nm);
+            runOnUiThread(
+                [&] {
+                    err = call(methodName, serviceName, requestArray, responseArray, timeout_ms);
+                    lock.unlock();
+                },
+                nm);
 
             lock.lock();
             lock.unlock();
-//            qDebug() << "rsp err" << err;
-//            qDebug() << "rsp array" << responseArray;
+            // qDebug() << "rsp err" << err;
+            // qDebug() << "rsp array" << responseArray;
 
             if (err != QNetworkReply::NetworkError::NoError) {
                 return err;
@@ -162,9 +164,8 @@ namespace QtGrpc {
             }
             return QNetworkReply::NetworkError::NoError;
         }
-
     };
-}
+} // namespace QtGrpc
 
 namespace NekoRay::rpc {
     Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
@@ -172,10 +173,9 @@ namespace NekoRay::rpc {
         this->onError = std::move(onError);
     }
 
-#define NOT_OK *rpcOK = false; \
-    onError( \
-            QString("QNetworkReply::NetworkError code: %1\n").arg(status) \
-    );
+#define NOT_OK      \
+    *rpcOK = false; \
+    onError(QString("QNetworkReply::NetworkError code: %1\n").arg(status));
 
     void Client::Exit() {
         libcore::EmptyReq request;
@@ -276,6 +276,6 @@ namespace NekoRay::rpc {
             return reply;
         }
     }
-}
+} // namespace NekoRay::rpc
 
 #endif

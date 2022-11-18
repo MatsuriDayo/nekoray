@@ -6,7 +6,7 @@ namespace NekoRay::fmt {
         // https://sing-box.sagernet.org/configuration/shared/v2ray-transport
 
         if (network != "tcp") {
-            QJsonObject transport{{"type", network},};
+            QJsonObject transport{{"type", network}};
             if (network == "ws") {
                 if (!path.isEmpty()) transport["path"] = path;
                 if (!host.isEmpty()) transport["headers"] = QJsonObject{{"Host", host}};
@@ -36,8 +36,8 @@ namespace NekoRay::fmt {
             }
             if (!utls.isEmpty()) {
                 tls["utls"] = QJsonObject{
-                        {"enabled",     true},
-                        {"fingerprint", utls},
+                    {"enabled", true},
+                    {"fingerprint", utls},
                 };
             }
             outbound->insert("tls", tls);
@@ -88,12 +88,12 @@ namespace NekoRay::fmt {
     CoreObjOutboundBuildResult VMessBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
         QJsonObject outbound{
-                {"type",        "vmess"},
-                {"server",      serverAddress},
-                {"server_port", serverPort},
-                {"uuid",        uuid.trimmed()},
-                {"alter_id",    aid},
-                {"security",    security},
+            {"type", "vmess"},
+            {"server", serverAddress},
+            {"server_port", serverPort},
+            {"uuid", uuid.trimmed()},
+            {"alter_id", aid},
+            {"security", security},
         };
 
         stream->BuildStreamSettingsSingBox(&outbound);
@@ -104,9 +104,9 @@ namespace NekoRay::fmt {
     CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
         QJsonObject outbound{
-                {"type",        proxy_type == proxy_VLESS ? "vless" : "trojan"},
-                {"server",      serverAddress},
-                {"server_port", serverPort},
+            {"type", proxy_type == proxy_VLESS ? "vless" : "trojan"},
+            {"server", serverAddress},
+            {"server_port", serverPort},
         };
 
         QJsonObject settings;
@@ -154,4 +154,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-}
+} // namespace NekoRay::fmt

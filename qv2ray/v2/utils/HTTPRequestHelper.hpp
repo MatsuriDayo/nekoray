@@ -14,11 +14,12 @@ namespace Qv2ray::common::network {
     };
 
     class NetworkRequestHelper : QObject {
-    Q_OBJECT
+        Q_OBJECT
 
-        explicit NetworkRequestHelper(QObject *parent) : QObject(parent) {};
+        explicit NetworkRequestHelper(QObject *parent) : QObject(parent){};
 
-        ~NetworkRequestHelper() override = default;;
+        ~NetworkRequestHelper() override = default;
+        ;
 
     public:
         static NekoHTTPResponse HttpGet(const QUrl &url);

@@ -3,8 +3,7 @@
 
 #include "ui/mainwindow_interface.h"
 
-DialogHotkey::DialogHotkey(QWidget *parent) :
-        QDialog(parent), ui(new Ui::DialogHotkey) {
+DialogHotkey::DialogHotkey(QWidget *parent) : QDialog(parent), ui(new Ui::DialogHotkey) {
     ui->setupUi(this);
     ui->show_mainwindow->setKeySequence(NekoRay::dataStore->hotkey_mainwindow);
     ui->show_groups->setKeySequence(NekoRay::dataStore->hotkey_group);

@@ -6,11 +6,13 @@
 #include "db/Database.hpp"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class GroupItem; }
+namespace Ui {
+    class GroupItem;
+}
 QT_END_NAMESPACE
 
 class GroupItem : public QWidget {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item);

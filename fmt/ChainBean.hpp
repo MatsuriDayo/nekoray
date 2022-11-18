@@ -15,4 +15,4 @@ namespace NekoRay::fmt {
 
         QString DisplayAddress() override { return ""; };
     };
-}
+} // namespace NekoRay::fmt

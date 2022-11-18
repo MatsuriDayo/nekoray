@@ -4,8 +4,7 @@
 #include "main/GuiUtils.hpp"
 #include "main/NekoRay.hpp"
 
-DialogVPNSettings::DialogVPNSettings(QWidget *parent) :
-        QDialog(parent), ui(new Ui::DialogVPNSettings) {
+DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new Ui::DialogVPNSettings) {
     ui->setupUi(this);
 
     ui->fake_dns->setVisible(!IS_NEKO_BOX);

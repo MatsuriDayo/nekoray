@@ -10,7 +10,7 @@ namespace Ui {
 }
 
 class DialogEditProfile : public QDialog {
-Q_OBJECT
+    Q_OBJECT
 
 public:
     explicit DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent = nullptr);

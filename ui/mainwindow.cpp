@@ -55,13 +55,10 @@ void UI_InitMainWindow() {
     mainwindow = new MainWindow;
 }
 
-MainWindow::MainWindow(QWidget *parent)
-        : QMainWindow(parent), ui(new Ui::MainWindow) {
+MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
     MW_dialog_message = [=](const QString &a, const QString &b) {
-        runOnUiThread([=] {
-            dialog_message_impl(a, b);
-        });
+        runOnUiThread([=] { dialog_message_impl(a, b); });
     };
 
     // Load Manager
@@ -111,10 +108,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->toolButton_preferences->setMenu(ui->menu_preferences);
     ui->toolButton_server->setMenu(ui->menu_server);
     ui->menubar->setVisible(false);
-    connect(ui->toolButton_document, &QToolButton::clicked, this,
-            [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
-    connect(ui->toolButton_ads, &QToolButton::clicked, this,
-            [=] { QDesktopServices::openUrl(QUrl("https://matsuricom.github.io/")); });
+    connect(ui->toolButton_document, &QToolButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
+    connect(ui->toolButton_ads, &QToolButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuricom.github.io/")); });
     connect(ui->toolButton_update, &QToolButton::clicked, this, [=] { runOnNewThread([=] { CheckUpdate(); }); });
 
     // Setup log UI
@@ -142,19 +137,13 @@ MainWindow::MainWindow(QWidget *parent)
         bar->setValue(bar->maximum());
     });
     MW_show_log = [=](const QString &log) {
-        runOnUiThread([=] {
-            show_log_impl(log);
-        });
+        runOnUiThread([=] { show_log_impl(log); });
     };
     MW_show_log_ext = [=](const QString &tag, const QString &log) {
-        runOnUiThread([=] {
-            show_log_impl("[" + tag + "] " + log);
-        });
+        runOnUiThread([=] { show_log_impl("[" + tag + "] " + log); });
     };
     MW_show_log_ext_vt100 = [=](const QString &log) {
-        runOnUiThread([=] {
-            show_log_impl(cleanVT100String(log));
-        });
+        runOnUiThread([=] { show_log_impl(cleanVT100String(log)); });
     };
 
     // table UI
@@ -163,33 +152,32 @@ MainWindow::MainWindow(QWidget *parent)
         group->order = ui->proxyListTable->order;
         group->Save();
     };
-    connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionClicked, this,
-            [=](int logicalIndex) {
-                NekoRay::GroupSortAction action;
-                // 不正确的descending实现
-                if (proxy_last_order == logicalIndex) {
-                    action.descending = true;
-                    proxy_last_order = -1;
-                } else {
-                    proxy_last_order = logicalIndex;
-                }
-                action.save_sort = true;
-                // 表头
-                if (logicalIndex == 1) {
-                    action.method = NekoRay::GroupSortMethod::ByType;
-                } else if (logicalIndex == 2) {
-                    action.method = NekoRay::GroupSortMethod::ByAddress;
-                } else if (logicalIndex == 3) {
-                    action.method = NekoRay::GroupSortMethod::ByName;
-                } else if (logicalIndex == 4) {
-                    action.method = NekoRay::GroupSortMethod::ByLatency;
-                } else if (logicalIndex == 0) {
-                    action.method = NekoRay::GroupSortMethod::ById;
-                } else {
-                    return;
-                }
-                refresh_proxy_list_impl(-1, action);
-            });
+    connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionClicked, this, [=](int logicalIndex) {
+        NekoRay::GroupSortAction action;
+        // 不正确的descending实现
+        if (proxy_last_order == logicalIndex) {
+            action.descending = true;
+            proxy_last_order = -1;
+        } else {
+            proxy_last_order = logicalIndex;
+        }
+        action.save_sort = true;
+        // 表头
+        if (logicalIndex == 1) {
+            action.method = NekoRay::GroupSortMethod::ByType;
+        } else if (logicalIndex == 2) {
+            action.method = NekoRay::GroupSortMethod::ByAddress;
+        } else if (logicalIndex == 3) {
+            action.method = NekoRay::GroupSortMethod::ByName;
+        } else if (logicalIndex == 4) {
+            action.method = NekoRay::GroupSortMethod::ByLatency;
+        } else if (logicalIndex == 0) {
+            action.method = NekoRay::GroupSortMethod::ById;
+        } else {
+            return;
+        }
+        refresh_proxy_list_impl(-1, action);
+    });
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -238,26 +226,25 @@ MainWindow::MainWindow(QWidget *parent)
     this->refresh_groups();
 
     // Setup Tray
-    tray = new QSystemTrayIcon(this);//初始化托盘对象tray
+    tray = new QSystemTrayIcon(this); //初始化托盘对象tray
     tray->setIcon(TrayIcon::GetIcon(TrayIcon::NONE));
-    tray->setContextMenu(ui->menu_program);//创建托盘菜单
-    tray->show();//让托盘图标显示在系统托盘上
-    connect(tray, &QSystemTrayIcon::activated, this,
-            [=](QSystemTrayIcon::ActivationReason reason) {
-                switch (reason) {
-                    case QSystemTrayIcon::Trigger:
-                        if (this->isVisible()) {
-                            hide();
-                        } else {
-                            this->showNormal();
-                            this->raise();
-                            this->activateWindow();
-                        }
-                        break;
-                    default:
-                        break;
+    tray->setContextMenu(ui->menu_program); //创建托盘菜单
+    tray->show();                           //让托盘图标显示在系统托盘上
+    connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
+        switch (reason) {
+            case QSystemTrayIcon::Trigger:
+                if (this->isVisible()) {
+                    hide();
+                } else {
+                    this->showNormal();
+                    this->raise();
+                    this->activateWindow();
                 }
-            });
+                break;
+            default:
+                break;
+        }
+    });
     //
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
@@ -310,9 +297,7 @@ MainWindow::MainWindow(QWidget *parent)
             r.load_control_force = true;
             r.fn = ROUTES_PREFIX + fn;
             if (r.Load()) {
-                auto btn = QMessageBox::question(GetMessageBoxParent(), software_name,
-                                                 tr("Load routing and apply: %1").arg(fn) + "\n" + r.toString());
-                if (btn == QMessageBox::Yes) {
+                if (QMessageBox::question(GetMessageBoxParent(), software_name, tr("Load routing and apply: %1").arg(fn) + "\n" + r.toString()) == QMessageBox::Yes) {
                     NekoRay::Routing::SetToActive(fn);
                     if (NekoRay::dataStore->started_id >= 0) {
                         neko_start(NekoRay::dataStore->started_id);
@@ -343,16 +328,12 @@ MainWindow::MainWindow(QWidget *parent)
     });
     connect(ui->menu_spmode, &QMenu::aboutToShow, this, [=]() {
         ui->menu_spmode_disabled->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::DISABLE);
-        ui->menu_spmode_system_proxy->setChecked(
-                NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
+        ui->menu_spmode_system_proxy->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY);
         ui->menu_spmode_vpn->setChecked(NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN);
     });
-    connect(ui->menu_spmode_system_proxy, &QAction::triggered, this,
-            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::SYSTEM_PROXY); });
-    connect(ui->menu_spmode_vpn, &QAction::triggered, this,
-            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::VPN); });
-    connect(ui->menu_spmode_disabled, &QAction::triggered, this,
-            [=]() { neko_set_spmode(NekoRay::SystemProxyMode::DISABLE); });
+    connect(ui->menu_spmode_system_proxy, &QAction::triggered, this, [=]() { neko_set_spmode(NekoRay::SystemProxyMode::SYSTEM_PROXY); });
+    connect(ui->menu_spmode_vpn, &QAction::triggered, this, [=]() { neko_set_spmode(NekoRay::SystemProxyMode::VPN); });
+    connect(ui->menu_spmode_disabled, &QAction::triggered, this, [=]() { neko_set_spmode(NekoRay::SystemProxyMode::DISABLE); });
     connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0); });
     connect(ui->menu_url_test, &QAction::triggered, this, [=]() { speedtest_current_group(1); });
@@ -410,7 +391,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (tray->isVisible()) {
-        hide(); //隐藏窗口
+        hide();          //隐藏窗口
         event->ignore(); //忽略事件
     }
 }
@@ -471,8 +452,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         if (info.contains("VPNChanged") && NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
             MessageBoxWarning(tr("VPN settings changed"), tr("Restart VPN to take effect."));
         } else if (changed && NekoRay::dataStore->started_id >= 0 &&
-                   QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"),
-                                         tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
+                   QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
             neko_start(NekoRay::dataStore->started_id);
         }
         refresh_status();
@@ -509,12 +489,13 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
 
 inline bool dialog_is_using = false;
 
-#define USE_DIALOG(a) if (dialog_is_using) return; \
-dialog_is_using = true; \
-auto dialog = new a(this); \
-dialog->exec(); \
-dialog->deleteLater(); \
-dialog_is_using = false;
+#define USE_DIALOG(a)            \
+    if (dialog_is_using) return; \
+    dialog_is_using = true;      \
+    auto dialog = new a(this);   \
+    dialog->exec();              \
+    dialog->deleteLater();       \
+    dialog_is_using = false;
 
 void MainWindow::on_menu_basic_settings_triggered() {
     USE_DIALOG(DialogBasicSettings)
@@ -578,7 +559,9 @@ void MainWindow::on_menu_exit_triggered() {
     QCoreApplication::quit();
 }
 
-#define neko_set_spmode_FAILED refresh_status(); return;
+#define neko_set_spmode_FAILED \
+    refresh_status();          \
+    return;
 
 void MainWindow::neko_set_spmode(int mode, bool save) {
     if (mode != NekoRay::dataStore->running_spmode) {
@@ -907,11 +890,11 @@ void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
 }
 
-#define NO_ADD_TO_SUBSCRIPTION_GROUP \
-if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) { \
-MessageBoxWarning(software_name, MainWindow::tr("Manual addition of profiles is not allowed in subscription groupings.")); \
-return; \
-}
+#define NO_ADD_TO_SUBSCRIPTION_GROUP                                                                                               \
+    if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) {                                                                 \
+        MessageBoxWarning(software_name, MainWindow::tr("Manual addition of profiles is not allowed in subscription groupings.")); \
+        return;                                                                                                                    \
+    }
 
 void MainWindow::on_menu_add_from_input_triggered() {
     NO_ADD_TO_SUBSCRIPTION_GROUP
@@ -977,10 +960,7 @@ void MainWindow::on_menu_delete_triggered() {
 void MainWindow::on_menu_reset_traffic_triggered() {
     auto ents = get_now_selected();
     if (ents.count() == 0) return;
-    if (QMessageBox::question(this,
-                              tr("Confirmation"),
-                              QString(tr("Reset traffic of %1 item(s) ?")).arg(ents.count()))
-        == QMessageBox::StandardButton::Yes) {
+    if (QMessageBox::question(this, tr("Confirmation"), QString(tr("Reset traffic of %1 item(s) ?")).arg(ents.count())) == QMessageBox::StandardButton::Yes) {
         for (const auto &ent: ents) {
             ent->traffic_data->Reset();
             ent->Save();
@@ -994,9 +974,7 @@ void MainWindow::on_menu_profile_debug_info_triggered() {
     if (ents.count() != 1) return;
     auto btn = QMessageBox::information(this, software_name, ents.first()->ToJsonBytes(), "OK", "Edit", "Reload", 0, 0);
     if (btn == 1) {
-        QDesktopServices::openUrl(QUrl::fromLocalFile(
-                QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()
-        ));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()));
     } else if (btn == 2) {
         ents.first()->Load();
         refresh_proxy_list();
@@ -1144,9 +1122,9 @@ void MainWindow::on_menu_scan_qr_triggered() {
     show();
 
     auto hints = DecodeHints()
-            .setFormats(BarcodeFormat::QRCode)
-            .setTryRotate(false)
-            .setBinarizer(Binarizer::FixedThreshold);
+                     .setFormats(BarcodeFormat::QRCode)
+                     .setTryRotate(false)
+                     .setBinarizer(Binarizer::FixedThreshold);
 
     auto result = ReadBarcode(qpx.toImage(), hints);
     const auto &text = result.text();
@@ -1194,11 +1172,7 @@ void MainWindow::on_menu_delete_repeat_triggered() {
     }
 
     if (out_del.length() > 0 &&
-        QMessageBox::question(this,
-                              tr("Confirmation"),
-                              tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display
-        ) == QMessageBox::StandardButton::Yes) {
-
+        QMessageBox::question(this, tr("Confirmation"), tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display) == QMessageBox::StandardButton::Yes) {
         for (const auto &ent: out_del) {
             NekoRay::profileManager->DeleteProfile(ent->id);
         }
@@ -1229,11 +1203,7 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
         remove_display += ent->bean->DisplayTypeAndName() + "\n";
     }
     if (out_del.length() > 0 &&
-        QMessageBox::question(this,
-                              tr("Confirmation"),
-                              tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display
-        ) == QMessageBox::StandardButton::Yes) {
-
+        QMessageBox::question(this, tr("Confirmation"), tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display) == QMessageBox::StandardButton::Yes) {
         for (const auto &ent: out_del) {
             NekoRay::profileManager->DeleteProfile(ent->id);
         }
@@ -1244,8 +1214,7 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
 void MainWindow::on_menu_resolve_domain_triggered() {
     if (QMessageBox::question(this,
                               tr("Confirmation"),
-                              tr("Resolving current group domain to IP, if support.")
-    ) != QMessageBox::StandardButton::Yes) {
+                              tr("Resolving current group domain to IP, if support.")) != QMessageBox::StandardButton::Yes) {
         return;
     }
     if (mw_sub_updating) return;
@@ -1401,10 +1370,7 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
         } else {
             f->setText(tr("Active"));
         }
-        f->setToolTip(tr("Start: %1\nEnd: %2").arg(
-                DisplayTime(start_t),
-                end_t > 0 ? DisplayTime(end_t) : ""
-        ));
+        f->setToolTip(tr("Start: %1\nEnd: %2").arg(DisplayTime(start_t), end_t > 0 ? DisplayTime(end_t) : ""));
         ui->tableWidget_conn->setItem(row, 0, f);
 
         // C1: Outbound
@@ -1424,7 +1390,6 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
         ui->tableWidget_conn->setItem(row, 2, f);
     }
 }
-
 
 // Hotkey
 
@@ -1498,16 +1463,13 @@ bool MainWindow::StartVPNProcess() {
     //
 #ifdef Q_OS_WIN
     runOnNewThread([=] {
-        vpn_pid = 1; //TODO get pid?
+        vpn_pid = 1; // TODO get pid?
         WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/nekobox_core.exe",
                                          {"--disable-color", "run", "-c", configPath},
                                          "",
-                                         NekoRay::dataStore->vpn_hide_console
-        ); // blocking
+                                         NekoRay::dataStore->vpn_hide_console); // blocking
         vpn_pid = 0;
-        runOnUiThread([=] {
-            neko_set_spmode(NekoRay::SystemProxyMode::DISABLE);
-        });
+        runOnUiThread([=] { neko_set_spmode(NekoRay::SystemProxyMode::DISABLE); });
     });
 #else
     QFile::remove(protectPath);
@@ -1528,7 +1490,7 @@ bool MainWindow::StartVPNProcess() {
     vpn_process->setProcessChannelMode(QProcess::ForwardedChannels);
 #ifdef Q_OS_MACOS
     vpn_process->start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
-            .arg("bash " + scriptPath)});
+                                               .arg("bash " + scriptPath)});
 #else
     vpn_process->start("pkexec", {"bash", scriptPath});
 #endif
@@ -1551,7 +1513,7 @@ bool MainWindow::StopVPNProcess() {
         QProcess p;
 #ifdef Q_OS_MACOS
         p.start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
-                .arg("pkill -2 -U 0 nekobox_core")});
+                                        .arg("pkill -2 -U 0 nekobox_core")});
 #else
         p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
 #endif

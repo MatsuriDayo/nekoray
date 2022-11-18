@@ -19,7 +19,7 @@ namespace NekoRay {
         class CustomBean;
 
         class ChainBean;
-    };
+    }; // namespace fmt
 
     class ProxyEntity : public JsonStore {
     public:
@@ -29,8 +29,7 @@ namespace NekoRay {
         int gid = 0;
         int latency = 0;
         QSharedPointer<fmt::AbstractBean> bean;
-        QSharedPointer<traffic::TrafficData> traffic_data = QSharedPointer<traffic::TrafficData>(
-                new traffic::TrafficData(""));
+        QSharedPointer<traffic::TrafficData> traffic_data = QSharedPointer<traffic::TrafficData>(new traffic::TrafficData(""));
 
         // Cache
         QString full_test_report;
@@ -68,6 +67,5 @@ namespace NekoRay {
         [[nodiscard]] fmt::CustomBean *CustomBean() const {
             return (fmt::CustomBean *) bean.get();
         };
-
     };
-}
+} // namespace NekoRay

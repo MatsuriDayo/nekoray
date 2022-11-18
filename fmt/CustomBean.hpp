@@ -47,4 +47,4 @@ namespace NekoRay::fmt {
 
         CoreObjOutboundBuildResult BuildCoreObjV2Ray() override;
     };
-}
+} // namespace NekoRay::fmt

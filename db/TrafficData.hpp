@@ -37,4 +37,4 @@ namespace NekoRay::traffic {
             return QString("%1↑ %2↓").arg(ReadableSize(uplink), ReadableSize(downlink));
         }
     };
-}
+} // namespace NekoRay::traffic
