@@ -16,7 +16,7 @@ mkdir -p $DEST
 export CGO_ENABLED=0
 
 #### Go: updater ####
-pushd updater
+pushd go/cmd/updater
 [ "$GOOS" == "darwin" ] || go build -o $DEST -trimpath -ldflags "-w -s"
 [ "$GOOS" == "linux" ] && mv $DEST/updater $DEST/launcher || true
 popd
