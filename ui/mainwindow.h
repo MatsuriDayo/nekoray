@@ -156,6 +156,8 @@ private:
 
     void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
 
+    void refresh_proxy_list_impl_refresh_data(const int &id = -1);
+
     void keyPressEvent(QKeyEvent *event) override;
 
     void closeEvent(QCloseEvent *event) override;

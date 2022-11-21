@@ -152,6 +152,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         group->order = ui->proxyListTable->order;
         group->Save();
     };
+    ui->proxyListTable->refresh_data = [=](int id) { refresh_proxy_list_impl_refresh_data(id); };
+    if (auto button = ui->proxyListTable->findChild<QAbstractButton *>(QString(), Qt::FindDirectChildrenOnly)) {
+        // Corner Button
+        connect(button, &QAbstractButton::clicked, this, [=] { refresh_proxy_list_impl(-1, {NekoRay::GroupSortMethod::ById}); });
+    }
     connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionClicked, this, [=](int logicalIndex) {
         NekoRay::GroupSortAction action;
         // 不正确的descending实现
@@ -163,27 +168,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
         action.save_sort = true;
         // 表头
-        if (logicalIndex == 1) {
+        if (logicalIndex == 0) {
             action.method = NekoRay::GroupSortMethod::ByType;
-        } else if (logicalIndex == 2) {
+        } else if (logicalIndex == 1) {
             action.method = NekoRay::GroupSortMethod::ByAddress;
-        } else if (logicalIndex == 3) {
+        } else if (logicalIndex == 2) {
             action.method = NekoRay::GroupSortMethod::ByName;
-        } else if (logicalIndex == 4) {
+        } else if (logicalIndex == 3) {
             action.method = NekoRay::GroupSortMethod::ByLatency;
-        } else if (logicalIndex == 0) {
-            action.method = NekoRay::GroupSortMethod::ById;
         } else {
             return;
         }
         refresh_proxy_list_impl(-1, action);
     });
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
+    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
     ui->proxyListTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(5, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -226,10 +228,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->refresh_groups();
 
     // Setup Tray
-    tray = new QSystemTrayIcon(this); //初始化托盘对象tray
+    tray = new QSystemTrayIcon(this); // 初始化托盘对象tray
     tray->setIcon(TrayIcon::GetIcon(TrayIcon::NONE));
-    tray->setContextMenu(ui->menu_program); //创建托盘菜单
-    tray->show();                           //让托盘图标显示在系统托盘上
+    tray->setContextMenu(ui->menu_program); // 创建托盘菜单
+    tray->show();                           // 让托盘图标显示在系统托盘上
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
         switch (reason) {
             case QSystemTrayIcon::Trigger:
@@ -391,8 +393,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (tray->isVisible()) {
-        hide();          //隐藏窗口
-        event->ignore(); //忽略事件
+        hide();          // 隐藏窗口
+        event->ignore(); // 忽略事件
     }
 }
 
@@ -734,75 +736,19 @@ void MainWindow::refresh_proxy_list(const int &id) {
 }
 
 void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction groupSortAction) {
+    // id < 0 重绘
     if (id < 0) {
-        //这样才能清空数据
+        // 清空数据
+        ui->proxyListTable->row2Id.clear();
         ui->proxyListTable->setRowCount(0);
-    }
-
-    QTableWidgetItem *started_item = nullptr;
-
-    // 绘制或更新item(s)
-    int row = -1;
-    for (const auto &profile: NekoRay::profileManager->profiles) {
-        if (NekoRay::dataStore->current_group != profile->gid) continue;
-
-        row++;
-        if (id >= 0 && profile->id != id) continue; // update only one item
-        if (id < 0) {
+        // 添加行
+        int row = -1;
+        for (const auto &profile: NekoRay::profileManager->profiles) {
+            if (NekoRay::dataStore->current_group != profile->gid) continue;
+            row++;
             ui->proxyListTable->insertRow(row);
-        } else {
-            // 排序过的，要找
-            row = ui->proxyListTable->id2Row[id];
+            ui->proxyListTable->row2Id += profile->id;
         }
-
-        auto f0 = std::make_unique<QTableWidgetItem>();
-        f0->setData(114514, profile->id);
-
-        // C0: is Running
-        auto f = f0->clone();
-        if (profile->id == NekoRay::dataStore->started_id) {
-            f->setText("✓");
-            if (groupSortAction.scroll_to_started) started_item = f;
-        } else {
-            f->setText("　");
-        }
-        ui->proxyListTable->setItem(row, 0, f);
-
-        // C1: Type
-        f = f0->clone();
-        f->setText(profile->bean->DisplayType());
-        auto insecure_hint = profile->bean->DisplayInsecureHint();
-        if (!insecure_hint.isEmpty()) {
-            f->setBackground(Qt::red);
-            f->setToolTip(insecure_hint);
-        }
-        ui->proxyListTable->setItem(row, 1, f);
-
-        // C2: Address+Port
-        f = f0->clone();
-        f->setText(profile->bean->DisplayAddress());
-        ui->proxyListTable->setItem(row, 2, f);
-
-        // C3: Name
-        f = f0->clone();
-        f->setText(profile->bean->name);
-        ui->proxyListTable->setItem(row, 3, f);
-
-        // C4: Test Result
-        f = f0->clone();
-        if (profile->full_test_report.isEmpty()) {
-            auto color = profile->DisplayLatencyColor();
-            if (color.isValid()) f->setForeground(color);
-            f->setText(profile->DisplayLatency());
-        } else {
-            f->setText(profile->full_test_report);
-        }
-        ui->proxyListTable->setItem(row, 4, f);
-
-        // C5: Traffic
-        f = f0->clone();
-        f->setText(profile->traffic_data->DisplayTraffic());
-        ui->proxyListTable->setItem(row, 5, f);
     }
 
     // 显示排序
@@ -815,14 +761,8 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
                 break;
             }
             case NekoRay::GroupSortMethod::ById: {
-                std::sort(ui->proxyListTable->order.begin(), ui->proxyListTable->order.end(),
-                          [=](int a, int b) {
-                              if (groupSortAction.descending) {
-                                  return a > b;
-                              } else {
-                                  return a < b;
-                              }
-                          });
+                // Clear Order
+                ui->proxyListTable->order.clear();
                 break;
             }
             case NekoRay::GroupSortMethod::ByAddress:
@@ -869,10 +809,60 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
         ui->proxyListTable->update_order(groupSortAction.save_sort);
     }
 
-    if (started_item != nullptr) {
-        runOnUiThread([=] {
-            ui->proxyListTable->verticalScrollBar()->setSliderPosition(started_item->row());
-        });
+    // refresh data
+    refresh_proxy_list_impl_refresh_data(id);
+}
+
+void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
+    // 绘制或更新item(s)
+    for (int row = 0; row < ui->proxyListTable->rowCount(); row++) {
+        auto profile = NekoRay::profileManager->GetProfile(ui->proxyListTable->row2Id[row]);
+        if (profile == nullptr) continue;
+        if (id >= 0 && profile->id != id) continue; // refresh ONE item
+
+        auto f0 = std::make_unique<QTableWidgetItem>();
+        f0->setData(114514, profile->id);
+
+        // Check state
+        auto check = f0->clone();
+        check->setText(profile->id == NekoRay::dataStore->started_id ? "✓" : Int2String(row + 1));
+        ui->proxyListTable->setVerticalHeaderItem(row, check);
+
+        // C0: Type
+        auto f = f0->clone();
+        f->setText(profile->bean->DisplayType());
+        auto insecure_hint = profile->bean->DisplayInsecureHint();
+        if (!insecure_hint.isEmpty()) {
+            f->setBackground(Qt::red);
+            f->setToolTip(insecure_hint);
+        }
+        ui->proxyListTable->setItem(row, 0, f);
+
+        // C1: Address+Port
+        f = f0->clone();
+        f->setText(profile->bean->DisplayAddress());
+        ui->proxyListTable->setItem(row, 1, f);
+
+        // C2: Name
+        f = f0->clone();
+        f->setText(profile->bean->name);
+        ui->proxyListTable->setItem(row, 2, f);
+
+        // C3: Test Result
+        f = f0->clone();
+        if (profile->full_test_report.isEmpty()) {
+            auto color = profile->DisplayLatencyColor();
+            if (color.isValid()) f->setForeground(color);
+            f->setText(profile->DisplayLatency());
+        } else {
+            f->setText(profile->full_test_report);
+        }
+        ui->proxyListTable->setItem(row, 3, f);
+
+        // C4: Traffic
+        f = f0->clone();
+        f->setText(profile->traffic_data->DisplayTraffic());
+        ui->proxyListTable->setItem(row, 4, f);
     }
 }
 
@@ -1237,7 +1227,7 @@ void MainWindow::on_menu_resolve_domain_triggered() {
 }
 
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
-    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); //弹出菜单
+    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // 弹出菜单
 }
 
 QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::get_now_selected() {
@@ -1312,8 +1302,7 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
         ui->masterLogBrowser->clear();
     });
     menu->addAction(action_clear);
-
-    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); //弹出菜单
+    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // 弹出菜单
 }
 
 // eventFilter

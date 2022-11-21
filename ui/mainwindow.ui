@@ -266,13 +266,8 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>26</number>
+            <number>24</number>
            </attribute>
-           <column>
-            <property name="text">
-             <string/>
-            </property>
-           </column>
            <column>
             <property name="text">
              <string>Type</string>
