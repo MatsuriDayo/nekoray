@@ -43,7 +43,7 @@ void MainWindow::setup_grpc() {
     runOnUiThread([=] { t->start(2000); }, t);
 
     // Looper
-    runOnNewThread([=] { NekoRay::traffic::trafficLooper->loop(); });
+    runOnNewThread([=] { NekoRay::traffic::trafficLooper->Loop(); });
 #endif
 }
 
@@ -271,7 +271,7 @@ void MainWindow::neko_stop(bool crash) {
     NekoRay::traffic::trafficLooper->loop_enabled = false;
     NekoRay::traffic::trafficLooper->loop_mutex.lock();
     if (NekoRay::dataStore->traffic_loop_interval != 0) {
-        NekoRay::traffic::trafficLooper->update_all();
+        NekoRay::traffic::trafficLooper->UpdateAll();
         for (const auto &item: NekoRay::traffic::trafficLooper->items) {
             NekoRay::profileManager->GetProfile(item->id)->Save();
             refresh_proxy_list(item->id);

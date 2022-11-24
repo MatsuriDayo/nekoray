@@ -15,16 +15,18 @@ namespace NekoRay::traffic {
         QMutex loop_mutex;
 
         QList<QSharedPointer<TrafficData>> items;
-        TrafficData *bypass = new TrafficData("bypass");
         TrafficData *proxy = nullptr;
 
-        static std::unique_ptr<TrafficData> update_stats(TrafficData *item);
+        void UpdateAll();
 
-        static QJsonArray get_connection_list();
+        void Loop();
 
-        void update_all();
+    private:
+        TrafficData *bypass = new TrafficData("bypass");
 
-        void loop();
+        [[nodiscard]] static TrafficData *update_stats(TrafficData *item);
+
+        [[nodiscard]] static QJsonArray get_connection_list();
     };
 
     extern TrafficLooper *trafficLooper;

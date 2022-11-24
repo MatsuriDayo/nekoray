@@ -8,12 +8,12 @@
 namespace NekoRay::traffic {
 
     TrafficLooper *trafficLooper = new TrafficLooper;
-    QElapsedTimer trafficLooper_timer;
+    QElapsedTimer elapsedTimer;
 
-    std::unique_ptr<TrafficData> TrafficLooper::update_stats(TrafficData *item) {
+    TrafficData *TrafficLooper::update_stats(TrafficData *item) {
 #ifndef NKR_NO_GRPC
         // last update
-        auto now = trafficLooper_timer.elapsed();
+        auto now = elapsedTimer.elapsed();
         auto interval = now - item->last_update;
         item->last_update = now;
         if (interval <= 0) return nullptr;
@@ -29,7 +29,7 @@ namespace NekoRay::traffic {
         item->uplink_rate = uplink * 1000 / interval;
 
         // return diff
-        auto ret = std::make_unique<TrafficData>(item->tag);
+        auto ret = new TrafficData(item->tag);
         ret->downlink = downlink;
         ret->uplink = uplink;
         ret->downlink_rate = item->downlink_rate;
@@ -49,15 +49,15 @@ namespace NekoRay::traffic {
 #endif
     }
 
-    void TrafficLooper::update_all() {
-        std::map<std::string, std::unique_ptr<TrafficData>> updated; // tag to diff
-        for (const auto &item: items) {
+    void TrafficLooper::UpdateAll() {
+        std::map<std::string, TrafficData *> updated; // tag to diff
+        for (const auto &item: this->items) {
             auto data = item.get();
-            auto diff = std::move(updated[data->tag]);
+            auto diff = updated[data->tag];
             // 避免重复查询一个 outbound tag
             if (diff == nullptr) {
                 diff = update_stats(data);
-                updated[data->tag] = std::move(diff);
+                updated[data->tag] = diff;
             } else {
                 data->uplink += diff->uplink;
                 data->downlink += diff->downlink;
@@ -65,11 +65,15 @@ namespace NekoRay::traffic {
                 data->downlink_rate = diff->downlink_rate;
             }
         }
-        update_stats(bypass);
+        updated[bypass->tag] = update_stats(bypass);
+        //
+        for (const auto &pair: updated) {
+            delete pair.second;
+        }
     }
 
-    void TrafficLooper::loop() {
-        trafficLooper_timer.start();
+    void TrafficLooper::Loop() {
+        elapsedTimer.start();
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
             auto user_disabled = sleep_ms == 0;
@@ -97,7 +101,7 @@ namespace NekoRay::traffic {
             // do update
             loop_mutex.lock();
 
-            update_all();
+            UpdateAll();
 
             // do conn list update
             QJsonArray conn_list;
