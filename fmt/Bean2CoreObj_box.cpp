@@ -44,7 +44,9 @@ namespace NekoRay::fmt {
         }
 
         if (!packet_encoding.isEmpty()) {
-            outbound->insert("packet_encoding", packet_encoding);
+            auto pkt = packet_encoding;
+            if (pkt == "packet") pkt = "packetaddr";
+            outbound->insert("packet_encoding", pkt);
         }
     }
 
