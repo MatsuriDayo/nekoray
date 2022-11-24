@@ -266,7 +266,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>24</number>
+            <number>26</number>
            </attribute>
            <column>
             <property name="text">
@@ -507,6 +507,7 @@
     <addaction name="menu_routing_settings"/>
     <addaction name="menu_vpn_settings"/>
     <addaction name="menu_hotkey_settings"/>
+    <addaction name="menu_open_config_folder"/>
    </widget>
    <widget class="QMenu" name="menu_server">
     <property name="title">
@@ -838,6 +839,11 @@
   <action name="actionRestart_Program">
    <property name="text">
     <string>Restart Program</string>
+   </property>
+  </action>
+  <action name="menu_open_config_folder">
+   <property name="text">
+    <string>Open Config Folder</string>
    </property>
   </action>
  </widget>

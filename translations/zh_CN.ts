@@ -1189,6 +1189,10 @@ End: %2</source>
         <source>Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart.</source>
         <translation>当前服务器与 VPN 不兼容。请先停止服务器，打开 VPN 模式后再启动。</translation>
     </message>
+    <message>
+        <source>Open Config Folder</source>
+        <translation>打开配置目录</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
