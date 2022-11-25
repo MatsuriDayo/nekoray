@@ -18,7 +18,12 @@ namespace NekoRay {
 
     void ProfileManager::LoadManager() {
         for (auto id: _profiles) {
-            profiles[id] = LoadProxyEntity(QString("profiles/%1.json").arg(id));
+            auto ent = LoadProxyEntity(QString("profiles/%1.json").arg(id));
+            if (ent->bean->version == -114514) { // clear invaild profile
+                DeleteProfile(id);
+                continue;
+            }
+            profiles[id] = ent;
         }
         for (auto id: _groups) {
             groups[id] = LoadGroup(QString("groups/%1.json").arg(id));
@@ -49,13 +54,8 @@ namespace NekoRay {
             ent->load_control_force = true;
             ent->fn = jsonPath;
             ent->Load();
-            return ent;
-        } else {
-            // 返回一个假的？
-            ent = NewProxyEntity("socks");
-            ent->bean->name = "[Load Error]";
-            return ent;
         }
+        return ent;
     }
 
     //  新建的不给 fn 和 id

@@ -6,7 +6,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/gofrs/uuid v4.3.1+incompatible
 	github.com/sagernet/sing v0.0.0-20221008120626-60a9910eefe4
-	github.com/sagernet/sing-box v1.0.2-0.20221121132044-ffd54eef6c71
+	github.com/sagernet/sing-box v1.0.2-0.20221125145930-05ed88aba88b
 	github.com/sagernet/sing-dns v0.0.0-20221113031420-c6aaf2ea4b10
 	github.com/sagernet/sing-tun v0.0.0-20221104121441-66c48a57776f
 	github.com/spf13/cobra v1.6.1
@@ -49,7 +49,7 @@ require (
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20221108053023-645bcc4f9b15 // indirect
-	github.com/sagernet/sing-shadowsocks v0.0.0-20220819002358-7461bb09a8f6 // indirect
+	github.com/sagernet/sing-shadowsocks v0.0.0-20221115140728-028358027bfa // indirect
 	github.com/sagernet/sing-vmess v0.0.0-20221109021549-b446d5bdddf0 // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect

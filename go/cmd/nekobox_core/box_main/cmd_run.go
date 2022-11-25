@@ -79,6 +79,19 @@ func Create(nekoConfigContent []byte, forceDisableColor bool) (*box.Box, context
 		cancel()
 		return nil, nil, E.Cause(err, "create service")
 	}
+	osSignals := make(chan os.Signal, 1)
+	signal.Notify(osSignals, os.Interrupt, syscall.SIGTERM, syscall.SIGHUP)
+	defer func() {
+		signal.Stop(osSignals)
+		close(osSignals)
+	}()
+
+	go func() {
+		_, loaded := <-osSignals
+		if loaded {
+			cancel()
+		}
+	}()
 	err = instance.Start()
 	if err != nil {
 		cancel()
@@ -90,6 +103,7 @@ func Create(nekoConfigContent []byte, forceDisableColor bool) (*box.Box, context
 func run() error {
 	osSignals := make(chan os.Signal, 1)
 	signal.Notify(osSignals, os.Interrupt, syscall.SIGTERM, syscall.SIGHUP)
+	defer signal.Stop(osSignals)
 	for {
 		instance, cancel, err := Create(nil, false)
 		if err != nil {

@@ -83,9 +83,7 @@ namespace QtGrpc {
             return networkReply->readAll().mid(GrpcMessageSizeHeaderSize);
         }
 
-        QNetworkReply::NetworkError
-        call(const QString &method, const QString &service, const QByteArray &args, QByteArray &qByteArray,
-             int timeout_ms) {
+        QNetworkReply::NetworkError call(const QString &method, const QString &service, const QByteArray &args, QByteArray &qByteArray, int timeout_ms) {
             QNetworkReply *networkReply = post(method, service, args);
 
             QTimer *abortTimer = nullptr;
