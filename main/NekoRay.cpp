@@ -4,6 +4,10 @@
 #include <QDir>
 #include <QApplication>
 #include <QFileInfo>
+#include <QSharedPointer>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
 
 namespace NekoRay {
 

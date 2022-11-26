@@ -77,12 +77,14 @@ jobs:
           # 14.1 is for vs2017, 14.2 is vs2019, following the upstream vcpkg build from Qv2ray-deps repo
           toolset: 14.2
           arch: ${{ matrix.arch }}
-      - name: Download Artifacts
+      - name: Download Artifacts for macOS
         if: matrix.platform == 'macos-10.15'
         uses: actions/download-artifact@v3
         with:
           path: download-artifact
-      - name: Install Qt
+      # ========================================================================================================= Qt Install
+      - name: macOS - Install Qt 5.15
+        if: matrix.platform == 'macos-10.15'
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.qt_version }}
@@ -91,10 +93,24 @@ jobs:
           setup-python: false
           cache: true
           cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
-      # ========================================================================================================= Other install
+      - name: Windows - Download Custom Qt 5.15 SDK
+        shell: bash
+        if: matrix.platform == 'windows-2022'
+        run: |
+          mkdir qtsdk ; cd qtsdk
+          curl -LSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt5.15.7-Windows-x86_64-VS2019-16.11.20-20221103.7z
+          7z x *.7z
+          rm *.7z
+          mv Qt* Qt
+      - name: Linux - Install Qt 5.12 via apt
+        shell: bash
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zlib1g-dev fcitx-frontend-qt5 qtbase5-dev qttools5-dev libqt5svg5-dev libqt5x11extras5-dev
+      # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v3
-      # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Cache Download
         id: cache-deps
         uses: actions/cache@v3
@@ -114,6 +130,7 @@ jobs:
           CC: cl.exe
           CXX: cl.exe
         run: |
+          source libs/env_qtsdk.sh $PWD/qtsdk/Qt
           mkdir build
           cd build
           cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..

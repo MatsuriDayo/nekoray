@@ -60,22 +60,7 @@ https://matsuridayo.github.io
 
 ## Linux 运行
 
-**使用 Linux 系统相信您已具备基本的排错能力，
-本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
-
-要求：已安装主流的发行版和 xcb 桌面环境。
-
-运行： `./launcher` 或 部分系统可双击打开
-
-launcher 参数
-
-* `./launcher -- -appdata` ( `--` 后的参数传递给主程序 )
-* `-debug` Debug mode
-* `-theme` Use local QT theme (unstable) (1.0+)
-
-已知部分 Linux 发行版无法使用预编译版、非 x86_64 暂无适配，可以尝试自行编译。
-
-Ubuntu 22.04: `sudo apt install libxcb-xinerama0`
+[Linux 运行教程](examples/docs/Run_Linux.md)
 
 ## 编译教程
 

@@ -3,6 +3,7 @@
 // Qv2ray wrapper
 
 #include <QJsonDocument>
+#include <QDebug>
 
 #define LOG(...) Qv2ray::base::log_internal(__VA_ARGS__)
 #define DEBUG(...) Qv2ray::base::log_internal(__VA_ARGS__)

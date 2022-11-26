@@ -6,6 +6,7 @@
 
 #ifndef MW_INTERFACE
 
+#include <QTime>
 #include <QTableWidgetItem>
 #include <QKeyEvent>
 #include <QSystemTrayIcon>

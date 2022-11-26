@@ -1,5 +1,6 @@
 #include "NekoRay_Utils.hpp"
 
+#include "3rdparty/base64.h"
 #include "3rdparty/QThreadCreateThread.hpp"
 
 #include <random>
@@ -9,6 +10,40 @@
 #include <QTimer>
 #include <QMessageBox>
 #include <QFile>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QRegularExpression>
+#include <QDateTime>
+#include <QLocale>
+
+QStringList SplitLines(const QString &_string) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
+#else
+    return _string.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts);
+#endif
+}
+
+QString DecodeB64IfValid(const QString &input, QByteArray::Base64Options options) {
+    Qt515Base64::Base64Options newOptions = Qt515Base64::Base64Option::AbortOnBase64DecodingErrors;
+    if (options.testFlag(QByteArray::Base64UrlEncoding)) newOptions |= Qt515Base64::Base64Option::Base64UrlEncoding;
+    if (options.testFlag(QByteArray::OmitTrailingEquals)) newOptions |= Qt515Base64::Base64Option::OmitTrailingEquals;
+    auto result = Qt515Base64::QByteArray_fromBase64Encoding(input.toUtf8(), newOptions);
+    if (result) {
+        return result.decoded;
+    }
+    return {};
+}
+
+QString QStringList2Command(const QStringList &list) {
+    QStringList new_list;
+    for (auto str: list) {
+        auto q = "\"" + str.replace("\"", "\\\"") + "\"";
+        new_list << q;
+    }
+    return new_list.join(" ");
+}
 
 QString GetQueryValue(const QUrlQuery &q, const QString &key, const QString &def) {
     auto a = q.queryItemValue(key);
@@ -32,6 +67,43 @@ QString GetRandomString(int randomStringLength) {
         randomString.append(nextChar);
     }
     return randomString;
+}
+
+// QString >> QJson
+QJsonObject QString2QJsonObject(const QString &jsonString) {
+    QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());
+    QJsonObject jsonObject = jsonDocument.object();
+    return jsonObject;
+}
+
+// QJson >> QString
+QString QJsonObject2QString(const QJsonObject &jsonObject, bool compact) {
+    return QJsonDocument(jsonObject).toJson(compact ? QJsonDocument::Compact : QJsonDocument::Indented);
+}
+
+template<typename T>
+QJsonArray QList2QJsonArray(const QList<T> &list) {
+    QVariantList list2;
+    for (auto &item: list)
+        list2.append(item);
+    return QJsonArray::fromVariantList(list2);
+}
+
+template QJsonArray QList2QJsonArray<int>(const QList<int> &list);
+template QJsonArray QList2QJsonArray<QString>(const QList<QString> &list);
+
+QList<int> QJsonArray2QListInt(const QJsonArray &arr) {
+    QList<int> list2;
+    for (auto item: arr)
+        list2.append(item.toInt());
+    return list2;
+}
+
+QList<QString> QJsonArray2QListString(const QJsonArray &arr) {
+    QList<QString> list2;
+    for (auto item: arr)
+        list2.append(item.toString());
+    return list2;
 }
 
 QByteArray ReadFile(const QString &path) {
@@ -74,6 +146,12 @@ bool IsIpAddressV6(const QString &str) {
     if (address.protocol() == QAbstractSocket::IPv6Protocol)
         return true;
     return false;
+}
+
+QString DisplayTime(long long time, int formatType) {
+    QDateTime t;
+    t.setSecsSinceEpoch(time);
+    return QLocale().toString(t, QLocale::FormatType(formatType));
 }
 
 QWidget *GetMessageBoxParent() {

@@ -4,6 +4,10 @@
 #include "ui/mainwindow_interface.h"
 
 #include <QThread>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QElapsedTimer>
 
 namespace NekoRay::traffic {
 

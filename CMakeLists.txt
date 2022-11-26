@@ -40,10 +40,16 @@ include("cmake/fuck_windows/fuck.cmake")
 
 # default prefix path
 if (NKR_PACKAGE)
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/package)
+    list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/package)
 else ()
-    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_SOURCE_DIR}/libs/deps/built)
+    list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/built)
 endif ()
+
+if (NKR_DISABLE_LIBS)
+else ()
+    list(APPEND CMAKE_PREFIX_PATH ${NKR_LIBS})
+endif ()
+
 message("[CMAKE_PREFIX_PATH] ${CMAKE_PREFIX_PATH}")
 
 # for some cross toolchain
@@ -100,6 +106,7 @@ set(PROJECT_SOURCES
         main/NekoRay.cpp
         main/NekoRay_Utils.cpp
 
+        3rdparty/base64.cpp
         3rdparty/qrcodegen.cpp
         3rdparty/QtExtKeySequenceEdit.cpp
 
@@ -207,14 +214,6 @@ set(PROJECT_SOURCES
         ${QV2RAY_RC}
         )
 
-# Translations
-set(TS_FILES
-        translations/zh_CN.ts
-        )
-qt_create_translation(QM_FILES ${PROJECT_SOURCES} ${TS_FILES} OPTIONS -locations none)
-configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
-set(PROJECT_SOURCES ${PROJECT_SOURCES} ${TS_FILES} ${QM_FILES} ${CMAKE_BINARY_DIR}/translations.qrc)
-
 # Qt exe
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(nekoray
@@ -245,21 +244,12 @@ set_property(TARGET nekoray PROPERTY AUTOUIC ON)
 set_property(TARGET nekoray PROPERTY AUTOMOC ON)
 set_property(TARGET nekoray PROPERTY AUTORCC ON)
 
-# Target Link
-
-target_link_libraries(nekoray PRIVATE
-        Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
-        Threads::Threads
-        ${NKR_EXTERNAL_TARGETS}
-        ${PLATFORM_FUCKING_LIBRARIES}
-        )
+# Target Source macOS
 
 set(MACOSX_ICON ${CMAKE_SOURCE_DIR}/res/nekoray.icns)
-
 if (APPLE)
     target_sources(nekoray PRIVATE ${MACOSX_ICON})
 endif ()
-
 set_target_properties(nekoray PROPERTIES
         MACOSX_BUNDLE_ICON_FILE "nekoray.icns"
         RESOURCE ${MACOSX_ICON}
@@ -267,6 +257,29 @@ set_target_properties(nekoray PROPERTIES
         MACOSX_BUNDLE_GUI_IDENTIFIER moe.nekoray.macosx
         MACOSX_BUNDLE TRUE
         WIN32_EXECUTABLE TRUE
+        )
+
+# Target Source Translations
+
+set(TS_FILES
+        translations/zh_CN.ts
+        )
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_lupdate(nekoray TS_FILES ${TS_FILES})
+    qt_add_lrelease(nekoray TS_FILES ${TS_FILES} QM_FILES_OUTPUT_VARIABLE QM_FILES)
+else ()
+    qt5_create_translation(QM_FILES ${PROJECT_SOURCES} ${TS_FILES} OPTIONS -locations none)
+endif ()
+configure_file(translations/translations.qrc ${CMAKE_BINARY_DIR} COPYONLY)
+target_sources(nekoray PRIVATE ${CMAKE_BINARY_DIR}/translations.qrc)
+
+# Target Link
+
+target_link_libraries(nekoray PRIVATE
+        Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
+        Threads::Threads
+        ${NKR_EXTERNAL_TARGETS}
+        ${PLATFORM_FUCKING_LIBRARIES}
         )
 
 if (QT_VERSION_MAJOR EQUAL 6)

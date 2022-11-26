@@ -167,9 +167,8 @@ void AutoRun_SetEnabled(bool enable) {
     QStringList appCmdList = {QApplication::applicationFilePath(), "-tray"};
 
     // nekoray: launcher
-    auto launcherPath = QApplication::applicationDirPath() + "/launcher";
-    if (QFile::exists(launcherPath)) {
-        appCmdList = QStringList{launcherPath, "--", "-tray"};
+    if (qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1") {
+        appCmdList = QStringList{QApplication::applicationDirPath() + "/launcher", "--", "-tray"};
     }
 
     if (enable) {

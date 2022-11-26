@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QJsonObject>
+#include <QJsonArray>
+
 #include "main/NekoRay.hpp"
 
 namespace NekoRay::fmt {

@@ -1,9 +1,8 @@
 #include "includes.h"
 
-#include <functional>
-
 #include <QApplication>
 #include <QHostInfo>
+#include <QUrl>
 
 namespace NekoRay::fmt {
     AbstractBean::AbstractBean(int version) {
