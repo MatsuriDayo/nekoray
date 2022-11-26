@@ -23,7 +23,6 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type LibcoreServiceClient interface {
 	Exit(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error)
-	KeepAlive(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error)
 	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
 	Start(ctx context.Context, in *LoadConfigReq, opts ...grpc.CallOption) (*ErrorResp, error)
 	Stop(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*ErrorResp, error)
@@ -43,15 +42,6 @@ func NewLibcoreServiceClient(cc grpc.ClientConnInterface) LibcoreServiceClient {
 func (c *libcoreServiceClient) Exit(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error) {
 	out := new(EmptyResp)
 	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/Exit", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *libcoreServiceClient) KeepAlive(ctx context.Context, in *EmptyReq, opts ...grpc.CallOption) (*EmptyResp, error) {
-	out := new(EmptyResp)
-	err := c.cc.Invoke(ctx, "/libcore.LibcoreService/KeepAlive", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +107,6 @@ func (c *libcoreServiceClient) ListConnections(ctx context.Context, in *EmptyReq
 // for forward compatibility
 type LibcoreServiceServer interface {
 	Exit(context.Context, *EmptyReq) (*EmptyResp, error)
-	KeepAlive(context.Context, *EmptyReq) (*EmptyResp, error)
 	Update(context.Context, *UpdateReq) (*UpdateResp, error)
 	Start(context.Context, *LoadConfigReq) (*ErrorResp, error)
 	Stop(context.Context, *EmptyReq) (*ErrorResp, error)
@@ -133,9 +122,6 @@ type UnimplementedLibcoreServiceServer struct {
 
 func (UnimplementedLibcoreServiceServer) Exit(context.Context, *EmptyReq) (*EmptyResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Exit not implemented")
-}
-func (UnimplementedLibcoreServiceServer) KeepAlive(context.Context, *EmptyReq) (*EmptyResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method KeepAlive not implemented")
 }
 func (UnimplementedLibcoreServiceServer) Update(context.Context, *UpdateReq) (*UpdateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
@@ -182,24 +168,6 @@ func _LibcoreService_Exit_Handler(srv interface{}, ctx context.Context, dec func
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(LibcoreServiceServer).Exit(ctx, req.(*EmptyReq))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _LibcoreService_KeepAlive_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EmptyReq)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(LibcoreServiceServer).KeepAlive(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/libcore.LibcoreService/KeepAlive",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LibcoreServiceServer).KeepAlive(ctx, req.(*EmptyReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -322,10 +290,6 @@ var LibcoreService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Exit",
 			Handler:    _LibcoreService_Exit_Handler,
-		},
-		{
-			MethodName: "KeepAlive",
-			Handler:    _LibcoreService_KeepAlive_Handler,
 		},
 		{
 			MethodName: "Update",

@@ -5,7 +5,6 @@ option go_package = "neko/gen";
 
 service LibcoreService {
   rpc Exit(EmptyReq) returns (EmptyResp) {}
-  rpc KeepAlive(EmptyReq) returns (EmptyResp) {}
   rpc Update(UpdateReq) returns (UpdateResp) {}
   //
   rpc Start(LoadConfigReq) returns (ErrorResp) {}

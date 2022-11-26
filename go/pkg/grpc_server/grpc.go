@@ -11,8 +11,10 @@ import (
 	"neko/pkg/neko_common"
 	"net"
 	"os"
+	"runtime"
 	"strconv"
 	"strings"
+	"syscall"
 	"time"
 
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
@@ -21,13 +23,6 @@ import (
 
 type BaseServer struct {
 	gen.LibcoreServiceServer
-}
-
-var last time.Time
-
-func (s *BaseServer) KeepAlive(ctx context.Context, in *gen.EmptyReq) (*gen.EmptyResp, error) {
-	last = time.Now()
-	return &gen.EmptyResp{}, nil
 }
 
 func (s *BaseServer) Exit(ctx context.Context, in *gen.EmptyReq) (out *gen.EmptyResp, _ error) {
@@ -47,12 +42,20 @@ func RunCore(setupCore func(), server gen.LibcoreServiceServer) {
 	neko_common.Debug = *_debug
 
 	go func() {
-		t := time.NewTicker(time.Second * 10)
-		for {
-			<-t.C
-			if last.Add(time.Second * 10).Before(time.Now()) {
-				fmt.Println("Exit due to inactive")
-				os.Exit(0)
+		parent, err := os.FindProcess(os.Getppid())
+		if err != nil {
+			log.Fatalln("find parent:", err)
+		}
+		if runtime.GOOS == "windows" {
+			state, err := parent.Wait()
+			log.Fatalln("parent exited:", state, err)
+		} else {
+			for {
+				time.Sleep(time.Second * 10)
+				err = parent.Signal(syscall.Signal(0))
+				if err != nil {
+					log.Fatalln("parent exited:", err)
+				}
 			}
 		}
 	}()
