@@ -55,7 +55,7 @@ jobs:
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-20.04, macos-10.15 ]
+        platform: [ windows-2022, ubuntu-20.04, macos-11 ]
         arch: [ x64 ]
         qt_version: [ 5.15.2 ]
       fail-fast: false
@@ -78,13 +78,13 @@ jobs:
           toolset: 14.2
           arch: ${{ matrix.arch }}
       - name: Download Artifacts for macOS
-        if: matrix.platform == 'macos-10.15'
+        if: matrix.platform == 'macos-11'
         uses: actions/download-artifact@v3
         with:
           path: download-artifact
       # ========================================================================================================= Qt Install
       - name: macOS - Install Qt 5.15
-        if: matrix.platform == 'macos-10.15'
+        if: matrix.platform == 'macos-11'
         uses: jurplel/install-qt-action@v3
         with:
           version: ${{ matrix.qt_version }}
@@ -149,7 +149,7 @@ jobs:
           ./libs/deploy_linux64.sh
       - name: macOS - ${{ matrix.qt_version }} - Generate MakeFile and Build
         shell: bash
-        if: matrix.platform == 'macos-10.15'
+        if: matrix.platform == 'macos-11'
         run: |
           mkdir build
           cd build
