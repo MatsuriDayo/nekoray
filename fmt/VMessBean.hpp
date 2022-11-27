@@ -8,7 +8,7 @@ namespace NekoRay::fmt {
     public:
         QString uuid = "";
         int aid = 0;
-        QString security = "auto";
+        QString security = "aes-128-gcm";
 
         QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
         QString custom = "";
