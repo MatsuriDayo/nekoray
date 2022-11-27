@@ -69,6 +69,13 @@ QString GetRandomString(int randomStringLength) {
     return randomString;
 }
 
+quint64 GetRandomUint64() {
+    std::random_device rd;
+    std::mt19937 mt(rd());
+    std::uniform_int_distribution<quint64> dist;
+    return dist(mt);
+}
+
 // QString >> QJson
 QJsonObject QString2QJsonObject(const QString &jsonString) {
     QJsonDocument jsonDocument = QJsonDocument::fromJson(jsonString.toUtf8());

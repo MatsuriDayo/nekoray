@@ -310,19 +310,20 @@ void MainWindow::CheckUpdate() {
     }
 
     runOnUiThread([=] {
+        auto allow_updater = !NekoRay::dataStore->flag_use_appdata;
         auto note_pre_release = response.is_pre_release() ? " (Pre-release)" : "";
         QMessageBox box(QMessageBox::Question, QObject::tr("Update") + note_pre_release,
                         QObject::tr("Update found: %1\nRelease note:\n%2").arg(response.assets_name().c_str(), response.release_note().c_str()));
         //
         QAbstractButton *btn1 = nullptr;
-        if (!NekoRay::dataStore->flag_use_appdata) {
+        if (allow_updater) {
             btn1 = box.addButton(QObject::tr("Update"), QMessageBox::AcceptRole);
         }
         QAbstractButton *btn2 = box.addButton(QObject::tr("Open in browser"), QMessageBox::AcceptRole);
         box.addButton(QObject::tr("Close"), QMessageBox::RejectRole);
         box.exec();
         //
-        if (btn1 == box.clickedButton()) {
+        if (btn1 == box.clickedButton() && allow_updater) {
             // Download Update
             runOnNewThread([=] {
                 bool ok2;

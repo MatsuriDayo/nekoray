@@ -22,19 +22,13 @@
 #include "qv2ray/v2/ui/LogHighlighter.hpp"
 
 #ifndef NKR_NO_EXTERNAL
-
 #include "3rdparty/ZxingQtReader.hpp"
-
 #endif
 
 #ifdef Q_OS_WIN
-
 #include "3rdparty/WinCommander.hpp"
-
 #else
-
 #include <unistd.h>
-
 #endif
 
 #include <QClipboard>
@@ -238,9 +232,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 if (this->isVisible()) {
                     hide();
                 } else {
-                    this->showNormal();
-                    this->raise();
-                    this->activateWindow();
+                    ACTIVE_THIS_WINDOW
                 }
                 break;
             default:
@@ -445,6 +437,7 @@ void MainWindow::show_group(int gid) {
 // callback
 
 void MainWindow::dialog_message_impl(const QString &sender, const QString &info) {
+    // info
     if (info.contains("UpdateIcon")) {
         icon_status = -1;
         refresh_status();
@@ -464,8 +457,10 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     if (info == "RestartProgram") {
         this->exit_reason = 2;
         on_menu_exit_triggered();
+    } else if (info == "Raise") {
+        ACTIVE_THIS_WINDOW
     }
-    //
+    // sender
     if (sender == Dialog_DialogEditProfile) {
         if (info == "accept") {
             refresh_proxy_list();

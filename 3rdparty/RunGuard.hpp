@@ -7,15 +7,14 @@
 #include <QCryptographicHash>
 
 class RunGuard {
-
 public:
     RunGuard(const QString &key);
 
     ~RunGuard();
 
-    bool isAnotherRunning();
+    bool isAnotherRunning(quint64 *data_out);
 
-    bool tryToRun();
+    bool tryToRun(quint64 *data_in);
 
     void release();
 
@@ -42,15 +41,13 @@ namespace {
         return data;
     }
 
-}
-
+} // namespace
 
 RunGuard::RunGuard(const QString &key)
-        : key(key), memLockKey(generateKeyHash(key, "_memLockKey")),
-          sharedmemKey(generateKeyHash(key, "_sharedmemKey")), sharedMem(sharedmemKey), memLock(memLockKey, 1) {
+    : key(key), memLockKey(generateKeyHash(key, "_memLockKey")), sharedmemKey(generateKeyHash(key, "_sharedmemKey")), sharedMem(sharedmemKey), memLock(memLockKey, 1) {
     memLock.acquire();
     {
-        QSharedMemory fix(sharedmemKey);    // Fix for *nix: http://habrahabr.ru/post/173281/
+        QSharedMemory fix(sharedmemKey); // Fix for *nix: http://habrahabr.ru/post/173281/
         fix.attach();
     }
     memLock.release();
@@ -60,26 +57,32 @@ RunGuard::~RunGuard() {
     release();
 }
 
-bool RunGuard::isAnotherRunning() {
+bool RunGuard::isAnotherRunning(quint64 *data_out) {
     if (sharedMem.isAttached())
         return false;
 
     memLock.acquire();
     const bool isRunning = sharedMem.attach();
-    if (isRunning)
+    if (isRunning) {
+        if (data_out != nullptr) {
+            memcpy(data_out, sharedMem.data(), sizeof(quint64));
+        }
         sharedMem.detach();
+    }
     memLock.release();
 
     return isRunning;
 }
 
-bool RunGuard::tryToRun() {
-    if (isAnotherRunning())   // Extra check
+bool RunGuard::tryToRun(quint64 *data_in) {
+    if (isAnotherRunning(nullptr)) // Extra check
         return false;
 
     memLock.acquire();
     const bool result = sharedMem.create(sizeof(quint64));
+    if (result) memcpy(sharedMem.data(), data_in, sizeof(quint64));
     memLock.release();
+
     if (!result) {
         release();
         return false;

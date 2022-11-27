@@ -7,6 +7,8 @@
 #include <QTranslator>
 #include <QMessageBox>
 #include <QStandardPaths>
+#include <QLocalSocket>
+#include <QLocalServer>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoRay.hpp"
@@ -21,6 +23,8 @@ void signal_handler(int signum) {
         qApp->exit();
     }
 }
+
+#define LOCAL_SERVER_PREFIX "nekoraylocalserver-"
 
 int main(int argc, char *argv[]) {
     // Core dump
@@ -72,11 +76,25 @@ int main(int argc, char *argv[]) {
 
     // RunGuard
     RunGuard guard("nekoray" + wd.absolutePath());
-    if (!NekoRay::dataStore->flag_many) {
-        if (!guard.tryToRun()) {
-            QMessageBox::warning(nullptr, "NekoRay", QObject::tr("Another program is running."));
+    quint64 guard_data_in = GetRandomUint64();
+    quint64 guard_data_out = 0;
+    if (!NekoRay::dataStore->flag_many && !guard.tryToRun(&guard_data_in)) {
+        // Some Good System
+        if (guard.isAnotherRunning(&guard_data_out)) {
+            // Wake up a running instance
+            QLocalSocket socket;
+            socket.connectToServer(LOCAL_SERVER_PREFIX + Int2String(guard_data_out));
+            qDebug() << socket.fullServerName();
+            if (!socket.waitForConnected(500)) {
+                qDebug() << "Failed to wake a running instance.";
+                return 0;
+            }
+            qDebug() << "connected to local server, try to raise another program";
             return 0;
         }
+        // Some Bad System
+        QMessageBox::warning(nullptr, "NekoRay", "RunGuard disallow to run, use -many to force start.");
+        return 0;
     }
     MF_release_runguard = [&] { guard.release(); };
 
@@ -158,6 +176,19 @@ int main(int argc, char *argv[]) {
     // Signals
     signal(SIGTERM, signal_handler);
     signal(SIGINT, signal_handler);
+
+    // QLocalServer
+    QLocalServer server;
+    auto server_name = LOCAL_SERVER_PREFIX + Int2String(guard_data_in);
+    QLocalServer::removeServer(server_name);
+    server.listen(server_name);
+    QObject::connect(&server, &QLocalServer::newConnection, &a, [&] {
+        auto socket = server.nextPendingConnection();
+        qDebug() << "nextPendingConnection:" << server_name << socket;
+        socket->deleteLater();
+        // raise main window
+        MW_dialog_message("", "Raise");
+    });
 
     UI_InitMainWindow();
     return QApplication::exec();

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <future>
 #include <QThread>
 
 // FOR OLD QT

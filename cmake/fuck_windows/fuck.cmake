@@ -1,5 +1,5 @@
 if (WIN32)
-    set(PLATFORM_FUCKING_SOURCES 3rdparty/WinCommander.cpp)
+    set(PLATFORM_FUCKING_SOURCES 3rdparty/WinCommander.cpp sys/windows/guihelper.cpp)
     set(PLATFORM_FUCKING_LIBRARIES wininet wsock32 ws2_32 user32 rasapi32 iphlpapi)
 
     include(cmake/fuck_windows/generate_product_version.cmake)
