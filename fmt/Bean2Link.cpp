@@ -15,12 +15,12 @@ namespace NekoRay::fmt {
         } else {
             url.setScheme(QString("socks%1").arg(socks_http_type));
         }
-        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
+        if (!name.isEmpty()) url.setFragment(name);
         if (!username.isEmpty()) url.setUserName(username);
         if (!password.isEmpty()) url.setPassword(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        return url.toString();
+        return url.toString(QUrl::FullyEncoded);
     }
 
     QString TrojanVLESSBean::ToShareLink() {
@@ -30,7 +30,7 @@ namespace NekoRay::fmt {
         url.setUserName(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
+        if (!name.isEmpty()) url.setFragment(name);
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
         query.addQueryItem("security", stream->security);
         query.addQueryItem("type", stream->network);
@@ -43,7 +43,7 @@ namespace NekoRay::fmt {
         }
 
         url.setQuery(query);
-        return url.toString();
+        return url.toString(QUrl::FullyEncoded);
     }
 
     QString ShadowSocksBean::ToShareLink() {
@@ -53,11 +53,11 @@ namespace NekoRay::fmt {
         url.setUserName(username.toUtf8().toBase64(QByteArray::Base64Option::Base64UrlEncoding));
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
+        if (!name.isEmpty()) url.setFragment(name);
         QUrlQuery q;
         if (!plugin.isEmpty()) q.addQueryItem("plugin", plugin);
         if (!q.isEmpty()) url.setQuery(q);
-        return url.toString();
+        return url.toString(QUrl::FullyEncoded);
     }
 
     QString VMessBean::ToShareLink() {
@@ -86,8 +86,8 @@ namespace NekoRay::fmt {
         url.setPassword(password);
         url.setHost(serverAddress);
         url.setPort(serverPort);
-        if (!name.isEmpty()) url.setFragment(UrlSafe_encode(name));
-        return url.toString();
+        if (!name.isEmpty()) url.setFragment(name);
+        return url.toString(QUrl::FullyEncoded);
     }
 
 } // namespace NekoRay::fmt

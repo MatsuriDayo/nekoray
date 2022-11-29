@@ -89,6 +89,7 @@ namespace NekoRay::fmt {
 
     CoreObjOutboundBuildResult VMessBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
+
         QJsonObject outbound{
             {"type", "vmess"},
             {"server", serverAddress},
@@ -105,6 +106,7 @@ namespace NekoRay::fmt {
 
     CoreObjOutboundBuildResult TrojanVLESSBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
+
         QJsonObject outbound{
             {"type", proxy_type == proxy_VLESS ? "vless" : "trojan"},
             {"server", serverAddress},

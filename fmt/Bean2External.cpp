@@ -51,10 +51,16 @@ namespace NekoRay::fmt {
         domain_address = WrapIPV6Host(domain_address);
         connect_address = WrapIPV6Host(connect_address);
 
+        auto proxy_url = QUrl();
+        proxy_url.setScheme(protocol);
+        proxy_url.setUserName(username);
+        proxy_url.setPassword(password);
+        proxy_url.setPort(connect_port);
+        proxy_url.setHost(domain_address);
+
         result.arguments += "--log";
         result.arguments += "--listen=socks://127.0.0.1:" + Int2String(socks_port);
-        result.arguments += "--proxy=" + protocol + "://" + username + ":" + password + "@" +
-                            domain_address + ":" + Int2String(connect_port);
+        result.arguments += "--proxy=" + proxy_url.toString(QUrl::FullyEncoded);
         if (domain_address != connect_address)
             result.arguments += "--host-resolver-rules=MAP " + domain_address + " " + connect_address;
         if (insecure_concurrency > 0) result.arguments += "--insecure-concurrency=" + Int2String(insecure_concurrency);

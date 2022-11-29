@@ -57,10 +57,6 @@ QString GetRandomString(int randomStringLength);
 
 quint64 GetRandomUint64();
 
-inline QString UrlSafe_encode(const QString &s) {
-    return s.toUtf8().toPercentEncoding().replace(" ", "%20");
-}
-
 // JSON
 
 class QJsonObject;

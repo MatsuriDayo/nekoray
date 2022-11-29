@@ -19,7 +19,8 @@ namespace NekoRay {
     void ProfileManager::LoadManager() {
         for (auto id: _profiles) {
             auto ent = LoadProxyEntity(QString("profiles/%1.json").arg(id));
-            if (ent->bean->version == -114514) { // clear invaild profile
+            if (ent == nullptr || ent->bean == nullptr || ent->bean->version == -114514) {
+                // clear invaild profile
                 DeleteProfile(id);
                 continue;
             }
