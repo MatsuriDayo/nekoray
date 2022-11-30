@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDir>
 #include <QFileInfo>
+#include <QUrl>
 
 #define WriteTempFile(fn, data)                                   \
     QDir dir;                                                     \

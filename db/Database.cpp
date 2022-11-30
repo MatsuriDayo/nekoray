@@ -17,17 +17,21 @@ namespace NekoRay {
     }
 
     void ProfileManager::LoadManager() {
+        QList<int> invaild_profile_id;
         for (auto id: _profiles) {
             auto ent = LoadProxyEntity(QString("profiles/%1.json").arg(id));
             if (ent == nullptr || ent->bean == nullptr || ent->bean->version == -114514) {
                 // clear invaild profile
-                DeleteProfile(id);
+                invaild_profile_id << id;
                 continue;
             }
             profiles[id] = ent;
         }
         for (auto id: _groups) {
             groups[id] = LoadGroup(QString("groups/%1.json").arg(id));
+        }
+        for (auto id: invaild_profile_id) {
+            DeleteProfile(id);
         }
     }
 
