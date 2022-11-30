@@ -9,6 +9,7 @@ import (
 	"unsafe"
 
 	D "github.com/sagernet/sing-dns"
+	"github.com/sagernet/sing/common/logger"
 	M "github.com/sagernet/sing/common/metadata"
 	N "github.com/sagernet/sing/common/network"
 )
@@ -19,13 +20,13 @@ func init() {
 	D.RegisterTransport([]string{"underlying"}, CreateUnderlyingTransport)
 }
 
-func CreateUnderlyingTransport(ctx context.Context, dialer N.Dialer, link string) (D.Transport, error) {
+func CreateUnderlyingTransport(ctx context.Context, logger logger.ContextLogger, dialer N.Dialer, link string) (D.Transport, error) {
 	if runtime.GOOS != "windows" {
 		// Linux no resolv.conf change
-		return D.CreateLocalTransport(ctx, dialer, "local")
+		return D.CreateLocalTransport(ctx, logger, dialer, "local")
 	}
 	// Windows Underlying DNS hook
-	t, _ := D.CreateUDPTransport(ctx, dialer, link)
+	t, _ := D.CreateUDPTransport(ctx, logger, dialer, link)
 	udp := t.(*D.UDPTransport)
 	handler_ := reflect.Indirect(reflect.ValueOf(udp)).FieldByName("handler")
 	handler_ = reflect.NewAt(handler_.Type(), unsafe.Pointer(handler_.UnsafeAddr())).Elem()
