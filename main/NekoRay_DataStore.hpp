@@ -47,6 +47,7 @@ namespace NekoRay {
         bool core_prepare_exit = false;
         int running_spmode = NekoRay::SystemProxyMode::DISABLE;
         bool need_keep_vpn_off = false;
+        QStringList ignoreConnTag = {};
 
         Routing *routing = new Routing;
         int imported_count = 0;

@@ -12,6 +12,7 @@ namespace NekoRay {
 
         QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
         QSharedPointer<traffic::TrafficData> outboundStat;         // main
+        QStringList ignoreConnTag;
 
         QList<sys::ExternalProcess *> ext;
     };

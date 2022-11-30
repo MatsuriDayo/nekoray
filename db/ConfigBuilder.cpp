@@ -381,6 +381,11 @@ namespace NekoRay {
                 tagOut = "proxy";
             }
 
+            // ignoreConnTag
+            if (index != 0) {
+                status->result->ignoreConnTag << tagOut;
+            }
+
             if (needGlobal) {
                 if (status->globalProfiles.contains(ent->id)) {
                     continue;

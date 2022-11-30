@@ -334,16 +334,20 @@ void DialogEditProfile::accept() {
         *((QString *) custom_item->ptr) = CACHE.custom;
     }
 
+    // finish
+    QStringList msg = {"accept"};
+
     if (newEnt) {
         auto ok = NekoRay::profileManager->AddProfile(ent);
         if (!ok) {
             MessageBoxWarning("???", "id exists");
         }
     } else {
-        ent->Save();
+        auto changed = ent->Save();
+        if (changed && NekoRay::dataStore->started_id == ent->id) msg << "restart";
     }
 
-    MW_dialog_message(Dialog_DialogEditProfile, "accept");
+    MW_dialog_message(Dialog_DialogEditProfile, msg.join(","));
     QDialog::accept();
 }
 

@@ -462,8 +462,14 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     }
     // sender
     if (sender == Dialog_DialogEditProfile) {
-        if (info == "accept") {
+        auto msg = info.split(",");
+        if (msg.contains("accept")) {
             refresh_proxy_list();
+            if (msg.contains("restart")) {
+                if (QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
+                    neko_start(NekoRay::dataStore->started_id);
+                }
+            }
         }
     } else if (sender == Dialog_DialogManageGroups) {
         if (info.startsWith("refresh")) {
@@ -1342,6 +1348,7 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
     int row = -1;
     for (const auto &_item: arr) {
         auto item = _item.toObject();
+        if (NekoRay::dataStore->ignoreConnTag.contains(item["Tag"].toString())) continue;
 
         row++;
         ui->tableWidget_conn->insertRow(row);

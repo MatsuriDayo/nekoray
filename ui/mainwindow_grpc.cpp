@@ -232,6 +232,7 @@ void MainWindow::neko_start(int _id) {
     //
     NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
     NekoRay::traffic::trafficLooper->items = result->outboundStats;
+    NekoRay::dataStore->ignoreConnTag = result->ignoreConnTag;
     NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
