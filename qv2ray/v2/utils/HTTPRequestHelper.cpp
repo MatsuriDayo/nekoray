@@ -35,7 +35,20 @@ namespace Qv2ray::common::network {
         // Set attribute
         request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
         request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, NekoRay::dataStore->user_agent);
+        if (NekoRay::dataStore->sub_insecure) {
+            QSslConfiguration c;
+            c.setPeerVerifyMode(QSslSocket::PeerVerifyMode::VerifyNone);
+            request.setSslConfiguration(c);
+        }
+        //
         auto _reply = accessManager.get(request);
+        connect(_reply, &QNetworkReply::sslErrors, _reply, [](const QList<QSslError> &errors) {
+            QStringList error_str;
+            for (const auto &err: errors) {
+                error_str << err.errorString();
+            }
+            MW_show_log(QString("SSL Errors: %1 %2").arg(error_str.join(","), NekoRay::dataStore->sub_insecure ? "(Ignored)" : ""));
+        });
         //
         {
             QEventLoop loop;
@@ -43,8 +56,10 @@ namespace Qv2ray::common::network {
             loop.exec();
         }
         //
-        return NekoHTTPResponse{_reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString(),
-                                _reply->readAll(), _reply->rawHeaderPairs()};
+        auto result = NekoHTTPResponse{_reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString(),
+                                       _reply->readAll(), _reply->rawHeaderPairs()};
+        _reply->deleteLater();
+        return result;
     }
 
     QString NetworkRequestHelper::GetHeader(const QList<QPair<QByteArray, QByteArray>> &header, const QString &name) {

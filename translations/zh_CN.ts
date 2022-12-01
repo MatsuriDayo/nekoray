@@ -199,6 +199,10 @@
         <source>Clear servers before updating subscription</source>
         <translation>更新订阅前清除服务器</translation>
     </message>
+    <message>
+        <source>Ignore TLS errors when updating subscription</source>
+        <translation>更新订阅时忽略 TLS 错误</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

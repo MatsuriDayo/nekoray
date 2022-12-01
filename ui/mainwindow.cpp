@@ -1101,7 +1101,6 @@ void MainWindow::display_qr_link(bool nkrFormat) {
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
-    NO_ADD_TO_SUBSCRIPTION_GROUP
 #ifndef NKR_NO_EXTERNAL
     using namespace ZXingQt;
 
@@ -1124,6 +1123,8 @@ void MainWindow::on_menu_scan_qr_triggered() {
     if (text.isEmpty()) {
         MessageBoxInfo(software_name, tr("QR Code not found"));
     } else {
+        show_log_impl("QR Code Result:\n" + text);
+        NO_ADD_TO_SUBSCRIPTION_GROUP
         NekoRay::sub::groupUpdater->AsyncUpdate(text);
     }
 #endif

@@ -64,6 +64,7 @@ namespace NekoRay {
         _add(new configItem("check_include_pre", &check_include_pre, itemType::boolean));
         _add(new configItem("sp_format", &system_proxy_format, itemType::string));
         _add(new configItem("sub_clear", &sub_clear, itemType::boolean));
+        _add(new configItem("sub_insecure", &sub_insecure, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {

@@ -81,6 +81,7 @@ namespace NekoRay {
         QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
         bool sub_use_proxy = false;
         bool sub_clear = false;
+        bool sub_insecure = false;
 
         // Security
         bool insecure_hint = true;
