@@ -8,6 +8,7 @@ import (
 	"io"
 	"libcore"
 	"libcore/stun"
+	"log"
 	"neko/gen"
 	"neko/pkg/grpc_server"
 	"neko/pkg/neko_common"
@@ -36,6 +37,16 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 
 	if neko_common.Debug {
 		logrus.Println("Start:", in.CoreConfig, in.TryDomains)
+	}
+
+	if neko_common.GetBuildTime() > 0 {
+		if time.Now().Unix() >= neko_common.GetExpireTime() {
+			err = errors.New("Your version is too old! Please update!! 版本太旧，请升级！")
+			return
+		} else if time.Now().Unix() >= (neko_common.GetExpireTime() - 30*24*60*60) {
+			log.Println("Your version is too old! Please update!! 版本太旧，请升级！")
+			log.Println("This version expires on " + time.Unix(neko_common.GetExpireTime(), 0).Format("2006-01-02"))
+		}
 	}
 
 	if instance != nil {

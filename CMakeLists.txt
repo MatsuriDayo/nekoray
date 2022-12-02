@@ -16,7 +16,6 @@ if (WIN32)
 endif ()
 
 # Find Qt
-
 if (NOT QT_VERSION_MAJOR)
     set(QT_VERSION_MAJOR 5)
 endif ()
@@ -30,15 +29,11 @@ if (NKR_CROSS)
     set_property(TARGET Qt5::lupdate PROPERTY IMPORTED_LOCATION /usr/bin/lupdate)
 endif ()
 
-if (NKR_PACKAGE OR NKR_PACKAGE_MACOS)
-    message("[add_compile_definitions] NKR_CPP_USE_APPDATA")
-    add_compile_definitions(NKR_CPP_USE_APPDATA)
-endif ()
-
 # Windows
 include("cmake/fuck_windows/fuck.cmake")
 
-# default prefix path
+#### default prefix path ####
+
 if (NKR_PACKAGE)
     list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/package)
 else ()
@@ -56,39 +51,63 @@ message("[CMAKE_PREFIX_PATH] ${CMAKE_PREFIX_PATH}")
 list(APPEND CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
 message("[CMAKE_FIND_ROOT_PATH] ${CMAKE_FIND_ROOT_PATH}")
 
-# NKR
+#### NKR ####
+
 include("cmake/print.cmake")
 include("cmake/nkr.cmake")
 
 find_package(Threads)
 
-if (NKR_NO_EXTERNAL)
-    add_compile_definitions(NKR_NO_EXTERNAL)
-else ()
-    if (NKR_NO_GRPC)
-        add_compile_definitions(NKR_NO_GRPC)
-    else ()
-        # My proto
-        include("cmake/myproto.cmake")
-        list(APPEND NKR_EXTERNAL_TARGETS myproto)
-    endif ()
+if (NKR_PACKAGE OR NKR_PACKAGE_MACOS)
+    nkr_add_compile_definitions(NKR_CPP_USE_APPDATA)
+endif ()
 
-    # yaml-cpp (static)
+#### NKR EXTERNAL ####
+
+if (NKR_NO_EXTERNAL)
+    set(NKR_NO_GRPC 1)
+    set(NKR_NO_YAML 1)
+    set(NKR_NO_ZXING 1)
+    set(NKR_NO_QHOTKEY 1)
+endif ()
+
+# grpc
+if (NKR_NO_GRPC)
+    nkr_add_compile_definitions(NKR_NO_GRPC)
+else ()
+    # My proto
+    include("cmake/myproto.cmake")
+    list(APPEND NKR_EXTERNAL_TARGETS myproto)
+endif ()
+
+# yaml-cpp
+if (NKR_NO_YAML)
+    nkr_add_compile_definitions(NKR_NO_YAML)
+else ()
     find_package(yaml-cpp CONFIG REQUIRED) # only Release is built
     list(APPEND NKR_EXTERNAL_TARGETS yaml-cpp)
+endif ()
 
-    # zxing-cpp
+# zxing-cpp
+if (NKR_NO_ZXING)
+    nkr_add_compile_definitions(NKR_NO_ZXING)
+else ()
     find_package(ZXing CONFIG REQUIRED)
     list(APPEND NKR_EXTERNAL_TARGETS ZXing::ZXing)
+endif ()
 
-    # QHotkey (static submodule)
+# QHotkey (static submodule)
+if (NKR_NO_QHOTKEY)
+    nkr_add_compile_definitions(NKR_NO_QHOTKEY)
+else ()
     set(QHOTKEY_INSTALL OFF)
     set(BUILD_SHARED_LIBS OFF)
     add_subdirectory(3rdparty/QHotkey)
     list(APPEND NKR_EXTERNAL_TARGETS qhotkey)
 endif ()
 
-# debug print
+#### debug print ####
+
 if (DBG_CMAKE)
     print_all_variables()
     print_target_properties(myproto)

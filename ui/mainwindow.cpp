@@ -21,7 +21,7 @@
 #include "qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
 #include "qv2ray/v2/ui/LogHighlighter.hpp"
 
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_ZXING
 #include "3rdparty/ZxingQtReader.hpp"
 #endif
 
@@ -766,6 +766,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             case NekoRay::GroupSortMethod::ById: {
                 // Clear Order
                 ui->proxyListTable->order.clear();
+                ui->proxyListTable->callback_save_order();
                 break;
             }
             case NekoRay::GroupSortMethod::ByAddress:
@@ -1101,7 +1102,7 @@ void MainWindow::display_qr_link(bool nkrFormat) {
 }
 
 void MainWindow::on_menu_scan_qr_triggered() {
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_ZXING
     using namespace ZXingQt;
 
     hide();
@@ -1387,7 +1388,7 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
 
 // Hotkey
 
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_QHOTKEY
 
 #include <QHotkey>
 

@@ -10,7 +10,7 @@
 #include <QInputDialog>
 #include <QUrlQuery>
 
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_YAML
 
 #include <yaml-cpp/yaml.h>
 
@@ -164,7 +164,7 @@ namespace NekoRay::sub {
         update_counter++;
     }
 
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_YAML
 
     QString Node2QString(const YAML::Node &n, const QString &def = "") {
         try {
@@ -203,7 +203,7 @@ namespace NekoRay::sub {
 
     // https://github.com/Dreamacro/clash/wiki/configuration
     void RawUpdater::updateClash(const QString &str) {
-#ifndef NKR_NO_EXTERNAL
+#ifndef NKR_NO_YAML
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {

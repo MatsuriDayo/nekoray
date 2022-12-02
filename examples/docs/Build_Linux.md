@@ -33,10 +33,11 @@ ninja
 | CMake 参数         | 默认值 | 含义                      |
 |------------------|-----|-------------------------|
 | QT_VERSION_MAJOR | 5   | QT版本                    |
-| NKR_NO_EXTERNAL  |     | 不包含外部C++依赖(如ZXing/gRPC) |
+| NKR_NO_EXTERNAL  |     | 不包含外部C++依赖(以下所有) |
+| NKR_NO_YAML     |     | 不包含yaml-cpp                 |
+| NKR_NO_QHOTKEY   |     | 不包含qhotkey                 |
+| NKR_NO_ZXING     |     | 不包含zxing                 |
 | NKR_NO_GRPC      |     | 不包含gRPC                 |
-| NKR_CROSS        |     |                         |
-| NKR_PACKAGE      |     | 打包                     |
 
 #### C++ 部分
 

@@ -12,6 +12,7 @@ import (
 	"neko/pkg/speedtest"
 	"nekobox_core/box_main"
 	"reflect"
+	"time"
 	"unsafe"
 
 	box "github.com/sagernet/sing-box"
@@ -36,6 +37,16 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 
 	if neko_common.Debug {
 		log.Println("Start:", in.CoreConfig)
+	}
+
+	if neko_common.GetBuildTime() > 0 {
+		if time.Now().Unix() >= neko_common.GetExpireTime() {
+			err = errors.New("Your version is too old! Please update!! 版本太旧，请升级！")
+			return
+		} else if time.Now().Unix() >= (neko_common.GetExpireTime() - 30*24*60*60) {
+			log.Println("Your version is too old! Please update!! 版本太旧，请升级！")
+			log.Println("This version expires on " + time.Unix(neko_common.GetExpireTime(), 0).Format("2006-01-02"))
+		}
 	}
 
 	if instance != nil {

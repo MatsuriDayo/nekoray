@@ -16,7 +16,7 @@ git clone https://github.com/MatsuriDayo/nekoray.git --recursive
 
 ### 下载 Qt SDK
 
-目前使用的版本是 Qt 5.15.2 其他版本未测试
+目前使用的版本是 Qt 5.15.7 其他版本未测试
 
 在此下载 `qtbase` `qtsvg` `qttools` 的包并解压到同一个目录。
 
