@@ -6,7 +6,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/gofrs/uuid v4.3.1+incompatible
 	github.com/sagernet/sing v0.1.0
-	github.com/sagernet/sing-box v1.0.2-0.20221128103050-66d8d563eba3
+	github.com/sagernet/sing-box v1.0.2-0.20221203063852-7ebbd58b00f6
 	github.com/sagernet/sing-dns v0.1.0
 	github.com/sagernet/sing-tun v0.1.1-0.20221128044455-b22d9eb41b74
 	github.com/spf13/cobra v1.6.1
