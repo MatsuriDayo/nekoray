@@ -69,6 +69,15 @@ if (NKR_NO_EXTERNAL)
     set(NKR_NO_YAML 1)
     set(NKR_NO_ZXING 1)
     set(NKR_NO_QHOTKEY 1)
+    set(NKR_NO_QUICKJS 1)
+endif ()
+
+# quickjs (static submodule)
+if (NKR_NO_QUICKJS)
+    nkr_add_compile_definitions(NKR_NO_QUICKJS)
+else ()
+    add_subdirectory(3rdparty/qjs)
+    list(APPEND NKR_EXTERNAL_TARGETS quickjs)
 endif ()
 
 # grpc
@@ -124,6 +133,7 @@ set(PROJECT_SOURCES
         main/main.cpp
         main/NekoRay.cpp
         main/NekoRay_Utils.cpp
+        main/QJS.cpp
 
         3rdparty/base64.cpp
         3rdparty/qrcodegen.cpp

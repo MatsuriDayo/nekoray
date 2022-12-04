@@ -578,6 +578,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QCheckBox" name="enable_js_hook">
+         <property name="text">
+          <string>Enable hook.js</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </widget>

@@ -203,6 +203,10 @@
         <source>Ignore TLS errors when updating subscription</source>
         <translation>更新订阅时忽略 TLS 错误</translation>
     </message>
+    <message>
+        <source>Enable hook.js</source>
+        <translation>启用 hook.js 功能</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

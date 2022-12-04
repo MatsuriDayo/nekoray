@@ -4,6 +4,7 @@
 #include "db/ProfileFilter.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
+#include "main/QJS.hpp"
 
 #include "GroupUpdater.hpp"
 
@@ -391,6 +392,17 @@ namespace NekoRay::sub {
                 for (const auto &profile: in) {
                     profileManager->DeleteProfile(profile->id);
                 }
+            }
+        }
+
+        // hook.js
+        auto source = qjs::ReadHookJS();
+        if (!source.isEmpty()) {
+            qjs::QJS js(source);
+            auto js_result = js.EvalFunction("hook.hook_import", content);
+            if (content != js_result) {
+                MW_show_log("hook.js modified your import content.");
+                content = js_result;
             }
         }
 

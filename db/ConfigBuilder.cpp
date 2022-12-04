@@ -2,6 +2,7 @@
 #include "db/Database.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
+#include "main/QJS.hpp"
 
 #include <QApplication>
 #include <QFile>
@@ -12,10 +13,26 @@ namespace NekoRay {
     // Common
 
     QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
+        QSharedPointer<BuildConfigResult> result;
         if (IS_NEKO_BOX) {
-            return BuildConfigSingBox(ent, forTest, forExport);
+            result = BuildConfigSingBox(ent, forTest, forExport);
+        } else {
+            result = BuildConfigV2Ray(ent, forTest, forExport);
         }
-        return BuildConfigV2Ray(ent, forTest, forExport);
+        // hook.js
+        if (result->error.isEmpty()) {
+            auto source = qjs::ReadHookJS();
+            if (!source.isEmpty()) {
+                qjs::QJS js(source);
+                auto js_result = js.EvalFunction("hook.hook_core_config", QJsonObject2QString(result->coreConfig, true));
+                auto js_result_json = QString2QJsonObject(js_result);
+                if (!js_result_json.isEmpty() && result->coreConfig != js_result_json) {
+                    MW_show_log("hook.js modified your " + software_core_name + " json config.");
+                    result->coreConfig = js_result_json;
+                }
+            }
+        }
+        return result;
     }
 
     QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status) {
@@ -878,6 +895,16 @@ namespace NekoRay {
                           .replace("%TUN_NAME%", tun_name)
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
+        // hook.js
+        auto source = qjs::ReadHookJS();
+        if (!source.isEmpty()) {
+            qjs::QJS js(source);
+            auto js_result = js.EvalFunction("hook.hook_vpn_config", config);
+            if (config != js_result) {
+                MW_show_log("hook.js modified your VPN config.");
+                config = js_result;
+            }
+        }
         // write config
         QFile file;
         file.setFileName(QFileInfo(configFn).fileName());
@@ -897,6 +924,16 @@ namespace NekoRay {
                           .replace("$PROTECT_LISTEN_PATH", protectPath)
                           .replace("$CONFIG_PATH", configPath)
                           .replace("$TABLE_FWMARK", "514");
+        // hook.js
+        auto source = qjs::ReadHookJS();
+        if (!source.isEmpty()) {
+            qjs::QJS js(source);
+            auto js_result = js.EvalFunction("hook.hook_vpn_script", script);
+            if (script != js_result) {
+                MW_show_log("hook.js modified your VPN script.");
+                script = js_result;
+            }
+        }
         // write script
         QFile file2;
         file2.setFileName(QFileInfo(scriptFn).fileName());

@@ -66,6 +66,7 @@ namespace NekoRay {
         _add(new configItem("sp_format", &system_proxy_format, itemType::string));
         _add(new configItem("sub_clear", &sub_clear, itemType::boolean));
         _add(new configItem("sub_insecure", &sub_insecure, itemType::boolean));
+        _add(new configItem("enable_js_hook", &enable_js_hook, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {
