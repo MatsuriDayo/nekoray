@@ -126,6 +126,7 @@ namespace NekoRay {
         QString hotkey_mainwindow = "";
         QString hotkey_group = "";
         QString hotkey_route = "";
+        QString hotkey_system_proxy_menu = "";
 
         // Other Core
         ExtraCore *extraCore = new ExtraCore;

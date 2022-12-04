@@ -376,6 +376,10 @@
         <source>Trigger main window</source>
         <translation>显示/隐藏主窗口</translation>
     </message>
+    <message>
+        <source>System Proxy</source>
+        <translation>系统代理</translation>
+    </message>
 </context>
 <context>
     <name>DialogManageGroups</name>

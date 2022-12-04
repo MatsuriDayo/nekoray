@@ -14,17 +14,20 @@
    <string>Hotkey</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Trigger main window</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QtExtKeySequenceEdit" name="show_groups"/>
    </item>
-   <item row="3" column="1">
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Show routes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QtExtKeySequenceEdit" name="show_routes"/>
+   </item>
+   <item row="4" column="1">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="focusPolicy">
       <enum>Qt::StrongFocus</enum>
@@ -34,18 +37,8 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Show routes</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QtExtKeySequenceEdit" name="show_mainwindow"/>
-   </item>
-   <item row="2" column="1">
-    <widget class="QtExtKeySequenceEdit" name="show_routes"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_3">
@@ -53,6 +46,23 @@
       <string>Show groups</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Trigger main window</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>System Proxy</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QtExtKeySequenceEdit" name="system_proxy"/>
    </item>
   </layout>
  </widget>
@@ -64,10 +74,11 @@
   </customwidget>
  </customwidgets>
  <tabstops>
-  <tabstop>buttonBox</tabstop>
   <tabstop>show_mainwindow</tabstop>
   <tabstop>show_groups</tabstop>
   <tabstop>show_routes</tabstop>
+  <tabstop>system_proxy</tabstop>
+  <tabstop>buttonBox</tabstop>
  </tabstops>
  <resources/>
  <connections>

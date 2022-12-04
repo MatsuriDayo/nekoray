@@ -50,6 +50,7 @@ namespace NekoRay {
         _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));
         _add(new configItem("hk_group", &hotkey_group, itemType::string));
         _add(new configItem("hk_route", &hotkey_route, itemType::string));
+        _add(new configItem("hk_spmenu", &hotkey_system_proxy_menu, itemType::string));
         _add(new configItem("fakedns", &fake_dns, itemType::boolean));
         _add(new configItem("active_routing", &active_routing, itemType::string));
         _add(new configItem("mw_size", &mw_size, itemType::string));

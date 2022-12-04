@@ -1401,10 +1401,12 @@ void MainWindow::RegisterHotkey(bool unregister) {
     }
     if (unregister) return;
 
-    QStringList regstr;
-    regstr += NekoRay::dataStore->hotkey_mainwindow;
-    regstr += NekoRay::dataStore->hotkey_group;
-    regstr += NekoRay::dataStore->hotkey_route;
+    QStringList regstr{
+        NekoRay::dataStore->hotkey_mainwindow,
+        NekoRay::dataStore->hotkey_group,
+        NekoRay::dataStore->hotkey_route,
+        NekoRay::dataStore->hotkey_system_proxy_menu,
+    };
 
     for (const auto &key: regstr) {
         if (key.isEmpty()) continue;
@@ -1432,6 +1434,8 @@ void MainWindow::HotkeyEvent(const QString &key) {
             on_menu_manage_groups_triggered();
         } else if (key == NekoRay::dataStore->hotkey_route) {
             on_menu_routing_settings_triggered();
+        } else if (key == NekoRay::dataStore->hotkey_system_proxy_menu) {
+            ui->menu_spmode->popup(QCursor::pos());
         }
     });
 }
