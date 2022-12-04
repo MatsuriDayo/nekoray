@@ -1,5 +1,9 @@
 #include "QJS.hpp"
 
+#ifdef _MSC_VER
+#define JS_STRICT_NAN_BOXING
+#endif
+
 #include "3rdparty/qjs/nekoray_qjs.h"
 #include "main/NekoRay.hpp"
 
