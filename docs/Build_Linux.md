@@ -38,6 +38,7 @@ ninja
 | NKR_NO_QHOTKEY   |     | 不包含qhotkey                 |
 | NKR_NO_ZXING     |     | 不包含zxing                 |
 | NKR_NO_GRPC      |     | 不包含gRPC                 |
+| NKR_NO_QUICKJS   |     | 不包含quickjs                |
 
 #### C++ 部分
 

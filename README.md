@@ -60,13 +60,13 @@ https://matsuridayo.github.io
 
 ## Linux 运行
 
-[Linux 运行教程](examples/docs/Run_Linux.md)
+[Linux 运行教程](docs/Run_Linux.md)
 
 ## 编译教程
 
-[Linux](examples/docs/Build_Linux.md)
+[Linux](docs/Build_Linux.md)
 
-[Windows](examples/docs/Build_Windows.md)
+[Windows](docs/Build_Windows.md)
 
 ## 捐助 / Donate
 
