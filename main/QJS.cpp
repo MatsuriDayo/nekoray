@@ -80,6 +80,7 @@ namespace NekoRay::qjs {
         this->neko_ctx = malloc(sizeof(nekoray_qjs_context));
         nekoray_qjs_new_arg arg;
         arg.neko_ctx = NEKO_CTX;
+        arg.enable_std = NekoRay::dataStore->enable_js_hook == 2 ? 1 : 0;
         arg.func_log = func_log;
         nekoray_qjs_new(arg);
 #endif
@@ -138,7 +139,7 @@ namespace NekoRay::qjs {
 
     QByteArray ReadHookJS() {
 #ifndef NKR_NO_QUICKJS
-        if (NekoRay::dataStore->enable_js_hook) {
+        if (NekoRay::dataStore->enable_js_hook > 0) {
             return ReadFile(QString("./hook.%1.js").arg(software_name.toLower()));
         }
 #endif

@@ -579,10 +579,41 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="enable_js_hook">
-         <property name="text">
-          <string>Enable hook.js</string>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_14">
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Enable hook.js</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="enable_js_hook">
+            <item>
+             <property name="text">
+              <string notr="true">Disable</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Enable</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Enable + load std module</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>

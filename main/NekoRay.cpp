@@ -66,7 +66,7 @@ namespace NekoRay {
         _add(new configItem("sp_format", &system_proxy_format, itemType::string));
         _add(new configItem("sub_clear", &sub_clear, itemType::boolean));
         _add(new configItem("sub_insecure", &sub_insecure, itemType::boolean));
-        _add(new configItem("enable_js_hook", &enable_js_hook, itemType::boolean));
+        _add(new configItem("enable_js_hook", &enable_js_hook, itemType::integer));
     }
 
     void DataStore::UpdateStartedId(int id) {
@@ -233,49 +233,42 @@ namespace NekoRay {
             switch (item->type) {
                 case itemType::string:
                     if (value.type() != QJsonValue::String) {
-                        MessageBoxWarning("错误", "Not a string\n" + key);
                         continue;
                     }
                     *(QString *) item->ptr = value.toString();
                     break;
                 case itemType::integer:
                     if (value.type() != QJsonValue::Double) {
-                        MessageBoxWarning("错误", "Not a int\n" + key);
                         continue;
                     }
                     *(int *) item->ptr = value.toInt();
                     break;
                 case itemType::integer64:
                     if (value.type() != QJsonValue::Double) {
-                        MessageBoxWarning("错误", "Not a int64\n" + key);
                         continue;
                     }
                     *(long long *) item->ptr = value.toDouble();
                     break;
                 case itemType::boolean:
                     if (value.type() != QJsonValue::Bool) {
-                        MessageBoxWarning("错误", "Not a bool\n" + key);
                         continue;
                     }
                     *(bool *) item->ptr = value.toBool();
                     break;
                 case itemType::stringList:
                     if (value.type() != QJsonValue::Array) {
-                        MessageBoxWarning("错误", "Not a Array\n" + key);
                         continue;
                     }
                     *(QList<QString> *) item->ptr = QJsonArray2QListString(value.toArray());
                     break;
                 case itemType::integerList:
                     if (value.type() != QJsonValue::Array) {
-                        MessageBoxWarning("错误", "Not a Array\n" + key);
                         continue;
                     }
                     *(QList<int> *) item->ptr = QJsonArray2QListInt(value.toArray());
                     break;
                 case itemType::jsonStore:
                     if (value.type() != QJsonValue::Object) {
-                        MessageBoxWarning("错误", "Not a json object\n" + key);
                         continue;
                     }
                     if (load_control_no_jsonStore)

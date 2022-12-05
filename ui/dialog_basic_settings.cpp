@@ -228,7 +228,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     D_LOAD_BOOL(insecure_hint)
     D_LOAD_BOOL(skip_cert)
-    D_LOAD_BOOL(enable_js_hook)
+    ui->enable_js_hook->setCurrentIndex(NekoRay::dataStore->enable_js_hook);
 }
 
 DialogBasicSettings::~DialogBasicSettings() {
@@ -279,7 +279,7 @@ void DialogBasicSettings::accept() {
 
     D_SAVE_BOOL(insecure_hint)
     D_SAVE_BOOL(skip_cert)
-    D_SAVE_BOOL(enable_js_hook)
+    NekoRay::dataStore->enable_js_hook = ui->enable_js_hook->currentIndex();
 
     MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();

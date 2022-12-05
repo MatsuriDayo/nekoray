@@ -86,7 +86,7 @@ namespace NekoRay {
         // Security
         bool insecure_hint = true;
         bool skip_cert = false;
-        bool enable_js_hook = false;
+        int enable_js_hook = 0;
 
         // Remember
         int remember_spmode = NekoRay::SystemProxyMode::DISABLE;
