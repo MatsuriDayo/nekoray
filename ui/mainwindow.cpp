@@ -558,7 +558,7 @@ void MainWindow::on_menu_exit_triggered() {
         QProcess::startDetached("./updater", QStringList{});
     } else if (exit_reason == 2) {
         QDir::setCurrent(QApplication::applicationDirPath());
-        QProcess::startDetached("./nekoray", QStringList{});
+        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : "./nekoray", QStringList{});
     }
     tray->hide();
     QCoreApplication::quit();
@@ -1013,11 +1013,17 @@ void MainWindow::on_menu_export_config_triggered() {
 
     QMessageBox msg(QMessageBox::Information, tr("Config copied"), config_core);
     msg.addButton("Copy core config", QMessageBox::YesRole);
+    msg.addButton("Copy test config", QMessageBox::YesRole);
     msg.addButton(QMessageBox::Ok);
+    msg.setEscapeButton(QMessageBox::Ok);
     msg.setDefaultButton(QMessageBox::Ok);
     auto ret = msg.exec();
     if (ret == 0) {
         result = NekoRay::BuildConfig(ent, false, false);
+        config_core = QJsonObject2QString(result->coreConfig, true);
+        QApplication::clipboard()->setText(config_core);
+    } else if (ret == 1) {
+        result = NekoRay::BuildConfig(ent, true, false);
         config_core = QJsonObject2QString(result->coreConfig, true);
         QApplication::clipboard()->setText(config_core);
     }

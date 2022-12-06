@@ -72,8 +72,6 @@ namespace NekoRay {
         return chainTagOut;
     }
 
-    // V2Ray
-
     void ApplyCustomOutboundJsonSettings(const QJsonObject &custom, QJsonObject &outbound) {
         // 合并
         if (custom.isEmpty()) return;
@@ -94,6 +92,38 @@ namespace NekoRay {
             }
         }
     }
+
+#define DOMAIN_USER_RULE                                                    \
+    for (const auto &line: SplitLines(dataStore->routing->proxy_domain)) {  \
+        if (line.startsWith("#")) continue;                                 \
+        if (dataStore->dns_routing) status->domainListDNSRemote += line;    \
+        status->domainListRemote += line;                                   \
+    }                                                                       \
+    for (const auto &line: SplitLines(dataStore->routing->direct_domain)) { \
+        if (line.startsWith("#")) continue;                                 \
+        if (dataStore->dns_routing) status->domainListDNSDirect += line;    \
+        status->domainListDirect += line;                                   \
+    }                                                                       \
+    for (const auto &line: SplitLines(dataStore->routing->block_domain)) {  \
+        if (line.startsWith("#")) continue;                                 \
+        status->domainListBlock += line;                                    \
+    }
+
+#define IP_USER_RULE                                                    \
+    for (const auto &line: SplitLines(dataStore->routing->block_ip)) {  \
+        if (line.startsWith("#")) continue;                             \
+        status->ipListBlock += line;                                    \
+    }                                                                   \
+    for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {  \
+        if (line.startsWith("#")) continue;                             \
+        status->ipListRemote += line;                                   \
+    }                                                                   \
+    for (const auto &line: SplitLines(dataStore->routing->direct_ip)) { \
+        if (line.startsWith("#")) continue;                             \
+        status->ipListDirect += line;                                   \
+    }
+
+    // V2Ray
 
     QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
         auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult);
@@ -215,20 +245,10 @@ namespace NekoRay {
         result->coreConfig.insert("inbounds", status->inbounds);
         result->coreConfig.insert("outbounds", status->outbounds);
 
-        // dns domain user rule
-        for (const auto &line: SplitLines(dataStore->routing->proxy_domain)) {
-            if (line.startsWith("#")) continue;
-            if (dataStore->dns_routing) status->domainListDNSRemote += line;
-            status->domainListRemote += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->direct_domain)) {
-            if (line.startsWith("#")) continue;
-            if (dataStore->dns_routing) status->domainListDNSDirect += line;
-            status->domainListDirect += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->block_domain)) {
-            if (line.startsWith("#")) continue;
-            status->domainListBlock += line;
+        // user rule
+        if (!forTest) {
+            DOMAIN_USER_RULE
+            IP_USER_RULE
         }
 
         // final add DNS
@@ -281,17 +301,10 @@ namespace NekoRay {
         routing["domainStrategy"] = dataStore->domain_strategy;
         routing["domainMatcher"] = dataStore->domain_matcher == DomainMatcher::MPH ? "mph" : "linear";
 
-        // ip user rule
+        // final add block route
         QJsonObject routingRule_tmp;
         routingRule_tmp["type"] = "field";
-
-        // block
         routingRule_tmp["outboundTag"] = "block";
-        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListBlock += line;
-        }
-        // final add block route
         if (!status->ipListBlock.isEmpty()) {
             auto tmp = routingRule_tmp;
             tmp["ip"] = status->ipListBlock;
@@ -303,13 +316,8 @@ namespace NekoRay {
             status->routingRules += tmp;
         }
 
-        // proxy
-        routingRule_tmp["outboundTag"] = tagProxy;
-        for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListRemote += line;
-        }
         // final add proxy route
+        routingRule_tmp["outboundTag"] = "proxy";
         if (!status->ipListRemote.isEmpty()) {
             auto tmp = routingRule_tmp;
             tmp["ip"] = status->ipListRemote;
@@ -321,13 +329,8 @@ namespace NekoRay {
             status->routingRules += tmp;
         }
 
-        // bypass
-        routingRule_tmp["outboundTag"] = "bypass";
-        for (const auto &line: SplitLines(dataStore->routing->direct_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListDirect += line;
-        }
         // final add bypass route
+        routingRule_tmp["outboundTag"] = "bypass";
         if (!status->ipListDirect.isEmpty()) {
             auto tmp = routingRule_tmp;
             tmp["ip"] = status->ipListDirect;
@@ -655,10 +658,12 @@ namespace NekoRay {
             {"type", "block"},
             {"tag", "block"},
         };
-        status->outbounds += QJsonObject{
-            {"type", "dns"},
-            {"tag", "dns-out"},
-        };
+        if (!forTest) {
+            status->outbounds += QJsonObject{
+                {"type", "dns"},
+                {"tag", "dns-out"},
+            };
+        }
 
         // custom inbound
         QJSONARRAY_ADD(status->inbounds, QString2QJsonObject(dataStore->custom_inbound)["inbounds"].toArray())
@@ -666,23 +671,13 @@ namespace NekoRay {
         result->coreConfig.insert("inbounds", status->inbounds);
         result->coreConfig.insert("outbounds", status->outbounds);
 
-        // dns domain user rule
-        for (const auto &line: SplitLines(dataStore->routing->proxy_domain)) {
-            if (line.startsWith("#")) continue;
-            status->domainListDNSRemote += line;
-            status->domainListRemote += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->direct_domain)) {
-            if (line.startsWith("#")) continue;
-            status->domainListDNSDirect += line;
-            status->domainListDirect += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->block_domain)) {
-            if (line.startsWith("#")) continue;
-            status->domainListBlock += line;
+        // user rule
+        if (!forTest) {
+            DOMAIN_USER_RULE
+            IP_USER_RULE
         }
 
-        //
+        // sing-box common rule object
         auto make_rule = [&](const QJsonArray &arr, bool isIP = false) {
             QJsonObject rule;
             QJsonArray ips;
@@ -763,7 +758,7 @@ namespace NekoRay {
             {"detour", "direct"},
         };
 
-        // DNS rules
+        // sing-box dns rule object
         auto add_rule_dns = [&](const QJsonArray &arr, const QString &server) {
             auto rule = make_rule(arr, false);
             if (rule.isEmpty()) return;
@@ -784,9 +779,9 @@ namespace NekoRay {
         auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
 
         // dns hijack
-        routingRules += QJsonObject{{"protocol", "dns"},
-                                    {"outbound", "dns-out"}};
+        if (!forTest) routingRules += QJsonObject{{"protocol", "dns"}, {"outbound", "dns-out"}};
 
+        // sing-box routing rule object
         auto add_rule_route = [&](const QJsonArray &arr, bool isIP, const QString &out) {
             auto rule = make_rule(arr, isIP);
             if (rule.isEmpty()) return;
@@ -794,24 +789,10 @@ namespace NekoRay {
             routingRules += rule;
         };
 
-        // ip user rule
-        for (const auto &line: SplitLines(dataStore->routing->block_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListBlock += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListRemote += line;
-        }
-        for (const auto &line: SplitLines(dataStore->routing->direct_ip)) {
-            if (line.startsWith("#")) continue;
-            status->ipListDirect += line;
-        }
+        // final add routing rule
         add_rule_route(status->ipListBlock, true, "block");
         add_rule_route(status->ipListRemote, true, tagProxy);
         add_rule_route(status->ipListDirect, true, "bypass");
-
-        // domain user rule
         add_rule_route(status->domainListBlock, false, "block");
         add_rule_route(status->domainListRemote, false, tagProxy);
         add_rule_route(status->domainListDirect, false, "bypass");

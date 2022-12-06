@@ -40,7 +40,11 @@ func main() {
 			// 1. update files
 			Updater()
 			// 2. start
-			Launcher()
+			if os.Getenv("NKR_FROM_LAUNCHER") == "1" {
+				Launcher()
+			} else {
+				exec.Command("./nekoray").Start()
+			}
 		}
 		return
 	} else if strings.HasPrefix(strings.ToLower(exe), "launcher") {
