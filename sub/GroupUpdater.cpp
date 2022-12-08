@@ -228,10 +228,26 @@ namespace NekoRay::sub {
                     auto plugin_n = proxy["plugin"];
                     auto pluginOpts_n = proxy["plugin-opts"];
                     if (plugin_n.IsDefined() && pluginOpts_n.IsDefined()) {
-                        if (Node2QString(plugin_n) == "obfs") {
-                            bean->plugin = "obfs-local;obfs=" + Node2QString(pluginOpts_n["mode"]) + ";obfs-host=" +
-                                           Node2QString(pluginOpts_n["host"]);
+                        QStringList ssPlugin;
+                        auto plugin = Node2QString(plugin_n);
+                        if (plugin == "obfs") {
+                            ssPlugin << "obfs-local";
+                            ssPlugin << "obfs=" + Node2QString(pluginOpts_n["mode"]);
+                            ssPlugin << "obfs-host=" + Node2QString(pluginOpts_n["host"]);
+                        } else if (plugin == "v2ray-plugin") {
+                            auto mode = Node2QString(pluginOpts_n["mode"]);
+                            auto host = Node2QString(pluginOpts_n["host"]);
+                            auto path = Node2QString(pluginOpts_n["path"]);
+                            ssPlugin << "v2ray-plugin";
+                            if (!mode.isEmpty() && mode != "websocket") ssPlugin << "mode=" + mode;
+                            if (Node2Bool(pluginOpts_n["tls"])) ssPlugin << "tls";
+                            if (!host.isEmpty()) ssPlugin << "host=" + host;
+                            if (!path.isEmpty()) ssPlugin << "path=" + path;
+                            // clash only: skip-cert-verify
+                            // clash only: headers
+                            // clash: mux=?
                         }
+                        bean->plugin = ssPlugin.join(";");
                     }
                     auto protocol_n = proxy["protocol"];
                     if (protocol_n.IsDefined()) {

@@ -19,21 +19,24 @@ namespace NekoRay {
 
     class BuildConfigStatus {
     public:
-        QList<int> globalProfiles;
-
         QSharedPointer<BuildConfigResult> result;
         QSharedPointer<ProxyEntity> ent;
+        bool forTest;
+        bool forExport;
+
+        // priv
+        QList<int> globalProfiles;
 
         // xxList is V2Ray format string list
 
-        QJsonArray domainListDNSRemote;
-        QJsonArray domainListDNSDirect;
-        QJsonArray domainListRemote;
-        QJsonArray domainListDirect;
-        QJsonArray ipListRemote;
-        QJsonArray ipListDirect;
-        QJsonArray domainListBlock;
-        QJsonArray ipListBlock;
+        QStringList domainListDNSRemote;
+        QStringList domainListDNSDirect;
+        QStringList domainListRemote;
+        QStringList domainListDirect;
+        QStringList ipListRemote;
+        QStringList ipListDirect;
+        QStringList domainListBlock;
+        QStringList ipListBlock;
 
         // config format
 
@@ -42,14 +45,11 @@ namespace NekoRay {
         QJsonArray outbounds;
     };
 
-    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent,
-                                                  bool forTest, bool forExport);
+    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport);
 
-    QSharedPointer<BuildConfigResult> BuildConfigV2Ray(const QSharedPointer<ProxyEntity> &ent,
-                                                       bool forTest, bool forExport);
+    void BuildConfigV2Ray(const QSharedPointer<BuildConfigStatus> &status);
 
-    QSharedPointer<BuildConfigResult> BuildConfigSingBox(const QSharedPointer<ProxyEntity> &ent,
-                                                         bool forTest, bool forExport);
+    void BuildConfigSingBox(const QSharedPointer<BuildConfigStatus> &status);
 
     QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status);
 
