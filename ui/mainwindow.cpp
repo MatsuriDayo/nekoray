@@ -558,7 +558,7 @@ void MainWindow::on_menu_exit_triggered() {
         QProcess::startDetached("./updater", QStringList{});
     } else if (exit_reason == 2) {
         QDir::setCurrent(QApplication::applicationDirPath());
-        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : "./nekoray", QStringList{});
+        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : QApplication::applicationFilePath(), QStringList{});
     }
     tray->hide();
     QCoreApplication::quit();
@@ -1277,9 +1277,15 @@ inline void FastAppendTextDocument(const QString &message, QTextDocument *doc) {
 }
 
 void MainWindow::show_log_impl(const QString &log) {
-    if (log.trimmed().isEmpty()) return;
+    auto log2 = log.trimmed();
+    if (log2.isEmpty()) return;
 
-    FastAppendTextDocument(log, qvLogDocument);
+    auto log_ignore = NekoRay::dataStore->log_ignore;
+    for (const auto &str: log_ignore) {
+        if (log2.contains(str)) return;
+    }
+
+    FastAppendTextDocument(log2, qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);
     // From https://gist.github.com/jemyzhang/7130092
     auto maxLines = 200;
@@ -1298,6 +1304,8 @@ void MainWindow::show_log_impl(const QString &log) {
     }
 }
 
+#define ADD_TO_CURRENT_ROUTE(a, b) NekoRay::dataStore->routing->a = (SplitLines(NekoRay::dataStore->routing->a) << b).join("\n");
+
 void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &pos) {
     QMenu *menu = ui->masterLogBrowser->createStandardContextMenu();
 
@@ -1305,14 +1313,74 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     sep->setSeparator(true);
     menu->addAction(sep);
 
+    auto action_add_ignore = new QAction;
+    action_add_ignore->setText(tr("Set ignore keyword"));
+    connect(action_add_ignore, &QAction::triggered, this, [=] {
+        auto list = NekoRay::dataStore->log_ignore;
+        auto newStr = ui->masterLogBrowser->textCursor().selectedText().trimmed();
+        if (!newStr.isEmpty()) list << newStr;
+        bool ok;
+        newStr = QInputDialog::getMultiLineText(GetMessageBoxParent(), tr("Set ignore keyword"), tr("Set the following keywords to ignore?\nSplit by line."), list.join("\n"), &ok);
+        if (ok) {
+            NekoRay::dataStore->log_ignore = SplitLines(newStr);
+            NekoRay::dataStore->Save();
+        }
+    });
+    menu->addAction(action_add_ignore);
+
+    auto action_add_route = new QAction;
+    action_add_route->setText(tr("Save as route"));
+    connect(action_add_route, &QAction::triggered, this, [=] {
+        auto newStr = ui->masterLogBrowser->textCursor().selectedText().trimmed();
+        if (newStr.isEmpty()) return;
+        //
+        bool ok;
+        newStr = QInputDialog::getText(GetMessageBoxParent(), tr("Save as route"), tr("Edit"), {}, newStr, &ok).trimmed();
+        if (!ok) return;
+        if (newStr.isEmpty()) return;
+        //
+        auto select = IsIpAddress(newStr) ? 0 : 3;
+        QStringList items = {"proxyIP", "bypassIP", "blockIP", "proxyDomain", "bypassDomain", "blockDomain"};
+        auto item = QInputDialog::getItem(GetMessageBoxParent(), tr("Save as route"),
+                                          tr("Save \"%1\" as a routing rule?").arg(newStr),
+                                          items, select, false, &ok);
+        if (ok) {
+            auto index = items.indexOf(item);
+            switch (index) {
+                case 0:
+                    ADD_TO_CURRENT_ROUTE(proxy_ip, newStr);
+                    break;
+                case 1:
+                    ADD_TO_CURRENT_ROUTE(direct_ip, newStr);
+                    break;
+                case 2:
+                    ADD_TO_CURRENT_ROUTE(block_ip, newStr);
+                    break;
+                case 3:
+                    ADD_TO_CURRENT_ROUTE(proxy_domain, newStr);
+                    break;
+                case 4:
+                    ADD_TO_CURRENT_ROUTE(direct_domain, newStr);
+                    break;
+                case 5:
+                    ADD_TO_CURRENT_ROUTE(block_domain, newStr);
+                    break;
+                default:
+                    break;
+            }
+            MW_dialog_message("", "UpdateDataStore,RouteChanged");
+        }
+    });
+    menu->addAction(action_add_route);
+
     auto action_clear = new QAction;
     action_clear->setText(tr("Clear"));
-    action_clear->setData(-1);
     connect(action_clear, &QAction::triggered, this, [=] {
         qvLogDocument->clear();
         ui->masterLogBrowser->clear();
     });
     menu->addAction(action_clear);
+
     menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // 弹出菜单
 }
 

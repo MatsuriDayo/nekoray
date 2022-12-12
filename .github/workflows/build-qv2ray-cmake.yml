@@ -35,7 +35,7 @@ jobs:
         if: steps.cache-common.outputs.cache-hit != 'true'
         uses: actions/setup-go@v3
         with:
-          go-version: 1.19.2
+          go-version: 1.19.4
       - name: Build golang parts
         if: steps.cache-common.outputs.cache-hit != 'true'
         shell: bash
@@ -57,7 +57,6 @@ jobs:
       matrix:
         platform: [ windows-2022, ubuntu-20.04, macos-10.15 ]
         arch: [ x64 ]
-        qt_version: [ 5.15.2 ]
       fail-fast: false
 
     runs-on: ${{ matrix.platform }}
@@ -87,12 +86,12 @@ jobs:
         if: matrix.platform == 'macos-10.15'
         uses: jurplel/install-qt-action@v3
         with:
-          version: ${{ matrix.qt_version }}
+          version: 5.15.2
           py7zrversion: ' '
           aqtversion: ' '
           setup-python: false
           cache: true
-          cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}
+          cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}
       - name: Windows - Download Custom Qt 5.15 SDK
         shell: bash
         if: matrix.platform == 'windows-2022'
@@ -116,14 +115,14 @@ jobs:
         uses: actions/cache@v3
         with:
           path: libs/deps
-          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ matrix.qt_version }}-${{ hashFiles('libs/build_deps_*.sh') }}
+          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}
       - name: Build Dependencies
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
           ./libs/build_deps_all.sh
       # ========================================================================================================= Generate MakeFile and Build
-      - name: Windows - ${{ matrix.qt_version }} - Generate MakeFile and Build
+      - name: Windows - Generate MakeFile and Build
         shell: bash
         if: matrix.platform == 'windows-2022'
         env:
@@ -137,7 +136,7 @@ jobs:
           ninja
           cd ..
           ./libs/deploy_windows64.sh
-      - name: Linux - ${{ matrix.qt_version }} - Generate MakeFile and Build
+      - name: Linux - Generate MakeFile and Build
         shell: bash
         if: matrix.platform == 'ubuntu-20.04'
         run: |
@@ -147,7 +146,7 @@ jobs:
           ninja
           cd ..
           ./libs/deploy_linux64.sh
-      - name: macOS - ${{ matrix.qt_version }} - Generate MakeFile and Build
+      - name: macOS - Generate MakeFile and Build
         shell: bash
         if: matrix.platform == 'macos-10.15'
         run: |

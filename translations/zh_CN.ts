@@ -1205,6 +1205,28 @@ End: %2</source>
         <source>Open Config Folder</source>
         <translation>打开配置目录</translation>
     </message>
+    <message>
+        <source>Set ignore keyword</source>
+        <translation>设置忽略关键字</translation>
+    </message>
+    <message>
+        <source>Set the following keywords to ignore?
+Split by line.</source>
+        <translation>将以下关键字设置为忽略？
+一行一个。</translation>
+    </message>
+    <message>
+        <source>Save as route</source>
+        <translation>保存为路由规则</translation>
+    </message>
+    <message>
+        <source>Save &quot;%1&quot; as a routing rule?</source>
+        <translation>将&quot;%1&quot;保存为一条路由规则？</translation>
+    </message>
+    <message>
+        <source>Edit</source>
+        <translation>编辑</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

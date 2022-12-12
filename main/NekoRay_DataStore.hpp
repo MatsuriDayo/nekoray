@@ -76,6 +76,7 @@ namespace NekoRay {
         QString mw_size = "";
         bool check_include_pre = false;
         QString system_proxy_format = "";
+        QStringList log_ignore = {};
 
         // Subscription
         QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
