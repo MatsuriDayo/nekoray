@@ -267,6 +267,23 @@ namespace NekoRay::sub {
                     bean->stream->network = Node2QString(proxy["network"], "tcp");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+
+                    // opts
+                    auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
+                    if (ws.IsMap()) {
+                        auto headers = ws["headers"];
+                        for (auto header: headers) {
+                            if (Node2QString(header.first).toLower() == "host") {
+                                bean->stream->host = Node2QString(header.second);
+                            }
+                        }
+                        bean->stream->path = Node2QString(ws["path"]);
+                    }
+
+                    auto grpc = NodeChild(proxy, {"grpc-opts", "grpc-opt"});
+                    if (grpc.IsMap()) {
+                        bean->stream->path = Node2QString(grpc["grpc-service-name"]);
+                    }
                 } else if (type == "vmess") {
                     needFix = true;
                     auto bean = ent->VMessBean();
@@ -278,6 +295,7 @@ namespace NekoRay::sub {
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
 
+                    // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
                     if (ws.IsMap()) {
                         auto headers = ws["headers"];
