@@ -68,6 +68,7 @@ namespace NekoRay {
         _add(new configItem("sub_insecure", &sub_insecure, itemType::boolean));
         _add(new configItem("enable_js_hook", &enable_js_hook, itemType::integer));
         _add(new configItem("log_ignore", &log_ignore, itemType::stringList));
+        _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
     }
 
     void DataStore::UpdateStartedId(int id) {

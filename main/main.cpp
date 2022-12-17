@@ -146,6 +146,9 @@ int main(int argc, char *argv[]) {
         NekoRay::dataStore->Save();
     }
 
+    // Datastore & Flags
+    if (NekoRay::dataStore->start_minimal) NekoRay::dataStore->flag_tray = true;
+
     // load routing
     NekoRay::dataStore->routing->fn = ROUTES_PREFIX + NekoRay::dataStore->active_routing;
     isLoaded = NekoRay::dataStore->routing->Load();

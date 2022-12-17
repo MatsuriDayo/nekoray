@@ -207,6 +207,10 @@
         <source>Enable hook.js</source>
         <translation>启用 hook.js 功能</translation>
     </message>
+    <message>
+        <source>Hide dashboard at startup</source>
+        <translation>启动时不显示仪表盘</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
