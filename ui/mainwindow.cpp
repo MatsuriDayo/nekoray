@@ -683,7 +683,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
 
     setWindowTitle(make_title(false));
-    if (icon_status_new != icon_status) setWindowIcon(TrayIcon::GetIcon(TrayIcon::NONE));
+    if (icon_status_new != icon_status) QApplication::setWindowIcon(TrayIcon::GetIcon(TrayIcon::NONE));
 
     if (tray != nullptr) {
         tray->setToolTip(make_title(true));
@@ -1055,16 +1055,19 @@ void MainWindow::display_qr_link(bool nkrFormat) {
             auto link_display = is_nk ? link_nk : link;
             l2->setPlainText(link_display);
             //
-            qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link_display.toUtf8().data(),
-                                                                 qrcodegen::QrCode::Ecc::MEDIUM);
-            qint32 sz = qr.getSize();
-            im = QImage(sz, sz, QImage::Format_RGB32);
-            QRgb black = qRgb(0, 0, 0);
-            QRgb white = qRgb(255, 255, 255);
-            for (int y = 0; y < sz; y++)
-                for (int x = 0; x < sz; x++)
-                    im.setPixel(x, y, qr.getModule(x, y) ? black : white);
-            show_qr(size());
+            try {
+                qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link_display.toUtf8().data(), qrcodegen::QrCode::Ecc::MEDIUM);
+                qint32 sz = qr.getSize();
+                im = QImage(sz, sz, QImage::Format_RGB32);
+                QRgb black = qRgb(0, 0, 0);
+                QRgb white = qRgb(255, 255, 255);
+                for (int y = 0; y < sz; y++)
+                    for (int x = 0; x < sz; x++)
+                        im.setPixel(x, y, qr.getModule(x, y) ? black : white);
+                show_qr(size());
+            } catch (const std::exception &ex) {
+                QMessageBox::warning(nullptr, "error", ex.what());
+            }
         }
 
         W(const QString &link_, const QString &link_nk_) {

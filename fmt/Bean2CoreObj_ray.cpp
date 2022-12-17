@@ -51,8 +51,10 @@ namespace NekoRay::fmt {
             if (allow_insecure || dataStore->skip_cert) tls["allowInsecure"] = true;
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
             if (!certificate.trimmed().isEmpty()) {
+                tls["disableSystemRoot"] = true;
                 tls["certificates"] = QJsonArray{
                     QJsonObject{
+                        {"usage", "verify"},
                         {"certificate", QList2QJsonArray(SplitLines(certificate.trimmed()))},
                     },
                 };
