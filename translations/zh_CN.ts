@@ -1170,10 +1170,6 @@ End: %2</source>
         <translation>允许其他设备连接</translation>
     </message>
     <message>
-        <source>Manual addition of profiles is not allowed in subscription groupings.</source>
-        <translation>订阅分组中不允许手动添加配置。</translation>
-    </message>
-    <message>
         <source>Resolve domain</source>
         <translation>将服务器域名解析为 IP</translation>
     </message>

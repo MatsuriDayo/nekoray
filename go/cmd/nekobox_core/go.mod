@@ -6,7 +6,7 @@ require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/gofrs/uuid v4.3.1+incompatible
 	github.com/sagernet/sing v0.1.0
-	github.com/sagernet/sing-box v1.0.2-0.20221203063852-7ebbd58b00f6
+	github.com/sagernet/sing-box v1.1.1
 	github.com/sagernet/sing-dns v0.1.0
 	github.com/sagernet/sing-tun v0.1.1-0.20221128044455-b22d9eb41b74
 	github.com/spf13/cobra v1.6.1
@@ -27,6 +27,8 @@ require (
 	github.com/go-chi/chi/v5 v5.0.7 // indirect
 	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/go-chi/render v1.0.2 // indirect
+	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
+	github.com/golang/mock v1.6.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/google/btree v1.0.1 // indirect
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
@@ -41,6 +43,8 @@ require (
 	github.com/marten-seemann/qtls-go1-19 v0.1.1 // indirect
 	github.com/mholt/acmez v1.0.4 // indirect
 	github.com/miekg/dns v1.1.50 // indirect
+	github.com/nxadm/tail v1.4.8 // indirect
+	github.com/onsi/ginkgo v1.16.5 // indirect
 	github.com/oschwald/maxminddb-golang v1.10.0 // indirect
 	github.com/pires/go-proxyproto v0.6.2 // indirect
 	github.com/refraction-networking/utls v1.2.0 // indirect
@@ -48,9 +52,9 @@ require (
 	github.com/sagernet/cloudflare-tls v0.0.0-20221031050923-d70792f4c3a0 // indirect
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
-	github.com/sagernet/quic-go v0.0.0-20221108053023-645bcc4f9b15 // indirect
+	github.com/sagernet/quic-go v0.0.0-20221206044826-d15273f58d82 // indirect
 	github.com/sagernet/sing-shadowsocks v0.1.0 // indirect
-	github.com/sagernet/sing-vmess v0.1.0 // indirect
+	github.com/sagernet/sing-vmess v0.1.1-0.20221206050106-bcacd436d74c // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
@@ -71,6 +75,7 @@ require (
 	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
 	google.golang.org/grpc v1.51.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
+	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 	gvisor.dev/gvisor v0.0.0-20220901235040-6ca97ef2ce1c // indirect
 	lukechampine.com/blake3 v1.1.7 // indirect
 )

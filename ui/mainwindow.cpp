@@ -884,20 +884,12 @@ void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
 }
 
-#define NO_ADD_TO_SUBSCRIPTION_GROUP                                                                                               \
-    if (!NekoRay::profileManager->CurrentGroup()->url.isEmpty()) {                                                                 \
-        MessageBoxWarning(software_name, MainWindow::tr("Manual addition of profiles is not allowed in subscription groupings.")); \
-        return;                                                                                                                    \
-    }
-
 void MainWindow::on_menu_add_from_input_triggered() {
-    NO_ADD_TO_SUBSCRIPTION_GROUP
     auto dialog = new DialogEditProfile("socks", NekoRay::dataStore->current_group, this);
     connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
-    NO_ADD_TO_SUBSCRIPTION_GROUP
     auto clipboard = QApplication::clipboard()->text();
     NekoRay::sub::groupUpdater->AsyncUpdate(clipboard);
 }
@@ -1134,7 +1126,6 @@ void MainWindow::on_menu_scan_qr_triggered() {
         MessageBoxInfo(software_name, tr("QR Code not found"));
     } else {
         show_log_impl("QR Code Result:\n" + text);
-        NO_ADD_TO_SUBSCRIPTION_GROUP
         NekoRay::sub::groupUpdater->AsyncUpdate(text);
     }
 #endif
