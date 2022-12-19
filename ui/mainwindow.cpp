@@ -1271,15 +1271,24 @@ inline void FastAppendTextDocument(const QString &message, QTextDocument *doc) {
 }
 
 void MainWindow::show_log_impl(const QString &log) {
-    auto log2 = log.trimmed();
-    if (log2.isEmpty()) return;
+    auto lines = SplitLines(log.trimmed());
+    if (lines.isEmpty()) return;
 
+    QStringList newLines;
     auto log_ignore = NekoRay::dataStore->log_ignore;
-    for (const auto &str: log_ignore) {
-        if (log2.contains(str)) return;
+    for (const auto &line: lines) {
+        bool showThisLine = true;
+        for (const auto &str: log_ignore) {
+            if (line.contains(str)) {
+                showThisLine = false;
+                break;
+            }
+        }
+        if (showThisLine) newLines << line;
     }
+    if (newLines.isEmpty()) return;
 
-    FastAppendTextDocument(log2, qvLogDocument);
+    FastAppendTextDocument(newLines.join("\n"), qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);
     // From https://gist.github.com/jemyzhang/7130092
     auto maxLines = 200;
