@@ -164,6 +164,9 @@ int main(int argc, char *argv[]) {
         case 2:
             locale = "zh_CN";
             break;
+        case 3:
+            locale = "fa_IR"; //farsi(iran)
+            break;
         default:
             locale = QLocale().name();
     }
