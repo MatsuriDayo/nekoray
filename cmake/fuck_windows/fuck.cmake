@@ -5,12 +5,12 @@ if (WIN32)
     include(cmake/fuck_windows/generate_product_version.cmake)
     generate_product_version(
             QV2RAY_RC
-            NAME "Nekoray"
-            BUNDLE "Nekoray Project Family"
             ICON "${CMAKE_SOURCE_DIR}/res/nekoray.ico"
-            COMPANY_NAME "Nekoray Workgroup"
-            COMPANY_COPYRIGHT "Nekoray Workgroup"
-            FILE_DESCRIPTION "Nekoray Main Application"
+            NAME "nekoray"
+            BUNDLE "nekoray"
+            COMPANY_NAME "nekoray"
+            COMPANY_COPYRIGHT "nekoray"
+            FILE_DESCRIPTION "nekoray"
     )
     add_definitions(-DUNICODE -D_UNICODE -DNOMINMAX)
     set(GUI_TYPE WIN32)

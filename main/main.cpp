@@ -57,7 +57,7 @@ int main(int argc, char *argv[]) {
     if (args.contains("-tray")) NekoRay::dataStore->flag_tray = true;
     if (args.contains("-debug")) NekoRay::dataStore->flag_debug = true;
 #ifdef NKR_CPP_USE_APPDATA
-    NekoRay::dataStore->flag_use_appdata = true;
+    NekoRay::dataStore->flag_use_appdata = true; // Example: Package & MacOS
 #endif
 #ifdef NKR_CPP_DEBUG
     NekoRay::dataStore->flag_debug = true;

@@ -157,7 +157,7 @@ void MainWindow::speedtest_current_group(int mode) {
 #endif
 }
 
-void MainWindow::test_current() {
+void MainWindow::speedtest_current() {
 #ifndef NKR_NO_GRPC
     last_test_time = QTime::currentTime();
     ui->label_running->setText(tr("Testing"));
@@ -186,7 +186,7 @@ void MainWindow::test_current() {
 #endif
 }
 
-void MainWindow::ExitNekorayCore() {
+void MainWindow::stop_core_daemon() {
 #ifndef NKR_NO_GRPC
     NekoRay::rpc::defaultClient->Exit();
 #endif
@@ -287,6 +287,7 @@ void MainWindow::neko_stop(bool crash) {
 }
 
 void MainWindow::CheckUpdate() {
+    // on new thread...
 #ifndef NKR_NO_GRPC
     bool ok;
     libcore::UpdateReq request;

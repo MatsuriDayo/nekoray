@@ -9,6 +9,9 @@ on:
       publish:
         description: 'Publish: If want ignore'
         required: false
+      artifact-pack:
+        description: 'artifact-pack: If want ignore'
+        required: false
 jobs:
   build-go:
     strategy:
@@ -16,8 +19,8 @@ jobs:
         cross_os: [ windows, linux, darwin ]
         cross_arch: [ amd64 ]
         include:
-          - cross_os: asset
-            cross_arch: asset
+          - cross_os: public_res
+            cross_arch: public_res
       fail-fast: false
     runs-on: ubuntu-latest
     steps:
@@ -40,10 +43,10 @@ jobs:
         if: steps.cache-common.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          [ ${{ matrix.cross_os }} == asset ] || ./libs/get_source.sh
-          [ ${{ matrix.cross_os }} == asset ] || GOOS=${{ matrix.cross_os }} GOARCH=${{ matrix.cross_arch }} ./libs/build_go.sh
-          [ ${{ matrix.cross_os }} == asset ] || exit 0
-          ./libs/build_asset.sh
+          [ ${{ matrix.cross_os }} == public_res ] || ./libs/get_source.sh
+          [ ${{ matrix.cross_os }} == public_res ] || GOOS=${{ matrix.cross_os }} GOARCH=${{ matrix.cross_arch }} ./libs/build_go.sh
+          [ ${{ matrix.cross_os }} == public_res ] || exit 0
+          ./libs/build_public_res.sh
       - name: Tar files
         if: steps.cache-common.outputs.cache-hit != 'true'
         run: tar czvf artifacts.tgz ./deployment
@@ -166,7 +169,8 @@ jobs:
           name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
           path: artifacts.tgz
   publish:
-    name: Publish Release
+    name: Pack & Publish Release
+    if: github.event.inputs.artifact-pack != 'y'
     runs-on: ubuntu-latest
     needs:
       - build-cpp
@@ -185,9 +189,9 @@ jobs:
           mv ghr*linux_amd64/ghr .
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
-          cp -r assets/* linux64
-          cp -r assets/* windows64
-          rm -rf assets *.pdb
+          cp -r public_res/* linux64
+          cp -r public_res/* windows64
+          rm -rf public_res *.pdb
           ####
           mv linux64 nekoray
           zip -r $version_standalone-linux64.zip nekoray

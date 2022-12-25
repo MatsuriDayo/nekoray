@@ -550,7 +550,7 @@ void MainWindow::on_menu_exit_triggered() {
     //
     NekoRay::dataStore->core_prepare_exit = true;
     hide();
-    ExitNekorayCore();
+    stop_core_daemon();
     //
     MF_release_runguard();
     if (exit_reason == 1) {
@@ -1394,7 +1394,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
 
         if (obj == ui->label_running && mouseEvent->button() == Qt::LeftButton && running != nullptr) {
-            test_current();
+            speedtest_current();
             return true;
         } else if (obj == ui->label_inbound && mouseEvent->button() == Qt::LeftButton) {
             on_menu_basic_settings_triggered();

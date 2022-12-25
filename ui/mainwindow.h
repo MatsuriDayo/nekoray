@@ -173,13 +173,13 @@ private:
 
     // grpc and ...
 
-    static void ExitNekorayCore();
+    void setup_grpc();
 
     void speedtest_current_group(int mode);
 
-    void test_current();
+    void speedtest_current();
 
-    void setup_grpc();
+    static void stop_core_daemon();
 
     void CheckUpdate();
 
