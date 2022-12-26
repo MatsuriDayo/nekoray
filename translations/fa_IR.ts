@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="fa_IR">
+<TS version="2.1" language="fa_IR" sourcelanguage="en">
 <context>
     <name>DialogBasicSettings</name>
     <message>
@@ -101,11 +101,12 @@
     </message>
     <message>
         <source>Language</source>
-        <translation>Language</translation>
+        <translation>زبان</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Security</translation>
+        <translatorcomment>امنیت security</translatorcomment>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>Insecure hint</source>
@@ -137,6 +138,7 @@
     </message>
     <message>
         <source>Delete</source>
+        <translatorcomment>حذف</translatorcomment>
         <translation>Delete</translation>
     </message>
     <message>
