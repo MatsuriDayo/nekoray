@@ -283,6 +283,11 @@ void DialogBasicSettings::accept() {
     D_SAVE_BOOL(skip_cert)
     NekoRay::dataStore->enable_js_hook = ui->enable_js_hook->currentIndex();
 
+    // 关闭连接统计，停止刷新前清空记录。
+    if (NekoRay::dataStore->traffic_loop_interval == 0 || NekoRay::dataStore->connection_statistics == false) {
+        MW_dialog_message("", "ClearConnectionList");
+    }
+
     MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
     QDialog::accept();
 }
