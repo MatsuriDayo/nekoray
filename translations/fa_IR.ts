@@ -13,27 +13,27 @@
     </message>
     <message>
         <source>HTTP Listen Port</source>
-        <translation>HTTP Listen Port</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Listen Address</source>
-        <translation>Listen Address</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Socks Listen Port</source>
-        <translation>Socks Listen Port</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>concurrency</source>
-        <translation>همزمانی</translation>
+        <translation type="unfinished">همزمانیهمزمانی</translation>
     </message>
     <message>
         <source>User Agent</source>
-        <translation>User Agent</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Common</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Style</source>
@@ -49,55 +49,55 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Subscription</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Core</source>
-        <translation>Core</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Extra Core</source>
-        <translation>Extra Core</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Select</translation>
+        <translation type="unfinished">برگزیدن</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Edit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Custom Inbound</source>
-        <translation>Custom Inbound</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Asset Location</source>
-        <translation>Asset Location</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Default: dir of &quot;nekoray&quot;</source>
-        <translation>Default: dir of &quot;nekoray&quot;</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Settings changed</source>
-        <translation>Settings changed</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Restart nekoray to take effect.</source>
-        <translation>Restart nekoray to take effect.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Concurrent</source>
-        <translation>Concurrent</translation>
+        <translation type="unfinished">هم زمان</translation>
     </message>
     <message>
         <source>Test URL</source>
-        <translation>Test URL</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
-        <translation>Use proxy when updating subscription</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Language</source>
@@ -110,52 +110,52 @@
     </message>
     <message>
         <source>Insecure hint</source>
-        <translation>Insecure hint</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default</source>
-        <translation>Skip TLS certificate authentication by default</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Traffic statistics refresh rate</source>
-        <translation>Traffic statistics refresh rate</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Fast</source>
-        <translation>Fast</translation>
+        <translation type="unfinished">سریع</translation>
     </message>
     <message>
         <source>Slow</source>
-        <translation>Slow</translation>
+        <translation type="unfinished">کند</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Off</translation>
+        <translation type="unfinished">خاموش</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Add</translation>
+        <translation type="unfinished">اضافه کردن</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>حذف</translatorcomment>
-        <translation>Delete</translation>
+        <translation type="unfinished">پاک کردن</translation>
     </message>
     <message>
         <source>Please input the core name.</source>
-        <translation>Please input the core name.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Please select the core name.</source>
-        <translation>Please select the core name.</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Connection statistics</source>
-        <translation>Connection statistics</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>Include Pre-release when checking update</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>System proxy format</source>
@@ -234,7 +234,7 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished">Subscription</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Archive</source>
@@ -273,7 +273,7 @@
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">Common</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Type</source>
@@ -591,7 +591,7 @@
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished">Core</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Json Editor</source>
@@ -733,7 +733,7 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Edit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Remove</source>
@@ -745,7 +745,7 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished">Subscription</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Archive</source>
@@ -819,55 +819,55 @@
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">برنامه</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">سلیقه ها</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">سرور</translation>
     </message>
     <message>
         <source>Ads</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تبلیغات</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اسناد</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">بروزرسانی</translation>
     </message>
     <message>
         <source>VPN Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">حالت vpn</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پروکسی سیستمی</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">نوع</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">آدرس</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اسم</translation>
     </message>
     <message>
         <source>Test Result</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">نتیجه تست</translation>
     </message>
     <message>
         <source>Traffic</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ترافیک</translation>
     </message>
     <message>
         <source>Log</source>
@@ -875,11 +875,11 @@
     </message>
     <message>
         <source>Connection</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اتصال</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">وضعیت</translation>
     </message>
     <message>
         <source>Outbound</source>
@@ -891,7 +891,7 @@
     </message>
     <message>
         <source>Active Server</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">سرور فعال</translation>
     </message>
     <message>
         <source>Active Routing</source>
@@ -923,15 +923,15 @@
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">آغازکردن</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">متوقف کردن</translation>
     </message>
     <message>
         <source>Routing Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات مسیریابی</translation>
     </message>
     <message>
         <source>Add profile from clipboard</source>
@@ -975,7 +975,7 @@
     </message>
     <message>
         <source>Disable</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">غیرفعال کردن</translation>
     </message>
     <message>
         <source>Remove Duplicates</source>
@@ -1007,7 +1007,7 @@
     </message>
     <message>
         <source>Full Test</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تست کامل</translation>
     </message>
     <message>
         <source>Hotkey Settings</source>
@@ -1015,7 +1015,7 @@
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">انتخاب همه</translation>
     </message>
     <message>
         <source>Copy links of selected (Neko Links)</source>
@@ -1027,7 +1027,7 @@
     </message>
     <message>
         <source>Enable VPN</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">فعال کردن vpn</translation>
     </message>
     <message>
         <source>Clone</source>
@@ -1043,11 +1043,11 @@
     </message>
     <message>
         <source>VPN Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات vpn</translation>
     </message>
     <message>
         <source>Restart Program</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اجرا دوباره برنامه</translation>
     </message>
     <message>
         <source>Open Config Folder</source>
@@ -1160,7 +1160,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">Edit</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Save &quot;%1&quot; as a routing rule?</source>
@@ -1189,7 +1189,7 @@ End: %2</source>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ورودی</translation>
     </message>
     <message>
         <source>Please enter the items to be tested, separated by commas
@@ -1209,7 +1209,7 @@ End: %2</source>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">غیرقایل دسترسی</translation>
     </message>
     <message>
         <source>Starting profile %1</source>
@@ -1247,7 +1247,7 @@ End: %2</source>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Select</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Update</source>
