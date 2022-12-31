@@ -66,6 +66,8 @@ https://matsuridayo.github.io
 
 [Linux](docs/Build_Linux.md)
 
+[Mac](docs/Build_MacOS.md)
+
 [Windows](docs/Build_Windows.md)
 
 ## 捐助 / Donate
