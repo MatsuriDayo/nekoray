@@ -155,7 +155,7 @@
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">هنگام بررسی به‌روزرسانی، نسخه پیش‌انتشار را نیز لحاظ شود</translation>
     </message>
     <message>
         <source>System proxy format</source>
@@ -171,15 +171,15 @@
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">قبل از به‌روزرسانی اشتراک، سرورها را پاک شود</translation>
     </message>
     <message>
         <source>Ignore TLS errors when updating subscription</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
     </message>
     <message>
         <source>Switch core</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">سوئیچ هسته</translation>
     </message>
     <message>
         <source>Enable hook.js</source>
@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تائیدیه</translation>
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
@@ -234,7 +234,7 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اشتراک</translation>
     </message>
     <message>
         <source>Archive</source>
@@ -258,7 +258,7 @@
     </message>
     <message>
         <source>Please input URL</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لطفا URL را وارد کنید</translation>
     </message>
     <message>
         <source>Copied</source>
@@ -372,7 +372,7 @@
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">کلید میانبر</translation>
     </message>
     <message>
         <source>Show routes</source>
@@ -395,7 +395,7 @@
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">گروه ها</translation>
+        <translation type="unfinished">گروه هاگروه ها</translation>
     </message>
     <message>
         <source>New group</source>
@@ -553,7 +553,7 @@
     </message>
     <message>
         <source>Hide Console</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">مخفی کردن کنسول</translation>
     </message>
     <message>
         <source>VPN Enable IPv6</source>
@@ -619,7 +619,7 @@
     </message>
     <message>
         <source>Please pick a core.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لطفا یک هسته انتخاب کنید.</translation>
     </message>
 </context>
 <context>
@@ -673,11 +673,11 @@
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">رمزگذاری</translation>
     </message>
     <message>
         <source>Plugin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پلاگین</translation>
     </message>
 </context>
 <context>
@@ -692,11 +692,11 @@
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished"></translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>کلمه عبور</translation>
     </message>
 </context>
 <context>
@@ -729,7 +729,7 @@
     <name>GroupItem</name>
     <message>
         <source>Update Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">به روز رسانی اشتراک</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -737,7 +737,7 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">حذف کردن</translation>
     </message>
     <message>
         <source>Basic</source>
@@ -780,7 +780,7 @@
     </message>
     <message>
         <source>Json Editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ویرایشگر Json</translation>
     </message>
     <message>
         <source>Structure Preview</source>
@@ -839,11 +839,11 @@
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">بروزرسانی</translation>
+        <translation>بروزرسانی</translation>
     </message>
     <message>
         <source>VPN Mode</source>
-        <translation type="unfinished">حالت vpn</translation>
+        <translation type="unfinished">حالتvpn</translation>
     </message>
     <message>
         <source>System Proxy</source>
@@ -1232,7 +1232,7 @@ End: %2</source>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تائیدیه</translation>
     </message>
     <message>
         <source>Remove %1?</source>
