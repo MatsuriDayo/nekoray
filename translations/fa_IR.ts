@@ -25,7 +25,7 @@
     </message>
     <message>
         <source>concurrency</source>
-        <translation type="unfinished">همزمانیهمزمانی</translation>
+        <translation type="unfinished">همزمانی</translation>
     </message>
     <message>
         <source>User Agent</source>
@@ -151,7 +151,7 @@
     </message>
     <message>
         <source>Connection statistics</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">آمار اتصال</translation>
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
@@ -167,7 +167,7 @@
     </message>
     <message>
         <source>Hide dashboard at startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">مخفی کردن داشبورد هنگام راه‌اندازی</translation>
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Please select a PNG file.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لطفاً یک فایل PNG انتخاب کنید.</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -207,11 +207,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لغو کردن</translation>
     </message>
     <message>
         <source>Please select a valid square image.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
     </message>
 </context>
 <context>
