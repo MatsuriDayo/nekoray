@@ -13,15 +13,15 @@
     </message>
     <message>
         <source>HTTP Listen Port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پورت گوش دادن HTTP</translation>
     </message>
     <message>
         <source>Listen Address</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">آدرس گوش کرذت</translation>
     </message>
     <message>
         <source>Socks Listen Port</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پورت گوش کردن ساکس</translation>
     </message>
     <message>
         <source>concurrency</source>
@@ -29,11 +29,11 @@
     </message>
     <message>
         <source>User Agent</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">عامل کاربر</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">متداول</translation>
     </message>
     <message>
         <source>Style</source>
@@ -49,15 +49,15 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">اشتراک</translation>
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished"></translation>
+        <translation>هسته</translation>
     </message>
     <message>
         <source>Extra Core</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">هسته اضافی</translation>
     </message>
     <message>
         <source>Select</source>
@@ -65,11 +65,11 @@
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ویرایش</translation>
     </message>
     <message>
         <source>Custom Inbound</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ورودی سفارشی</translation>
     </message>
     <message>
         <source>Asset Location</source>
@@ -81,11 +81,11 @@
     </message>
     <message>
         <source>Settings changed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات تغییر کرد</translation>
     </message>
     <message>
         <source>Restart nekoray to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">برای اعمال تغییرات nekoray را مجددا راه اندازی کنید.</translation>
     </message>
     <message>
         <source>Concurrent</source>
@@ -591,7 +591,7 @@
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">هسته</translation>
     </message>
     <message>
         <source>Json Editor</source>
@@ -688,7 +688,7 @@
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">نسخه</translation>
     </message>
     <message>
         <source>Username</source>
@@ -823,7 +823,7 @@
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">سفارشی سازی</translation>
+        <translation type="unfinished">تنظیمات</translation>
     </message>
     <message>
         <source>Server</source>
@@ -871,7 +871,7 @@
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ثبت رویدادها</translation>
     </message>
     <message>
         <source>Connection</source>
@@ -883,11 +883,11 @@
     </message>
     <message>
         <source>Outbound</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">خروجی</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">مقصد</translation>
     </message>
     <message>
         <source>Active Server</source>
@@ -915,7 +915,7 @@
     </message>
     <message>
         <source>New profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پروفایل جدید</translation>
     </message>
     <message>
         <source>Groups</source>
@@ -935,7 +935,7 @@
     </message>
     <message>
         <source>Add profile from clipboard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">افزودن پروفایل از کلیپ بورد</translation>
     </message>
     <message>
         <source>Delete</source>
@@ -947,11 +947,11 @@
     </message>
     <message>
         <source>QR Code and link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">کد QR و پیوند</translation>
     </message>
     <message>
         <source>Copy Link</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لینک را کپی کنید</translation>
     </message>
     <message>
         <source>Clear Test Result</source>
@@ -983,23 +983,23 @@
     </message>
     <message>
         <source>fake</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">جعلی</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">حرکت</translation>
     </message>
     <message>
         <source>Start with system</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">با سیستم شروع شود</translation>
     </message>
     <message>
         <source>Remember last profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">آخرین پروفایل را به خاطر بسپار</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">به دستگاه های دیگر اجازه اتصال دهید</translation>
     </message>
     <message>
         <source>Remove Unavailable</source>
@@ -1011,7 +1011,7 @@
     </message>
     <message>
         <source>Hotkey Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات کلید میانبر</translation>
     </message>
     <message>
         <source>Select All</source>
@@ -1023,7 +1023,7 @@
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لینک های انتخاب شده را کپی کنید</translation>
     </message>
     <message>
         <source>Enable VPN</source>
@@ -1031,7 +1031,7 @@
     </message>
     <message>
         <source>Clone</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">شبیه سازی</translation>
     </message>
     <message>
         <source>Update subscription</source>
@@ -1039,7 +1039,7 @@
     </message>
     <message>
         <source>Resolve domain</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">دامنه را حل کنید</translation>
     </message>
     <message>
         <source>VPN Settings</source>
@@ -1051,11 +1051,11 @@
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پوشه Config را باز کنید</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پیش فرض</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1071,15 +1071,15 @@
     </message>
     <message>
         <source>Restart VPN to take effect.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">VPN را مجدداً راه اندازی کنید تا اعمال شود.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تائیدیه</translation>
     </message>
     <message>
         <source>Settings changed, restart proxy?</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تنظیمات تغییر کرد، پراکسی راه اندازی مجدد شود؟</translation>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
@@ -1107,7 +1107,7 @@
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">هیچ یک</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1139,7 +1139,7 @@
     </message>
     <message>
         <source>QR Code not found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">کد QR یافت نشد</translation>
     </message>
     <message>
         <source>Resolving current group domain to IP, if support.</source>
@@ -1147,7 +1147,7 @@
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">کلیدواژه نادیده گرفتن را تنظیم کنید</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
@@ -1156,7 +1156,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Save as route</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ذخیره به عنوان مسیر</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -1168,11 +1168,11 @@ Split by line.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پاک کردن</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پایان</translation>
     </message>
     <message>
         <source>Active</source>
@@ -1185,7 +1185,7 @@ End: %2</source>
     </message>
     <message>
         <source>Failed to stop VPN process</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">فرآیند VPN متوقف نشد</translation>
     </message>
     <message>
         <source>Input</source>
@@ -1321,7 +1321,7 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Chain Proxy</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">پروکسی زنجیره ای</translation>
     </message>
     <message>
         <source>The configuration (insecure) can be detected and identified, the transmission is fully visible to the censor and is not resistant to man-in-the-middle tampering with the content of the communication.</source>
