@@ -207,7 +207,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">لغو کردن</translation>
+        <translation>لغو کردن</translation>
     </message>
     <message>
         <source>Please select a valid square image.</source>
@@ -580,7 +580,7 @@
     </message>
     <message>
         <source>Select Profile</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">انتخاب کردن پروفایل</translation>
     </message>
 </context>
 <context>
@@ -703,7 +703,7 @@
     <name>EditTrojanVLESS</name>
     <message>
         <source>Password</source>
-        <translation type="unfinished">کلمه عبور</translation>
+        <translation>کلمه عبور</translation>
     </message>
 </context>
 <context>
@@ -1019,7 +1019,7 @@
     </message>
     <message>
         <source>Copy links of selected (Neko Links)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">کپی لینک های انتخاب شده (پیوندهای Neko)</translation>
     </message>
     <message>
         <source>Copy links of selected</source>
@@ -1107,6 +1107,7 @@
     </message>
     <message>
         <source>None</source>
+        <translatorcomment>هیچ یک</translatorcomment>
         <translation type="unfinished">هیچ یک</translation>
     </message>
     <message>
