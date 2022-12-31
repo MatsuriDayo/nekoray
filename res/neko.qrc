@@ -8,10 +8,10 @@
         <file alias="icon/b-system-software-update.svg">icon/system-software-update.svg</file>
     </qresource>
     <qresource prefix="/neko">
-        <file alias="nekobox.png">../assets/nekobox.png</file>
-        <file alias="nekoray.png">../assets/nekoray.png</file>
+        <file alias="nekobox.png">public/nekobox.png</file>
+        <file alias="nekoray.png">public/nekoray.png</file>
         <file>neko.css</file>
-        <file alias="vpn/vpn-run-root.sh">../examples/vpn-run-root.sh</file>
-        <file alias="vpn/sing-box-vpn.json">../examples/sing-box-vpn.json</file>
+        <file>vpn/vpn-run-root.sh</file>
+        <file>vpn/sing-box-vpn.json</file>
     </qresource>
 </RCC>

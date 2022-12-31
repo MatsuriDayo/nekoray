@@ -454,11 +454,14 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         }
         refresh_status();
     }
+    //
     if (info == "RestartProgram") {
         this->exit_reason = 2;
         on_menu_exit_triggered();
     } else if (info == "Raise") {
         ACTIVE_THIS_WINDOW
+    } else if (info == "ClearConnectionList") {
+        refresh_connection_list({});
     }
     // sender
     if (sender == Dialog_DialogEditProfile) {
@@ -550,7 +553,7 @@ void MainWindow::on_menu_exit_triggered() {
     //
     NekoRay::dataStore->core_prepare_exit = true;
     hide();
-    ExitNekorayCore();
+    stop_core_daemon();
     //
     MF_release_runguard();
     if (exit_reason == 1) {
@@ -1394,7 +1397,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
 
         if (obj == ui->label_running && mouseEvent->button() == Qt::LeftButton && running != nullptr) {
-            test_current();
+            speedtest_current();
             return true;
         } else if (obj == ui->label_inbound && mouseEvent->button() == Qt::LeftButton) {
             on_menu_basic_settings_triggered();
@@ -1421,6 +1424,8 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
         return;
     }
     last_arr = arr;
+
+    if (NekoRay::dataStore->flag_debug) qDebug() << arr;
 
     ui->tableWidget_conn->setRowCount(0);
 

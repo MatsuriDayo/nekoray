@@ -3,9 +3,17 @@ set -e
 
 cd libs
 
+# 参数
+if [ -z $cmake ]; then
+  cmake="cmake"
+fi
+if [ -z $deps ]; then
+  deps="deps"
+fi
+
 # libs/deps/...
-mkdir -p deps
-cd deps
+mkdir -p $deps
+cd $deps
 if [ -z $NKR_PACKAGE ]; then
   INSTALL_PREFIX=$PWD/built
 else
@@ -27,7 +35,7 @@ cd zxing-*
 mkdir -p build
 cd build
 
-cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_BLACKBOX_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
+$cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXAMPLES=OFF -DBUILD_BLACKBOX_TESTS=OFF -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
 ninja && ninja install
 
 cd ../..
@@ -46,7 +54,7 @@ cd yaml-*
 mkdir -p build
 cd build
 
-cmake .. -GNinja -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
+$cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DBUILD_TESTING=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$INSTALL_PREFIX
 ninja && ninja install
 
 cd ../..
@@ -59,7 +67,7 @@ git clone --recurse-submodules -b v21.4 --depth 1 --shallow-submodules https://g
 mkdir -p protobuf/build
 cd protobuf/build
 
-cmake .. -GNinja \
+$cmake .. -GNinja \
   -DCMAKE_BUILD_TYPE=Release \
   -DBUILD_SHARED_LIBS=OFF \
   -Dprotobuf_MSVC_STATIC_RUNTIME=OFF \

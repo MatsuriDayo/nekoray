@@ -80,11 +80,11 @@ namespace NekoRay::traffic {
         elapsedTimer.start();
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
-            auto user_disabled = sleep_ms == 0;
             if (sleep_ms < 500 || sleep_ms > 2000) sleep_ms = 1000;
             QThread::msleep(sleep_ms);
-            if (user_disabled) continue;
+            if (dataStore->traffic_loop_interval == 0) continue; // user disabled
 
+            // profile start and stop
             if (!loop_enabled) {
                 // 停止
                 if (looping) {
