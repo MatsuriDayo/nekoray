@@ -987,7 +987,7 @@
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished">حرکت</translation>
+        <translation type="unfinished">جابجایی</translation>
     </message>
     <message>
         <source>Start with system</source>
@@ -1031,7 +1031,7 @@
     </message>
     <message>
         <source>Clone</source>
-        <translation type="unfinished">شبیه سازی</translation>
+        <translation type="unfinished">همزادسازی</translation>
     </message>
     <message>
         <source>Update subscription</source>
