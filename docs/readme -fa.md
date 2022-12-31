@@ -1,37 +1,36 @@
 # NekoRay
 
-Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
+مدیریت پیکربندی پروکسی با رابط کاربری مبتنی بر QT , کراس پلتفرم . (بک اند : v2ray / sing-box )
 
-Support Windows / Linux / macOS amd64 out of the box now.
+اکنون از Windows / Linux / macOS amd64 پشتیبانی می کند.
 
-基于 Qt 的跨平台代理配置管理器 (后端 v2ray / sing-box)
 
-目前支持 Windows / Linux / macOS amd64 开箱即用
 
-## 下载 / Download
+
+## دانلود / Download
 
 ### GitHub Releases (Portable ZIP)
 
-便携格式，无安装器。转到 Releases 下载预编译的二进制文件，解压后即可使用。
+فرمت قابل حمل، بدون نصب. برای دانلود باینری های از پیش کامپایل شده به Releases بروید، آنها را باز کرده و از آنها استفاده کنید.
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases)
 
 [Download](https://github.com/Matsuridayo/nekoray/releases)
 
-### Package
+### بسته
 
 1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
 2. Scoop extras: `scoop install nekoray`
 
-## 更改记录 & 发布频道 / Changelog & Telegram channel
+## تغییرات برنامه و کانال تلگرام / Changelog & Telegram channel
 
 https://t.me/Matsuridayo
 
-## 项目主页 & 文档 / Homepage & Documents
+## صفحه مستندات / Homepage & Documents
 
 https://matsuridayo.github.io
 
-## 代理 / Proxy
+## پروکسی / Proxy
 
 * SOCKS (4/4a/5)
 * HTTP(S)
@@ -44,35 +43,34 @@ https://matsuridayo.github.io
 * Custom Outbound
 * Custom Core
 
-## 订阅 / Subscription
+## اشتراک / Subscription
 
 * Raw: some widely used formats (like shadowsocks, clash and v2rayN)
-* 原始格式：一些广泛使用的格式（如 shadowsocks、clash 和 v2rayN）
+* فرمت های خام: برخی از فرمت های پرکاربرد (مانند shadowsocks، clash و v2rayN)
 
-## 运行参数
+## پارامترهای عملیاتی
 
-- `-many` 无视同目录正在运行的实例，强行开启新的实例 (0.11+)
-- `-appdata` 开启后配置文件会放在共享目录，无法多开和自动升级 (0.11+)
+- `-many` نمونه در حال اجرا همان دایرکتوری را نادیده بگیرید و به اجبار یک نمونه جدید راه اندازی کنید(0.11+)
+- `-appdata` پس از باز کردن، فایل پیکربندی در دایرکتوری مشترک قرار می گیرد و نمی توان آن را بیشتر باز کرد و به طور خودکار ارتقا داد. (0.11+)
 
-## Windows 运行
+## Windows 
 
-若提示 DLL 缺失，无法运行，请下载 安装 [微软 C++ 运行库](https://aka.ms/vs/17/release/vc_redist.x64.exe)
+اگر به شما می گوید که DLL وجود ندارد و نمی تواند اجرا شود، لطفاً [Microsoft C++ Runtime Library] (https://aka.ms/vs/17/release/vc_redist.x64.exe) را دانلود و نصب کنید.
 
-## Linux 运行
+## Linux 
 
-[Linux 运行教程](docs/Run_Linux.md)
-
-## 编译教程
+[آموزش اجرای لینوکس] (docs/Run_Linux.md)
+## آموزش کامپایل
 
 [Linux](docs/Build_Linux.md)
 
 [Windows](docs/Build_Windows.md)
 
-## 捐助 / Donate
+## کمک مالی / Donate
 
 Donations are welcome to support project development.
 
-欢迎捐赠以支持项目开发。
+از کمک های مالی برای حمایت از توسعه پروژه استقبال می شود。
 
 USDT TRC20
 
