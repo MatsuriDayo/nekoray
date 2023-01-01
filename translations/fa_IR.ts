@@ -13,31 +13,31 @@
     </message>
     <message>
         <source>HTTP Listen Port</source>
-        <translation type="unfinished">پورت HTTP درحال شنود</translation>
+        <translation>پورت HTTP درحال شنود</translation>
     </message>
     <message>
         <source>Listen Address</source>
-        <translation type="unfinished">آدرس درحال شنود</translation>
+        <translation>آدرس درحال شنود</translation>
     </message>
     <message>
         <source>Socks Listen Port</source>
-        <translation type="unfinished">پورت ساکس درحال شنود</translation>
+        <translation>پورت ساکس درحال شنود</translation>
     </message>
     <message>
         <source>concurrency</source>
-        <translation type="unfinished">همزمانی</translation>
+        <translation>همزمانی</translation>
     </message>
     <message>
         <source>User Agent</source>
-        <translation type="unfinished">عامل کاربر</translation>
+        <translation>عامل کاربر</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">متداول</translation>
+        <translation>متداول</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation type="unfinished">استایل</translation>
+        <translation>استایل</translation>
     </message>
     <message>
         <source>Theme</source>
@@ -49,7 +49,7 @@
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished">اشتراک</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Core</source>
@@ -57,23 +57,23 @@
     </message>
     <message>
         <source>Extra Core</source>
-        <translation type="unfinished">هسته اضافی</translation>
+        <translation>هسته اضافی</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">برگزیدن</translation>
+        <translation>برگزیدن</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">ویرایش</translation>
+        <translation>ویرایش</translation>
     </message>
     <message>
         <source>Custom Inbound</source>
-        <translation type="unfinished">ورودی سفارشی</translation>
+        <translation>ورودی سفارشی</translation>
     </message>
     <message>
         <source>Asset Location</source>
-        <translation type="unfinished">مکان دارایی</translation>
+        <translation>مکان دارایی</translation>
     </message>
     <message>
         <source>Default: dir of &quot;nekoray&quot;</source>
@@ -81,23 +81,23 @@
     </message>
     <message>
         <source>Settings changed</source>
-        <translation type="unfinished">تنظیمات تغییر کرد</translation>
+        <translation>تنظیمات تغییر کرد</translation>
     </message>
     <message>
         <source>Restart nekoray to take effect.</source>
-        <translation type="unfinished">برای اعمال تغییرات nekoray را مجددا راه اندازی کنید.</translation>
+        <translation>برای اعمال تغییرات nekoray را مجددا راه اندازی کنید.</translation>
     </message>
     <message>
         <source>Concurrent</source>
-        <translation type="unfinished">هم زمان</translation>
+        <translation>هم زمان</translation>
     </message>
     <message>
         <source>Test URL</source>
-        <translation type="unfinished">url تست</translation>
+        <translation>url تست</translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
-        <translation type="unfinished">استفاده از پروکسی زمانی که اشتراک را بروزرسانی می کنید</translation>
+        <translation>استفاده از پروکسی زمانی که اشتراک را بروزرسانی می کنید</translation>
     </message>
     <message>
         <source>Language</source>
@@ -110,7 +110,7 @@
     </message>
     <message>
         <source>Insecure hint</source>
-        <translation type="unfinished">اشاره ناامن</translation>
+        <translation>اشاره ناامن</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default</source>
@@ -118,28 +118,28 @@
     </message>
     <message>
         <source>Traffic statistics refresh rate</source>
-        <translation type="unfinished">نرخ تازه سازی آمار ترافیک</translation>
+        <translation>نرخ تازه سازی آمار ترافیک</translation>
     </message>
     <message>
         <source>Fast</source>
-        <translation type="unfinished">سریع</translation>
+        <translation>سریع</translation>
     </message>
     <message>
         <source>Slow</source>
-        <translation type="unfinished">کند</translation>
+        <translation>کند</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">خاموش</translation>
+        <translation>خاموش</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation type="unfinished">اضافه کردن</translation>
+        <translation>اضافه کردن</translation>
     </message>
     <message>
         <source>Delete</source>
         <translatorcomment>حذف</translatorcomment>
-        <translation type="unfinished">حذف کردن</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Please input the core name.</source>
@@ -151,35 +151,35 @@
     </message>
     <message>
         <source>Connection statistics</source>
-        <translation type="unfinished">آمار اتصال</translation>
+        <translation>آمار اتصال</translation>
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation type="unfinished">هنگام بررسی به‌روزرسانی، نسخه پیش‌انتشار را نیز لحاظ شود</translation>
+        <translation>هنگام بررسی به‌روزرسانی، نسخه پیش‌انتشار را نیز لحاظ شود</translation>
     </message>
     <message>
         <source>System proxy format</source>
-        <translation type="unfinished">فرمت پروکسی سیستم</translation>
+        <translation>فرمت پروکسی سیستم</translation>
     </message>
     <message>
         <source>Set custom icon</source>
-        <translation type="unfinished">تنظیم آیکون سفارشی</translation>
+        <translation>تنظیم آیکون سفارشی</translation>
     </message>
     <message>
         <source>Hide dashboard at startup</source>
-        <translation type="unfinished">مخفی کردن داشبورد هنگام راه‌اندازی</translation>
+        <translation>مخفی کردن داشبورد هنگام راه‌اندازی</translation>
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
-        <translation type="unfinished">قبل از به‌روزرسانی اشتراک، سرورها را پاک شود</translation>
+        <translation>قبل از به‌روزرسانی اشتراک، سرورها را پاک شود</translation>
     </message>
     <message>
         <source>Ignore TLS errors when updating subscription</source>
-        <translation type="unfinished">هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
+        <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
     </message>
     <message>
         <source>Switch core</source>
-        <translation type="unfinished">سوئیچ هسته</translation>
+        <translation>سوئیچ هسته</translation>
     </message>
     <message>
         <source>Enable hook.js</source>
@@ -187,11 +187,11 @@
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
-        <translation type="unfinished">تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
+        <translation>تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تائیدیه</translation>
+        <translation>تائیدیه</translation>
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
@@ -199,11 +199,11 @@
     </message>
     <message>
         <source>Please select a PNG file.</source>
-        <translation type="unfinished">لطفاً یک فایل PNG انتخاب کنید.</translation>
+        <translation>لطفاً یک فایل PNG انتخاب کنید.</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">بازنشانی</translation>
+        <translation>بازنشانی</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -211,34 +211,34 @@
     </message>
     <message>
         <source>Please select a valid square image.</source>
-        <translation type="unfinished">لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
+        <translation>لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
     </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
     <message>
         <source>Edit Group</source>
-        <translation type="unfinished">ویرایش گروه</translation>
+        <translation>ویرایش گروه</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">نوع</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">نام</translation>
+        <translation>نام</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished">پایه</translation>
+        <translation>پایه</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished">اشتراک</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation type="unfinished">بایگانی</translation>
+        <translation>بایگانی</translation>
     </message>
     <message>
         <source>URL</source>
@@ -246,7 +246,7 @@
     </message>
     <message>
         <source>Copy profile share links</source>
-        <translation type="unfinished">لینک های اشتراک گذاری نمایه را کپی کنید</translation>
+        <translation>لینک های اشتراک گذاری نمایه را کپی کنید</translation>
     </message>
     <message>
         <source>Copy profile share links (Neko Links)</source>
@@ -254,42 +254,42 @@
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">هشدار</translation>
+        <translation>هشدار</translation>
     </message>
     <message>
         <source>Please input URL</source>
-        <translation type="unfinished">لطفا URL را وارد کنید</translation>
+        <translation>لطفا URL را وارد کنید</translation>
     </message>
     <message>
         <source>Copied</source>
-        <translation type="unfinished">کپی شده است</translation>
+        <translation>کپی شده است</translation>
     </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">ویرایش کردن</translation>
+        <translation>ویرایش کردن</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">متداول</translation>
+        <translation>متداول</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">نوع</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation type="unfinished">پورت</translation>
+        <translation>پورت</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation type="unfinished">آدرس</translation>
+        <translation>آدرس</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <source>Custom Json Settings</source>
@@ -297,7 +297,7 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">تنظیمات</translation>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
@@ -305,7 +305,7 @@
     </message>
     <message>
         <source>Network</source>
-        <translation type="unfinished">شبکه</translation>
+        <translation>شبکه</translation>
     </message>
     <message>
         <source>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</source>
@@ -313,7 +313,7 @@
     </message>
     <message>
         <source>Security</source>
-        <translation type="unfinished">امنیت</translation>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
@@ -329,7 +329,7 @@
     </message>
     <message>
         <source>Security Settings</source>
-        <translation type="unfinished">تنظیمات امنیت</translation>
+        <translation>تنظیمات امنیت</translation>
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
@@ -337,7 +337,7 @@
     </message>
     <message>
         <source>Allow insecure</source>
-        <translation type="unfinished">اجازه ناامن بودن</translation>
+        <translation>اجازه ناامن بودن</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -361,26 +361,26 @@
     </message>
     <message>
         <source>Not set</source>
-        <translation type="unfinished">تنظیم نشده</translation>
+        <translation>تنظیم نشده</translation>
     </message>
     <message>
         <source>Already set</source>
-        <translation type="unfinished">تنظیم شده</translation>
+        <translation>تنظیم شده</translation>
     </message>
 </context>
 <context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
-        <translation type="unfinished">کلید میانبر</translation>
+        <translation>کلید میانبر</translation>
     </message>
     <message>
         <source>Show routes</source>
-        <translation type="unfinished">مسیرها را نمایش بده</translation>
+        <translation>مسیرها را نمایش بده</translation>
     </message>
     <message>
         <source>Show groups</source>
-        <translation type="unfinished">نمایش گروه ها</translation>
+        <translation>نمایش گروه ها</translation>
     </message>
     <message>
         <source>Trigger main window</source>
@@ -388,18 +388,18 @@
     </message>
     <message>
         <source>System Proxy</source>
-        <translation type="unfinished">پروکسی سیستم</translation>
+        <translation>پروکسی سیستم</translation>
     </message>
 </context>
 <context>
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">گروه هاگروه ها</translation>
+        <translation>گروه هاگروه ها</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation type="unfinished">گروه جدید</translation>
+        <translation>گروه جدید</translation>
     </message>
     <message>
         <source>Update all subscriptions</source>
@@ -407,18 +407,18 @@
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تاییدیه</translation>
+        <translation>تاییدیه</translation>
     </message>
     <message>
         <source>Update all subscriptions?</source>
-        <translation type="unfinished">آیا همه اشتراک ها بروزرسانی شوند؟</translation>
+        <translation>آیا همه اشتراک ها بروزرسانی شوند؟</translation>
     </message>
 </context>
 <context>
     <name>DialogManageRoutes</name>
     <message>
         <source>Routes</source>
-        <translation type="unfinished">مسیرها</translation>
+        <translation>مسیرها</translation>
     </message>
     <message>
         <source>Sniffing Mode</source>
@@ -426,7 +426,7 @@
     </message>
     <message>
         <source>Disable</source>
-        <translation type="unfinished">غیرفعال کردن</translation>
+        <translation>غیرفعال کردن</translation>
     </message>
     <message>
         <source>The sniffing result is used for routing</source>
@@ -474,19 +474,19 @@
     </message>
     <message>
         <source>Direct</source>
-        <translation type="unfinished">مستقیم</translation>
+        <translation>مستقیم</translation>
     </message>
     <message>
         <source>Domain</source>
-        <translation type="unfinished">دامنه</translation>
+        <translation>دامنه</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation type="unfinished">پروکسی</translation>
+        <translation>پروکسی</translation>
     </message>
     <message>
         <source>IP</source>
-        <translation type="unfinished">آی پی</translation>
+        <translation>آی پی</translation>
     </message>
     <message>
         <source>Preset</source>
@@ -518,11 +518,11 @@
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">ذخیره کردن</translation>
+        <translation>ذخیره کردن</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">حذف کردن</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -545,7 +545,7 @@
     <name>DialogVPNSettings</name>
     <message>
         <source>VPN Settings</source>
-        <translation type="unfinished">تنظیمات vpn</translation>
+        <translation>تنظیمات vpn</translation>
     </message>
     <message>
         <source>VPN Implementation</source>
@@ -553,7 +553,7 @@
     </message>
     <message>
         <source>Hide Console</source>
-        <translation type="unfinished">مخفی کردن کنسول</translation>
+        <translation>مخفی کردن کنسول</translation>
     </message>
     <message>
         <source>VPN Enable IPv6</source>
@@ -580,7 +580,7 @@
     </message>
     <message>
         <source>Select Profile</source>
-        <translation type="unfinished">انتخاب کردن پروفایل</translation>
+        <translation>انتخاب کردن پروفایل</translation>
     </message>
 </context>
 <context>
@@ -591,7 +591,7 @@
     </message>
     <message>
         <source>Core</source>
-        <translation type="unfinished">هسته</translation>
+        <translation>هسته</translation>
     </message>
     <message>
         <source>Json Editor</source>
@@ -619,7 +619,7 @@
     </message>
     <message>
         <source>Please pick a core.</source>
-        <translation type="unfinished">لطفا یک هسته انتخاب کنید.</translation>
+        <translation>لطفا یک هسته انتخاب کنید.</translation>
     </message>
 </context>
 <context>
@@ -630,11 +630,11 @@
     </message>
     <message>
         <source>Protocol</source>
-        <translation type="unfinished">پروتکل</translation>
+        <translation>پروتکل</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">رمزعبور</translation>
+        <translation>رمزعبور</translation>
     </message>
     <message>
         <source>Extra headers</source>
@@ -646,7 +646,7 @@
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">نام کاربری</translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -654,7 +654,7 @@
     </message>
     <message>
         <source>Insecure concurrency</source>
-        <translation type="unfinished">همزمانی ناامن</translation>
+        <translation>همزمانی ناامن</translation>
     </message>
 </context>
 <context>
@@ -669,26 +669,26 @@
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">کلمه عبور</translation>
+        <translation>کلمه عبور</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation type="unfinished">رمزگذاری</translation>
+        <translation>رمزگذاری</translation>
     </message>
     <message>
         <source>Plugin</source>
-        <translation type="unfinished">پلاگین</translation>
+        <translation>پلاگین</translation>
     </message>
 </context>
 <context>
     <name>EditSocksHttp</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished">فرم</translation>
+        <translation>فرم</translation>
     </message>
     <message>
         <source>Version</source>
-        <translation type="unfinished">نسخه</translation>
+        <translation>نسخه</translation>
     </message>
     <message>
         <source>Username</source>
@@ -710,7 +710,7 @@
     <name>EditVMess</name>
     <message>
         <source>EditVMess</source>
-        <translation type="unfinished">ویرایش VMess</translation>
+        <translation>ویرایش VMess</translation>
     </message>
     <message>
         <source>Alter Id</source>
@@ -718,7 +718,7 @@
     </message>
     <message>
         <source>Security</source>
-        <translation type="unfinished">امنیت</translation>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>UUID</source>
@@ -729,7 +729,7 @@
     <name>GroupItem</name>
     <message>
         <source>Update Subscription</source>
-        <translation type="unfinished">به روز رسانی اشتراک</translation>
+        <translation>به روز رسانی اشتراک</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -737,19 +737,19 @@
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">حذف کردن</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation type="unfinished">پایه</translation>
+        <translation>پایه</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation type="unfinished">اشتراک</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation type="unfinished">آرشیو</translation>
+        <translation>آرشیو</translation>
     </message>
     <message>
         <source>Last update: %1</source>
@@ -780,7 +780,7 @@
     </message>
     <message>
         <source>Json Editor</source>
-        <translation type="unfinished">ویرایشگر Json</translation>
+        <translation>ویرایشگر Json</translation>
     </message>
     <message>
         <source>Structure Preview</source>
@@ -804,7 +804,7 @@
     </message>
     <message>
         <source>Syntax Errors</source>
-        <translation type="unfinished">خطاهای نحوی</translation>
+        <translation>خطاهای نحوی</translation>
     </message>
     <message>
         <source>Please fix the JSON errors or remove the comments before continue</source>
@@ -819,23 +819,23 @@
     </message>
     <message>
         <source>Program</source>
-        <translation type="unfinished">برنامه</translation>
+        <translation>برنامه</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation type="unfinished">تنظیمات</translation>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation type="unfinished">سرور</translation>
+        <translation>سرور</translation>
     </message>
     <message>
         <source>Ads</source>
-        <translation type="unfinished">تبلیغات</translation>
+        <translation>تبلیغات</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation type="unfinished">اسناد</translation>
+        <translation>اسناد</translation>
     </message>
     <message>
         <source>Update</source>
@@ -843,119 +843,119 @@
     </message>
     <message>
         <source>VPN Mode</source>
-        <translation type="unfinished">حالتvpn</translation>
+        <translation>حالتvpn</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation type="unfinished">پروکسی سیستمی</translation>
+        <translation>پروکسی سیستمی</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation type="unfinished">نوع</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation type="unfinished">آدرس</translation>
+        <translation>آدرس</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished">اسم</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <source>Test Result</source>
-        <translation type="unfinished">نتیجه تست</translation>
+        <translation>نتیجه تست</translation>
     </message>
     <message>
         <source>Traffic</source>
-        <translation type="unfinished">ترافیک</translation>
+        <translation>ترافیک</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation type="unfinished">ثبت رویدادها</translation>
+        <translation>ثبت رویدادها</translation>
     </message>
     <message>
         <source>Connection</source>
-        <translation type="unfinished">اتصال</translation>
+        <translation>اتصال</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation type="unfinished">وضعیت</translation>
+        <translation>وضعیت</translation>
     </message>
     <message>
         <source>Outbound</source>
-        <translation type="unfinished">خروجی</translation>
+        <translation>خروجی</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation type="unfinished">مقصد</translation>
+        <translation>مقصد</translation>
     </message>
     <message>
         <source>Active Server</source>
-        <translation type="unfinished">سرور فعال</translation>
+        <translation>سرور فعال</translation>
     </message>
     <message>
         <source>Active Routing</source>
-        <translation type="unfinished">مسیریابی فعال</translation>
+        <translation>مسیریابی فعال</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished">اشتراک گذاری</translation>
+        <translation>اشتراک گذاری</translation>
     </message>
     <message>
         <source>Current Group</source>
-        <translation type="unfinished">گروه فعلی</translation>
+        <translation>گروه فعلی</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation type="unfinished">خروج</translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation type="unfinished">تنظیمات پایه</translation>
+        <translation>تنظیمات پایه</translation>
     </message>
     <message>
         <source>New profile</source>
-        <translation type="unfinished">پروفایل جدید</translation>
+        <translation>پروفایل جدید</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation type="unfinished">گروه ها</translation>
+        <translation>گروه ها</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation type="unfinished">آغازکردن</translation>
+        <translation>آغازکردن</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation type="unfinished">متوقف کردن</translation>
+        <translation>متوقف کردن</translation>
     </message>
     <message>
         <source>Routing Settings</source>
-        <translation type="unfinished">تنظیمات مسیریابی</translation>
+        <translation>تنظیمات مسیریابی</translation>
     </message>
     <message>
         <source>Add profile from clipboard</source>
-        <translation type="unfinished">افزودن پروفایل از کلیپ بورد</translation>
+        <translation>افزودن پروفایل از کلیپ بورد</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation type="unfinished">از بین بردن</translation>
+        <translation>از بین بردن</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation type="unfinished">اطلاعات اشکال زدایی</translation>
+        <translation>اطلاعات اشکال زدایی</translation>
     </message>
     <message>
         <source>QR Code and link</source>
-        <translation type="unfinished">کد QR و پیوند</translation>
+        <translation>کد QR و پیوند</translation>
     </message>
     <message>
         <source>Copy Link</source>
-        <translation type="unfinished">لینک را کپی کنید</translation>
+        <translation>لینک را کپی کنید</translation>
     </message>
     <message>
         <source>Clear Test Result</source>
-        <translation type="unfinished">نتایج تست پاک شود</translation>
+        <translation>نتایج تست پاک شود</translation>
     </message>
     <message>
         <source>Export %1 config</source>
@@ -963,99 +963,99 @@
     </message>
     <message>
         <source>Reset Traffic</source>
-        <translation type="unfinished">بازنشانی ترافیک</translation>
+        <translation>بازنشانی ترافیک</translation>
     </message>
     <message>
         <source>Scan QR Code</source>
-        <translation type="unfinished">کد QR را اسکن کنید</translation>
+        <translation>کد QR را اسکن کنید</translation>
     </message>
     <message>
         <source>Enable System Proxy</source>
-        <translation type="unfinished">پروکسی سیستم را فعال کنید</translation>
+        <translation>پروکسی سیستم را فعال کنید</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation type="unfinished">غیرفعال کردن</translation>
+        <translation>غیرفعال کردن</translation>
     </message>
     <message>
         <source>Remove Duplicates</source>
-        <translation type="unfinished">موارد تکراری را حذف کردن</translation>
+        <translation>موارد تکراری را حذف کردن</translation>
     </message>
     <message>
         <source>fake</source>
-        <translation type="unfinished">جعلی</translation>
+        <translation>جعلی</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation type="unfinished">جابجایی</translation>
+        <translation>جابجایی</translation>
     </message>
     <message>
         <source>Start with system</source>
-        <translation type="unfinished">با سیستم شروع شود</translation>
+        <translation>با سیستم شروع شود</translation>
     </message>
     <message>
         <source>Remember last profile</source>
-        <translation type="unfinished">آخرین پروفایل را به خاطر بسپار</translation>
+        <translation>آخرین پروفایل را به خاطر بسپار</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
-        <translation type="unfinished">به دستگاه های دیگر اجازه اتصال دهید</translation>
+        <translation>به دستگاه های دیگر اجازه اتصال دهید</translation>
     </message>
     <message>
         <source>Remove Unavailable</source>
-        <translation type="unfinished">غیرقابل دستیابی پاک شود</translation>
+        <translation>غیرقابل دستیابی پاک شود</translation>
     </message>
     <message>
         <source>Full Test</source>
-        <translation type="unfinished">تست کامل</translation>
+        <translation>تست کامل</translation>
     </message>
     <message>
         <source>Hotkey Settings</source>
-        <translation type="unfinished">تنظیمات کلید میانبر</translation>
+        <translation>تنظیمات کلید میانبر</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation type="unfinished">انتخاب همه</translation>
+        <translation>انتخاب همه</translation>
     </message>
     <message>
         <source>Copy links of selected (Neko Links)</source>
-        <translation type="unfinished">کپی لینک های انتخاب شده (پیوندهای Neko)</translation>
+        <translation>کپی لینک های انتخاب شده (پیوندهای Neko)</translation>
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation type="unfinished">لینک های انتخاب شده را کپی کنید</translation>
+        <translation>لینک های انتخاب شده را کپی کنید</translation>
     </message>
     <message>
         <source>Enable VPN</source>
-        <translation type="unfinished">فعال کردن vpn</translation>
+        <translation>فعال کردن vpn</translation>
     </message>
     <message>
         <source>Clone</source>
-        <translation type="unfinished">همزادسازی</translation>
+        <translation>همزادسازی</translation>
     </message>
     <message>
         <source>Update subscription</source>
-        <translation type="unfinished">اشتراک را به روز کنید</translation>
+        <translation>اشتراک را به روز کنید</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translation type="unfinished">دامنه را حل کنید</translation>
+        <translation>دامنه را حل کنید</translation>
     </message>
     <message>
         <source>VPN Settings</source>
-        <translation type="unfinished">تنظیمات vpn</translation>
+        <translation>تنظیمات vpn</translation>
     </message>
     <message>
         <source>Restart Program</source>
-        <translation type="unfinished">اجرا دوباره برنامه</translation>
+        <translation>اجرا دوباره برنامه</translation>
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation type="unfinished">پوشه Config باز شود</translation>
+        <translation>پوشه Config باز شود</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">پیش فرض</translation>
+        <translation>پیش فرض</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1063,23 +1063,23 @@
     </message>
     <message>
         <source>Error</source>
-        <translation type="unfinished">خطا</translation>
+        <translation>خطا</translation>
     </message>
     <message>
         <source>VPN settings changed</source>
-        <translation type="unfinished">تنظیمات VPN تغییر کرد</translation>
+        <translation>تنظیمات VPN تغییر کرد</translation>
     </message>
     <message>
         <source>Restart VPN to take effect.</source>
-        <translation type="unfinished">VPN را مجدداً راه اندازی کنید تا اعمال شود.</translation>
+        <translation>VPN را مجدداً راه اندازی کنید تا اعمال شود.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تائیدیه</translation>
+        <translation>تائیدیه</translation>
     </message>
     <message>
         <source>Settings changed, restart proxy?</source>
-        <translation type="unfinished">تنظیمات تغییر کرد، پراکسی راه اندازی مجدد شود؟</translation>
+        <translation>تنظیمات تغییر کرد، پراکسی راه اندازی مجدد شود؟</translation>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
@@ -1091,7 +1091,7 @@
     </message>
     <message>
         <source>Settings</source>
-        <translation type="unfinished">تنظیمات</translation>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <source>Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart.</source>
@@ -1099,7 +1099,7 @@
     </message>
     <message>
         <source>Not Running</source>
-        <translation type="unfinished">در حال اجرا نیست</translation>
+        <translation>در حال اجرا نیست</translation>
     </message>
     <message>
         <source>Running: %1</source>
@@ -1108,11 +1108,11 @@
     <message>
         <source>None</source>
         <translatorcomment>هیچ یک</translatorcomment>
-        <translation type="unfinished">هیچ یک</translation>
+        <translation>هیچ یک</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">انتخاب</translation>
+        <translation>انتخاب</translation>
     </message>
     <message>
         <source>Clone %1 item(s)</source>
@@ -1136,11 +1136,11 @@
     </message>
     <message>
         <source>Config copied</source>
-        <translation type="unfinished">کانفیگ کپی شد</translation>
+        <translation>کانفیگ کپی شد</translation>
     </message>
     <message>
         <source>QR Code not found</source>
-        <translation type="unfinished">کد QR یافت نشد</translation>
+        <translation>کد QR یافت نشد</translation>
     </message>
     <message>
         <source>Resolving current group domain to IP, if support.</source>
@@ -1148,7 +1148,7 @@
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation type="unfinished">کلیدواژه نادیده گرفتن را تنظیم کنید</translation>
+        <translation>کلیدواژه نادیده گرفتن را تنظیم کنید</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
@@ -1157,11 +1157,11 @@ Split by line.</source>
     </message>
     <message>
         <source>Save as route</source>
-        <translation type="unfinished">ذخیره به عنوان مسیر</translation>
+        <translation>ذخیره به عنوان مسیر</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation type="unfinished">ویرایش کردن</translation>
+        <translation>ویرایش کردن</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot; as a routing rule?</source>
@@ -1169,15 +1169,15 @@ Split by line.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">پاک کردن</translation>
+        <translation>پاک کردن</translation>
     </message>
     <message>
         <source>End</source>
-        <translation type="unfinished">پایان</translation>
+        <translation>پایان</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation type="unfinished">فعال</translation>
+        <translation>فعال</translation>
     </message>
     <message>
         <source>Start: %1
@@ -1186,11 +1186,11 @@ End: %2</source>
     </message>
     <message>
         <source>Failed to stop VPN process</source>
-        <translation type="unfinished">فرآیند VPN متوقف نشد</translation>
+        <translation>فرآیند VPN متوقف نشد</translation>
     </message>
     <message>
         <source>Input</source>
-        <translation type="unfinished">ورودی</translation>
+        <translation>ورودی</translation>
     </message>
     <message>
         <source>Please enter the items to be tested, separated by commas
@@ -1206,34 +1206,34 @@ End: %2</source>
     </message>
     <message>
         <source>Testing</source>
-        <translation type="unfinished">آزمایش کردن</translation>
+        <translation>آزمایش کردن</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished">غیرقایل دسترسی</translation>
+        <translation>غیرقایل دسترسی</translation>
     </message>
     <message>
         <source>Starting profile %1</source>
-        <translation type="unfinished">اغاز پروفایل %1</translation>
+        <translation>اغاز پروفایل %1</translation>
     </message>
     <message>
         <source>Profile is insecure: %1</source>
-        <translation type="unfinished">پروفایل ناامن می باشد: %1</translation>
+        <translation>پروفایل ناامن می باشد: %1</translation>
     </message>
     <message>
         <source>Stopping profile %1</source>
-        <translation type="unfinished">متوقف کردن پروفایل %1</translation>
+        <translation>متوقف کردن پروفایل %1</translation>
     </message>
 </context>
 <context>
     <name>ProxyItem</name>
     <message>
         <source>Remove</source>
-        <translation type="unfinished">حذف کردن</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">تائیدیه</translation>
+        <translation>تائیدیه</translation>
     </message>
     <message>
         <source>Remove %1?</source>
@@ -1248,15 +1248,15 @@ End: %2</source>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">انتخاب کردن</translation>
+        <translation>انتخاب کردن</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished">بروزرسانی</translation>
+        <translation>بروزرسانی</translation>
     </message>
     <message>
         <source>No update</source>
-        <translation type="unfinished">بدون بروزرسانی جدید</translation>
+        <translation>بدون بروزرسانی جدید</translation>
     </message>
     <message>
         <source>Update found: %1
@@ -1270,11 +1270,11 @@ Release note:
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">بستن</translation>
+        <translation>بستن</translation>
     </message>
     <message>
         <source>Update is ready, restart to install?</source>
-        <translation type="unfinished">به روز رسانی آماده است، برای نصب مجدد راه اندازی شود؟</translation>
+        <translation>به روز رسانی آماده است، برای نصب مجدد راه اندازی شود؟</translation>
     </message>
     <message>
         <source>As Subscription</source>
@@ -1282,7 +1282,7 @@ Release note:
     </message>
     <message>
         <source>As link</source>
-        <translation type="unfinished">به عنوان لینک</translation>
+        <translation>به عنوان لینک</translation>
     </message>
     <message>
         <source>url detected</source>
@@ -1322,7 +1322,7 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Chain Proxy</source>
-        <translation type="unfinished">پروکسی زنجیره ای</translation>
+        <translation>پروکسی زنجیره ای</translation>
     </message>
     <message>
         <source>The configuration (insecure) can be detected and identified, the transmission is fully visible to the censor and is not resistant to man-in-the-middle tampering with the content of the communication.</source>
@@ -1355,7 +1355,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation type="unfinished">غیرقابل دسترس</translation>
+        <translation>غیرقابل دسترس</translation>
     </message>
     <message>
         <source>Request with proxy but no profile started.</source>
@@ -1366,7 +1366,7 @@ Direct: %2</source>
     <name>Qv2ray::ui::widgets::AutoCompleteTextEdit</name>
     <message>
         <source>You can not input space characters here.</source>
-        <translation type="unfinished">شما نمی توانید کاراکتر فضای خالی در اینجا استفاده کنید.</translation>
+        <translation>شما نمی توانید کاراکتر فضای خالی در اینجا استفاده کنید.</translation>
     </message>
 </context>
 </TS>
