@@ -4,9 +4,6 @@
 
 اکنون از Windows / Linux / macOS amd64 پشتیبانی می کند.
 
-
-
-
 ## دانلود / Download
 
 ### GitHub Releases (Portable ZIP)
@@ -45,7 +42,6 @@ https://matsuridayo.github.io
 
 ## اشتراک / Subscription
 
-* Raw: some widely used formats (like shadowsocks, clash and v2rayN)
 * فرمت های خام: برخی از فرمت های پرکاربرد (مانند shadowsocks، clash و v2rayN)
 
 ## پارامترهای عملیاتی
@@ -67,8 +63,6 @@ https://matsuridayo.github.io
 [Windows](docs/Build_Windows.md)
 
 ## کمک مالی / Donate
-
-Donations are welcome to support project development.
 
 از کمک های مالی برای حمایت از توسعه پروژه استقبال می شود。
 
