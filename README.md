@@ -62,9 +62,11 @@ https://matsuridayo.github.io
 
 [Linux 运行教程](docs/Run_Linux.md)
 
-## 编译教程
+## 编译教程 / Compile Tutorial
 
 [Linux](docs/Build_Linux.md)
+
+[Mac](docs/Build_MacOS.md)
 
 [Windows](docs/Build_Windows.md)
 
