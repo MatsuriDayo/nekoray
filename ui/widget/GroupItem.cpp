@@ -43,6 +43,7 @@ QString ParseSubInfo(const QString &info) {
 
 GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item) : QWidget(parent), ui(new Ui::GroupItem) {
     ui->setupUi(this);
+    this->setLayoutDirection(Qt::LeftToRight);
 
     this->ent = ent;
     this->item = item;

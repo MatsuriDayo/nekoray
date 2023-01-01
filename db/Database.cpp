@@ -119,9 +119,9 @@ namespace NekoRay {
 
     QString ProxyEntity::DisplayLatency() const {
         if (latency < 0) {
-            return QObject::tr("Unavailable");
+            return UNICODE_LRO + QObject::tr("Unavailable");
         } else if (latency > 0) {
-            return QString("%1 ms").arg(latency);
+            return UNICODE_LRO + QString("%1 ms").arg(latency);
         } else {
             return "";
         }

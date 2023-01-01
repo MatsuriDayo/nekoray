@@ -165,11 +165,14 @@ int main(int argc, char *argv[]) {
             locale = "zh_CN";
             break;
         case 3:
-            locale = "fa_IR"; //farsi(iran)
+            locale = "fa_IR"; // farsi(iran)
             break;
         default:
             locale = QLocale().name();
     }
+    QGuiApplication::tr("QT_LAYOUT_DIRECTION");
+    QLocale::setDefault(QLocale(locale));
+    //
     QTranslator trans;
     if (trans.load(":/translations/" + locale + ".qm")) {
         QCoreApplication::installTranslator(&trans);

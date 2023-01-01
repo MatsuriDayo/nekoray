@@ -1220,6 +1220,13 @@ Split by line.</source>
     </message>
 </context>
 <context>
+    <name>QGuiApplication</name>
+    <message>
+        <source>QT_LAYOUT_DIRECTION</source>
+        <translation>LTR</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>As Subscription</source>
@@ -1350,6 +1357,14 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
     <message>
         <source>Clearing servers...</source>
         <translation>正在清理服务器...</translation>
+    </message>
+    <message>
+        <source>Enable VPN</source>
+        <translation type="obsolete">启用 VPN</translation>
+    </message>
+    <message>
+        <source>Enable System Proxy</source>
+        <translation type="obsolete">启用系统代理</translation>
     </message>
 </context>
 <context>

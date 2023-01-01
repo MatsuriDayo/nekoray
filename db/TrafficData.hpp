@@ -29,12 +29,12 @@ namespace NekoRay::traffic {
         }
 
         [[nodiscard]] QString DisplaySpeed() const {
-            return QString("%1↑ %2↓").arg(ReadableSize(uplink_rate), ReadableSize(downlink_rate));
+            return UNICODE_LRO + QString("%1↑ %2↓").arg(ReadableSize(uplink_rate), ReadableSize(downlink_rate));
         }
 
         [[nodiscard]] QString DisplayTraffic() const {
             if (downlink + uplink == 0) return "";
-            return QString("%1↑ %2↓").arg(ReadableSize(uplink), ReadableSize(downlink));
+            return UNICODE_LRO + QString("%1↑ %2↓").arg(ReadableSize(uplink), ReadableSize(downlink));
         }
     };
 } // namespace NekoRay::traffic

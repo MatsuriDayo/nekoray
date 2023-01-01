@@ -25,6 +25,8 @@ inline std::function<void(QString, QString)> MW_dialog_message;
 
 // String
 
+inline const QString UNICODE_LRO = QString::fromUtf8(QByteArray::fromHex("E280AD"));
+
 #define Int2String(num) QString::number(num)
 
 inline QString SubStrBefore(QString str, const QString &sub) {

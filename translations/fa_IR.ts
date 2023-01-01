@@ -1217,6 +1217,13 @@ End: %2</source>
     </message>
 </context>
 <context>
+    <name>QGuiApplication</name>
+    <message>
+        <source>QT_LAYOUT_DIRECTION</source>
+        <translation>RTL</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <source>Used: %1 Remain: %2 Expire: %3</source>
@@ -1336,6 +1343,14 @@ Direct: %2</source>
     <message>
         <source>Request with proxy but no profile started.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable VPN</source>
+        <translation type="obsolete">فعال کردن vpn</translation>
+    </message>
+    <message>
+        <source>Enable System Proxy</source>
+        <translation type="obsolete">پروکسی سیستم را فعال کنید</translation>
     </message>
 </context>
 <context>
