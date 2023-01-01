@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>EditChain</string>
+   <string notr="true">EditChain</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>

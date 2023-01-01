@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>EditCustom</string>
+   <string notr="true">EditCustom</string>
   </property>
   <layout class="QHBoxLayout" name="layout">
    <item>

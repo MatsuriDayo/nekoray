@@ -569,10 +569,6 @@
 <context>
     <name>EditChain</name>
     <message>
-        <source>EditChain</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Select Profile</source>
         <translation>选择配置</translation>
     </message>
@@ -583,10 +579,6 @@
 </context>
 <context>
     <name>EditCustom</name>
-    <message>
-        <source>EditCustom</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Core</source>
         <translation>核心</translation>
@@ -622,10 +614,6 @@
 </context>
 <context>
     <name>EditNaive</name>
-    <message>
-        <source>EditNaive</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Protocol</source>
         <translation>协议</translation>
@@ -673,10 +661,6 @@
         <source>Plugin</source>
         <translation>插件</translation>
     </message>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>EditSocksHttp</name>
@@ -692,10 +676,6 @@
         <source>Password</source>
         <translation>密码</translation>
     </message>
-    <message>
-        <source>Form</source>
-        <translation></translation>
-    </message>
 </context>
 <context>
     <name>EditTrojanVLESS</name>
@@ -709,10 +689,6 @@
     <message>
         <source>Security</source>
         <translation>加密</translation>
-    </message>
-    <message>
-        <source>EditVMess</source>
-        <translation></translation>
     </message>
     <message>
         <source>Alter Id</source>

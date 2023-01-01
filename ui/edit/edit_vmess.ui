@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>EditVMess</string>
+   <string notr="true">EditVMess</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="1" column="0">

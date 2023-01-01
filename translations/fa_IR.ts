@@ -526,7 +526,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">لغو کردن</translation>
     </message>
     <message>
         <source>Load routing: %1</source>
@@ -571,10 +571,6 @@
 <context>
     <name>EditChain</name>
     <message>
-        <source>EditChain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Traffic order is from top to bottom</source>
         <translation type="unfinished"></translation>
     </message>
@@ -586,16 +582,12 @@
 <context>
     <name>EditCustom</name>
     <message>
-        <source>EditCustom</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Core</source>
         <translation>هسته</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ویرایشگر Json</translation>
     </message>
     <message>
         <source>Command</source>
@@ -624,10 +616,6 @@
 </context>
 <context>
     <name>EditNaive</name>
-    <message>
-        <source>EditNaive</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Protocol</source>
         <translation>پروتکل</translation>
@@ -660,10 +648,6 @@
 <context>
     <name>EditShadowSocks</name>
     <message>
-        <source>Form</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Plugin Args</source>
         <translation type="unfinished"></translation>
     </message>
@@ -682,10 +666,6 @@
 </context>
 <context>
     <name>EditSocksHttp</name>
-    <message>
-        <source>Form</source>
-        <translation>فرم</translation>
-    </message>
     <message>
         <source>Version</source>
         <translation>نسخه</translation>
@@ -708,10 +688,6 @@
 </context>
 <context>
     <name>EditVMess</name>
-    <message>
-        <source>EditVMess</source>
-        <translation>ویرایش VMess</translation>
-    </message>
     <message>
         <source>Alter Id</source>
         <translation type="unfinished"></translation>
