@@ -588,7 +588,7 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
         if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
             if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !IS_NEKO_BOX &&
-                !InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
+                !InRange(NekoRay::dataStore->inbound_http_port, 1, 65535)) {
                 auto btn = QMessageBox::warning(this, software_name,
                                                 tr("Http inbound is not enabled, can't set system proxy."),
                                                 "OK", tr("Settings"), "", 0, 0);
@@ -646,7 +646,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
     //
     auto display_http = tr("None");
-    if (InRange(NekoRay::dataStore->inbound_http_port, 0, 65535)) {
+    if (InRange(NekoRay::dataStore->inbound_http_port, 1, 65535)) {
         display_http = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port);
     }
     auto display_socks = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port);

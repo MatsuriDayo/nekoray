@@ -147,7 +147,7 @@ namespace NekoRay {
         };
 
         // socks-in
-        if (InRange(dataStore->inbound_socks_port, 0, 65535) && !status->forTest) {
+        if (InRange(dataStore->inbound_socks_port, 1, 65535) && !status->forTest) {
             QJsonObject socksInbound;
             socksInbound["tag"] = "socks-in";
             socksInbound["protocol"] = "socks";
@@ -163,7 +163,7 @@ namespace NekoRay {
             status->inbounds += socksInbound;
         }
         // http-in
-        if (InRange(dataStore->inbound_http_port, 0, 65535) && !status->forTest) {
+        if (InRange(dataStore->inbound_http_port, 1, 65535) && !status->forTest) {
             QJsonObject socksInbound;
             socksInbound["tag"] = "http-in";
             socksInbound["protocol"] = "http";
@@ -456,12 +456,12 @@ namespace NekoRay {
             if (thisExternalStat > 0) {
                 if (ent->type == "custom") {
                     auto bean = ent->CustomBean();
-                    if (InRange(bean->mapping_port, 0, 65535)) {
+                    if (InRange(bean->mapping_port, 1, 65535)) {
                         ext_mapping_port = bean->mapping_port;
                     } else {
                         ext_mapping_port = MkPort();
                     }
-                    if (InRange(bean->socks_port, 0, 65535)) {
+                    if (InRange(bean->socks_port, 1, 65535)) {
                         ext_socks_port = bean->socks_port;
                     } else {
                         ext_socks_port = MkPort();
@@ -642,7 +642,7 @@ namespace NekoRay {
         // Inbounds
 
         // mixed-in
-        if (InRange(dataStore->inbound_socks_port, 0, 65535) && !status->forTest) {
+        if (InRange(dataStore->inbound_socks_port, 1, 65535) && !status->forTest) {
             QJsonObject socksInbound;
             socksInbound["tag"] = "mixed-in";
             socksInbound["type"] = "mixed";
