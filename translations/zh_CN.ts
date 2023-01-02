@@ -592,10 +592,6 @@
         <translation>命令</translation>
     </message>
     <message>
-        <source>Generator</source>
-        <translation>生成器</translation>
-    </message>
-    <message>
         <source>Json Editor</source>
         <translation>JSON 编辑器</translation>
     </message>
@@ -614,6 +610,22 @@
     <message>
         <source>Config Suffix</source>
         <translation>配置文件后缀</translation>
+    </message>
+    <message>
+        <source>Random if it&apos;s empty or zero.</source>
+        <translation>如果为空或为零，则表示使用随机端口。</translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation>预览</translation>
+    </message>
+    <message>
+        <source>Preview replace</source>
+        <translation>预览替换串</translation>
+    </message>
+    <message>
+        <source>Preview config</source>
+        <translation>预览配置</translation>
     </message>
 </context>
 <context>

@@ -5,12 +5,17 @@
 #include <QApplication>
 
 namespace NekoRay::sys {
-    ExternalProcess::ExternalProcess() : QProcess() {}
+    ExternalProcess::ExternalProcess() : QProcess() {
+        // qDebug() << "[Debug] ExternalProcess()" << this << running_ext;
+    }
+
+    ExternalProcess::~ExternalProcess() {
+        // qDebug() << "[Debug] ~ExternalProcess()" << this << running_ext;
+    }
 
     void ExternalProcess::Start() {
         if (started) return;
         started = true;
-        if (managed) running_ext.push_back(this);
 
         if (show_log) {
             connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
@@ -19,14 +24,11 @@ namespace NekoRay::sys {
             connect(this, &QProcess::readyReadStandardError, this, [&]() {
                 MW_show_log_ext_vt100(readAllStandardError().trimmed());
             });
-        }
-
-        if (managed) {
             connect(this, &QProcess::errorOccurred, this, [&](QProcess::ProcessError error) {
                 if (!killed) {
                     crashed = true;
                     MW_show_log_ext(tag, "errorOccurred:" + errorString());
-                    MW_dialog_message("ExternalProcess", "Crashed");
+                    if (managed) MW_dialog_message("ExternalProcess", "Crashed");
                 }
             });
             connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
@@ -37,7 +39,7 @@ namespace NekoRay::sys {
                         crashed = true;
                         MW_show_log_ext(tag, "[Error] Program exited accidentally: " + errorString());
                         Kill();
-                        MW_dialog_message("ExternalProcess", "Crashed");
+                        if (managed) MW_dialog_message("ExternalProcess", "Crashed");
                     }
                 }
             });
@@ -51,7 +53,6 @@ namespace NekoRay::sys {
     void ExternalProcess::Kill() {
         if (killed) return;
         killed = true;
-        if (managed) running_ext.removeAll(this);
 
         if (!crashed) {
             QProcess::kill();
@@ -59,7 +60,7 @@ namespace NekoRay::sys {
         }
     }
 
-    CoreProcess::CoreProcess(const QString &core_path, const QStringList &args) {
+    CoreProcess::CoreProcess(const QString &core_path, const QStringList &args) : ExternalProcess() {
         ExternalProcess::managed = false;
         ExternalProcess::show_log = false;
         ExternalProcess::program = core_path;

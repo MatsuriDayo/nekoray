@@ -12,6 +12,9 @@ public:
     virtual bool onEnd() = 0;
 
     std::function<QWidget *()> get_edit_dialog;
+    std::function<QString()> get_edit_text_name;
+    std::function<QString()> get_edit_text_serverAddress;
+    std::function<QString()> get_edit_text_serverPort;
 
     // cached editor
 

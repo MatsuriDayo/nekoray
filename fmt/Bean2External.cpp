@@ -20,7 +20,7 @@
     auto TempFile = QFileInfo(f).absoluteFilePath();
 
 namespace NekoRay::fmt {
-    // 0: no external
+    // 0: Internal
     // 1: Mapping External
     // 2: Direct External
 
@@ -85,13 +85,10 @@ namespace NekoRay::fmt {
 
         for (int i = 0; i < result.arguments.length(); i++) {
             auto arg = result.arguments[i];
-            if (arg.contains("%mapping_port%")) {
-                arg = arg.replace("%mapping_port%", Int2String(mapping_port));
-            } else if (arg.contains("%socks_port%")) {
-                arg = arg.replace("%socks_port%", Int2String(socks_port));
-            } else {
-                continue;
-            }
+            arg = arg.replace("%mapping_port%", Int2String(mapping_port));
+            arg = arg.replace("%socks_port%", Int2String(socks_port));
+            arg = arg.replace("%server_addr%", serverAddress);
+            arg = arg.replace("%server_port%", Int2String(serverPort));
             result.arguments[i] = arg;
         }
 

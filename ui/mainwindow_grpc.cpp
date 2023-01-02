@@ -100,15 +100,15 @@ void MainWindow::speedtest_current_group(int mode) {
                     req.set_url(NekoRay::dataStore->test_url.toStdString());
 
                     //
-                    QList<NekoRay::sys::ExternalProcess *> ext;
+                    std::list<std::pair<NekoRay::fmt::ExternalBuildResult, QSharedPointer<NekoRay::sys::ExternalProcess>>> exts;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
                         auto c = NekoRay::BuildConfig(profile, true, false);
-                        // external test ???
-                        if (!c->ext.isEmpty()) {
-                            ext = c->ext;
-                            for (auto extC: ext) {
-                                extC->Start();
+                        // TODO refactor external test
+                        if (!c->exts.empty()) {
+                            exts = c->exts;
+                            for (const auto &ext: exts) {
+                                ext.second->Start();
                             }
                             QThread::msleep(500);
                         }
@@ -128,9 +128,8 @@ void MainWindow::speedtest_current_group(int mode) {
 
                     bool rpcOK;
                     auto result = defaultClient->Test(&rpcOK, req);
-                    for (auto extC: ext) {
-                        extC->Kill();
-                        extC->deleteLater();
+                    for (const auto &ext: exts) {
+                        ext.second->Kill();
                     }
                     if (!rpcOK) return;
 
@@ -236,8 +235,9 @@ void MainWindow::neko_start(int _id) {
     NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
-    for (auto extC: result->ext) {
-        extC->Start();
+    for (const auto &ext: result->exts) {
+        NekoRay::sys::running_ext.push_back(ext.second);
+        ext.second->Start();
     }
 
     NekoRay::dataStore->UpdateStartedId(ent->id);
@@ -254,7 +254,6 @@ void MainWindow::neko_stop(bool crash) {
     while (!NekoRay::sys::running_ext.isEmpty()) {
         auto extC = NekoRay::sys::running_ext.takeFirst();
         extC->Kill();
-        extC->deleteLater();
     }
 
 #ifndef NKR_NO_GRPC

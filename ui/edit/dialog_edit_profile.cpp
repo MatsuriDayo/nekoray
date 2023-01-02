@@ -234,12 +234,11 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     delete old;
 
     // 左边 bean inner editor
-    innerEditor->get_edit_dialog = [&]() {
-        return (QWidget *) this;
-    };
-    innerEditor->editor_cache_updated = [=] {
-        editor_cache_updated_impl();
-    };
+    innerEditor->get_edit_dialog = [&]() { return (QWidget *) this; };
+    innerEditor->get_edit_text_name = [&]() { return ui->name->text(); };
+    innerEditor->get_edit_text_serverAddress = [&]() { return ui->address->text(); };
+    innerEditor->get_edit_text_serverPort = [&]() { return ui->port->text(); };
+    innerEditor->editor_cache_updated = [=] { editor_cache_updated_impl(); };
     innerEditor->onStart(ent);
 
     // 左边 common

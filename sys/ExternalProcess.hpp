@@ -12,10 +12,11 @@ namespace NekoRay::sys {
         QStringList arguments;
         QStringList env;
 
-        bool managed = true; // running_ext & stateChanged
+        bool managed = true; // MW_dialog_message
         bool show_log = true;
 
         ExternalProcess();
+        ~ExternalProcess();
 
         // start & kill is one time
 
@@ -41,6 +42,6 @@ namespace NekoRay::sys {
         int restart_id = -1;
     };
 
-    // start & kill change this list
-    inline QList<ExternalProcess *> running_ext;
+    // 手动管理
+    inline QList<QSharedPointer<ExternalProcess>> running_ext;
 } // namespace NekoRay::sys

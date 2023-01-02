@@ -602,10 +602,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generator</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Please read the documentation. If you don&apos;t understand, use a share link instead.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -616,6 +612,22 @@
     <message>
         <source>Please pick a core.</source>
         <translation>لطفا یک هسته انتخاب کنید.</translation>
+    </message>
+    <message>
+        <source>Random if it&apos;s empty or zero.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview replace</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preview config</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

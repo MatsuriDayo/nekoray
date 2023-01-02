@@ -7,129 +7,136 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>400</height>
+    <height>450</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string notr="true">EditCustom</string>
   </property>
-  <layout class="QHBoxLayout" name="layout">
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
-       <item>
-        <widget class="QLabel" name="core_l">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Core</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="core">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="as_json">
-         <property name="text">
-          <string>Json Editor</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QLabel" name="core_l">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Core</string>
+       </property>
+      </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QLabel" name="command_l">
-         <property name="text">
-          <string>Command</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="command">
-         <property name="placeholderText">
-          <string notr="true">%config%</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="config_suffix_l">
-         <property name="text">
-          <string>Config Suffix</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="config_suffix">
-         <property name="editable">
-          <bool>true</bool>
-         </property>
-         <item>
-          <property name="text">
-           <string notr="true"/>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">json</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-      </layout>
+      <widget class="QComboBox" name="core">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+      </widget>
      </item>
      <item>
-      <widget class="QTextEdit" name="config_simple">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>300</height>
-        </size>
+      <widget class="QPushButton" name="as_json">
+       <property name="text">
+        <string>Json Editor</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
    <item>
-    <widget class="QGroupBox" name="generator">
-     <property name="title">
-      <string>Generator</string>
-     </property>
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <property name="leftMargin">
-       <number>0</number>
-      </property>
-      <property name="topMargin">
-       <number>0</number>
-      </property>
-      <property name="rightMargin">
-       <number>0</number>
-      </property>
-      <property name="bottomMargin">
-       <number>0</number>
-      </property>
-      <item>
-       <widget class="QWidget" name="fake" native="true">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QLabel" name="command_l">
+       <property name="text">
+        <string>Command</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="command">
+       <property name="placeholderText">
+        <string notr="true">%config%</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="config_suffix_l">
+       <property name="text">
+        <string>Config Suffix</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QComboBox" name="config_suffix">
+       <property name="editable">
+        <bool>true</bool>
+       </property>
+       <item>
+        <property name="text">
+         <string notr="true"/>
         </property>
-       </widget>
-      </item>
-     </layout>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">json</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">yml</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="toolTip">
+        <string>Random if it's empty or zero.</string>
+       </property>
+       <property name="text">
+        <string notr="true">Mapping Port</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="mapping_port"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="toolTip">
+        <string>Random if it's empty or zero.</string>
+       </property>
+       <property name="text">
+        <string notr="true">Socks Port</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="socks_port"/>
+     </item>
+     <item>
+      <widget class="QPushButton" name="preview">
+       <property name="text">
+        <string>Preview</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <widget class="QTextEdit" name="config_simple">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>300</height>
+      </size>
+     </property>
     </widget>
    </item>
   </layout>
@@ -138,6 +145,11 @@
   <tabstop>core</tabstop>
   <tabstop>as_json</tabstop>
   <tabstop>command</tabstop>
+  <tabstop>config_suffix</tabstop>
+  <tabstop>mapping_port</tabstop>
+  <tabstop>socks_port</tabstop>
+  <tabstop>preview</tabstop>
+  <tabstop>config_simple</tabstop>
  </tabstops>
  <resources/>
  <connections/>

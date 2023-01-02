@@ -449,8 +449,28 @@ namespace NekoRay {
             }
 
             // chain rules: this
-            auto mapping_port = MkPort();
+            auto ext_mapping_port = 0;
+            auto ext_socks_port = 0;
             auto thisExternalStat = ent->bean->NeedExternal(isFirstProfile, dataStore->running_spmode == SystemProxyMode::VPN);
+            // determine port
+            if (thisExternalStat > 0) {
+                if (ent->type == "custom") {
+                    auto bean = ent->CustomBean();
+                    if (InRange(bean->mapping_port, 0, 65535)) {
+                        ext_mapping_port = bean->mapping_port;
+                    } else {
+                        ext_mapping_port = MkPort();
+                    }
+                    if (InRange(bean->socks_port, 0, 65535)) {
+                        ext_socks_port = bean->socks_port;
+                    } else {
+                        ext_socks_port = MkPort();
+                    }
+                } else {
+                    ext_mapping_port = MkPort();
+                    ext_socks_port = MkPort();
+                }
+            }
             if (thisExternalStat == 2) dataStore->need_keep_vpn_off = true;
             if (thisExternalStat == 1) {
                 // mapping
@@ -459,7 +479,7 @@ namespace NekoRay {
                         {"type", "direct"},
                         {"tag", tagOut + "-mapping"},
                         {"listen", "127.0.0.1"},
-                        {"listen_port", mapping_port},
+                        {"listen_port", ext_mapping_port},
                         {"override_address", ent->bean->serverAddress},
                         {"override_port", ent->bean->serverPort},
                     };
@@ -468,7 +488,7 @@ namespace NekoRay {
                         {"protocol", "dokodemo-door"},
                         {"tag", tagOut + "-mapping"},
                         {"listen", "127.0.0.1"},
-                        {"port", mapping_port},
+                        {"port", ext_mapping_port},
                         {"settings", QJsonObject{
                                          // to
                                          {"address", ent->bean->serverAddress},
@@ -497,12 +517,9 @@ namespace NekoRay {
             // Outbound
 
             QJsonObject outbound;
-            fmt::CoreObjOutboundBuildResult coreR;
-            fmt::ExternalBuildResult extR;
 
             if (thisExternalStat > 0) {
-                auto ext_socks_port = MkPort();
-                extR = ent->bean->BuildExternal(mapping_port, ext_socks_port, thisExternalStat);
+                const auto extR = ent->bean->BuildExternal(ext_mapping_port, ext_socks_port, thisExternalStat);
                 if (extR.program.isEmpty()) {
                     status->result->error = QObject::tr("Core not found: %1").arg(ent->bean->DisplayType());
                     return {};
@@ -530,14 +547,14 @@ namespace NekoRay {
                 }
 
                 // EXTERNAL PROCESS
-                auto extC = new sys::ExternalProcess();
+                QSharedPointer<sys::ExternalProcess> extC(new sys::ExternalProcess());
                 extC->tag = ent->bean->DisplayType();
                 extC->program = extR.program;
                 extC->arguments = extR.arguments;
                 extC->env = extR.env;
-                status->result->ext += extC;
+                status->result->exts.emplace_back(extR, extC);
             } else {
-                coreR = IS_NEKO_BOX ? ent->bean->BuildCoreObjSingBox() : ent->bean->BuildCoreObjV2Ray();
+                const auto coreR = IS_NEKO_BOX ? ent->bean->BuildCoreObjSingBox() : ent->bean->BuildCoreObjV2Ray();
                 if (coreR.outbound.isEmpty()) {
                     status->result->error = "unsupported outbound";
                     return {};
