@@ -7,6 +7,7 @@ git clone https://github.com/MatsuriDayo/nekoray.git --recursive
 ```
 
 ## 先决条件
+
 1. 安装 `CMake` `Ninja` `npm`
 2. 安装 Qt `5.15.x` 编译环境，并设置好有关环境变量，以免 CMake 找不到 Qt。 (`qtbase` `qtsvg` `qttools`)
 3. 安装 `appdmg` (`sudo npm install -g appdmg`)
@@ -58,6 +59,7 @@ curl -Lso build/nekoray.app/Contents/MacOS/geosite.db "https://github.com/SagerN
 如果打包时没有包含geo文件，可在应用内设置 `v2ray资源路径` 代替。
 
 ### 在nekoray目录下打包
+
 ```shell
 appdmg appdmg.json /path/to/nekoray.dmg
 ```

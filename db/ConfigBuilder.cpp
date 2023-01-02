@@ -290,10 +290,9 @@ namespace NekoRay {
         dnsServers += QJsonObject{
             {"address", directDnsAddress},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
-            {"skipFallback", true},
         };
 
-        dns["disableFallbackIfMatch"] = true;
+        dns["fallbackStrategy"] = "disabled_if_any_match";
         dns["servers"] = dnsServers;
         dns["tag"] = "dns";
         status->result->coreConfig.insert("dns", dns);

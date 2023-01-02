@@ -1,6 +1,0 @@
-依赖
-libs/deps/*
-libs/deps/windows-x64 (vcpkg)
-libs/deps/built (prefix)
-
-全部在项目根目录运行

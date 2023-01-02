@@ -47,6 +47,7 @@ namespace NekoRay::fmt {
         }
 
         if (security == "tls") {
+            bool v5_utls = !utlsFingerprint.isEmpty();
             QJsonObject tls;
             if (allow_insecure || dataStore->skip_cert) tls["allowInsecure"] = true;
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
@@ -54,16 +55,24 @@ namespace NekoRay::fmt {
                 tls["disableSystemRoot"] = true;
                 tls["certificates"] = QJsonArray{
                     QJsonObject{
-                        {"usage", "verify"},
+                        {"usage", v5_utls ? "ENCIPHERMENT" : "verify"},
                         {"certificate", QList2QJsonArray(SplitLines(certificate.trimmed()))},
                     },
                 };
             }
             if (!alpn.trimmed().isEmpty()) {
-                tls["alpn"] = QList2QJsonArray(alpn.split(","));
+                tls[v5_utls ? "nextProtocol" : "alpn"] = QList2QJsonArray(alpn.split(","));
             }
-            streamSettings["tlsSettings"] = tls;
-            streamSettings["security"] = "tls";
+            if (v5_utls) {
+                streamSettings["utlsSettings"] = QJsonObject{
+                    {"imitate", utlsFingerprint},
+                    {"tlsConfig", tls},
+                };
+                streamSettings["security"] = "utls";
+            } else {
+                streamSettings["tlsSettings"] = tls;
+                streamSettings["security"] = "tls";
+            }
         }
 
         return streamSettings;

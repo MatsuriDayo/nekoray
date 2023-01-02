@@ -447,69 +447,16 @@ security (QUIC)</string>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="toolTip">
-              <string notr="true">Currently only supported in sing-box core.</string>
-             </property>
              <property name="text">
               <string notr="true">uTLS</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QComboBox" name="utls">
+            <widget class="QComboBox" name="utlsFingerprint">
              <property name="editable">
               <bool>true</bool>
              </property>
-             <item>
-              <property name="text">
-               <string notr="true"/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">chrome</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">firefox</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">edge</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">safari</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">360</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">qq</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">ios</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">android</string>
-              </property>
-             </item>
-             <item>
-              <property name="text">
-               <string notr="true">random</string>
-              </property>
-             </item>
             </widget>
            </item>
           </layout>
@@ -591,7 +538,7 @@ security (QUIC)</string>
   <tabstop>ws_early_data_length</tabstop>
   <tabstop>ws_early_data_name</tabstop>
   <tabstop>insecure</tabstop>
-  <tabstop>utls</tabstop>
+  <tabstop>utlsFingerprint</tabstop>
   <tabstop>sni</tabstop>
   <tabstop>alpn</tabstop>
   <tabstop>certificate_edit</tabstop>

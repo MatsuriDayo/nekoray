@@ -34,10 +34,10 @@ namespace NekoRay::fmt {
             if (!alpn.trimmed().isEmpty()) {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
-            if (!utls.isEmpty()) {
+            if (!utlsFingerprint.isEmpty()) {
                 tls["utls"] = QJsonObject{
                     {"enabled", true},
-                    {"fingerprint", utls},
+                    {"fingerprint", utlsFingerprint},
                 };
             }
             outbound->insert("tls", tls);
