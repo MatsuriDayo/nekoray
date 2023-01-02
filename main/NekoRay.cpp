@@ -109,7 +109,7 @@ namespace NekoRay {
         _add(new configItem("custom", &this->custom, itemType::string));
     }
 
-    QString Routing::toString() const {
+    QString Routing::DisplayRouting() const {
         return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6")
             .arg(SplitLines(proxy_domain).join(","))
             .arg(SplitLines(proxy_ip).join(","))
@@ -219,9 +219,6 @@ namespace NekoRay {
     void JsonStore::FromJson(QJsonObject object) {
         for (const auto &key: object.keys()) {
             if (_map.count(key) == 0) {
-                if (debug_verbose) {
-                    qDebug() << QString("unknown key\n%1\n%2").arg(key, QJsonObject2QString(object, false));
-                }
                 continue;
             }
 
@@ -273,16 +270,12 @@ namespace NekoRay {
                     if (value.type() != QJsonValue::Object) {
                         continue;
                     }
-                    if (load_control_no_jsonStore)
-                        continue;
                     ((JsonStore *) item->ptr)->FromJson(value.toObject());
                     break;
             }
         }
 
-        for (const auto &hook: _hooks_after_load) {
-            hook();
-        }
+        if (callback_after_load != nullptr) callback_after_load();
     }
 
     void JsonStore::FromJsonBytes(const QByteArray &data) {
@@ -290,7 +283,7 @@ namespace NekoRay {
         auto document = QJsonDocument::fromJson(data, &error);
 
         if (error.error != error.NoError) {
-            if (debug_verbose) qDebug() << "QJsonParseError" << error.errorString();
+            qDebug() << "QJsonParseError" << error.errorString();
             return;
         }
 
@@ -298,9 +291,7 @@ namespace NekoRay {
     }
 
     bool JsonStore::Save() {
-        for (const auto &hook: _hooks_before_save) {
-            hook();
-        }
+        if (callback_before_save != nullptr) callback_before_save();
 
         auto save_content = ToJsonBytes();
         auto changed = last_save_content != save_content;
@@ -319,8 +310,9 @@ namespace NekoRay {
         QFile file;
         file.setFileName(fn);
 
-        if (!file.exists() && !load_control_force)
+        if (!file.exists() && !load_control_must) {
             return false;
+        }
 
         bool ok = file.open(QIODevice::ReadOnly);
         if (!ok) {

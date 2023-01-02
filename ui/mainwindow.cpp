@@ -290,10 +290,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         auto fn = a->text();
         if (!fn.isEmpty()) {
             NekoRay::Routing r;
-            r.load_control_force = true;
+            r.load_control_must = true;
             r.fn = ROUTES_PREFIX + fn;
             if (r.Load()) {
-                if (QMessageBox::question(GetMessageBoxParent(), software_name, tr("Load routing and apply: %1").arg(fn) + "\n" + r.toString()) == QMessageBox::Yes) {
+                if (QMessageBox::question(GetMessageBoxParent(), software_name, tr("Load routing and apply: %1").arg(fn) + "\n" + r.DisplayRouting()) == QMessageBox::Yes) {
                     NekoRay::Routing::SetToActive(fn);
                     if (NekoRay::dataStore->started_id >= 0) {
                         neko_start(NekoRay::dataStore->started_id);
@@ -965,7 +965,8 @@ void MainWindow::on_menu_profile_debug_info_triggered() {
     if (btn == 1) {
         QDesktopServices::openUrl(QUrl::fromLocalFile(QFileInfo(QString("profiles/%1.json").arg(ents.first()->id)).absoluteFilePath()));
     } else if (btn == 2) {
-        ents.first()->Load();
+        NekoRay::dataStore->Load();
+        NekoRay::profileManager->Load();
         refresh_proxy_list();
     }
 }

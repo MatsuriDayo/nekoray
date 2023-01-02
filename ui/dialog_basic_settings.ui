@@ -414,8 +414,8 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_2">
-           <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <widget class="QGroupBox" name="horizontalGroupBox_5">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
              <widget class="QCheckBox" name="start_minimal">
               <property name="sizePolicy">

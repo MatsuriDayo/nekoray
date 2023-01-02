@@ -10,19 +10,21 @@ namespace NekoRay {
     ProfileManager *profileManager = new ProfileManager();
 
     ProfileManager::ProfileManager() : JsonStore("groups/pm.json") {
-        _hooks_after_load.push_back([=]() { LoadManager(); });
-        _hooks_before_save.push_back([=]() { SaveManager(); });
+        callback_after_load = [this]() { LoadManager(); };
+        callback_before_save = [this]() { SaveManager(); };
         _add(new configItem("profiles", &_profiles, itemType::integerList));
         _add(new configItem("groups", &_groups, itemType::integerList));
     }
 
     void ProfileManager::LoadManager() {
-        QList<int> invaild_profile_id;
+        profiles = {};
+        groups = {};
+        QList<int> invalidProfileId;
         for (auto id: _profiles) {
             auto ent = LoadProxyEntity(QString("profiles/%1.json").arg(id));
             if (ent == nullptr || ent->bean == nullptr || ent->bean->version == -114514) {
-                // clear invaild profile
-                invaild_profile_id << id;
+                // clear invalid profile
+                invalidProfileId << id;
                 continue;
             }
             profiles[id] = ent;
@@ -30,7 +32,7 @@ namespace NekoRay {
         for (auto id: _groups) {
             groups[id] = LoadGroup(QString("groups/%1.json").arg(id));
         }
-        for (auto id: invaild_profile_id) {
+        for (auto id: invalidProfileId) {
             DeleteProfile(id);
         }
     }
@@ -55,8 +57,7 @@ namespace NekoRay {
         }
 
         if (validType) {
-            // 加载前设置好 fn
-            ent->load_control_force = true;
+            ent->load_control_must = true;
             ent->fn = jsonPath;
             ent->Load();
         }
@@ -101,8 +102,9 @@ namespace NekoRay {
 
     // ProxyEntity
 
-    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, QString _type) {
-        type = std::move(_type);
+    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, const QString &type_) {
+        if (type_ != nullptr) this->type = type_;
+
         _add(new configItem("type", &type, itemType::string));
         _add(new configItem("id", &id, itemType::integer));
         _add(new configItem("gid", &gid, itemType::integer));

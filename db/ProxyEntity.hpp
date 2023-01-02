@@ -34,7 +34,7 @@ namespace NekoRay {
         // Cache
         QString full_test_report;
 
-        ProxyEntity(fmt::AbstractBean *bean, QString _type);
+        ProxyEntity(fmt::AbstractBean *bean, const QString &type_);
 
         [[nodiscard]] QString DisplayLatency() const;
 

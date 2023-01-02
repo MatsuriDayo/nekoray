@@ -2,8 +2,6 @@
 
 namespace NekoRay {
 
-    QString FindCoreAsset(const QString &name);
-
     class Routing : public JsonStore {
     public:
         QString direct_ip;
@@ -16,7 +14,7 @@ namespace NekoRay {
 
         explicit Routing(int preset = 0);
 
-        [[nodiscard]] QString toString() const;
+        [[nodiscard]] QString DisplayRouting() const;
 
         static QStringList List();
 
@@ -134,6 +132,8 @@ namespace NekoRay {
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
 
+        // Methods
+
         DataStore();
 
         void UpdateStartedId(int id);
@@ -141,10 +141,4 @@ namespace NekoRay {
 
     extern DataStore *dataStore;
 
-    inline int coreType = NekoRay::CoreType::V2RAY;
-
 } // namespace NekoRay
-
-#define IS_NEKO_BOX (NekoRay::coreType == NekoRay::CoreType::SING_BOX)
-#define ROUTES_PREFIX_NAME QString(IS_NEKO_BOX ? "routes_box" : "routes")
-#define ROUTES_PREFIX QString(ROUTES_PREFIX_NAME + "/")

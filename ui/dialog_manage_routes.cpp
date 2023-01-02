@@ -167,10 +167,10 @@ void DialogManageRoutes::on_load_save_clicked() {
         auto fn = lineEdit->text();
         if (!fn.isEmpty()) {
             auto r = std::make_unique<NekoRay::Routing>();
-            r->load_control_force = true;
+            r->load_control_must = true;
             r->fn = ROUTES_PREFIX + fn;
             if (r->Load()) {
-                if (QMessageBox::question(nullptr, software_name, tr("Load routing: %1").arg(fn) + "\n" + r->toString()) == QMessageBox::Yes) {
+                if (QMessageBox::question(nullptr, software_name, tr("Load routing: %1").arg(fn) + "\n" + r->DisplayRouting()) == QMessageBox::Yes) {
                     REFRESH_ACTIVE_ROUTING(fn, r)
                     w->accept();
                 }
@@ -183,7 +183,7 @@ void DialogManageRoutes::on_load_save_clicked() {
             auto r = std::make_unique<NekoRay::Routing>();
             SAVE_TO_ROUTING(r)
             r->fn = ROUTES_PREFIX + fn;
-            if (QMessageBox::question(nullptr, software_name, tr("Save routing: %1").arg(fn) + "\n" + r->toString()) == QMessageBox::Yes) {
+            if (QMessageBox::question(nullptr, software_name, tr("Save routing: %1").arg(fn) + "\n" + r->DisplayRouting()) == QMessageBox::Yes) {
                 r->Save();
                 REFRESH_ACTIVE_ROUTING(fn, r)
                 w->accept();

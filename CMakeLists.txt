@@ -34,14 +34,15 @@ include("cmake/fuck_windows/fuck.cmake")
 
 #### default prefix path ####
 
-if (NKR_PACKAGE)
-    list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/package)
-else ()
-    list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/built)
+if (NOT NKR_LIBS)
+    if (NKR_PACKAGE)
+        list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/package)
+    else ()
+        list(APPEND NKR_LIBS ${CMAKE_SOURCE_DIR}/libs/deps/built)
+    endif ()
 endif ()
 
-if (NKR_DISABLE_LIBS)
-else ()
+if (NOT NKR_DISABLE_LIBS)
     list(APPEND CMAKE_PREFIX_PATH ${NKR_LIBS})
 endif ()
 

@@ -7,6 +7,7 @@
 namespace NekoRay {
     class ProfileManager : public JsonStore {
     public:
+        // Manager
         QMap<int, QSharedPointer<ProxyEntity>> profiles;
         QMap<int, QSharedPointer<Group>> groups;
 

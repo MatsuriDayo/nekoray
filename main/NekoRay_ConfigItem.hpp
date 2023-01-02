@@ -29,12 +29,12 @@ namespace NekoRay {
     class JsonStore {
     public:
         QMap<QString, QSharedPointer<configItem>> _map;
-        QList<std::function<void()>> _hooks_after_load;
-        QList<std::function<void()>> _hooks_before_save;
+
+        std::function<void()> callback_after_load = nullptr;
+        std::function<void()> callback_before_save = nullptr;
+
         QString fn;
-        bool debug_verbose = false;
-        bool load_control_force = false;
-        bool load_control_no_jsonStore = false; //不加载 json object
+        bool load_control_must = false; // must load from file
         bool save_control_compact = false;
         QByteArray last_save_content;
 
