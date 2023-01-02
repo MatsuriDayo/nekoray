@@ -213,6 +213,10 @@
         <source>Please select a valid square image.</source>
         <translation>لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
     </message>
+    <message>
+        <source>Max log lines</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

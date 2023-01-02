@@ -1295,11 +1295,10 @@ void MainWindow::show_log_impl(const QString &log) {
     FastAppendTextDocument(newLines.join("\n"), qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);
     // From https://gist.github.com/jemyzhang/7130092
-    auto maxLines = 200;
     auto block = qvLogDocument->begin();
 
     while (block.isValid()) {
-        if (qvLogDocument->blockCount() > maxLines) {
+        if (qvLogDocument->blockCount() > NekoRay::dataStore->max_log_line) {
             QTextCursor cursor(block);
             block = block.next();
             cursor.select(QTextCursor::BlockUnderCursor);

@@ -101,6 +101,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_BOOL(check_include_pre)
     D_LOAD_BOOL(connection_statistics)
     D_LOAD_BOOL(start_minimal)
+    D_LOAD_INT(max_log_line)
     //
     if (NekoRay::dataStore->traffic_loop_interval == 500) {
         ui->rfsh_r->setCurrentIndex(0);
@@ -256,6 +257,11 @@ void DialogBasicSettings::accept() {
     D_SAVE_BOOL(connection_statistics)
     D_SAVE_BOOL(check_include_pre)
     D_SAVE_BOOL(start_minimal)
+    D_SAVE_INT(max_log_line)
+
+    if (NekoRay::dataStore->max_log_line <= 0) {
+        NekoRay::dataStore->max_log_line = 200;
+    }
 
     if (ui->rfsh_r->currentIndex() == 0) {
         NekoRay::dataStore->traffic_loop_interval = 500;

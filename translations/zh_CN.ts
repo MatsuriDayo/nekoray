@@ -211,6 +211,10 @@
         <source>Hide dashboard at startup</source>
         <translation>启动时不显示仪表盘</translation>
     </message>
+    <message>
+        <source>Max log lines</source>
+        <translation>日志最大行数限制</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
