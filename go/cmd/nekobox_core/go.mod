@@ -5,12 +5,12 @@ go 1.19
 require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/gofrs/uuid v4.3.1+incompatible
-	github.com/sagernet/sing v0.1.0
-	github.com/sagernet/sing-box v1.1.1
-	github.com/sagernet/sing-dns v0.1.0
-	github.com/sagernet/sing-tun v0.1.1-0.20221128044455-b22d9eb41b74
+	github.com/sagernet/sing v0.1.2
+	github.com/sagernet/sing-box v1.1.2
+	github.com/sagernet/sing-dns v0.1.1
+	github.com/sagernet/sing-tun v0.1.1
 	github.com/spf13/cobra v1.6.1
-	golang.org/x/sys v0.2.1-0.20221110211117-d684c6f88669
+	golang.org/x/sys v0.3.0
 	neko v1.0.0
 )
 
@@ -24,7 +24,7 @@ require (
 	github.com/cretz/bine v0.2.0 // indirect
 	github.com/database64128/tfo-go/v2 v2.0.2 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
-	github.com/go-chi/chi/v5 v5.0.7 // indirect
+	github.com/go-chi/chi/v5 v5.0.8 // indirect
 	github.com/go-chi/cors v1.2.1 // indirect
 	github.com/go-chi/render v1.0.2 // indirect
 	github.com/go-task/slim-sprig v0.0.0-20210107165309-348f09dbbbc0 // indirect
@@ -48,13 +48,12 @@ require (
 	github.com/oschwald/maxminddb-golang v1.10.0 // indirect
 	github.com/pires/go-proxyproto v0.6.2 // indirect
 	github.com/refraction-networking/utls v1.2.0 // indirect
-	github.com/sagernet/abx-go v0.0.0-20220819185957-dba1257d738e // indirect
 	github.com/sagernet/cloudflare-tls v0.0.0-20221031050923-d70792f4c3a0 // indirect
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20221206044826-d15273f58d82 // indirect
 	github.com/sagernet/sing-shadowsocks v0.1.0 // indirect
-	github.com/sagernet/sing-vmess v0.1.1-0.20221206050106-bcacd436d74c // indirect
+	github.com/sagernet/sing-vmess v0.1.1 // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
@@ -63,13 +62,13 @@ require (
 	go.etcd.io/bbolt v1.3.6 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
-	go.uber.org/zap v1.23.0 // indirect
+	go.uber.org/zap v1.24.0 // indirect
 	go4.org/netipx v0.0.0-20220925034521-797b0c90d8ab // indirect
-	golang.org/x/crypto v0.3.1-0.20221117191849-2c476679df9a // indirect
-	golang.org/x/exp v0.0.0-20221028150844-83b7d23a625f // indirect
+	golang.org/x/crypto v0.4.0 // indirect
+	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15 // indirect
 	golang.org/x/mod v0.6.0 // indirect
-	golang.org/x/net v0.2.1-0.20221117215542-ecf7fda6a59e // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/net v0.4.0 // indirect
+	golang.org/x/text v0.5.0 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	golang.org/x/tools v0.2.0 // indirect
 	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
