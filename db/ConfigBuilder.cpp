@@ -193,27 +193,7 @@ namespace NekoRay {
             {"tag", "block"},
         };
 
-        // block for tun
-        if (!status->forTest) {
-            status->routingRules += QJsonObject{
-                {"type", "field"},
-                {
-                    "ip",
-                    QJsonArray{
-                        "224.0.0.0/3",
-                        "169.254.0.0/16",
-                    },
-                },
-                {"outboundTag", "block"},
-            };
-            status->routingRules += QJsonObject{
-                {"type", "field"},
-                {"port", "135-139"},
-                {"outboundTag", "block"},
-            };
-        }
-
-        // DNS Routing (tun2socks 用到，防污染)
+        // DNS Routing
         if (dataStore->dns_routing && !status->forTest) {
             QJsonObject dnsOut;
             dnsOut["protocol"] = "dns";
@@ -234,11 +214,6 @@ namespace NekoRay {
                 {"inboundTag", QJsonArray{"socks-in", "http-in"}},
                 {"outboundTag", "dns-out"},
             };
-            // status->routingRules += QJsonObject{
-            //     {"type", "field"},
-            //     {"inboundTag", QJsonArray{"dns-in"}},
-            //     {"outboundTag", "dns-out"},
-            // };
         }
 
         // custom inbound
@@ -700,8 +675,8 @@ namespace NekoRay {
             //
             QJsonArray domain_keyword;
             QJsonArray domain_subdomain;
+            QJsonArray domain_regexp;
             QJsonArray domain_full;
-            QJsonArray domain_suffix;
             QJsonArray geosite;
             for (auto item: list) {
                 if (isIP) {
@@ -711,14 +686,19 @@ namespace NekoRay {
                         ip_cidr += item;
                     }
                 } else {
+                    // https://www.v2fly.org/config/dns.html#dnsobject
                     if (item.startsWith("geosite:")) {
                         geosite += item.replace("geosite:", "");
                     } else if (item.startsWith("full:")) {
                         domain_full += item.replace("full:", "");
                     } else if (item.startsWith("domain:")) {
-                        domain_suffix += item.replace("domain:", "");
+                        domain_subdomain += item.replace("domain:", "");
+                    } else if (item.startsWith("regexp:")) {
+                        domain_regexp += item.replace("regexp:", "");
+                    } else if (item.startsWith("keyword:")) {
+                        domain_keyword += item.replace("keyword:", "");
                     } else {
-                        domain_keyword += item;
+                        domain_full += item;
                     }
                 }
             }
@@ -727,12 +707,13 @@ namespace NekoRay {
                 rule["ip_cidr"] = ip_cidr;
                 rule["geoip"] = geoip;
             } else {
-                if (domain_keyword.isEmpty() && domain_subdomain.isEmpty() && domain_full.isEmpty() && geosite.isEmpty()) {
+                if (domain_keyword.isEmpty() && domain_subdomain.isEmpty() && domain_regexp.isEmpty() && domain_full.isEmpty() && geosite.isEmpty()) {
                     return rule;
                 }
                 rule["domain"] = domain_full;
-                rule["domain_suffix"] = domain_suffix;
+                rule["domain_suffix"] = domain_subdomain; // v2ray Subdomain => sing-box suffix
                 rule["domain_keyword"] = domain_keyword;
+                rule["domain_regex"] = domain_regexp;
                 rule["geosite"] = geosite;
             }
             return rule;
