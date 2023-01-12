@@ -43,6 +43,8 @@ QString QStringList2Command(const QStringList &list);
 
 QStringList SplitLines(const QString &_string);
 
+QStringList SplitLinesSkipSharp(const QString &_string);
+
 // Base64
 
 QString DecodeB64IfValid(const QString &input, QByteArray::Base64Options options = QByteArray::Base64Option::Base64Encoding);
@@ -120,30 +122,14 @@ int MkPort();
 
 QString DisplayTime(long long time, int formatType = 0);
 
-inline QString ReadableSize(const qint64 &size) {
-    double sizeAsDouble = size;
-    static QStringList measures;
-    if (measures.isEmpty())
-        measures << "B"
-                 << "KiB"
-                 << "MiB"
-                 << "GiB"
-                 << "TiB"
-                 << "PiB"
-                 << "EiB"
-                 << "ZiB"
-                 << "YiB";
-    QStringListIterator it(measures);
-    QString measure(it.next());
-    while (sizeAsDouble >= 1024.0 && it.hasNext()) {
-        measure = it.next();
-        sizeAsDouble /= 1024.0;
-    }
-    return QString::fromLatin1("%1 %2").arg(sizeAsDouble, 0, 'f', 2).arg(measure);
-}
+QString ReadableSize(const qint64 &size);
 
 inline bool InRange(unsigned x, unsigned low, unsigned high) {
     return (low <= x && x <= high);
+}
+
+inline bool IsValidPort(int port) {
+    return InRange(port, 1, 65535);
 }
 
 // UI

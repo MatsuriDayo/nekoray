@@ -1,10 +1,9 @@
-#include "qv2ray/v2/utils/HTTPRequestHelper.hpp"
-
 #include "db/Database.hpp"
 #include "db/ProfileFilter.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
 #include "main/QJS.hpp"
+#include "main/HTTPRequestHelper.hpp"
 
 #include "GroupUpdater.hpp"
 

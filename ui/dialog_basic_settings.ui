@@ -45,6 +45,13 @@
             <item>
              <widget class="QLineEdit" name="socks_ip"/>
             </item>
+            <item>
+             <widget class="QPushButton" name="inbound_auth">
+              <property name="text">
+               <string notr="true">Auth</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>
@@ -196,6 +203,13 @@
            <widget class="QCheckBox" name="check_include_pre">
             <property name="text">
              <string>Include Pre-release when checking update</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="Line" name="sys_proxy_format_vline">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
             </property>
            </widget>
           </item>

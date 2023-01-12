@@ -135,6 +135,7 @@ set(PROJECT_SOURCES
         main/NekoRay.cpp
         main/NekoRay_Utils.cpp
         main/QJS.cpp
+        main/HTTPRequestHelper.cpp
 
         3rdparty/base64.cpp
         3rdparty/qrcodegen.cpp
@@ -142,7 +143,6 @@ set(PROJECT_SOURCES
 
         qv2ray/v2/ui/LogHighlighter.cpp
         qv2ray/v2/ui/QvAutoCompleteTextEdit.cpp
-        qv2ray/v2/utils/HTTPRequestHelper.cpp
         qv2ray/v2/components/proxy/QvProxyConfigurator.cpp
         qv2ray/v2/ui/widgets/common/QJsonModel.cpp
         qv2ray/v2/ui/widgets/editors/w_JsonEditor.cpp
@@ -174,7 +174,7 @@ set(PROJECT_SOURCES
         sys/AutoRun.cpp
 
         ui/ThemeManager.cpp
-        ui/TrayIcon.cpp
+        ui/Icon.cpp
 
         ui/mainwindow_grpc.cpp
         ui/mainwindow.cpp

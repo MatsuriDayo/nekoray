@@ -100,34 +100,28 @@ namespace NekoRay {
         }
     }
 
-#define DOMAIN_USER_RULE                                                    \
-    for (const auto &line: SplitLines(dataStore->routing->proxy_domain)) {  \
-        if (line.startsWith("#")) continue;                                 \
-        if (dataStore->dns_routing) status->domainListDNSRemote += line;    \
-        status->domainListRemote += line;                                   \
-    }                                                                       \
-    for (const auto &line: SplitLines(dataStore->routing->direct_domain)) { \
-        if (line.startsWith("#")) continue;                                 \
-        if (dataStore->dns_routing) status->domainListDNSDirect += line;    \
-        status->domainListDirect += line;                                   \
-    }                                                                       \
-    for (const auto &line: SplitLines(dataStore->routing->block_domain)) {  \
-        if (line.startsWith("#")) continue;                                 \
-        status->domainListBlock += line;                                    \
+#define DOMAIN_USER_RULE                                                             \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->proxy_domain)) {  \
+        if (dataStore->dns_routing) status->domainListDNSRemote += line;             \
+        status->domainListRemote += line;                                            \
+    }                                                                                \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->direct_domain)) { \
+        if (dataStore->dns_routing) status->domainListDNSDirect += line;             \
+        status->domainListDirect += line;                                            \
+    }                                                                                \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->block_domain)) {  \
+        status->domainListBlock += line;                                             \
     }
 
-#define IP_USER_RULE                                                    \
-    for (const auto &line: SplitLines(dataStore->routing->block_ip)) {  \
-        if (line.startsWith("#")) continue;                             \
-        status->ipListBlock += line;                                    \
-    }                                                                   \
-    for (const auto &line: SplitLines(dataStore->routing->proxy_ip)) {  \
-        if (line.startsWith("#")) continue;                             \
-        status->ipListRemote += line;                                   \
-    }                                                                   \
-    for (const auto &line: SplitLines(dataStore->routing->direct_ip)) { \
-        if (line.startsWith("#")) continue;                             \
-        status->ipListDirect += line;                                   \
+#define IP_USER_RULE                                                             \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->block_ip)) {  \
+        status->ipListBlock += line;                                             \
+    }                                                                            \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->proxy_ip)) {  \
+        status->ipListRemote += line;                                            \
+    }                                                                            \
+    for (const auto &line: SplitLinesSkipSharp(dataStore->routing->direct_ip)) { \
+        status->ipListDirect += line;                                            \
     }
 
     // V2Ray
@@ -147,32 +141,49 @@ namespace NekoRay {
         };
 
         // socks-in
-        if (InRange(dataStore->inbound_socks_port, 1, 65535) && !status->forTest) {
-            QJsonObject socksInbound;
-            socksInbound["tag"] = "socks-in";
-            socksInbound["protocol"] = "socks";
-            socksInbound["listen"] = dataStore->inbound_address;
-            socksInbound["port"] = dataStore->inbound_socks_port;
-            socksInbound["settings"] = QJsonObject{
-                {"auth", "noauth"},
-                {"udp", true},
-            };
+        if (IsValidPort(dataStore->inbound_socks_port) && !status->forTest) {
+            QJsonObject inboundObj;
+            inboundObj["tag"] = "socks-in";
+            inboundObj["protocol"] = "socks";
+            inboundObj["listen"] = dataStore->inbound_address;
+            inboundObj["port"] = dataStore->inbound_socks_port;
+            QJsonObject socksSettings = {{"udp", true}};
             if (dataStore->fake_dns || dataStore->sniffing_mode != SniffingMode::DISABLE) {
-                socksInbound["sniffing"] = sniffing;
+                inboundObj["sniffing"] = sniffing;
             }
-            status->inbounds += socksInbound;
+            if (dataStore->inbound_auth->NeedAuth()) {
+                socksSettings["auth"] = "password";
+                socksSettings["accounts"] = QJsonArray{
+                    QJsonObject{
+                        {"user", dataStore->inbound_auth->username},
+                        {"pass", dataStore->inbound_auth->password},
+                    },
+                };
+            }
+            inboundObj["settings"] = socksSettings;
+            status->inbounds += inboundObj;
         }
         // http-in
-        if (InRange(dataStore->inbound_http_port, 1, 65535) && !status->forTest) {
-            QJsonObject socksInbound;
-            socksInbound["tag"] = "http-in";
-            socksInbound["protocol"] = "http";
-            socksInbound["listen"] = dataStore->inbound_address;
-            socksInbound["port"] = dataStore->inbound_http_port;
+        if (IsValidPort(dataStore->inbound_http_port) && !status->forTest) {
+            QJsonObject inboundObj;
+            inboundObj["tag"] = "http-in";
+            inboundObj["protocol"] = "http";
+            inboundObj["listen"] = dataStore->inbound_address;
+            inboundObj["port"] = dataStore->inbound_http_port;
             if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
-                socksInbound["sniffing"] = sniffing;
+                inboundObj["sniffing"] = sniffing;
             }
-            status->inbounds += socksInbound;
+            if (dataStore->inbound_auth->NeedAuth()) {
+                inboundObj["settings"] = QJsonObject{
+                    {"accounts", QJsonArray{
+                                     QJsonObject{
+                                         {"user", dataStore->inbound_auth->username},
+                                         {"pass", dataStore->inbound_auth->password},
+                                     },
+                                 }},
+                };
+            }
+            status->inbounds += inboundObj;
         }
 
         // Outbounds
@@ -431,12 +442,12 @@ namespace NekoRay {
             if (thisExternalStat > 0) {
                 if (ent->type == "custom") {
                     auto bean = ent->CustomBean();
-                    if (InRange(bean->mapping_port, 1, 65535)) {
+                    if (IsValidPort(bean->mapping_port)) {
                         ext_mapping_port = bean->mapping_port;
                     } else {
                         ext_mapping_port = MkPort();
                     }
-                    if (InRange(bean->socks_port, 1, 65535)) {
+                    if (IsValidPort(bean->socks_port)) {
                         ext_socks_port = bean->socks_port;
                     } else {
                         ext_socks_port = MkPort();
@@ -617,17 +628,25 @@ namespace NekoRay {
         // Inbounds
 
         // mixed-in
-        if (InRange(dataStore->inbound_socks_port, 1, 65535) && !status->forTest) {
-            QJsonObject socksInbound;
-            socksInbound["tag"] = "mixed-in";
-            socksInbound["type"] = "mixed";
-            socksInbound["listen"] = dataStore->inbound_address;
-            socksInbound["listen_port"] = dataStore->inbound_socks_port;
+        if (IsValidPort(dataStore->inbound_socks_port) && !status->forTest) {
+            QJsonObject inboundObj;
+            inboundObj["tag"] = "mixed-in";
+            inboundObj["type"] = "mixed";
+            inboundObj["listen"] = dataStore->inbound_address;
+            inboundObj["listen_port"] = dataStore->inbound_socks_port;
             if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
-                socksInbound["sniff"] = true;
-                socksInbound["sniff_override_destination"] = dataStore->sniffing_mode == SniffingMode::FOR_DESTINATION;
+                inboundObj["sniff"] = true;
+                inboundObj["sniff_override_destination"] = dataStore->sniffing_mode == SniffingMode::FOR_DESTINATION;
             }
-            status->inbounds += socksInbound;
+            if (dataStore->inbound_auth->NeedAuth()) {
+                inboundObj["users"] = QJsonArray{
+                    QJsonObject{
+                        {"username", dataStore->inbound_auth->username},
+                        {"password", dataStore->inbound_auth->password},
+                    },
+                };
+            }
+            status->inbounds += inboundObj;
         }
 
         // Outbounds
@@ -839,26 +858,32 @@ namespace NekoRay {
     }
 
     QString WriteVPNSingBoxConfig() {
-        //
+        // user rule
         QString process_name_rule = dataStore->vpn_bypass_process.trimmed();
         if (!process_name_rule.isEmpty()) {
-            auto arr = SplitLines(process_name_rule);
+            auto arr = SplitLinesSkipSharp(process_name_rule);
             QJsonObject rule{{"outbound", "direct"},
                              {"process_name", QList2QJsonArray(arr)}};
             process_name_rule = "," + QJsonObject2QString(rule, false);
         }
         QString cidr_rule = dataStore->vpn_bypass_cidr.trimmed();
         if (!cidr_rule.isEmpty()) {
-            auto arr = SplitLines(cidr_rule);
+            auto arr = SplitLinesSkipSharp(cidr_rule);
             QJsonObject rule{{"outbound", "direct"},
                              {"ip_cidr", QList2QJsonArray(arr)}};
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
-        //
+        // tun name
         auto tun_name = "nekoray-tun";
 #ifdef Q_OS_MACOS
         tun_name = "utun9";
 #endif
+        // auth
+        QString socks_user_pass;
+        if (dataStore->inbound_auth->NeedAuth()) {
+            socks_user_pass = R"( "username": "%1", "password": "%2", )";
+            socks_user_pass = socks_user_pass.arg(dataStore->inbound_auth->username, dataStore->inbound_auth->password);
+        }
         // gen config
         auto configFn = ":/neko/vpn/sing-box-vpn.json";
         if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
@@ -870,6 +895,7 @@ namespace NekoRay {
                           .replace("%CIDR_RULE%", cidr_rule)
                           .replace("%TUN_NAME%", tun_name)
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
+                          .replace("%SOCKS_USER_PASS%", socks_user_pass)
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // hook.js
         auto source = qjs::ReadHookJS();
@@ -891,11 +917,13 @@ namespace NekoRay {
     }
 
     QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath) {
+#ifdef Q_OS_WIN
+        return {};
+#endif
         // gen script
         auto scriptFn = ":/neko/vpn/vpn-run-root.sh";
         if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
         auto script = ReadFileText(scriptFn)
-                          .replace("$PORT", Int2String(dataStore->inbound_socks_port))
                           .replace("./nekobox_core", QApplication::applicationDirPath() + "/nekobox_core")
                           .replace("$PROTECT_LISTEN_PATH", protectPath)
                           .replace("$CONFIG_PATH", configPath)

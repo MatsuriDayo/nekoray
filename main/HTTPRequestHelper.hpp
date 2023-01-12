@@ -6,7 +6,7 @@
 #include <QObject>
 #include <functional>
 
-namespace Qv2ray::common::network {
+namespace NekoRay::network {
     struct NekoHTTPResponse {
         QString error;
         QByteArray data;
@@ -26,6 +26,6 @@ namespace Qv2ray::common::network {
 
         static QString GetHeader(const QList<QPair<QByteArray, QByteArray>> &header, const QString &name);
     };
-} // namespace Qv2ray::common::network
+} // namespace NekoRay::network
 
-using namespace Qv2ray::common::network;
+using namespace NekoRay::network;

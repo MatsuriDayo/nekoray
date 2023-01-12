@@ -1,10 +1,10 @@
-#include "TrayIcon.hpp"
+#include "Icon.hpp"
 
 #include "main/NekoRay.hpp"
 
 #include <QPainter>
 
-QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
+QIcon Icon::GetTrayIcon(Icon::TrayIconStatus status) {
     QPixmap pixmap;
 
     // software embedded icon
@@ -44,5 +44,10 @@ QIcon TrayIcon::GetIcon(TrayIcon::TrayIconStatus status) {
         radius);
     p.end();
 
+    return pixmap;
+}
+
+QIcon Icon::GetMaterialIcon(const QString &name) {
+    QPixmap pixmap(":/icon/material/" + name + ".svg");
     return pixmap;
 }

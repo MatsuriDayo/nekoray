@@ -217,6 +217,18 @@
         <source>Max log lines</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Inbound Auth</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation type="unfinished">نام کاربری</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

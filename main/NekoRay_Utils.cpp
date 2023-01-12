@@ -25,6 +25,16 @@ QStringList SplitLines(const QString &_string) {
 #endif
 }
 
+QStringList SplitLinesSkipSharp(const QString &_string) {
+    auto lines = SplitLines(_string);
+    QStringList newLines;
+    for (const auto &line: lines) {
+        if (line.trimmed().startsWith("#")) continue;
+        newLines << line;
+    }
+    return newLines;
+}
+
 QString DecodeB64IfValid(const QString &input, QByteArray::Base64Options options) {
     Qt515Base64::Base64Options newOptions = Qt515Base64::Base64Option::AbortOnBase64DecodingErrors;
     if (options.testFlag(QByteArray::Base64UrlEncoding)) newOptions |= Qt515Base64::Base64Option::Base64UrlEncoding;
@@ -132,6 +142,28 @@ int MkPort() {
     auto port = s.serverPort();
     s.close();
     return port;
+}
+
+QString ReadableSize(const qint64 &size) {
+    double sizeAsDouble = size;
+    static QStringList measures;
+    if (measures.isEmpty())
+        measures << "B"
+                 << "KiB"
+                 << "MiB"
+                 << "GiB"
+                 << "TiB"
+                 << "PiB"
+                 << "EiB"
+                 << "ZiB"
+                 << "YiB";
+    QStringListIterator it(measures);
+    QString measure(it.next());
+    while (sizeAsDouble >= 1024.0 && it.hasNext()) {
+        measure = it.next();
+        sizeAsDouble /= 1024.0;
+    }
+    return QString::fromLatin1("%1 %2").arg(sizeAsDouble, 0, 'f', 2).arg(measure);
 }
 
 bool IsIpAddress(const QString &str) {

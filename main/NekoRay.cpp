@@ -17,6 +17,7 @@ namespace NekoRay {
 
     DataStore::DataStore() : JsonStore() {
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
+        _add(new configItem("inbound_auth", dynamic_cast<JsonStore *>(inbound_auth), itemType::jsonStore));
 
         _add(new configItem("user_agent", &user_agent, itemType::string));
         _add(new configItem("test_url", &test_url, itemType::string));
@@ -112,12 +113,12 @@ namespace NekoRay {
 
     QString Routing::DisplayRouting() const {
         return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6")
-            .arg(SplitLines(proxy_domain).join(","))
-            .arg(SplitLines(proxy_ip).join(","))
-            .arg(SplitLines(direct_domain).join(","))
-            .arg(SplitLines(direct_ip).join(","))
-            .arg(SplitLines(block_domain).join(","))
-            .arg(SplitLines(block_ip).join(","));
+            .arg(SplitLinesSkipSharp(proxy_domain).join(","))
+            .arg(SplitLinesSkipSharp(proxy_ip).join(","))
+            .arg(SplitLinesSkipSharp(direct_domain).join(","))
+            .arg(SplitLinesSkipSharp(direct_ip).join(","))
+            .arg(SplitLinesSkipSharp(block_domain).join(","))
+            .arg(SplitLinesSkipSharp(block_ip).join(","));
     }
 
     QStringList Routing::List() {
@@ -161,6 +162,15 @@ namespace NekoRay {
         auto obj = QString2QJsonObject(core_map);
         obj.remove(id);
         core_map = QJsonObject2QString(obj, true);
+    }
+
+    InboundAuthorization::InboundAuthorization() : JsonStore() {
+        _add(new configItem("user", &this->username, itemType::string));
+        _add(new configItem("pass", &this->password, itemType::string));
+    }
+
+    bool InboundAuthorization::NeedAuth() const {
+        return !username.trimmed().isEmpty() && !password.trimmed().isEmpty();
     }
 
     // 添加关联

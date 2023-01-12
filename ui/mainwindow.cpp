@@ -8,7 +8,7 @@
 #include "sys/AutoRun.hpp"
 
 #include "ui/ThemeManager.hpp"
-#include "ui/TrayIcon.hpp"
+#include "ui/Icon.hpp"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
@@ -223,7 +223,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     // Setup Tray
     tray = new QSystemTrayIcon(this); // 初始化托盘对象tray
-    tray->setIcon(TrayIcon::GetIcon(TrayIcon::NONE));
+    tray->setIcon(Icon::GetTrayIcon(Icon::NONE));
     tray->setContextMenu(ui->menu_program); // 创建托盘菜单
     tray->show();                           // 让托盘图标显示在系统托盘上
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
@@ -587,8 +587,7 @@ void MainWindow::neko_set_spmode(int mode, bool save) {
 
         if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
 #if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
-            if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !IS_NEKO_BOX &&
-                !InRange(NekoRay::dataStore->inbound_http_port, 1, 65535)) {
+            if (mode == NekoRay::SystemProxyMode::SYSTEM_PROXY && !IS_NEKO_BOX && !IsValidPort(NekoRay::dataStore->inbound_http_port)) {
                 auto btn = QMessageBox::warning(this, software_name,
                                                 tr("Http inbound is not enabled, can't set system proxy."),
                                                 "OK", tr("Settings"), "", 0, 0);
@@ -646,7 +645,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
     //
     auto display_http = tr("None");
-    if (InRange(NekoRay::dataStore->inbound_http_port, 1, 65535)) {
+    if (IsValidPort(NekoRay::dataStore->inbound_http_port)) {
         display_http = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_http_port);
     }
     auto display_socks = DisplayAddress(NekoRay::dataStore->inbound_address, NekoRay::dataStore->inbound_socks_port);
@@ -676,21 +675,23 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         return tt.join(isTray ? "\n" : " ");
     };
 
-    auto icon_status_new = TrayIcon::NONE;
+    auto icon_status_new = Icon::NONE;
     if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
-        icon_status_new = TrayIcon::SYSTEM_PROXY;
+        icon_status_new = Icon::SYSTEM_PROXY;
     } else if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::VPN) {
-        icon_status_new = TrayIcon::VPN;
+        icon_status_new = Icon::VPN;
     } else if (!running.isNull()) {
-        icon_status_new = TrayIcon::RUNNING;
+        icon_status_new = Icon::RUNNING;
     }
 
+    // refresh title & window icon
     setWindowTitle(make_title(false));
-    if (icon_status_new != icon_status) QApplication::setWindowIcon(TrayIcon::GetIcon(TrayIcon::NONE));
+    if (icon_status_new != icon_status) QApplication::setWindowIcon(Icon::GetTrayIcon(Icon::NONE));
 
+    // refresh tray
     if (tray != nullptr) {
         tray->setToolTip(make_title(true));
-        if (icon_status_new != icon_status) tray->setIcon(TrayIcon::GetIcon(icon_status_new));
+        if (icon_status_new != icon_status) tray->setIcon(Icon::GetTrayIcon(icon_status_new));
     }
 
     icon_status = icon_status_new;
@@ -1310,7 +1311,7 @@ void MainWindow::show_log_impl(const QString &log) {
     }
 }
 
-#define ADD_TO_CURRENT_ROUTE(a, b) NekoRay::dataStore->routing->a = (SplitLines(NekoRay::dataStore->routing->a) << b).join("\n");
+#define ADD_TO_CURRENT_ROUTE(a, b) NekoRay::dataStore->routing->a = (SplitLines(NekoRay::dataStore->routing->a) << (b)).join("\n");
 
 void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &pos) {
     QMenu *menu = ui->masterLogBrowser->createStandardContextMenu();

@@ -11,7 +11,6 @@ if [ "$(uname)" == "Darwin" ]; then
   IS_MACOS=1
 fi
 
-[ -z $PORT ] && echo "Please set env PORT" && exit
 [ -z $TABLE_FWMARK ] && echo "Please set env TABLE_FWMARK" && exit
 command -v pkill >/dev/null 2>&1 || exit
 

@@ -27,6 +27,7 @@
             "type": "socks",
             "tag": "nekoray-socks",
             "udp_fragment": true,
+            %SOCKS_USER_PASS%
             "server": "127.0.0.1",
             "server_port": %PORT%
         },

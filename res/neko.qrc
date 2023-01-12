@@ -6,6 +6,8 @@
         <file alias="icon/b-network-server.svg">icon/network-server.svg</file>
         <file alias="icon/b-dialog-question.svg">icon/dialog-question.svg</file>
         <file alias="icon/b-system-software-update.svg">icon/system-software-update.svg</file>
+        <file>icon/material/lock-open-outline.svg</file>
+        <file>icon/material/lock-outline.svg</file>
     </qresource>
     <qresource prefix="/neko">
         <file alias="nekobox.png">public/nekobox.png</file>

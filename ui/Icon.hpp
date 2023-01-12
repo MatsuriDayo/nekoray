@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-namespace TrayIcon {
+namespace Icon {
 
     enum TrayIconStatus {
         NONE,
@@ -11,6 +11,8 @@ namespace TrayIcon {
         VPN,
     };
 
-    QIcon GetIcon(TrayIconStatus status);
+    QIcon GetTrayIcon(TrayIconStatus status);
 
-} // namespace TrayIcon
+    QIcon GetMaterialIcon(const QString &name);
+
+} // namespace Icon

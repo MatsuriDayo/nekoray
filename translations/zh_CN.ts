@@ -215,6 +215,18 @@
         <source>Max log lines</source>
         <translation>日志最大行数限制</translation>
     </message>
+    <message>
+        <source>Inbound Auth</source>
+        <translation>入站认证设置</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

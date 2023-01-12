@@ -4,6 +4,7 @@
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "fmt/Preset.hpp"
 #include "ui/ThemeManager.hpp"
+#include "ui/Icon.hpp"
 #include "main/GuiUtils.hpp"
 #include "main/NekoRay.hpp"
 
@@ -65,6 +66,8 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     } else {
         ui->log_level->addItems({"debug", "info", "warning", "none"});
     }
+
+    refresh_auth();
 
     ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
     ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
@@ -298,6 +301,17 @@ void DialogBasicSettings::accept() {
     QDialog::accept();
 }
 
+// slots
+
+void DialogBasicSettings::refresh_auth() {
+    ui->inbound_auth->setText({});
+    if (NekoRay::dataStore->inbound_auth->NeedAuth()) {
+        ui->inbound_auth->setIcon(Icon::GetMaterialIcon("lock-outline"));
+    } else {
+        ui->inbound_auth->setIcon(Icon::GetMaterialIcon("lock-open-outline"));
+    }
+}
+
 void DialogBasicSettings::on_set_custom_icon_clicked() {
     auto title = ui->set_custom_icon->text();
     QString user_icon_path = "./" + software_name.toLower() + ".png";
@@ -318,4 +332,38 @@ void DialogBasicSettings::on_set_custom_icon_clicked() {
         return;
     }
     MW_dialog_message(Dialog_DialogBasicSettings, "UpdateIcon");
+}
+
+void DialogBasicSettings::on_inbound_auth_clicked() {
+    auto w = new QDialog(this);
+    w->setWindowTitle(tr("Inbound Auth"));
+    auto layout = new QGridLayout;
+    w->setLayout(layout);
+    //
+    auto user_l = new QLabel(tr("Username"));
+    auto pass_l = new QLabel(tr("Password"));
+    auto user = new MyLineEdit;
+    auto pass = new MyLineEdit;
+    user->setText(NekoRay::dataStore->inbound_auth->username);
+    pass->setText(NekoRay::dataStore->inbound_auth->password);
+    //
+    layout->addWidget(user_l, 0, 0);
+    layout->addWidget(user, 0, 1);
+    layout->addWidget(pass_l, 1, 0);
+    layout->addWidget(pass, 1, 1);
+    auto box = new QDialogButtonBox;
+    box->setOrientation(Qt::Horizontal);
+    box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    connect(box, &QDialogButtonBox::accepted, w, [=] {
+        NekoRay::dataStore->inbound_auth->username = user->text();
+        NekoRay::dataStore->inbound_auth->password = pass->text();
+        NekoRay::dataStore->Save();
+        w->accept();
+    });
+    connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
+    layout->addWidget(box, 2, 1);
+    //
+    w->exec();
+    w->deleteLater();
+    refresh_auth();
 }

@@ -7,9 +7,7 @@
 
 #include "main/NekoRay.hpp"
 
-#include "qv2ray/wrapper.hpp"
-
-namespace Qv2ray::common::network {
+namespace NekoRay::network {
 
     NekoHTTPResponse NetworkRequestHelper::HttpGet(const QUrl &url) {
         QNetworkRequest request;
@@ -22,13 +20,16 @@ namespace Qv2ray::common::network {
             p.setType(IS_NEKO_BOX ? QNetworkProxy::HttpProxy : QNetworkProxy::Socks5Proxy);
             p.setHostName("127.0.0.1");
             p.setPort(NekoRay::dataStore->inbound_socks_port);
+            if (dataStore->inbound_auth->NeedAuth()) {
+                p.setUser(dataStore->inbound_auth->username);
+                p.setPassword(dataStore->inbound_auth->password);
+            }
             accessManager.setProxy(p);
             if (NekoRay::dataStore->started_id < 0) {
                 return NekoHTTPResponse{QObject::tr("Request with proxy but no profile started.")};
             }
         }
         if (accessManager.proxy().type() == QNetworkProxy::Socks5Proxy) {
-            DEBUG("Adding HostNameLookupCapability to proxy.");
             auto cap = accessManager.proxy().capabilities();
             accessManager.proxy().setCapabilities(cap | QNetworkProxy::HostNameLookupCapability);
         }
@@ -69,4 +70,4 @@ namespace Qv2ray::common::network {
         return "";
     }
 
-} // namespace Qv2ray::common::network
+} // namespace NekoRay::network
