@@ -9,10 +9,14 @@ namespace NekoRay {
         int id = -1;
         bool archive = false;
         QString name = "";
-        QList<int> order;
         QString url = "";
         QString info = "";
         qint64 last_update = 0;
+
+        // list ui
+        bool manually_column_width = false;
+        QList<int> column_width;
+        QList<int> order;
 
         Group();
 

@@ -280,6 +280,10 @@
         <source>Copied</source>
         <translation>کپی شده است</translation>
     </message>
+    <message>
+        <source>Manually column width</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>

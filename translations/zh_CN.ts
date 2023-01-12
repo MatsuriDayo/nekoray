@@ -278,6 +278,10 @@
         <source>Copy profile share links (Neko Links)</source>
         <translation>复制分组内配置的分享链接 (Neko Links)</translation>
     </message>
+    <message>
+        <source>Manually column width</source>
+        <translation>手动调节列宽</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>

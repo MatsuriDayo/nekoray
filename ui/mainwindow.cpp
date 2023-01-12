@@ -175,11 +175,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
         refresh_proxy_list_impl(-1, action);
     });
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
-    ui->proxyListTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+    connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionResized, this, [=](int logicalIndex, int oldSize, int newSize) {
+        auto group = NekoRay::profileManager->CurrentGroup();
+        if (NekoRay::dataStore->refreshing_group || group == nullptr || !group->manually_column_width) return;
+        // save manually column width
+        group->column_width.clear();
+        for (int i = 0; i < ui->proxyListTable->horizontalHeader()->count(); i++) {
+            group->column_width.push_back(ui->proxyListTable->horizontalHeader()->sectionSize(i));
+        }
+        group->column_width[logicalIndex] = newSize;
+        group->Save();
+    });
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(1, QHeaderView::ResizeToContents);
     ui->tableWidget_conn->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
@@ -417,9 +423,13 @@ void MainWindow::on_tabWidget_currentChanged(int index) {
 }
 
 void MainWindow::show_group(int gid) {
+    if (NekoRay::dataStore->refreshing_group) return;
+    NekoRay::dataStore->refreshing_group = true;
+
     auto group = NekoRay::profileManager->GetGroup(gid);
     if (group == nullptr) {
         MessageBoxWarning(tr("Error"), QString("No such group: %1").arg(gid));
+        NekoRay::dataStore->refreshing_group = false;
         return;
     }
 
@@ -429,9 +439,28 @@ void MainWindow::show_group(int gid) {
     }
     ui->tabWidget->widget(groupId2TabIndex(gid))->layout()->addWidget(ui->proxyListTable);
 
+    // 列宽是否可调
+    if (group->manually_column_width) {
+        for (int i = 0; i <= 4; i++) {
+            ui->proxyListTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Interactive);
+            auto size = group->column_width.value(i);
+            if (size <= 0) size = ui->proxyListTable->horizontalHeader()->defaultSectionSize();
+            ui->proxyListTable->horizontalHeader()->resizeSection(i, size);
+        }
+    } else {
+        ui->proxyListTable->horizontalHeader()->setSectionResizeMode(0, QHeaderView::ResizeToContents);
+        ui->proxyListTable->horizontalHeader()->setSectionResizeMode(1, QHeaderView::Stretch);
+        ui->proxyListTable->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
+        ui->proxyListTable->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
+        ui->proxyListTable->horizontalHeader()->setSectionResizeMode(4, QHeaderView::ResizeToContents);
+    }
+
+    // show proxies
     NekoRay::GroupSortAction gsa;
     gsa.scroll_to_started = true;
     refresh_proxy_list_impl(-1, gsa);
+
+    NekoRay::dataStore->refreshing_group = false;
 }
 
 // callback

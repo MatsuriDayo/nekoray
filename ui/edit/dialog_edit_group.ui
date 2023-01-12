@@ -15,7 +15,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QWidget" name="gridWidget" native="true">
+    <widget class="QWidget" name="cat_common" native="true">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
        <horstretch>0</horstretch>
@@ -35,13 +35,6 @@
       <property name="bottomMargin">
        <number>0</number>
       </property>
-      <item row="1" column="0">
-       <widget class="QLabel" name="label_2">
-        <property name="text">
-         <string>Type</string>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QLineEdit" name="name"/>
       </item>
@@ -52,20 +45,13 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <layout class="QHBoxLayout" name="horizontalLayout">
+      <item row="3" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_2">
         <item>
-         <widget class="QComboBox" name="type">
-          <item>
-           <property name="text">
-            <string>Basic</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string>Subscription</string>
-           </property>
-          </item>
+         <widget class="QCheckBox" name="manually_column_width">
+          <property name="text">
+           <string>Manually column width</string>
+          </property>
          </widget>
         </item>
         <item>
@@ -76,6 +62,27 @@
          </widget>
         </item>
        </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Type</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QComboBox" name="type">
+        <item>
+         <property name="text">
+          <string>Basic</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Subscription</string>
+         </property>
+        </item>
+       </widget>
       </item>
      </layout>
     </widget>

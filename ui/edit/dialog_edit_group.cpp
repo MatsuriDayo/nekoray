@@ -18,6 +18,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     ui->url->setText(ent->url);
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
+    ui->manually_column_width->setChecked(ent->manually_column_width);
     ui->copy_links->setVisible(false);
     ui->copy_links_nkr->setVisible(false);
     if (ent->id >= 0) { // already a group
@@ -38,6 +39,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
         ent->name = ui->name->text();
         ent->url = ui->url->text();
         ent->archive = ui->archive->isChecked();
+        ent->manually_column_width = ui->manually_column_width->isChecked();
         QDialog::accept();
     });
 
