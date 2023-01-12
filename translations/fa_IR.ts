@@ -1177,11 +1177,11 @@ Split by line.</source>
     </message>
     <message>
         <source>End</source>
-        <translation>پایان</translation>
+        <translation type="vanished">پایان</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>فعال</translation>
+        <translation type="vanished">فعال</translation>
     </message>
     <message>
         <source>Start: %1

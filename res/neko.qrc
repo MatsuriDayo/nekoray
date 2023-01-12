@@ -8,6 +8,9 @@
         <file alias="icon/b-system-software-update.svg">icon/system-software-update.svg</file>
         <file>icon/material/lock-open-outline.svg</file>
         <file>icon/material/lock-outline.svg</file>
+        <file>icon/material/cancel.svg</file>
+        <file>icon/material/history.svg</file>
+        <file>icon/material/swap-vertical.svg</file>
     </qresource>
     <qresource prefix="/neko">
         <file alias="nekobox.png">public/nekobox.png</file>

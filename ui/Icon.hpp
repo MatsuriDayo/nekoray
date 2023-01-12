@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QIcon>
+#include <QPixmap>
 
 namespace Icon {
 
@@ -11,8 +11,8 @@ namespace Icon {
         VPN,
     };
 
-    QIcon GetTrayIcon(TrayIconStatus status);
+    QPixmap GetTrayIcon(TrayIconStatus status);
 
-    QIcon GetMaterialIcon(const QString &name);
+    QPixmap GetMaterialIcon(const QString &name);
 
 } // namespace Icon

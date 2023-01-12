@@ -4,7 +4,7 @@
 
 #include <QPainter>
 
-QIcon Icon::GetTrayIcon(Icon::TrayIconStatus status) {
+QPixmap Icon::GetTrayIcon(Icon::TrayIconStatus status) {
     QPixmap pixmap;
 
     // software embedded icon
@@ -47,7 +47,7 @@ QIcon Icon::GetTrayIcon(Icon::TrayIconStatus status) {
     return pixmap;
 }
 
-QIcon Icon::GetMaterialIcon(const QString &name) {
+QPixmap Icon::GetMaterialIcon(const QString &name) {
     QPixmap pixmap(":/icon/material/" + name + ".svg");
     return pixmap;
 }

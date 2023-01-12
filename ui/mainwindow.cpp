@@ -1438,27 +1438,36 @@ void MainWindow::refresh_connection_list(const QJsonArray &arr) {
         row++;
         ui->tableWidget_conn->insertRow(row);
 
+        auto f0 = std::make_unique<QTableWidgetItem>();
+        f0->setData(114514, item["ID"].toInt());
+
         // C0: Status
-        auto *f = new QTableWidgetItem("");
-        f->setData(114514, item["ID"].toInt());
+        auto c0 = new QLabel;
         auto start_t = item["Start"].toInt();
         auto end_t = item["End"].toInt();
-        if (end_t > 0) {
-            f->setText(tr("End"));
+        // icon
+        auto outboundTag = item["Tag"].toString();
+        if (outboundTag == "block") {
+            c0->setPixmap(Icon::GetMaterialIcon("cancel"));
         } else {
-            f->setText(tr("Active"));
+            if (end_t > 0) {
+                c0->setPixmap(Icon::GetMaterialIcon("history"));
+            } else {
+                c0->setPixmap(Icon::GetMaterialIcon("swap-vertical"));
+            }
         }
-        f->setToolTip(tr("Start: %1\nEnd: %2").arg(DisplayTime(start_t), end_t > 0 ? DisplayTime(end_t) : ""));
-        ui->tableWidget_conn->setItem(row, 0, f);
+        c0->setAlignment(Qt::AlignCenter);
+        c0->setToolTip(tr("Start: %1\nEnd: %2").arg(DisplayTime(start_t), end_t > 0 ? DisplayTime(end_t) : ""));
+        ui->tableWidget_conn->setCellWidget(row, 0, c0);
 
         // C1: Outbound
-        f = f->clone();
+        auto f = f0->clone();
         f->setToolTip("");
-        f->setText(item["Tag"].toString());
+        f->setText(outboundTag);
         ui->tableWidget_conn->setItem(row, 1, f);
 
         // C2: Destination
-        f = f->clone();
+        f = f0->clone();
         QString target1 = item["Dest"].toString();
         QString target2 = item["RDest"].toString();
         if (target2.isEmpty() || target1 == target2) {

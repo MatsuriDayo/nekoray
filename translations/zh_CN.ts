@@ -1009,11 +1009,11 @@
     </message>
     <message>
         <source>End</source>
-        <translation>结束</translation>
+        <translation type="vanished">结束</translation>
     </message>
     <message>
         <source>Active</source>
-        <translation>活动</translation>
+        <translation type="vanished">活动</translation>
     </message>
     <message>
         <source>Start: %1
