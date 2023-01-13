@@ -275,6 +275,7 @@ namespace NekoRay {
         }
         dnsServers += QJsonObject{
             {"address", directDnsAddress},
+            {"fallbackStrategy", "disabled"},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
 
