@@ -102,6 +102,9 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         auto tmpEnt = NekoRay::ProfileManager::NewProxyEntity("custom");
         auto bean = tmpEnt->CustomBean();
         SAVE_CUSTOM_BEAN
+        // 补充
+        bean->serverAddress = get_edit_text_serverAddress();
+        bean->serverPort = get_edit_text_serverPort().toInt();
         if (bean->core.isEmpty()) return;
         //
         auto result = NekoRay::BuildConfig(tmpEnt, false, false);

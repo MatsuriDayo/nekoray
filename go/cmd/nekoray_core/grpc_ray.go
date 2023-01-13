@@ -17,6 +17,7 @@ import (
 	"time"
 
 	"github.com/sirupsen/logrus"
+	core "github.com/v2fly/v2ray-core/v5"
 )
 
 type server struct {
@@ -212,12 +213,10 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			result := make(chan string, 0)
 
 			go func() {
-				stunServer := "206.53.159.130:3478"
-				stunAddr, _ := net.ResolveUDPAddr("udp4", stunServer)
-				pc, err := i.DialUDP(stunAddr)
+				pc, err := core.DialUDP(context.TODO(), i.Core)
 				if err == nil {
 					stunClient := stun.NewClientWithConnection(pc)
-					stunClient.SetServerAddr(stunServer)
+					stunClient.SetServerAddr("stun.ekiga.net:3478")
 					nat, host, err, fake := stunClient.Discover()
 					if err == nil {
 						if host != nil {
