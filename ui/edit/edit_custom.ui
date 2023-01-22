@@ -46,88 +46,116 @@
     </layout>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
-     <item>
-      <widget class="QLabel" name="command_l">
-       <property name="text">
-        <string>Command</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="command">
-       <property name="placeholderText">
-        <string notr="true">%config%</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLabel" name="config_suffix_l">
-       <property name="text">
-        <string>Config Suffix</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QComboBox" name="config_suffix">
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <item>
+    <widget class="QWidget" name="w_ext1" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="command_l">
         <property name="text">
-         <string notr="true"/>
+         <string>Command</string>
         </property>
-       </item>
-       <item>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="command">
+        <property name="placeholderText">
+         <string notr="true">%config%</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="config_suffix_l">
         <property name="text">
-         <string notr="true">json</string>
+         <string>Config Suffix</string>
         </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">yml</string>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="config_suffix">
+        <property name="editable">
+         <bool>true</bool>
         </property>
-       </item>
-      </widget>
-     </item>
-    </layout>
+        <item>
+         <property name="text">
+          <string notr="true"/>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">json</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string notr="true">yml</string>
+         </property>
+        </item>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_3">
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="toolTip">
-        <string>Random if it's empty or zero.</string>
-       </property>
-       <property name="text">
-        <string notr="true">Mapping Port</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="mapping_port"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label_2">
-       <property name="toolTip">
-        <string>Random if it's empty or zero.</string>
-       </property>
-       <property name="text">
-        <string notr="true">Socks Port</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QLineEdit" name="socks_port"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="preview">
-       <property name="text">
-        <string>Preview</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
+    <widget class="QWidget" name="w_ext2" native="true">
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="toolTip">
+         <string>Random if it's empty or zero.</string>
+        </property>
+        <property name="text">
+         <string notr="true">Mapping Port</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="mapping_port"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="toolTip">
+         <string>Random if it's empty or zero.</string>
+        </property>
+        <property name="text">
+         <string notr="true">Socks Port</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="socks_port"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="preview">
+        <property name="text">
+         <string>Preview</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </item>
    <item>
     <widget class="QTextEdit" name="config_simple">

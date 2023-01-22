@@ -1340,7 +1340,9 @@ void MainWindow::show_log_impl(const QString &log) {
     }
 }
 
-#define ADD_TO_CURRENT_ROUTE(a, b) NekoRay::dataStore->routing->a = (SplitLines(NekoRay::dataStore->routing->a) << (b)).join("\n");
+#define ADD_TO_CURRENT_ROUTE(a, b)                                                                   \
+    NekoRay::dataStore->routing->a = (SplitLines(NekoRay::dataStore->routing->a) << (b)).join("\n"); \
+    NekoRay::dataStore->routing->Save();
 
 void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &pos) {
     QMenu *menu = ui->masterLogBrowser->createStandardContextMenu();
