@@ -42,3 +42,7 @@ void ProxyItem::on_remove_clicked() {
         delete item;
     }
 }
+
+QPushButton *ProxyItem::get_change_button() {
+    return ui->change;
+}

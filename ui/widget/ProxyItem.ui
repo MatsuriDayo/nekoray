@@ -36,6 +36,20 @@
       </widget>
      </item>
      <item>
+      <widget class="QPushButton" name="change">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/neko.qrc">
+         <normaloff>:/icon/material/swap-horizontal.svg</normaloff>:/icon/material/swap-horizontal.svg</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QPushButton" name="remove">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -43,8 +57,9 @@
          <verstretch>0</verstretch>
         </sizepolicy>
        </property>
-       <property name="text">
-        <string>Remove</string>
+       <property name="icon">
+        <iconset resource="../../res/neko.qrc">
+         <normaloff>:/icon/material/delete.svg</normaloff>:/icon/material/delete.svg</iconset>
        </property>
       </widget>
      </item>
@@ -124,6 +139,8 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../res/neko.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -11,6 +11,8 @@
         <file>icon/material/cancel.svg</file>
         <file>icon/material/history.svg</file>
         <file>icon/material/swap-vertical.svg</file>
+        <file>icon/material/delete.svg</file>
+        <file>icon/material/swap-horizontal.svg</file>
     </qresource>
     <qresource prefix="/neko">
         <file alias="nekobox.png">public/nekobox.png</file>

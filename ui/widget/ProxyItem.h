@@ -11,6 +11,8 @@ namespace Ui {
 }
 QT_END_NAMESPACE
 
+class QPushButton;
+
 class ProxyItem : public QWidget {
     Q_OBJECT
 
@@ -20,6 +22,8 @@ public:
     ~ProxyItem() override;
 
     void refresh_data();
+
+    QPushButton *get_change_button();
 
     QSharedPointer<NekoRay::ProxyEntity> ent;
     QListWidgetItem *item;

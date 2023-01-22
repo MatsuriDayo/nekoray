@@ -1240,7 +1240,7 @@ Split by line.</source>
     <name>ProxyItem</name>
     <message>
         <source>Remove</source>
-        <translation>删除</translation>
+        <translation type="vanished">删除</translation>
     </message>
     <message>
         <source>Confirmation</source>

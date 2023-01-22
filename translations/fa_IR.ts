@@ -1237,7 +1237,7 @@ End: %2</source>
     <name>ProxyItem</name>
     <message>
         <source>Remove</source>
-        <translation>حذف کردن</translation>
+        <translation type="vanished">حذف کردن</translation>
     </message>
     <message>
         <source>Confirmation</source>

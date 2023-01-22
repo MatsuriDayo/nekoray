@@ -9,6 +9,8 @@ namespace Ui {
 }
 QT_END_NAMESPACE
 
+class ProxyItem;
+
 class EditChain : public QWidget, public ProfileEditor {
     Q_OBJECT
 
@@ -25,7 +27,9 @@ private:
     Ui::EditChain *ui;
     QSharedPointer<NekoRay::ProxyEntity> ent;
 
-    void AddProfileToListIfExist(int id);
+    void AddProfileToListIfExist(int profileId);
+
+    static void ReplaceProfile(ProxyItem *w, int profileId);
 
 private slots:
 
