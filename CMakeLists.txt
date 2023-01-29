@@ -29,8 +29,14 @@ if (NKR_CROSS)
     set_property(TARGET Qt5::lupdate PROPERTY IMPORTED_LOCATION /usr/bin/lupdate)
 endif ()
 
-# Windows
-include("cmake/fuck_windows/fuck.cmake")
+#### Platform Variables ####
+if (APPLE)
+    include("cmake/macos/macos.cmake")
+elseif (WIN32)
+    include("cmake/windows/windows.cmake")
+else ()
+    include("cmake/linux/linux.cmake")
+endif ()
 
 #### default prefix path ####
 
@@ -129,7 +135,7 @@ endif ()
 
 # Sources
 set(PROJECT_SOURCES
-        ${PLATFORM_FUCKING_SOURCES}
+        ${PLATFORM_SOURCES}
 
         main/main.cpp
         main/NekoRay.cpp
@@ -310,7 +316,7 @@ target_link_libraries(nekoray PRIVATE
         Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Svg
         Threads::Threads
         ${NKR_EXTERNAL_TARGETS}
-        ${PLATFORM_FUCKING_LIBRARIES}
+        ${PLATFORM_LIBRARIES}
         )
 
 if (QT_VERSION_MAJOR EQUAL 6)
