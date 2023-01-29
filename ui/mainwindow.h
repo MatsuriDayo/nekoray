@@ -153,6 +153,10 @@ private:
 
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> get_now_selected();
 
+    QList<QSharedPointer<NekoRay::ProxyEntity>> get_now_selected_list();
+
+    QList<QSharedPointer<NekoRay::ProxyEntity>> get_selected_or_group();
+
     void dialog_message_impl(const QString &sender, const QString &info);
 
     void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});

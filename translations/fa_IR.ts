@@ -1163,7 +1163,7 @@
         <translation>کد QR یافت نشد</translation>
     </message>
     <message>
-        <source>Resolving current group domain to IP, if support.</source>
+        <source>Resolving domain to IP, if support.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1243,6 +1243,10 @@ End: %2</source>
     <message>
         <source>Stopping profile %1</source>
         <translation>متوقف کردن پروفایل %1</translation>
+    </message>
+    <message>
+        <source>Current Select</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

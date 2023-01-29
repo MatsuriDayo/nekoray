@@ -341,6 +341,42 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->menu_url_test, &QAction::triggered, this, [=]() { speedtest_current_group(1); });
     connect(ui->menu_full_test, &QAction::triggered, this, [=]() { speedtest_current_group(2); });
     //
+    auto set_selected_or_group = [=](int mode) {
+        // 0=group 1=select 2=unknown(menu is hide)
+        ui->menu_server->setProperty("selected_or_group", mode);
+    };
+    auto move_tests_to_menu = [=](bool menuCurrent_Select) {
+        return [=] {
+            if (menuCurrent_Select) {
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_tcp_ping);
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_url_test);
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_full_test);
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_clear_test_result);
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_resolve_domain);
+            } else {
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_tcp_ping);
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_url_test);
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_full_test);
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_clear_test_result);
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_resolve_domain);
+            }
+            ui->menu_full_test->setVisible(!IS_NEKO_BOX);
+            set_selected_or_group(menuCurrent_Select ? 1 : 0);
+        };
+    };
+    connect(ui->menuCurrent_Select, &QMenu::aboutToShow, this, move_tests_to_menu(true));
+    connect(ui->menuCurrent_Group, &QMenu::aboutToShow, this, move_tests_to_menu(false));
+    connect(ui->menu_server, &QMenu::aboutToHide, this, [=] {
+        auto timer = new QTimer(this);
+        timer->setInterval(100);
+        connect(timer, &QTimer::timeout, this, [=] {
+            set_selected_or_group(2);
+            timer->deleteLater();
+        });
+        timer->start();
+    });
+    set_selected_or_group(2);
+    //
     connect(ui->menu_share_item, &QMenu::aboutToShow, this, [=] {
         QString name;
         auto selected = get_now_selected();
@@ -350,9 +386,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
         ui->menu_export_config->setVisible(name == software_core_name);
         ui->menu_export_config->setText(tr("Export %1 config").arg(name));
-    });
-    connect(ui->menugroup, &QMenu::aboutToShow, this, [=] {
-        ui->menu_full_test->setVisible(!IS_NEKO_BOX);
     });
     refresh_status();
 
@@ -1166,8 +1199,7 @@ void MainWindow::on_menu_scan_qr_triggered() {
 }
 
 void MainWindow::on_menu_clear_test_result_triggered() {
-    for (const auto &profile: NekoRay::profileManager->profiles) {
-        if (NekoRay::dataStore->current_group != profile->gid) continue;
+    for (const auto &profile: get_selected_or_group()) {
         profile->latency = 0;
         profile->full_test_report = "";
         profile->Save();
@@ -1241,19 +1273,16 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
 }
 
 void MainWindow::on_menu_resolve_domain_triggered() {
+    auto profiles = get_selected_or_group();
+    if (profiles.isEmpty()) return;
+
     if (QMessageBox::question(this,
                               tr("Confirmation"),
-                              tr("Resolving current group domain to IP, if support.")) != QMessageBox::StandardButton::Yes) {
+                              tr("Resolving domain to IP, if support.")) != QMessageBox::StandardButton::Yes) {
         return;
     }
     if (mw_sub_updating) return;
     mw_sub_updating = true;
-
-    auto group = NekoRay::profileManager->CurrentGroup();
-    if (group == nullptr) return;
-
-    auto profiles = group->ProfilesWithOrder();
-    NekoRay::dataStore->resolve_count = profiles.length();
 
     for (const auto &profile: profiles) {
         profile->bean->ResolveDomainToIP([=] {
@@ -1278,6 +1307,29 @@ QMap<int, QSharedPointer<NekoRay::ProxyEntity>> MainWindow::get_now_selected() {
         if (ent != nullptr) map[id] = ent;
     }
     return map;
+}
+
+QList<QSharedPointer<NekoRay::ProxyEntity>> MainWindow::get_now_selected_list() {
+    auto items = ui->proxyListTable->selectedItems();
+    QList<QSharedPointer<NekoRay::ProxyEntity>> list;
+    for (auto item: items) {
+        auto id = item->data(114514).toInt();
+        auto ent = NekoRay::profileManager->GetProfile(id);
+        if (ent != nullptr && !list.contains(ent)) list += ent;
+    }
+    return list;
+}
+
+QList<QSharedPointer<NekoRay::ProxyEntity>> MainWindow::get_selected_or_group() {
+    auto selected_or_group = ui->menu_server->property("selected_or_group").toInt();
+    QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
+    if (selected_or_group > 0) {
+        profiles = get_now_selected_list();
+        if (profiles.isEmpty() && selected_or_group == 2) profiles = NekoRay::profileManager->CurrentGroup()->ProfilesWithOrder();
+    } else {
+        profiles = NekoRay::profileManager->CurrentGroup()->ProfilesWithOrder();
+    }
+    return profiles;
 }
 
 void MainWindow::keyPressEvent(QKeyEvent *event) {

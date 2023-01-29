@@ -41,8 +41,11 @@ void MainWindow::setup_grpc() {
 inline bool speedtesting = false;
 
 void MainWindow::speedtest_current_group(int mode) {
-#ifndef NKR_NO_GRPC
     if (speedtesting) return;
+    auto profiles = get_selected_or_group();
+    if (profiles.isEmpty()) return;
+    auto group = NekoRay::profileManager->CurrentGroup();
+    if (group->archive) return;
 
     QStringList full_test_flags;
     if (mode == libcore::FullTest) {
@@ -59,23 +62,13 @@ void MainWindow::speedtest_current_group(int mode) {
     }
 
     speedtesting = true;
-
-    runOnNewThread([=]() {
-        auto group = NekoRay::profileManager->CurrentGroup();
-        if (group->archive) return;
-        auto order = ui->proxyListTable->order; // copy
-
+#ifndef NKR_NO_GRPC
+    runOnNewThread([this, profiles, mode, full_test_flags]() {
         QMutex lock_write;
         QMutex lock_return;
-        QList<QSharedPointer<NekoRay::ProxyEntity>> profiles;
         int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
         int threadN_finished = 0;
-
-        // 这个是按照显示的顺序
-        for (auto id: order) {
-            auto profile = NekoRay::profileManager->GetProfile(id);
-            if (profile != nullptr) profiles += profile;
-        }
+        auto profiles_test = profiles; // copy
 
         // Threads
         lock_return.lock();
@@ -84,13 +77,13 @@ void MainWindow::speedtest_current_group(int mode) {
                 forever {
                     //
                     lock_write.lock();
-                    if (profiles.isEmpty()) {
+                    if (profiles_test.isEmpty()) {
                         threadN_finished++;
                         if (threadN == threadN_finished) lock_return.unlock();
                         lock_write.unlock();
                         return;
                     }
-                    auto profile = profiles.takeFirst();
+                    auto profile = profiles_test.takeFirst();
                     lock_write.unlock();
 
                     //

@@ -523,20 +523,27 @@
      <addaction name="menu_copy_links"/>
      <addaction name="menu_copy_links_nkr"/>
     </widget>
-    <widget class="QMenu" name="menugroup">
+    <widget class="QMenu" name="menuCurrent_Group">
      <property name="title">
       <string>Current Group</string>
      </property>
+     <addaction name="actionfake_5"/>
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
-     <addaction name="menu_remove_unavailable"/>
      <addaction name="menu_clear_test_result"/>
-     <addaction name="separator"/>
-     <addaction name="menu_delete_repeat"/>
      <addaction name="menu_resolve_domain"/>
      <addaction name="separator"/>
+     <addaction name="menu_remove_unavailable"/>
+     <addaction name="menu_delete_repeat"/>
+     <addaction name="separator"/>
      <addaction name="menu_update_subscription"/>
+    </widget>
+    <widget class="QMenu" name="menuCurrent_Select">
+     <property name="title">
+      <string>Current Select</string>
+     </property>
+     <addaction name="actionfake_4"/>
     </widget>
     <addaction name="menu_add_from_input"/>
     <addaction name="menu_add_from_clipboard"/>
@@ -552,7 +559,8 @@
     <addaction name="separator"/>
     <addaction name="menu_share_item"/>
     <addaction name="separator"/>
-    <addaction name="menugroup"/>
+    <addaction name="menuCurrent_Select"/>
+    <addaction name="menuCurrent_Group"/>
     <addaction name="separator"/>
     <addaction name="menu_profile_debug_info"/>
     <addaction name="separator"/>
@@ -844,6 +852,22 @@
   <action name="menu_open_config_folder">
    <property name="text">
     <string>Open Config Folder</string>
+   </property>
+  </action>
+  <action name="actionfake_4">
+   <property name="text">
+    <string notr="true">fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionfake_5">
+   <property name="text">
+    <string notr="true">fake</string>
+   </property>
+   <property name="visible">
+    <bool>false</bool>
    </property>
   </action>
  </widget>

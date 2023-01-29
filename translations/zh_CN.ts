@@ -1202,8 +1202,8 @@ End: %2</source>
         <translation>将服务器域名解析为 IP</translation>
     </message>
     <message>
-        <source>Resolving current group domain to IP, if support.</source>
-        <translation>将当前分组内服务器域名解析为 IP（如果支持）。</translation>
+        <source>Resolving domain to IP, if support.</source>
+        <translation>将服务器域名解析为 IP（如果支持）。</translation>
     </message>
     <message>
         <source>Export %1 config</source>
@@ -1254,6 +1254,10 @@ Split by line.</source>
     <message>
         <source>Edit</source>
         <translation>编辑</translation>
+    </message>
+    <message>
+        <source>Current Select</source>
+        <translation>当前选中</translation>
     </message>
 </context>
 <context>
