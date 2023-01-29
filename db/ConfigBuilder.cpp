@@ -865,21 +865,28 @@ namespace NekoRay {
     }
 
     QString WriteVPNSingBoxConfig() {
+        auto match_out = NekoRay::dataStore->vpn_rule_white ? "proxy" : "direct";
+        auto no_match_out = NekoRay::dataStore->vpn_rule_white ? "direct" : "proxy";
         // user rule
-        QString process_name_rule = dataStore->vpn_bypass_process.trimmed();
+        QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {
             auto arr = SplitLinesSkipSharp(process_name_rule);
-            QJsonObject rule{{"outbound", "direct"},
+            QJsonObject rule{{"outbound", match_out},
                              {"process_name", QList2QJsonArray(arr)}};
             process_name_rule = "," + QJsonObject2QString(rule, false);
         }
-        QString cidr_rule = dataStore->vpn_bypass_cidr.trimmed();
+        QString cidr_rule = dataStore->vpn_rule_cidr.trimmed();
         if (!cidr_rule.isEmpty()) {
             auto arr = SplitLinesSkipSharp(cidr_rule);
-            QJsonObject rule{{"outbound", "direct"},
+            QJsonObject rule{{"outbound", match_out},
                              {"ip_cidr", QList2QJsonArray(arr)}};
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
+        // no_match_rule
+        auto no_match_rule = QJsonObject{
+            {"port_range", ":"},
+            {"outbound", no_match_out},
+        };
         // tun name
         auto tun_name = "nekoray-tun";
 #ifdef Q_OS_MACOS
@@ -903,6 +910,7 @@ namespace NekoRay {
                           .replace("%TUN_NAME%", tun_name)
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%SOCKS_USER_PASS%", socks_user_pass)
+                          .replace("%NO_MATCH_RULE%", "," + QJsonObject2QString(no_match_rule, false))
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // hook.js
         auto source = qjs::ReadHookJS();

@@ -120,25 +120,25 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
-      <widget class="QGroupBox" name="verticalGroupBox">
+      <widget class="QGroupBox" name="gb_cidr">
        <property name="title">
         <string>Bypass CIDR</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QTextEdit" name="vpn_bypass_cidr"/>
+         <widget class="QTextEdit" name="vpn_rule_cidr"/>
         </item>
        </layout>
       </widget>
      </item>
      <item>
-      <widget class="QGroupBox" name="verticalGroupBox_2">
+      <widget class="QGroupBox" name="gb_process_name">
        <property name="title">
         <string>Bypass Process Name</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QTextEdit" name="vpn_bypass_process"/>
+         <widget class="QTextEdit" name="vpn_rule_process"/>
         </item>
        </layout>
       </widget>
@@ -146,11 +146,25 @@
     </layout>
    </item>
    <item>
-    <widget class="QDialogButtonBox" name="buttonBox">
-     <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QCheckBox" name="whitelist_mode">
+       <property name="toolTip">
+        <string>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</string>
+       </property>
+       <property name="text">
+        <string>Whitelist mode</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QDialogButtonBox" name="buttonBox">
+       <property name="standardButtons">
+        <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

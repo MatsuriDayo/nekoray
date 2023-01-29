@@ -248,12 +248,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port->setValidator(QRegExpValidator_Number);
 
     // 星号
-    for (auto label: findChildren<QLabel *>()) {
-        auto text = label->text();
-        if (!label->toolTip().isEmpty() && !text.endsWith("*")) {
-            label->setText(text + "*");
-        }
-    }
+    ADD_ASTERISK(this);
 
     // 设置 for NekoBox
     if (IS_NEKO_BOX) {

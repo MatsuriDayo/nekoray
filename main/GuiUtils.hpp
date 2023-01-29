@@ -80,3 +80,17 @@
 #else
 #define ACTIVE_THIS_WINDOW _ACTIVE_THIS_WINDOW_COMMON
 #endif
+
+#define ADD_ASTERISK(parent)                                         \
+    for (auto label: parent->findChildren<QLabel *>()) {             \
+        auto text = label->text();                                   \
+        if (!label->toolTip().isEmpty() && !text.endsWith("*")) {    \
+            label->setText(text + "*");                              \
+        }                                                            \
+    }                                                                \
+    for (auto checkBox: parent->findChildren<QCheckBox *>()) {       \
+        auto text = checkBox->text();                                \
+        if (!checkBox->toolTip().isEmpty() && !text.endsWith("*")) { \
+            checkBox->setText(text + "*");                           \
+        }                                                            \
+    }

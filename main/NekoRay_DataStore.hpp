@@ -133,8 +133,9 @@ namespace NekoRay {
         bool vpn_ipv6 = false;
         bool vpn_hide_console = false;
         bool vpn_strict_route = false;
-        QString vpn_bypass_process = "";
-        QString vpn_bypass_cidr = "";
+        bool vpn_rule_white = false;
+        QString vpn_rule_process = "";
+        QString vpn_rule_cidr = "";
 
         // Hotkey
         QString hotkey_mainwindow = "";

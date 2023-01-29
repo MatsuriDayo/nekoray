@@ -583,6 +583,22 @@
         <source>Bypass Process Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Whitelist mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy CIDR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proxy Process Name</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>

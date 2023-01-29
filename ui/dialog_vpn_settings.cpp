@@ -6,6 +6,7 @@
 
 DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new Ui::DialogVPNSettings) {
     ui->setupUi(this);
+    ADD_ASTERISK(this);
 
     ui->fake_dns->setVisible(!IS_NEKO_BOX);
     ui->fake_dns->setChecked(NekoRay::dataStore->fake_dns);
@@ -19,8 +20,19 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new 
 #endif
     ui->strict_route->setChecked(NekoRay::dataStore->vpn_strict_route);
     //
-    D_LOAD_STRING(vpn_bypass_cidr)
-    D_LOAD_STRING(vpn_bypass_process)
+    D_LOAD_STRING(vpn_rule_cidr)
+    D_LOAD_STRING(vpn_rule_process)
+    //
+    connect(ui->whitelist_mode, &QCheckBox::stateChanged, this, [=](int state) {
+        if (state == Qt::Checked) {
+            ui->gb_cidr->setTitle(tr("Proxy CIDR"));
+            ui->gb_process_name->setTitle(tr("Proxy Process Name"));
+        } else {
+            ui->gb_cidr->setTitle(tr("Bypass CIDR"));
+            ui->gb_process_name->setTitle(tr("Bypass Process Name"));
+        }
+    });
+    ui->whitelist_mode->setChecked(NekoRay::dataStore->vpn_rule_white);
 }
 
 DialogVPNSettings::~DialogVPNSettings() {
@@ -37,9 +49,10 @@ void DialogVPNSettings::accept() {
     NekoRay::dataStore->vpn_ipv6 = ui->vpn_ipv6->isChecked();
     NekoRay::dataStore->vpn_hide_console = ui->hide_console->isChecked();
     NekoRay::dataStore->vpn_strict_route = ui->strict_route->isChecked();
+    NekoRay::dataStore->vpn_rule_white = ui->whitelist_mode->isChecked();
     //
-    D_SAVE_STRING_QTEXTEDIT(vpn_bypass_cidr)
-    D_SAVE_STRING_QTEXTEDIT(vpn_bypass_process)
+    D_SAVE_STRING_QTEXTEDIT(vpn_rule_cidr)
+    D_SAVE_STRING_QTEXTEDIT(vpn_rule_process)
     //
     MW_dialog_message("", "UpdateDataStore,VPNChanged");
     QDialog::accept();

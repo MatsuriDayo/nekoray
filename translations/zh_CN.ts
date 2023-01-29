@@ -589,6 +589,22 @@
         <source>Bypass Process Name</source>
         <translation>绕过进程名</translation>
     </message>
+    <message>
+        <source>Whitelist mode</source>
+        <translation>白名单模式</translation>
+    </message>
+    <message>
+        <source>Proxy CIDR</source>
+        <translation>代理 CIDR</translation>
+    </message>
+    <message>
+        <source>Proxy Process Name</source>
+        <translation>代理进程名</translation>
+    </message>
+    <message>
+        <source>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
+        <translation>无论是黑名单还是白名单，您的流量都将由 nekobox_core (sing-tun) 处理。这不等于某些软件的「进程模式」。</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>
