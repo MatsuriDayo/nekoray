@@ -290,7 +290,7 @@ namespace NekoRay {
         routing["domainMatcher"] = dataStore->domain_matcher == DomainMatcher::MPH ? "mph" : "linear";
         if (status->forTest) routing["domainStrategy"] = "AsIs";
 
-        // final add block route
+        // final add user rule (block)
         QJsonObject routingRule_tmp;
         routingRule_tmp["type"] = "field";
         routingRule_tmp["outboundTag"] = "block";
@@ -305,7 +305,7 @@ namespace NekoRay {
             status->routingRules += tmp;
         }
 
-        // final add proxy route
+        // final add user rule (proxy)
         routingRule_tmp["outboundTag"] = "proxy";
         if (!status->ipListRemote.isEmpty()) {
             auto tmp = routingRule_tmp;
@@ -318,7 +318,7 @@ namespace NekoRay {
             status->routingRules += tmp;
         }
 
-        // final add bypass route
+        // final add user rule (bypass)
         routingRule_tmp["outboundTag"] = "bypass";
         if (!status->ipListDirect.isEmpty()) {
             auto tmp = routingRule_tmp;
@@ -331,8 +331,14 @@ namespace NekoRay {
             status->routingRules += tmp;
         }
 
+        // def_outbound
+        status->routingRules += QJsonObject{
+            {"type", "field"},
+            {"port", "0-65535"},
+            {"outboundTag", dataStore->routing->def_outbound},
+        };
+
         // final add routing rule
-        // custom routing rule
         auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
         if (status->forTest) routingRules = {};
         if (!status->forTest) QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
@@ -604,11 +610,7 @@ namespace NekoRay {
 
             // Bypass Lookup for the first profile
             if (isFirstProfile && !IsIpAddress(ent->bean->serverAddress)) {
-                if (dataStore->enhance_resolve_server_domain && !IS_NEKO_BOX) {
-                    status->result->tryDomains += ent->bean->serverAddress;
-                } else {
-                    status->domainListDNSDirect += "full:" + ent->bean->serverAddress;
-                }
+                status->domainListDNSDirect += "full:" + ent->bean->serverAddress;
             }
 
             status->outbounds += outbound;
@@ -791,28 +793,30 @@ namespace NekoRay {
 
         // Routing
 
-        // custom routing rule (top)
-        auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
-        if (status->forTest) routingRules = {};
-
         // dns hijack
-        if (!status->forTest) routingRules += QJsonObject{{"protocol", "dns"}, {"outbound", "dns-out"}};
+        if (!status->forTest) status->routingRules += QJsonObject{{"protocol", "dns"}, {"outbound", "dns-out"}};
 
         // sing-box routing rule object
         auto add_rule_route = [&](const QStringList &list, bool isIP, const QString &out) {
             auto rule = make_rule(list, isIP);
             if (rule.isEmpty()) return;
             rule["outbound"] = out;
-            routingRules += rule;
+            status->routingRules += rule;
         };
 
-        // final add routing rule
+        // final add user rule
         add_rule_route(status->ipListBlock, true, "block");
         add_rule_route(status->ipListRemote, true, tagProxy);
         add_rule_route(status->ipListDirect, true, "bypass");
         add_rule_route(status->domainListBlock, false, "block");
         add_rule_route(status->domainListRemote, false, tagProxy);
         add_rule_route(status->domainListDirect, false, "bypass");
+
+        // def_outbound
+        status->routingRules += QJsonObject{
+            {"port_range", ":"},
+            {"outbound", dataStore->routing->def_outbound},
+        };
 
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
@@ -821,6 +825,8 @@ namespace NekoRay {
         if (geosite.isEmpty()) status->result->error = +"geosite.db not found";
 
         // final add routing rule
+        auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
+        if (status->forTest) routingRules = {};
         if (!status->forTest) QJSONARRAY_ADD(routingRules, QString2QJsonObject(dataStore->custom_route_global)["rules"].toArray())
         QJSONARRAY_ADD(routingRules, status->routingRules)
         auto routeObj = QJsonObject{

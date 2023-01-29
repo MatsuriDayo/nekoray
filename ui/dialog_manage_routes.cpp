@@ -9,11 +9,11 @@
 #include <QMessageBox>
 #include <QListWidget>
 
-#define REFRESH_ACTIVE_ROUTING(a, r)                         \
-    active_routing = a;                                      \
-    ui->active_routing->setText("[" + active_routing + "]"); \
-    setWindowTitle(title_base + " [" + a + "]");             \
-    SetRouteConfig(*r);
+#define REFRESH_ACTIVE_ROUTING(name, obj)           \
+    this->active_routing = name;                    \
+    ui->active_routing->setText(name);              \
+    setWindowTitle(title_base + " [" + name + "]"); \
+    SetRouteConfig(*obj);
 
 #define SAVE_TO_ROUTING(r)                             \
     r->direct_ip = directIPTxt->toPlainText();         \
@@ -22,6 +22,7 @@
     r->proxy_domain = proxyDomainTxt->toPlainText();   \
     r->block_ip = blockIPTxt->toPlainText();           \
     r->block_domain = blockDomainTxt->toPlainText();   \
+    r->def_outbound = ui->def_outbound->currentText(); \
     r->custom = CACHE.custom_route;
 
 DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(new Ui::DialogManageRoutes) {
@@ -29,10 +30,8 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     title_base = windowTitle();
 
     if (IS_NEKO_BOX) {
-        ui->enhance_resolve_server_domain->setVisible(false);
         ui->domain_v2ray->setVisible(false);
     } else {
-        ui->enhance_resolve_server_domain->setVisible(true);
         ui->domain_v2ray->setVisible(true);
     }
     //
@@ -43,7 +42,6 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
     ui->dns_direct->setText(NekoRay::dataStore->direct_dns);
-    ui->enhance_resolve_server_domain->setChecked(NekoRay::dataStore->enhance_resolve_server_domain);
     D_C_LOAD_STRING(custom_route_global)
     //
     connect(ui->custom_route_edit, &QPushButton::clicked, this, [=] {
@@ -93,7 +91,6 @@ void DialogManageRoutes::accept() {
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();
     NekoRay::dataStore->remote_dns = ui->dns_remote->text();
     NekoRay::dataStore->direct_dns = ui->dns_direct->text();
-    NekoRay::dataStore->enhance_resolve_server_domain = ui->enhance_resolve_server_domain->isChecked();
     D_C_SAVE_STRING(custom_route_global)
     bool routeChanged = false;
     if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;
@@ -135,6 +132,7 @@ void DialogManageRoutes::SetRouteConfig(const NekoRay::Routing &conf) {
     proxyIPTxt->setPlainText(conf.proxy_ip);
     //
     CACHE.custom_route = conf.custom;
+    ui->def_outbound->setCurrentText(conf.def_outbound);
 }
 
 void DialogManageRoutes::on_load_save_clicked() {

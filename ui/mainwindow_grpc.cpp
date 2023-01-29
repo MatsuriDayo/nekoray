@@ -220,7 +220,6 @@ void MainWindow::neko_start(int _id) {
 #ifndef NKR_NO_GRPC
     libcore::LoadConfigReq req;
     req.set_coreconfig(QJsonObject2QString(result->coreConfig, true).toStdString());
-    req.set_trydomains(result->tryDomains.join(",").toStdString());
     //
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, req);

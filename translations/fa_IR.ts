@@ -469,14 +469,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enhanced domain name resolution</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Enable DNS Routing</source>
         <translation type="unfinished"></translation>
     </message>
@@ -558,6 +550,10 @@
     </message>
     <message>
         <source>Remove routing: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default Outbound</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -8,7 +8,6 @@ namespace NekoRay {
     public:
         QString error;
         QJsonObject coreConfig;
-        QStringList tryDomains;
 
         QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
         QSharedPointer<traffic::TrafficData> outboundStat;         // main

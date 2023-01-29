@@ -468,11 +468,11 @@
     </message>
     <message>
         <source>Enhanced domain name resolution</source>
-        <translation>增强域名解析</translation>
+        <translation type="vanished">增强域名解析</translation>
     </message>
     <message>
         <source>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</source>
-        <translation>使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</translation>
+        <translation type="vanished">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</translation>
     </message>
     <message>
         <source>Enable DNS Routing</source>
@@ -557,6 +557,10 @@
     <message>
         <source>Custom (global)</source>
         <translation>自定义 (全局)</translation>
+    </message>
+    <message>
+        <source>Default Outbound</source>
+        <translation>默认出站</translation>
     </message>
 </context>
 <context>

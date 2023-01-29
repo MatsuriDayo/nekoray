@@ -41,7 +41,6 @@ namespace NekoRay {
         _add(new configItem("custom_route", &custom_route_global, itemType::string));
         _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
-        _add(new configItem("enhance_domain", &enhance_resolve_server_domain, itemType::boolean));
         _add(new configItem("remember_id", &remember_id, itemType::integer));
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
@@ -108,6 +107,7 @@ namespace NekoRay {
         _add(new configItem("proxy_domain", &this->proxy_domain, itemType::string));
         _add(new configItem("block_ip", &this->block_ip, itemType::string));
         _add(new configItem("block_domain", &this->block_domain, itemType::string));
+        _add(new configItem("def_outbound", &this->def_outbound, itemType::string));
         _add(new configItem("custom", &this->custom, itemType::string));
     }
 
