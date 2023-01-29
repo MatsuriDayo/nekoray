@@ -5,12 +5,12 @@ go 1.19
 require (
 	github.com/dustin/go-humanize v1.0.0
 	github.com/gofrs/uuid v4.3.1+incompatible
-	github.com/sagernet/sing v0.1.2
-	github.com/sagernet/sing-box v1.1.2
-	github.com/sagernet/sing-dns v0.1.1
+	github.com/sagernet/sing v0.1.6-0.20230113035014-620a4e75cda6
+	github.com/sagernet/sing-box v1.1.4
+	github.com/sagernet/sing-dns v0.1.2-0.20230113035038-f980624c0c4a
 	github.com/sagernet/sing-tun v0.1.1
 	github.com/spf13/cobra v1.6.1
-	golang.org/x/sys v0.3.0
+	golang.org/x/sys v0.4.0
 	neko v1.0.0
 )
 
@@ -64,11 +64,11 @@ require (
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
 	go4.org/netipx v0.0.0-20220925034521-797b0c90d8ab // indirect
-	golang.org/x/crypto v0.4.0 // indirect
-	golang.org/x/exp v0.0.0-20221217163422-3c43f8badb15 // indirect
+	golang.org/x/crypto v0.5.0 // indirect
+	golang.org/x/exp v0.0.0-20230105202349-8879d0199aa3 // indirect
 	golang.org/x/mod v0.6.0 // indirect
-	golang.org/x/net v0.4.0 // indirect
-	golang.org/x/text v0.5.0 // indirect
+	golang.org/x/net v0.5.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
 	golang.org/x/tools v0.2.0 // indirect
 	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
