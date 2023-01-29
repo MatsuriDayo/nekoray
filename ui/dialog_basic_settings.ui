@@ -353,7 +353,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string>Language</string>
+               <string notr="true">Language</string>
               </property>
              </widget>
             </item>
@@ -361,7 +361,7 @@
              <widget class="QComboBox" name="language">
               <item>
                <property name="text">
-                <string>System</string>
+                <string notr="true">System</string>
                </property>
               </item>
               <item>
@@ -443,20 +443,37 @@
         </layout>
        </item>
        <item row="5" column="0">
-        <widget class="QGroupBox" name="groupBox_2">
-         <layout class="QHBoxLayout" name="horizontalLayout_23">
-          <item>
-           <widget class="QLabel" name="label_17">
-            <property name="text">
-             <string>Max log lines</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="max_log_line"/>
-          </item>
-         </layout>
-        </widget>
+        <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="1,1">
+         <item>
+          <widget class="QGroupBox" name="groupBox_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
+            <item>
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Max log lines</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="max_log_line"/>
+            </item>
+           </layout>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>0</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>

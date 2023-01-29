@@ -101,7 +101,7 @@
     </message>
     <message>
         <source>Language</source>
-        <translation>زبان</translation>
+        <translation type="vanished">زبان</translation>
     </message>
     <message>
         <source>Security</source>

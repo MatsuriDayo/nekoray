@@ -332,11 +332,11 @@ namespace NekoRay {
         }
 
         // def_outbound
-        status->routingRules += QJsonObject{
-            {"type", "field"},
-            {"port", "0-65535"},
-            {"outboundTag", dataStore->routing->def_outbound},
-        };
+        if (!status->forTest) status->routingRules += QJsonObject{
+                                  {"type", "field"},
+                                  {"port", "0-65535"},
+                                  {"outboundTag", dataStore->routing->def_outbound},
+                              };
 
         // final add routing rule
         auto routingRules = QString2QJsonObject(dataStore->routing->custom)["rules"].toArray();
@@ -813,10 +813,10 @@ namespace NekoRay {
         add_rule_route(status->domainListDirect, false, "bypass");
 
         // def_outbound
-        status->routingRules += QJsonObject{
-            {"port_range", ":"},
-            {"outbound", dataStore->routing->def_outbound},
-        };
+        if (!status->forTest) status->routingRules += QJsonObject{
+                                  {"port_range", ":"},
+                                  {"outbound", dataStore->routing->def_outbound},
+                              };
 
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
@@ -865,8 +865,8 @@ namespace NekoRay {
     }
 
     QString WriteVPNSingBoxConfig() {
-        auto match_out = NekoRay::dataStore->vpn_rule_white ? "proxy" : "direct";
-        auto no_match_out = NekoRay::dataStore->vpn_rule_white ? "direct" : "proxy";
+        auto match_out = NekoRay::dataStore->vpn_rule_white ? "nekoray-socks" : "direct";
+        auto no_match_out = NekoRay::dataStore->vpn_rule_white ? "direct" : "nekoray-socks";
         // user rule
         QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {

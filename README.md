@@ -8,6 +8,10 @@ Support Windows / Linux / macOS amd64 out of the box now.
 
 目前支持 Windows / Linux / macOS amd64 开箱即用
 
+## Readme Translations
+
+中文 / English (undone) / [fa_IR](README_fa.md)
+
 ## 下载 / Download
 
 ### GitHub Releases (Portable ZIP)
