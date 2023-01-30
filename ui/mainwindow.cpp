@@ -1259,10 +1259,16 @@ void MainWindow::on_menu_remove_unavailable_triggered() {
         if (profile->latency < 0) out_del += profile;
     }
 
+    int remove_display_count = 0;
     QString remove_display;
     for (const auto &ent: out_del) {
         remove_display += ent->bean->DisplayTypeAndName() + "\n";
+        if (++remove_display_count == 20) {
+            remove_display += "...";
+            break;
+        }
     }
+
     if (out_del.length() > 0 &&
         QMessageBox::question(this, tr("Confirmation"), tr("Remove %1 item(s) ?").arg(out_del.length()) + "\n" + remove_display) == QMessageBox::StandardButton::Yes) {
         for (const auto &ent: out_del) {

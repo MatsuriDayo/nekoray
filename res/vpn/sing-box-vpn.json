@@ -45,6 +45,7 @@
         }
     ],
     "route": {
+        "final": "%FINAL_OUT%",
         "auto_detect_interface": true,
         "rules": [
             {
@@ -95,7 +96,6 @@
             }
             %PROCESS_NAME_RULE%
             %CIDR_RULE%
-            %NO_MATCH_RULE%
         ]
     }
 }

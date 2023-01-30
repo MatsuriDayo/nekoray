@@ -812,12 +812,6 @@ namespace NekoRay {
         add_rule_route(status->domainListRemote, false, tagProxy);
         add_rule_route(status->domainListDirect, false, "bypass");
 
-        // def_outbound
-        if (!status->forTest) status->routingRules += QJsonObject{
-                                  {"port_range", ":"},
-                                  {"outbound", dataStore->routing->def_outbound},
-                              };
-
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
         auto geosite = FindCoreAsset("geosite.db");
@@ -844,6 +838,7 @@ namespace NekoRay {
                     {"path", geosite},
                 },
             }};
+        if (!status->forTest) routeObj["final"] = dataStore->routing->def_outbound;
         if (status->forExport) {
             routeObj.remove("geoip");
             routeObj.remove("geosite");
@@ -882,11 +877,6 @@ namespace NekoRay {
                              {"ip_cidr", QList2QJsonArray(arr)}};
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
-        // no_match_rule
-        auto no_match_rule = QJsonObject{
-            {"port_range", ":"},
-            {"outbound", no_match_out},
-        };
         // tun name
         auto tun_name = "nekoray-tun";
 #ifdef Q_OS_MACOS
@@ -910,7 +900,7 @@ namespace NekoRay {
                           .replace("%TUN_NAME%", tun_name)
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%SOCKS_USER_PASS%", socks_user_pass)
-                          .replace("%NO_MATCH_RULE%", "," + QJsonObject2QString(no_match_rule, false))
+                          .replace("%FINAL_OUT%", no_match_out)
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // hook.js
         auto source = qjs::ReadHookJS();
