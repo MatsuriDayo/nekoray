@@ -70,6 +70,11 @@ namespace NekoRay::fmt {
             stream->host = GetQueryValue(query, "host", "").replace("|", ",");
         } else if (stream->network == "grpc") {
             stream->path = GetQueryValue(query, "serviceName", "");
+        } else if (stream->network == "tcp") {
+            if (GetQueryValue(query, "headerType") == "http") {
+                stream->header_type = "http";
+                stream->host = GetQueryValue(query, "host", "");
+            }
         }
 
         return !password.isEmpty();
