@@ -443,7 +443,7 @@
         </layout>
        </item>
        <item row="5" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_24" stretch="1,1">
+        <layout class="QHBoxLayout" name="horizontalLayout_24">
          <item>
           <widget class="QGroupBox" name="groupBox_2">
            <layout class="QHBoxLayout" name="horizontalLayout_23">
@@ -455,23 +455,33 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="max_log_line"/>
+             <widget class="QLineEdit" name="max_log_line">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
          </item>
          <item>
-          <spacer name="horizontalSpacer">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-           <property name="sizeHint" stdset="0">
-            <size>
-             <width>0</width>
-             <height>0</height>
-            </size>
-           </property>
-          </spacer>
+          <widget class="QGroupBox" name="groupBox_3">
+           <layout class="QHBoxLayout" name="horizontalLayout_25">
+            <item>
+             <widget class="QCheckBox" name="AA_EnableHighDpiScaling">
+              <property name="toolTip">
+               <string>Maybe useful for HiDPI screens.</string>
+              </property>
+              <property name="text">
+               <string notr="true">Qt::AA_EnableHighDpiScaling</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
          </item>
         </layout>
        </item>

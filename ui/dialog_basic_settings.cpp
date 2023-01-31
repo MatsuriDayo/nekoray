@@ -54,6 +54,7 @@ public:
 DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     : QDialog(parent), ui(new Ui::DialogBasicSettings) {
     ui->setupUi(this);
+    ADD_ASTERISK(this);
 
     // Common
 
@@ -141,6 +142,20 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         repaint();
         mainwindow->repaint();
         NekoRay::dataStore->Save();
+    });
+    //
+    ui->AA_EnableHighDpiScaling->setChecked(ReadFileText("groups/HiDPI").toInt() == 1);
+    connect(ui->AA_EnableHighDpiScaling, &QCheckBox::clicked, this, [=](bool checked) {
+        QFile file;
+        file.setFileName("groups/HiDPI");
+        file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+        if (checked) {
+            file.write("1");
+        } else {
+            file.write("0");
+        }
+        file.close();
+        MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
     });
 
     // Subscription

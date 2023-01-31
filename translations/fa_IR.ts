@@ -229,6 +229,10 @@
         <source>Password</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Maybe useful for HiDPI screens.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
