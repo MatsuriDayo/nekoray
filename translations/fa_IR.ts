@@ -113,10 +113,6 @@
         <translation>اشاره ناامن</translation>
     </message>
     <message>
-        <source>Skip TLS certificate authentication by default</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Traffic statistics refresh rate</source>
         <translation>نرخ تازه سازی آمار ترافیک</translation>
     </message>
@@ -231,6 +227,10 @@
     </message>
     <message>
         <source>Maybe useful for HiDPI screens.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip TLS certificate authentication by default (allowInsecure)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -746,6 +746,10 @@
     </message>
     <message>
         <source>UUID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Generate UUID</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

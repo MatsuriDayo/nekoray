@@ -1,4 +1,4 @@
-set(PLATFORM_SOURCES 3rdparty/WinCommander.cpp sys/windows/guihelper.cpp)
+set(PLATFORM_SOURCES 3rdparty/WinCommander.cpp sys/windows/guihelper.cpp sys/windows/MiniDump.cpp)
 set(PLATFORM_LIBRARIES wininet wsock32 ws2_32 user32 rasapi32 iphlpapi)
 
 include(cmake/windows/generate_product_version.cmake)
@@ -21,5 +21,4 @@ else ()
     add_compile_options("/utf-8")
     add_compile_options("/std:c++17")
     add_definitions(-D_WIN32_WINNT=0x600 -D_SCL_SECURE_NO_WARNINGS -D_CRT_SECURE_NO_WARNINGS)
-    list(APPEND PLATFORM_SOURCES sys/windows/MiniDump.cpp)
 endif ()

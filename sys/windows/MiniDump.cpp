@@ -1,8 +1,11 @@
 #include "MiniDump.h"
 
-#include <Windows.h>
-#include <TChar.h>
-#include <DbgHelp.h>
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#include <windows.h>
+#include <tchar.h>
+#include <dbghelp.h>
 
 #include <QApplication>
 #include <QDir>
@@ -27,14 +30,14 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
     if (DllHandle) {
         MINIDUMPWRITEDUMP Dump = (MINIDUMPWRITEDUMP) GetProcAddress(DllHandle, "MiniDumpWriteDump");
         if (Dump) {
-            //创建 Dump 文件
+            // 创建 Dump 文件
             QDateTime CurDTime = QDateTime::currentDateTime();
             QString current_date = CurDTime.toString("yyyy_MM_dd_hh_mm_ss");
             // dmp文件的命名
             QString dumpText = "Dump_" + current_date + ".dmp";
             EXCEPTION_RECORD *record = pException->ExceptionRecord;
             QString errCode(QString::number(record->ExceptionCode, 16));
-            QString errAddr(QString::number((uint) record->ExceptionAddress, 16));
+            QString errAddr(QString::number((uintptr_t) record->ExceptionAddress, 16));
             QString errFlag(QString::number(record->ExceptionFlags, 16));
             QString errPara(QString::number(record->NumberParameters, 16));
             HANDLE DumpHandle = CreateFile((LPCWSTR) dumpText.utf16(),
@@ -44,14 +47,14 @@ LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
                 dumpInfo.ExceptionPointers = pException;
                 dumpInfo.ThreadId = GetCurrentThreadId();
                 dumpInfo.ClientPointers = TRUE;
-                //将dump信息写入dmp文件
+                // 将dump信息写入dmp文件
                 Dump(GetCurrentProcess(), GetCurrentProcessId(), DumpHandle, MiniDumpNormal, &dumpInfo,
                      NULL, NULL);
                 CloseHandle(DumpHandle);
             } else {
                 dumpText = "";
             }
-            //创建消息提示
+            // 创建消息提示
             QMessageBox::warning(NULL, "Application crashed",
                                  QString("ErrorCode: %1 ErrorAddr:%2 ErrorFlag: %3 ErrorPara: %4\nVersion: %5\nDump file at %6")
                                      .arg(errCode)

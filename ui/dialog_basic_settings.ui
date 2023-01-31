@@ -659,7 +659,7 @@
        <item>
         <widget class="QCheckBox" name="skip_cert">
          <property name="text">
-          <string>Skip TLS certificate authentication by default</string>
+          <string>Skip TLS certificate authentication by default (allowInsecure)</string>
          </property>
         </widget>
        </item>

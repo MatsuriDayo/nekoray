@@ -14,34 +14,7 @@
    <string notr="true">EditVMess</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Alter Id</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="MyLineEdit" name="uuid"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Security</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="aid"/>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>UUID</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
+   <item row="4" column="1">
     <widget class="QComboBox" name="security">
      <property name="editable">
       <bool>true</bool>
@@ -73,6 +46,64 @@
      </item>
     </widget>
    </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Security</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Alter Id</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>UUID</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="MyLineEdit" name="uuid"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QWidget" name="horizontalWidget" native="true">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QLineEdit" name="aid"/>
+      </item>
+      <item>
+       <widget class="QPushButton" name="uuidgen">
+        <property name="text">
+         <string>Generate UUID</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -82,6 +113,12 @@
    <header>ui/widget/MyLineEdit.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>uuid</tabstop>
+  <tabstop>aid</tabstop>
+  <tabstop>uuidgen</tabstop>
+  <tabstop>security</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

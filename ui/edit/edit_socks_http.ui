@@ -14,9 +14,6 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <property name="horizontalSpacing">
-    <number>0</number>
-   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="version_l">
      <property name="text">

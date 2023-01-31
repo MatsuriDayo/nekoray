@@ -112,10 +112,6 @@
         <translation>提示不安全的配置</translation>
     </message>
     <message>
-        <source>Skip TLS certificate authentication by default</source>
-        <translation>默认跳过 TLS 证书验证</translation>
-    </message>
-    <message>
         <source>Traffic statistics refresh rate</source>
         <translation>流量统计刷新率</translation>
     </message>
@@ -153,7 +149,7 @@
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>检查更新时包括 Pre-release</translation>
+        <translation>检查更新时包括 Pre-release 版本</translation>
     </message>
     <message>
         <source>Set custom icon</source>
@@ -230,6 +226,10 @@
     <message>
         <source>Maybe useful for HiDPI screens.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Skip TLS certificate authentication by default (allowInsecure)</source>
+        <translation>默认跳过 TLS 证书验证 (allowInsecure)</translation>
     </message>
 </context>
 <context>
@@ -753,6 +753,10 @@
     <message>
         <source>UUID</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Generate UUID</source>
+        <translation>生成 UUID</translation>
     </message>
 </context>
 <context>

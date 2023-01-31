@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	"github.com/codeclysm/extract"
 )
@@ -18,12 +19,23 @@ func Updater() {
 		os.RemoveAll("./nekoray_update")
 	}
 
-	// update extract
-	if Exist("./nekoray.zip") {
-		pre_cleanup()
-		log.Println("updating from zip")
+	// find update package
+	var updatePackagePath string
+	if len(os.Args) == 2 && Exist(os.Args[1]) {
+		updatePackagePath = os.Args[1]
+	} else if Exist("./nekoray.zip") {
+		updatePackagePath = "./nekoray.zip"
+	} else if Exist("./nekoray.tar.gz") {
+		updatePackagePath = "./nekoray.tar.gz"
+	} else {
+		log.Fatalln("no update")
+	}
+	log.Println("updating from", updatePackagePath)
 
-		f, err := os.Open("./nekoray.zip")
+	// extract update package
+	if strings.HasSuffix(updatePackagePath, ".zip") {
+		pre_cleanup()
+		f, err := os.Open(updatePackagePath)
 		if err != nil {
 			log.Fatalln(err.Error())
 		}
@@ -32,11 +44,9 @@ func Updater() {
 			log.Fatalln(err.Error())
 		}
 		f.Close()
-	} else if Exist("./nekoray.tar.gz") {
+	} else if strings.HasSuffix(updatePackagePath, ".tar.gz") {
 		pre_cleanup()
-		log.Println("updating from tar.gz")
-
-		f, err := os.Open("./nekoray.tar.gz")
+		f, err := os.Open(updatePackagePath)
 		if err != nil {
 			log.Fatalln(err.Error())
 		}
@@ -45,8 +55,6 @@ func Updater() {
 			log.Fatalln(err.Error())
 		}
 		f.Close()
-	} else {
-		log.Fatalln("no update")
 	}
 
 	// remove old file

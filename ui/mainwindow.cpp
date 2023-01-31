@@ -367,13 +367,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->menuCurrent_Select, &QMenu::aboutToShow, this, move_tests_to_menu(true));
     connect(ui->menuCurrent_Group, &QMenu::aboutToShow, this, move_tests_to_menu(false));
     connect(ui->menu_server, &QMenu::aboutToHide, this, [=] {
-        auto timer = new QTimer(this);
-        timer->setInterval(100);
-        connect(timer, &QTimer::timeout, this, [=] {
-            set_selected_or_group(2);
-            timer->deleteLater();
-        });
-        timer->start();
+        setTimeout([=] { set_selected_or_group(2); }, this, 200);
     });
     set_selected_or_group(2);
     //
