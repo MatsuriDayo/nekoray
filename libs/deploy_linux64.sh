@@ -23,7 +23,8 @@ cp $USR_LIB/libQt5Svg.so.5 .
 cp $USR_LIB/libQt5Widgets.so.5 .
 cp $USR_LIB/libQt5X11Extras.so.5 .
 cp $USR_LIB/libQt5XcbQpa.so.5 .
-cp $USR_LIB/libxcb-util.so.1 .
+cp $USR_LIB/libdouble-conversion.so.? .
+cp $USR_LIB/libxcb-util.so.? .
 cp $USR_LIB/libicuuc.so.?? .
 cp $USR_LIB/libicui18n.so.?? .
 cp $USR_LIB/libicudata.so.?? .

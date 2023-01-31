@@ -41,12 +41,13 @@ void MainWindow::setup_grpc() {
 inline bool speedtesting = false;
 
 void MainWindow::speedtest_current_group(int mode) {
-    if (speedtesting) return;
     auto profiles = get_selected_or_group();
     if (profiles.isEmpty()) return;
     auto group = NekoRay::profileManager->CurrentGroup();
     if (group->archive) return;
 
+#ifndef NKR_NO_GRPC
+    if (speedtesting) return;
     QStringList full_test_flags;
     if (mode == libcore::FullTest) {
         bool ok;
@@ -60,9 +61,8 @@ void MainWindow::speedtest_current_group(int mode) {
         full_test_flags = s.trimmed().split(",");
         if (!ok) return;
     }
-
     speedtesting = true;
-#ifndef NKR_NO_GRPC
+
     runOnNewThread([this, profiles, mode, full_test_flags]() {
         QMutex lock_write;
         QMutex lock_return;
