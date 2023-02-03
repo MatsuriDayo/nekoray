@@ -8,6 +8,7 @@ import (
 	"neko/pkg/neko_common"
 	"net"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -18,7 +19,7 @@ import (
 
 var instance *libcore.V2RayInstance
 var getNekorayTunIndex = func() int { return 0 } // Windows only
-var underlyingNetDialer *net.Dialer              // Windows only
+var underlyingNetDialer *net.Dialer              // NKR_VPN_LEGACY_DNS only
 
 func setupCore() {
 	// TODO del
@@ -28,14 +29,16 @@ func setupCore() {
 	// localdns setup
 	resolver_def := &net.Resolver{PreferGo: false}
 	resolver_go := &net.Resolver{PreferGo: true}
-	if underlyingNetDialer != nil {
+	if underlyingNetDialer != nil && os.Getenv("NKR_VPN_LEGACY_DNS") == "1" {
+		resolver_def.Dial = underlyingNetDialer.DialContext
 		resolver_go.Dial = underlyingNetDialer.DialContext
+		logrus.Println("using NKR_VPN_LEGACY_DNS")
 	}
 	localdns.SetLookupFunc(func(network string, host string) (ips []net.IP, err error) {
 		// fix old sekai
 		defer func() {
 			if len(ips) == 0 {
-				logrus.Println("LookupIP error:", err)
+				logrus.Println("LookupIP error:", network, host, err)
 				err = dns.ErrEmptyResponse
 			}
 		}()
@@ -43,7 +46,7 @@ func setupCore() {
 		if getNekorayTunIndex() == 0 {
 			return resolver_def.LookupIP(context.Background(), network, host)
 		}
-		// VPN mode use Go resolver
+		// Windows VPN mode use Go resolver
 		return resolver_go.LookupIP(context.Background(), network, host)
 	})
 	//

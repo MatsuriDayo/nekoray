@@ -7,6 +7,7 @@
 namespace NekoRay::sys {
     ExternalProcess::ExternalProcess() : QProcess() {
         // qDebug() << "[Debug] ExternalProcess()" << this << running_ext;
+        this->env = QProcessEnvironment::systemEnvironment().toStringList();
     }
 
     ExternalProcess::~ExternalProcess() {
@@ -117,7 +118,6 @@ namespace NekoRay::sys {
 
     void CoreProcess::Start() {
         show_stderr = false;
-        env = QStringList();
         auto v2ray_asset_dir = FindCoreAsset("geoip.dat");
         if (!v2ray_asset_dir.isEmpty()) {
             v2ray_asset_dir = QFileInfo(v2ray_asset_dir).absolutePath();

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"libcore/protect"
 	"log"
+	"net"
 	"strings"
 	"syscall"
 
@@ -102,4 +103,12 @@ func is_fwmark_exist(number int) bool {
 
 func init() {
 	protect.FdProtector = &fwmarkProtector{}
+	underlyingNetDialer = &net.Dialer{
+		Control: func(network, address string, c syscall.RawConn) error {
+			c.Control(func(fd uintptr) {
+				protect.FdProtector.Protect(int32(fd))
+			})
+			return nil
+		},
+	}
 }
