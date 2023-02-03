@@ -17,7 +17,8 @@ import (
 )
 
 var instance *libcore.V2RayInstance
-var getNekorayTunIndex = func() int { return 0 }
+var getNekorayTunIndex = func() int { return 0 } // Windows only
+var underlyingNetDialer *net.Dialer              // Windows only
 
 func setupCore() {
 	// TODO del
@@ -27,6 +28,9 @@ func setupCore() {
 	// localdns setup
 	resolver_def := &net.Resolver{PreferGo: false}
 	resolver_go := &net.Resolver{PreferGo: true}
+	if underlyingNetDialer != nil {
+		resolver_go.Dial = underlyingNetDialer.DialContext
+	}
 	localdns.SetLookupFunc(func(network string, host string) (ips []net.IP, err error) {
 		// fix old sekai
 		defer func() {

@@ -34,7 +34,7 @@ func main() {
 			} else {
 				// 1. nekoray stop it self and run "updater.exe"
 				Copy("./updater.exe", "./updater.old")
-				exec.Command("./updater.old").Start()
+				exec.Command("./updater.old", os.Args[1:]...).Start()
 			}
 		} else {
 			// 1. update files

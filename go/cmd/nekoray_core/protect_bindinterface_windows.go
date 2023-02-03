@@ -23,7 +23,7 @@ func init() {
 		bindInterfaceIndex := getBindInterfaceIndex(address)
 		if bindInterfaceIndex != 0 {
 			if err := bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
-				log.Println("bind inbound interface", err)
+				log.Println("bind inbound interface", network, address, err)
 				return err
 			}
 		}
@@ -41,12 +41,33 @@ func init() {
 				v6 = false
 			}
 			if err := bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
-				log.Println("bind outbound interface", err)
+				log.Println("bind outbound interface", network, address, err)
 				return err
 			}
 		}
 		return nil
 	})
+	underlyingNetDialer = &net.Dialer{
+		Control: func(network, address string, c syscall.RawConn) error {
+			c.Control(func(fd uintptr) {
+				bindInterfaceIndex := getBindInterfaceIndex(address)
+				if bindInterfaceIndex != 0 {
+					var v4, v6 bool
+					if strings.HasSuffix(network, "6") {
+						v4 = false
+						v6 = true
+					} else {
+						v4 = true
+						v6 = false
+					}
+					if err := bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
+						log.Println("underlyingNetDialer: bind interface", network, address, err)
+					}
+				}
+			})
+			return nil
+		},
+	}
 	//
 	updateRoutes()
 	iphlpapi.RegisterNotifyRouteChange2(func(callerContext uintptr, row uintptr, notificationType uint32) uintptr {
