@@ -2,11 +2,11 @@
 
 Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 
-Support Windows / Linux / ~~macOS amd64~~ out of the box now.
+Support Windows / Linux / macOS amd64 is built manually out of the box now. See [here](https://github.com/MatsuriDayo/nekoray#macos)
 
 基于 Qt 的跨平台代理配置管理器 (后端 v2ray / sing-box)
 
-目前支持 Windows / Linux / ~~macOS amd64~~ 开箱即用
+目前支持 Windows / Linux / macOS amd64 is built manually out of the box now. See [here](https://github.com/MatsuriDayo/nekoray#macos)
 
 ## Readme Translations
 
