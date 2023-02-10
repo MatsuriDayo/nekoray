@@ -31,7 +31,6 @@ namespace NekoRay {
         QSharedPointer<fmt::AbstractBean> bean;
         QSharedPointer<traffic::TrafficData> traffic_data = QSharedPointer<traffic::TrafficData>(new traffic::TrafficData(""));
 
-        // Cache
         QString full_test_report;
 
         ProxyEntity(fmt::AbstractBean *bean, const QString &type_);

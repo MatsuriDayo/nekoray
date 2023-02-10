@@ -66,7 +66,7 @@ void MainWindow::speedtest_current_group(int mode) {
     runOnNewThread([this, profiles, mode, full_test_flags]() {
         QMutex lock_write;
         QMutex lock_return;
-        int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
+        int threadN = NekoRay::dataStore->test_concurrent;
         int threadN_finished = 0;
         auto profiles_test = profiles; // copy
 
