@@ -48,6 +48,7 @@ message TestReq {
   bool full_speed = 9;
   bool full_in_out = 10;
   bool full_nat = 11;
+  bool full_udp_latency = 12;
 }
 
 message TestResp {

@@ -56,8 +56,9 @@ void MainWindow::speedtest_current_group(int mode) {
                                           "1. Latency\n"
                                           "2. Download speed\n"
                                           "3. In and Out IP\n"
-                                          "4. NAT type"),
-                                       QLineEdit::Normal, "1,2,3,4", &ok);
+                                          "4. UDP NAT type\n"
+                                          "5. UDP Latency"),
+                                       QLineEdit::Normal, "1,5", &ok);
         full_test_flags = s.trimmed().split(",");
         if (!ok) return;
     }
@@ -115,6 +116,7 @@ void MainWindow::speedtest_current_group(int mode) {
                         req.set_full_speed(full_test_flags.contains("2"));
                         req.set_full_in_out(full_test_flags.contains("3"));
                         req.set_full_nat(full_test_flags.contains("4"));
+                        req.set_full_udp_latency(full_test_flags.contains("5"));
                     } else if (mode == libcore::TcpPing) {
                         req.set_address(profile->bean->DisplayAddress().toStdString());
                     }

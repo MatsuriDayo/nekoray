@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -159,6 +160,46 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 
+		// UDP Latency
+		var udpLatency string
+		if in.FullUdpLatency {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+			result := make(chan string)
+
+			go func() {
+				var startTime = time.Now()
+				pc, err := core.DialUDP(ctx, i.Core)
+				if err == nil {
+					defer pc.Close()
+					dnsPacket, _ := hex.DecodeString("0000010000010000000000000377777706676f6f676c6503636f6d0000010001")
+					addr := &net.UDPAddr{
+						IP:   net.ParseIP("8.8.8.8"),
+						Port: 53,
+					}
+					_, err = pc.WriteTo(dnsPacket, addr)
+					if err == nil {
+						var buf [1400]byte
+						_, _, err = pc.ReadFrom(buf[:])
+					}
+				}
+				if err == nil {
+					var endTime = time.Now()
+					result <- fmt.Sprint(endTime.Sub(startTime).Abs().Milliseconds(), "ms")
+				} else {
+					result <- "Error"
+				}
+				close(result)
+			}()
+
+			select {
+			case <-ctx.Done():
+				udpLatency = "Timeout"
+			case r := <-result:
+				udpLatency = r
+			}
+			cancel()
+		}
+
 		// 入口 IP
 		var in_ip string
 		if in.FullInOut {
@@ -209,12 +250,13 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		// STUN
 		var stunText string
 		if in.FullNat {
-			timeout := time.NewTimer(time.Second * 5)
-			result := make(chan string, 0)
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
+			result := make(chan string)
 
 			go func() {
-				pc, err := core.DialUDP(context.TODO(), i.Core)
+				pc, err := core.DialUDP(ctx, i.Core)
 				if err == nil {
+					defer pc.Close()
 					stunClient := stun.NewClientWithConnection(pc)
 					stunClient.SetServerAddr("stun.ekiga.net:3478")
 					nat, host, err, fake := stunClient.Discover()
@@ -236,16 +278,20 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}()
 
 			select {
-			case <-timeout.C:
+			case <-ctx.Done():
 				stunText = "Timeout"
 			case r := <-result:
 				stunText = r
 			}
+			cancel()
 		}
 
 		fr := make([]string, 0)
 		if latency != "" {
 			fr = append(fr, fmt.Sprintf("Latency: %s", latency))
+		}
+		if udpLatency != "" {
+			fr = append(fr, fmt.Sprintf("UDPLatency: %s", udpLatency))
 		}
 		if speed != "" {
 			fr = append(fr, fmt.Sprintf("Speed: %s", speed))
