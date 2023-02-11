@@ -1,0 +1,214 @@
+name: Nekoray build matrix for macOS - cmake
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release Tag'
+        required: true
+      publish:
+        description: 'Publish: If want ignore'
+        required: false
+      artifact-pack:
+        description: 'artifact-pack: If want ignore'
+        required: false
+jobs:
+  build-go:
+    strategy:
+      matrix:
+        cross_os: [ windows, linux, darwin ]
+        cross_arch: [ amd64 ]
+        include:
+          - cross_os: public_res
+            cross_arch: public_res
+      fail-fast: false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v3
+      - name: Go Status
+        run: git ls-files go | xargs cat | sha1sum > go_status
+      - name: Cache Common Download
+        id: cache-common
+        uses: actions/cache@v3
+        with:
+          path: artifacts.tgz
+          key: CommonCache-${{ matrix.cross_os }}-${{ matrix.cross_arch }}-${{ hashFiles('libs/*.sh', 'go_status', '*.txt') }}
+      - name: Install Golang
+        if: steps.cache-common.outputs.cache-hit != 'true'
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.19.4
+      - name: Build golang parts
+        if: steps.cache-common.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          [ ${{ matrix.cross_os }} == public_res ] || ./libs/get_source.sh
+          [ ${{ matrix.cross_os }} == public_res ] || GOOS=${{ matrix.cross_os }} GOARCH=${{ matrix.cross_arch }} ./libs/build_go.sh
+          [ ${{ matrix.cross_os }} == public_res ] || exit 0
+          ./libs/build_public_res.sh
+      - name: Tar files
+        if: steps.cache-common.outputs.cache-hit != 'true'
+        run: tar czvf artifacts.tgz ./deployment
+      - name: Uploading Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: NekoRay-${{ github.sha }}-Common-${{ matrix.cross_os }}-${{ matrix.cross_arch }}
+          path: artifacts.tgz
+  build-cpp:
+    strategy:
+      matrix:
+        platform: [ windows-2022, ubuntu-20.04, macos-10.15 ]
+        arch: [ x64 ]
+      fail-fast: false
+
+    runs-on: ${{ matrix.platform }}
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    needs:
+      - build-go
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v3
+        with:
+          submodules: "recursive"
+      - name: Install MSVC compiler
+        if: matrix.platform == 'windows-2022'
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          # 14.1 is for vs2017, 14.2 is vs2019, following the upstream vcpkg build from Qv2ray-deps repo
+          toolset: 14.2
+          arch: ${{ matrix.arch }}
+      - name: Download Artifacts for macOS
+        if: matrix.platform == 'macos-10.15'
+        uses: actions/download-artifact@v3
+        with:
+          path: download-artifact
+      # ========================================================================================================= Qt Install
+      - name: macOS - Install Qt 5.15
+        if: matrix.platform == 'macos-10.15'
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: 5.15.2
+          py7zrversion: ' '
+          aqtversion: ' '
+          setup-python: false
+          cache: true
+          cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}
+      - name: Windows - Download Custom Qt 5.15 SDK
+        shell: bash
+        if: matrix.platform == 'windows-2022'
+        run: |
+          mkdir qtsdk ; cd qtsdk
+          curl -LSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt5.15.7-Windows-x86_64-VS2019-16.11.20-20221103.7z
+          7z x *.7z
+          rm *.7z
+          mv Qt* Qt
+      - name: Linux - Install Qt 5.12 via apt
+        shell: bash
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y zlib1g-dev fcitx-frontend-qt5 qtbase5-dev qttools5-dev libqt5svg5-dev libqt5x11extras5-dev
+      # ========================================================================================================= 编译与 Qt 无关的依赖
+      - name: Install ninja-build tool
+        uses: seanmiddleditch/gha-setup-ninja@v3
+      - name: Cache Download
+        id: cache-deps
+        uses: actions/cache@v3
+        with:
+          path: libs/deps
+          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}
+      - name: Build Dependencies
+        shell: bash
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: |
+          ./libs/build_deps_all.sh
+      # ========================================================================================================= Generate MakeFile and Build
+      - name: Windows - Generate MakeFile and Build
+        shell: bash
+        if: matrix.platform == 'windows-2022'
+        env:
+          CC: cl.exe
+          CXX: cl.exe
+        run: |
+          source libs/env_qtsdk.sh $PWD/qtsdk/Qt
+          mkdir build
+          cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+          ninja
+          cd ..
+          ./libs/deploy_windows64.sh
+      - name: Linux - Generate MakeFile and Build
+        shell: bash
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          mkdir build
+          cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+          ninja
+          cd ..
+          ./libs/deploy_linux64.sh
+      - name: macOS - Generate MakeFile and Build
+        shell: bash
+        if: matrix.platform == 'macos-10.15'
+        run: |
+          mkdir build
+          cd build
+          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DNKR_PACKAGE_MACOS=1 ..
+          ninja
+          cd ..
+          ./libs/deploy_macos.sh
+      # ========================================================================================================= Deployments
+      - name: Tar files
+        shell: bash
+        run: tar czvf artifacts.tgz ./deployment
+      - name: Uploading Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
+          path: artifacts.tgz
+  publish:
+    name: Pack & Publish Release
+    if: github.event.inputs.artifact-pack != 'y'
+    runs-on: ubuntu-latest
+    needs:
+      - build-cpp
+      - build-go
+    steps:
+      - name: Checking out sources
+        uses: actions/checkout@v3
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          path: download-artifact
+      - name: Pack
+        run: |
+          source libs/deploy_common.sh
+          curl -Lo - https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar xzv
+          mv ghr*linux_amd64/ghr .
+          find . -name artifacts.tgz | xargs -n1 tar xvzf
+          cd deployment
+          cp -r public_res/* linux64
+          cp -r public_res/* windows64
+          rm -rf public_res *.pdb
+          ####
+          mv linux64 nekoray
+          zip -r $version_standalone-linux64.zip nekoray
+          rm -rf nekoray
+          ####
+          mv windows64 nekoray
+          zip -r $version_standalone-windows64.zip nekoray
+          rm -rf nekoray
+          ####
+          mv macos-amd64/nekoray.dmg $version_standalone-macos-amd64.dmg
+          rm -rf macos-amd64
+      - name: Uploading Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: Deployment-${{ github.sha }}
+          path: deployment
+      - name: Release
+        if: github.event.inputs.publish != 'y'
+        run: |
+          ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" deployment
