@@ -56,8 +56,8 @@ void MainWindow::speedtest_current_group(int mode) {
                                           "1. Latency\n"
                                           "2. Download speed\n"
                                           "3. In and Out IP\n"
-                                          "4. NAT type"),
-                                       QLineEdit::Normal, "1,2,3,4", &ok);
+                                          "4. UDP Latency"),
+                                       QLineEdit::Normal, "1,4", &ok);
         full_test_flags = s.trimmed().split(",");
         if (!ok) return;
     }
@@ -66,7 +66,7 @@ void MainWindow::speedtest_current_group(int mode) {
     runOnNewThread([this, profiles, mode, full_test_flags]() {
         QMutex lock_write;
         QMutex lock_return;
-        int threadN = mode == libcore::FullTest ? 1 : NekoRay::dataStore->test_concurrent;
+        int threadN = NekoRay::dataStore->test_concurrent;
         int threadN_finished = 0;
         auto profiles_test = profiles; // copy
 
@@ -107,14 +107,14 @@ void MainWindow::speedtest_current_group(int mode) {
                         }
                         //
                         auto config = new libcore::LoadConfigReq;
-                        config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
+                        config->set_core_config(QJsonObject2QString(c->coreConfig, true).toStdString());
                         req.set_allocated_config(config);
                         req.set_in_address(profile->bean->serverAddress.toStdString());
 
                         req.set_full_latency(full_test_flags.contains("1"));
                         req.set_full_speed(full_test_flags.contains("2"));
                         req.set_full_in_out(full_test_flags.contains("3"));
-                        req.set_full_nat(full_test_flags.contains("4"));
+                        req.set_full_udp_latency(full_test_flags.contains("4"));
                     } else if (mode == libcore::TcpPing) {
                         req.set_address(profile->bean->DisplayAddress().toStdString());
                     }
@@ -212,7 +212,8 @@ void MainWindow::neko_start(int _id) {
 
 #ifndef NKR_NO_GRPC
     libcore::LoadConfigReq req;
-    req.set_coreconfig(QJsonObject2QString(result->coreConfig, true).toStdString());
+    req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
+    req.set_enable_nekoray_connections(NekoRay::dataStore->connection_statistics);
     //
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, req);

@@ -1090,18 +1090,6 @@ End: %2</source>
         <translation>输入</translation>
     </message>
     <message>
-        <source>Please enter the items to be tested, separated by commas
-1. Latency
-2. Download speed
-3. In and Out IP
-4. NAT type</source>
-        <translation>请输入要测试的项目，用逗号分隔
-1. 延迟
-2. 下载速度
-3. 入口出口 IP
-4. NAT 类型</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>手动输入配置</translation>
     </message>
@@ -1266,6 +1254,18 @@ Split by line.</source>
     <message>
         <source>Current Select</source>
         <translation>当前选中</translation>
+    </message>
+    <message>
+        <source>Please enter the items to be tested, separated by commas
+1. Latency
+2. Download speed
+3. In and Out IP
+4. UDP Latency</source>
+        <translation>请输入要测试的项目，用逗号分隔
+1. TCP 延迟
+2. 下载速度
+3. 入口出口 IP
+4. UDP DNS 延迟</translation>
     </message>
 </context>
 <context>

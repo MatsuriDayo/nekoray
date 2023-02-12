@@ -27,7 +27,7 @@ namespace NekoRay {
         }
 
         // hook.js
-        if (result->error.isEmpty()) {
+        if (result->error.isEmpty() && !forTest) {
             auto source = qjs::ReadHookJS();
             if (!source.isEmpty()) {
                 qjs::QJS js(source);
@@ -274,7 +274,7 @@ namespace NekoRay {
             });
         }
         dnsServers += QJsonObject{
-            {"address", directDnsAddress},
+            {"address", directDnsAddress.replace("https://", "https+local://")},
             {"fallbackStrategy", "disabled"},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
@@ -595,9 +595,12 @@ namespace NekoRay {
                         auto stream = GetStreamSettings(ent->bean.data());
                         if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
                             muxObj["packetEncoding"] = stream->packet_encoding;
+                        } else if (stream != nullptr && stream->network == "grpc") {
+                            // ignore mux.cool for gRPC
+                        } else {
+                            outbound["mux"] = muxObj;
+                            muxApplied = true;
                         }
-                        outbound["mux"] = muxObj;
-                        muxApplied = true;
                     }
                 }
             }

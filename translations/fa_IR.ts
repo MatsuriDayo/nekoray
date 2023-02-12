@@ -1221,14 +1221,6 @@ End: %2</source>
         <translation>ورودی</translation>
     </message>
     <message>
-        <source>Please enter the items to be tested, separated by commas
-1. Latency
-2. Download speed
-3. In and Out IP
-4. NAT type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>[%1] test error: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1254,6 +1246,14 @@ End: %2</source>
     </message>
     <message>
         <source>Current Select</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please enter the items to be tested, separated by commas
+1. Latency
+2. Download speed
+3. In and Out IP
+4. UDP Latency</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

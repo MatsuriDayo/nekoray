@@ -51,22 +51,22 @@ namespace Qv2ray::ui {
         highlightingRules.append(rule);
         //
         debugFormat.setForeground(Qt::darkGray);
-        rule.pattern = QRegularExpression("\\[?D[Ee][Bb][Uu].*?\\]");
+        rule.pattern = QRegularExpression("\\[D[Ee][Bb][Uu].*?\\]");
         rule.format = debugFormat;
         highlightingRules.append(rule);
         //
         infoFormat.setForeground(darkMode ? Qt::lightGray : Qt::darkCyan);
-        rule.pattern = QRegularExpression("\\[?I[Nn][Ff][Oo].*?\\]");
+        rule.pattern = QRegularExpression("\\[I[Nn][Ff][Oo].*?\\]");
         rule.format = infoFormat;
         highlightingRules.append(rule);
         //
         warningFormat.setFontWeight(QFont::Bold);
         warningFormat2.setFontWeight(QFont::Bold);
-        rule.pattern = QRegularExpression("\\[?W[Aa][Rr][Nn].*?\\]");
+        rule.pattern = QRegularExpression("\\[W[Aa][Rr][Nn].*?\\]");
         rule.format = warningFormat2;
         highlightingRules.append(rule);
         //
-        rule.pattern = QRegularExpression("\\[?E[Rr][Rr][Oo].*?\\]");
+        rule.pattern = QRegularExpression("\\[E[Rr][Rr][Oo].*?\\]");
         rule.format = rejectedFormat;
         highlightingRules.append(rule);
 
@@ -81,10 +81,6 @@ namespace Qv2ray::ui {
         failedFormat.setForeground(Qt::white);
         rule.pattern = QRegularExpression("failed");
         rule.format = failedFormat;
-        highlightingRules.append(rule);
-        //
-        rule.pattern = QRegularExpression("default route");
-        rule.format = infoFormat;
         highlightingRules.append(rule);
         //
         rule.pattern = QRegularExpression(">>>>+");

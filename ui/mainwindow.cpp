@@ -831,6 +831,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
             }
             case NekoRay::GroupSortMethod::ByAddress:
             case NekoRay::GroupSortMethod::ByName:
+            case NekoRay::GroupSortMethod::ByLatency:
             case NekoRay::GroupSortMethod::ByType: {
                 std::sort(ui->proxyListTable->order.begin(), ui->proxyListTable->order.end(),
                           [=](int a, int b) {
@@ -845,25 +846,27 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
                               } else if (groupSortAction.method == NekoRay::GroupSortMethod::ByAddress) {
                                   ms_a = NekoRay::profileManager->GetProfile(a)->bean->DisplayAddress();
                                   ms_b = NekoRay::profileManager->GetProfile(b)->bean->DisplayAddress();
+                              } else if (groupSortAction.method == NekoRay::GroupSortMethod::ByLatency) {
+                                  ms_a = NekoRay::profileManager->GetProfile(a)->full_test_report;
+                                  ms_b = NekoRay::profileManager->GetProfile(b)->full_test_report;
                               }
                               if (groupSortAction.descending) {
+                                  if (groupSortAction.method == NekoRay::GroupSortMethod::ByLatency) {
+                                      auto int_a = NekoRay::profileManager->GetProfile(a)->latency;
+                                      auto int_b = NekoRay::profileManager->GetProfile(b)->latency;
+                                      if (int_a > 0 && int_b > 0) {
+                                          return int_a > int_b;
+                                      }
+                                  }
                                   return ms_a > ms_b;
                               } else {
-                                  return ms_a < ms_b;
-                              }
-                          });
-                break;
-            }
-            case NekoRay::GroupSortMethod::ByLatency: {
-                std::sort(ui->proxyListTable->order.begin(), ui->proxyListTable->order.end(),
-                          [=](int a, int b) {
-                              auto ms_a = NekoRay::profileManager->GetProfile(a)->latency;
-                              auto ms_b = NekoRay::profileManager->GetProfile(b)->latency;
-                              if (ms_a <= 0) ms_a = 114514;
-                              if (ms_b <= 0) ms_b = 114514;
-                              if (groupSortAction.descending) {
-                                  return ms_a > ms_b;
-                              } else {
+                                  if (groupSortAction.method == NekoRay::GroupSortMethod::ByLatency) {
+                                      auto int_a = NekoRay::profileManager->GetProfile(a)->latency;
+                                      auto int_b = NekoRay::profileManager->GetProfile(b)->latency;
+                                      if (int_a > 0 && int_b > 0) {
+                                          return int_a < int_b;
+                                      }
+                                  }
                                   return ms_a < ms_b;
                               }
                           });
@@ -1283,6 +1286,7 @@ void MainWindow::on_menu_resolve_domain_triggered() {
     }
     if (mw_sub_updating) return;
     mw_sub_updating = true;
+    NekoRay::dataStore->resolve_count = profiles.count();
 
     for (const auto &profile: profiles) {
         profile->bean->ResolveDomainToIP([=] {
@@ -1501,7 +1505,7 @@ void MainWindow::start_select_mode(QObject *context, const std::function<void(in
 
 // 连接列表
 
-inline QJsonArray last_arr;
+inline QJsonArray last_arr; // format is nekoray_connections_json
 
 void MainWindow::refresh_connection_list(const QJsonArray &arr) {
     if (last_arr == arr) {

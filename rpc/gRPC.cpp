@@ -257,7 +257,7 @@ namespace NekoRay::rpc {
         auto status = grpc_channel->Call("ListConnections", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
-            return reply.matsuri_connections_json();
+            return reply.nekoray_connections_json();
         } else {
             return "";
         }

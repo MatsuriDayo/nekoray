@@ -23,8 +23,8 @@ message ErrorResp {
 }
 
 message LoadConfigReq {
-  string coreConfig = 1;
-  string tryDomains = 2;
+  string core_config = 1;
+  bool enable_nekoray_connections = 2;
 }
 
 enum TestMode {
@@ -47,7 +47,9 @@ message TestReq {
   bool full_latency = 8;
   bool full_speed = 9;
   bool full_in_out = 10;
-  bool full_nat = 11;
+  bool full_udp_latency = 12;
+  //
+  bool full_nat = 11 [deprecated = true];
 }
 
 message TestResp {
@@ -85,5 +87,5 @@ message UpdateResp {
 }
 
 message ListConnectionsResp {
-  string matsuri_connections_json = 1;
+  string nekoray_connections_json = 1;
 }

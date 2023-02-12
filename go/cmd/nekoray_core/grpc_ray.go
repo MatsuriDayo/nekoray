@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
+	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
-	"libcore"
-	"libcore/stun"
+	"log"
 	"neko/gen"
 	"neko/pkg/grpc_server"
 	"neko/pkg/neko_common"
@@ -16,8 +16,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/sirupsen/logrus"
 	core "github.com/v2fly/v2ray-core/v5"
+	"github.com/v2fly/v2ray-core/v5/nekoutils"
 )
 
 type server struct {
@@ -36,7 +36,8 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 	}()
 
 	if neko_common.Debug {
-		logrus.Println("Start:", in.CoreConfig, in.TryDomains)
+		log.Println("Start:", in.CoreConfig)
+		log.Println("EnableNekorayConnections:", in.EnableNekorayConnections)
 	}
 
 	if instance != nil {
@@ -44,14 +45,12 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		return
 	}
 
-	instance = libcore.NewV2rayInstance()
-
-	libcore.SetConfig(in.TryDomains, false, true)
-
-	err = instance.LoadConfig(in.CoreConfig)
+	instance, err = NewNekoV2rayInstance(in.CoreConfig)
 	if err != nil {
 		return
 	}
+
+	nekoutils.SetConnectionPoolV2RayEnabled(instance.CorePtr(), in.EnableNekorayConnections)
 
 	err = instance.Start()
 	if err != nil {
@@ -92,22 +91,19 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 	}()
 
 	if neko_common.Debug {
-		logrus.Println("Test:", in)
+		log.Println("Test:", in)
 	}
 
 	if in.Mode == gen.TestMode_UrlTest {
-		var i *libcore.V2RayInstance
+		var i *NekoV2RayInstance
 
 		if in.Config != nil {
 			// Test instance
-			i = libcore.NewV2rayInstance()
-			i.ForTest = true
-			defer i.Close()
-
-			err = i.LoadConfig(in.Config.CoreConfig)
+			i, err = NewNekoV2rayInstance(in.Config.CoreConfig)
 			if err != nil {
 				return
 			}
+			defer i.Close()
 
 			err = i.Start()
 			if err != nil {
@@ -131,16 +127,12 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		if in.Config == nil {
 			return
 		}
-		// TODO del
 		// Test instance
-		i := libcore.NewV2rayInstance()
-		i.ForTest = true
-		defer i.Close()
-
-		err = i.LoadConfig(in.Config.CoreConfig)
+		i, err := NewNekoV2rayInstance(in.Config.CoreConfig)
 		if err != nil {
 			return
 		}
+		defer i.Close()
 
 		err = i.Start()
 		if err != nil {
@@ -157,6 +149,46 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			} else {
 				latency = "Error"
 			}
+		}
+
+		// UDP Latency
+		var udpLatency string
+		if in.FullUdpLatency {
+			ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+			result := make(chan string)
+
+			go func() {
+				var startTime = time.Now()
+				pc, err := core.DialUDP(ctx, i.Instance)
+				if err == nil {
+					defer pc.Close()
+					dnsPacket, _ := hex.DecodeString("0000010000010000000000000377777706676f6f676c6503636f6d0000010001")
+					addr := &net.UDPAddr{
+						IP:   net.ParseIP("8.8.8.8"),
+						Port: 53,
+					}
+					_, err = pc.WriteTo(dnsPacket, addr)
+					if err == nil {
+						var buf [1400]byte
+						_, _, err = pc.ReadFrom(buf[:])
+					}
+				}
+				if err == nil {
+					var endTime = time.Now()
+					result <- fmt.Sprint(endTime.Sub(startTime).Abs().Milliseconds(), "ms")
+				} else {
+					result <- "Error"
+				}
+				close(result)
+			}()
+
+			select {
+			case <-ctx.Done():
+				udpLatency = "Timeout"
+			case r := <-result:
+				udpLatency = r
+			}
+			cancel()
 		}
 
 		// 入口 IP
@@ -206,46 +238,12 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 
-		// STUN
-		var stunText string
-		if in.FullNat {
-			timeout := time.NewTimer(time.Second * 5)
-			result := make(chan string, 0)
-
-			go func() {
-				pc, err := core.DialUDP(context.TODO(), i.Core)
-				if err == nil {
-					stunClient := stun.NewClientWithConnection(pc)
-					stunClient.SetServerAddr("stun.ekiga.net:3478")
-					nat, host, err, fake := stunClient.Discover()
-					if err == nil {
-						if host != nil {
-							if fake {
-								result <- fmt.Sprint("No Endpoint", nat)
-							} else {
-								result <- fmt.Sprint(nat)
-							}
-						}
-					} else {
-						result <- "Discover Error"
-					}
-				} else {
-					result <- "DialUDP Error"
-				}
-				close(result)
-			}()
-
-			select {
-			case <-timeout.C:
-				stunText = "Timeout"
-			case r := <-result:
-				stunText = r
-			}
-		}
-
 		fr := make([]string, 0)
 		if latency != "" {
 			fr = append(fr, fmt.Sprintf("Latency: %s", latency))
+		}
+		if udpLatency != "" {
+			fr = append(fr, fmt.Sprintf("UDPLatency: %s", udpLatency))
 		}
 		if speed != "" {
 			fr = append(fr, fmt.Sprintf("Speed: %s", speed))
@@ -256,9 +254,6 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		if out_ip != "" {
 			fr = append(fr, fmt.Sprintf("Out: %s", out_ip))
 		}
-		if stunText != "" {
-			fr = append(fr, fmt.Sprintf("NAT: %s", stunText))
-		}
 
 		out.FullReport = strings.Join(fr, " / ")
 	}
@@ -268,15 +263,22 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *gen.QueryStatsResp, _ error) {
 	out = &gen.QueryStatsResp{}
-	if instance != nil {
-		out.Traffic = instance.QueryStats(in.Tag, in.Direct)
+	if instance != nil && instance.StatsManager != nil {
+		counter := instance.StatsManager.GetCounter(fmt.Sprintf("outbound>>>%s>>>traffic>>>%s", in.Tag, in.Direct))
+		if counter != nil {
+			out.Traffic = counter.Set(0)
+		}
 	}
 	return
 }
 
-func (s *server) ListConnections(ctx context.Context, in *gen.EmptyReq) (*gen.ListConnectionsResp, error) {
-	out := &gen.ListConnectionsResp{
-		MatsuriConnectionsJson: libcore.ListV2rayConnections(),
+func (s *server) ListConnections(ctx context.Context, in *gen.EmptyReq) (out *gen.ListConnectionsResp, _ error) {
+	// nekoray_connections_json
+
+	out = &gen.ListConnectionsResp{}
+	if instance != nil {
+		out.NekorayConnectionsJson = nekoutils.ListConnections(instance.CorePtr())
 	}
-	return out, nil
+
+	return
 }

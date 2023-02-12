@@ -75,7 +75,7 @@ ninja
 
 ### Go 部分
 
-1. 把 `Matsuridayo/Matsuri` `Matsuridayo/v2ray-core` 置于 `../`
+1. 把 `Matsuridayo/v2ray-core` 置于 `../`
 2. 进入 `go/cmd/nekoray_core` 文件夹 `go build` 得到 `nekoray_core`。
 3. 进入 `go/cmd/nekobox_core` 文件夹 `go build` 得到 `nekobox_core`。
 
