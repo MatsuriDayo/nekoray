@@ -1253,8 +1253,7 @@ End: %2</source>
 1. Latency
 2. Download speed
 3. In and Out IP
-4. UDP NAT type
-5. UDP Latency</source>
+4. UDP Latency</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

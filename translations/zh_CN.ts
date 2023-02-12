@@ -1260,14 +1260,12 @@ Split by line.</source>
 1. Latency
 2. Download speed
 3. In and Out IP
-4. UDP NAT type
-5. UDP Latency</source>
+4. UDP Latency</source>
         <translation>请输入要测试的项目，用逗号分隔
 1. TCP 延迟
 2. 下载速度
 3. 入口出口 IP
-4. UDP NAT 类型
-5. UDP DNS 延迟</translation>
+4. UDP DNS 延迟</translation>
     </message>
 </context>
 <context>

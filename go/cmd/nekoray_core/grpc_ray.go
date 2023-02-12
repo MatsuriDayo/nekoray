@@ -238,46 +238,6 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 
-		// STUN
-		var stunText string
-		if in.FullNat {
-			ctx, cancel := context.WithTimeout(context.Background(), time.Second*5)
-			result := make(chan string)
-
-			go func() {
-				pc, err := core.DialUDP(ctx, i.Instance)
-				if err == nil {
-					defer pc.Close()
-					// TODO import stun
-					// stunClient := stun.NewClientWithConnection(pc)
-					// stunClient.SetServerAddr("stun.ekiga.net:3478")
-					// nat, host, err, fake := stunClient.Discover()
-					// if err == nil {
-					// 	if host != nil {
-					// 		if fake {
-					// 			result <- fmt.Sprint("No Endpoint", nat)
-					// 		} else {
-					// 			result <- fmt.Sprint(nat)
-					// 		}
-					// 	}
-					// } else {
-					// 	result <- "Discover Error"
-					// }
-				} else {
-					result <- "DialUDP Error"
-				}
-				close(result)
-			}()
-
-			select {
-			case <-ctx.Done():
-				stunText = "Timeout"
-			case r := <-result:
-				stunText = r
-			}
-			cancel()
-		}
-
 		fr := make([]string, 0)
 		if latency != "" {
 			fr = append(fr, fmt.Sprintf("Latency: %s", latency))
@@ -293,9 +253,6 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		}
 		if out_ip != "" {
 			fr = append(fr, fmt.Sprintf("Out: %s", out_ip))
-		}
-		if stunText != "" {
-			fr = append(fr, fmt.Sprintf("NAT: %s", stunText))
 		}
 
 		out.FullReport = strings.Join(fr, " / ")
