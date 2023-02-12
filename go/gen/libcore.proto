@@ -23,8 +23,8 @@ message ErrorResp {
 }
 
 message LoadConfigReq {
-  string coreConfig = 1;
-  string tryDomains = 2;
+  string core_config = 1;
+  bool enable_nekoray_connections = 2;
 }
 
 enum TestMode {
@@ -86,5 +86,5 @@ message UpdateResp {
 }
 
 message ListConnectionsResp {
-  string matsuri_connections_json = 1;
+  string nekoray_connections_json = 1;
 }

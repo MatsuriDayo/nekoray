@@ -1505,7 +1505,7 @@ void MainWindow::start_select_mode(QObject *context, const std::function<void(in
 
 // 连接列表
 
-inline QJsonArray last_arr;
+inline QJsonArray last_arr; // format is nekoray_connections_json
 
 void MainWindow::refresh_connection_list(const QJsonArray &arr) {
     if (last_arr == arr) {

@@ -3,6 +3,7 @@ package speedtest
 import (
 	"context"
 	"fmt"
+	"log"
 	"math/rand"
 	"net"
 	"net/http"
@@ -42,7 +43,7 @@ func UrlTest(client *http.Client, link string, timeout int32) (int32, error) {
 
 		resp, err := client.Do(req)
 		if err != nil {
-			fmt.Println("Url test failed:", err)
+			log.Println("Url test failed:", err)
 			return 0, err
 		}
 		resp.Body.Close()

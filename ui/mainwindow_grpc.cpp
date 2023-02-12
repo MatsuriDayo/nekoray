@@ -108,7 +108,7 @@ void MainWindow::speedtest_current_group(int mode) {
                         }
                         //
                         auto config = new libcore::LoadConfigReq;
-                        config->set_coreconfig(QJsonObject2QString(c->coreConfig, true).toStdString());
+                        config->set_core_config(QJsonObject2QString(c->coreConfig, true).toStdString());
                         req.set_allocated_config(config);
                         req.set_in_address(profile->bean->serverAddress.toStdString());
 
@@ -214,7 +214,8 @@ void MainWindow::neko_start(int _id) {
 
 #ifndef NKR_NO_GRPC
     libcore::LoadConfigReq req;
-    req.set_coreconfig(QJsonObject2QString(result->coreConfig, true).toStdString());
+    req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
+    req.set_enable_nekoray_connections(NekoRay::dataStore->connection_statistics);
     //
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, req);

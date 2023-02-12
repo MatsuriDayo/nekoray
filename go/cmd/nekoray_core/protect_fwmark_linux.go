@@ -2,22 +2,20 @@ package main
 
 import (
 	"fmt"
-	"libcore/protect"
 	"log"
 	"net"
 	"strings"
 	"syscall"
 
 	"github.com/jsimonetti/rtnetlink"
+	"github.com/v2fly/v2ray-core/v5/transport/internet"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"
 )
-
-type fwmarkProtector struct{}
 
 var rtnetlink_conn *rtnetlink.Conn
 var cap_net_admin = 0
 
-func (f *fwmarkProtector) Protect(fd int32) bool {
+func nekorayLinuxProtect(fd int) bool {
 	if cap_net_admin == 0 {
 		str := strings.ToLower(linuxcap.GetProc().String())
 		if strings.Contains(str, "cap_net_admin") || str == "=ep" {
@@ -30,12 +28,14 @@ func (f *fwmarkProtector) Protect(fd int32) bool {
 	// check is in VPN mode
 	if is_fwmark_exist(514) {
 		if cap_net_admin == 1 {
-			if err := syscall.SetsockoptInt(int(fd), syscall.SOL_SOCKET, syscall.SO_MARK, 514); err != nil {
+			// have permission
+			if err := syscall.SetsockoptInt(fd, syscall.SOL_SOCKET, syscall.SO_MARK, 514); err != nil {
 				log.Println("syscall.SetsockoptInt:", err)
 				return false
 			}
 		} else {
-			if err := cmsgProtect(int(fd), "./protect"); err != nil {
+			// don't have permission
+			if err := cmsgProtect(fd, "./protect"); err != nil {
 				log.Println("cmsgProtect:", err)
 				return false
 			}
@@ -102,11 +102,18 @@ func is_fwmark_exist(number int) bool {
 }
 
 func init() {
-	protect.FdProtector = &fwmarkProtector{}
+	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
+		nekorayLinuxProtect(int(fd))
+		return nil
+	})
+	internet.RegisterDialerController(func(network, address string, fd uintptr) error {
+		nekorayLinuxProtect(int(fd))
+		return nil
+	})
 	underlyingNetDialer = &net.Dialer{
 		Control: func(network, address string, c syscall.RawConn) error {
 			c.Control(func(fd uintptr) {
-				protect.FdProtector.Protect(int32(fd))
+				nekorayLinuxProtect(int(fd))
 			})
 			return nil
 		},

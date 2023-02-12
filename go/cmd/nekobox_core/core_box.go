@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"io"
-	"log"
 	"neko/pkg/neko_common"
 	"neko/pkg/neko_log"
 	"net"
@@ -29,9 +28,6 @@ var box_v2ray_service *v2rayapi.StatsService
 
 func setupCore() {
 	neko_log.SetupLog(50*1024, "./neko.log")
-	//
-	log.SetFlags(log.LstdFlags)
-	log.SetOutput(neko_log.LogWriter)
 	//
 	neko_common.GetProxyHttpClient = func() *http.Client {
 		return getProxyHttpClient(instance)
