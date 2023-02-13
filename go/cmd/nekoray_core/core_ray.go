@@ -27,7 +27,7 @@ type v2rayLogWriter struct {
 }
 
 func (w *v2rayLogWriter) Write(s string) error {
-	log.Println(s)
+	log.Print(s)
 	return nil
 }
 
