@@ -27,8 +27,8 @@ clean() {
   rm -rf dl.zip yaml-* zxing-* protobuf
 }
 
-#### ZXing 1.3.0 ####
-curl -L -o dl.zip https://github.com/nu-book/zxing-cpp/archive/refs/tags/v1.3.0.zip
+#### ZXing v2.0.0 ####
+curl -L -o dl.zip https://github.com/nu-book/zxing-cpp/archive/refs/tags/v2.0.0.zip
 unzip dl.zip
 
 cd zxing-*
@@ -39,12 +39,6 @@ $cmake .. -GNinja -DBUILD_SHARED_LIBS=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_EXA
 ninja && ninja install
 
 cd ../..
-
-#### exit if NKR_PACKAGE ####
-if [ ! -z $NKR_PACKAGE ]; then
-  clean
-  exit
-fi
 
 #### yaml-cpp ####
 curl -L -o dl.zip https://github.com/jbeder/yaml-cpp/archive/refs/tags/yaml-cpp-0.7.0.zip
