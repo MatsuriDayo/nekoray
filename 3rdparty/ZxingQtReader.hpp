@@ -10,7 +10,11 @@
 #include <QImage>
 #include <QDebug>
 #include <QMetaType>
+#if QT_VERSION < QT_VERSION_CHECK(5, 15, 0)
+#include "qscopeguard.h"
+#else
 #include <QScopeGuard>
+#endif
 
 #ifdef QT_MULTIMEDIA_LIB
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
