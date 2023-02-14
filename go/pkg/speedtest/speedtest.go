@@ -30,6 +30,7 @@ func UrlTest(client *http.Client, link string, timeout int32) (int32, error) {
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(timeout)*time.Millisecond)
 	defer cancel()
+
 	req, err := http.NewRequestWithContext(ctx, "GET", link, nil)
 	req.Header.Set("User-Agent", fmt.Sprintf("curl/7.%d.%d", rand.Int()%84, rand.Int()%2))
 	if err != nil {
@@ -53,17 +54,8 @@ func UrlTest(client *http.Client, link string, timeout int32) (int32, error) {
 }
 
 func TcpPing(address string, timeout int32) (ms int32, err error) {
-	host, port, err := net.SplitHostPort(address)
-	if err != nil {
-		return
-	}
-	ip, err := net.ResolveIPAddr("ip", host)
-	if err != nil {
-		return
-	}
-	//
 	startTime := time.Now()
-	c, err := net.DialTimeout("tcp", net.JoinHostPort(ip.String(), port), time.Duration(timeout)*time.Millisecond)
+	c, err := net.DialTimeout("tcp", address, time.Duration(timeout)*time.Millisecond)
 	endTime := time.Now()
 	if err == nil {
 		ms = int32(endTime.Sub(startTime).Milliseconds())

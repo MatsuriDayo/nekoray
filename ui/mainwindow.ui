@@ -711,6 +711,9 @@
    <property name="text">
     <string>Remove Duplicates</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+D</string>
+   </property>
   </action>
   <action name="actionfake">
    <property name="text">
@@ -755,6 +758,9 @@
   <action name="menu_remove_unavailable">
    <property name="text">
     <string>Remove Unavailable</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+R</string>
    </property>
   </action>
   <action name="menu_full_test">
@@ -837,6 +843,9 @@
   <action name="menu_resolve_domain">
    <property name="text">
     <string>Resolve domain</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+Shift+I</string>
    </property>
   </action>
   <action name="menu_vpn_settings">
