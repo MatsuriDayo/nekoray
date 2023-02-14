@@ -54,4 +54,6 @@ public slots:
     void SetRouteConfig(const NekoRay::Routing &conf);
 
     void on_load_save_clicked();
+
+    void on_queryStrategy_clicked();
 };

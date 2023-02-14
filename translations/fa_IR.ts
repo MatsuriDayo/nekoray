@@ -560,6 +560,14 @@
         <source>Default Outbound</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Query Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogVPNSettings</name>
