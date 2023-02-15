@@ -198,10 +198,7 @@ namespace NekoRay {
     }
 
     QSharedPointer<ProxyEntity> ProfileManager::GetProfile(int id) {
-        if (profiles.contains(id)) {
-            return profiles[id];
-        }
-        return nullptr;
+        return profiles.value(id, nullptr);
     }
 
     // Group
@@ -264,10 +261,7 @@ namespace NekoRay {
     }
 
     QSharedPointer<Group> ProfileManager::GetGroup(int id) {
-        if (groups.contains(id)) {
-            return groups[id];
-        }
-        return nullptr;
+        return groups.value(id, nullptr);
     }
 
     QSharedPointer<Group> ProfileManager::CurrentGroup() {

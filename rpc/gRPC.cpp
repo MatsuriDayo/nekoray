@@ -49,7 +49,7 @@ namespace QtGrpc {
         }
     };
 
-    class Http2GrpcChannelPrivate : public QObject {
+    class Http2GrpcChannelPrivate {
     private:
         QThread *thread;
         QNetworkAccessManager *nm;
@@ -117,7 +117,7 @@ namespace QtGrpc {
                 abortTimer = new QTimer;
                 abortTimer->setSingleShot(true);
                 abortTimer->setInterval(timeout_ms);
-                connect(abortTimer, &QTimer::timeout, abortTimer, [=]() {
+                QObject::connect(abortTimer, &QTimer::timeout, abortTimer, [=]() {
                     networkReply->abort();
                 });
                 abortTimer->start();
@@ -154,6 +154,13 @@ namespace QtGrpc {
             nm->setCache(new NoCache);
             nm->moveToThread(thread);
             thread->start();
+        }
+
+        ~Http2GrpcChannelPrivate() {
+            nm->deleteLater();
+            thread->quit();
+            thread->wait();
+            thread->deleteLater();
         }
 
         QNetworkReply::NetworkError Call(const QString &methodName,
@@ -194,8 +201,10 @@ namespace QtGrpc {
 } // namespace QtGrpc
 
 namespace NekoRay::rpc {
+
     Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
-        this->grpc_channel = std::make_unique<QtGrpc::Http2GrpcChannelPrivate>(target, token, "libcore.LibcoreService");
+        this->make_grpc_channel = [=]() { return std::make_unique<QtGrpc::Http2GrpcChannelPrivate>(target, token, "libcore.LibcoreService"); };
+        this->default_grpc_channel = make_grpc_channel();
         this->onError = std::move(onError);
     }
 
@@ -206,12 +215,12 @@ namespace NekoRay::rpc {
     void Client::Exit() {
         libcore::EmptyReq request;
         libcore::EmptyResp reply;
-        grpc_channel->Call("Exit", request, &reply, 500);
+        default_grpc_channel->Call("Exit", request, &reply, 500);
     }
 
     QString Client::Start(bool *rpcOK, const libcore::LoadConfigReq &request) {
         libcore::ErrorResp reply;
-        auto status = grpc_channel->Call("Start", request, &reply, 3000);
+        auto status = default_grpc_channel->Call("Start", request, &reply, 3000);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;
@@ -225,7 +234,7 @@ namespace NekoRay::rpc {
     QString Client::Stop(bool *rpcOK) {
         libcore::EmptyReq request;
         libcore::ErrorResp reply;
-        auto status = grpc_channel->Call("Stop", request, &reply, 3000);
+        auto status = default_grpc_channel->Call("Stop", request, &reply, 3000);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;
@@ -242,7 +251,7 @@ namespace NekoRay::rpc {
         request.set_direct(direct);
 
         libcore::QueryStatsResp reply;
-        auto status = grpc_channel->Call("QueryStats", request, &reply, 500);
+        auto status = default_grpc_channel->Call("QueryStats", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
             return reply.traffic();
@@ -254,7 +263,7 @@ namespace NekoRay::rpc {
     std::string Client::ListConnections() {
         libcore::EmptyReq request;
         libcore::ListConnectionsResp reply;
-        auto status = grpc_channel->Call("ListConnections", request, &reply, 500);
+        auto status = default_grpc_channel->Call("ListConnections", request, &reply, 500);
 
         if (status == QNetworkReply::NoError) {
             return reply.nekoray_connections_json();
@@ -267,7 +276,7 @@ namespace NekoRay::rpc {
 
     libcore::TestResp Client::Test(bool *rpcOK, const libcore::TestReq &request) {
         libcore::TestResp reply;
-        auto status = grpc_channel->Call("Test", request, &reply);
+        auto status = make_grpc_channel()->Call("Test", request, &reply);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;
@@ -280,7 +289,7 @@ namespace NekoRay::rpc {
 
     libcore::UpdateResp Client::Update(bool *rpcOK, const libcore::UpdateReq &request) {
         libcore::UpdateResp reply;
-        auto status = grpc_channel->Call("Update", request, &reply);
+        auto status = default_grpc_channel->Call("Update", request, &reply);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;

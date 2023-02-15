@@ -694,7 +694,7 @@
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">گواهی</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>

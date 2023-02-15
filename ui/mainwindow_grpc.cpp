@@ -131,11 +131,13 @@ void MainWindow::speedtest_current_group(int mode) {
                     profile->full_test_report = result.full_report().c_str();
                     profile->Save();
 
-                    runOnUiThread([=] {
-                        if (!result.error().empty()) {
-                            show_log_impl(tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(), result.error().c_str()));
-                        }
-                        refresh_proxy_list(profile->id);
+                    if (!result.error().empty()) {
+                        MW_show_log(tr("[%1] test error: %2").arg(profile->bean->DisplayTypeAndName(), result.error().c_str()));
+                    }
+
+                    auto profileId = profile->id;
+                    runOnUiThread([this, profileId] {
+                        refresh_proxy_list(profileId);
                     });
                 }
             });

@@ -33,7 +33,8 @@ namespace NekoRay::rpc {
         libcore::UpdateResp Update(bool *rpcOK, const libcore::UpdateReq &request);
 
     private:
-        std::unique_ptr<QtGrpc::Http2GrpcChannelPrivate> grpc_channel;
+        std::function<std::unique_ptr<QtGrpc::Http2GrpcChannelPrivate>()> make_grpc_channel;
+        std::unique_ptr<QtGrpc::Http2GrpcChannelPrivate> default_grpc_channel;
         std::function<void(const QString &)> onError;
     };
 
