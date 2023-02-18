@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QDir>
 
+#include "main/NekoRay.hpp"
+
 // macOS headers (possibly OBJ-c)
 #if defined(Q_OS_MACOS)
 #include <CoreFoundation/CoreFoundation.h>
@@ -169,6 +171,10 @@ void AutoRun_SetEnabled(bool enable) {
     // nekoray: launcher
     if (qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1") {
         appCmdList = QStringList{QApplication::applicationDirPath() + "/launcher", "--", "-tray"};
+    }
+
+    if (NekoRay::dataStore->flag_use_appdata){
+        appCmdList = QStringList{QApplication::applicationDirPath(), "-tray", "-appdata"};
     }
 
     if (enable) {
