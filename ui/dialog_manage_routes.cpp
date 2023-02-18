@@ -210,3 +210,46 @@ void DialogManageRoutes::on_load_save_clicked() {
     w->exec();
     w->deleteLater();
 }
+void DialogManageRoutes::on_queryStrategy_clicked() {
+    auto w = new QDialog(this);
+    w->setWindowTitle("DNS Query Strategy");
+    auto layout = new QGridLayout;
+    w->setLayout(layout);
+    //
+    QStringList qsValue{""};
+    if (IS_NEKO_BOX) {
+        qsValue += QString("prefer_ipv4 prefer_ipv6 ipv4_only ipv6_only").split(" ");
+    } else {
+        qsValue += QString("use_ip use_ip4 use_ip6").split(" ");
+    }
+    //
+    auto remote_l = new QLabel(tr("Remote"));
+    auto direct_l = new QLabel(tr("Direct"));
+    auto remote = new QComboBox;
+    auto direct = new QComboBox;
+    remote->setEditable(true);
+    remote->addItems(qsValue);
+    remote->setCurrentText(NekoRay::dataStore->remote_dns_strategy);
+    direct->setEditable(true);
+    direct->addItems(qsValue);
+    direct->setCurrentText(NekoRay::dataStore->direct_dns_strategy);
+    //
+    layout->addWidget(remote_l, 0, 0);
+    layout->addWidget(remote, 0, 1);
+    layout->addWidget(direct_l, 1, 0);
+    layout->addWidget(direct, 1, 1);
+    auto box = new QDialogButtonBox;
+    box->setOrientation(Qt::Horizontal);
+    box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    connect(box, &QDialogButtonBox::accepted, w, [=] {
+        NekoRay::dataStore->remote_dns_strategy = remote->currentText();
+        NekoRay::dataStore->direct_dns_strategy = direct->currentText();
+        NekoRay::dataStore->Save();
+        w->accept();
+    });
+    connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
+    layout->addWidget(box, 2, 1);
+    //
+    w->exec();
+    w->deleteLater();
+}

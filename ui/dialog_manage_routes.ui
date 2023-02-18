@@ -132,6 +132,13 @@
         <item>
          <widget class="QLineEdit" name="dns_direct"/>
         </item>
+        <item>
+         <widget class="QPushButton" name="queryStrategy">
+          <property name="text">
+           <string>Query Strategy</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </item>
       <item>

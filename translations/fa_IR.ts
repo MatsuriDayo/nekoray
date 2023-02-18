@@ -139,11 +139,11 @@
     </message>
     <message>
         <source>Please input the core name.</source>
-        <translation type="unfinished"></translation>
+        <translation>لطفا نام هسته را وارد کنید</translation>
     </message>
     <message>
         <source>Please select the core name.</source>
-        <translation type="unfinished"></translation>
+        <translation>لطفا نام هسته را انتخاب کنید</translation>
     </message>
     <message>
         <source>Connection statistics</source>
@@ -191,7 +191,7 @@
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation type="unfinished"></translation>
+        <translation>هسته به 1% تغییر میابد، روی  &quot;Yes&quot; کلیک کنید تا تغییر پایان یابد و برنامه ریستارت شود. این قابلیت ممکن است پایدار نباشد، لطفا مکررا تعویض نکنید</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
@@ -211,27 +211,27 @@
     </message>
     <message>
         <source>Max log lines</source>
-        <translation type="unfinished"></translation>
+        <translation>حداکثر خطوط فایل لاگ</translation>
     </message>
     <message>
         <source>Inbound Auth</source>
-        <translation type="unfinished"></translation>
+        <translation>اعتبار ورودی</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation type="unfinished">نام کاربری</translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>رمز عبور</translation>
     </message>
     <message>
         <source>Maybe useful for HiDPI screens.</source>
-        <translation type="unfinished"></translation>
+        <translation>شاید برای صفحه نمایش های HiDPI مفید باشد.</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
-        <translation type="unfinished"></translation>
+        <translation>رد شدن از احراز هویت گواهی TLS به طور پیش فرض (allowInsecure)</translation>
     </message>
 </context>
 <context>
@@ -262,7 +262,7 @@
     </message>
     <message>
         <source>URL</source>
-        <translation type="unfinished"></translation>
+        <translation>URL</translation>
     </message>
     <message>
         <source>Copy profile share links</source>
@@ -270,7 +270,7 @@
     </message>
     <message>
         <source>Copy profile share links (Neko Links)</source>
-        <translation type="unfinished"></translation>
+        <translation>لینک های اشتراک گذاری نمایه را کپی کنید (لینک های Neko)</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -286,7 +286,7 @@
     </message>
     <message>
         <source>Manually column width</source>
-        <translation type="unfinished"></translation>
+        <translation>عرض ستون به صورت دستی</translation>
     </message>
 </context>
 <context>
@@ -317,7 +317,7 @@
     </message>
     <message>
         <source>Custom Json Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیمات JSON سفارشی</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -325,7 +325,7 @@
     </message>
     <message>
         <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation type="unfinished"></translation>
+        <translation>روش انتقال باید با سرور سازگار باشد، در غیر این صورت، اتصال نمی تواند برقرار شود.</translation>
     </message>
     <message>
         <source>Network</source>
@@ -333,7 +333,7 @@
     </message>
     <message>
         <source>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation type="unfinished"></translation>
+        <translation>امنیت لایه انتقال باید با سرور سازگار باشد، در غیر این صورت، اتصال نمی تواند برقرار شود.</translation>
     </message>
     <message>
         <source>Security</source>
@@ -345,11 +345,11 @@
     </message>
     <message>
         <source>Packet Encoding</source>
-        <translation type="unfinished"></translation>
+        <translation>رمزنگاری بسته ها</translation>
     </message>
     <message>
         <source>Network Settings (%1)</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیمات شبکه (1%)</translation>
     </message>
     <message>
         <source>Security Settings</source>
@@ -365,7 +365,7 @@
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation>گواهی</translation>
     </message>
     <message>
         <source>Server name indication, clear text.</source>
@@ -381,7 +381,7 @@
     </message>
     <message>
         <source>Custom (Extra Core)</source>
-        <translation type="unfinished"></translation>
+        <translation>سفارشی ( هسته اضافه)</translation>
     </message>
     <message>
         <source>Not set</source>
@@ -427,7 +427,7 @@
     </message>
     <message>
         <source>Update all subscriptions</source>
-        <translation type="unfinished"></translation>
+        <translation>به روز رسانی تمام اشتراک ها</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -474,11 +474,11 @@
     </message>
     <message>
         <source>Enable DNS Routing</source>
-        <translation type="unfinished"></translation>
+        <translation>فعال کردن مسیریابی DNS</translation>
     </message>
     <message>
         <source>Domain Strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>استراتژی دامنه</translation>
     </message>
     <message>
         <source>Matcher</source>
@@ -506,11 +506,11 @@
     </message>
     <message>
         <source>Preset</source>
-        <translation type="unfinished"></translation>
+        <translation>پیشفرض</translation>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation>سفارشی</translation>
     </message>
     <message>
         <source>Custom (global)</source>
@@ -542,7 +542,7 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">لغو کردن</translation>
+        <translation>لغو کردن</translation>
     </message>
     <message>
         <source>Load routing: %1</source>
@@ -560,6 +560,14 @@
         <source>Default Outbound</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Query Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogVPNSettings</name>
@@ -569,7 +577,7 @@
     </message>
     <message>
         <source>VPN Implementation</source>
-        <translation type="unfinished"></translation>
+        <translation>پیاده سازی VPN</translation>
     </message>
     <message>
         <source>Hide Console</source>
@@ -623,7 +631,7 @@
     </message>
     <message>
         <source>Json Editor</source>
-        <translation type="unfinished">ویرایشگر Json</translation>
+        <translation>ویرایشگر Json</translation>
     </message>
     <message>
         <source>Command</source>
@@ -639,7 +647,7 @@
     </message>
     <message>
         <source>Outbound JSON, please read the documentation.</source>
-        <translation type="unfinished"></translation>
+        <translation>JSON خروجی، لطفاً مستندات را بخوانید.</translation>
     </message>
     <message>
         <source>Please pick a core.</source>
@@ -686,7 +694,7 @@
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">گواهی</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>

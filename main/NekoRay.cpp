@@ -27,7 +27,9 @@ namespace NekoRay {
         _add(new configItem("inbound_http_port", &inbound_http_port, itemType::integer));
         _add(new configItem("log_level", &log_level, itemType::string));
         _add(new configItem("remote_dns", &remote_dns, itemType::string));
+        _add(new configItem("remote_dns_strategy", &remote_dns_strategy, itemType::string));
         _add(new configItem("direct_dns", &direct_dns, itemType::string));
+        _add(new configItem("direct_dns_strategy", &direct_dns_strategy, itemType::string));
         _add(new configItem("domain_matcher", &domain_matcher, itemType::integer));
         _add(new configItem("domain_strategy", &domain_strategy, itemType::string));
         _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));

@@ -247,6 +247,7 @@ namespace NekoRay {
         QJsonObject dnsServerRemote;
         dnsServerRemote["address"] = dataStore->fake_dns ? "fakedns" : dataStore->remote_dns;
         dnsServerRemote["domains"] = QList2QJsonArray<QString>(status->domainListDNSRemote);
+        dnsServerRemote["queryStrategy"] = dataStore->remote_dns_strategy;
         if (!status->forTest) dnsServers += dnsServerRemote;
 
         // Direct
@@ -276,6 +277,7 @@ namespace NekoRay {
         dnsServers += QJsonObject{
             {"address", directDnsAddress.replace("https://", "https+local://")},
             {"fallbackStrategy", "disabled"},
+            {"queryStrategy", dataStore->direct_dns_strategy},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
 
@@ -754,6 +756,7 @@ namespace NekoRay {
             dnsServers += QJsonObject{
                 {"tag", "dns-remote"},
                 {"address_resolver", "dns-underlying"},
+                {"strategy", dataStore->remote_dns_strategy},
                 {"address", dataStore->remote_dns},
                 {"detour", tagProxy},
             };
@@ -768,6 +771,7 @@ namespace NekoRay {
             dnsServers += QJsonObject{
                 {"tag", "dns-direct"},
                 {"address_resolver", "dns-underlying"},
+                {"strategy", dataStore->direct_dns_strategy},
                 {"address", directDNSAddress.replace("+local://", "://")},
                 {"detour", "direct"},
             };

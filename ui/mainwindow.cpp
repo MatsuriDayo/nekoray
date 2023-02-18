@@ -883,16 +883,17 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
 void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
     // 绘制或更新item(s)
     for (int row = 0; row < ui->proxyListTable->rowCount(); row++) {
-        auto profile = NekoRay::profileManager->GetProfile(ui->proxyListTable->row2Id[row]);
+        auto profileId = ui->proxyListTable->row2Id[row];
+        if (id >= 0 && profileId != id) continue; // refresh ONE item
+        auto profile = NekoRay::profileManager->GetProfile(profileId);
         if (profile == nullptr) continue;
-        if (id >= 0 && profile->id != id) continue; // refresh ONE item
 
         auto f0 = std::make_unique<QTableWidgetItem>();
-        f0->setData(114514, profile->id);
+        f0->setData(114514, profileId);
 
         // Check state
         auto check = f0->clone();
-        check->setText(profile->id == NekoRay::dataStore->started_id ? "✓" : Int2String(row + 1));
+        check->setText(profileId == NekoRay::dataStore->started_id ? "✓" : Int2String(row + 1));
         ui->proxyListTable->setVerticalHeaderItem(row, check);
 
         // C0: Type

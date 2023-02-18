@@ -225,7 +225,7 @@
     </message>
     <message>
         <source>Maybe useful for HiDPI screens.</source>
-        <translation type="unfinished"></translation>
+        <translation>可能对 HiDPI 屏幕有用。</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
@@ -565,6 +565,14 @@
     <message>
         <source>Default Outbound</source>
         <translation>默认出站</translation>
+    </message>
+    <message>
+        <source>Query Strategy</source>
+        <translation>DNS 查询策略</translation>
+    </message>
+    <message>
+        <source>Remote</source>
+        <translation>远程</translation>
     </message>
 </context>
 <context>
