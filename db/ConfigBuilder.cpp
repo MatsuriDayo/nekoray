@@ -597,7 +597,8 @@ namespace NekoRay {
                         auto stream = GetStreamSettings(ent->bean.data());
                         if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
                             muxObj["packetEncoding"] = stream->packet_encoding;
-                        } else if (stream != nullptr && stream->network == "grpc") {
+                        }
+                        if (stream != nullptr && stream->network == "grpc") {
                             // ignore mux.cool for gRPC
                         } else {
                             outbound["mux"] = muxObj;
