@@ -10,7 +10,7 @@ Support Windows / Linux / ~~macOS amd64~~ out of the box now.
 
 ## Readme Translations
 
-中文 / English (undone) / [fa_IR](README_fa.md)
+中文 / [English](README_en.md) / [fa_IR](README_fa.md)
 
 ## 下载 / Download
 
