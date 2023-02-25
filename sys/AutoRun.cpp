@@ -3,6 +3,8 @@
 #include <QApplication>
 #include <QDir>
 
+#include "main/NekoRay.hpp"
+
 // macOS headers (possibly OBJ-c)
 #if defined(Q_OS_MACOS)
 #include <CoreFoundation/CoreFoundation.h>
@@ -21,8 +23,8 @@ QString Windows_GenAutoRunString() {
 }
 
 void AutoRun_SetEnabled(bool enable) {
-    //以程序名称作为注册表中的键
-    //根据键获取对应的值（程序路径）
+    // 以程序名称作为注册表中的键
+    // 根据键获取对应的值（程序路径）
     auto appPath = QApplication::applicationFilePath();
     QFileInfo fInfo(appPath);
     QString name = fInfo.baseName();
@@ -39,8 +41,8 @@ void AutoRun_SetEnabled(bool enable) {
 bool AutoRun_IsEnabled() {
     QSettings settings("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", QSettings::NativeFormat);
 
-    //以程序名称作为注册表中的键
-    //根据键获取对应的值（程序路径）
+    // 以程序名称作为注册表中的键
+    // 根据键获取对应的值（程序路径）
     auto appPath = QApplication::applicationFilePath();
     QFileInfo fInfo(appPath);
     QString name = fInfo.baseName();
@@ -164,11 +166,20 @@ void AutoRun_SetEnabled(bool enable) {
     QString appName = QCoreApplication::applicationName();
     QString userAutoStartPath = getUserAutostartDir_private();
     QString desktopFileLocation = userAutoStartPath + appName + QLatin1String(".desktop");
-    QStringList appCmdList = {QApplication::applicationFilePath(), "-tray"};
+    QStringList appCmdList;
 
     // nekoray: launcher
     if (qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1") {
-        appCmdList = QStringList{QApplication::applicationDirPath() + "/launcher", "--", "-tray"};
+        appCmdList << QApplication::applicationDirPath() + "/launcher"
+                   << "--";
+    } else {
+        appCmdList << QApplication::applicationFilePath();
+    }
+
+    appCmdList << "-tray";
+
+    if (NekoRay::dataStore->flag_use_appdata) {
+        appCmdList << "-appdata";
     }
 
     if (enable) {
