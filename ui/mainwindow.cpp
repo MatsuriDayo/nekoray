@@ -850,12 +850,16 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
                                   ms_a = NekoRay::profileManager->GetProfile(a)->full_test_report;
                                   ms_b = NekoRay::profileManager->GetProfile(b)->full_test_report;
                               }
+                              auto get_latency_for_sort = [](int id) {
+                                  auto i = NekoRay::profileManager->GetProfile(id)->latency;
+                                  if (i < 0) i = 99999;
+                                  return i;
+                              };
                               if (groupSortAction.descending) {
                                   if (groupSortAction.method == NekoRay::GroupSortMethod::ByLatency) {
-                                      auto int_a = NekoRay::profileManager->GetProfile(a)->latency;
-                                      auto int_b = NekoRay::profileManager->GetProfile(b)->latency;
-                                      if (int_a > 0 && int_b > 0) {
-                                          return int_a > int_b;
+                                      if (ms_a.isEmpty() && ms_b.isEmpty()) {
+                                          // compare latency if full_test_report is empty
+                                          return get_latency_for_sort(a) > get_latency_for_sort(b);
                                       }
                                   }
                                   return ms_a > ms_b;
@@ -863,8 +867,9 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
                                   if (groupSortAction.method == NekoRay::GroupSortMethod::ByLatency) {
                                       auto int_a = NekoRay::profileManager->GetProfile(a)->latency;
                                       auto int_b = NekoRay::profileManager->GetProfile(b)->latency;
-                                      if (int_a > 0 && int_b > 0) {
-                                          return int_a < int_b;
+                                      if (ms_a.isEmpty() && ms_b.isEmpty()) {
+                                          // compare latency if full_test_report is empty
+                                          return get_latency_for_sort(a) < get_latency_for_sort(b);
                                       }
                                   }
                                   return ms_a < ms_b;

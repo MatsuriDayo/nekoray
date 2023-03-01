@@ -126,9 +126,13 @@ void MainWindow::speedtest_current_group(int mode) {
                     }
                     if (!rpcOK) return;
 
-                    profile->latency = result.ms();
-                    if (profile->latency == 0) profile->latency = -1; // sn
-                    profile->full_test_report = result.full_report().c_str();
+                    if (result.error().empty()) {
+                        profile->latency = result.ms();
+                        if (profile->latency == 0) profile->latency = 1; // nekoray use 0 to represents not tested
+                    } else {
+                        profile->latency = -1;
+                    }
+                    profile->full_test_report = result.full_report().c_str(); // higher priority
                     profile->Save();
 
                     if (!result.error().empty()) {

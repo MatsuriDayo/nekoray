@@ -55,6 +55,7 @@ namespace NekoRay::fmt {
 
         QJsonObject outbound;
         outbound["type"] = socks_http_type == type_HTTP ? "http" : "socks";
+        if (socks_http_type == type_Socks4) outbound["version"] = "4";
         outbound["server"] = serverAddress;
         outbound["server_port"] = serverPort;
 
