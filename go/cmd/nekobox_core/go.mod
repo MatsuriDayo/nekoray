@@ -5,10 +5,10 @@ go 1.19
 require (
 	github.com/dustin/go-humanize v1.0.1
 	github.com/gofrs/uuid v4.4.0+incompatible
-	github.com/sagernet/sing v0.1.8-0.20230221060643-3401d210384b
-	github.com/sagernet/sing-box v1.1.6-0.20230221125425-e99741159bcc
+	github.com/sagernet/sing v0.1.8-0.20230301160041-9fab0a9f4304
+	github.com/sagernet/sing-box v1.1.6-0.20230301163156-e8802357e1e7
 	github.com/sagernet/sing-dns v0.1.4
-	github.com/sagernet/sing-tun v0.1.1
+	github.com/sagernet/sing-tun v0.1.2-0.20230226091124-0cdb0eed74d9
 	github.com/spf13/cobra v1.6.1
 	golang.org/x/sys v0.5.0
 	neko v1.0.0
@@ -50,16 +50,19 @@ require (
 	github.com/quic-go/qtls-go1-18 v0.2.0 // indirect
 	github.com/quic-go/qtls-go1-19 v0.2.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.1.0 // indirect
+	github.com/sagernet/badhttp v0.0.0-20230228035330-e77eb9a689fd // indirect
+	github.com/sagernet/badhttp2 v0.0.0-20230228040529-408b0b8e774d // indirect
 	github.com/sagernet/cloudflare-tls v0.0.0-20221031050923-d70792f4c3a0 // indirect
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
+	github.com/sagernet/reality v0.0.0-20230228045158-d3e085a8e5d1 // indirect
 	github.com/sagernet/sing-shadowsocks v0.1.2-0.20230221080503-769c01d6bba9 // indirect
 	github.com/sagernet/sing-shadowtls v0.0.0-20230221123345-78e50cd7b587 // indirect
 	github.com/sagernet/sing-vmess v0.1.2 // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230207095944-549363a7327d // indirect
-	github.com/sagernet/utls v0.0.0-20230220130002-c08891932056 // indirect
+	github.com/sagernet/utls v0.0.0-20230225061716-536a007c8b01 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
 	github.com/spf13/pflag v1.0.5 // indirect

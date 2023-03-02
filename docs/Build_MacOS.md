@@ -35,9 +35,9 @@ cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DNKR_PACKAGE_MACOS=1 ..
 ninja
 ```
 
-## Go 部分
+### Go 部分编译
 
-同 Build_Linux
+请看 [Build_Core.md](./Build_Core.md)
 
 ## 打包
 

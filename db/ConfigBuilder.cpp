@@ -853,18 +853,6 @@ namespace NekoRay {
             routeObj.remove("auto_detect_interface");
         }
         status->result->coreConfig.insert("route", routeObj);
-
-        // api
-        if (!status->forTest && !status->forExport && dataStore->traffic_loop_interval > 0) {
-            status->result->coreConfig.insert("experimental", QJsonObject{
-                                                                  {"v2ray_api", QJsonObject{
-                                                                                    {"listen", "127.0.0.1:" + Int2String(dataStore->inbound_socks_port + 10)},
-                                                                                    {"stats", QJsonObject{
-                                                                                                  {"enabled", true},
-                                                                                                  {"outbounds", QJsonArray{tagProxy, "bypass"}},
-                                                                                              }}}},
-                                                              });
-        }
     }
 
     QString WriteVPNSingBoxConfig() {

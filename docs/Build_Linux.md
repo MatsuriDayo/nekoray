@@ -73,12 +73,6 @@ ninja
 
 编译完成后得到 `nekoray`
 
-### Go 部分
+### Go 部分编译
 
-1. 把 `Matsuridayo/v2ray-core` 置于 `../`
-2. 进入 `go/cmd/nekoray_core` 文件夹 `go build` 得到 `nekoray_core`。
-3. 进入 `go/cmd/nekobox_core` 文件夹 `go build` 得到 `nekobox_core`。
-
-具体编译过程请参考 `libs/get_source.sh` `libs/build_go.sh`
-
-非官方构建无需编译 `updater` `launcher`
+请看 [Build_Core.md](./Build_Core.md)

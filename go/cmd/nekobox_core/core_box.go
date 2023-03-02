@@ -14,15 +14,12 @@ import (
 	box "github.com/sagernet/sing-box"
 	"github.com/sagernet/sing-box/adapter"
 	"github.com/sagernet/sing-box/common/dialer"
-	"github.com/sagernet/sing-box/experimental/v2rayapi"
 	"github.com/sagernet/sing/common/metadata"
 	"github.com/sagernet/sing/common/network"
 )
 
 var instance *box.Box
 var instance_cancel context.CancelFunc
-
-var box_v2ray_service *v2rayapi.StatsService
 
 // Use sing-box instead of libcore & v2ray
 

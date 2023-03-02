@@ -63,4 +63,4 @@ ninja
 
 ### Go 部分编译
 
-同 Linux
+请看 [Build_Core.md](./Build_Core.md)

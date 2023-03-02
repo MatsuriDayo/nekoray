@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"neko/gen"
 	"neko/pkg/grpc_server"
@@ -12,10 +13,10 @@ import (
 	"neko/pkg/speedtest"
 	"nekobox_core/box_main"
 	"reflect"
+	"time"
 	"unsafe"
 
 	box "github.com/sagernet/sing-box"
-	"github.com/sagernet/sing-box/adapter"
 	"github.com/sagernet/sing-box/experimental/v2rayapi"
 )
 
@@ -54,13 +55,7 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		writer_ = reflect.NewAt(writer_.Type(), unsafe.Pointer(writer_.UnsafeAddr())).Elem() // get unexported io.Writer
 		writer_.Set(reflect.ValueOf(neko_log.LogWriter))
 		// V2ray Service
-		v2ray_ := reflect.Indirect(reflect.ValueOf(instance)).FieldByName("v2rayServer")
-		v2ray_ = reflect.NewAt(v2ray_.Type(), unsafe.Pointer(v2ray_.UnsafeAddr())).Elem()
-		if v2ray, ok := v2ray_.Interface().(adapter.V2RayServer); ok {
-			if s, ok := v2ray.StatsService().(*v2rayapi.StatsService); ok {
-				box_v2ray_service = s
-			}
-		}
+		instance.Router().SetV2RayServer(NewSbV2rayServer())
 	}
 
 	return
@@ -80,11 +75,25 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 		return
 	}
 
-	instance_cancel()
-	instance.Close() // TODO closed failed??
+	t := time.NewTimer(time.Second * 2)
+	c := make(chan struct{}, 1)
 
+	go func(cancel context.CancelFunc, closer io.Closer) {
+		cancel()
+		closer.Close()
+		c <- struct{}{}
+		close(c)
+	}(instance_cancel, instance)
+
+	select {
+	case <-t.C:
+		log.Println("[Warning] sing-box close takes longer than expected.")
+	case <-c:
+	}
+
+	t.Stop()
 	instance = nil
-	box_v2ray_service = nil
+
 	return
 }
 
@@ -129,6 +138,12 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *gen.QueryStatsResp, _ error) {
 	out = &gen.QueryStatsResp{}
+
+	var box_v2ray_service *sbV2rayStatsService
+
+	if instance != nil && instance.Router().V2RayServer() != nil {
+		box_v2ray_service, _ = instance.Router().V2RayServer().StatsService().(*sbV2rayStatsService)
+	}
 
 	if box_v2ray_service != nil {
 		req := &v2rayapi.GetStatsRequest{
