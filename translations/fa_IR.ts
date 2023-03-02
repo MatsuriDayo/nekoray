@@ -611,6 +611,25 @@
         <source>Proxy Process Name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Troubleshooting</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you have trouble starting VPN, you can force reset nekobox_core process here.
+
+If still not working, see documentation for more information.
+https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation type="unfinished">بازنشانی</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">لغو کردن</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>

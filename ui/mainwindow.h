@@ -61,6 +61,8 @@ public:
 
     void RegisterHotkey(bool unregister);
 
+    bool StopVPNProcess(bool unconditional = false);
+
 signals:
 
     void profile_selected(int id);
@@ -172,8 +174,6 @@ private:
     void HotkeyEvent(const QString &key);
 
     bool StartVPNProcess();
-
-    bool StopVPNProcess();
 
     // grpc and ...
 

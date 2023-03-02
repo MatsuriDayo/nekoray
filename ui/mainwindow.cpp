@@ -1684,8 +1684,8 @@ bool MainWindow::StartVPNProcess() {
     return true;
 }
 
-bool MainWindow::StopVPNProcess() {
-    if (vpn_pid != 0) {
+bool MainWindow::StopVPNProcess(bool unconditional) {
+    if (unconditional || vpn_pid != 0) {
         bool ok;
         core_process->processId();
 #ifdef Q_OS_WIN
@@ -1699,15 +1699,17 @@ bool MainWindow::StopVPNProcess() {
         p.start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
                                         .arg("pkill -2 -U 0 nekobox_core")});
 #else
-        p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+        if (unconditional) {
+            p.start("pkexec", {"killall", "nekobox_core"});
+        } else {
+            p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+        }
 #endif
         p.waitForFinished();
         ok = p.exitCode() == 0;
 #endif
-        if (ok) {
-            vpn_pid = 0;
-        } else {
-            MessageBoxWarning(tr("Error"), tr("Failed to stop VPN process"));
+        if (!unconditional) {
+            ok ? vpn_pid = 0 : MessageBoxWarning(tr("Error"), tr("Failed to stop VPN process"));
         }
         return ok;
     }

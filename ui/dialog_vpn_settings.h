@@ -23,6 +23,9 @@ private:
 public slots:
 
     void accept() override;
+
+    void on_troubleshooting_clicked();
+
 };
 
 #endif // NEKORAY_DIALOG_VPN_SETTINGS_H
