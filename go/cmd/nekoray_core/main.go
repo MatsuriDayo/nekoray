@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
-	"neko/pkg/grpc_server"
-	"neko/pkg/neko_common"
+	"grpc_server"
 	"os"
 	_ "unsafe"
+
+	"github.com/matsuridayo/libneko/neko_common"
 
 	"github.com/v2fly/v2ray-core/v5/main/commands"
 	"github.com/v2fly/v2ray-core/v5/main/commands/base"

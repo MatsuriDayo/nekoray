@@ -4,11 +4,12 @@ import (
 	"flag"
 	"io"
 	"log"
-	"neko/pkg/protect_server"
 	"net"
 	"net/http"
 	"os"
 	"syscall"
+
+	"github.com/matsuridayo/libneko/protect_server"
 
 	"github.com/jsimonetti/rtnetlink"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"

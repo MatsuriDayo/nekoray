@@ -4,14 +4,18 @@ import (
 	"context"
 	"errors"
 	"fmt"
+
+	"grpc_server"
+	"grpc_server/gen"
+
+	"github.com/matsuridayo/libneko/neko_common"
+	"github.com/matsuridayo/libneko/neko_log"
+	"github.com/matsuridayo/libneko/speedtest"
+	"github.com/matsuridayo/sing-box-extra/boxapi"
+	"github.com/matsuridayo/sing-box-extra/boxmain"
+
 	"io"
 	"log"
-	"neko/gen"
-	"neko/pkg/grpc_server"
-	"neko/pkg/neko_common"
-	"neko/pkg/neko_log"
-	"neko/pkg/speedtest"
-	"nekobox_core/box_main"
 	"reflect"
 	"time"
 	"unsafe"
@@ -44,7 +48,7 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		return
 	}
 
-	instance, instance_cancel, err = box_main.Create([]byte(in.CoreConfig), true)
+	instance, instance_cancel, err = boxmain.Create([]byte(in.CoreConfig), true)
 
 	if instance != nil {
 		// Logger
@@ -55,7 +59,7 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		writer_ = reflect.NewAt(writer_.Type(), unsafe.Pointer(writer_.UnsafeAddr())).Elem() // get unexported io.Writer
 		writer_.Set(reflect.ValueOf(neko_log.LogWriter))
 		// V2ray Service
-		instance.Router().SetV2RayServer(NewSbV2rayServer())
+		instance.Router().SetV2RayServer(boxapi.NewSbV2rayServer())
 	}
 
 	return
@@ -111,7 +115,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		var i *box.Box
 		if in.Config != nil {
 			// Test instance
-			i, instance_cancel, err = box_main.Create([]byte(in.Config.CoreConfig), true)
+			i, instance_cancel, err = boxmain.Create([]byte(in.Config.CoreConfig), true)
 			if instance_cancel != nil {
 				defer instance_cancel()
 			}
@@ -139,10 +143,10 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *gen.QueryStatsResp, _ error) {
 	out = &gen.QueryStatsResp{}
 
-	var box_v2ray_service *sbV2rayStatsService
+	var box_v2ray_service *boxapi.SbV2rayStatsService
 
 	if instance != nil && instance.Router().V2RayServer() != nil {
-		box_v2ray_service, _ = instance.Router().V2RayServer().StatsService().(*sbV2rayStatsService)
+		box_v2ray_service, _ = instance.Router().V2RayServer().StatsService().(*boxapi.SbV2rayStatsService)
 	}
 
 	if box_v2ray_service != nil {

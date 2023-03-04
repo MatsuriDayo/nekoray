@@ -5,9 +5,10 @@ go 1.19
 require (
 	github.com/Dreamacro/clash v1.9.0
 	github.com/jsimonetti/rtnetlink v1.2.2
+	github.com/matsuridayo/libneko v0.0.0-20230304130313-5ea96b79b3c3
 	github.com/v2fly/v2ray-core/v5 v5.0.0
+	grpc_server v1.0.0
 	kernel.org/pub/linux/libs/security/libcap/cap v1.2.65
-	neko v1.0.0
 )
 
 require (
@@ -75,6 +76,8 @@ require (
 	kernel.org/pub/linux/libs/security/libcap/psx v1.2.65 // indirect
 )
 
-replace neko v1.0.0 => ../../
+replace neko v1.0.0 => ../../neko
+
+replace grpc_server v1.0.0 => ../../grpc_server
 
 replace github.com/v2fly/v2ray-core/v5 v5.0.0 => ../../../../v2ray-core

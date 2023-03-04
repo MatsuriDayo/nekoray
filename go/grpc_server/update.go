@@ -3,14 +3,15 @@ package grpc_server
 import (
 	"context"
 	"encoding/json"
+	"grpc_server/gen"
 	"io"
-	"neko/gen"
-	"neko/pkg/neko_common"
 	"net/http"
 	"os"
 	"runtime"
 	"strings"
 	"time"
+
+	"github.com/matsuridayo/libneko/neko_common"
 )
 
 var update_download_url string

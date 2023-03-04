@@ -1,4 +1,4 @@
-package neko_auth
+package auth
 
 import (
 	"context"

@@ -1,9 +1,10 @@
-module neko
+module grpc_server
 
 go 1.19
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
+	github.com/matsuridayo/libneko v0.0.0-20230304130313-5ea96b79b3c3
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
 )

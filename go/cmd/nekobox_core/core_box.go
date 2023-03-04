@@ -3,13 +3,14 @@ package main
 import (
 	"context"
 	"io"
-	"neko/pkg/neko_common"
-	"neko/pkg/neko_log"
 	"net"
 	"net/http"
 	"reflect"
 	"time"
 	"unsafe"
+
+	"github.com/matsuridayo/libneko/neko_common"
+	"github.com/matsuridayo/libneko/neko_log"
 
 	box "github.com/sagernet/sing-box"
 	"github.com/sagernet/sing-box/adapter"

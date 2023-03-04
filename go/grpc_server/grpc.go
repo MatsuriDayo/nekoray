@@ -5,10 +5,9 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"grpc_server/auth"
+	"grpc_server/gen"
 	"log"
-	"neko/gen"
-	"neko/pkg/neko_auth"
-	"neko/pkg/neko_common"
 	"net"
 	"os"
 	"runtime"
@@ -16,6 +15,8 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/matsuridayo/libneko/neko_common"
 
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"google.golang.org/grpc"
@@ -83,7 +84,7 @@ func RunCore(setupCore func(), server gen.LibcoreServiceServer) {
 	}
 	os.Stderr.WriteString("token is set\n")
 
-	auther := neko_auth.Authenticator{
+	auther := auth.Authenticator{
 		Token: token,
 	}
 

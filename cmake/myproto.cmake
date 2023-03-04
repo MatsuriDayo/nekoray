@@ -1,7 +1,7 @@
 find_package(Protobuf CONFIG REQUIRED)
 
 set(PROTO_FILES
-        go/gen/libcore.proto
+        go/grpc_server/gen/libcore.proto
         )
 
 add_library(myproto STATIC ${PROTO_FILES})

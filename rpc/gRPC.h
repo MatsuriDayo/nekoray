@@ -2,7 +2,7 @@
 
 #ifndef NKR_NO_GRPC
 
-#include "go/gen/libcore.pb.h"
+#include "go/grpc_server/gen/libcore.pb.h"
 #include <QString>
 
 namespace QtGrpc {

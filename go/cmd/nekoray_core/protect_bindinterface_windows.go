@@ -3,12 +3,13 @@ package main
 import (
 	"encoding/binary"
 	"log"
-	"neko/pkg/iphlpapi"
 	"net"
 	"strings"
 	"sync"
 	"syscall"
 	"unsafe"
+
+	"github.com/matsuridayo/libneko/iphlpapi"
 
 	"github.com/v2fly/v2ray-core/v5/transport/internet"
 )

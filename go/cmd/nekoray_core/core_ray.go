@@ -4,12 +4,13 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"neko/pkg/neko_common"
-	"neko/pkg/neko_log"
 	"net"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/matsuridayo/libneko/neko_common"
+	"github.com/matsuridayo/libneko/neko_log"
 
 	core "github.com/v2fly/v2ray-core/v5"
 	appLog "github.com/v2fly/v2ray-core/v5/app/log"
