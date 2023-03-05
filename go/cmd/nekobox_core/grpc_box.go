@@ -130,7 +130,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 		// Latency
-		out.Ms, err = speedtest.UrlTest(getProxyHttpClient(i), in.Url, in.Timeout)
+		out.Ms, err = speedtest.UrlTest(boxapi.GetProxyHttpClient(i), in.Url, in.Timeout)
 	} else if in.Mode == gen.TestMode_TcpPing {
 		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
 	} else {
