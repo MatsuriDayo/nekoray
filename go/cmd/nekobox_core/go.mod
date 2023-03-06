@@ -3,9 +3,9 @@ module nekobox_core
 go 1.19
 
 require (
-	github.com/matsuridayo/libneko v0.0.0-20230305030237-4aefab71d5b4
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230305030339-e94f0e97ef0c
-	github.com/sagernet/sing-box v1.1.6-0.20230301163156-e8802357e1e7
+	github.com/matsuridayo/libneko v0.0.0-20230305061957-9c2b6bde8ab5
+	github.com/matsuridayo/sing-box-extra v0.0.0-20230306082019-d7b10c40c9ca
+	github.com/sagernet/sing-box v1.1.6-0.20230305153712-ac7cc09694f3
 	grpc_server v1.0.0
 )
 
@@ -31,14 +31,14 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0 // indirect
 	github.com/hashicorp/yamux v0.1.1 // indirect
 	github.com/inconshreveable/mousetrap v1.0.1 // indirect
-	github.com/insomniacslk/dhcp v0.0.0-20230220010740-598984875576 // indirect
+	github.com/insomniacslk/dhcp v0.0.0-20230301142404-3e45eea5edd7 // indirect
 	github.com/josharian/native v1.1.0 // indirect
 	github.com/klauspost/compress v1.15.15 // indirect
 	github.com/klauspost/cpuid/v2 v2.1.1 // indirect
 	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
 	github.com/mholt/acmez v1.1.0 // indirect
-	github.com/miekg/dns v1.1.50 // indirect
+	github.com/miekg/dns v1.1.51 // indirect
 	github.com/onsi/ginkgo/v2 v2.2.0 // indirect
 	github.com/oschwald/maxminddb-golang v1.10.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.14 // indirect
@@ -54,34 +54,34 @@ require (
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
 	github.com/sagernet/reality v0.0.0-20230228045158-d3e085a8e5d1 // indirect
-	github.com/sagernet/sing v0.1.8-0.20230301160041-9fab0a9f4304 // indirect
+	github.com/sagernet/sing v0.1.8-0.20230305055148-e16845727f76 // indirect
 	github.com/sagernet/sing-dns v0.1.4 // indirect
 	github.com/sagernet/sing-shadowsocks v0.1.2-0.20230221080503-769c01d6bba9 // indirect
-	github.com/sagernet/sing-shadowtls v0.0.0-20230221123345-78e50cd7b587 // indirect
+	github.com/sagernet/sing-shadowtls v0.1.0 // indirect
 	github.com/sagernet/sing-tun v0.1.2-0.20230226091124-0cdb0eed74d9 // indirect
-	github.com/sagernet/sing-vmess v0.1.2 // indirect
+	github.com/sagernet/sing-vmess v0.1.3-0.20230303082804-627cc46ae68b // indirect
 	github.com/sagernet/smux v0.0.0-20220831015742-e0f1988e3195 // indirect
-	github.com/sagernet/tfo-go v0.0.0-20230207095944-549363a7327d // indirect
+	github.com/sagernet/tfo-go v0.0.0-20230303015439-ffcfd8c41cf9 // indirect
 	github.com/sagernet/utls v0.0.0-20230225061716-536a007c8b01 // indirect
 	github.com/sagernet/websocket v0.0.0-20220913015213-615516348b4e // indirect
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
 	github.com/spf13/cobra v1.6.1 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
-	github.com/u-root/uio v0.0.0-20230215032506-9aa6f7e2d72c // indirect
+	github.com/u-root/uio v0.0.0-20230220225925-ffce2a382923 // indirect
 	github.com/vishvananda/netns v0.0.0-20211101163701-50045581ed74 // indirect
 	go.etcd.io/bbolt v1.3.7 // indirect
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
 	go.uber.org/zap v1.24.0 // indirect
-	go4.org/netipx v0.0.0-20230125063823-8449b0a6169f // indirect
-	golang.org/x/crypto v0.6.0 // indirect
-	golang.org/x/exp v0.0.0-20230213192124-5e25df0256eb // indirect
-	golang.org/x/mod v0.6.0 // indirect
-	golang.org/x/net v0.7.0 // indirect
-	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	go4.org/netipx v0.0.0-20230303233057-f1b76eb4bb35 // indirect
+	golang.org/x/crypto v0.7.0 // indirect
+	golang.org/x/exp v0.0.0-20230304125523-9ff063c70017 // indirect
+	golang.org/x/mod v0.8.0 // indirect
+	golang.org/x/net v0.8.0 // indirect
+	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/text v0.8.0 // indirect
 	golang.org/x/time v0.0.0-20191024005414-555d28b269f0 // indirect
-	golang.org/x/tools v0.2.0 // indirect
+	golang.org/x/tools v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
 	google.golang.org/grpc v1.53.0 // indirect
 	google.golang.org/protobuf v1.28.1 // indirect
