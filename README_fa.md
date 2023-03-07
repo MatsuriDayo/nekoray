@@ -55,7 +55,7 @@ https://matsuridayo.github.io
 
 ## Linux 
 
-[آموزش اجرای لینوکس] (docs/Run_Linux.md)
+[آموزش اجرای لینوکس](docs/Run_Linux.md)
 ## آموزش کامپایل
 
 [Linux](docs/Build_Linux.md)
