@@ -61,10 +61,10 @@ namespace NekoRay::fmt {
 
                 // replace ws tls
                 if (stream != nullptr) {
-                    if (stream->security == "tls" && !stream->sni.isEmpty()) {
+                    if (stream->security == "tls" && stream->sni.isEmpty()) {
                         stream->sni = domain;
                     }
-                    if (stream->network == "ws" && !stream->host.isEmpty()) {
+                    if (stream->network == "ws" && stream->host.isEmpty()) {
                         stream->host = domain;
                     }
                 }
