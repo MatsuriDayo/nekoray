@@ -7,11 +7,10 @@ import (
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/neko_log"
 	"github.com/matsuridayo/sing-box-extra/boxapi"
-
-	box "github.com/sagernet/sing-box"
+	"github.com/matsuridayo/sing-box-extra/boxbox"
 )
 
-var instance *box.Box
+var instance *boxbox.Box
 var instance_cancel context.CancelFunc
 
 // Use sing-box instead of libcore & v2ray

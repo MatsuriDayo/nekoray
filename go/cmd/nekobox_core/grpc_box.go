@@ -12,6 +12,7 @@ import (
 	"github.com/matsuridayo/libneko/neko_log"
 	"github.com/matsuridayo/libneko/speedtest"
 	"github.com/matsuridayo/sing-box-extra/boxapi"
+	"github.com/matsuridayo/sing-box-extra/boxbox"
 	"github.com/matsuridayo/sing-box-extra/boxmain"
 
 	"io"
@@ -20,8 +21,8 @@ import (
 	"time"
 	"unsafe"
 
-	box "github.com/sagernet/sing-box"
 	"github.com/sagernet/sing-box/experimental/v2rayapi"
+	"github.com/sagernet/sing-box/option"
 )
 
 type server struct {
@@ -59,7 +60,10 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		writer_ = reflect.NewAt(writer_.Type(), unsafe.Pointer(writer_.UnsafeAddr())).Elem() // get unexported io.Writer
 		writer_.Set(reflect.ValueOf(neko_log.LogWriter))
 		// V2ray Service
-		instance.Router().SetV2RayServer(boxapi.NewSbV2rayServer())
+		instance.Router().SetV2RayServer(boxapi.NewSbV2rayServer(option.V2RayStatsServiceOptions{
+			Enabled:   true,
+			Outbounds: []string{"proxy", "bypass"},
+		}))
 	}
 
 	return
@@ -112,7 +116,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 	}()
 
 	if in.Mode == gen.TestMode_UrlTest {
-		var i *box.Box
+		var i *boxbox.Box
 		if in.Config != nil {
 			// Test instance
 			i, instance_cancel, err = boxmain.Create([]byte(in.Config.CoreConfig), true)
