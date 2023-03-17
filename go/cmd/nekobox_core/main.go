@@ -8,14 +8,13 @@ import (
 	"grpc_server"
 
 	"github.com/matsuridayo/libneko/neko_common"
+	"github.com/matsuridayo/sing-box-extra/boxbox"
 	"github.com/matsuridayo/sing-box-extra/boxmain"
 	_ "github.com/matsuridayo/sing-box-extra/distro/all"
-
-	"github.com/sagernet/sing-box/constant"
 )
 
 func main() {
-	fmt.Println("sing-box:", constant.Version, "NekoBox:", neko_common.Version_neko)
+	fmt.Println("sing-box-extra:", boxbox.Version(), "NekoBox:", neko_common.Version_neko)
 	fmt.Println()
 
 	// local DNS transport
