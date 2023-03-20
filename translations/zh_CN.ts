@@ -639,6 +639,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
+    <message>
+        <source>Don&apos;t ask for privilege elevation</source>
+        <translation>不请求特权提升</translation>
+    </message>
+    <message>
+        <source>Already Admin</source>
+        <translation>已是管理员</translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>

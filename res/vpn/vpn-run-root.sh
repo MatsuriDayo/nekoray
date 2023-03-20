@@ -3,8 +3,7 @@ set -e
 set -x
 
 if [ "$EUID" -ne 0 ]; then
-  echo "Please run as root"
-  exit
+  echo "[Warning] vpn script not running as root"
 fi
 
 if [ "$(uname)" == "Darwin" ]; then

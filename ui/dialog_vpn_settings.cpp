@@ -18,7 +18,10 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new 
     ui->vpn_mtu->setCurrentText(Int2String(NekoRay::dataStore->vpn_mtu));
     ui->vpn_ipv6->setChecked(NekoRay::dataStore->vpn_ipv6);
     ui->hide_console->setChecked(NekoRay::dataStore->vpn_hide_console);
-#ifndef Q_OS_WIN
+    ui->vpn_already_admin->setChecked(NekoRay::dataStore->vpn_already_admin);
+#ifdef Q_OS_WIN
+    ui->vpn_already_admin->setVisible(false);
+#else
     ui->hide_console->setVisible(false);
 #endif
     ui->strict_route->setChecked(NekoRay::dataStore->vpn_strict_route);
@@ -53,6 +56,7 @@ void DialogVPNSettings::accept() {
     NekoRay::dataStore->vpn_hide_console = ui->hide_console->isChecked();
     NekoRay::dataStore->vpn_strict_route = ui->strict_route->isChecked();
     NekoRay::dataStore->vpn_rule_white = ui->whitelist_mode->isChecked();
+    NekoRay::dataStore->vpn_already_admin = ui->vpn_already_admin->isChecked();
     //
     D_SAVE_STRING_QTEXTEDIT(vpn_rule_cidr)
     D_SAVE_STRING_QTEXTEDIT(vpn_rule_process)

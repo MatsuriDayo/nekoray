@@ -630,6 +630,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
         <source>Cancel</source>
         <translation type="unfinished">لغو کردن</translation>
     </message>
+    <message>
+        <source>Don&apos;t ask for privilege elevation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already Admin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditChain</name>

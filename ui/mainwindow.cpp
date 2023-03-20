@@ -715,6 +715,9 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
+#ifdef Q_OS_WIN
+        if (!isTray && Windows_IsInAdmin()) tt << "[Admin]";
+#endif
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
         if (NekoRay::dataStore->running_spmode == NekoRay::SystemProxyMode::SYSTEM_PROXY) {
@@ -1676,7 +1679,11 @@ bool MainWindow::StartVPNProcess() {
     vpn_process->start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
                                                .arg("bash " + scriptPath)});
 #else
-    vpn_process->start("pkexec", {"bash", scriptPath});
+    if (NekoRay::dataStore->vpn_already_admin) {
+        vpn_process->start("bash", {scriptPath});
+    } else {
+        vpn_process->start("pkexec", {"bash", scriptPath});
+    }
 #endif
     vpn_process->waitForStarted();
     vpn_pid = vpn_process->processId(); // actually it's pkexec or bash PID
@@ -1699,10 +1706,14 @@ bool MainWindow::StopVPNProcess(bool unconditional) {
         p.start("osascript", {"-e", QString("do shell script \"%1\" with administrator privileges")
                                         .arg("pkill -2 -U 0 nekobox_core")});
 #else
-        if (unconditional) {
-            p.start("pkexec", {"killall", "nekobox_core"});
+        if (NekoRay::dataStore->vpn_already_admin) {
+            p.start("bash", {"kill", "-2", Int2String(vpn_pid)});
         } else {
-            p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+            if (unconditional) {
+                p.start("pkexec", {"killall", "-2", "nekobox_core"});
+            } else {
+                p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
+            }
         }
 #endif
         p.waitForFinished();

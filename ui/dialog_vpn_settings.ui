@@ -114,6 +114,16 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QCheckBox" name="vpn_already_admin">
+        <property name="toolTip">
+         <string>Don't ask for privilege elevation</string>
+        </property>
+        <property name="text">
+         <string>Already Admin</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>

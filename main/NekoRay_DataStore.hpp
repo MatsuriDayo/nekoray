@@ -136,6 +136,7 @@ namespace NekoRay {
         bool vpn_hide_console = false;
         bool vpn_strict_route = false;
         bool vpn_rule_white = false;
+        bool vpn_already_admin = false; // not saved on Windows
         QString vpn_rule_process = "";
         QString vpn_rule_cidr = "";
 
