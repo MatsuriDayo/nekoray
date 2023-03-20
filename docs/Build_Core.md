@@ -19,7 +19,4 @@
 
 ### sing-box tags
 
-默认使用的 tags 以下变动外，其余均与官方版 sing-box 构建相同。具体使用的 tags 请看 `libs/build_go.sh`
-
-1. 不包含 `reality_server`
-2. `clash_api` 替换为 `v2ray_api`
+具体使用的 tags 请看 `libs/build_go.sh`

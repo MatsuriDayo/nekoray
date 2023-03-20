@@ -49,7 +49,7 @@ func (s *server) Start(ctx context.Context, in *gen.LoadConfigReq) (out *gen.Err
 		return
 	}
 
-	instance, instance_cancel, err = boxmain.Create([]byte(in.CoreConfig), true)
+	instance, instance_cancel, err = boxmain.Create([]byte(in.CoreConfig))
 
 	if instance != nil {
 		// Logger
@@ -119,7 +119,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		var i *boxbox.Box
 		if in.Config != nil {
 			// Test instance
-			i, instance_cancel, err = boxmain.Create([]byte(in.Config.CoreConfig), true)
+			i, instance_cancel, err = boxmain.Create([]byte(in.Config.CoreConfig))
 			if instance_cancel != nil {
 				defer instance_cancel()
 			}
