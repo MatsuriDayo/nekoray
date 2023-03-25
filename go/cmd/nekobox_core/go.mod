@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/matsuridayo/libneko v0.0.0-20230315005352-9d7e3f3a79d1
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230320103851-5151ef0514be
-	github.com/sagernet/sing-box v1.1.6-0.20230320093659-f680d0acaf15
+	github.com/matsuridayo/sing-box-extra v0.0.0-20230325060026-3d1536ef0aa0
+	github.com/sagernet/sing-box v1.2.0
 	grpc_server v1.0.0
 )
 
@@ -52,12 +52,12 @@ require (
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
-	github.com/sagernet/reality v0.0.0-20230312150606-35ea9af0e0b8 // indirect
-	github.com/sagernet/sing v0.2.1-0.20230318094614-4bbf5f2c3046 // indirect
+	github.com/sagernet/reality v0.0.0-20230323230523-5fa25e693e7f // indirect
+	github.com/sagernet/sing v0.2.1-0.20230323071235-f8038854d286 // indirect
 	github.com/sagernet/sing-dns v0.1.4 // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.0 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.0 // indirect
-	github.com/sagernet/sing-tun v0.1.3-0.20230315134716-fe89bbded22d // indirect
+	github.com/sagernet/sing-tun v0.1.3-0.20230323073325-35d565af6515 // indirect
 	github.com/sagernet/sing-vmess v0.1.3 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230303015439-ffcfd8c41cf9 // indirect
@@ -74,7 +74,7 @@ require (
 	go.uber.org/zap v1.24.0 // indirect
 	go4.org/netipx v0.0.0-20230303233057-f1b76eb4bb35 // indirect
 	golang.org/x/crypto v0.7.0 // indirect
-	golang.org/x/exp v0.0.0-20230315142452-642cacee5cc0 // indirect
+	golang.org/x/exp v0.0.0-20230321023759-10a507213a29 // indirect
 	golang.org/x/mod v0.8.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
 	golang.org/x/sys v0.6.0 // indirect
@@ -83,7 +83,7 @@ require (
 	golang.org/x/tools v0.6.0 // indirect
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20230215201556-9c5414ab4bde // indirect
 	google.golang.org/genproto v0.0.0-20230110181048-76db0878b65f // indirect
-	google.golang.org/grpc v1.53.0 // indirect
+	google.golang.org/grpc v1.54.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gvisor.dev/gvisor v0.0.0-20220901235040-6ca97ef2ce1c // indirect
 	lukechampine.com/blake3 v1.1.7 // indirect
