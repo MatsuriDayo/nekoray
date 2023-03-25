@@ -96,6 +96,11 @@ jobs:
         with:
           path: libs/deps
           key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}
+      - name: Debian's Dependencies
+        shell: bash
+        if: matrix.platform == 'ubuntu-20.04'
+        run: |
+          sudo apt install -y devscripts build-essential lintian
       - name: Build Dependencies
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform != 'ubuntu-20.04'
@@ -167,6 +172,10 @@ jobs:
           cp -r public_res/* linux64
           cp -r public_res/* windows64
           rm -rf public_res *.pdb
+          ####
+          sudo bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
+          mv nekoray.deb $version_standalone-linux64.deb
+          sudo rm -rf nekoray
           ####
           mv linux64 nekoray
           zip -r $version_standalone-linux64.zip nekoray
