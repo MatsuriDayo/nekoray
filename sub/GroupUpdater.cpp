@@ -72,7 +72,7 @@ namespace NekoRay::sub {
             if (ent->bean->version == -114514) return;
             auto j = DecodeB64IfValid(link.fragment().toUtf8(), QByteArray::Base64UrlEncoding);
             if (j.isEmpty()) return;
-            ent->bean->FromJsonBytes(j.toUtf8());
+            ent->bean->FromJsonBytes(j);
             MW_show_log("nekoray format: " + ent->bean->DisplayTypeAndName());
         }
 

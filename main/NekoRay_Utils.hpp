@@ -47,7 +47,7 @@ QStringList SplitLinesSkipSharp(const QString &_string);
 
 // Base64
 
-QString DecodeB64IfValid(const QString &input, QByteArray::Base64Options options = QByteArray::Base64Option::Base64Encoding);
+QByteArray DecodeB64IfValid(const QString &input, QByteArray::Base64Options options = QByteArray::Base64Option::Base64Encoding);
 
 // URL
 

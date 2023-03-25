@@ -35,7 +35,7 @@ QStringList SplitLinesSkipSharp(const QString &_string) {
     return newLines;
 }
 
-QString DecodeB64IfValid(const QString &input, QByteArray::Base64Options options) {
+QByteArray DecodeB64IfValid(const QString &input, QByteArray::Base64Options options) {
     Qt515Base64::Base64Options newOptions = Qt515Base64::Base64Option::AbortOnBase64DecodingErrors;
     if (options.testFlag(QByteArray::Base64UrlEncoding)) newOptions |= Qt515Base64::Base64Option::Base64UrlEncoding;
     if (options.testFlag(QByteArray::OmitTrailingEquals)) newOptions |= Qt515Base64::Base64Option::OmitTrailingEquals;
