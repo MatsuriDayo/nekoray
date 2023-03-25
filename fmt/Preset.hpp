@@ -18,12 +18,13 @@ namespace Preset {
 
     namespace SingBox {
         inline QStringList VpnImplementation = {"gvisor", "system"};
-    }
+        inline QStringList DomainStrategy = {"", "ipv4_only", "ipv6_only", "prefer_ipv4", "prefer_ipv6"};
+    } // namespace SingBox
 
     namespace Windows {
         inline QStringList system_proxy_format{"{ip}:{http_port}",
                                                "socks={ip}:{socks_port}",
                                                "http={ip}:{http_port};https={ip}:{http_port};ftp={ip}:{http_port};socks={ip}:{socks_port}",
                                                "http=http://{ip}:{http_port};https=http://{ip}:{http_port}"};
-    }
+    } // namespace Windows
 } // namespace Preset

@@ -67,7 +67,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>Outbound Domain Strategy</string>
+           <string>Inbound &amp; Outbound Domain Strategy</string>
           </property>
          </widget>
         </item>
@@ -76,36 +76,6 @@
           <property name="editable">
            <bool>false</bool>
           </property>
-          <item>
-           <property name="text">
-            <string notr="true">AsIs</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">UseIP</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">UseIPv4</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">UseIPv6</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">PreferIPv4</string>
-           </property>
-          </item>
-          <item>
-           <property name="text">
-            <string notr="true">PreferIPv6</string>
-           </property>
-          </item>
          </widget>
         </item>
        </layout>
@@ -179,7 +149,7 @@
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
-            <string>Domain Strategy</string>
+            <string>V2Ray Domain Strategy</string>
            </property>
           </widget>
          </item>

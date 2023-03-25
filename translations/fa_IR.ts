@@ -461,10 +461,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Outbound Domain Strategy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remote DNS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -477,7 +473,7 @@
         <translation>فعال کردن مسیریابی DNS</translation>
     </message>
     <message>
-        <source>Domain Strategy</source>
+        <source>V2Ray Domain Strategy</source>
         <translation>استراتژی دامنه</translation>
     </message>
     <message>
@@ -566,6 +562,10 @@
     </message>
     <message>
         <source>Remote</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inbound &amp; Outbound Domain Strategy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

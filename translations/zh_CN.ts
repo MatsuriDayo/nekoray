@@ -100,10 +100,6 @@
         <translation>更新订阅时使用代理</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation type="vanished">语言</translation>
-    </message>
-    <message>
         <source>Security</source>
         <translation>安全</translation>
     </message>
@@ -443,10 +439,6 @@
         <translation>路由</translation>
     </message>
     <message>
-        <source>Outbound Domain Strategy</source>
-        <translation>出站域名策略</translation>
-    </message>
-    <message>
         <source>Disable</source>
         <translation>禁用</translation>
     </message>
@@ -471,19 +463,11 @@
         <translation>远程 DNS</translation>
     </message>
     <message>
-        <source>Enhanced domain name resolution</source>
-        <translation type="vanished">增强域名解析</translation>
-    </message>
-    <message>
-        <source>Using multiple overseas DNS to query the server address can alleviate the DNS pollution of the server domain name to a certain extent, which may have side effects.</source>
-        <translation type="vanished">使用多个境外 DNS 查询服务器地址，一定程度上可缓解对服务器域名的 DNS 污染，可能有副作用。</translation>
-    </message>
-    <message>
         <source>Enable DNS Routing</source>
         <translation>启用 DNS 路由</translation>
     </message>
     <message>
-        <source>Domain Strategy</source>
+        <source>V2Ray Domain Strategy</source>
         <translation>域名策略</translation>
     </message>
     <message>
@@ -573,6 +557,10 @@
     <message>
         <source>Remote</source>
         <translation>远程</translation>
+    </message>
+    <message>
+        <source>Inbound &amp; Outbound Domain Strategy</source>
+        <translation>出入站域名策略</translation>
     </message>
 </context>
 <context>
@@ -1078,14 +1066,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>目标地址</translation>
     </message>
     <message>
-        <source>End</source>
-        <translation type="vanished">结束</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">活动</translation>
-    </message>
-    <message>
         <source>Start: %1
 End: %2</source>
         <translation>开始: %1
@@ -1308,10 +1288,6 @@ Split by line.</source>
 </context>
 <context>
     <name>ProxyItem</name>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">删除</translation>
-    </message>
     <message>
         <source>Confirmation</source>
         <translation>确认</translation>

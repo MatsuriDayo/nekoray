@@ -1,6 +1,7 @@
 #include "./ui_mainwindow.h"
 #include "mainwindow.h"
 
+#include "fmt/Preset.hpp"
 #include "db/ProfileFilter.hpp"
 #include "db/ConfigBuilder.hpp"
 #include "sub/GroupUpdater.hpp"
@@ -92,8 +93,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (IS_NEKO_BOX) {
         software_name = "NekoBox";
         software_core_name = "sing-box";
+        // replace default values
         if (NekoRay::dataStore->log_level == "warning") {
             NekoRay::dataStore->log_level = "info";
+        }
+        if (!Preset::SingBox::DomainStrategy.contains(NekoRay::dataStore->outbound_domain_strategy)) {
+            NekoRay::dataStore->outbound_domain_strategy = "";
         }
     }
 

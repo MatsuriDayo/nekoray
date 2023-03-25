@@ -4,6 +4,7 @@
 #include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "qv2ray/v3/components/GeositeReader/GeositeReader.hpp"
 #include "main/GuiUtils.hpp"
+#include "fmt/Preset.hpp"
 
 #include <QFile>
 #include <QMessageBox>
@@ -31,8 +32,10 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
 
     if (IS_NEKO_BOX) {
         ui->domain_v2ray->setVisible(false);
+        ui->outbound_domain_strategy->addItems(Preset::SingBox::DomainStrategy);
     } else {
         ui->domain_v2ray->setVisible(true);
+        ui->outbound_domain_strategy->addItems({"AsIs", "UseIPv4", "UseIPv6", "PreferIPv4", "PreferIPv6"});
     }
     //
     ui->sniffing_mode->setCurrentIndex(NekoRay::dataStore->sniffing_mode);

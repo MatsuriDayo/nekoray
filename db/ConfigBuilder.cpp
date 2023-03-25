@@ -568,21 +568,8 @@ namespace NekoRay {
             status->result->outboundStats += ent->traffic_data;
 
             if (IS_NEKO_BOX) {
-                auto ds = dataStore->outbound_domain_strategy;
-                if (status->forTest) {
-                    ds = "";
-                } else if (ds == "UseIPv4") {
-                    ds = "ipv4_only";
-                } else if (ds == "UseIPv6") {
-                    ds = "ipv6_only";
-                } else if (ds == "PreferIPv4") {
-                    ds = "prefer_ipv4";
-                } else if (ds == "PreferIPv6") {
-                    ds = "prefer_ipv6";
-                } else {
-                    ds = "";
-                }
-                outbound["domain_strategy"] = ds;
+                // apply domain_strategy
+                outbound["domain_strategy"] = dataStore->outbound_domain_strategy;
                 // TODO apply mux
             } else {
                 if (!status->forTest) outbound["domainStrategy"] = dataStore->outbound_domain_strategy;
@@ -655,6 +642,9 @@ namespace NekoRay {
                     },
                 };
             }
+            // apply domain_strategy
+            inboundObj["domain_strategy"] = dataStore->outbound_domain_strategy;
+            //
             status->inbounds += inboundObj;
         }
 
