@@ -1129,16 +1129,19 @@ void MainWindow::display_qr_link(bool nkrFormat) {
         void refresh(bool is_nk) {
             auto link_display = is_nk ? link_nk : link;
             l2->setPlainText(link_display);
+            constexpr qint32 qr_padding = 2;
             //
             try {
                 qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(link_display.toUtf8().data(), qrcodegen::QrCode::Ecc::MEDIUM);
                 qint32 sz = qr.getSize();
-                im = QImage(sz, sz, QImage::Format_RGB32);
+                im = QImage(sz + qr_padding * 2, sz + qr_padding * 2, QImage::Format_RGB32);
                 QRgb black = qRgb(0, 0, 0);
                 QRgb white = qRgb(255, 255, 255);
+                im.fill(white);
                 for (int y = 0; y < sz; y++)
                     for (int x = 0; x < sz; x++)
-                        im.setPixel(x, y, qr.getModule(x, y) ? black : white);
+                        if (qr.getModule(x, y))
+                            im.setPixel(x + qr_padding, y + qr_padding, black);
                 show_qr(size());
             } catch (const std::exception &ex) {
                 QMessageBox::warning(nullptr, "error", ex.what());
