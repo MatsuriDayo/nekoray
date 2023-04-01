@@ -4,7 +4,6 @@ version="$1"
 
 mkdir -p nekoray/DEBIAN
 mkdir -p nekoray/opt
-mkdir -p nekoray/usr/local/bin
 cp -r linux64 nekoray/opt/
 mv nekoray/opt/linux64 nekoray/opt/nekoray
 
@@ -14,7 +13,7 @@ Package: nekoray
 Version: $version
 Architecture: amd64
 Maintainer: MatsuriDayo nekoha_matsuri@protonmail.com
-Depends: libxcb-xinerama0, qtbase5-dev, libqt5svg5-dev, libqt5x11extras5-dev
+Depends: libxcb-xinerama0, libqt5core5a, libqt5gui5, libqt5network5, libqt5widgets5, libqt5svg5, libqt5x11extras5
 Description: Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 EOF
 
