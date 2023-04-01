@@ -6,6 +6,8 @@ mkdir -p nekoray/DEBIAN
 mkdir -p nekoray/opt
 cp -r linux64 nekoray/opt/
 mv nekoray/opt/linux64 nekoray/opt/nekoray
+rm -rf nekoray/opt/nekoray/usr
+rm nekoray/opt/nekoray/launcher
 
 # basic
 cat >nekoray/DEBIAN/control <<-EOF
@@ -17,7 +19,6 @@ Depends: libxcb-xinerama0, libqt5core5a, libqt5gui5, libqt5network5, libqt5widge
 Description: Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 EOF
 
-# Fix permission issues
 cat >nekoray/DEBIAN/postinst <<-EOF
 cat >/usr/share/applications/nekoray.desktop<<-END
 [Desktop Entry]
