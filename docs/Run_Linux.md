@@ -1,3 +1,21 @@
+## Linux 安装
+
+### Debian 系发行版
+
+使用 Debian 系发行版时，推荐使用 .deb 包安装：
+
+```shell
+sudo dpkg -i nekoray-*-linux64.deb
+```
+
+安装需要一些 Qt5 依赖，如果在安装时没有，请输入 `sudo apt upgrade --fix-broken -y`。
+
+安装完成后，桌面快捷方式启动自带参数 `-appdata`，如果想要直接启动并使用之前的配置，注意附带本参数。
+
+### 其他发行版
+
+下载 .zip 文件，解压到合理的路径，开箱即用。具体使用方法见下文。
+
 ## Linux 运行
 
 **使用 Linux 系统相信您已具备基本的排错能力，
