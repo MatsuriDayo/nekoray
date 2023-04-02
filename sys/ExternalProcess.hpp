@@ -1,7 +1,5 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
-
 #include <QProcess>
 
 namespace NekoRay::sys {

@@ -52,11 +52,11 @@ int main(int argc, char *argv[]) {
 #endif
 
     // Flags
-    auto args = QApplication::arguments();
-    if (args.contains("-many")) NekoRay::dataStore->flag_many = true;
-    if (args.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
-    if (args.contains("-tray")) NekoRay::dataStore->flag_tray = true;
-    if (args.contains("-debug")) NekoRay::dataStore->flag_debug = true;
+    NekoRay::dataStore->argv = QApplication::arguments();
+    if (NekoRay::dataStore->argv.contains("-many")) NekoRay::dataStore->flag_many = true;
+    if (NekoRay::dataStore->argv.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
+    if (NekoRay::dataStore->argv.contains("-tray")) NekoRay::dataStore->flag_tray = true;
+    if (NekoRay::dataStore->argv.contains("-debug")) NekoRay::dataStore->flag_debug = true;
 #ifdef NKR_CPP_USE_APPDATA
     NekoRay::dataStore->flag_use_appdata = true; // Example: Package & MacOS
 #endif

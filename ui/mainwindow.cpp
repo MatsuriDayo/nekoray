@@ -627,7 +627,9 @@ void MainWindow::on_menu_exit_triggered() {
         QProcess::startDetached("./updater", QStringList{});
     } else if (exit_reason == 2) {
         QDir::setCurrent(QApplication::applicationDirPath());
-        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : QApplication::applicationFilePath(), QStringList{});
+        auto arguments = NekoRay::dataStore->argv;
+        if (arguments.length() > 0) arguments.removeFirst();
+        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : QApplication::applicationFilePath(), arguments);
     }
     tray->hide();
     QCoreApplication::quit();

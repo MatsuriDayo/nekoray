@@ -65,6 +65,7 @@ namespace NekoRay {
         int resolve_count = 0;
 
         // Flags
+        QStringList argv = {};
         bool flag_use_appdata = false;
         bool flag_many = false;
         bool flag_tray = false;

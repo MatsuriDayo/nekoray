@@ -1,4 +1,5 @@
 #include "ExternalProcess.hpp"
+#include "main/NekoRay.hpp"
 
 #include <QTimer>
 #include <QDir>
