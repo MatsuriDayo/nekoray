@@ -170,6 +170,7 @@ namespace NekoRay::sub {
         try {
             return n.as<std::string>().c_str();
         } catch (const YAML::Exception &ex) {
+            qDebug() << ex.what();
             return def;
         }
     }
@@ -178,6 +179,7 @@ namespace NekoRay::sub {
         try {
             return n.as<int>();
         } catch (const YAML::Exception &ex) {
+            qDebug() << ex.what();
             return def;
         }
     }
@@ -186,6 +188,7 @@ namespace NekoRay::sub {
         try {
             return n.as<bool>();
         } catch (const YAML::Exception &ex) {
+            qDebug() << ex.what();
             return def;
         }
     }
