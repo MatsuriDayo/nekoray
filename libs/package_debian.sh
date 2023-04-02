@@ -41,4 +41,4 @@ sudo chmod 755 nekoray/DEBIAN/postinst
 
 # desktop && PATH
 
-sudo dpkg-deb --build nekoray
+sudo dpkg-deb -Zxz --build nekoray
