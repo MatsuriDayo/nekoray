@@ -139,7 +139,7 @@ namespace NekoRay {
             } else if (latency < 200) {
                 return Qt::darkYellow;
             } else {
-                return Qt::darkRed;
+                return Qt::red;
             }
         } else {
             return {};
