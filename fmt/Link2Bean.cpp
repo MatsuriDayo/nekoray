@@ -89,10 +89,20 @@ namespace NekoRay::fmt {
             name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
-            auto method_password = DecodeB64IfValid(url.userName(), QByteArray::Base64Option::Base64UrlEncoding);
+
+            auto urlUserName = url.userName();
+            QString method_password;
+            if (urlUserName.contains(":")) {
+                // 2022 format
+                method_password = urlUserName;
+            } else {
+                // traditional format
+                method_password = DecodeB64IfValid(urlUserName, QByteArray::Base64Option::Base64UrlEncoding);
+            }
             if (method_password.isEmpty()) return false;
             method = SubStrBefore(method_password, ":");
             password = SubStrAfter(method_password, ":");
+
             auto query = GetQuery(url);
             plugin = query.queryItemValue("plugin").replace("simple-obfs;", "obfs-local;");
         } else {
