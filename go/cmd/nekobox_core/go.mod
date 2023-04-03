@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/matsuridayo/libneko v0.0.0-20230315005352-9d7e3f3a79d1
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230325060026-3d1536ef0aa0
-	github.com/sagernet/sing-box v1.2.0
+	github.com/matsuridayo/sing-box-extra v0.0.0-20230403023034-c868033055eb
+	github.com/sagernet/sing-box v1.2.3-0.20230402040603-f8be48401998
 	grpc_server v1.0.0
 )
 
@@ -38,7 +38,7 @@ require (
 	github.com/libdns/libdns v0.2.1 // indirect
 	github.com/logrusorgru/aurora v2.0.3+incompatible // indirect
 	github.com/mholt/acmez v1.1.0 // indirect
-	github.com/miekg/dns v1.1.52 // indirect
+	github.com/miekg/dns v1.1.53 // indirect
 	github.com/onsi/ginkgo/v2 v2.2.0 // indirect
 	github.com/ooni/go-libtor v1.1.7 // indirect
 	github.com/oschwald/maxminddb-golang v1.10.0 // indirect
@@ -53,11 +53,11 @@ require (
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
 	github.com/sagernet/reality v0.0.0-20230323230523-5fa25e693e7f // indirect
-	github.com/sagernet/sing v0.2.1-0.20230323071235-f8038854d286 // indirect
-	github.com/sagernet/sing-dns v0.1.4 // indirect
+	github.com/sagernet/sing v0.2.2-0.20230402035613-6d63c1a7dca5 // indirect
+	github.com/sagernet/sing-dns v0.1.5-0.20230402033314-a752be02978d // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.0 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.0 // indirect
-	github.com/sagernet/sing-tun v0.1.3-0.20230323073325-35d565af6515 // indirect
+	github.com/sagernet/sing-tun v0.1.4-0.20230326080954-8848c0e4cbab // indirect
 	github.com/sagernet/sing-vmess v0.1.3 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230303015439-ffcfd8c41cf9 // indirect

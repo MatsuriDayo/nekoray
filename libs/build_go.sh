@@ -32,5 +32,5 @@ popd
 
 #### Go: nekobox_core ####
 pushd go/cmd/nekobox_core
-go build -v -o $DEST -trimpath -ldflags "-w -s -X $neko_common.Version_neko=$version_standalone" -tags "with_gvisor,with_quic,with_wireguard,with_utls,with_v2ray_api"
+go build -v -o $DEST -trimpath -ldflags "-w -s -X $neko_common.Version_neko=$version_standalone" -tags "with_grpc,with_gvisor,with_quic,with_wireguard,with_utls,with_v2ray_api"
 popd
