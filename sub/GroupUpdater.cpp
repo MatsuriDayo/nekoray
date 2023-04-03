@@ -257,7 +257,7 @@ namespace NekoRay::sub {
                     }
                 } else if (type == "socks" || type == "http") {
                     auto bean = ent->SocksHTTPBean();
-                    bean->password = Node2QString(proxy["username"]);
+                    bean->username = Node2QString(proxy["username"]);
                     bean->password = Node2QString(proxy["password"]);
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
