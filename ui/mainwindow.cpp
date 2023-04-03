@@ -867,6 +867,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, NekoRay::GroupSortAction
                               }
                               auto get_latency_for_sort = [](int id) {
                                   auto i = NekoRay::profileManager->GetProfile(id)->latency;
+                                  if (i == 0) i = 100000;
                                   if (i < 0) i = 99999;
                                   return i;
                               };
