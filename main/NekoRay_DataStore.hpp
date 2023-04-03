@@ -102,6 +102,7 @@ namespace NekoRay {
         bool insecure_hint = true;
         bool skip_cert = false;
         int enable_js_hook = 0;
+        QString utlsFingerprint = "";
 
         // Remember
         int remember_spmode = NekoRay::SystemProxyMode::DISABLE;

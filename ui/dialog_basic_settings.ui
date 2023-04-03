@@ -48,7 +48,7 @@
             <item>
              <widget class="QPushButton" name="inbound_auth">
               <property name="text">
-               <string notr="true">Auth</string>
+               <string notr="true"/>
               </property>
              </widget>
             </item>
@@ -276,18 +276,22 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_5">
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
+          <widget class="QGroupBox" name="groupBox_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
             <item>
-             <widget class="QCheckBox" name="start_minimal">
+             <widget class="QLabel" name="label_17">
+              <property name="text">
+               <string>Max log lines</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="max_log_line">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Hide dashboard at startup</string>
               </property>
              </widget>
             </item>
@@ -394,7 +398,7 @@
             <item>
              <widget class="QLabel" name="label_16">
               <property name="text">
-               <string>Traffic statistics refresh rate</string>
+               <string>Statistics refresh rate</string>
               </property>
              </widget>
             </item>
@@ -445,22 +449,18 @@
        <item row="5" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_24">
          <item>
-          <widget class="QGroupBox" name="groupBox_2">
-           <layout class="QHBoxLayout" name="horizontalLayout_23">
+          <widget class="QGroupBox" name="horizontalGroupBox_5">
+           <layout class="QHBoxLayout" name="horizontalLayout_6">
             <item>
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>Max log lines</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="max_log_line">
+             <widget class="QCheckBox" name="start_minimal">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Hide dashboard at startup</string>
               </property>
              </widget>
             </item>
@@ -473,10 +473,10 @@
             <item>
              <widget class="QCheckBox" name="AA_EnableHighDpiScaling">
               <property name="toolTip">
-               <string>Maybe useful for HiDPI screens.</string>
+               <string notr="true">Enable Qt::AA_EnableHighDpiScaling, maybe useful for HiDPI screens.</string>
               </property>
               <property name="text">
-               <string notr="true">Qt::AA_EnableHighDpiScaling</string>
+               <string notr="true">HiDPI Screen wrokaround</string>
               </property>
              </widget>
             </item>
@@ -696,6 +696,32 @@
               <string notr="true">Enable + load std module</string>
              </property>
             </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_26">
+          <item>
+           <widget class="QLabel" name="label_18">
+            <property name="text">
+             <string>Default uTLS Fingerprint</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="utlsFingerprint">
+            <property name="editable">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
          </layout>

@@ -108,7 +108,7 @@
         <translation>提示不安全的配置</translation>
     </message>
     <message>
-        <source>Traffic statistics refresh rate</source>
+        <source>Statistics refresh rate</source>
         <translation>流量统计刷新率</translation>
     </message>
     <message>
@@ -220,12 +220,12 @@
         <translation>密码</translation>
     </message>
     <message>
-        <source>Maybe useful for HiDPI screens.</source>
-        <translation>可能对 HiDPI 屏幕有用。</translation>
-    </message>
-    <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
         <translation>默认跳过 TLS 证书验证 (allowInsecure)</translation>
+    </message>
+    <message>
+        <source>Default uTLS Fingerprint</source>
+        <translation>默认 uTLS 指纹</translation>
     </message>
 </context>
 <context>

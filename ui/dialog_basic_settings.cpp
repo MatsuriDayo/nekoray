@@ -246,9 +246,12 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Security
 
+    ui->utlsFingerprint->addItems(IS_NEKO_BOX ? Preset::SingBox::UtlsFingerPrint : Preset::V2Ray::UtlsFingerPrint);
+
     D_LOAD_BOOL(insecure_hint)
     D_LOAD_BOOL(skip_cert)
     ui->enable_js_hook->setCurrentIndex(NekoRay::dataStore->enable_js_hook);
+    ui->utlsFingerprint->setCurrentText(NekoRay::dataStore->utlsFingerprint);
 }
 
 DialogBasicSettings::~DialogBasicSettings() {
@@ -306,6 +309,7 @@ void DialogBasicSettings::accept() {
     D_SAVE_BOOL(insecure_hint)
     D_SAVE_BOOL(skip_cert)
     NekoRay::dataStore->enable_js_hook = ui->enable_js_hook->currentIndex();
+    NekoRay::dataStore->utlsFingerprint = ui->utlsFingerprint->currentText();
 
     // 关闭连接统计，停止刷新前清空记录。
     if (NekoRay::dataStore->traffic_loop_interval == 0 || NekoRay::dataStore->connection_statistics == false) {

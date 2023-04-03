@@ -47,7 +47,8 @@ namespace NekoRay::fmt {
         }
 
         if (security == "tls") {
-            bool v5_utls = !utlsFingerprint.isEmpty();
+            auto fp = utlsFingerprint.isEmpty() ? NekoRay::dataStore->utlsFingerprint : utlsFingerprint;
+            bool v5_utls = !fp.isEmpty();
             QJsonObject tls;
             if (allow_insecure || dataStore->skip_cert) tls["allowInsecure"] = true;
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
@@ -65,7 +66,7 @@ namespace NekoRay::fmt {
             }
             if (v5_utls) {
                 streamSettings["utlsSettings"] = QJsonObject{
-                    {"imitate", utlsFingerprint},
+                    {"imitate", fp},
                     {"tlsConfig", tls},
                 };
                 streamSettings["security"] = "utls";

@@ -113,7 +113,7 @@
         <translation>اشاره ناامن</translation>
     </message>
     <message>
-        <source>Traffic statistics refresh rate</source>
+        <source>Statistics refresh rate</source>
         <translation>نرخ تازه سازی آمار ترافیک</translation>
     </message>
     <message>
@@ -224,10 +224,6 @@
     <message>
         <source>Password</source>
         <translation>رمز عبور</translation>
-    </message>
-    <message>
-        <source>Maybe useful for HiDPI screens.</source>
-        <translation>شاید برای صفحه نمایش های HiDPI مفید باشد.</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
