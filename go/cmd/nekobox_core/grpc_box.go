@@ -21,7 +21,6 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/sagernet/sing-box/experimental/v2rayapi"
 	"github.com/sagernet/sing-box/option"
 )
 
@@ -147,20 +146,9 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 func (s *server) QueryStats(ctx context.Context, in *gen.QueryStatsReq) (out *gen.QueryStatsResp, _ error) {
 	out = &gen.QueryStatsResp{}
 
-	var box_v2ray_service *boxapi.SbV2rayStatsService
-
 	if instance != nil && instance.Router().V2RayServer() != nil {
-		box_v2ray_service, _ = instance.Router().V2RayServer().StatsService().(*boxapi.SbV2rayStatsService)
-	}
-
-	if box_v2ray_service != nil {
-		req := &v2rayapi.GetStatsRequest{
-			Name:   fmt.Sprintf("outbound>>>%s>>>traffic>>>%s", in.Tag, in.Direct),
-			Reset_: true,
-		}
-		resp, err := box_v2ray_service.GetStats(ctx, req)
-		if err == nil {
-			out.Traffic = resp.Stat.Value
+		if ss, ok := instance.Router().V2RayServer().(*boxapi.SbV2rayServer); ok {
+			out.Traffic = ss.QueryStats(fmt.Sprintf("outbound>>>%s>>>traffic>>>%s", in.Tag, in.Direct))
 		}
 	}
 
