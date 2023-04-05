@@ -4,7 +4,7 @@ go 1.19
 
 require (
 	github.com/matsuridayo/libneko v0.0.0-20230315005352-9d7e3f3a79d1
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230404135215-f6737f68d71c
+	github.com/matsuridayo/sing-box-extra v0.0.0-20230405052125-4308a4d39f94
 	github.com/sagernet/sing-box v1.2.3-0.20230402040603-f8be48401998
 	grpc_server v1.0.0
 )
