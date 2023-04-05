@@ -476,7 +476,7 @@
                <string notr="true">Enable Qt::AA_EnableHighDpiScaling, maybe useful for HiDPI screens.</string>
               </property>
               <property name="text">
-               <string notr="true">HiDPI Screen wrokaround</string>
+               <string notr="true">HiDPI Screen workaround</string>
               </property>
              </widget>
             </item>

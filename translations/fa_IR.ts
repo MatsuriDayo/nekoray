@@ -229,6 +229,10 @@
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
         <translation>رد شدن از احراز هویت گواهی TLS به طور پیش فرض (allowInsecure)</translation>
     </message>
+    <message>
+        <source>Default uTLS Fingerprint</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
