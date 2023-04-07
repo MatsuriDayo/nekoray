@@ -149,6 +149,9 @@ namespace NekoRay {
         QString hotkey_route = "";
         QString hotkey_system_proxy_menu = "";
 
+        // Core
+        bool core_box_auto_detect_interface = true;
+
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
 

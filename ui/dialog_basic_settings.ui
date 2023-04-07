@@ -590,6 +590,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QPushButton" name="core_settings">
+              <property name="text">
+               <string>Settings</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </item>
          </layout>

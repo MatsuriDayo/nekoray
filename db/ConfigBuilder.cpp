@@ -823,7 +823,7 @@ namespace NekoRay {
         QJSONARRAY_ADD(routingRules, status->routingRules)
         auto routeObj = QJsonObject{
             {"rules", routingRules},
-            {"auto_detect_interface", true},
+            {"auto_detect_interface", NekoRay::dataStore->core_box_auto_detect_interface},
             {
                 "geoip",
                 QJsonObject{

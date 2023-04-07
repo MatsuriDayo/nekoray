@@ -75,6 +75,7 @@ namespace NekoRay {
         _add(new configItem("max_log_line", &max_log_line, itemType::integer));
         _add(new configItem("splitter_state", &splitter_state, itemType::string));
         _add(new configItem("utlsFingerprint", &utlsFingerprint, itemType::string));
+        _add(new configItem("core_box_auto_detect_interface", &core_box_auto_detect_interface, itemType::boolean));
 #ifndef Q_OS_WIN
         _add(new configItem("vpn_already_admin", &vpn_already_admin, itemType::boolean));
 #endif

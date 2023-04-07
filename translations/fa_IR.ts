@@ -233,6 +233,10 @@
         <source>Default uTLS Fingerprint</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished">تنظیمات</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

@@ -167,6 +167,8 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
+    if (!IS_NEKO_BOX) ui->core_settings->hide();
+
     ui->groupBox_core->setTitle(software_core_name);
     ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
     //
@@ -381,6 +383,40 @@ void DialogBasicSettings::on_inbound_auth_clicked() {
     });
     connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
     layout->addWidget(box, 2, 1);
+    //
+    w->exec();
+    w->deleteLater();
+    refresh_auth();
+}
+
+void DialogBasicSettings::on_core_settings_clicked() {
+    auto w = new QDialog(this);
+    w->setWindowTitle(software_core_name + " settings");
+    auto layout = new QGridLayout;
+    w->setLayout(layout);
+    //
+    auto line = -1;
+    QCheckBox *core_box_auto_detect_interface;
+    if (IS_NEKO_BOX) {
+        auto core_box_auto_detect_interface_l = new QLabel("auto_detect_interface");
+        core_box_auto_detect_interface = new QCheckBox;
+        core_box_auto_detect_interface->setChecked(NekoRay::dataStore->core_box_auto_detect_interface);
+        layout->addWidget(core_box_auto_detect_interface_l, ++line, 0);
+        layout->addWidget(core_box_auto_detect_interface, line, 1);
+    }
+    //
+    auto box = new QDialogButtonBox;
+    box->setOrientation(Qt::Horizontal);
+    box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    connect(box, &QDialogButtonBox::accepted, w, [=] {
+        if (IS_NEKO_BOX) {
+            NekoRay::dataStore->core_box_auto_detect_interface = core_box_auto_detect_interface->isChecked();
+        }
+        NekoRay::dataStore->Save();
+        w->accept();
+    });
+    connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
+    layout->addWidget(box, ++line, 1);
     //
     w->exec();
     w->deleteLater();

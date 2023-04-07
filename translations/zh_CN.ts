@@ -227,6 +227,10 @@
         <source>Default uTLS Fingerprint</source>
         <translation>默认 uTLS 指纹</translation>
     </message>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
