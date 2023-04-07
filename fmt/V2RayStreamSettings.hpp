@@ -22,6 +22,9 @@ namespace NekoRay::fmt {
         // ws early data
         QString ws_early_data_name = "";
         int ws_early_data_length = 0;
+        // reality
+        QString reality_pbk = "";
+        QString reality_sid = "";
 
         V2rayStreamSettings() : JsonStore() {
             _add(new configItem("net", &network, itemType::string));
@@ -37,6 +40,8 @@ namespace NekoRay::fmt {
             _add(new configItem("ed_name", &ws_early_data_name, itemType::string));
             _add(new configItem("ed_len", &ws_early_data_length, itemType::integer));
             _add(new configItem("utls", &utlsFingerprint, itemType::string));
+            _add(new configItem("pbk", &reality_pbk, itemType::string));
+            _add(new configItem("sid", &reality_sid, itemType::string));
         }
 
         QJsonObject BuildStreamSettingsV2Ray();

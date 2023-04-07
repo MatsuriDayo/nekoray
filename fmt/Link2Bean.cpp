@@ -38,6 +38,8 @@ namespace NekoRay::fmt {
 
             stream->security = GetQueryValue(query, "security", "");
             stream->sni = GetQueryValue(query, "sni");
+
+            if (link.startsWith("https")) stream->security = "tls";
         }
         return true;
     }
@@ -54,14 +56,15 @@ namespace NekoRay::fmt {
         if (serverPort == -1) serverPort = 443;
 
         stream->network = GetQueryValue(query, "type", "tcp");
-        stream->security = GetQueryValue(query, "security", "tls");
+        stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls");
         auto sni1 = GetQueryValue(query, "sni");
         auto sni2 = GetQueryValue(query, "peer");
         if (!sni1.isEmpty()) stream->sni = sni1;
         if (!sni2.isEmpty()) stream->sni = sni2;
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
+        stream->reality_pbk = GetQueryValue(query, "pbk", "");
+        stream->reality_sid = GetQueryValue(query, "sid", "");
 
-        // TODO header kcp quic
         if (stream->network == "ws") {
             stream->path = GetQueryValue(query, "path", "");
             stream->host = GetQueryValue(query, "host", "");

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>678</height>
+    <height>800</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -130,7 +130,7 @@
          <item>
           <widget class="QPushButton" name="custom_edit">
            <property name="text">
-            <string>Edit</string>
+            <string notr="true">Edit</string>
            </property>
           </widget>
          </item>
@@ -411,7 +411,7 @@ security (QUIC)</string>
          </sizepolicy>
         </property>
         <property name="title">
-         <string>Security Settings</string>
+         <string>TLS Security Settings</string>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
@@ -440,38 +440,13 @@ security (QUIC)</string>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="label_6">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
                <horstretch>0</horstretch>
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
-             <property name="text">
-              <string notr="true">uTLS</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="utlsFingerprint">
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <layout class="QGridLayout" name="_3">
-           <item row="2" column="1">
-            <widget class="QPushButton" name="certificate_edit">
-             <property name="text">
-              <string notr="true">PushButton</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="label_6">
              <property name="toolTip">
               <string notr="true"/>
              </property>
@@ -480,6 +455,17 @@ security (QUIC)</string>
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QPushButton" name="certificate_edit">
+             <property name="text">
+              <string notr="true">Edit</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="_3">
            <item row="0" column="1">
             <widget class="MyLineEdit" name="sni"/>
            </item>
@@ -511,6 +497,58 @@ security (QUIC)</string>
         </layout>
        </widget>
       </item>
+      <item>
+       <widget class="QGroupBox" name="reality_box">
+        <property name="title">
+         <string>TLS Camouflage Settings</string>
+        </property>
+        <layout class="QGridLayout" name="gridLayout_3">
+         <item row="1" column="0">
+          <widget class="QLabel" name="reality_pbk_l">
+           <property name="toolTip">
+            <string>Reality public key. If not empty, turn TLS into REALITY.</string>
+           </property>
+           <property name="text">
+            <string notr="true">Realty Pbk</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="0">
+          <widget class="QLabel" name="reality_sid_l">
+           <property name="text">
+            <string notr="true">Reality Sid</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
+          <widget class="MyLineEdit" name="reality_sid"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="MyLineEdit" name="reality_pbk"/>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string notr="true">uTLS</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QComboBox" name="utlsFingerprint">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -538,10 +576,12 @@ security (QUIC)</string>
   <tabstop>ws_early_data_length</tabstop>
   <tabstop>ws_early_data_name</tabstop>
   <tabstop>insecure</tabstop>
-  <tabstop>utlsFingerprint</tabstop>
+  <tabstop>certificate_edit</tabstop>
   <tabstop>sni</tabstop>
   <tabstop>alpn</tabstop>
-  <tabstop>certificate_edit</tabstop>
+  <tabstop>utlsFingerprint</tabstop>
+  <tabstop>reality_pbk</tabstop>
+  <tabstop>reality_sid</tabstop>
  </tabstops>
  <resources/>
  <connections>

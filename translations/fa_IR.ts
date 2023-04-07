@@ -353,7 +353,7 @@
     </message>
     <message>
         <source>Security Settings</source>
-        <translation>تنظیمات امنیت</translation>
+        <translation type="vanished">تنظیمات امنیت</translation>
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
@@ -390,6 +390,18 @@
     <message>
         <source>Already set</source>
         <translation>تنظیم شده</translation>
+    </message>
+    <message>
+        <source>TLS Security Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Camouflage Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reality public key. If not empty, turn TLS into REALITY.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

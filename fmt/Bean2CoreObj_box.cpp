@@ -41,6 +41,13 @@ namespace NekoRay::fmt {
                     {"fingerprint", fp},
                 };
             }
+            if (!reality_pbk.trimmed().isEmpty()) {
+                tls["reality"] = QJsonObject{
+                    {"enabled", true},
+                    {"public_key", reality_pbk},
+                    {"short_id", reality_sid},
+                };
+            }
             outbound->insert("tls", tls);
         }
 

@@ -346,12 +346,8 @@
         <translation>应用层协议协商，明文。多个请以英文逗号分隔。</translation>
     </message>
     <message>
-        <source>Security Settings</source>
-        <translation>安全设置</translation>
-    </message>
-    <message>
         <source>Allow insecure</source>
-        <translation>不检查服务器证书（不安全）</translation>
+        <translation>不检查服务器证书</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -384,6 +380,18 @@
     <message>
         <source>Custom (%1)</source>
         <translation>自定义 (%1)</translation>
+    </message>
+    <message>
+        <source>TLS Security Settings</source>
+        <translation>TLS 安全设置</translation>
+    </message>
+    <message>
+        <source>TLS Camouflage Settings</source>
+        <translation>TLS 伪装设置</translation>
+    </message>
+    <message>
+        <source>Reality public key. If not empty, turn TLS into REALITY.</source>
+        <translation>Reality public key. 如果不为空，则将 TLS 变为 REALITY。</translation>
     </message>
 </context>
 <context>
