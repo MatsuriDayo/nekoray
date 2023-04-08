@@ -484,6 +484,7 @@
      </property>
      <addaction name="actionfake_3"/>
     </widget>
+    <addaction name="actionShow_window"/>
     <addaction name="menu_add_from_clipboard2"/>
     <addaction name="menu_scan_qr"/>
     <addaction name="separator"/>
@@ -572,6 +573,11 @@
   <action name="menu_exit">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionShow_window">
+   <property name="text">
+    <string>Show Window</string>
    </property>
   </action>
   <action name="menu_basic_settings">
