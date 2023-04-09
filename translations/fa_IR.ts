@@ -1307,6 +1307,10 @@ End: %2</source>
 4. UDP Latency</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Window</source>
+        <translation>نمایش پنجره برنامه</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

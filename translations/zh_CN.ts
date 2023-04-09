@@ -1297,6 +1297,10 @@ Split by line.</source>
 3. 入口出口 IP
 4. UDP DNS 延迟</translation>
     </message>
+    <message>
+        <source>Show Window</source>
+        <translation>显示主窗口</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
