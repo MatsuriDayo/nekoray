@@ -1299,7 +1299,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Show Window</source>
-        <translation type="unfinished"></translation>
+        <translation>显示主窗口</translation>
     </message>
 </context>
 <context>
