@@ -174,7 +174,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     //
     CACHE.extraCore = QString2QJsonObject(NekoRay::dataStore->extraCore->core_map);
     if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
-    if (!CACHE.extraCore.contains("hysteria") && !IS_NEKO_BOX) CACHE.extraCore.insert("hysteria", "");
+    if (!CACHE.extraCore.contains("hysteria")) CACHE.extraCore.insert("hysteria", "");
     //
     auto extra_core_layout = ui->extra_core_box->layout();
     for (const auto &s: CACHE.extraCore.keys()) {
