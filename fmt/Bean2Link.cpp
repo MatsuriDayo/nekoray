@@ -39,6 +39,7 @@ namespace NekoRay::fmt {
 
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
         if (stream->allow_insecure) query.addQueryItem("allowInsecure", "1");
+        if (IS_NEKO_BOX && !stream->utlsFingerprint.isEmpty()) query.addQueryItem("fp", stream->utlsFingerprint);
 
         if (security == "reality") {
             query.addQueryItem("pbk", stream->reality_pbk);
@@ -57,6 +58,13 @@ namespace NekoRay::fmt {
             if (stream->header_type == "http") {
                 query.addQueryItem("headerType", "http");
                 query.addQueryItem("host", stream->host);
+            }
+        }
+
+        // protocol
+        if (proxy_type == proxy_VLESS) {
+            if (!flow.isEmpty()) {
+                query.addQueryItem("flow", flow);
             }
         }
 

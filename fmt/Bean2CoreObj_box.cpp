@@ -125,6 +125,7 @@ namespace NekoRay::fmt {
         QJsonObject settings;
         if (proxy_type == proxy_VLESS) {
             outbound["uuid"] = password.trimmed();
+            outbound["flow"] = flow;
         } else {
             outbound["password"] = password;
         }

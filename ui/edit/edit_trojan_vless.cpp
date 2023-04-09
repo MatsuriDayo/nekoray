@@ -14,12 +14,20 @@ EditTrojanVLESS::~EditTrojanVLESS() {
 void EditTrojanVLESS::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->TrojanVLESSBean();
-    if (bean->proxy_type == NekoRay::fmt::TrojanVLESSBean::proxy_VLESS) ui->label->setText("UUID");
+    if (bean->proxy_type == NekoRay::fmt::TrojanVLESSBean::proxy_VLESS) {
+        ui->label->setText("UUID");
+    }
+    if (!IS_NEKO_BOX || bean->proxy_type != NekoRay::fmt::TrojanVLESSBean::proxy_VLESS) {
+        ui->flow->hide();
+        ui->flow_l->hide();
+    }
     ui->password->setText(bean->password);
+    ui->flow->setCurrentText(bean->flow);
 }
 
 bool EditTrojanVLESS::onEnd() {
     auto bean = this->ent->TrojanVLESSBean();
     bean->password = ui->password->text();
+    bean->flow = ui->flow->currentText();
     return true;
 }
