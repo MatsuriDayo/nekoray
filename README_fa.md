@@ -62,6 +62,8 @@ https://matsuridayo.github.io
 
 [Windows](docs/Build_Windows.md)
 
+[macOs] (docs/Build_MacOS_fa)
+
 ## کمک مالی / Donate
 
 از کمک های مالی برای حمایت از توسعه پروژه استقبال می شود。
