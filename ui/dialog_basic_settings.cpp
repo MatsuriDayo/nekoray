@@ -391,7 +391,7 @@ void DialogBasicSettings::on_inbound_auth_clicked() {
 
 void DialogBasicSettings::on_core_settings_clicked() {
     auto w = new QDialog(this);
-    w->setWindowTitle(software_core_name + " settings");
+    w->setWindowTitle(software_core_name + " Core Options");
     auto layout = new QGridLayout;
     w->setLayout(layout);
     //

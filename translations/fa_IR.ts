@@ -234,8 +234,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation type="unfinished">تنظیمات</translation>
+        <source>Core Options</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

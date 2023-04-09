@@ -228,8 +228,8 @@
         <translation>默认 uTLS 指纹</translation>
     </message>
     <message>
-        <source>Settings</source>
-        <translation>设置</translation>
+        <source>Core Options</source>
+        <translation>核心选项</translation>
     </message>
 </context>
 <context>

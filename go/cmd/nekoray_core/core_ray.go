@@ -40,8 +40,7 @@ func setupCore() {
 	// core setup
 	os.Setenv("v2ray.conf.geoloader", "memconservative")
 	neko_log.SetupLog(50*1024, "./neko.log")
-	_ = appLog.RegisterHandlerCreator(appLog.LogType_Console, func(lt appLog.LogType,
-		options appLog.HandlerCreatorOptions) (commonLog.Handler, error) {
+	_ = appLog.RegisterHandlerCreator(appLog.LogType_Console, func(lt appLog.LogType, options appLog.HandlerCreatorOptions) (commonLog.Handler, error) {
 		return commonLog.NewLogger(func() commonLog.Writer {
 			return &v2rayLogWriter{}
 		}), nil

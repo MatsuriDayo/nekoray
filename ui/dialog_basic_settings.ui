@@ -591,9 +591,16 @@
              </widget>
             </item>
             <item>
+             <widget class="Line" name="line">
+              <property name="orientation">
+               <enum>Qt::Vertical</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
              <widget class="QPushButton" name="core_settings">
               <property name="text">
-               <string>Settings</string>
+               <string>Core Options</string>
               </property>
              </widget>
             </item>
