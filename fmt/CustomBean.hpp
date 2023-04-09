@@ -25,6 +25,8 @@ namespace NekoRay::fmt {
             if (core == "internal") {
                 auto obj = QString2QJsonObject(config_simple);
                 return obj[IS_NEKO_BOX ? "type" : "protocol"].toString();
+            } else if (core == "internal-full") {
+                return software_core_name + " config";
             }
             return core;
         };
@@ -39,6 +41,8 @@ namespace NekoRay::fmt {
                 } else {
                     return {};
                 }
+            } else if (core == "internal-full") {
+                return {};
             }
             return AbstractBean::DisplayAddress();
         };

@@ -382,10 +382,6 @@
         <translation>自定义 (其他核心)</translation>
     </message>
     <message>
-        <source>Custom (%1)</source>
-        <translation>自定义 (%1)</translation>
-    </message>
-    <message>
         <source>TLS Security Settings</source>
         <translation>TLS 安全设置</translation>
     </message>
@@ -396,6 +392,14 @@
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
         <translation>Reality public key. 如果不为空，则将 TLS 变为 REALITY。</translation>
+    </message>
+    <message>
+        <source>Custom (%1 outbound)</source>
+        <translation>自定义 (%1 出站)</translation>
+    </message>
+    <message>
+        <source>Custom (%1 config)</source>
+        <translation>自定义 (%1 完整配置)</translation>
     </message>
 </context>
 <context>
@@ -704,6 +708,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Preview config</source>
         <translation>预览配置</translation>
+    </message>
+    <message>
+        <source>Please fill the complete config.</source>
+        <translation>请填写完整配置。</translation>
     </message>
 </context>
 <context>

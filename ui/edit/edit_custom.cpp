@@ -56,6 +56,13 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
             "    \"type\": \"socks\",\n"
             "    // ...\n"
             "}");
+    } else if (preset_core == "internal-full") {
+        preset_command = preset_config = "";
+        ui->config_simple->setPlaceholderText(
+            "{\n"
+            "    \"inbounds\": [],\n"
+            "    \"outbounds\": []\n"
+            "}");
     }
 
     // load core ui
@@ -78,9 +85,13 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     }
 
     // custom internal
-    if (preset_core == "internal") {
+    if (preset_core == "internal" || preset_core == "internal-full") {
         ui->core->hide();
-        ui->core_l->setText(tr("Outbound JSON, please read the documentation."));
+        if (preset_core == "internal") {
+            ui->core_l->setText(tr("Outbound JSON, please read the documentation."));
+        } else {
+            ui->core_l->setText(tr("Please fill the complete config."));
+        }
         ui->w_ext1->hide();
         ui->w_ext2->hide();
     }

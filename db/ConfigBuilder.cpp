@@ -20,10 +20,15 @@ namespace NekoRay {
         status->forTest = forTest;
         status->forExport = forExport;
 
-        if (IS_NEKO_BOX) {
-            BuildConfigSingBox(status);
+        auto customBean = dynamic_cast<fmt::CustomBean *>(ent->bean.get());
+        if (customBean != nullptr && customBean->core == "internal-full") {
+            result->coreConfig = QString2QJsonObject(customBean->config_simple);
         } else {
-            BuildConfigV2Ray(status);
+            if (IS_NEKO_BOX) {
+                BuildConfigSingBox(status);
+            } else {
+                BuildConfigV2Ray(status);
+            }
         }
 
         // hook.js

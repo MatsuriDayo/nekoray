@@ -32,7 +32,7 @@ namespace NekoRay::fmt {
     }
 
     int CustomBean::NeedExternal(bool isFirstProfile, bool isVPN) {
-        if (core == "internal") return 0;
+        if (core == "internal" || core == "internal-full") return 0;
         if (core == "hysteria") {
             if (isFirstProfile && !isVPN) {
                 return 2;

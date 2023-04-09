@@ -124,7 +124,8 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vless");
         LOAD_TYPE("naive");
         ui->type->addItem("Hysteria", "hysteria");
-        ui->type->addItem(tr("Custom (%1)").arg(software_core_name), "internal");
+        ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
+        ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
         LOAD_TYPE("chain");
 
@@ -176,7 +177,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-    } else if (type == "custom" || type == "internal" || type == "hysteria") {
+    } else if (type == "custom" || type == "internal" || type == "internal-full" || type == "hysteria") {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
@@ -198,7 +199,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 
     // hide some widget
-    auto showAddressPort = type != "chain" && customType != "internal";
+    auto showAddressPort = type != "chain" && customType != "internal" && customType != "internal-full";
     ui->address->setVisible(showAddressPort);
     ui->address_l->setVisible(showAddressPort);
     ui->port->setVisible(showAddressPort);

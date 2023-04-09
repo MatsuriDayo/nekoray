@@ -380,10 +380,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Custom (Extra Core)</source>
         <translation>سفارشی ( هسته اضافه)</translation>
     </message>
@@ -405,6 +401,14 @@
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom (%1 outbound)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom (%1 config)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -710,6 +714,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
     </message>
     <message>
         <source>Preview config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please fill the complete config.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
