@@ -14,10 +14,9 @@ DialogFirstSetup::~DialogFirstSetup() {
 void DialogFirstSetup::onButtonClicked() {
     auto s = sender();
     if (s == ui->v2ray) {
-        done(NekoRay::CoreType::V2RAY);
+        NekoRay::coreType = NekoRay::CoreType::V2RAY;
     } else if (s == ui->singbox) {
-        done(NekoRay::CoreType::SING_BOX);
-    } else {
-        done(-1);
+        NekoRay::coreType = NekoRay::CoreType::SING_BOX;
     }
+    done(0);
 }

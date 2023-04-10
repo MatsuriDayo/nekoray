@@ -509,7 +509,7 @@ security (QUIC)</string>
             <string>Reality public key. If not empty, turn TLS into REALITY.</string>
            </property>
            <property name="text">
-            <string notr="true">Realty Pbk</string>
+            <string notr="true">Reality Pbk</string>
            </property>
           </widget>
          </item>

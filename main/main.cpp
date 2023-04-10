@@ -147,18 +147,19 @@ int main(int argc, char* argv[]) {
     // Load coreType
     auto coreLoaded = ReadFileText("groups/coreType");
     if (coreLoaded.isEmpty()) {
+        NekoRay::coreType = -1;
         loadTranslate(QLocale().name());
         auto dialogFirstSetup = new DialogFirstSetup;
-        auto coreSelected = dialogFirstSetup->exec();
+        dialogFirstSetup->exec();
         dialogFirstSetup->deleteLater();
-        if (coreSelected < 0) {
+        if (NekoRay::coreType < 0) {
             return 0;
         } else {
-            NekoRay::coreType = coreSelected;
+            QDir().mkdir("groups");
             QFile file;
             file.setFileName("groups/coreType");
             file.open(QIODevice::ReadWrite | QIODevice::Truncate);
-            file.write(Int2String(coreSelected).toUtf8());
+            file.write(Int2String(NekoRay::coreType).toUtf8());
             file.close();
         }
     } else {
