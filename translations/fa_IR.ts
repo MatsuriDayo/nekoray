@@ -1471,6 +1471,10 @@ Direct: %2</source>
         <source>Enable System Proxy</source>
         <translation type="obsolete">پروکسی سیستم را فعال کنید</translation>
     </message>
+    <message>
+        <source>Subscription request fininshed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Qv2ray::ui::widgets::AutoCompleteTextEdit</name>

@@ -856,6 +856,20 @@ namespace NekoRay {
             routeObj.remove("auto_detect_interface");
         }
         status->result->coreConfig.insert("route", routeObj);
+
+        // experimental
+        QJsonObject experimentalObj;
+
+        if (NekoRay::dataStore->core_box_clash_api > 0) {
+            QJsonObject clash_api = {
+                {"external_controller", "127.0.0.1:" + Int2String(NekoRay::dataStore->core_box_clash_api)},
+                {"secret", NekoRay::dataStore->core_box_clash_api_secret},
+                {"external_ui", "dashboard"},
+            };
+            experimentalObj["clash_api"] = clash_api;
+        }
+
+        if (!experimentalObj.isEmpty()) status->result->coreConfig.insert("experimental", experimentalObj);
     }
 
     QString WriteVPNSingBoxConfig() {

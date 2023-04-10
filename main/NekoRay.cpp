@@ -76,6 +76,8 @@ namespace NekoRay {
         _add(new configItem("splitter_state", &splitter_state, itemType::string));
         _add(new configItem("utlsFingerprint", &utlsFingerprint, itemType::string));
         _add(new configItem("core_box_auto_detect_interface", &core_box_auto_detect_interface, itemType::boolean));
+        _add(new configItem("core_box_clash_api", &core_box_clash_api, itemType::integer));
+        _add(new configItem("core_box_clash_api_secret", &core_box_clash_api_secret, itemType::string));
 #ifndef Q_OS_WIN
         _add(new configItem("vpn_already_admin", &vpn_already_admin, itemType::boolean));
 #endif

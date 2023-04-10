@@ -1461,12 +1461,8 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
         <translation>正在清理服务器...</translation>
     </message>
     <message>
-        <source>Enable VPN</source>
-        <translation type="obsolete">启用 VPN</translation>
-    </message>
-    <message>
-        <source>Enable System Proxy</source>
-        <translation type="obsolete">启用系统代理</translation>
+        <source>Subscription request fininshed: %1</source>
+        <translation>订阅请求完成: %1</translation>
     </message>
 </context>
 <context>
