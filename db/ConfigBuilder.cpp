@@ -607,8 +607,16 @@ namespace NekoRay {
             }
 
             // Bypass Lookup for the first profile
-            if (isFirstProfile && !IsIpAddress(ent->bean->serverAddress)) {
-                status->domainListDNSDirect += "full:" + ent->bean->serverAddress;
+            auto serverAddress = ent->bean->serverAddress;
+
+            auto customBean = dynamic_cast<fmt::CustomBean *>(ent->bean.get());
+            if (customBean != nullptr && customBean->core == "internal") {
+                auto server = QString2QJsonObject(customBean->config_simple)["server"].toString();
+                if (!server.isEmpty()) serverAddress = server;
+            }
+
+            if (isFirstProfile && !IsIpAddress(serverAddress)) {
+                status->domainListDNSDirect += "full:" + serverAddress;
             }
 
             status->outbounds += outbound;
@@ -713,15 +721,15 @@ namespace NekoRay {
                     if (item.startsWith("geosite:")) {
                         geosite += item.replace("geosite:", "");
                     } else if (item.startsWith("full:")) {
-                        domain_full += item.replace("full:", "");
+                        domain_full += item.replace("full:", "").toLower();
                     } else if (item.startsWith("domain:")) {
-                        domain_subdomain += item.replace("domain:", "");
+                        domain_subdomain += item.replace("domain:", "").toLower();
                     } else if (item.startsWith("regexp:")) {
-                        domain_regexp += item.replace("regexp:", "");
+                        domain_regexp += item.replace("regexp:", "").toLower();
                     } else if (item.startsWith("keyword:")) {
-                        domain_keyword += item.replace("keyword:", "");
+                        domain_keyword += item.replace("keyword:", "").toLower();
                     } else {
-                        domain_full += item;
+                        domain_full += item.toLower();
                     }
                 }
             }
@@ -751,7 +759,7 @@ namespace NekoRay {
         if (!status->forTest)
             dnsServers += QJsonObject{
                 {"tag", "dns-remote"},
-                {"address_resolver", "dns-underlying"},
+                {"address_resolver", "dns-local"},
                 {"strategy", dataStore->remote_dns_strategy},
                 {"address", dataStore->remote_dns},
                 {"detour", tagProxy},
@@ -766,7 +774,7 @@ namespace NekoRay {
         if (!status->forTest)
             dnsServers += QJsonObject{
                 {"tag", "dns-direct"},
-                {"address_resolver", "dns-underlying"},
+                {"address_resolver", "dns-local"},
                 {"strategy", dataStore->direct_dns_strategy},
                 {"address", directDNSAddress.replace("+local://", "://")},
                 {"detour", "direct"},
@@ -774,7 +782,7 @@ namespace NekoRay {
 
         // Underlying 100% Working DNS
         dnsServers += QJsonObject{
-            {"tag", "dns-underlying"},
+            {"tag", "dns-local"},
             {"address", underlyingStr},
             {"detour", "direct"},
         };

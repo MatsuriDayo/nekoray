@@ -103,6 +103,26 @@
          <widget class="QLineEdit" name="dns_direct"/>
         </item>
         <item>
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="dns_routing">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Enable DNS Routing</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="queryStrategy">
           <property name="text">
            <string>Query Strategy</string>
@@ -113,7 +133,7 @@
       </item>
       <item>
        <widget class="QWidget" name="domain_v2ray" native="true">
-        <layout class="QHBoxLayout" name="_2" stretch="0,0,0,1,0,1">
+        <layout class="QHBoxLayout" name="_2" stretch="0,1,0,1">
          <property name="leftMargin">
           <number>0</number>
          </property>
@@ -126,26 +146,6 @@
          <property name="bottomMargin">
           <number>0</number>
          </property>
-         <item>
-          <widget class="QCheckBox" name="dns_routing">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="text">
-            <string>Enable DNS Routing</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="Line" name="line">
-           <property name="orientation">
-            <enum>Qt::Vertical</enum>
-           </property>
-          </widget>
-         </item>
          <item>
           <widget class="QLabel" name="label_6">
            <property name="text">
@@ -465,6 +465,7 @@
   <tabstop>dns_remote</tabstop>
   <tabstop>dns_direct</tabstop>
   <tabstop>dns_routing</tabstop>
+  <tabstop>queryStrategy</tabstop>
   <tabstop>domainStrategyCombo</tabstop>
   <tabstop>domainMatcherCombo</tabstop>
   <tabstop>preset</tabstop>
