@@ -16,7 +16,7 @@
 #include <QStandardPaths>
 #include <QProcess>
 
-#include "qv2ray/wrapper.hpp"
+#include "3rdparty/qv2ray/wrapper.hpp"
 #include "fmt/Preset.hpp"
 #include "main/NekoRay.hpp"
 

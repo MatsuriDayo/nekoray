@@ -19,8 +19,8 @@
 
 #include "3rdparty/qrcodegen.hpp"
 #include "3rdparty/VT100Parser.hpp"
-#include "qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
-#include "qv2ray/v2/ui/LogHighlighter.hpp"
+#include "3rdparty/qv2ray/v2/components/proxy/QvProxyConfigurator.hpp"
+#include "3rdparty/qv2ray/v2/ui/LogHighlighter.hpp"
 
 #ifndef NKR_NO_ZXING
 #include "3rdparty/ZxingQtReader.hpp"

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "qv2ray/wrapper.hpp"
-#include "qv2ray/v2/ui/widgets/common/QJsonModel.hpp"
+#include "3rdparty/qv2ray/wrapper.hpp"
+#include "3rdparty/qv2ray/v2/ui/widgets/common/QJsonModel.hpp"
 #include "ui_w_JsonEditor.h"
 
 #include <QDialog>
