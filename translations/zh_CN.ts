@@ -403,6 +403,25 @@
     </message>
 </context>
 <context>
+    <name>DialogFirstSetup</name>
+    <message>
+        <source>First time setup</source>
+        <translation>首次设置</translation>
+    </message>
+    <message>
+        <source>It looks like you are using this software for the first time, please select a core.
+
+These settings can be changed later.</source>
+        <translation>看来您是第一次使用该软件，请选择内核。
+
+这些设置可以稍后更改。</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>退出</translation>
+    </message>
+</context>
+<context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>

@@ -413,6 +413,27 @@
     </message>
 </context>
 <context>
+    <name>DialogFirstSetup</name>
+    <message>
+        <source>First time setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It looks like you are using this software for the first time, please select a core.
+
+These settings can be changed later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="obsolete">خروج</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>

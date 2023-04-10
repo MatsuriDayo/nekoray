@@ -1,5 +1,3 @@
-#include "ui/mainwindow_interface.h"
-
 #include <csignal>
 
 #include <QApplication>
@@ -13,6 +11,9 @@
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoRay.hpp"
 
+#include "ui/mainwindow_interface.h"
+#include "ui/dialog_first_setup.h"
+
 #ifdef Q_OS_WIN
 #include "sys/windows/MiniDump.h"
 #endif
@@ -24,9 +25,32 @@ void signal_handler(int signum) {
     }
 }
 
+QTranslator* trans = nullptr;
+QTranslator* trans_qt = nullptr;
+
+void loadTranslate(const QString& locale) {
+    if (trans != nullptr) {
+        trans->deleteLater();
+    }
+    if (trans_qt != nullptr) {
+        trans_qt->deleteLater();
+    }
+    //
+    trans = new QTranslator;
+    trans_qt = new QTranslator;
+    QLocale::setDefault(QLocale(locale));
+    //
+    if (trans->load(":/translations/" + locale + ".qm")) {
+        QCoreApplication::installTranslator(trans);
+    }
+    if (trans_qt->load(QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm")) {
+        QCoreApplication::installTranslator(trans_qt);
+    }
+}
+
 #define LOCAL_SERVER_PREFIX "nekoraylocalserver-"
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     // Core dump
 #ifdef Q_OS_WIN
     Windows_SetCrashHandler();
@@ -121,7 +145,25 @@ int main(int argc, char *argv[]) {
     }
 
     // Load coreType
-    NekoRay::coreType = ReadFileText("groups/coreType").toInt(); // default to 0
+    auto coreLoaded = ReadFileText("groups/coreType");
+    if (coreLoaded.isEmpty()) {
+        loadTranslate(QLocale().name());
+        auto dialogFirstSetup = new DialogFirstSetup;
+        auto coreSelected = dialogFirstSetup->exec();
+        dialogFirstSetup->deleteLater();
+        if (coreSelected < 0) {
+            return 0;
+        } else {
+            NekoRay::coreType = coreSelected;
+            QFile file;
+            file.setFileName("groups/coreType");
+            file.open(QIODevice::ReadWrite | QIODevice::Truncate);
+            file.write(Int2String(coreSelected).toUtf8());
+            file.close();
+        }
+    } else {
+        NekoRay::coreType = coreLoaded.toInt();
+    }
 
     // Dir
     QDir dir;
@@ -182,16 +224,7 @@ int main(int argc, char *argv[]) {
             locale = QLocale().name();
     }
     QGuiApplication::tr("QT_LAYOUT_DIRECTION");
-    QLocale::setDefault(QLocale(locale));
-    //
-    QTranslator trans;
-    if (trans.load(":/translations/" + locale + ".qm")) {
-        QCoreApplication::installTranslator(&trans);
-    }
-    QTranslator trans_qt;
-    if (trans_qt.load(QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm")) {
-        QCoreApplication::installTranslator(&trans_qt);
-    }
+    loadTranslate(locale);
 
     // Signals
     signal(SIGTERM, signal_handler);
