@@ -4,8 +4,8 @@ go 1.19
 
 require (
 	github.com/matsuridayo/libneko v0.0.0-20230315005352-9d7e3f3a79d1
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230407151528-afb3401544d4
-	github.com/sagernet/sing-box v1.2.3
+	github.com/matsuridayo/sing-box-extra v0.0.0-20230410030710-72e14149e230
+	github.com/sagernet/sing-box v1.2.4-0.20230408011350-68439705360e
 	grpc_server v1.0.0
 )
 
@@ -54,7 +54,7 @@ require (
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
 	github.com/sagernet/reality v0.0.0-20230406110435-ee17307e7691 // indirect
 	github.com/sagernet/sing v0.2.2-0.20230407053809-308e421e33c2 // indirect
-	github.com/sagernet/sing-dns v0.1.5-0.20230407055526-2a27418e7855 // indirect
+	github.com/sagernet/sing-dns v0.1.5-0.20230408004833-5adaf486d440 // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.0 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.0 // indirect
 	github.com/sagernet/sing-tun v0.1.4-0.20230326080954-8848c0e4cbab // indirect
@@ -97,4 +97,4 @@ replace grpc_server v1.0.0 => ../../grpc_server
 
 // replace github.com/sagernet/sing-dns => ../../../../sing-dns
 
-replace github.com/sagernet/sing-dns => github.com/matsuridayo/sing-dns v0.0.0-20230407150154-fb87a0e6d1ec
+replace github.com/sagernet/sing-dns => github.com/matsuridayo/sing-dns v0.0.0-20230410025504-c609bffff165
