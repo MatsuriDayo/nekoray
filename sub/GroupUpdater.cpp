@@ -406,6 +406,8 @@ namespace NekoRay::sub {
 
             content = resp.data;
             sub_user_info = NetworkRequestHelper::GetHeader(resp.header, "Subscription-UserInfo");
+
+            MW_show_log("<<<<<<<< " + QObject::tr("Subscription request fininshed: %1").arg(groupName));
         }
 
         QList<QSharedPointer<ProxyEntity>> in;         // 更新前
@@ -461,11 +463,11 @@ namespace NekoRay::sub {
 
             QString notice_added;
             for (const auto &ent: only_out) {
-                notice_added += ent->bean->DisplayTypeAndName() + "\n";
+                notice_added += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
             }
             QString notice_deleted;
             for (const auto &ent: only_in) {
-                notice_deleted += ent->bean->DisplayTypeAndName() + "\n";
+                notice_deleted += "[-] " + ent->bean->DisplayTypeAndName() + "\n";
             }
 
             auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")

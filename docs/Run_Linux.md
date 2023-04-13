@@ -5,7 +5,7 @@
 使用 Debian 系发行版时，推荐使用 .deb 包安装：
 
 ```shell
-sudo apt install ./nekoray-*-linux64.deb
+sudo apt install ./nekoray-*-debian-x64.deb
 ```
 
 安装完成后，桌面快捷方式启动自带参数 `-appdata`，如果想要直接启动并使用之前的配置，注意附带本参数。

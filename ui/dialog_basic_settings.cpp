@@ -1,7 +1,7 @@
 #include "dialog_basic_settings.h"
 #include "ui_dialog_basic_settings.h"
 
-#include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
+#include "3rdparty/qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "fmt/Preset.hpp"
 #include "ui/ThemeManager.hpp"
 #include "ui/Icon.hpp"
@@ -167,12 +167,14 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
+    if (!IS_NEKO_BOX) ui->core_settings->hide();
+
     ui->groupBox_core->setTitle(software_core_name);
     ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
     //
     CACHE.extraCore = QString2QJsonObject(NekoRay::dataStore->extraCore->core_map);
     if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
-    if (!CACHE.extraCore.contains("hysteria") && !IS_NEKO_BOX) CACHE.extraCore.insert("hysteria", "");
+    if (!CACHE.extraCore.contains("hysteria")) CACHE.extraCore.insert("hysteria", "");
     //
     auto extra_core_layout = ui->extra_core_box->layout();
     for (const auto &s: CACHE.extraCore.keys()) {
@@ -376,11 +378,68 @@ void DialogBasicSettings::on_inbound_auth_clicked() {
     connect(box, &QDialogButtonBox::accepted, w, [=] {
         NekoRay::dataStore->inbound_auth->username = user->text();
         NekoRay::dataStore->inbound_auth->password = pass->text();
-        NekoRay::dataStore->Save();
+        MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
         w->accept();
     });
     connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
     layout->addWidget(box, 2, 1);
+    //
+    w->exec();
+    w->deleteLater();
+    refresh_auth();
+}
+
+void DialogBasicSettings::on_core_settings_clicked() {
+    auto w = new QDialog(this);
+    w->setWindowTitle(software_core_name + " Core Options");
+    auto layout = new QGridLayout;
+    w->setLayout(layout);
+    //
+    auto line = -1;
+    QCheckBox *core_box_auto_detect_interface;
+    QCheckBox *core_box_enable_clash_api;
+    QLineEdit *core_box_clash_api;
+    QLineEdit *core_box_clash_api_secret;
+    if (IS_NEKO_BOX) {
+        auto core_box_auto_detect_interface_l = new QLabel("auto_detect_interface");
+        core_box_auto_detect_interface = new QCheckBox;
+        core_box_auto_detect_interface->setChecked(NekoRay::dataStore->core_box_auto_detect_interface);
+        layout->addWidget(core_box_auto_detect_interface_l, ++line, 0);
+        layout->addWidget(core_box_auto_detect_interface, line, 1);
+        //
+        auto core_box_enable_clash_api_l = new QLabel("Enable Clash API");
+        core_box_enable_clash_api = new QCheckBox;
+        core_box_enable_clash_api->setChecked(NekoRay::dataStore->core_box_clash_api > 0);
+        layout->addWidget(core_box_enable_clash_api_l, ++line, 0);
+        layout->addWidget(core_box_enable_clash_api, line, 1);
+        //
+        auto core_box_clash_api_l = new QLabel("Clash API Listen Port");
+        core_box_clash_api = new MyLineEdit;
+        core_box_clash_api->setText(Int2String(std::abs(NekoRay::dataStore->core_box_clash_api)));
+        layout->addWidget(core_box_clash_api_l, ++line, 0);
+        layout->addWidget(core_box_clash_api, line, 1);
+        //
+        auto core_box_clash_api_secret_l = new QLabel("Clash API Secret");
+        core_box_clash_api_secret = new MyLineEdit;
+        core_box_clash_api_secret->setText(NekoRay::dataStore->core_box_clash_api_secret);
+        layout->addWidget(core_box_clash_api_secret_l, ++line, 0);
+        layout->addWidget(core_box_clash_api_secret, line, 1);
+    }
+    //
+    auto box = new QDialogButtonBox;
+    box->setOrientation(Qt::Horizontal);
+    box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+    connect(box, &QDialogButtonBox::accepted, w, [=] {
+        if (IS_NEKO_BOX) {
+            NekoRay::dataStore->core_box_auto_detect_interface = core_box_auto_detect_interface->isChecked();
+            NekoRay::dataStore->core_box_clash_api = core_box_clash_api->text().toInt() * (core_box_enable_clash_api->isChecked() ? 1 : -1);
+            NekoRay::dataStore->core_box_clash_api_secret = core_box_clash_api_secret->text();
+        }
+        MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
+        w->accept();
+    });
+    connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
+    layout->addWidget(box, ++line, 1);
     //
     w->exec();
     w->deleteLater();

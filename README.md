@@ -70,13 +70,15 @@ https://matsuridayo.github.io
 
 由于缺乏维护，不再提供 macOS 版本下载。最后包含 dmg 的版本是 [2.12](https://github.com/MatsuriDayo/nekoray/releases/download/2.12/nekoray-2.12-2023-01-29-macos-amd64.dmg) 和 [2.11](https://github.com/MatsuriDayo/nekoray/releases/download/2.11/nekoray-2.11-2023-01-13-macos-amd64.dmg)
 
+您还可以在下面的存储库中非正式地获取更新版本。[非官方发布 / Unofficial releases](https://github.com/aaaamirabbas/nekoray-macos/releases)
+
 仍可以参照下方教程自行编译，常见问题请参考历史 Issue，欢迎 Pull Request 修复。
 
 ## 编译教程 / Compile Tutorial
 
 [Linux](docs/Build_Linux.md)
 
-[Mac](docs/Build_MacOS.md)
+[Mac](docs/Build_MacOS.md) or [用于自动构建的非官方脚本 / Unofficial Script for automatic build](https://github.com/aaaamirabbas/nekoray-macos)
 
 [Windows](docs/Build_Windows.md)
 

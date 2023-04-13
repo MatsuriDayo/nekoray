@@ -20,5 +20,6 @@
         <file>neko.css</file>
         <file>vpn/vpn-run-root.sh</file>
         <file>vpn/sing-box-vpn.json</file>
+        <file>dashboard-notice.html</file>
     </qresource>
 </RCC>

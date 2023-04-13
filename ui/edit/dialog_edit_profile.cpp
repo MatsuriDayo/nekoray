@@ -12,7 +12,7 @@
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
 
-#include "qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
+#include "3rdparty/qv2ray/v2/ui/widgets/editors/w_JsonEditor.hpp"
 #include "main/GuiUtils.hpp"
 
 #include <QInputDialog>
@@ -94,8 +94,16 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     connect(ui->security, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         if (txt == "tls") {
             ui->security_box->setVisible(true);
+            ui->reality_box->setVisible(true);
+            if (!IS_NEKO_BOX) {
+                ui->reality_pbk->hide();
+                ui->reality_sid->hide();
+                ui->reality_pbk_l->hide();
+                ui->reality_sid_l->hide();
+            }
         } else {
             ui->security_box->setVisible(false);
+            ui->reality_box->setVisible(false);
         }
         ADJUST_SIZE
     });
@@ -116,7 +124,8 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vless");
         LOAD_TYPE("naive");
         ui->type->addItem("Hysteria", "hysteria");
-        ui->type->addItem(tr("Custom (%1)").arg(software_core_name), "internal");
+        ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
+        ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
         LOAD_TYPE("chain");
 
@@ -168,7 +177,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-    } else if (type == "custom" || type == "internal" || type == "hysteria") {
+    } else if (type == "custom" || type == "internal" || type == "internal-full" || type == "hysteria") {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
@@ -190,13 +199,13 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 
     // hide some widget
-    auto showAddressPort = type != "chain" && customType != "internal";
+    auto showAddressPort = type != "chain" && customType != "internal" && customType != "internal-full";
     ui->address->setVisible(showAddressPort);
     ui->address_l->setVisible(showAddressPort);
     ui->port->setVisible(showAddressPort);
     ui->port_l->setVisible(showAddressPort);
 
-    // 右边 Outbound: settings
+    // 右边 stream
     auto stream = GetStreamSettings(ent->bean.data());
     if (stream != nullptr) {
         ui->right_all_w->setVisible(true);
@@ -212,6 +221,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->header_type->setCurrentText(stream->header_type);
         ui->ws_early_data_name->setText(stream->ws_early_data_name);
         ui->ws_early_data_length->setText(Int2String(stream->ws_early_data_length));
+        ui->reality_pbk->setText(stream->reality_pbk);
+        ui->reality_sid->setText(stream->reality_sid);
         CACHE.certificate = stream->certificate;
     } else {
         ui->right_all_w->setVisible(false);
@@ -310,7 +321,7 @@ void DialogEditProfile::accept() {
         return;
     }
 
-    // 右边
+    // 右边 stream
     auto stream = GetStreamSettings(ent->bean.data());
     if (stream != nullptr) {
         stream->network = ui->network->currentText();
@@ -326,7 +337,11 @@ void DialogEditProfile::accept() {
         stream->ws_early_data_name = ui->ws_early_data_name->text();
         stream->ws_early_data_length = ui->ws_early_data_length->text().toInt();
         stream->certificate = CACHE.certificate;
+        stream->reality_pbk = ui->reality_pbk->text();
+        stream->reality_sid = ui->reality_sid->text();
     }
+
+    // cached custom
     auto custom_item = ent->bean->_get("custom");
     if (custom_item != nullptr) {
         *((QString *) custom_item->ptr) = CACHE.custom;

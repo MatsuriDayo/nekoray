@@ -11,6 +11,7 @@ namespace NekoRay::fmt {
         int proxy_type = proxy_Trojan;
 
         QString password = "";
+        QString flow = "";
 
         QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
         QString custom = "";
@@ -18,6 +19,7 @@ namespace NekoRay::fmt {
         explicit TrojanVLESSBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
             _add(new configItem("pass", &password, itemType::string));
+            _add(new configItem("flow", &flow, itemType::string));
             _add(new configItem("stream", dynamic_cast<JsonStore *>(stream.get()), itemType::jsonStore));
             _add(new configItem("custom", &custom, itemType::string));
         };

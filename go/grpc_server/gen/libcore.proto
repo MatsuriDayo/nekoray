@@ -25,6 +25,7 @@ message ErrorResp {
 message LoadConfigReq {
   string core_config = 1;
   bool enable_nekoray_connections = 2;
+  repeated string stats_outbounds = 3;
 }
 
 enum TestMode {

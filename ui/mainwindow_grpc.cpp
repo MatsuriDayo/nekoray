@@ -223,6 +223,10 @@ void MainWindow::neko_start(int _id) {
     libcore::LoadConfigReq req;
     req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
     req.set_enable_nekoray_connections(NekoRay::dataStore->connection_statistics);
+    if (NekoRay::dataStore->traffic_loop_interval > 0) {
+        req.add_stats_outbounds("proxy");
+        req.add_stats_outbounds("bypass");
+    }
     //
     bool rpcOK;
     QString error = defaultClient->Start(&rpcOK, req);

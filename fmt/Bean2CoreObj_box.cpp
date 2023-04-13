@@ -41,6 +41,13 @@ namespace NekoRay::fmt {
                     {"fingerprint", fp},
                 };
             }
+            if (!reality_pbk.trimmed().isEmpty()) {
+                tls["reality"] = QJsonObject{
+                    {"enabled", true},
+                    {"public_key", reality_pbk},
+                    {"short_id", reality_sid},
+                };
+            }
             outbound->insert("tls", tls);
         }
 
@@ -118,6 +125,7 @@ namespace NekoRay::fmt {
         QJsonObject settings;
         if (proxy_type == proxy_VLESS) {
             outbound["uuid"] = password.trimmed();
+            outbound["flow"] = flow;
         } else {
             outbound["password"] = password;
         }
@@ -129,30 +137,6 @@ namespace NekoRay::fmt {
 
     CoreObjOutboundBuildResult CustomBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
-
-        if (core == "hysteria") {
-            QJsonObject outbound{{"type", "hysteria"}};
-            outbound["server"] = serverAddress;
-            outbound["server_port"] = serverPort;
-            auto hy = QString2QJsonObject(config_simple);
-            QJSONOBJECT_COPY(hy, outbound, "up")
-            QJSONOBJECT_COPY(hy, outbound, "down")
-            QJSONOBJECT_COPY(hy, outbound, "up_mbps")
-            QJSONOBJECT_COPY(hy, outbound, "down_mbps")
-            QJSONOBJECT_COPY(hy, outbound, "obfs")
-            QJSONOBJECT_COPY(hy, outbound, "auth")
-            QJSONOBJECT_COPY(hy, outbound, "auth_str")
-            QJSONOBJECT_COPY(hy, outbound, "recv_window_conn")
-            QJSONOBJECT_COPY(hy, outbound, "recv_window_client")
-            QJSONOBJECT_COPY(hy, outbound, "disable_mtu_discovery")
-            QJsonObject tls{{"enabled", true}};
-            QJSONOBJECT_COPY(hy, tls, "server_name")
-            QJSONOBJECT_COPY(hy, tls, "alpn")
-            QJSONOBJECT_COPY(hy, tls, "insecure")
-            QJSONOBJECT_COPY2(hy, tls, "ca", "certificate_path")
-            outbound["tls"] = tls;
-            result.outbound = outbound;
-        }
 
         if (core == "internal") {
             result.outbound = QString2QJsonObject(config_simple);

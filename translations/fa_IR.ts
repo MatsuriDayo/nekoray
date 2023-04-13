@@ -233,6 +233,10 @@
         <source>Default uTLS Fingerprint</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Core Options</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -353,7 +357,7 @@
     </message>
     <message>
         <source>Security Settings</source>
-        <translation>تنظیمات امنیت</translation>
+        <translation type="vanished">تنظیمات امنیت</translation>
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
@@ -376,10 +380,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Custom (%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Custom (Extra Core)</source>
         <translation>سفارشی ( هسته اضافه)</translation>
     </message>
@@ -390,6 +390,47 @@
     <message>
         <source>Already set</source>
         <translation>تنظیم شده</translation>
+    </message>
+    <message>
+        <source>TLS Security Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>TLS Camouflage Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reality public key. If not empty, turn TLS into REALITY.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom (%1 outbound)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom (%1 config)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DialogFirstSetup</name>
+    <message>
+        <source>First time setup</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It looks like you are using this software for the first time, please select a core.
+
+These settings can be changed later.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exit</source>
+        <translation type="obsolete">خروج</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -694,6 +735,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
     </message>
     <message>
         <source>Preview config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please fill the complete config.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1291,6 +1336,10 @@ End: %2</source>
 4. UDP Latency</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Show Window</source>
+        <translation>نمایش پنجره برنامه</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1442,6 +1491,10 @@ Direct: %2</source>
     <message>
         <source>Enable System Proxy</source>
         <translation type="obsolete">پروکسی سیستم را فعال کنید</translation>
+    </message>
+    <message>
+        <source>Subscription request fininshed: %1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

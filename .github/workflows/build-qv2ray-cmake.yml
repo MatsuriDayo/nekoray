@@ -169,7 +169,7 @@ jobs:
           rm -rf public_res *.pdb
           ####
           sudo bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
-          mv nekoray.deb $version_standalone-linux64.deb
+          mv nekoray.deb $version_standalone-debian-x64.deb
           sudo rm -rf nekoray
           ####
           mv linux64 nekoray

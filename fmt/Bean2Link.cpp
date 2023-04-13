@@ -31,9 +31,22 @@ namespace NekoRay::fmt {
         url.setHost(serverAddress);
         url.setPort(serverPort);
         if (!name.isEmpty()) url.setFragment(name);
+
+        //  security
+        auto security = stream->security;
+        if (security == "tls" && !stream->reality_pbk.trimmed().isEmpty()) security = "reality";
+        query.addQueryItem("security", security);
+
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
         if (stream->allow_insecure) query.addQueryItem("allowInsecure", "1");
-        query.addQueryItem("security", stream->security);
+        if (IS_NEKO_BOX && !stream->utlsFingerprint.isEmpty()) query.addQueryItem("fp", stream->utlsFingerprint);
+
+        if (security == "reality") {
+            query.addQueryItem("pbk", stream->reality_pbk);
+            query.addQueryItem("sid", stream->reality_sid);
+        }
+
+        // type
         query.addQueryItem("type", stream->network);
 
         if (stream->network == "ws" || stream->network == "http") {
@@ -45,6 +58,13 @@ namespace NekoRay::fmt {
             if (stream->header_type == "http") {
                 query.addQueryItem("headerType", "http");
                 query.addQueryItem("host", stream->host);
+            }
+        }
+
+        // protocol
+        if (proxy_type == proxy_VLESS) {
+            if (!flow.isEmpty()) {
+                query.addQueryItem("flow", flow);
             }
         }
 

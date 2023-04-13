@@ -38,6 +38,8 @@ namespace NekoRay::fmt {
 
             stream->security = GetQueryValue(query, "security", "");
             stream->sni = GetQueryValue(query, "sni");
+
+            if (link.startsWith("https")) stream->security = "tls";
         }
         return true;
     }
@@ -53,15 +55,19 @@ namespace NekoRay::fmt {
         password = url.userName();
         if (serverPort == -1) serverPort = 443;
 
+        // security
         stream->network = GetQueryValue(query, "type", "tcp");
-        stream->security = GetQueryValue(query, "security", "tls");
+        stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls");
         auto sni1 = GetQueryValue(query, "sni");
         auto sni2 = GetQueryValue(query, "peer");
         if (!sni1.isEmpty()) stream->sni = sni1;
         if (!sni2.isEmpty()) stream->sni = sni2;
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
+        stream->reality_pbk = GetQueryValue(query, "pbk", "");
+        stream->reality_sid = GetQueryValue(query, "sid", "");
+        if (IS_NEKO_BOX) stream->utlsFingerprint = GetQueryValue(query, "fp", "");
 
-        // TODO header kcp quic
+        // type
         if (stream->network == "ws") {
             stream->path = GetQueryValue(query, "path", "");
             stream->host = GetQueryValue(query, "host", "");
@@ -75,6 +81,11 @@ namespace NekoRay::fmt {
                 stream->header_type = "http";
                 stream->host = GetQueryValue(query, "host", "");
             }
+        }
+
+        // protocol
+        if (proxy_type == proxy_VLESS) {
+            flow = GetQueryValue(query, "flow", "");
         }
 
         return !password.isEmpty();

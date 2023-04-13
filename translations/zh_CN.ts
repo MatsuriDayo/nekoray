@@ -227,6 +227,10 @@
         <source>Default uTLS Fingerprint</source>
         <translation>默认 uTLS 指纹</translation>
     </message>
+    <message>
+        <source>Core Options</source>
+        <translation>核心选项</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -346,12 +350,8 @@
         <translation>应用层协议协商，明文。多个请以英文逗号分隔。</translation>
     </message>
     <message>
-        <source>Security Settings</source>
-        <translation>安全设置</translation>
-    </message>
-    <message>
         <source>Allow insecure</source>
-        <translation>不检查服务器证书（不安全）</translation>
+        <translation>不检查服务器证书</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -382,8 +382,43 @@
         <translation>自定义 (其他核心)</translation>
     </message>
     <message>
-        <source>Custom (%1)</source>
-        <translation>自定义 (%1)</translation>
+        <source>TLS Security Settings</source>
+        <translation>TLS 安全设置</translation>
+    </message>
+    <message>
+        <source>TLS Camouflage Settings</source>
+        <translation>TLS 伪装设置</translation>
+    </message>
+    <message>
+        <source>Reality public key. If not empty, turn TLS into REALITY.</source>
+        <translation>Reality public key. 如果不为空，则将 TLS 变为 REALITY。</translation>
+    </message>
+    <message>
+        <source>Custom (%1 outbound)</source>
+        <translation>自定义 (%1 出站)</translation>
+    </message>
+    <message>
+        <source>Custom (%1 config)</source>
+        <translation>自定义 (%1 完整配置)</translation>
+    </message>
+</context>
+<context>
+    <name>DialogFirstSetup</name>
+    <message>
+        <source>First time setup</source>
+        <translation>首次设置</translation>
+    </message>
+    <message>
+        <source>It looks like you are using this software for the first time, please select a core.
+
+These settings can be changed later.</source>
+        <translation>看来您是第一次使用该软件，请选择内核。
+
+这些设置可以稍后更改。</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>退出</translation>
     </message>
 </context>
 <context>
@@ -692,6 +727,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Preview config</source>
         <translation>预览配置</translation>
+    </message>
+    <message>
+        <source>Please fill the complete config.</source>
+        <translation>请填写完整配置。</translation>
     </message>
 </context>
 <context>
@@ -1285,6 +1324,10 @@ Split by line.</source>
 3. 入口出口 IP
 4. UDP DNS 延迟</translation>
     </message>
+    <message>
+        <source>Show Window</source>
+        <translation>显示主窗口</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1437,12 +1480,8 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
         <translation>正在清理服务器...</translation>
     </message>
     <message>
-        <source>Enable VPN</source>
-        <translation type="obsolete">启用 VPN</translation>
-    </message>
-    <message>
-        <source>Enable System Proxy</source>
-        <translation type="obsolete">启用系统代理</translation>
+        <source>Subscription request fininshed: %1</source>
+        <translation>订阅请求完成: %1</translation>
     </message>
 </context>
 <context>
