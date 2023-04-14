@@ -8,6 +8,8 @@
 #include <QFile>
 #include <QFileInfo>
 
+#define BOX_UNDERLYING_DNS NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "underlying://0.0.0.0" : NekoRay::dataStore->core_box_underlying_dns
+
 namespace NekoRay {
 
     // Common
@@ -765,12 +767,9 @@ namespace NekoRay {
                 {"detour", tagProxy},
             };
 
-        // neko only
-        auto underlyingStr = status->forExport ? "local" : "underlying://0.0.0.0";
-
         // Direct
         auto directDNSAddress = dataStore->direct_dns;
-        if (directDNSAddress == "localhost") directDNSAddress = underlyingStr;
+        if (directDNSAddress == "localhost") directDNSAddress = BOX_UNDERLYING_DNS;
         if (!status->forTest)
             dnsServers += QJsonObject{
                 {"tag", "dns-direct"},
@@ -783,7 +782,7 @@ namespace NekoRay {
         // Underlying 100% Working DNS
         dnsServers += QJsonObject{
             {"tag", "dns-local"},
-            {"address", underlyingStr},
+            {"address", BOX_UNDERLYING_DNS},
             {"detour", "direct"},
         };
 
@@ -914,6 +913,7 @@ namespace NekoRay {
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%SOCKS_USER_PASS%", socks_user_pass)
                           .replace("%FINAL_OUT%", no_match_out)
+                          .replace("%DNS_ADDRESS%", BOX_UNDERLYING_DNS)
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // hook.js
         auto source = qjs::ReadHookJS();

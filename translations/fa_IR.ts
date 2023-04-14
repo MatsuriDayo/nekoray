@@ -237,6 +237,16 @@
         <source>Core Options</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Override underlying DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.
+For NekoRay, this rewrites the underlying(localhost) DNS in VPN mode.
+For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mode, and also URL Test.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

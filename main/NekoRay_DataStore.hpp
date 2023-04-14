@@ -153,6 +153,7 @@ namespace NekoRay {
         bool core_box_auto_detect_interface = true;
         int core_box_clash_api = -9090;
         QString core_box_clash_api_secret = "";
+        QString core_box_underlying_dns = "";
 
         // Other Core
         ExtraCore *extraCore = new ExtraCore;

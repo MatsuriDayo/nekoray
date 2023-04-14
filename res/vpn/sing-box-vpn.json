@@ -3,7 +3,7 @@
         "servers": [
             {
                 "tag": "dns-direct",
-                "address": "underlying://0.0.0.0",
+                "address": "%DNS_ADDRESS%",
                 "detour": "direct"
             }
         ]

@@ -167,8 +167,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Core
 
-    if (!IS_NEKO_BOX) ui->core_settings->hide();
-
     ui->groupBox_core->setTitle(software_core_name);
     ui->core_v2ray_asset->setText(NekoRay::dataStore->v2ray_asset_dir);
     //
@@ -398,8 +396,21 @@ void DialogBasicSettings::on_core_settings_clicked() {
     auto line = -1;
     QCheckBox *core_box_auto_detect_interface;
     QCheckBox *core_box_enable_clash_api;
-    QLineEdit *core_box_clash_api;
-    QLineEdit *core_box_clash_api_secret;
+    MyLineEdit *core_box_clash_api;
+    MyLineEdit *core_box_clash_api_secret;
+    MyLineEdit *core_box_underlying_dns;
+    //
+    auto core_box_underlying_dns_l = new QLabel(tr("Override underlying DNS"));
+    core_box_underlying_dns_l->setToolTip(tr(
+        "It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.\n"
+        "For NekoRay, this rewrites the underlying(localhost) DNS in VPN mode.\n"
+        "For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mode, and also URL Test."));
+    core_box_underlying_dns = new MyLineEdit;
+    core_box_underlying_dns->setText(NekoRay::dataStore->core_box_underlying_dns);
+    core_box_underlying_dns->setMinimumWidth(300);
+    layout->addWidget(core_box_underlying_dns_l, ++line, 0);
+    layout->addWidget(core_box_underlying_dns, line, 1);
+    //
     if (IS_NEKO_BOX) {
         auto core_box_auto_detect_interface_l = new QLabel("auto_detect_interface");
         core_box_auto_detect_interface = new QCheckBox;
@@ -430,6 +441,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
     box->setOrientation(Qt::Horizontal);
     box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
     connect(box, &QDialogButtonBox::accepted, w, [=] {
+        NekoRay::dataStore->core_box_underlying_dns = core_box_underlying_dns->text();
         if (IS_NEKO_BOX) {
             NekoRay::dataStore->core_box_auto_detect_interface = core_box_auto_detect_interface->isChecked();
             NekoRay::dataStore->core_box_clash_api = core_box_clash_api->text().toInt() * (core_box_enable_clash_api->isChecked() ? 1 : -1);
@@ -441,6 +453,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
     connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
     layout->addWidget(box, ++line, 1);
     //
+    ADD_ASTERISK(w)
     w->exec();
     w->deleteLater();
     refresh_auth();
