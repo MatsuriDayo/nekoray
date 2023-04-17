@@ -330,10 +330,6 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <translation>اسم</translation>
     </message>
     <message>
-        <source>Custom Json Settings</source>
-        <translation>تنظیمات JSON سفارشی</translation>
-    </message>
-    <message>
         <source>Settings</source>
         <translation>تنظیمات</translation>
     </message>
@@ -419,6 +415,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     </message>
     <message>
         <source>Custom (%1 config)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Outbound Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Config Settings</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

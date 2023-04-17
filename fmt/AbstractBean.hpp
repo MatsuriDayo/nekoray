@@ -24,9 +24,13 @@ namespace NekoRay::fmt {
     class AbstractBean : public JsonStore {
     public:
         int version;
+
         QString name = "";
         QString serverAddress = "127.0.0.1";
         int serverPort = 1080;
+
+        QString custom_config = "";
+        QString custom_outbound = "";
 
         explicit AbstractBean(int version);
 

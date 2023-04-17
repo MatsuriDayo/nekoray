@@ -229,13 +229,22 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 
     // left: custom
-    auto custom_item = ent->bean->_get("custom");
-    if (custom_item != nullptr) {
-        ui->custom_box->setVisible(true);
-        CACHE.custom = *((QString *) custom_item->ptr);
-    } else {
-        ui->custom_box->setVisible(false);
+    CACHE.custom_config = ent->bean->custom_config;
+    CACHE.custom_outbound = ent->bean->custom_outbound;
+    bool show_custom_config = true;
+    bool show_custom_outbound = true;
+    if (type == "chain") {
+        show_custom_outbound = false;
+    } else if (type == "custom") {
+        if (customType == "internal") {
+            show_custom_outbound = false;
+        } else if (customType == "internal-full") {
+            show_custom_outbound = false;
+            show_custom_config = false;
+        }
     }
+    ui->custom_box->setVisible(show_custom_outbound);
+    ui->custom_global_box->setVisible(show_custom_config);
 
     // 左边 bean
     auto old = ui->bean->layout()->itemAt(0)->widget();
@@ -342,10 +351,8 @@ void DialogEditProfile::accept() {
     }
 
     // cached custom
-    auto custom_item = ent->bean->_get("custom");
-    if (custom_item != nullptr) {
-        *((QString *) custom_item->ptr) = CACHE.custom;
-    }
+    ent->bean->custom_outbound = CACHE.custom_outbound;
+    ent->bean->custom_config = CACHE.custom_config;
 
     // finish
     QStringList msg = {"accept"};
@@ -372,10 +379,15 @@ void DialogEditProfile::editor_cache_updated_impl() {
     } else {
         ui->certificate_edit->setText(tr("Already set"));
     }
-    if (CACHE.custom.isEmpty()) {
-        ui->custom_edit->setText(tr("Not set"));
+    if (CACHE.custom_outbound.isEmpty()) {
+        ui->custom_outbound_edit->setText(tr("Not set"));
     } else {
-        ui->custom_edit->setText(tr("Already set"));
+        ui->custom_outbound_edit->setText(tr("Already set"));
+    }
+    if (CACHE.custom_config.isEmpty()) {
+        ui->custom_config_edit->setText(tr("Not set"));
+    } else {
+        ui->custom_config_edit->setText(tr("Already set"));
     }
 
     // CACHE macro
@@ -388,8 +400,13 @@ void DialogEditProfile::editor_cache_updated_impl() {
     }
 }
 
-void DialogEditProfile::on_custom_edit_clicked() {
-    C_EDIT_JSON_ALLOW_EMPTY(custom)
+void DialogEditProfile::on_custom_outbound_edit_clicked() {
+    C_EDIT_JSON_ALLOW_EMPTY(custom_outbound)
+    editor_cache_updated_impl();
+}
+
+void DialogEditProfile::on_custom_config_edit_clicked() {
+    C_EDIT_JSON_ALLOW_EMPTY(custom_config)
     editor_cache_updated_impl();
 }
 

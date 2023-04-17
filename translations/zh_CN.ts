@@ -370,10 +370,6 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <translation>证书</translation>
     </message>
     <message>
-        <source>Custom Json Settings</source>
-        <translation>自定义 JSON 设置</translation>
-    </message>
-    <message>
         <source>Not set</source>
         <translation>未设置</translation>
     </message>
@@ -412,6 +408,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     <message>
         <source>Custom (%1 config)</source>
         <translation>自定义 (%1 完整配置)</translation>
+    </message>
+    <message>
+        <source>Custom Outbound Settings</source>
+        <translation>自定义出站 JSON 设置</translation>
+    </message>
+    <message>
+        <source>Custom Config Settings</source>
+        <translation>自定义配置 JSON 设置</translation>
     </message>
 </context>
 <context>

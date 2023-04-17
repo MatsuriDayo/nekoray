@@ -11,6 +11,8 @@ namespace NekoRay::fmt {
         _add(new configItem("name", &name, itemType::string));
         _add(new configItem("addr", &serverAddress, itemType::string));
         _add(new configItem("port", &serverPort, itemType::integer));
+        _add(new configItem("c_cfg", &custom_config, itemType::string));
+        _add(new configItem("c_out", &custom_outbound, itemType::string));
     }
 
     QString AbstractBean::ToNekorayShareLink(const QString &type) {

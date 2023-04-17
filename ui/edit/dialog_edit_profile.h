@@ -23,7 +23,9 @@ public slots:
 
 private slots:
 
-    void on_custom_edit_clicked();
+    void on_custom_outbound_edit_clicked();
+
+    void on_custom_config_edit_clicked();
 
     void on_certificate_edit_clicked();
 
@@ -40,7 +42,8 @@ private:
     QString network_title_base;
 
     struct {
-        QString custom;
+        QString custom_outbound;
+        QString custom_config;
         QString certificate;
     } CACHE;
 
