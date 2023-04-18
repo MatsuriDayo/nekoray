@@ -80,14 +80,6 @@
         <translation>默认值：和 nekoray 同路径</translation>
     </message>
     <message>
-        <source>Settings changed</source>
-        <translation>设置改变</translation>
-    </message>
-    <message>
-        <source>Restart nekoray to take effect.</source>
-        <translation>重启 nekoray 生效。</translation>
-    </message>
-    <message>
         <source>Concurrent</source>
         <translation>并发</translation>
     </message>
@@ -242,6 +234,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <translation>建议留空，但有时会出现问题，这时可以设置这个选项。
 对于 NekoRay 来说，在 VPN 模式下会重写 underlying(localhost) DNS。
 对于 NekoBox 来说，在 VPN 模式、正常模式和 URL 测试中会重写 underlying(localhost) DNS。</translation>
+    </message>
+    <message>
+        <source>If you VPN mode is not working, try to change this option.</source>
+        <translation>如果您的VPN模式有问题，请尝试更改此选项。</translation>
     </message>
 </context>
 <context>
@@ -1343,6 +1339,14 @@ Split by line.</source>
     <message>
         <source>Show Window</source>
         <translation>显示主窗口</translation>
+    </message>
+    <message>
+        <source>Settings changed</source>
+        <translation>设置改变</translation>
+    </message>
+    <message>
+        <source>Restart nekoray to take effect.</source>
+        <translation>重启 nekoray 生效。</translation>
     </message>
 </context>
 <context>

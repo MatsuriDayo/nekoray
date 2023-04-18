@@ -155,7 +155,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             file.write("0");
         }
         file.close();
-        MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
+        CACHE.needRestart = true;
     });
 
     // Subscription
@@ -259,8 +259,6 @@ DialogBasicSettings::~DialogBasicSettings() {
 }
 
 void DialogBasicSettings::accept() {
-    if (CACHE.needRestart) MessageBoxWarning(tr("Settings changed"), tr("Restart nekoray to take effect."));
-
     // Common
 
     NekoRay::dataStore->inbound_address = ui->socks_ip->text();
@@ -316,7 +314,9 @@ void DialogBasicSettings::accept() {
         MW_dialog_message("", "ClearConnectionList");
     }
 
-    MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
+    QStringList str{"UpdateDataStore"};
+    if (CACHE.needRestart) str << "NeedRestart";
+    MW_dialog_message(Dialog_DialogBasicSettings, str.join(","));
     QDialog::accept();
 }
 
@@ -399,6 +399,8 @@ void DialogBasicSettings::on_core_settings_clicked() {
     MyLineEdit *core_box_clash_api;
     MyLineEdit *core_box_clash_api_secret;
     MyLineEdit *core_box_underlying_dns;
+    QCheckBox *core_ray_direct_dns;
+    QCheckBox *core_ray_windows_disable_auto_interface;
     //
     auto core_box_underlying_dns_l = new QLabel(tr("Override underlying DNS"));
     core_box_underlying_dns_l->setToolTip(tr(
@@ -435,6 +437,23 @@ void DialogBasicSettings::on_core_settings_clicked() {
         core_box_clash_api_secret->setText(NekoRay::dataStore->core_box_clash_api_secret);
         layout->addWidget(core_box_clash_api_secret_l, ++line, 0);
         layout->addWidget(core_box_clash_api_secret, line, 1);
+    } else {
+        auto core_ray_direct_dns_l = new QLabel("NKR_CORE_RAY_DIRECT_DNS");
+        core_ray_direct_dns_l->setToolTip(tr("If you VPN mode is not working, try to change this option."));
+        core_ray_direct_dns = new QCheckBox;
+        core_ray_direct_dns->setChecked(NekoRay::dataStore->core_ray_direct_dns);
+        connect(core_ray_direct_dns, &QCheckBox::clicked, this, [&] { CACHE.needRestart = true; });
+        layout->addWidget(core_ray_direct_dns_l, ++line, 0);
+        layout->addWidget(core_ray_direct_dns, line, 1);
+#ifdef Q_OS_WIN
+        auto core_ray_windows_disable_auto_interface_l = new QLabel("NKR_CORE_RAY_WINDOWS_DISABLE_AUTO_INTERFACE");
+        core_ray_windows_disable_auto_interface_l->setToolTip(tr("If you VPN mode is not working, try to change this option."));
+        core_ray_windows_disable_auto_interface = new QCheckBox;
+        core_ray_windows_disable_auto_interface->setChecked(NekoRay::dataStore->core_ray_windows_disable_auto_interface);
+        connect(core_ray_windows_disable_auto_interface, &QCheckBox::clicked, this, [&] { CACHE.needRestart = true; });
+        layout->addWidget(core_ray_windows_disable_auto_interface_l, ++line, 0);
+        layout->addWidget(core_ray_windows_disable_auto_interface, line, 1);
+#endif
     }
     //
     auto box = new QDialogButtonBox;
@@ -446,6 +465,11 @@ void DialogBasicSettings::on_core_settings_clicked() {
             NekoRay::dataStore->core_box_auto_detect_interface = core_box_auto_detect_interface->isChecked();
             NekoRay::dataStore->core_box_clash_api = core_box_clash_api->text().toInt() * (core_box_enable_clash_api->isChecked() ? 1 : -1);
             NekoRay::dataStore->core_box_clash_api_secret = core_box_clash_api_secret->text();
+        } else {
+            NekoRay::dataStore->core_ray_direct_dns = core_ray_direct_dns->isChecked();
+#ifdef Q_OS_WIN
+            NekoRay::dataStore->core_ray_windows_disable_auto_interface = core_ray_windows_disable_auto_interface->isChecked();
+#endif
         }
         MW_dialog_message(Dialog_DialogBasicSettings, "UpdateDataStore");
         w->accept();

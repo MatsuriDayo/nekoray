@@ -79,7 +79,9 @@ namespace NekoRay {
         _add(new configItem("core_box_clash_api", &core_box_clash_api, itemType::integer));
         _add(new configItem("core_box_clash_api_secret", &core_box_clash_api_secret, itemType::string));
         _add(new configItem("core_box_underlying_dns", &core_box_underlying_dns, itemType::string));
+        _add(new configItem("core_ray_direct_dns", &core_ray_direct_dns, itemType::boolean));
 #ifndef Q_OS_WIN
+        _add(new configItem("core_ray_windows_disable_auto_interface", &core_ray_windows_disable_auto_interface, itemType::boolean));
         _add(new configItem("vpn_already_admin", &vpn_already_admin, itemType::boolean));
 #endif
     }

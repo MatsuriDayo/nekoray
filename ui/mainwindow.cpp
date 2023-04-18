@@ -522,6 +522,13 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         }
         refresh_status();
     }
+    if (info.contains("NeedRestart")) {
+        auto n = QMessageBox::warning(GetMessageBoxParent(), tr("Settings changed"), tr("Restart nekoray to take effect."), QMessageBox::Yes | QMessageBox::No);
+        if (n == QMessageBox::Yes) {
+            this->exit_reason = 2;
+            on_menu_exit_triggered();
+        }
+    }
     //
     if (info == "RestartProgram") {
         this->exit_reason = 2;

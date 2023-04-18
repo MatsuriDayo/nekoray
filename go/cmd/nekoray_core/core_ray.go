@@ -48,10 +48,10 @@ func setupCore() {
 	// localdns setup
 	resolver_def := &net.Resolver{PreferGo: false}
 	resolver_go := &net.Resolver{PreferGo: true}
-	if underlyingNetDialer != nil && os.Getenv("NKR_VPN_LEGACY_DNS") == "1" {
+	if underlyingNetDialer != nil && os.Getenv("NKR_CORE_RAY_DIRECT_DNS") == "1" {
 		resolver_def.Dial = underlyingNetDialer.DialContext
 		resolver_go.Dial = underlyingNetDialer.DialContext
-		log.Println("using NKR_VPN_LEGACY_DNS")
+		log.Println("using NKR_CORE_RAY_DIRECT_DNS")
 	}
 	localdns.SetLookupFunc(func(network string, host string) (ips []net.IP, err error) {
 		// fix old sekai

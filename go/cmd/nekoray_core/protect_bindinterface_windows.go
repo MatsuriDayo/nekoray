@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"log"
 	"net"
+	"os"
 	"strings"
 	"sync"
 	"syscall"
@@ -20,6 +21,26 @@ var interfaces []net.Interface
 var lock sync.Mutex
 
 func init() {
+	if os.Getenv("NKR_CORE_RAY_WINDOWS_DISABLE_AUTO_INTERFACE") == "1" {
+		log.Println("using NKR_CORE_RAY_WINDOWS_DISABLE_AUTO_INTERFACE")
+	} else {
+		initRoute()
+	}
+	//
+	getNekorayTunIndex = func() (index int) {
+		lock.Lock()
+		defer lock.Unlock()
+		for _, intf := range interfaces {
+			if intf.Name == "nekoray-tun" {
+				index = intf.Index
+				return
+			}
+		}
+		return
+	}
+}
+
+func initRoute() {
 	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
 		bindInterfaceIndex := getBindInterfaceIndex(address)
 		if bindInterfaceIndex != 0 {
@@ -75,18 +96,6 @@ func init() {
 		updateRoutes()
 		return 0
 	}, false)
-	//
-	getNekorayTunIndex = func() (index int) {
-		lock.Lock()
-		defer lock.Unlock()
-		for _, intf := range interfaces {
-			if intf.Name == "nekoray-tun" {
-				index = intf.Index
-				return
-			}
-		}
-		return
-	}
 }
 
 func updateRoutes() {
