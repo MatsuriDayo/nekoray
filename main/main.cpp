@@ -244,6 +244,16 @@ int main(int argc, char* argv[]) {
         MW_dialog_message("", "Raise");
     });
 
+    // Do preset update
+    if (NekoRay::dataStore->user_agent.isEmpty() || NekoRay::dataStore->user_agent.startsWith("Nekoray/1.0") || NekoRay::dataStore->user_agent.startsWith("ClashForAndroid")) {
+        if (IS_NEKO_BOX) {
+            NekoRay::dataStore->user_agent = "NekoBox/PC/2.0 (Prefer ClashMeta Format)";
+        } else {
+            NekoRay::dataStore->user_agent = "NekoRay/PC/2.0 (Prefer ClashMeta Format)";
+        }
+        NekoRay::dataStore->Save();
+    }
+
     UI_InitMainWindow();
     return QApplication::exec();
 }

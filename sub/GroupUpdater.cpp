@@ -175,6 +175,23 @@ namespace NekoRay::sub {
         }
     }
 
+    QStringList Node2QStringList(const YAML::Node &n) {
+        try {
+            if (n.IsSequence()) {
+                QStringList list;
+                for (auto item: n) {
+                    list << item.as<std::string>().c_str();
+                }
+                return list;
+            } else {
+                return {};
+            }
+        } catch (const YAML::Exception &ex) {
+            qDebug() << ex.what();
+            return {};
+        }
+    }
+
     int Node2Int(const YAML::Node &n, const int &def = 0) {
         try {
             return n.as<int>();
@@ -188,6 +205,11 @@ namespace NekoRay::sub {
         try {
             return n.as<bool>();
         } catch (const YAML::Exception &ex) {
+            try {
+                return n.as<int>();
+            } catch (const YAML::Exception &ex2) {
+                ex2.what();
+            }
             qDebug() << ex.what();
             return def;
         }
@@ -211,8 +233,11 @@ namespace NekoRay::sub {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {
                 auto type = Node2QString(proxy["type"]);
+                auto type_clash = type;
+
                 if (type == "ss" || type == "ssr") type = "shadowsocks";
                 if (type == "socks5") type = "socks";
+                if (type == "hysteria") type = "custom";
 
                 auto ent = ProfileManager::NewProxyEntity(type);
                 if (ent->bean->version == -114514) continue;
@@ -261,14 +286,20 @@ namespace NekoRay::sub {
                     bean->password = Node2QString(proxy["password"]);
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
-                } else if (type == "trojan") {
+                } else if (type == "trojan" || type == "vless") {
                     needFix = true;
                     auto bean = ent->TrojanVLESSBean();
-                    bean->password = Node2QString(proxy["password"]);
+                    if (type == "vless") {
+                        bean->flow = Node2QString(proxy["flow"]);
+                        bean->password = Node2QString(proxy["uuid"]);
+                    } else {
+                        bean->password = Node2QString(proxy["password"]);
+                    }
                     bean->stream->security = "tls";
                     bean->stream->network = Node2QString(proxy["network"], "tcp");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+                    if (IS_NEKO_BOX) bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
 
                     // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
@@ -285,6 +316,12 @@ namespace NekoRay::sub {
                     auto grpc = NodeChild(proxy, {"grpc-opts", "grpc-opt"});
                     if (grpc.IsMap()) {
                         bean->stream->path = Node2QString(grpc["grpc-service-name"]);
+                    }
+
+                    auto reality = NodeChild(proxy, {"reality-opts"});
+                    if (reality.IsMap()) {
+                        bean->stream->reality_pbk = Node2QString(reality["public-key"]);
+                        bean->stream->reality_sid = Node2QString(reality["short-id"]);
                     }
                 } else if (type == "vmess") {
                     needFix = true;
@@ -341,6 +378,35 @@ namespace NekoRay::sub {
                             break;
                         }
                     }
+                } else if (type_clash == "hysteria") {
+                    if (!IS_NEKO_BOX) {
+                        MW_show_log("Found Clash Meta format hysteria. This is only supported in NekoBox, please switch the core.");
+                        continue;
+                    }
+
+                    auto bean = ent->CustomBean();
+                    bean->core = "internal";
+
+                    QJsonObject coreTlsObj{
+                        {"enabled", true},
+                        {"insecure", Node2Bool(proxy["skip-cert-verify"])},
+                        {"alpn", QList2QJsonArray(Node2QStringList(proxy["alpn"]))},
+                        {"server_name", Node2QString(proxy["sni"])},
+                    };
+
+                    QJsonObject coreHysteriaObj{
+                        {"type", "hysteria"},
+                        {"tag", Node2QString(proxy["name"])},
+                        {"server", Node2QString(proxy["server"])},
+                        {"server_port", Node2Int(proxy["port"])},
+                        {"auth_str", Node2QString(proxy["auth_str"])},
+                        {"up_mbps", Node2Int(proxy["up"])},
+                        {"down_mbps", Node2Int(proxy["down"])},
+                        {"disable_mtu_discovery", Node2Bool(proxy["disable_mtu_discovery"])},
+                        {"tls", coreTlsObj},
+                    };
+
+                    bean->config_simple = QJsonObject2QString(coreHysteriaObj, false);
                 } else {
                     continue;
                 }

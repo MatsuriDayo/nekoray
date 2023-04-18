@@ -93,7 +93,7 @@ namespace NekoRay {
         QString splitter_state = "";
 
         // Subscription
-        QString user_agent = "Nekoray/1.0 (Prefer Clash Format)";
+        QString user_agent = ""; // set at main.cpp
         bool sub_use_proxy = false;
         bool sub_clear = false;
         bool sub_insecure = false;
