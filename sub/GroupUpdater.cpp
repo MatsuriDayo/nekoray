@@ -399,12 +399,23 @@ namespace NekoRay::sub {
                         {"tag", Node2QString(proxy["name"])},
                         {"server", Node2QString(proxy["server"])},
                         {"server_port", Node2Int(proxy["port"])},
-                        {"auth_str", Node2QString(proxy["auth_str"])},
-                        {"up_mbps", Node2Int(proxy["up"])},
-                        {"down_mbps", Node2Int(proxy["down"])},
+                        {"auth_str", FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]))},
                         {"disable_mtu_discovery", Node2Bool(proxy["disable_mtu_discovery"])},
+                        {"recv_window", Node2Int(proxy["recv-window"])},
+                        {"recv_window_conn", Node2Int(proxy["recv-window-conn"])},
                         {"tls", coreTlsObj},
                     };
+
+                    if (!Node2QString(proxy["up"]).contains("bps")) {
+                        coreHysteriaObj["up_mbps"] = Node2Int(proxy["up"]);
+                    } else {
+                        coreHysteriaObj["up"] = Node2QString(proxy["up"]);
+                    }
+                    if (!Node2QString(proxy["down"]).contains("bps")) {
+                        coreHysteriaObj["down_mbps"] = Node2Int(proxy["down"]);
+                    } else {
+                        coreHysteriaObj["down"] = Node2QString(proxy["down"]);
+                    }
 
                     bean->config_simple = QJsonObject2QString(coreHysteriaObj, false);
                 } else {
