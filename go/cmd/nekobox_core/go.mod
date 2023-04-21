@@ -3,9 +3,10 @@ module nekobox_core
 go 1.19
 
 require (
-	github.com/matsuridayo/libneko v0.0.0-20230315005352-9d7e3f3a79d1
-	github.com/matsuridayo/sing-box-extra v0.0.0-20230417014110-39b3adb5f93f
-	github.com/sagernet/sing-box v1.2.4
+	github.com/matsuridayo/libneko v1.0.0 // replaced
+	github.com/matsuridayo/sing-box-extra v1.0.0 // replaced
+	github.com/sagernet/sing-box v1.0.0 // replaced
+	github.com/sagernet/sing-dns v1.0.0 // indirect; replaced
 	grpc_server v1.0.0
 )
 
@@ -55,7 +56,6 @@ require (
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
 	github.com/sagernet/reality v0.0.0-20230406110435-ee17307e7691 // indirect
 	github.com/sagernet/sing v0.2.3 // indirect
-	github.com/sagernet/sing-dns v0.1.5-0.20230415085626-111ecf799dfc // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.0 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.0 // indirect
 	github.com/sagernet/sing-tun v0.1.4-0.20230326080954-8848c0e4cbab // indirect
@@ -92,10 +92,10 @@ require (
 
 replace grpc_server v1.0.0 => ../../grpc_server
 
-// replace github.com/matsuridayo/sing-box-extra => ../../../../sing-box-extra
+replace github.com/matsuridayo/libneko v1.0.0 => ../../../../libneko
 
-// replace github.com/sagernet/sing-box => ../../../../sing-box
+replace github.com/matsuridayo/sing-box-extra v1.0.0 => ../../../../sing-box-extra
 
-// replace github.com/sagernet/sing-dns => ../../../../sing-dns
+replace github.com/sagernet/sing-box v1.0.0 => ../../../../sing-box
 
-replace github.com/sagernet/sing-dns => github.com/matsuridayo/sing-dns v0.0.0-20230410025504-c609bffff165
+replace github.com/sagernet/sing-dns v1.0.0 => ../../../../sing-dns

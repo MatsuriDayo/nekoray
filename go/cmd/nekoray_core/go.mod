@@ -6,7 +6,7 @@ require (
 	github.com/Dreamacro/clash v1.9.0
 	github.com/jsimonetti/rtnetlink v1.2.2
 	github.com/matsuridayo/libneko v0.0.0-20230304130313-5ea96b79b3c3
-	github.com/v2fly/v2ray-core/v5 v5.0.0
+	github.com/v2fly/v2ray-core/v5 v5.0.0 // replaced
 	grpc_server v1.0.0
 	kernel.org/pub/linux/libs/security/libcap/cap v1.2.65
 )
