@@ -413,6 +413,46 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>Custom Config Settings</source>
         <translation>自定义配置 JSON 设置</translation>
     </message>
+    <message>
+        <source>chrome</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>firefox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>edge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>safari</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>360</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>qq</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ios</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>android</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>random</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>randomized</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogFirstSetup</name>

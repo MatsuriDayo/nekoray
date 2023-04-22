@@ -564,6 +564,61 @@ security (QUIC)</string>
            <property name="editable">
             <bool>true</bool>
            </property>
+           <item>
+            <property name="text">
+             <string/>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>chrome</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>firefox</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>edge</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>safari</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>360</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>qq</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>ios</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>android</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>random</string>
+            </property>
+           </item>
+           <item>
+            <property name="text">
+             <string>randomized</string>
+            </property>
+           </item>
           </widget>
          </item>
         </layout>
