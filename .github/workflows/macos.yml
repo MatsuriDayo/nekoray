@@ -1,4 +1,4 @@
-name: Nekoray build matrix - cmake
+name: Nekoray build mac
 
 on:
   workflow_dispatch:
