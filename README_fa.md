@@ -62,7 +62,7 @@ https://matsuridayo.github.io
 
 [Windows](docs/Build_Windows.md)
 
-[macOs] (docs/Build_MacOS_fa)
+[macOs](docs/Build_MacOS_fa.md)
 
 ## کمک مالی / Donate
 
