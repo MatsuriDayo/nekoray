@@ -102,7 +102,7 @@
     </message>
     <message>
         <source>Insecure hint</source>
-        <translation>اشاره ناامن</translation>
+        <translation type="vanished">اشاره ناامن</translation>
     </message>
     <message>
         <source>Statistics refresh rate</source>
@@ -1328,7 +1328,7 @@ End: %2</source>
     </message>
     <message>
         <source>Profile is insecure: %1</source>
-        <translation>پروفایل ناامن می باشد: %1</translation>
+        <translation type="vanished">پروفایل ناامن می باشد: %1</translation>
     </message>
     <message>
         <source>Stopping profile %1</source>
@@ -1464,26 +1464,6 @@ Deleted %3 Profiles:
     <message>
         <source>Chain Proxy</source>
         <translation>پروکسی زنجیره ای</translation>
-    </message>
-    <message>
-        <source>The configuration (insecure) can be detected and identified, the transmission is fully visible to the censor and is not resistant to man-in-the-middle tampering with the content of the communication.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This configuration (Shadowsocks streaming cipher) can be accurately proactively detected and decrypted by censors without requiring a password, and cannot be mitigated by turning on IV replay filters on the server side.
-
-Learn more: https://github.com/net4people/bbs/issues/24</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This profile is cleartext, don&apos;t use it if the server is not in your local network.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>This configuration (VMess MD5 authentication) has been deprecated by upstream because of its questionable resistance to tampering and concealment.
-
-As of January 1, 2022, compatibility with MD5 authentication information will be disabled on the server side by default. Any client using MD5 authentication information will not be able to connect to a server with VMess MD5 authentication information disabled.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Core not found: %1</source>

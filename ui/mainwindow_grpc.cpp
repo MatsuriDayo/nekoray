@@ -216,8 +216,6 @@ void MainWindow::neko_start(int _id) {
 
     if (NekoRay::dataStore->started_id >= 0) neko_stop();
     show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
-    auto insecure_hint = ent->bean->DisplayInsecureHint();
-    if (!insecure_hint.isEmpty()) show_log_impl(">>>>>>>> " + tr("Profile is insecure: %1").arg(insecure_hint));
 
 #ifndef NKR_NO_GRPC
     libcore::LoadConfigReq req;

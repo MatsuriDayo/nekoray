@@ -47,8 +47,6 @@ namespace NekoRay::fmt {
         QJsonObject BuildStreamSettingsV2Ray();
 
         void BuildStreamSettingsSingBox(QJsonObject *outbound);
-
-        [[nodiscard]] QString InsecureHint() const;
     };
 
     inline V2rayStreamSettings *GetStreamSettings(AbstractBean *bean) {
