@@ -63,10 +63,6 @@ namespace NekoRay::fmt {
         virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) { return {}; };
 
         virtual QString ToShareLink() { return {}; };
-
-        virtual QString InsecureHint() { return {}; };
-
-        QString DisplayInsecureHint();
     };
 
 } // namespace NekoRay::fmt

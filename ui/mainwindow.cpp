@@ -933,11 +933,6 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
         // C0: Type
         auto f = f0->clone();
         f->setText(profile->bean->DisplayType());
-        auto insecure_hint = profile->bean->DisplayInsecureHint();
-        if (!insecure_hint.isEmpty()) {
-            f->setBackground(Qt::red);
-            f->setToolTip(insecure_hint);
-        }
         ui->proxyListTable->setItem(row, 0, f);
 
         // C1: Address+Port

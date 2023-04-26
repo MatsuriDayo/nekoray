@@ -47,7 +47,6 @@ namespace NekoRay {
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
         _add(new configItem("spmode", &remember_spmode, itemType::integer));
-        _add(new configItem("insecure_hint", &insecure_hint, itemType::boolean));
         _add(new configItem("skip_cert", &skip_cert, itemType::boolean));
         _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));
         _add(new configItem("hk_group", &hotkey_group, itemType::string));
