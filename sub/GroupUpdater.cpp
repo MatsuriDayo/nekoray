@@ -16,8 +16,6 @@
 
 #endif
 
-#define FIRST_OR_SECOND(a, b) a.isEmpty() ? b : a
-
 namespace NekoRay::sub {
 
     GroupUpdater *groupUpdater = new GroupUpdater;
@@ -130,28 +128,9 @@ namespace NekoRay::sub {
         // Hysteria
         if (str.startsWith("hysteria://")) {
             needFix = false;
-            // https://github.com/HyNetwork/hysteria/wiki/URI-Scheme
-            ent = ProfileManager::NewProxyEntity("custom");
-            auto bean = ent->CustomBean();
-            auto url = QUrl(str);
-            auto query = QUrlQuery(url.query());
-            if (url.host().isEmpty() || url.port() == -1 || !query.hasQueryItem("upmbps")) return;
-            bean->name = url.fragment();
-            bean->serverAddress = url.host();
-            bean->serverPort = url.port();
-            bean->core = "hysteria";
-            bean->command = QString(Preset::Hysteria::command).split(" ");
-            auto result = QString2QJsonObject(Preset::Hysteria::config);
-            result["server_name"] = url.host(); // default sni
-            result["obfs"] = query.queryItemValue("obfsParam");
-            result["insecure"] = query.queryItemValue("insecure") == "1";
-            result["up_mbps"] = query.queryItemValue("upmbps").toInt();
-            result["down_mbps"] = query.queryItemValue("downmbps").toInt();
-            result["protocol"] = query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp";
-            if (query.hasQueryItem("auth")) result["auth_str"] = query.queryItemValue("auth");
-            if (query.hasQueryItem("alpn")) result["alpn"] = query.queryItemValue("alpn");
-            if (query.hasQueryItem("peer")) result["server_name"] = query.queryItemValue("peer");
-            bean->config_simple = QJsonObject2QString(result, false);
+            ent = ProfileManager::NewProxyEntity("hysteria");
+            auto ok = ent->HysteriaBean()->TryParseLink(str);
+            if (!ok) return;
         }
 
         if (ent == nullptr) return;
@@ -237,7 +216,6 @@ namespace NekoRay::sub {
 
                 if (type == "ss" || type == "ssr") type = "shadowsocks";
                 if (type == "socks5") type = "socks";
-                if (type == "hysteria") type = "custom";
 
                 auto ent = ProfileManager::NewProxyEntity(type);
                 if (ent->bean->version == -114514) continue;
@@ -379,45 +357,37 @@ namespace NekoRay::sub {
                         }
                     }
                 } else if (type_clash == "hysteria") {
-                    if (!IS_NEKO_BOX) {
-                        MW_show_log("Found Clash Meta format hysteria. This is only supported in NekoBox, please switch the core.");
-                        continue;
+                    auto bean = ent->HysteriaBean();
+
+                    bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
+                    auto alpn = Node2QStringList(proxy["alpn"]);
+                    if (!alpn.isEmpty()) bean->alpn = alpn[0];
+                    bean->sni = Node2QString(proxy["sni"]);
+
+                    bean->name = Node2QString(proxy["name"]);
+                    bean->serverAddress = Node2QString(proxy["server"]);
+                    bean->serverPort = Node2Int(proxy["port"]);
+                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
+
+                    auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
+                    auto auth = Node2QString(proxy["auth"]);
+                    if (!auth_str.isEmpty()) {
+                        bean->authPayloadType = fmt::HysteriaBean::hysteria_auth_string;
+                        bean->authPayload = auth_str;
+                    }
+                    if (!auth.isEmpty()) {
+                        bean->authPayloadType = fmt::HysteriaBean::hysteria_auth_base64;
+                        bean->authPayload = auth;
                     }
 
-                    auto bean = ent->CustomBean();
-                    bean->core = "internal";
+                    if (Node2Bool(proxy["disable_mtu_discovery"]) || Node2Bool(proxy["disable-mtu-discovery"])) bean->disableMtuDiscovery = true;
+                    bean->streamReceiveWindow = Node2Int(proxy["recv-window"]);
+                    bean->connectionReceiveWindow = Node2Int(proxy["recv-window-conn"]);
 
-                    QJsonObject coreTlsObj{
-                        {"enabled", true},
-                        {"insecure", Node2Bool(proxy["skip-cert-verify"])},
-                        {"alpn", QList2QJsonArray(Node2QStringList(proxy["alpn"]))},
-                        {"server_name", Node2QString(proxy["sni"])},
-                    };
-
-                    QJsonObject coreHysteriaObj{
-                        {"type", "hysteria"},
-                        {"tag", Node2QString(proxy["name"])},
-                        {"server", Node2QString(proxy["server"])},
-                        {"server_port", Node2Int(proxy["port"])},
-                        {"auth_str", FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]))},
-                        {"disable_mtu_discovery", Node2Bool(proxy["disable_mtu_discovery"])},
-                        {"recv_window", Node2Int(proxy["recv-window"])},
-                        {"recv_window_conn", Node2Int(proxy["recv-window-conn"])},
-                        {"tls", coreTlsObj},
-                    };
-
-                    if (!Node2QString(proxy["up"]).contains("bps")) {
-                        coreHysteriaObj["up_mbps"] = Node2Int(proxy["up"]);
-                    } else {
-                        coreHysteriaObj["up"] = Node2QString(proxy["up"]);
-                    }
-                    if (!Node2QString(proxy["down"]).contains("bps")) {
-                        coreHysteriaObj["down_mbps"] = Node2Int(proxy["down"]);
-                    } else {
-                        coreHysteriaObj["down"] = Node2QString(proxy["down"]);
-                    }
-
-                    bean->config_simple = QJsonObject2QString(coreHysteriaObj, false);
+                    auto upMbps = Node2QString(proxy["up"]).split(" ")[0].toInt();
+                    auto downMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
+                    if (upMbps > 0) bean->uploadMbps = upMbps;
+                    if (downMbps > 0) bean->downloadMbps = downMbps;
                 } else {
                     continue;
                 }

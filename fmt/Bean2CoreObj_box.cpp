@@ -135,6 +135,34 @@ namespace NekoRay::fmt {
         return result;
     }
 
+    CoreObjOutboundBuildResult HysteriaBean::BuildCoreObjSingBox() {
+        CoreObjOutboundBuildResult result;
+
+        QJsonObject coreTlsObj{
+            {"enabled", true},
+            {"insecure", allowInsecure},
+        };
+        if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};
+
+        QJsonObject coreHysteriaObj{
+            {"type", "hysteria"},
+            {"server", serverAddress},
+            {"server_port", serverPort},
+            {"disable_mtu_discovery", disableMtuDiscovery},
+            {"recv_window", streamReceiveWindow},
+            {"recv_window_conn", connectionReceiveWindow},
+            {"up_mbps", uploadMbps},
+            {"down_mbps", downloadMbps},
+            {"tls", coreTlsObj},
+        };
+
+        if (authPayloadType == hysteria_auth_base64) coreHysteriaObj["auth"] = authPayload;
+        if (authPayloadType == hysteria_auth_string) coreHysteriaObj["auth_str"] = authPayload;
+
+        result.outbound = coreHysteriaObj;
+        return result;
+    }
+
     CoreObjOutboundBuildResult CustomBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
 

@@ -6,4 +6,5 @@
 #include "VMessBean.hpp"
 #include "TrojanVLESSBean.hpp"
 #include "NaiveBean.hpp"
+#include "HysteriaBean.hpp"
 #include "CustomBean.hpp"

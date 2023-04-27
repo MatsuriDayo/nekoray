@@ -9,6 +9,7 @@
 #include <QFileInfo>
 
 #define BOX_UNDERLYING_DNS NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "underlying://0.0.0.0" : NekoRay::dataStore->core_box_underlying_dns
+#define BOX_UNDERLYING_DNS_EXPORT NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "local" : NekoRay::dataStore->core_box_underlying_dns
 
 namespace NekoRay {
 
@@ -769,7 +770,7 @@ namespace NekoRay {
 
         // Direct
         auto directDNSAddress = dataStore->direct_dns;
-        if (directDNSAddress == "localhost") directDNSAddress = BOX_UNDERLYING_DNS;
+        if (directDNSAddress == "localhost") directDNSAddress = BOX_UNDERLYING_DNS_EXPORT;
         if (!status->forTest)
             dnsServers += QJsonObject{
                 {"tag", "dns-direct"},
@@ -782,7 +783,7 @@ namespace NekoRay {
         // Underlying 100% Working DNS
         dnsServers += QJsonObject{
             {"tag", "dns-local"},
-            {"address", BOX_UNDERLYING_DNS},
+            {"address", BOX_UNDERLYING_DNS_EXPORT},
             {"detour", "direct"},
         };
 

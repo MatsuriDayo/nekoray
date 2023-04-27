@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>EditHysteria</class>
+ <widget class="QWidget" name="EditHysteria">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">EditHysteria</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout_2">
+   <item row="0" column="1">
+    <widget class="MyLineEdit" name="hopPort"/>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_8">
+     <property name="text">
+      <string>Auth Type</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Protocol</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="MyLineEdit" name="obfsPassword"/>
+   </item>
+   <item row="10" column="1">
+    <widget class="MyLineEdit" name="sni"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="MyLineEdit" name="uploadMbps"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Download (Mbps)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout_2">
+     <item>
+      <widget class="QComboBox" name="protocol">
+       <item>
+        <property name="text">
+         <string notr="true">QUIC</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">FakeTCP</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">wechat-video</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="disableMtuDiscovery">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Disable MTU Discovery</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_11">
+     <property name="text">
+      <string>Hop Interval (s)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="MyLineEdit" name="hopInterval"/>
+   </item>
+   <item row="13" column="0">
+    <widget class="QLabel" name="label_7">
+     <property name="text">
+      <string>Certificate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QComboBox" name="authPayloadType">
+     <item>
+      <property name="text">
+       <string notr="true">NONE</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">STRING</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">BASE64</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="MyLineEdit" name="alpn"/>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="allowInsecure">
+       <property name="text">
+        <string>Allow Insecure</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_10">
+     <property name="text">
+      <string>Hop Port</string>
+     </property>
+    </widget>
+   </item>
+   <item row="13" column="1">
+    <widget class="QPushButton" name="certificate">
+     <property name="text">
+      <string notr="true">PushButton</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Upload (Mbps)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Obfs Password</string>
+     </property>
+    </widget>
+   </item>
+   <item row="10" column="0">
+    <widget class="QLabel" name="label_6">
+     <property name="text">
+      <string>SNI</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="MyLineEdit" name="downloadMbps"/>
+   </item>
+   <item row="12" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="toolTip">
+      <string notr="true">Only 1 value</string>
+     </property>
+     <property name="text">
+      <string notr="true">ALPN</string>
+     </property>
+    </widget>
+   </item>
+   <item row="14" column="1">
+    <widget class="MyLineEdit" name="streamReceiveWindow"/>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_9">
+     <property name="text">
+      <string>Auth Payload</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="MyLineEdit" name="authPayload"/>
+   </item>
+   <item row="15" column="1">
+    <widget class="MyLineEdit" name="connectionReceiveWindow"/>
+   </item>
+   <item row="14" column="0">
+    <widget class="QLabel" name="label_12">
+     <property name="text">
+      <string notr="true">recv_window</string>
+     </property>
+    </widget>
+   </item>
+   <item row="15" column="0">
+    <widget class="QLabel" name="label_13">
+     <property name="text">
+      <string notr="true">recv_window_conn</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>ui/widget/MyLineEdit.h</header>
+  </customwidget>
+ </customwidgets>
+ <tabstops>
+  <tabstop>uploadMbps</tabstop>
+  <tabstop>downloadMbps</tabstop>
+  <tabstop>sni</tabstop>
+  <tabstop>certificate</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>

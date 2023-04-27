@@ -26,10 +26,10 @@ EditCustom::~EditCustom() {
 }
 
 #define SAVE_CUSTOM_BEAN                            \
-    P_SAVE_COMBO(core)                              \
+    P_SAVE_COMBO_STR(core)                          \
     bean->command = ui->command->text().split(" "); \
     P_SAVE_STRING_QTEXTEDIT(config_simple)          \
-    P_SAVE_COMBO(config_suffix)                     \
+    P_SAVE_COMBO_STR(config_suffix)                 \
     P_SAVE_INT(mapping_port)                        \
     P_SAVE_INT(socks_port)
 
@@ -43,13 +43,7 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
         if (key == "naive" || key == "hysteria") continue;
         ui->core->addItem(key);
     }
-    if (preset_core == "hysteria") {
-        preset_command = Preset::Hysteria::command;
-        preset_config = Preset::Hysteria::config;
-        ui->config_simple->setPlaceholderText("");
-        ui->core->hide();
-        ui->core_l->setText(tr("Please read the documentation. If you don't understand, use a share link instead."));
-    } else if (preset_core == "internal") {
+    if (preset_core == "internal") {
         preset_command = preset_config = "";
         ui->config_simple->setPlaceholderText(
             "{\n"
@@ -66,10 +60,10 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     }
 
     // load core ui
-    P_LOAD_COMBO(core)
+    P_LOAD_COMBO_STR(core)
     ui->command->setText(bean->command.join(" "));
     P_LOAD_STRING(config_simple)
-    P_LOAD_COMBO(config_suffix)
+    P_LOAD_COMBO_STR(config_suffix)
     P_LOAD_INT(mapping_port)
     P_LOAD_INT(socks_port)
 

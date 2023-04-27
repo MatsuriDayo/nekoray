@@ -85,6 +85,8 @@ namespace NekoRay {
             bean = new fmt::TrojanVLESSBean(fmt::TrojanVLESSBean::proxy_VLESS);
         } else if (type == "naive") {
             bean = new fmt::NaiveBean();
+        } else if (type == "hysteria") {
+            bean = new fmt::HysteriaBean();
         } else if (type == "custom") {
             bean = new fmt::CustomBean();
         } else {
