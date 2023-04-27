@@ -9,7 +9,7 @@
 #include <QFileInfo>
 
 #define BOX_UNDERLYING_DNS NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "underlying://0.0.0.0" : NekoRay::dataStore->core_box_underlying_dns
-#define BOX_UNDERLYING_DNS_EXPORT NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "local" : NekoRay::dataStore->core_box_underlying_dns
+#define BOX_UNDERLYING_DNS_EXPORT NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? (status->forExport ? "local" : "underlying://0.0.0.0") : NekoRay::dataStore->core_box_underlying_dns
 
 namespace NekoRay {
 
