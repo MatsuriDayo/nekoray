@@ -16,6 +16,8 @@ namespace NekoRay {
 
         class NaiveBean;
 
+        class HysteriaBean;
+
         class CustomBean;
 
         class ChainBean;
@@ -61,6 +63,10 @@ namespace NekoRay {
 
         [[nodiscard]] fmt::NaiveBean *NaiveBean() const {
             return (fmt::NaiveBean *) bean.get();
+        };
+
+        [[nodiscard]] fmt::HysteriaBean *HysteriaBean() const {
+            return (fmt::HysteriaBean *) bean.get();
         };
 
         [[nodiscard]] fmt::CustomBean *CustomBean() const {

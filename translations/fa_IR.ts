@@ -720,10 +720,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Please read the documentation. If you don&apos;t understand, use a share link instead.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Outbound JSON, please read the documentation.</source>
         <translation>JSON خروجی، لطفاً مستندات را بخوانید.</translation>
     </message>
@@ -749,6 +745,57 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
     </message>
     <message>
         <source>Please fill the complete config.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>EditHysteria</name>
+    <message>
+        <source>Certificate</source>
+        <translation type="unfinished">گواهی</translation>
+    </message>
+    <message>
+        <source>Auth Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation type="unfinished">پروتکل</translation>
+    </message>
+    <message>
+        <source>Download (Mbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Disable MTU Discovery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hop Interval (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allow Insecure</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hop Port</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Upload (Mbps)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Obfs Password</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auth Payload</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -7,6 +7,7 @@
 #include "ui/edit/edit_vmess.h"
 #include "ui/edit/edit_trojan_vless.h"
 #include "ui/edit/edit_naive.h"
+#include "ui/edit/edit_hysteria.h"
 #include "ui/edit/edit_custom.h"
 
 #include "fmt/includes.h"
@@ -123,7 +124,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vmess");
         LOAD_TYPE("vless");
         LOAD_TYPE("naive");
-        ui->type->addItem("Hysteria", "hysteria");
+        LOAD_TYPE("hysteria");
         ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
         ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
@@ -177,7 +178,11 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-    } else if (type == "custom" || type == "internal" || type == "internal-full" || type == "hysteria") {
+    } else if (type == "hysteria") {
+        auto _innerWidget = new EditHysteria(this);
+        innerWidget = _innerWidget;
+        innerEditor = _innerWidget;
+    } else if (type == "custom" || type == "internal" || type == "internal-full") {
         auto _innerWidget = new EditCustom(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;

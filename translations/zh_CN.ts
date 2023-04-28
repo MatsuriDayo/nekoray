@@ -717,10 +717,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>填写出站 JSON 对象，详细请看文档。</translation>
     </message>
     <message>
-        <source>Please read the documentation. If you don&apos;t understand, use a share link instead.</source>
-        <translation>格式请看文档。如果不懂，直接导入 hysteria:// 链接。</translation>
-    </message>
-    <message>
         <source>Config Suffix</source>
         <translation>配置文件后缀</translation>
     </message>
@@ -743,6 +739,57 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Please fill the complete config.</source>
         <translation>请填写完整配置。</translation>
+    </message>
+</context>
+<context>
+    <name>EditHysteria</name>
+    <message>
+        <source>Certificate</source>
+        <translation>证书</translation>
+    </message>
+    <message>
+        <source>Auth Type</source>
+        <translation>认证类型</translation>
+    </message>
+    <message>
+        <source>Protocol</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <source>Download (Mbps)</source>
+        <translation>下载速度 (Mbps)</translation>
+    </message>
+    <message>
+        <source>Disable MTU Discovery</source>
+        <translation>禁用 MTU 探测</translation>
+    </message>
+    <message>
+        <source>Hop Interval (s)</source>
+        <translation>端口跳跃间隔 (秒)</translation>
+    </message>
+    <message>
+        <source>Allow Insecure</source>
+        <translation>不检查服务器证书</translation>
+    </message>
+    <message>
+        <source>Hop Port</source>
+        <translation>跳跃端口</translation>
+    </message>
+    <message>
+        <source>Upload (Mbps)</source>
+        <translation>上传速度 (Mbps)</translation>
+    </message>
+    <message>
+        <source>Obfs Password</source>
+        <translation>混淆密码</translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation>SNI</translation>
+    </message>
+    <message>
+        <source>Auth Payload</source>
+        <translation>认证有效载荷</translation>
     </message>
 </context>
 <context>

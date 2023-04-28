@@ -176,4 +176,41 @@ namespace NekoRay::fmt {
         return !(username.isEmpty() || password.isEmpty());
     }
 
+    bool HysteriaBean::TryParseLink(const QString &link) {
+        // https://hysteria.network/docs/uri-scheme/
+        auto url = QUrl(link);
+        auto query = QUrlQuery(url.query());
+        if (url.host().isEmpty() || url.port() == -1 || !query.hasQueryItem("upmbps") || !query.hasQueryItem("downmbps")) return false;
+
+        name = url.fragment();
+        serverAddress = url.host();
+        serverPort = url.port();
+        serverAddress = url.host(); // default sni
+        hopPort = query.queryItemValue("mport");
+        obfsPassword = query.queryItemValue("obfsParam");
+        allowInsecure = query.queryItemValue("insecure") == "1";
+        uploadMbps = query.queryItemValue("upmbps").toInt();
+        downloadMbps = query.queryItemValue("downmbps").toInt();
+
+        auto protocolStr = (query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp").toLower();
+        if (protocolStr == "faketcp") {
+            protocol = fmt::HysteriaBean::hysteria_protocol_facktcp;
+        } else if (protocolStr.startsWith("wechat")) {
+            protocol = fmt::HysteriaBean::hysteria_protocol_wechat_video;
+        }
+
+        if (query.hasQueryItem("auth")) {
+            authPayload = query.queryItemValue("auth");
+            authPayloadType = fmt::HysteriaBean::hysteria_auth_string;
+        }
+
+        alpn = query.queryItemValue("alpn");
+        sni = FIRST_OR_SECOND(query.queryItemValue("peer"), query.queryItemValue("sni"));
+
+        connectionReceiveWindow = query.queryItemValue("recv_window").toInt();
+        streamReceiveWindow = query.queryItemValue("recv_window_conn").toInt();
+
+        return true;
+    }
+
 } // namespace NekoRay::fmt
