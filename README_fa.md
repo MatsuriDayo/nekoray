@@ -88,3 +88,4 @@ XMR
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
+- [AppImageKit](https://github.com/AppImage/AppImageKit)

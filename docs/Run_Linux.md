@@ -12,9 +12,11 @@ sudo apt install ./nekoray-*-debian-x64.deb
 
 ### 其他发行版
 
-下载 .zip 文件，解压到合理的路径，开箱即用。具体使用方法见下文。
+下载 .zip 或 .AppImage 文件，解压到合理的路径，开箱即用。AppImage 文件请先 `chmod +x nekoray-*-AppImage-x64.AppImage` 给予可执行权限。
 
-或者使用 AUR `nekoray-git`
+具体使用方法见下文。
+
+或者使用 AUR `nekoray-git`。
 
 ## Linux 运行
 
