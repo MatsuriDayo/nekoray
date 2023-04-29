@@ -198,9 +198,10 @@ jobs:
           rm -rf public_res *.pdb
           ####
           bash ../libs/package_appimage.sh
-          mv nekoray-x86_64.AppImage $version_standalone-AppImage-x64.AppImage
+          mv nekoray-x86_64.AppImage $version_standalone-linux-x64.AppImage
       - name: Clean Up
         run: |
+          cd deployment
           rm -rf linux64
           rm -rf windows64
       - name: Uploading Artifact
