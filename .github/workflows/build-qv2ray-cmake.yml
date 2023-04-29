@@ -176,7 +176,7 @@ jobs:
           mv windows64 nekoray
           zip -r $version_standalone-windows64.zip nekoray
           rm -rf nekoray
-      - name: Pack debian
+      - name: Pack Debian
         if: github.event.inputs.publish != 'y'
         run: |
           source libs/deploy_common.sh
@@ -199,6 +199,8 @@ jobs:
           ####
           bash ../libs/package_appimage.sh
           mv nekoray-x86_64.AppImage $version_standalone-AppImage-x64.AppImage
+      - name: Clean Up
+        run: |
           rm -rf linux64
           rm -rf windows64
       - name: Uploading Artifact
