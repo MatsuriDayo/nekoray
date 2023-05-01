@@ -20,6 +20,7 @@ void EditShadowSocks::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     auto bean = this->ent->ShadowSocksBean();
 
     ui->method->setCurrentText(bean->method);
+    ui->uot->setCurrentText(bean->uot);
     ui->password->setText(bean->password);
     auto ssPlugin = bean->plugin.split(";");
     if (!ssPlugin.empty()) {

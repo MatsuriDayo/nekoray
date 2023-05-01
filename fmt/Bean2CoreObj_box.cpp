@@ -85,6 +85,7 @@ namespace NekoRay::fmt {
         outbound["server_port"] = serverPort;
         outbound["method"] = method;
         outbound["password"] = password;
+        outbound["udp_over_tcp"] = uot;
 
         if (!plugin.trimmed().isEmpty()) {
             outbound["plugin"] = SubStrBefore(plugin, ";");
