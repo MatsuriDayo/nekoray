@@ -13,6 +13,24 @@
 
 namespace NekoRay {
 
+    QStringList getAutoBypassExternalProcessPaths(const QSharedPointer<BuildConfigResult> &result) {
+        QStringList paths;
+        for (const auto &ext: result->exts) {
+            auto path = ext.first.program;
+            if (path.trimmed().isEmpty()) continue;
+            paths << path.replace("\\", "/");
+        }
+        return paths;
+    }
+
+    QString genTunName() {
+        auto tun_name = "nekoray-tun";
+#ifdef Q_OS_MACOS
+        tun_name = "utun9";
+#endif
+        return tun_name;
+    }
+
     void MergeJson(const QJsonObject &custom, QJsonObject &outbound) {
         // 合并
         if (custom.isEmpty()) return;
@@ -215,8 +233,8 @@ namespace NekoRay {
             {"tag", "block"},
         };
 
-        // DNS Routing
-        if (dataStore->dns_routing && !status->forTest) {
+        // DNS out
+        if (!status->forTest) {
             QJsonObject dnsOut;
             dnsOut["protocol"] = "dns";
             dnsOut["tag"] = "dns-out";
@@ -300,7 +318,7 @@ namespace NekoRay {
         // Routing
         QJsonObject routing;
         routing["domainStrategy"] = dataStore->domain_strategy;
-        routing["domainMatcher"] = dataStore->domain_matcher == DomainMatcher::MPH ? "mph" : "linear";
+        routing["domainMatcher"] = "mph";
         if (status->forTest) routing["domainStrategy"] = "AsIs";
 
         // final add user rule (block)
@@ -457,7 +475,12 @@ namespace NekoRay {
             // chain rules: this
             auto ext_mapping_port = 0;
             auto ext_socks_port = 0;
-            auto thisExternalStat = ent->bean->NeedExternal(isFirstProfile, dataStore->running_spmode == SystemProxyMode::VPN);
+            auto thisExternalStat = ent->bean->NeedExternal(isFirstProfile);
+            if (thisExternalStat < 0) {
+                status->result->error = "This configuration cannot be set automatically, please try another.";
+                return {};
+            }
+
             // determine port
             if (thisExternalStat > 0) {
                 if (ent->type == "custom") {
@@ -658,9 +681,28 @@ namespace NekoRay {
                     },
                 };
             }
-            // apply domain_strategy
-            inboundObj["domain_strategy"] = dataStore->outbound_domain_strategy;
-            //
+            inboundObj["domain_strategy"] = dataStore->domain_strategy;
+            status->inbounds += inboundObj;
+        }
+
+        // tun-in
+        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn) {
+            QJsonObject inboundObj;
+            inboundObj["tag"] = "tun-in";
+            inboundObj["type"] = "tun";
+            inboundObj["interface_name"] = genTunName();
+            inboundObj["auto_route"] = true;
+            inboundObj["endpoint_independent_nat"] = true;
+            inboundObj["mtu"] = dataStore->vpn_mtu;
+            inboundObj["stack"] = Preset::SingBox::VpnImplementation.value(dataStore->vpn_implementation);
+            inboundObj["strict_route"] = dataStore->vpn_strict_route;
+            inboundObj["inet4_address"] = "172.19.0.1/28";
+            if (dataStore->vpn_ipv6) inboundObj["inet4_address"] = "fdfe:dcba:9876::1/126";
+            if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
+                inboundObj["sniff"] = true;
+                inboundObj["sniff_override_destination"] = dataStore->sniffing_mode == SniffingMode::FOR_DESTINATION;
+            }
+            inboundObj["domain_strategy"] = dataStore->domain_strategy;
             status->inbounds += inboundObj;
         }
 
@@ -805,7 +847,12 @@ namespace NekoRay {
         // Routing
 
         // dns hijack
-        if (!status->forTest) status->routingRules += QJsonObject{{"protocol", "dns"}, {"outbound", "dns-out"}};
+        if (!status->forTest) {
+            status->routingRules += QJsonObject{
+                {"protocol", "dns"},
+                {"outbound", "dns-out"},
+            };
+        }
 
         // sing-box routing rule object
         auto add_rule_route = [&](const QStringList &list, bool isIP, const QString &out) {
@@ -823,6 +870,49 @@ namespace NekoRay {
         add_rule_route(status->domainListRemote, false, tagProxy);
         add_rule_route(status->domainListDirect, false, "bypass");
 
+        // built-in rules
+        status->routingRules += QJsonObject{
+            {"network", "udp"},
+            {"port", QJsonArray{135, 137, 138, 5353}},
+            {"outbound", "block"},
+        };
+        status->routingRules += QJsonObject{
+            {"ip_cidr", QJsonArray{"224.0.0.0/3", "ff00::/8"}},
+            {"outbound", "block"},
+        };
+        status->routingRules += QJsonObject{
+            {"source_ip_cidr", QJsonArray{"224.0.0.0/3", "ff00::/8"}},
+            {"outbound", "block"},
+        };
+
+        // tun user rule
+        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn) {
+            auto match_out = NekoRay::dataStore->vpn_rule_white ? "proxy" : "bypass";
+
+            QString process_name_rule = dataStore->vpn_rule_process.trimmed();
+            if (!process_name_rule.isEmpty()) {
+                auto arr = SplitLinesSkipSharp(process_name_rule);
+                QJsonObject rule{{"outbound", match_out},
+                                 {"process_name", QList2QJsonArray(arr)}};
+                status->routingRules += rule;
+            }
+
+            QString cidr_rule = dataStore->vpn_rule_cidr.trimmed();
+            if (!cidr_rule.isEmpty()) {
+                auto arr = SplitLinesSkipSharp(cidr_rule);
+                QJsonObject rule{{"outbound", match_out},
+                                 {"ip_cidr", QList2QJsonArray(arr)}};
+                status->routingRules += rule;
+            }
+
+            auto autoBypassExternalProcessPaths = getAutoBypassExternalProcessPaths(status->result);
+            if (!autoBypassExternalProcessPaths.isEmpty()) {
+                QJsonObject rule{{"outbound", "bypass"},
+                                 {"process_name", QList2QJsonArray(autoBypassExternalProcessPaths)}};
+                status->routingRules += rule;
+            }
+        }
+
         // geopath
         auto geoip = FindCoreAsset("geoip.db");
         auto geosite = FindCoreAsset("geosite.db");
@@ -836,7 +926,7 @@ namespace NekoRay {
         QJSONARRAY_ADD(routingRules, status->routingRules)
         auto routeObj = QJsonObject{
             {"rules", routingRules},
-            {"auto_detect_interface", NekoRay::dataStore->core_box_auto_detect_interface},
+            {"auto_detect_interface", dataStore->spmode_vpn},
             {
                 "geoip",
                 QJsonObject{
@@ -873,9 +963,10 @@ namespace NekoRay {
     }
 
     QString WriteVPNSingBoxConfig() {
+        // tun user rule
         auto match_out = NekoRay::dataStore->vpn_rule_white ? "nekoray-socks" : "direct";
         auto no_match_out = NekoRay::dataStore->vpn_rule_white ? "direct" : "nekoray-socks";
-        // user rule
+
         QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {
             auto arr = SplitLinesSkipSharp(process_name_rule);
@@ -883,6 +974,7 @@ namespace NekoRay {
                              {"process_name", QList2QJsonArray(arr)}};
             process_name_rule = "," + QJsonObject2QString(rule, false);
         }
+
         QString cidr_rule = dataStore->vpn_rule_cidr.trimmed();
         if (!cidr_rule.isEmpty()) {
             auto arr = SplitLinesSkipSharp(cidr_rule);
@@ -890,11 +982,9 @@ namespace NekoRay {
                              {"ip_cidr", QList2QJsonArray(arr)}};
             cidr_rule = "," + QJsonObject2QString(rule, false);
         }
-        // tun name
-        auto tun_name = "nekoray-tun";
-#ifdef Q_OS_MACOS
-        tun_name = "utun9";
-#endif
+
+        // TODO bypass ext core process path?
+
         // auth
         QString socks_user_pass;
         if (dataStore->inbound_auth->NeedAuth()) {
@@ -910,7 +1000,7 @@ namespace NekoRay {
                           .replace("%STACK%", Preset::SingBox::VpnImplementation.value(dataStore->vpn_implementation))
                           .replace("%PROCESS_NAME_RULE%", process_name_rule)
                           .replace("%CIDR_RULE%", cidr_rule)
-                          .replace("%TUN_NAME%", tun_name)
+                          .replace("%TUN_NAME%", genTunName())
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%SOCKS_USER_PASS%", socks_user_pass)
                           .replace("%FINAL_OUT%", no_match_out)

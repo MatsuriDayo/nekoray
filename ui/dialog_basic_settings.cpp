@@ -392,7 +392,6 @@ void DialogBasicSettings::on_core_settings_clicked() {
     w->setLayout(layout);
     //
     auto line = -1;
-    QCheckBox *core_box_auto_detect_interface;
     QCheckBox *core_box_enable_clash_api;
     MyLineEdit *core_box_clash_api;
     MyLineEdit *core_box_clash_api_secret;
@@ -412,12 +411,6 @@ void DialogBasicSettings::on_core_settings_clicked() {
     layout->addWidget(core_box_underlying_dns, line, 1);
     //
     if (IS_NEKO_BOX) {
-        auto core_box_auto_detect_interface_l = new QLabel("auto_detect_interface");
-        core_box_auto_detect_interface = new QCheckBox;
-        core_box_auto_detect_interface->setChecked(NekoRay::dataStore->core_box_auto_detect_interface);
-        layout->addWidget(core_box_auto_detect_interface_l, ++line, 0);
-        layout->addWidget(core_box_auto_detect_interface, line, 1);
-        //
         auto core_box_enable_clash_api_l = new QLabel("Enable Clash API");
         core_box_enable_clash_api = new QCheckBox;
         core_box_enable_clash_api->setChecked(NekoRay::dataStore->core_box_clash_api > 0);
@@ -460,7 +453,6 @@ void DialogBasicSettings::on_core_settings_clicked() {
     connect(box, &QDialogButtonBox::accepted, w, [=] {
         NekoRay::dataStore->core_box_underlying_dns = core_box_underlying_dns->text();
         if (IS_NEKO_BOX) {
-            NekoRay::dataStore->core_box_auto_detect_interface = core_box_auto_detect_interface->isChecked();
             NekoRay::dataStore->core_box_clash_api = core_box_clash_api->text().toInt() * (core_box_enable_clash_api->isChecked() ? 1 : -1);
             NekoRay::dataStore->core_box_clash_api_secret = core_box_clash_api_secret->text();
         } else {

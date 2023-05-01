@@ -31,16 +31,15 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     title_base = windowTitle();
 
     if (IS_NEKO_BOX) {
-        ui->domain_v2ray->setVisible(false);
         ui->outbound_domain_strategy->addItems(Preset::SingBox::DomainStrategy);
+        ui->domainStrategyCombo->addItems(Preset::SingBox::DomainStrategy);
     } else {
-        ui->domain_v2ray->setVisible(true);
         ui->outbound_domain_strategy->addItems({"AsIs", "UseIPv4", "UseIPv6", "PreferIPv4", "PreferIPv6"});
+        ui->domainStrategyCombo->addItems({"AsIs", "IPIfNonMatch", "IPOnDemand"});
     }
     //
     ui->sniffing_mode->setCurrentIndex(NekoRay::dataStore->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(NekoRay::dataStore->outbound_domain_strategy);
-    ui->domainMatcherCombo->setCurrentIndex(NekoRay::dataStore->domain_matcher);
     ui->domainStrategyCombo->setCurrentText(NekoRay::dataStore->domain_strategy);
     ui->dns_routing->setChecked(NekoRay::dataStore->dns_routing);
     ui->dns_remote->setText(NekoRay::dataStore->remote_dns);
@@ -88,7 +87,6 @@ DialogManageRoutes::~DialogManageRoutes() {
 
 void DialogManageRoutes::accept() {
     NekoRay::dataStore->sniffing_mode = ui->sniffing_mode->currentIndex();
-    NekoRay::dataStore->domain_matcher = ui->domainMatcherCombo->currentIndex();
     NekoRay::dataStore->domain_strategy = ui->domainStrategyCombo->currentText();
     NekoRay::dataStore->outbound_domain_strategy = ui->outbound_domain_strategy->currentText();
     NekoRay::dataStore->dns_routing = ui->dns_routing->isChecked();

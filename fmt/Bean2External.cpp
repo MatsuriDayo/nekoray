@@ -20,38 +20,50 @@
     auto TempFile = QFileInfo(f).absoluteFilePath();
 
 namespace NekoRay::fmt {
+    // -1: Cannot use this config
     // 0: Internal
     // 1: Mapping External
     // 2: Direct External
 
-    int NaiveBean::NeedExternal(bool isFirstProfile, bool isVPN) {
-        if (isFirstProfile && !isVPN) {
+    int NaiveBean::NeedExternal(bool isFirstProfile) {
+        if (isFirstProfile) {
+            if (dataStore->spmode_vpn) {
+                return 1;
+            }
             return 2;
         }
         return 1;
     }
 
-    int HysteriaBean::NeedExternal(bool isFirstProfile, bool isVPN) {
+    int HysteriaBean::NeedExternal(bool isFirstProfile) {
+        auto hysteriaCore = [=] {
+            if (isFirstProfile) {
+                if (dataStore->spmode_vpn && protocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
+                    return 1;
+                }
+                return 2;
+            } else {
+                if (protocol == hysteria_protocol_facktcp || !hopPort.trimmed().isEmpty()) {
+                    return -1;
+                }
+            }
+            return 1;
+        };
+
         if (IS_NEKO_BOX) {
             if (protocol == hysteria_protocol_udp && hopPort.trimmed().isEmpty()) {
                 // sing-box support
                 return 0;
             } else {
                 // hysteria core support
-                if (isFirstProfile && !isVPN) {
-                    return 2;
-                }
-                return 1;
+                return hysteriaCore();
             }
         } else {
-            if (isFirstProfile && !isVPN) {
-                return 2;
-            }
-            return 1;
+            return hysteriaCore();
         }
     }
 
-    int CustomBean::NeedExternal(bool isFirstProfile, bool isVPN) {
+    int CustomBean::NeedExternal(bool isFirstProfile) {
         if (core == "internal" || core == "internal-full") return 0;
         return 1;
     }
@@ -99,8 +111,8 @@ namespace NekoRay::fmt {
 
         // determine server format
         auto is_direct = external_stat == 2;
-        auto sni2 = sni;
-        if (sni.isEmpty() && is_direct) sni2 = serverAddress;
+        auto sniGen = sni;
+        if (sni.isEmpty() && !IsIpAddress(serverAddress)) sniGen = serverAddress;
 
         auto server = serverAddress;
         if (!hopPort.trimmed().isEmpty()) {
@@ -130,7 +142,7 @@ namespace NekoRay::fmt {
         if (protocol == hysteria_protocol_facktcp) config["protocol"] = "faketcp";
         if (protocol == hysteria_protocol_wechat_video) config["protocol"] = "wechat-video";
 
-        if (!sni2.isEmpty()) config["server_name"] = sni2;
+        if (!sniGen.isEmpty()) config["server_name"] = sniGen;
         if (!alpn.isEmpty()) config["alpn"] = alpn;
 
         if (!caText.trimmed().isEmpty()) {

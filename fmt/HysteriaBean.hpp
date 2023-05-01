@@ -63,11 +63,11 @@ namespace NekoRay::fmt {
             return ::DisplayAddress(serverAddress, serverPort);
         }
 
-        QString DisplayCoreType() override { return NeedExternal(false, false) == 0 ? software_core_name : "Hysteria"; };
+        QString DisplayCoreType() override { return NeedExternal(false) == 0 ? software_core_name : "Hysteria"; };
 
         QString DisplayType() override { return "Hysteria"; };
 
-        int NeedExternal(bool isFirstProfile, bool isVPN) override;
+        int NeedExternal(bool isFirstProfile) override;
 
         ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) override;
 

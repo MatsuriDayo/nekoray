@@ -54,7 +54,8 @@ namespace NekoRay {
         int started_id = -1919;
         bool core_running = false;
         bool core_prepare_exit = false;
-        int running_spmode = NekoRay::SystemProxyMode::DISABLE;
+        bool spmode_vpn = false;
+        bool spmode_system_proxy = false;
         bool need_keep_vpn_off = false;
         QStringList ignoreConnTag = {};
 
@@ -104,7 +105,7 @@ namespace NekoRay {
         QString utlsFingerprint = "";
 
         // Remember
-        int remember_spmode = NekoRay::SystemProxyMode::DISABLE;
+        QStringList remember_spmode = {};
         int remember_id = -1919;
         bool remember_enable = false;
 
@@ -127,18 +128,17 @@ namespace NekoRay {
         QString domain_strategy = "AsIs";
         QString outbound_domain_strategy = "AsIs";
         int sniffing_mode = SniffingMode::FOR_ROUTING;
-        int domain_matcher = DomainMatcher::MPH;
         QString custom_route_global = "{\"rules\": []}";
         QString active_routing = "Default";
 
         // VPN
+        bool vpn_internal_tun = true;
         int vpn_implementation = 0;
         int vpn_mtu = 9000;
         bool vpn_ipv6 = false;
         bool vpn_hide_console = false;
         bool vpn_strict_route = false;
         bool vpn_rule_white = false;
-        bool vpn_already_admin = false; // not saved on Windows
         QString vpn_rule_process = "";
         QString vpn_rule_cidr = "";
 
@@ -149,7 +149,6 @@ namespace NekoRay {
         QString hotkey_system_proxy_menu = "";
 
         // Core
-        bool core_box_auto_detect_interface = true;
         int core_box_clash_api = -9090;
         QString core_box_clash_api_secret = "";
         QString core_box_underlying_dns = "";

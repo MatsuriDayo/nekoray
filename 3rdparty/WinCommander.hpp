@@ -28,10 +28,14 @@
 
 class WinCommander {
 public:
+    static const int SW_HIDE = 0;
+    static const int SW_NORMAL = 1;
+    static const int SW_SHOWMINIMIZED = 2;
+
     static uint runProcessElevated(const QString &path,
                                    const QStringList &parameters = QStringList(),
                                    const QString &workingDir = QString(),
-                                   bool hide = false, bool aWait = true);
+                                   int nShow = SW_SHOWMINIMIZED, bool aWait = true);
 };
 
 #endif // WINCOMMANDER_H

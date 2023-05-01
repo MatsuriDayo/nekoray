@@ -1,6 +1,6 @@
 #!/bin/bash
 
-sudo apt install fuse -y
+sudo apt-get install fuse -y
 
 cp -r linux64 nekoray.AppDir
 
@@ -25,7 +25,7 @@ chmod +x nekoray.AppDir/AppRun
 
 # build
 
-curl -L -O https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
+curl -fLSO https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
 ./appimagetool-x86_64.AppImage nekoray.AppDir
 

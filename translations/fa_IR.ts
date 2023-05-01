@@ -92,17 +92,9 @@
         <translation>استفاده از پروکسی زمانی که اشتراک را بروزرسانی می کنید</translation>
     </message>
     <message>
-        <source>Language</source>
-        <translation type="vanished">زبان</translation>
-    </message>
-    <message>
         <source>Security</source>
         <translatorcomment>امنیت security</translatorcomment>
         <translation>امنیت</translation>
-    </message>
-    <message>
-        <source>Insecure hint</source>
-        <translation type="vanished">اشاره ناامن</translation>
     </message>
     <message>
         <source>Statistics refresh rate</source>
@@ -358,10 +350,6 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <translation>تنظیمات شبکه (1%)</translation>
     </message>
     <message>
-        <source>Security Settings</source>
-        <translation type="vanished">تنظیمات امنیت</translation>
-    </message>
-    <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -504,14 +492,6 @@ These settings can be changed later.</source>
         <translation>غیرفعال کردن</translation>
     </message>
     <message>
-        <source>The sniffing result is used for routing</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The sniffing result is used for destination</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remote DNS</source>
         <translation type="unfinished"></translation>
     </message>
@@ -522,14 +502,6 @@ These settings can be changed later.</source>
     <message>
         <source>Enable DNS Routing</source>
         <translation>فعال کردن مسیریابی DNS</translation>
-    </message>
-    <message>
-        <source>V2Ray Domain Strategy</source>
-        <translation>استراتژی دامنه</translation>
-    </message>
-    <message>
-        <source>Matcher</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Block</source>
@@ -608,15 +580,27 @@ These settings can be changed later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Query Strategy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Remote</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Inbound &amp; Outbound Domain Strategy</source>
+        <source>DNS Query Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Domain Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Server Address Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sniff result for routing</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Sniff result for destination</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -682,11 +666,12 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
         <translation type="unfinished">لغو کردن</translation>
     </message>
     <message>
-        <source>Don&apos;t ask for privilege elevation</source>
+        <source>Internal Tun</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Already Admin</source>
+        <source>Add a tun inbound to the profile startup, instead of using two processes.
+This needs to be run NekoBox with administrator privileges.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1337,14 +1322,6 @@ Split by line.</source>
         <translation>پاک کردن</translation>
     </message>
     <message>
-        <source>End</source>
-        <translation type="vanished">پایان</translation>
-    </message>
-    <message>
-        <source>Active</source>
-        <translation type="vanished">فعال</translation>
-    </message>
-    <message>
         <source>Start: %1
 End: %2</source>
         <translation type="unfinished"></translation>
@@ -1374,10 +1351,6 @@ End: %2</source>
         <translation>اغاز پروفایل %1</translation>
     </message>
     <message>
-        <source>Profile is insecure: %1</source>
-        <translation type="vanished">پروفایل ناامن می باشد: %1</translation>
-    </message>
-    <message>
         <source>Stopping profile %1</source>
         <translation>متوقف کردن پروفایل %1</translation>
     </message>
@@ -1405,13 +1378,13 @@ End: %2</source>
         <source>Restart nekoray to take effect.</source>
         <translation type="unfinished">برای اعمال تغییرات nekoray را مجددا راه اندازی کنید.</translation>
     </message>
+    <message>
+        <source>Please run NekoBox as admin</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
-    <message>
-        <source>Remove</source>
-        <translation type="vanished">حذف کردن</translation>
-    </message>
     <message>
         <source>Confirmation</source>
         <translation>تائیدیه</translation>

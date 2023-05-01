@@ -16,14 +16,6 @@ namespace NekoRay {
         };
     }
 
-    namespace SystemProxyMode {
-        enum SystemProxyMode {
-            DISABLE,
-            SYSTEM_PROXY,
-            VPN,
-        };
-    }
-
     namespace CoreType {
         enum CoreType {
             V2RAY,

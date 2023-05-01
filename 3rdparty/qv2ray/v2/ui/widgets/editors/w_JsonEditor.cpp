@@ -40,6 +40,11 @@ QJsonObject JsonEditor::OpenEditor() {
     auto string = jsonEditor->toPlainText();
 
     while (resultCode == QDialog::Accepted && !VerifyJsonString(string).isEmpty()) {
+        if (string.isEmpty()) {
+            resultCode = QDialog::Accepted;
+            final = {};
+            break;
+        }
         QvMessageBoxWarn(this, tr("Json Contains Syntax Errors"),
                          tr("You must correct these errors before continuing."));
         resultCode = this->exec();

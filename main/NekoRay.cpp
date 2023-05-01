@@ -30,7 +30,6 @@ namespace NekoRay {
         _add(new configItem("remote_dns_strategy", &remote_dns_strategy, itemType::string));
         _add(new configItem("direct_dns", &direct_dns, itemType::string));
         _add(new configItem("direct_dns_strategy", &direct_dns_strategy, itemType::string));
-        _add(new configItem("domain_matcher", &domain_matcher, itemType::integer));
         _add(new configItem("domain_strategy", &domain_strategy, itemType::string));
         _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));
         _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
@@ -46,7 +45,7 @@ namespace NekoRay {
         _add(new configItem("remember_id", &remember_id, itemType::integer));
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
         _add(new configItem("language", &language, itemType::integer));
-        _add(new configItem("spmode", &remember_spmode, itemType::integer));
+        _add(new configItem("spmode2", &remember_spmode, itemType::stringList));
         _add(new configItem("skip_cert", &skip_cert, itemType::boolean));
         _add(new configItem("hk_mw", &hotkey_mainwindow, itemType::string));
         _add(new configItem("hk_group", &hotkey_group, itemType::string));
@@ -74,14 +73,13 @@ namespace NekoRay {
         _add(new configItem("max_log_line", &max_log_line, itemType::integer));
         _add(new configItem("splitter_state", &splitter_state, itemType::string));
         _add(new configItem("utlsFingerprint", &utlsFingerprint, itemType::string));
-        _add(new configItem("core_box_auto_detect_interface", &core_box_auto_detect_interface, itemType::boolean));
         _add(new configItem("core_box_clash_api", &core_box_clash_api, itemType::integer));
         _add(new configItem("core_box_clash_api_secret", &core_box_clash_api_secret, itemType::string));
         _add(new configItem("core_box_underlying_dns", &core_box_underlying_dns, itemType::string));
         _add(new configItem("core_ray_direct_dns", &core_ray_direct_dns, itemType::boolean));
-#ifndef Q_OS_WIN
+        _add(new configItem("vpn_internal_tun", &vpn_internal_tun, itemType::boolean));
+#ifdef Q_OS_WIN
         _add(new configItem("core_ray_windows_disable_auto_interface", &core_ray_windows_disable_auto_interface, itemType::boolean));
-        _add(new configItem("vpn_already_admin", &vpn_already_admin, itemType::boolean));
 #endif
     }
 

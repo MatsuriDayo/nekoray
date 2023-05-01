@@ -14,5 +14,6 @@ namespace NekoRay {
 } // namespace NekoRay
 
 #define IS_NEKO_BOX (NekoRay::coreType == NekoRay::CoreType::SING_BOX)
+#define IS_NEKO_BOX_INTERNAL_TUN (IS_NEKO_BOX && NekoRay::dataStore->vpn_internal_tun)
 #define ROUTES_PREFIX_NAME QString(IS_NEKO_BOX ? "routes_box" : "routes")
 #define ROUTES_PREFIX QString(ROUTES_PREFIX_NAME + "/")
