@@ -18,6 +18,8 @@
 
 1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
 2. Scoop extras: `scoop install nekoray`
+3. Homebrew (unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
+4. APT (unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
 
 ## تغییرات برنامه و کانال تلگرام / Changelog & Telegram channel
 
@@ -88,3 +90,4 @@ XMR
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
+- [AppImageKit](https://github.com/AppImage/AppImageKit)
