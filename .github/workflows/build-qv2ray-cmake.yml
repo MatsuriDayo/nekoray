@@ -176,7 +176,7 @@ jobs:
           mv windows64 nekoray
           zip -r $version_standalone-windows64.zip nekoray
           rm -rf nekoray
-      - name: Pack debian
+      - name: Pack Debian
         if: github.event.inputs.publish != 'y'
         run: |
           source libs/deploy_common.sh
@@ -186,9 +186,24 @@ jobs:
           cp -r public_res/* windows64
           rm -rf public_res *.pdb
           ####
-          sudo bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
+          bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
           mv nekoray.deb $version_standalone-debian-x64.deb
           sudo rm -rf nekoray
+      - name: Pack AppImage
+        run: |
+          source libs/deploy_common.sh
+          find . -name artifacts.tgz | xargs -n1 tar xvzf
+          cd deployment
+          cp -r public_res/* linux64
+          rm -rf public_res *.pdb
+          ####
+          bash ../libs/package_appimage.sh
+          mv nekoray-x86_64.AppImage $version_standalone-linux-x64.AppImage
+      - name: Clean Up
+        run: |
+          cd deployment
+          rm -rf linux64
+          rm -rf windows64
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:

@@ -642,7 +642,9 @@ void MainWindow::on_menu_exit_triggered() {
         QDir::setCurrent(QApplication::applicationDirPath());
         auto arguments = NekoRay::dataStore->argv;
         if (arguments.length() > 0) arguments.removeFirst();
-        QProcess::startDetached(qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1" ? "./launcher" : QApplication::applicationFilePath(), arguments);
+        auto isLauncher = qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1";
+        if (isLauncher) arguments.prepend("--");
+        QProcess::startDetached(isLauncher ? "./launcher" : QApplication::applicationFilePath(), arguments);
     }
     tray->hide();
     QCoreApplication::quit();

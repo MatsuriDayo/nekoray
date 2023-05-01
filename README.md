@@ -26,6 +26,8 @@ Support Windows / Linux / ~~macOS amd64~~ out of the box now.
 
 1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
 2. Scoop extras: `scoop install nekoray`
+3. Homebrew (非官方发布 / unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
+4. APT (非官方发布 / unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
 
 ## 更改记录 & 发布频道 / Changelog & Telegram channel
 
@@ -108,3 +110,4 @@ XMR
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
+- [AppImageKit](https://github.com/AppImage/AppImageKit)
