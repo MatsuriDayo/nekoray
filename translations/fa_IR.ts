@@ -834,20 +834,8 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>پلاگین</translation>
     </message>
     <message>
-        <source>3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>version</source>
-        <translation type="unfinished"></translation>
+        <source>Version</source>
+        <translation type="unfinished">نسخه</translation>
     </message>
 </context>
 <context>

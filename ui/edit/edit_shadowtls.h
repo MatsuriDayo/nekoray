@@ -1,12 +1,15 @@
-#ifndef EDIT_SHADOWTLS_H
-#define EDIT_SHADOWTLS_H
+#pragma once
+// #ifndef EDIT_SHADOWTLS_H
+// #define EDIT_SHADOWTLS_H
 
 #include <QWidget>
 #include "profile_editor.h"
 
+QT_BEGIN_NAMESPACE
 namespace Ui {
     class EditShadowTLS;
 }
+QT_END_NAMESPACE
 
 class EditShadowTLS : public QWidget, public ProfileEditor {
     Q_OBJECT
@@ -25,4 +28,4 @@ private:
     QSharedPointer<NekoRay::ProxyEntity> ent;
 };
 
-#endif // EDIT_SHADOWTLS_H
+//#endif // EDIT_SHADOWTLS_H

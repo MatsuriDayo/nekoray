@@ -14,10 +14,10 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label_5">
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Password</string>
+      <string>Version</string>
      </property>
     </widget>
    </item>
@@ -28,25 +28,25 @@
     <widget class="QComboBox" name="shadowTLSVersion">
      <item>
       <property name="text">
-       <string>3</string>
+       <string notr="true">3</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>2</string>
+       <string notr="true">2</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>1</string>
+       <string notr="true">1</string>
       </property>
      </item>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_5">
      <property name="text">
-      <string>version</string>
+      <string>Password</string>
      </property>
     </widget>
    </item>
