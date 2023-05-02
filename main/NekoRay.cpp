@@ -9,6 +9,12 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#ifdef Q_OS_WIN
+#include "sys/windows/guihelper.h"
+#else
+#include <unistd.h>
+#endif
+
 namespace NekoRay {
 
     DataStore *dataStore = new DataStore();
@@ -370,5 +376,21 @@ namespace NekoRay {
         }
         return {};
     }
+
+    short isAdminCache = -1;
+
+    bool isAdmin() {
+        if (isAdminCache >= 0) return isAdminCache;
+
+        auto admin = NekoRay::dataStore->flag_linux_run_core_as_admin;
+#ifdef Q_OS_WIN
+        admin = Windows_IsInAdmin();
+#else
+        admin |= geteuid() == 0;
+#endif
+
+        isAdminCache = admin;
+        return admin;
+    };
 
 } // namespace NekoRay

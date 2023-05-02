@@ -19,7 +19,7 @@ namespace NekoRay::sys {
         if (started) return;
         started = true;
 
-        if (show_log) {
+        if (managed) {
             connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
                 MW_show_log_ext_vt100(readAllStandardOutput().trimmed());
             });
@@ -30,7 +30,7 @@ namespace NekoRay::sys {
                 if (!killed) {
                     crashed = true;
                     MW_show_log_ext(tag, "errorOccurred:" + errorString());
-                    if (managed) MW_dialog_message("ExternalProcess", "Crashed");
+                    MW_dialog_message("ExternalProcess", "Crashed");
                 }
             });
             connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
@@ -41,7 +41,7 @@ namespace NekoRay::sys {
                         crashed = true;
                         MW_show_log_ext(tag, "[Error] Program exited accidentally: " + errorString());
                         Kill();
-                        if (managed) MW_dialog_message("ExternalProcess", "Crashed");
+                        MW_dialog_message("ExternalProcess", "Crashed");
                     }
                 }
             });
@@ -49,7 +49,18 @@ namespace NekoRay::sys {
         }
 
         QProcess::setEnvironment(env);
+
+        if (NekoRay::dataStore->flag_linux_run_core_as_admin && dynamic_cast<CoreProcess *>(this)) {
+            arguments.prepend(program);
+            arguments.prepend(QApplication::applicationDirPath() + "/linux_pkexec.sh");
+            program = "bash";
+        }
+
+        QProcess::setEnvironment(env);
         QProcess::start(program, arguments);
+
+        // waitForStarted();
+        // pid = processId();
     }
 
     void ExternalProcess::Kill() {
@@ -64,7 +75,6 @@ namespace NekoRay::sys {
 
     CoreProcess::CoreProcess(const QString &core_path, const QStringList &args) : ExternalProcess() {
         ExternalProcess::managed = false;
-        ExternalProcess::show_log = false;
         ExternalProcess::program = core_path;
         ExternalProcess::arguments = args;
 

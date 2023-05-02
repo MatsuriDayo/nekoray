@@ -9,9 +9,9 @@ namespace NekoRay::sys {
         QString program;
         QStringList arguments;
         QStringList env;
+        qint64 pid = 0;
 
         bool managed = true; // MW_dialog_message
-        bool show_log = true;
 
         ExternalProcess();
         ~ExternalProcess();

@@ -71,6 +71,7 @@ namespace NekoRay {
         bool flag_many = false;
         bool flag_tray = false;
         bool flag_debug = false;
+        bool flag_linux_run_core_as_admin = false;
 
         // Saved
 

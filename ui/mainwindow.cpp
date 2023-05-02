@@ -640,6 +640,7 @@ void MainWindow::on_menu_exit_triggered() {
         QProcess::startDetached("./updater", QStringList{});
     } else if (exit_reason == 2 || exit_reason == 3) {
         QDir::setCurrent(QApplication::applicationDirPath());
+
         auto arguments = NekoRay::dataStore->argv;
         if (arguments.length() > 0) arguments.removeFirst();
         auto isLauncher = qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1";
@@ -649,6 +650,9 @@ void MainWindow::on_menu_exit_triggered() {
         if (exit_reason == 3) { // restart as admin
 #ifdef Q_OS_WIN
             WinCommander::runProcessElevated(program, arguments, "", WinCommander::SW_NORMAL, false);
+#else
+            arguments << "-flag_linux_run_core_as_admin";
+            QProcess::startDetached(program, arguments);
 #endif
         } else {
             QProcess::startDetached(program, arguments);
@@ -701,8 +705,15 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     if (enable != NekoRay::dataStore->spmode_vpn) {
         if (enable) {
             if (IS_NEKO_BOX_INTERNAL_TUN) {
+                bool requestPermission = false;
 #ifdef Q_OS_WIN
                 if (!Windows_IsInAdmin()) {
+                    requestPermission = true;
+                }
+#else
+                requestPermission = !NekoRay::isAdmin();
+#endif
+                if (requestPermission) {
                     auto n = QMessageBox::warning(GetMessageBoxParent(), software_name, tr("Please run NekoBox as admin"), QMessageBox::Yes | QMessageBox::No);
                     if (n == QMessageBox::Yes) {
                         this->exit_reason = 3;
@@ -710,8 +721,6 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                     }
                     neko_set_spmode_FAILED
                 }
-#endif
-                // TODO check permission for Linux
             } else {
                 if (NekoRay::dataStore->need_keep_vpn_off) {
                     MessageBoxWarning(software_name, tr("Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart."));
@@ -781,9 +790,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
-#ifdef Q_OS_WIN
-        if (!isTray && Windows_IsInAdmin()) tt << "[Admin]";
-#endif
+        if (!isTray && NekoRay::isAdmin()) tt << "[Admin]";
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
         if (NekoRay::dataStore->spmode_vpn) tt << "[VPN]";

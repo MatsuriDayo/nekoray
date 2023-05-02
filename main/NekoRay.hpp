@@ -11,6 +11,9 @@ namespace NekoRay {
     inline int coreType = NekoRay::CoreType::V2RAY;
 
     QString FindCoreAsset(const QString &name);
+
+    bool isAdmin();
+
 } // namespace NekoRay
 
 #define IS_NEKO_BOX (NekoRay::coreType == NekoRay::CoreType::SING_BOX)
