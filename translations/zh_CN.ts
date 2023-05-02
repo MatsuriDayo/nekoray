@@ -835,6 +835,22 @@ This needs to be run NekoBox with administrator privileges.</source>
         <source>Plugin</source>
         <translation>插件</translation>
     </message>
+    <message>
+        <source>3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>version</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditSocksHttp</name>

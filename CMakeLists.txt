@@ -217,6 +217,10 @@ set(PROJECT_SOURCES
         ui/edit/edit_hysteria.cpp
         ui/edit/edit_hysteria.ui
 
+        ui/edit/edit_shadowtls.h
+        ui/edit/edit_shadowtls.cpp
+        ui/edit/edit_shadowtls.ui
+
         ui/edit/edit_custom.h
         ui/edit/edit_custom.cpp
         ui/edit/edit_custom.ui

@@ -18,6 +18,8 @@ namespace NekoRay {
 
         class HysteriaBean;
 
+        class ShadowTLSBean;
+
         class CustomBean;
 
         class ChainBean;
@@ -63,6 +65,10 @@ namespace NekoRay {
 
         [[nodiscard]] fmt::NaiveBean *NaiveBean() const {
             return (fmt::NaiveBean *) bean.get();
+        };
+
+        [[nodiscard]] fmt::ShadowTLSBean *ShadowTLSBean() const {
+            return (fmt::ShadowTLSBean *) bean.get();
         };
 
         [[nodiscard]] fmt::HysteriaBean *HysteriaBean() const {

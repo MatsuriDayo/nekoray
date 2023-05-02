@@ -87,6 +87,8 @@ namespace NekoRay {
             bean = new fmt::NaiveBean();
         } else if (type == "hysteria") {
             bean = new fmt::HysteriaBean();
+        } else if (type == "shadowtls") {
+            bean = new fmt::ShadowTLSBean();
         } else if (type == "custom") {
             bean = new fmt::CustomBean();
         } else {
