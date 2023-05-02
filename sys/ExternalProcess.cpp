@@ -52,15 +52,12 @@ namespace NekoRay::sys {
 
         if (NekoRay::dataStore->flag_linux_run_core_as_admin && dynamic_cast<CoreProcess *>(this)) {
             arguments.prepend(program);
-            arguments.prepend(QApplication::applicationDirPath() + "/linux_pkexec.sh");
-            program = "bash";
+            arguments.prepend("--keep-cwd");
+            program = "pkexec";
         }
 
         QProcess::setEnvironment(env);
         QProcess::start(program, arguments);
-
-        // waitForStarted();
-        // pid = processId();
     }
 
     void ExternalProcess::Kill() {
