@@ -79,6 +79,8 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     ui->blockIPLayout->addWidget(blockIPTxt, 0, 0);
     //
     REFRESH_ACTIVE_ROUTING(NekoRay::dataStore->active_routing, NekoRay::dataStore->routing)
+
+    ADD_ASTERISK(this)
 }
 
 DialogManageRoutes::~DialogManageRoutes() {

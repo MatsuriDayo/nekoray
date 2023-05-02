@@ -691,7 +691,7 @@ void MainWindow::neko_set_spmode_system_proxy(bool enable, bool save) {
 
     if (save) {
         NekoRay::dataStore->remember_spmode.removeAll("system_proxy");
-        if (enable) {
+        if (enable && NekoRay::dataStore->remember_enable) {
             NekoRay::dataStore->remember_spmode.append("system_proxy");
         }
         NekoRay::dataStore->Save();
@@ -743,7 +743,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
 
     if (save) {
         NekoRay::dataStore->remember_spmode.removeAll("vpn");
-        if (enable) {
+        if (enable && NekoRay::dataStore->remember_enable) {
             NekoRay::dataStore->remember_spmode.append("vpn");
         }
         NekoRay::dataStore->Save();

@@ -21,6 +21,15 @@ namespace NekoRay::fmt {
                 if (!path.isEmpty()) transport["service_name"] = path;
             }
             outbound->insert("transport", transport);
+        } else if (header_type == "http") {
+            // TCP + headerType
+            QJsonObject transport{
+                {"type", "http"},
+                {"method", "GET"},
+                {"path", path},
+                {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
+            };
+            outbound->insert("transport", transport);
         }
 
         // 对应字段 tls

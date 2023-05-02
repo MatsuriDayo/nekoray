@@ -873,7 +873,7 @@ namespace NekoRay {
         // built-in rules
         status->routingRules += QJsonObject{
             {"network", "udp"},
-            {"port", QJsonArray{135, 137, 138, 5353}},
+            {"port", QJsonArray{135, 137, 138, 139, 5353}},
             {"outbound", "block"},
         };
         status->routingRules += QJsonObject{

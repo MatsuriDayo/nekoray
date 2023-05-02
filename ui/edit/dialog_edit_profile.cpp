@@ -75,8 +75,6 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         }
         // 传输设置 for NekoBox
         if (IS_NEKO_BOX) {
-            ui->header_type->setVisible(false);
-            ui->header_type_l->setVisible(false);
             if (!ui->utlsFingerprint->count()) ui->utlsFingerprint->addItems(Preset::SingBox::UtlsFingerPrint);
         } else {
             if (!ui->utlsFingerprint->count()) ui->utlsFingerprint->addItems(Preset::V2Ray::UtlsFingerPrint);
