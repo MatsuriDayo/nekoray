@@ -841,14 +841,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <source>Plugin</source>
         <translation>插件</translation>
     </message>
-    <message>
-        <source>false</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>true</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>EditSocksHttp</name>
