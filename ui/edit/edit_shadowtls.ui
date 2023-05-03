@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditShadowSocks</class>
- <widget class="QWidget" name="EditShadowSocks">
+ <class>EditShadowTLS</class>
+ <widget class="QWidget" name="EditShadowTLS">
   <property name="geometry">
    <rect>
     <x>0</x>
