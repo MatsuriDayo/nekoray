@@ -24,7 +24,7 @@ bool EditShadowTLS::onEnd() {
     auto bean = this->ent->ShadowTLSBean();
 
     bean->password = ui->password->text();
-    bean->shadowTLSVersion = ui->shadowTLSVersion->currentText().toInt();
+    bean->shadowTLSVersion = ui->shadowTLSVersion->currentText();
 
     return true;
 }

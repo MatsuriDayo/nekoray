@@ -180,8 +180,8 @@ namespace NekoRay::fmt {
             {"server", serverAddress},
             {"server_port", serverPort},
             {"version", shadowTLSVersion},
-            {"password", password}};
-
+            {"password", password},
+        };
         stream->BuildStreamSettingsSingBox(&outbound);
         result.outbound = outbound;
         return result;

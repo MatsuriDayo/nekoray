@@ -28,4 +28,4 @@ private:
     QSharedPointer<NekoRay::ProxyEntity> ent;
 };
 
-//#endif // EDIT_SHADOWTLS_H
+// #endif // EDIT_SHADOWTLS_H
