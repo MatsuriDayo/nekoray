@@ -151,6 +151,7 @@ namespace NekoRay::fmt {
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"insecure", allowInsecure},
+            {"server_name", sni},
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};
 
@@ -158,6 +159,7 @@ namespace NekoRay::fmt {
             {"type", "hysteria"},
             {"server", serverAddress},
             {"server_port", serverPort},
+            {"obfs", obfsPassword},
             {"disable_mtu_discovery", disableMtuDiscovery},
             {"recv_window", streamReceiveWindow},
             {"recv_window_conn", connectionReceiveWindow},
