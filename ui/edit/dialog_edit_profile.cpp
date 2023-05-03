@@ -101,6 +101,15 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
                 ui->reality_pbk_l->hide();
                 ui->reality_sid_l->hide();
             }
+            if (type == "shadowtls") {
+                ui->reality_pbk->hide();
+                ui->reality_sid->hide();
+                ui->reality_pbk_l->hide();
+                ui->reality_sid_l->hide();
+                ui->network_box->hide();
+                ui->network->hide();
+                ui->packet_encoding->hide();
+            }
         } else {
             ui->security_box->setVisible(false);
             ui->reality_box->setVisible(false);
