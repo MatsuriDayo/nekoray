@@ -124,7 +124,9 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vless");
         LOAD_TYPE("naive");
         LOAD_TYPE("hysteria");
-        LOAD_TYPE("shadowtls");
+        if (IS_NEKO_BOX) {
+            LOAD_TYPE("shadowtls");
+        };
         ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
         ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
