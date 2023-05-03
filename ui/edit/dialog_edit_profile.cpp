@@ -300,7 +300,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
             ui->network->setVisible(false);
             ui->network_box->setVisible(false);
         }
-        if (type == "vmess" || type == "vless" || type == "trojan" || type == "http") {
+        if (type == "vmess" || type == "vless" || type == "trojan" || type == "http" || type == "shadowtls") {
             ui->security->setVisible(true);
             ui->security_l->setVisible(true);
         } else {
