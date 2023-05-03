@@ -184,6 +184,14 @@ namespace NekoRay::fmt {
             {"version", shadowTLSVersion},
             {"password", password},
         };
+        QJsonObject tls{
+            {"enabled", true},
+            {"insecure", false},
+            {"server_name", serverAddress},
+            {"alpn", QJsonArray{shadowTLSVersion}},
+        };
+        outbound["tls"] = tls;
+
         stream->BuildStreamSettingsSingBox(&outbound);
         result.outbound = outbound;
         return result;

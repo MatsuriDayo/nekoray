@@ -837,7 +837,18 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Version</source>
+        <translation type="obsolete">版本</translation>
+    </message>
+</context>
+<context>
+    <name>EditShadowTLS</name>
+    <message>
+        <source>Version</source>
         <translation type="unfinished">版本</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation type="unfinished">密码</translation>
     </message>
 </context>
 <context>
