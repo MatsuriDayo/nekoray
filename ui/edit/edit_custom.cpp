@@ -26,10 +26,10 @@ EditCustom::~EditCustom() {
 }
 
 #define SAVE_CUSTOM_BEAN                            \
-    P_SAVE_COMBO_STR(core)                          \
+    P_SAVE_COMBO_STRING(core)                          \
     bean->command = ui->command->text().split(" "); \
     P_SAVE_STRING_QTEXTEDIT(config_simple)          \
-    P_SAVE_COMBO_STR(config_suffix)                 \
+    P_SAVE_COMBO_STRING(config_suffix)                 \
     P_SAVE_INT(mapping_port)                        \
     P_SAVE_INT(socks_port)
 
@@ -60,10 +60,10 @@ void EditCustom::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
     }
 
     // load core ui
-    P_LOAD_COMBO_STR(core)
+    P_LOAD_COMBO_STRING(core)
     ui->command->setText(bean->command.join(" "));
     P_LOAD_STRING(config_simple)
-    P_LOAD_COMBO_STR(config_suffix)
+    P_LOAD_COMBO_STRING(config_suffix)
     P_LOAD_INT(mapping_port)
     P_LOAD_INT(socks_port)
 

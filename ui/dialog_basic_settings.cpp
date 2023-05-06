@@ -59,23 +59,25 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Common
 
     if (IS_NEKO_BOX) {
-        ui->groupBox_mux->hide();
         ui->groupBox_http->hide();
         ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
-        ui->hlayout_l2->addWidget(ui->groupBox_log);
+        ui->hlayout_l2->addWidget(ui->groupbox_custom_inbound);
         ui->log_level->addItems(QString("trace debug info warn error fatal panic").split(" "));
+        ui->mux_protocol->addItems({"", "h2mux", "smux", "yamux"});
     } else {
         ui->log_level->addItems({"debug", "info", "warning", "none"});
+        ui->mux_protocol->addItems({"", "mux.cool"});
     }
 
     refresh_auth();
 
-    ui->socks_ip->setText(NekoRay::dataStore->inbound_address);
-    ui->log_level->setCurrentText(NekoRay::dataStore->log_level);
+    D_LOAD_STRING(inbound_address)
+    D_LOAD_COMBO_STRING(log_level)
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
-    D_LOAD_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_LOAD_INT(mux_concurrency)
+    D_LOAD_COMBO_STRING(mux_protocol)
     D_LOAD_INT(test_concurrent)
     D_LOAD_STRING(test_url)
 
@@ -260,12 +262,13 @@ DialogBasicSettings::~DialogBasicSettings() {
 void DialogBasicSettings::accept() {
     // Common
 
-    NekoRay::dataStore->inbound_address = ui->socks_ip->text();
-    NekoRay::dataStore->log_level = ui->log_level->currentText();
+    D_SAVE_STRING(inbound_address)
+    D_SAVE_COMBO_STRING(log_level)
     NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
-    D_SAVE_INT_ENABLE(mux_cool, mux_cool_enable)
+    D_SAVE_INT(mux_concurrency)
+    D_SAVE_COMBO_STRING(mux_protocol)
     D_SAVE_INT(test_concurrent)
     D_SAVE_STRING(test_url)
 

@@ -39,7 +39,8 @@ namespace NekoRay {
         _add(new configItem("domain_strategy", &domain_strategy, itemType::string));
         _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));
         _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
-        _add(new configItem("mux_cool", &mux_cool, itemType::integer));
+        _add(new configItem("mux_protocol", &mux_protocol, itemType::string));
+        _add(new configItem("mux_concurrency", &mux_concurrency, itemType::integer));
         _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
         _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
         _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));

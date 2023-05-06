@@ -19,7 +19,7 @@ void EditNaive::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
 
     P_LOAD_STRING(username);
     P_LOAD_STRING(password);
-    P_LOAD_COMBO_STR(protocol);
+    P_LOAD_COMBO_STRING(protocol);
     P_C_LOAD_STRING(extra_headers);
     P_LOAD_STRING(sni);
     P_C_LOAD_STRING(certificate);
@@ -31,7 +31,7 @@ bool EditNaive::onEnd() {
 
     P_SAVE_STRING(username);
     P_SAVE_STRING(password);
-    P_SAVE_COMBO_STR(protocol);
+    P_SAVE_COMBO_STRING(protocol);
     P_C_SAVE_STRING(extra_headers);
     P_SAVE_STRING(sni);
     P_C_SAVE_STRING(certificate);

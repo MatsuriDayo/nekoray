@@ -82,7 +82,8 @@ namespace NekoRay {
         int traffic_loop_interval = 500;
         bool connection_statistics = false;
         int current_group = 0; // group id
-        int mux_cool = -8;
+        QString mux_protocol = "";
+        int mux_concurrency = 8;
         QString theme = "0";
         QString v2ray_asset_dir = "";
         int language = 0;

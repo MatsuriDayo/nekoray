@@ -546,6 +546,7 @@ namespace NekoRay {
             // Outbound
 
             QJsonObject outbound;
+            auto stream = GetStreamSettings(ent->bean.data());
 
             if (thisExternalStat > 0) {
                 const auto extR = ent->bean->BuildExternal(ext_mapping_port, ext_socks_port, thisExternalStat);
@@ -601,31 +602,50 @@ namespace NekoRay {
             ent->traffic_data->tag = tagOut.toStdString();
             status->result->outboundStats += ent->traffic_data;
 
+            // mux common
+            auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless";
+            needMux &= !dataStore->mux_protocol.isEmpty() && dataStore->mux_concurrency > 0;
+
+            if (stream != nullptr) {
+                if (IS_NEKO_BOX) {
+                    if (stream->network == "grpc" || stream->network == "quic" || (stream->network == "http" && stream->security == "tls")) {
+                        needMux = false;
+                    }
+                } else {
+                    if (stream->network == "grpc" || stream->network == "quic") {
+                        needMux = false;
+                    }
+                }
+            }
+
+            // common
             if (IS_NEKO_BOX) {
                 // apply domain_strategy
                 outbound["domain_strategy"] = dataStore->outbound_domain_strategy;
-                // TODO apply mux
+                // apply mux
+                if (!muxApplied && needMux) {
+                    auto muxObj = QJsonObject{
+                        {"enabled", true},
+                        {"protocol", dataStore->mux_protocol},
+                        {"max_streams", dataStore->mux_concurrency},
+                    };
+                    outbound["multiplex"] = muxObj;
+                    muxApplied = true;
+                }
             } else {
+                // apply domain_strategy
                 if (!status->forTest) outbound["domainStrategy"] = dataStore->outbound_domain_strategy;
                 // apply mux
-                if (dataStore->mux_cool > 0 && !muxApplied) {
-                    // TODO refactor mux settings
-                    if (ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless") {
-                        auto muxObj = QJsonObject{
-                            {"enabled", true},
-                            {"concurrency", dataStore->mux_cool},
-                        };
-                        auto stream = GetStreamSettings(ent->bean.data());
-                        if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
-                            muxObj["packetEncoding"] = stream->packet_encoding;
-                        }
-                        if (stream != nullptr && stream->network == "grpc") {
-                            // ignore mux.cool for gRPC
-                        } else {
-                            outbound["mux"] = muxObj;
-                            muxApplied = true;
-                        }
+                if (!muxApplied && needMux) {
+                    auto muxObj = QJsonObject{
+                        {"enabled", true},
+                        {"concurrency", dataStore->mux_concurrency},
+                    };
+                    if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
+                        muxObj["packetEncoding"] = stream->packet_encoding;
                     }
+                    outbound["mux"] = muxObj;
+                    muxApplied = true;
                 }
             }
 

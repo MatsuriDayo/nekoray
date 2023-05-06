@@ -36,8 +36,10 @@
     ui->a->setText(Int2String(NekoRay::dataStore->a)); \
     ui->a->setValidator(QRegExpValidator_Number);
 #define D_SAVE_INT(a) NekoRay::dataStore->a = ui->a->text().toInt();
-#define P_LOAD_COMBO_STR(a) ui->a->setCurrentText(bean->a);
-#define P_SAVE_COMBO_STR(a) bean->a = ui->a->currentText();
+#define P_LOAD_COMBO_STRING(a) ui->a->setCurrentText(bean->a);
+#define P_SAVE_COMBO_STRING(a) bean->a = ui->a->currentText();
+#define D_LOAD_COMBO_STRING(a) ui->a->setCurrentText(NekoRay::dataStore->a);
+#define D_SAVE_COMBO_STRING(a) NekoRay::dataStore->a = ui->a->currentText();
 #define P_LOAD_COMBO_INT(a) ui->a->setCurrentIndex(bean->a);
 #define P_SAVE_COMBO_INT(a) bean->a = ui->a->currentIndex();
 #define D_LOAD_BOOL(a) ui->a->setChecked(NekoRay::dataStore->a);
