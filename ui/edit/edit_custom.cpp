@@ -26,10 +26,10 @@ EditCustom::~EditCustom() {
 }
 
 #define SAVE_CUSTOM_BEAN                            \
-    P_SAVE_COMBO_STRING(core)                          \
+    P_SAVE_COMBO_STRING(core)                       \
     bean->command = ui->command->text().split(" "); \
     P_SAVE_STRING_QTEXTEDIT(config_simple)          \
-    P_SAVE_COMBO_STRING(config_suffix)                 \
+    P_SAVE_COMBO_STRING(config_suffix)              \
     P_SAVE_INT(mapping_port)                        \
     P_SAVE_INT(socks_port)
 
