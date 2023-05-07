@@ -13,11 +13,24 @@ namespace NekoRay::fmt {
 
         if (network == "ws") {
             QJsonObject ws;
-            if (!path.isEmpty()) ws["path"] = path;
             if (!host.isEmpty()) ws["headers"] = QJsonObject{{"Host", host}};
+            // ws path & ed
+            auto pathWithoutEd = SubStrBefore(path, "?ed=");
+            if (!pathWithoutEd.isEmpty()) ws["path"] = pathWithoutEd;
+            if (pathWithoutEd != path) {
+                auto ed = SubStrAfter(path, "?ed=").toInt();
+                if (ed > 0) {
+                    ws["maxEarlyData"] = ed;
+                    ws["earlyDataHeaderName"] = "Sec-WebSocket-Protocol";
+                }
+            }
             if (ws_early_data_length > 0) {
                 ws["maxEarlyData"] = ws_early_data_length;
-                ws["earlyDataHeaderName"] = ws_early_data_name;
+                if (ws_early_data_name.isEmpty()) {
+                    ws["earlyDataHeaderName"] = "Sec-WebSocket-Protocol";
+                } else {
+                    ws["earlyDataHeaderName"] = ws_early_data_name;
+                }
             }
             streamSettings["wsSettings"] = ws;
         } else if (network == "http") {

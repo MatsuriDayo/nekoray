@@ -11,7 +11,6 @@ namespace NekoRay::sys {
         QStringList env;
 
         bool managed = true; // MW_dialog_message
-        bool show_log = true;
 
         ExternalProcess();
         ~ExternalProcess();

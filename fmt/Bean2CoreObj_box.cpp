@@ -8,11 +8,24 @@ namespace NekoRay::fmt {
         if (network != "tcp") {
             QJsonObject transport{{"type", network}};
             if (network == "ws") {
-                if (!path.isEmpty()) transport["path"] = path;
                 if (!host.isEmpty()) transport["headers"] = QJsonObject{{"Host", host}};
+                // ws path & ed
+                auto pathWithoutEd = SubStrBefore(path, "?ed=");
+                if (!pathWithoutEd.isEmpty()) transport["path"] = pathWithoutEd;
+                if (pathWithoutEd != path) {
+                    auto ed = SubStrAfter(path, "?ed=").toInt();
+                    if (ed > 0) {
+                        transport["max_early_data"] = ed;
+                        transport["early_data_header_name"] = "Sec-WebSocket-Protocol";
+                    }
+                }
                 if (ws_early_data_length > 0) {
                     transport["max_early_data"] = ws_early_data_length;
-                    transport["early_data_header_name"] = ws_early_data_name;
+                    if (ws_early_data_name.isEmpty()) {
+                        transport["early_data_header_name"] = "Sec-WebSocket-Protocol";
+                    } else {
+                        transport["early_data_header_name"] = ws_early_data_name;
+                    }
                 }
             } else if (network == "http") {
                 if (!path.isEmpty()) transport["path"] = path;
@@ -20,6 +33,15 @@ namespace NekoRay::fmt {
             } else if (network == "grpc") {
                 if (!path.isEmpty()) transport["service_name"] = path;
             }
+            outbound->insert("transport", transport);
+        } else if (header_type == "http") {
+            // TCP + headerType
+            QJsonObject transport{
+                {"type", "http"},
+                {"method", "GET"},
+                {"path", path},
+                {"headers", QJsonObject{{"Host", QList2QJsonArray(host.split(","))}}},
+            };
             outbound->insert("transport", transport);
         }
 
@@ -85,6 +107,7 @@ namespace NekoRay::fmt {
         outbound["server_port"] = serverPort;
         outbound["method"] = method;
         outbound["password"] = password;
+        outbound["udp_over_tcp"] = uot;
 
         if (!plugin.trimmed().isEmpty()) {
             outbound["plugin"] = SubStrBefore(plugin, ";");
@@ -141,6 +164,7 @@ namespace NekoRay::fmt {
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"insecure", allowInsecure},
+            {"server_name", sni},
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};
 
@@ -148,6 +172,7 @@ namespace NekoRay::fmt {
             {"type", "hysteria"},
             {"server", serverAddress},
             {"server_port", serverPort},
+            {"obfs", obfsPassword},
             {"disable_mtu_discovery", disableMtuDiscovery},
             {"recv_window", streamReceiveWindow},
             {"recv_window_conn", connectionReceiveWindow},

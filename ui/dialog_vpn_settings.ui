@@ -87,23 +87,9 @@
     <widget class="QGroupBox" name="horizontalGroupBox_2">
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QCheckBox" name="hide_console">
-        <property name="text">
-         <string>Hide Console</string>
-        </property>
-       </widget>
-      </item>
-      <item>
        <widget class="QCheckBox" name="vpn_ipv6">
         <property name="text">
          <string>VPN Enable IPv6</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="fake_dns">
-        <property name="text">
-         <string notr="true">FakeDNS</string>
         </property>
        </widget>
       </item>
@@ -115,12 +101,34 @@
        </widget>
       </item>
       <item>
-       <widget class="QCheckBox" name="vpn_already_admin">
+       <widget class="QCheckBox" name="fake_dns">
+        <property name="text">
+         <string notr="true">FakeDNS</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="Line" name="line">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="hide_console">
+        <property name="text">
+         <string>Hide Console</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="single_core">
         <property name="toolTip">
-         <string>Don't ask for privilege elevation</string>
+         <string>Add a tun inbound to the profile startup, instead of using two processes.
+This needs to be run NekoBox with administrator privileges.</string>
         </property>
         <property name="text">
-         <string>Already Admin</string>
+         <string>Internal Tun</string>
         </property>
        </widget>
       </item>
@@ -198,6 +206,19 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>vpn_implementation</tabstop>
+  <tabstop>vpn_mtu</tabstop>
+  <tabstop>vpn_ipv6</tabstop>
+  <tabstop>strict_route</tabstop>
+  <tabstop>fake_dns</tabstop>
+  <tabstop>hide_console</tabstop>
+  <tabstop>single_core</tabstop>
+  <tabstop>vpn_rule_cidr</tabstop>
+  <tabstop>vpn_rule_process</tabstop>
+  <tabstop>whitelist_mode</tabstop>
+  <tabstop>troubleshooting</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

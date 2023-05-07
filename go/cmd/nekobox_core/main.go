@@ -17,9 +17,6 @@ func main() {
 	fmt.Println("sing-box-extra:", boxbox.Version(), "NekoBox:", neko_common.Version_neko)
 	fmt.Println()
 
-	// local DNS transport
-	_ = os.Setenv("GODEBUG", os.Getenv("GODEBUG")+",netdns=go")
-
 	// nekobox_core
 	if len(os.Args) > 1 && os.Args[1] == "nekobox" {
 		neko_common.RunMode = neko_common.RunMode_NekoBox_Core

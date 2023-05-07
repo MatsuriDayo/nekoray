@@ -31,7 +31,7 @@
       </attribute>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_8">
+        <layout class="QHBoxLayout" name="hlayout_l1">
          <item>
           <widget class="QGroupBox" name="horizontalGroupBox_3">
            <layout class="QHBoxLayout" name="horizontalLayout_19">
@@ -43,7 +43,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="socks_ip"/>
+             <widget class="QLineEdit" name="inbound_address"/>
             </item>
             <item>
              <widget class="QPushButton" name="inbound_auth">
@@ -56,7 +56,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="horizontalGroupBox_4">
+          <widget class="QGroupBox" name="groupbox_custom_inbound">
            <layout class="QHBoxLayout" name="horizontalLayout_10">
             <item>
              <widget class="QLabel" name="label_11">
@@ -147,7 +147,7 @@
         </widget>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_11">
+        <layout class="QHBoxLayout" name="hlayout_l4">
          <item>
           <widget class="QGroupBox" name="groupBox_log">
            <layout class="QHBoxLayout" name="horizontalLayout">
@@ -170,16 +170,12 @@
             <item>
              <widget class="QLabel" name="label_6">
               <property name="text">
-               <string notr="true">mux.cool</string>
+               <string notr="true">Mux</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QCheckBox" name="mux_cool_enable">
-              <property name="text">
-               <string>Enable</string>
-              </property>
-             </widget>
+             <widget class="QComboBox" name="mux_protocol"/>
             </item>
             <item>
              <widget class="QLabel" name="label_7">
@@ -189,7 +185,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="mux_cool"/>
+             <widget class="QLineEdit" name="mux_concurrency"/>
             </item>
            </layout>
           </widget>

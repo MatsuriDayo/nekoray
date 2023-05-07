@@ -31,7 +31,7 @@ namespace NekoRay::fmt {
             return core;
         };
 
-        QString DisplayCoreType() override { return NeedExternal(false, false) ? core : software_core_name; };
+        QString DisplayCoreType() override { return NeedExternal(false) ? core : software_core_name; };
 
         QString DisplayAddress() override {
             if (core == "internal") {
@@ -47,7 +47,7 @@ namespace NekoRay::fmt {
             return AbstractBean::DisplayAddress();
         };
 
-        int NeedExternal(bool isFirstProfile, bool isVPN) override;
+        int NeedExternal(bool isFirstProfile) override;
 
         ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) override;
 

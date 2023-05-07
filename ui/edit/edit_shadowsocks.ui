@@ -14,10 +14,20 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Plugin Args</string>
+      <string>Encryption</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="MyLineEdit" name="password"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Plugin</string>
      </property>
     </widget>
    </item>
@@ -30,40 +40,6 @@
       <string>Password</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Encryption</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="QComboBox" name="plugin">
-     <item>
-      <property name="text">
-       <string/>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">obfs-local</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">v2ray-plugin</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">ssr</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="1" column="1">
-    <widget class="MyLineEdit" name="password"/>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="method">
@@ -162,10 +138,41 @@
      </item>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Plugin</string>
+      <string>Plugin Args</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="QComboBox" name="plugin">
+     <item>
+      <property name="text">
+       <string/>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">obfs-local</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">v2ray-plugin</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string notr="true">ssr</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QCheckBox" name="uot">
+     <property name="text">
+      <string notr="true">UDP over TCP</string>
      </property>
     </widget>
    </item>

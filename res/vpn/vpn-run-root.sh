@@ -11,7 +11,7 @@ if [ "$(uname)" == "Darwin" ]; then
 fi
 
 [ -z $TABLE_FWMARK ] && echo "Please set env TABLE_FWMARK" && exit
-command -v pkill >/dev/null 2>&1 || exit
+command -v pkill >/dev/null 2>&1 || echo "[Warning] pkill not found"
 
 BASEDIR=$(dirname "$0")
 cd $BASEDIR

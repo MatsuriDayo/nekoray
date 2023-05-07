@@ -54,7 +54,7 @@ namespace NekoRay::fmt {
 
         //
 
-        virtual int NeedExternal(bool isFirstProfile, bool isVPN) { return 0; };
+        virtual int NeedExternal(bool isFirstProfile) { return 0; };
 
         virtual CoreObjOutboundBuildResult BuildCoreObjV2Ray() { return {}; };
 

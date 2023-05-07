@@ -21,12 +21,6 @@
        <layout class="QHBoxLayout" name="horizontalLayout_3">
         <item>
          <widget class="QLabel" name="label">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <property name="text">
            <string>Sniffing Mode</string>
           </property>
@@ -41,33 +35,38 @@
           </item>
           <item>
            <property name="text">
-            <string>The sniffing result is used for routing</string>
+            <string>Sniff result for routing</string>
            </property>
           </item>
           <item>
            <property name="text">
-            <string>The sniffing result is used for destination</string>
+            <string>Sniff result for destination</string>
            </property>
           </item>
          </widget>
         </item>
         <item>
-         <widget class="Line" name="line_4">
-          <property name="orientation">
-           <enum>Qt::Vertical</enum>
+         <widget class="QLabel" name="label_6">
+          <property name="toolTip">
+           <string notr="true">For V2Ray, it sets routing.domainStrategy
+For sing-box, it sets inbound.domain_strategy</string>
+          </property>
+          <property name="text">
+           <string>Domain Strategy</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QComboBox" name="domainStrategyCombo">
+          <property name="editable">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
         <item>
          <widget class="QLabel" name="label_3">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <property name="text">
-           <string>Inbound &amp; Outbound Domain Strategy</string>
+           <string>Server Address Strategy</string>
           </property>
          </widget>
         </item>
@@ -111,12 +110,6 @@
         </item>
         <item>
          <widget class="QCheckBox" name="dns_routing">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
           <property name="text">
            <string>Enable DNS Routing</string>
           </property>
@@ -124,80 +117,18 @@
         </item>
         <item>
          <widget class="QPushButton" name="queryStrategy">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
           <property name="text">
-           <string>Query Strategy</string>
+           <string>DNS Query Strategy</string>
           </property>
          </widget>
         </item>
        </layout>
-      </item>
-      <item>
-       <widget class="QWidget" name="domain_v2ray" native="true">
-        <layout class="QHBoxLayout" name="_2" stretch="0,1,0,1">
-         <property name="leftMargin">
-          <number>0</number>
-         </property>
-         <property name="topMargin">
-          <number>0</number>
-         </property>
-         <property name="rightMargin">
-          <number>0</number>
-         </property>
-         <property name="bottomMargin">
-          <number>0</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_6">
-           <property name="text">
-            <string>V2Ray Domain Strategy</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="domainStrategyCombo">
-           <property name="editable">
-            <bool>false</bool>
-           </property>
-           <item>
-            <property name="text">
-             <string notr="true">AsIs</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">IPIfNonMatch</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">IPOnDemand</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>Matcher</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QComboBox" name="domainMatcherCombo">
-           <item>
-            <property name="text">
-             <string notr="true">Original</string>
-            </property>
-           </item>
-           <item>
-            <property name="text">
-             <string notr="true">Minimal Perfect Hash Matcher</string>
-            </property>
-           </item>
-          </widget>
-         </item>
-        </layout>
-       </widget>
       </item>
      </layout>
     </widget>
@@ -461,13 +392,8 @@
  </widget>
  <tabstops>
   <tabstop>sniffing_mode</tabstop>
-  <tabstop>outbound_domain_strategy</tabstop>
   <tabstop>dns_remote</tabstop>
   <tabstop>dns_direct</tabstop>
-  <tabstop>dns_routing</tabstop>
-  <tabstop>queryStrategy</tabstop>
-  <tabstop>domainStrategyCombo</tabstop>
-  <tabstop>domainMatcherCombo</tabstop>
   <tabstop>preset</tabstop>
   <tabstop>custom_route_edit</tabstop>
   <tabstop>def_outbound</tabstop>

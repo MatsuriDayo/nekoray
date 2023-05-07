@@ -51,7 +51,9 @@ public:
 
     void neko_stop(bool crash = false);
 
-    void neko_set_spmode(int mode, bool save = true);
+    void neko_set_spmode_system_proxy(bool enable, bool save = true);
+
+    void neko_set_spmode_vpn(bool enable, bool save = true);
 
     void show_log_impl(const QString &log);
 

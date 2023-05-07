@@ -96,10 +96,6 @@
         <translation>安全</translation>
     </message>
     <message>
-        <source>Insecure hint</source>
-        <translation type="vanished">提示不安全的配置</translation>
-    </message>
-    <message>
         <source>Statistics refresh rate</source>
         <translation>流量统计刷新率</translation>
     </message>
@@ -494,11 +490,11 @@ These settings can be changed later.</source>
         <translation>流量探测</translation>
     </message>
     <message>
-        <source>The sniffing result is used for routing</source>
+        <source>Sniff result for routing</source>
         <translation>探测结果用于路由判断</translation>
     </message>
     <message>
-        <source>The sniffing result is used for destination</source>
+        <source>Sniff result for destination</source>
         <translation>探测结果用于目标地址</translation>
     </message>
     <message>
@@ -512,14 +508,6 @@ These settings can be changed later.</source>
     <message>
         <source>Enable DNS Routing</source>
         <translation>启用 DNS 路由</translation>
-    </message>
-    <message>
-        <source>V2Ray Domain Strategy</source>
-        <translation>域名策略</translation>
-    </message>
-    <message>
-        <source>Matcher</source>
-        <translation>域名匹配器</translation>
     </message>
     <message>
         <source>Block</source>
@@ -598,16 +586,20 @@ These settings can be changed later.</source>
         <translation>默认出站</translation>
     </message>
     <message>
-        <source>Query Strategy</source>
-        <translation>DNS 查询策略</translation>
-    </message>
-    <message>
         <source>Remote</source>
         <translation>远程</translation>
     </message>
     <message>
-        <source>Inbound &amp; Outbound Domain Strategy</source>
-        <translation>出入站域名策略</translation>
+        <source>DNS Query Strategy</source>
+        <translation>DNS 查询策略</translation>
+    </message>
+    <message>
+        <source>Domain Strategy</source>
+        <translation>域名策略</translation>
+    </message>
+    <message>
+        <source>Server Address Strategy</source>
+        <translation>服务器地址策略</translation>
     </message>
 </context>
 <context>
@@ -675,12 +667,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>取消</translation>
     </message>
     <message>
-        <source>Don&apos;t ask for privilege elevation</source>
-        <translation>不请求特权提升</translation>
+        <source>Internal Tun</source>
+        <translation>内部 Tun</translation>
     </message>
     <message>
-        <source>Already Admin</source>
-        <translation>已是管理员</translation>
+        <source>Add a tun inbound to the profile startup, instead of using two processes.
+This needs to be run NekoBox with administrator privileges.</source>
+        <translation>在配置文件启动时添加一个tun inbound，而不是使用两个进程。
+这需要以管理员权限运行NekoBox。</translation>
     </message>
 </context>
 <context>
@@ -1190,10 +1184,6 @@ End: %2</source>
         <translation>移动 %1 个项目</translation>
     </message>
     <message>
-        <source>Profile is insecure: %1</source>
-        <translation type="vanished">配置不安全: %1</translation>
-    </message>
-    <message>
         <source>Remove Unavailable</source>
         <translation>删除不可用的配置</translation>
     </message>
@@ -1395,6 +1385,10 @@ Split by line.</source>
         <source>Restart nekoray to take effect.</source>
         <translation>重启 nekoray 生效。</translation>
     </message>
+    <message>
+        <source>Please run NekoBox as admin</source>
+        <translation>请以管理员权限运行 NekoBox</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1499,26 +1493,6 @@ Release note:
         <translation>链式代理</translation>
     </message>
     <message>
-        <source>The configuration (insecure) can be detected and identified, the transmission is fully visible to the censor and is not resistant to man-in-the-middle tampering with the content of the communication.</source>
-        <translation type="vanished">该配置 (不安全) 能够被检测识别，传输的内容对审查者完全可见，并且无法抵抗中间人篡改通讯内容.</translation>
-    </message>
-    <message>
-        <source>This configuration (Shadowsocks streaming cipher) can be accurately proactively detected and decrypted by censors without requiring a password, and cannot be mitigated by turning on IV replay filters on the server side.
-
-Learn more: https://github.com/net4people/bbs/issues/24</source>
-        <translation type="vanished">该配置 (Shadowsocks 流式密码) 可以被准确地主动探测、在不需要密码的情况下被审查者解密流量, 且服务端开启 IV 重放过滤器也无法缓解.
-
-了解更多: https://github.com/net4people/bbs/issues/24</translation>
-    </message>
-    <message>
-        <source>This configuration (VMess MD5 authentication) has been deprecated by upstream because of its questionable resistance to tampering and concealment.
-
-As of January 1, 2022, compatibility with MD5 authentication information will be disabled on the server side by default. Any client using MD5 authentication information will not be able to connect to a server with VMess MD5 authentication information disabled.</source>
-        <translation type="vanished">该配置 (VMess MD5 认证) 抗篡改能力存疑, 隐蔽性存疑, 已被上游废弃.
-
-自 2022 年 1 月 1 日起, 服务器端将默认禁用对于 MD5 认证信息 的兼容. 任何使用 MD5 认证信息的客户端将无法连接到禁用 VMess MD5 认证信息的服务器端.</translation>
-    </message>
-    <message>
         <source>Requesting subscription: %1</source>
         <translation>正在请求订阅: %1</translation>
     </message>
@@ -1533,10 +1507,6 @@ As of January 1, 2022, compatibility with MD5 authentication information will be
     <message>
         <source>Change of %1:</source>
         <translation>%1 变化:</translation>
-    </message>
-    <message>
-        <source>This profile is cleartext, don&apos;t use it if the server is not in your local network.</source>
-        <translation type="vanished">该配置为明文传输，如果服务器不在本地局域网，请不要使用。</translation>
     </message>
     <message>
         <source>Select</source>
