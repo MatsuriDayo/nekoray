@@ -603,7 +603,7 @@ namespace NekoRay {
             status->result->outboundStats += ent->traffic_data;
 
             // mux common
-            auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless";
+            auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless" || ent->type == "shadowsocks";
             needMux &= !dataStore->mux_protocol.isEmpty() && dataStore->mux_concurrency > 0;
 
             if (stream != nullptr) {
@@ -616,6 +616,10 @@ namespace NekoRay {
                         needMux = false;
                     }
                 }
+            }
+
+            if (ent->type == "shadowsocks" && outbound["udp_over_tcp"] == true || (!IS_NEKO_BOX && ent->type == "shadowsocks")) {
+                needMux = false;
             }
 
             // common
