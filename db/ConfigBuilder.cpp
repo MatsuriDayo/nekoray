@@ -618,8 +618,10 @@ namespace NekoRay {
                 }
             }
 
-            if (ent->type == "shadowsocks" && outbound["udp_over_tcp"] == true || (!IS_NEKO_BOX && ent->type == "shadowsocks")) {
-                needMux = false;
+            if (ent->type == "shadowsocks") {
+                if (outbound["udp_over_tcp"] == true || !outbound["plugin"].isNull() || !IS_NEKO_BOX) {
+                    needMux = false;
+                }
             }
 
             // common
