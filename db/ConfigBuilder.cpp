@@ -619,7 +619,7 @@ namespace NekoRay {
             }
 
             if (ent->type == "shadowsocks") {
-                if (outbound["udp_over_tcp"] == true || !outbound["plugin"].isNull() || !IS_NEKO_BOX) {
+                if (!IS_NEKO_BOX || outbound["udp_over_tcp"] == true || !outbound["plugin"].isNull()) {
                     needMux = false;
                 }
             }
