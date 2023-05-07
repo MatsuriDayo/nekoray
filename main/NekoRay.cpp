@@ -32,17 +32,9 @@ namespace NekoRay {
         _add(new configItem("inbound_socks_port", &inbound_socks_port, itemType::integer));
         _add(new configItem("inbound_http_port", &inbound_http_port, itemType::integer));
         _add(new configItem("log_level", &log_level, itemType::string));
-        _add(new configItem("remote_dns", &remote_dns, itemType::string));
-        _add(new configItem("remote_dns_strategy", &remote_dns_strategy, itemType::string));
-        _add(new configItem("direct_dns", &direct_dns, itemType::string));
-        _add(new configItem("direct_dns_strategy", &direct_dns_strategy, itemType::string));
-        _add(new configItem("domain_strategy", &domain_strategy, itemType::string));
-        _add(new configItem("outbound_domain_strategy", &outbound_domain_strategy, itemType::string));
-        _add(new configItem("sniffing_mode", &sniffing_mode, itemType::integer));
         _add(new configItem("mux_protocol", &mux_protocol, itemType::string));
         _add(new configItem("mux_concurrency", &mux_concurrency, itemType::integer));
         _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
-        _add(new configItem("dns_routing", &dns_routing, itemType::boolean));
         _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
         _add(new configItem("theme", &theme, itemType::string));
         _add(new configItem("custom_inbound", &custom_inbound, itemType::string));
@@ -127,16 +119,29 @@ namespace NekoRay {
         _add(new configItem("block_domain", &this->block_domain, itemType::string));
         _add(new configItem("def_outbound", &this->def_outbound, itemType::string));
         _add(new configItem("custom", &this->custom, itemType::string));
+        //
+        _add(new configItem("remote_dns", &this->remote_dns, itemType::string));
+        _add(new configItem("remote_dns_strategy", &this->remote_dns_strategy, itemType::string));
+        _add(new configItem("direct_dns", &this->direct_dns, itemType::string));
+        _add(new configItem("direct_dns_strategy", &this->direct_dns_strategy, itemType::string));
+        _add(new configItem("domain_strategy", &this->domain_strategy, itemType::string));
+        _add(new configItem("outbound_domain_strategy", &this->outbound_domain_strategy, itemType::string));
+        _add(new configItem("dns_routing", &this->dns_routing, itemType::boolean));
+        _add(new configItem("sniffing_mode", &this->sniffing_mode, itemType::integer));
+        _add(new configItem("use_dns_object", &this->use_dns_object, itemType::boolean));
+        _add(new configItem("dns_object", &this->dns_object, itemType::string));
     }
 
     QString Routing::DisplayRouting() const {
-        return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6")
+        return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6\n[Default Outbound] %7\n[DNS] %8")
             .arg(SplitLinesSkipSharp(proxy_domain).join(","))
             .arg(SplitLinesSkipSharp(proxy_ip).join(","))
             .arg(SplitLinesSkipSharp(direct_domain).join(","))
             .arg(SplitLinesSkipSharp(direct_ip).join(","))
             .arg(SplitLinesSkipSharp(block_domain).join(","))
-            .arg(SplitLinesSkipSharp(block_ip).join(","));
+            .arg(SplitLinesSkipSharp(block_ip).join(","))
+            .arg(def_outbound)
+            .arg(use_dns_object ? "DNS Object" : "Simple DNS");
     }
 
     QStringList Routing::List() {

@@ -528,14 +528,6 @@ These settings can be changed later.</source>
         <translation>پیشفرض</translation>
     </message>
     <message>
-        <source>Custom</source>
-        <translation>سفارشی</translation>
-    </message>
-    <message>
-        <source>Custom (global)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Mange route set</source>
         <translation type="unfinished"></translation>
     </message>
@@ -580,14 +572,6 @@ These settings can be changed later.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remote</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>DNS Query Strategy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Domain Strategy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -601,6 +585,58 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Sniff result for destination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation type="unfinished">متداول</translation>
+    </message>
+    <message>
+        <source>DNS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple DNS Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use DNS Object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DNS Object Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Simple Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Route</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Route (global)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Note: Other settings are independent for each route set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Route sets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Query Strategy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Document</source>
+        <translation type="unfinished">اسناد</translation>
+    </message>
+    <message>
+        <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -13,6 +13,20 @@ namespace NekoRay {
         QString def_outbound = "proxy";
         QString custom = "{\"rules\": []}";
 
+        // DNS
+        QString remote_dns = "https://8.8.8.8/dns-query";
+        QString remote_dns_strategy = "";
+        QString direct_dns = "localhost";
+        QString direct_dns_strategy = "";
+        bool dns_routing = true;
+        bool use_dns_object = false;
+        QString dns_object = "";
+
+        // Misc
+        QString domain_strategy = "AsIs";
+        QString outbound_domain_strategy = "AsIs";
+        int sniffing_mode = SniffingMode::FOR_ROUTING;
+
         explicit Routing(int preset = 0);
 
         [[nodiscard]] QString DisplayRouting() const;
@@ -118,22 +132,12 @@ namespace NekoRay {
         InboundAuthorization *inbound_auth = new InboundAuthorization;
         QString custom_inbound = "{\"inbounds\": []}";
 
-        // DNS
-        QString remote_dns = "https://8.8.8.8/dns-query";
-        QString remote_dns_strategy = "";
-        QString direct_dns = "localhost";
-        QString direct_dns_strategy = "";
-        bool dns_routing = true;
-
         // Routing
-        bool fake_dns = false;
-        QString domain_strategy = "AsIs";
-        QString outbound_domain_strategy = "AsIs";
-        int sniffing_mode = SniffingMode::FOR_ROUTING;
         QString custom_route_global = "{\"rules\": []}";
         QString active_routing = "Default";
 
         // VPN
+        bool fake_dns = false;
         bool vpn_internal_tun = true;
         int vpn_implementation = 0;
         int vpn_mtu = 9000;

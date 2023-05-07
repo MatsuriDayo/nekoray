@@ -131,11 +131,11 @@ namespace NekoRay {
 
 #define DOMAIN_USER_RULE                                                             \
     for (const auto &line: SplitLinesSkipSharp(dataStore->routing->proxy_domain)) {  \
-        if (dataStore->dns_routing) status->domainListDNSRemote += line;             \
+        if (dataStore->routing->dns_routing) status->domainListDNSRemote += line;    \
         status->domainListRemote += line;                                            \
     }                                                                                \
     for (const auto &line: SplitLinesSkipSharp(dataStore->routing->direct_domain)) { \
-        if (dataStore->dns_routing) status->domainListDNSDirect += line;             \
+        if (dataStore->routing->dns_routing) status->domainListDNSDirect += line;    \
         status->domainListDirect += line;                                            \
     }                                                                                \
     for (const auto &line: SplitLinesSkipSharp(dataStore->routing->block_domain)) {  \
@@ -166,7 +166,7 @@ namespace NekoRay {
                                                  : QJsonArray{"http", "tls", "quic"}},
             {"enabled", true},
             {"metadataOnly", false},
-            {"routeOnly", dataStore->sniffing_mode == SniffingMode::FOR_ROUTING},
+            {"routeOnly", dataStore->routing->sniffing_mode == SniffingMode::FOR_ROUTING},
         };
 
         // socks-in
@@ -177,7 +177,7 @@ namespace NekoRay {
             inboundObj["listen"] = dataStore->inbound_address;
             inboundObj["port"] = dataStore->inbound_socks_port;
             QJsonObject socksSettings = {{"udp", true}};
-            if (dataStore->fake_dns || dataStore->sniffing_mode != SniffingMode::DISABLE) {
+            if (dataStore->fake_dns || dataStore->routing->sniffing_mode != SniffingMode::DISABLE) {
                 inboundObj["sniffing"] = sniffing;
             }
             if (dataStore->inbound_auth->NeedAuth()) {
@@ -199,7 +199,7 @@ namespace NekoRay {
             inboundObj["protocol"] = "http";
             inboundObj["listen"] = dataStore->inbound_address;
             inboundObj["port"] = dataStore->inbound_http_port;
-            if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
+            if (dataStore->routing->sniffing_mode != SniffingMode::DISABLE) {
                 inboundObj["sniffing"] = sniffing;
             }
             if (dataStore->inbound_auth->NeedAuth()) {
@@ -274,13 +274,13 @@ namespace NekoRay {
 
         // Remote or FakeDNS
         QJsonObject dnsServerRemote;
-        dnsServerRemote["address"] = dataStore->fake_dns ? "fakedns" : dataStore->remote_dns;
+        dnsServerRemote["address"] = dataStore->fake_dns ? "fakedns" : dataStore->routing->remote_dns;
         dnsServerRemote["domains"] = QList2QJsonArray<QString>(status->domainListDNSRemote);
-        dnsServerRemote["queryStrategy"] = dataStore->remote_dns_strategy;
+        dnsServerRemote["queryStrategy"] = dataStore->routing->remote_dns_strategy;
         if (!status->forTest) dnsServers += dnsServerRemote;
 
         // Direct
-        auto directDnsAddress = dataStore->direct_dns;
+        auto directDnsAddress = dataStore->routing->direct_dns;
         if (directDnsAddress.contains("://")) {
             auto directDnsIp = SubStrBefore(SubStrAfter(directDnsAddress, "://"), "/");
             if (IsIpAddress(directDnsIp)) {
@@ -306,18 +306,22 @@ namespace NekoRay {
         dnsServers += QJsonObject{
             {"address", directDnsAddress.replace("https://", "https+local://")},
             {"fallbackStrategy", "disabled"},
-            {"queryStrategy", dataStore->direct_dns_strategy},
+            {"queryStrategy", dataStore->routing->direct_dns_strategy},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
 
         dns["fallbackStrategy"] = "disabled_if_any_match";
         dns["servers"] = dnsServers;
         dns["tag"] = "dns";
+
+        if (dataStore->routing->use_dns_object) {
+            dns = QString2QJsonObject(dataStore->routing->dns_object);
+        }
         status->result->coreConfig.insert("dns", dns);
 
         // Routing
         QJsonObject routing;
-        routing["domainStrategy"] = dataStore->domain_strategy;
+        routing["domainStrategy"] = dataStore->routing->domain_strategy;
         routing["domainMatcher"] = "mph";
         if (status->forTest) routing["domainStrategy"] = "AsIs";
 
@@ -627,7 +631,7 @@ namespace NekoRay {
             // common
             if (IS_NEKO_BOX) {
                 // apply domain_strategy
-                outbound["domain_strategy"] = dataStore->outbound_domain_strategy;
+                outbound["domain_strategy"] = dataStore->routing->outbound_domain_strategy;
                 // apply mux
                 if (!muxApplied && needMux) {
                     auto muxObj = QJsonObject{
@@ -640,7 +644,7 @@ namespace NekoRay {
                 }
             } else {
                 // apply domain_strategy
-                if (!status->forTest) outbound["domainStrategy"] = dataStore->outbound_domain_strategy;
+                if (!status->forTest) outbound["domainStrategy"] = dataStore->routing->outbound_domain_strategy;
                 // apply mux
                 if (!muxApplied && needMux) {
                     auto muxObj = QJsonObject{
@@ -695,9 +699,9 @@ namespace NekoRay {
             inboundObj["type"] = "mixed";
             inboundObj["listen"] = dataStore->inbound_address;
             inboundObj["listen_port"] = dataStore->inbound_socks_port;
-            if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
+            if (dataStore->routing->sniffing_mode != SniffingMode::DISABLE) {
                 inboundObj["sniff"] = true;
-                inboundObj["sniff_override_destination"] = dataStore->sniffing_mode == SniffingMode::FOR_DESTINATION;
+                inboundObj["sniff_override_destination"] = dataStore->routing->sniffing_mode == SniffingMode::FOR_DESTINATION;
             }
             if (dataStore->inbound_auth->NeedAuth()) {
                 inboundObj["users"] = QJsonArray{
@@ -707,7 +711,7 @@ namespace NekoRay {
                     },
                 };
             }
-            inboundObj["domain_strategy"] = dataStore->domain_strategy;
+            inboundObj["domain_strategy"] = dataStore->routing->domain_strategy;
             status->inbounds += inboundObj;
         }
 
@@ -724,11 +728,11 @@ namespace NekoRay {
             inboundObj["strict_route"] = dataStore->vpn_strict_route;
             inboundObj["inet4_address"] = "172.19.0.1/28";
             if (dataStore->vpn_ipv6) inboundObj["inet4_address"] = "fdfe:dcba:9876::1/126";
-            if (dataStore->sniffing_mode != SniffingMode::DISABLE) {
+            if (dataStore->routing->sniffing_mode != SniffingMode::DISABLE) {
                 inboundObj["sniff"] = true;
-                inboundObj["sniff_override_destination"] = dataStore->sniffing_mode == SniffingMode::FOR_DESTINATION;
+                inboundObj["sniff_override_destination"] = dataStore->routing->sniffing_mode == SniffingMode::FOR_DESTINATION;
             }
-            inboundObj["domain_strategy"] = dataStore->domain_strategy;
+            inboundObj["domain_strategy"] = dataStore->routing->domain_strategy;
             status->inbounds += inboundObj;
         }
 
@@ -831,19 +835,19 @@ namespace NekoRay {
             dnsServers += QJsonObject{
                 {"tag", "dns-remote"},
                 {"address_resolver", "dns-local"},
-                {"strategy", dataStore->remote_dns_strategy},
-                {"address", dataStore->remote_dns},
+                {"strategy", dataStore->routing->remote_dns_strategy},
+                {"address", dataStore->routing->remote_dns},
                 {"detour", tagProxy},
             };
 
         // Direct
-        auto directDNSAddress = dataStore->direct_dns;
+        auto directDNSAddress = dataStore->routing->direct_dns;
         if (directDNSAddress == "localhost") directDNSAddress = BOX_UNDERLYING_DNS_EXPORT;
         if (!status->forTest)
             dnsServers += QJsonObject{
                 {"tag", "dns-direct"},
                 {"address_resolver", "dns-local"},
-                {"strategy", dataStore->direct_dns_strategy},
+                {"strategy", dataStore->routing->direct_dns_strategy},
                 {"address", directDNSAddress.replace("+local://", "://")},
                 {"detour", "direct"},
             };
@@ -868,6 +872,10 @@ namespace NekoRay {
 
         dns["servers"] = dnsServers;
         dns["rules"] = dnsRules;
+
+        if (dataStore->routing->use_dns_object) {
+            dns = QString2QJsonObject(dataStore->routing->dns_object);
+        }
         status->result->coreConfig.insert("dns", dns);
 
         // Routing
