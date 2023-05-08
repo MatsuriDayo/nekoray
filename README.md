@@ -24,7 +24,7 @@ Support Windows / Linux / ~~macOS amd64~~ out of the box now.
 
 ### Package
 
-1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-bin)
 2. Scoop extras: `scoop install nekoray`
 3. Homebrew (非官方发布 / unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
 4. APT (非官方发布 / unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
