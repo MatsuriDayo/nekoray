@@ -542,10 +542,6 @@ These settings can be changed later.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Custom</source>
-        <translation>自定义</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>保存</translation>
     </message>
@@ -578,20 +574,8 @@ These settings can be changed later.</source>
         <translation>管理路由规则</translation>
     </message>
     <message>
-        <source>Custom (global)</source>
-        <translation>自定义 (全局)</translation>
-    </message>
-    <message>
         <source>Default Outbound</source>
         <translation>默认出站</translation>
-    </message>
-    <message>
-        <source>Remote</source>
-        <translation>远程</translation>
-    </message>
-    <message>
-        <source>DNS Query Strategy</source>
-        <translation>DNS 查询策略</translation>
     </message>
     <message>
         <source>Domain Strategy</source>
@@ -600,6 +584,58 @@ These settings can be changed later.</source>
     <message>
         <source>Server Address Strategy</source>
         <translation>服务器地址策略</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>通用</translation>
+    </message>
+    <message>
+        <source>DNS</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Simple DNS Settings</source>
+        <translation>简易 DNS 设置</translation>
+    </message>
+    <message>
+        <source>Use DNS Object</source>
+        <translation>使用 DNS Object</translation>
+    </message>
+    <message>
+        <source>DNS Object Settings</source>
+        <translation>DNS Object 设置</translation>
+    </message>
+    <message>
+        <source>Simple Route</source>
+        <translation>简易路由</translation>
+    </message>
+    <message>
+        <source>Custom Route</source>
+        <translation>自定义路由</translation>
+    </message>
+    <message>
+        <source>Custom Route (global)</source>
+        <translation>自定义路由（全局）</translation>
+    </message>
+    <message>
+        <source>Note: Other settings are independent for each route set.</source>
+        <translation>注意：其他设置对于每个路由集都是独立的。</translation>
+    </message>
+    <message>
+        <source>Route sets</source>
+        <translation>路由集</translation>
+    </message>
+    <message>
+        <source>Query Strategy</source>
+        <translation>查询策略</translation>
+    </message>
+    <message>
+        <source>Document</source>
+        <translation>文档</translation>
+    </message>
+    <message>
+        <source>Format</source>
+        <translation>格式化</translation>
     </message>
 </context>
 <context>

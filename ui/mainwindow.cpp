@@ -95,8 +95,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         software_core_name = "sing-box";
         // replace default values
         if (NekoRay::dataStore->log_level == "warning") NekoRay::dataStore->log_level = "info";
-        if (!Preset::SingBox::DomainStrategy.contains(NekoRay::dataStore->domain_strategy)) NekoRay::dataStore->domain_strategy = "";
-        if (!Preset::SingBox::DomainStrategy.contains(NekoRay::dataStore->outbound_domain_strategy)) NekoRay::dataStore->outbound_domain_strategy = "";
+        if (!Preset::SingBox::DomainStrategy.contains(NekoRay::dataStore->routing->domain_strategy)) NekoRay::dataStore->routing->domain_strategy = "";
+        if (!Preset::SingBox::DomainStrategy.contains(NekoRay::dataStore->routing->outbound_domain_strategy)) NekoRay::dataStore->routing->outbound_domain_strategy = "";
         //
         if (QDir("dashboard").isEmpty()) {
             QDir().mkdir("dashboard");

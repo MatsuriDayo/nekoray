@@ -51,9 +51,9 @@ public slots:
 
     QAction *schemeToAction(const QString &name, const NekoRay::Routing &scheme);
 
-    void SetRouteConfig(const NekoRay::Routing &conf);
+    void UpdateDisplayRouting(NekoRay::Routing *conf, bool qv);
+
+    void SaveDisplayRouting(NekoRay::Routing *conf);
 
     void on_load_save_clicked();
-
-    void on_queryStrategy_clicked();
 };
