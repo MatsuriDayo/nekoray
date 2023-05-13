@@ -31,7 +31,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
         ui->outbound_domain_strategy->addItems({"AsIs", "UseIPv4", "UseIPv6", "PreferIPv4", "PreferIPv6"});
         ui->domainStrategyCombo->addItems({"AsIs", "IPIfNonMatch", "IPOnDemand"});
         qsValue += QString("use_ip use_ip4 use_ip6").split(" ");
-        ui->dns_object->setPlaceholderText(DecodeB64IfValid("ewogICJzZXJ2ZXJzIjogW10sCiAgInJ1bGVzIjogW10sCiAgImZpbmFsIjogIiIsCiAgInN0cmF0ZWd5IjogIiIsCiAgImRpc2FibGVfY2FjaGUiOiBmYWxzZSwKICAiZGlzYWJsZV9leHBpcmUiOiBmYWxzZSwKICAiaW5kZXBlbmRlbnRfY2FjaGUiOiBmYWxzZSwKICAicmV2ZXJzZV9tYXBwaW5nIjogZmFsc2UsCiAgImZha2VpcCI6IHt9Cn0="));
+        ui->dns_object->setPlaceholderText(DecodeB64IfValid("ewogICJzZXJ2ZXJzIjogW10KfQ=="));
         dnsHelpDocumentUrl = "https://www.v2fly.org/config/dns.html";
     }
     ui->direct_dns_strategy->addItems(qsValue);
@@ -146,7 +146,7 @@ void DialogManageRoutes::UpdateDisplayRouting(NekoRay::Routing *conf, bool qv) {
     //
     ui->sniffing_mode->setCurrentIndex(conf->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(conf->outbound_domain_strategy);
-    ui->domainStrategyCombo->setCurrentText(conf->outbound_domain_strategy);
+    ui->domainStrategyCombo->setCurrentText(conf->domain_strategy);
     ui->use_dns_object->setChecked(conf->use_dns_object);
     ui->dns_object->setPlainText(conf->dns_object);
     ui->dns_routing->setChecked(conf->dns_routing);
