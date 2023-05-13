@@ -63,7 +63,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
         ui->hlayout_l2->addWidget(ui->groupbox_custom_inbound);
         ui->log_level->addItems(QString("trace debug info warn error fatal panic").split(" "));
-        ui->mux_protocol->addItems({"", "smux", "yamux"});
+        ui->mux_protocol->addItems({"", "h2mux", "smux", "yamux"});
     } else {
         ui->log_level->addItems({"debug", "info", "warning", "none"});
         ui->mux_protocol->addItems({"", "mux.cool"});
