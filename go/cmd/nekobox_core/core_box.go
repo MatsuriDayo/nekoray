@@ -19,6 +19,6 @@ func setupCore() {
 	//
 	neko_log.SetupLog(50*1024, "./neko.log")
 	neko_common.GetProxyHttpClient = func() *http.Client {
-		return boxapi.GetProxyHttpClient(instance)
+		return boxapi.CreateProxyHttpClient(instance)
 	}
 }
