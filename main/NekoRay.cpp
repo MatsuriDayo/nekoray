@@ -18,7 +18,6 @@
 namespace NekoRay {
 
     DataStore *dataStore = new DataStore();
-    QString appdataDir;
 
     // datastore
 
