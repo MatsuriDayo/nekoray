@@ -88,6 +88,12 @@ int main(int argc, char* argv[]) {
     if (NekoRay::dataStore->argv.contains("-tray")) NekoRay::dataStore->flag_tray = true;
     if (NekoRay::dataStore->argv.contains("-debug")) NekoRay::dataStore->flag_debug = true;
     if (NekoRay::dataStore->argv.contains("-flag_linux_run_core_as_admin")) NekoRay::dataStore->flag_linux_run_core_as_admin = true;
+#ifdef NKR_CPP_USE_APPDATA
+    NekoRay::dataStore->flag_use_appdata = true; // Example: Package & MacOS
+#endif
+#ifdef NKR_CPP_DEBUG
+    NekoRay::dataStore->flag_debug = true;
+#endif
 
     // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
