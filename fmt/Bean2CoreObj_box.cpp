@@ -164,6 +164,7 @@ namespace NekoRay::fmt {
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"insecure", allowInsecure},
+            {"certificate", caText.trimmed()},
             {"server_name", sni},
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};
