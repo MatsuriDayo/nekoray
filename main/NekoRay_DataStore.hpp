@@ -71,6 +71,7 @@ namespace NekoRay {
         bool spmode_vpn = false;
         bool spmode_system_proxy = false;
         bool need_keep_vpn_off = false;
+        QString appdataDir = "";
         QStringList ignoreConnTag = {};
 
         Routing *routing = new Routing;
