@@ -620,6 +620,11 @@ namespace NekoRay {
                         needMux = false;
                     }
                 }
+                if (stream->multiplex_status == 0) {
+                    if (!dataStore->mux_default_on) needMux = false;
+                } else if (stream->multiplex_status == 2) {
+                    needMux = false;
+                }
             }
 
             if (ent->type == "shadowsocks") {

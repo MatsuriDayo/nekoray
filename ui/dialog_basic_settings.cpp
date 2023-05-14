@@ -60,8 +60,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     if (IS_NEKO_BOX) {
         ui->groupBox_http->hide();
-        ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed"));
-        ui->hlayout_l2->addWidget(ui->groupbox_custom_inbound);
+        ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed (SOCKS+HTTP)"));
         ui->log_level->addItems(QString("trace debug info warn error fatal panic").split(" "));
         ui->mux_protocol->addItems({"", "h2mux", "smux", "yamux"});
     } else {
@@ -76,8 +75,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     CACHE.custom_inbound = NekoRay::dataStore->custom_inbound;
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
-    D_LOAD_INT(mux_concurrency)
-    D_LOAD_COMBO_STRING(mux_protocol)
     D_LOAD_INT(test_concurrent)
     D_LOAD_STRING(test_url)
 
@@ -176,7 +173,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
     if (!CACHE.extraCore.contains("hysteria")) CACHE.extraCore.insert("hysteria", "");
     //
-    auto extra_core_layout = ui->extra_core_box->layout();
+    auto extra_core_layout = ui->extra_core_box_scrollAreaWidgetContents->layout();
     for (const auto &s: CACHE.extraCore.keys()) {
         extra_core_layout->addWidget(new ExtraCoreWidget(&CACHE.extraCore, s));
     }
@@ -246,6 +243,11 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     connect(ui->switch_core_v2ray, &QRadioButton::clicked, this, switch_core_on_click);
     connect(ui->switch_core_sing_box, &QRadioButton::clicked, this, switch_core_on_click);
 
+    // Mux
+    D_LOAD_INT(mux_concurrency)
+    D_LOAD_COMBO_STRING(mux_protocol)
+    D_LOAD_BOOL(mux_default_on)
+
     // Security
 
     ui->utlsFingerprint->addItems(IS_NEKO_BOX ? Preset::SingBox::UtlsFingerPrint : Preset::V2Ray::UtlsFingerPrint);
@@ -267,8 +269,6 @@ void DialogBasicSettings::accept() {
     NekoRay::dataStore->custom_inbound = CACHE.custom_inbound;
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
-    D_SAVE_INT(mux_concurrency)
-    D_SAVE_COMBO_STRING(mux_protocol)
     D_SAVE_INT(test_concurrent)
     D_SAVE_STRING(test_url)
 
@@ -303,6 +303,11 @@ void DialogBasicSettings::accept() {
 
     NekoRay::dataStore->v2ray_asset_dir = ui->core_v2ray_asset->text();
     NekoRay::dataStore->extraCore->core_map = QJsonObject2QString(CACHE.extraCore, true);
+
+    // Mux
+    D_SAVE_INT(mux_concurrency)
+    D_SAVE_COMBO_STRING(mux_protocol)
+    D_SAVE_BOOL(mux_default_on)
 
     // Security
 

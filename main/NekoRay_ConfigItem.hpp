@@ -46,7 +46,11 @@ namespace NekoRay {
 
         void _add(configItem *item);
 
+        QString _name(void *p);
+
         QSharedPointer<configItem> _get(const QString &name);
+
+        void _setValue(const QString &name, void *p);
 
         QJsonObject ToJson();
 

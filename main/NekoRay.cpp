@@ -34,6 +34,7 @@ namespace NekoRay {
         _add(new configItem("log_level", &log_level, itemType::string));
         _add(new configItem("mux_protocol", &mux_protocol, itemType::string));
         _add(new configItem("mux_concurrency", &mux_concurrency, itemType::integer));
+        _add(new configItem("mux_default_on", &mux_default_on, itemType::boolean));
         _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
         _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));
         _add(new configItem("theme", &theme, itemType::string));
@@ -201,12 +202,44 @@ namespace NekoRay {
         _map.insert(item->name, QSharedPointer<configItem>(item));
     }
 
+    QString JsonStore::_name(void *p) {
+        for (const auto &_item: _map) {
+            if (_item->ptr == p) return _item->name;
+        }
+        return {};
+    }
+
     QSharedPointer<configItem> JsonStore::_get(const QString &name) {
         // 直接 [] 会设置一个 nullptr ，所以先判断是否存在
         if (_map.contains(name)) {
             return _map[name];
         }
         return nullptr;
+    }
+
+    void JsonStore::_setValue(const QString &name, void *p) {
+        auto item = _get(name);
+        if (item == nullptr) return;
+
+        switch (item->type) {
+            case NekoRay::itemType::string:
+                *(QString *) item->ptr = *(QString *) p;
+                break;
+            case NekoRay::itemType::boolean:
+                *(bool *) item->ptr = *(bool *) p;
+                break;
+            case NekoRay::itemType::integer:
+                *(int *) item->ptr = *(int *) p;
+                break;
+            case NekoRay::itemType::integer64:
+                *(long long *) item->ptr = *(long long *) p;
+                break;
+            // others...
+            case stringList:
+            case integerList:
+            case jsonStore:
+                break;
+        }
     }
 
     QJsonObject JsonStore::ToJson() {

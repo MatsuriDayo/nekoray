@@ -235,6 +235,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>If you VPN mode is not working, try to change this option.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Default On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplex (mux)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -407,6 +415,30 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     </message>
     <message>
         <source>Custom Config Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply settings to this group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplex</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keep Default</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished">خاموش</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1416,6 +1448,10 @@ End: %2</source>
     </message>
     <message>
         <source>Please run NekoBox as admin</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart Proxy</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
