@@ -100,7 +100,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="inbound_socks_port"/>
+             <widget class="QLineEdit" name="inbound_socks_port">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -116,7 +123,14 @@
              </widget>
             </item>
             <item>
-             <widget class="QLineEdit" name="inbound_http_port"/>
+             <widget class="QLineEdit" name="inbound_http_port">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
             <item>
              <widget class="QCheckBox" name="http_enable">
