@@ -71,6 +71,7 @@ namespace NekoRay {
         bool spmode_vpn = false;
         bool spmode_system_proxy = false;
         bool need_keep_vpn_off = false;
+        QString appdataDir = "";
         QStringList ignoreConnTag = {};
 
         Routing *routing = new Routing;
@@ -98,6 +99,7 @@ namespace NekoRay {
         int current_group = 0; // group id
         QString mux_protocol = "";
         int mux_concurrency = 8;
+        bool mux_default_on = false;
         QString theme = "0";
         QString v2ray_asset_dir = "";
         int language = 0;

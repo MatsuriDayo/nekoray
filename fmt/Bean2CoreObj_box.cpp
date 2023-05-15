@@ -21,11 +21,7 @@ namespace NekoRay::fmt {
                 }
                 if (ws_early_data_length > 0) {
                     transport["max_early_data"] = ws_early_data_length;
-                    if (ws_early_data_name.isEmpty()) {
-                        transport["early_data_header_name"] = "Sec-WebSocket-Protocol";
-                    } else {
-                        transport["early_data_header_name"] = ws_early_data_name;
-                    }
+                    transport["early_data_header_name"] = ws_early_data_name;
                 }
             } else if (network == "http") {
                 if (!path.isEmpty()) transport["path"] = path;
@@ -164,6 +160,7 @@ namespace NekoRay::fmt {
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"insecure", allowInsecure},
+            {"certificate", caText.trimmed()},
             {"server_name", sni},
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};

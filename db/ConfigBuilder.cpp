@@ -620,6 +620,11 @@ namespace NekoRay {
                         needMux = false;
                     }
                 }
+                if (stream->multiplex_status == 0) {
+                    if (!dataStore->mux_default_on) needMux = false;
+                } else if (stream->multiplex_status == 2) {
+                    needMux = false;
+                }
             }
 
             if (ent->type == "shadowsocks") {
@@ -876,6 +881,7 @@ namespace NekoRay {
 
         dns["servers"] = dnsServers;
         dns["rules"] = dnsRules;
+        dns["independent_cache"] = true;
 
         if (dataStore->routing->use_dns_object) {
             dns = QString2QJsonObject(dataStore->routing->dns_object);

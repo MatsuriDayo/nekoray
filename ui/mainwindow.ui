@@ -266,7 +266,7 @@
             <bool>false</bool>
            </attribute>
            <attribute name="verticalHeaderDefaultSectionSize">
-            <number>26</number>
+            <number>30</number>
            </attribute>
            <column>
             <property name="text">
@@ -496,6 +496,7 @@
     <addaction name="menu_spmode"/>
     <addaction name="menu_program_preference"/>
     <addaction name="separator"/>
+    <addaction name="actionRestart_Proxy"/>
     <addaction name="actionRestart_Program"/>
     <addaction name="menu_exit"/>
    </widget>
@@ -883,6 +884,11 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actionRestart_Proxy">
+   <property name="text">
+    <string>Restart Proxy</string>
    </property>
   </action>
  </widget>

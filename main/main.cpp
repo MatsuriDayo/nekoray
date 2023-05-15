@@ -78,7 +78,13 @@ int main(int argc, char* argv[]) {
     // Flags
     NekoRay::dataStore->argv = QApplication::arguments();
     if (NekoRay::dataStore->argv.contains("-many")) NekoRay::dataStore->flag_many = true;
-    if (NekoRay::dataStore->argv.contains("-appdata")) NekoRay::dataStore->flag_use_appdata = true;
+    if (NekoRay::dataStore->argv.contains("-appdata")) {
+        NekoRay::dataStore->flag_use_appdata = true;
+        int appdataIndex = NekoRay::dataStore->argv.indexOf("-appdata");
+        if (NekoRay::dataStore->argv.size() > appdataIndex + 1 && !NekoRay::dataStore->argv.at(appdataIndex + 1).startsWith("-")) {
+            NekoRay::dataStore->appdataDir = NekoRay::dataStore->argv.at(appdataIndex + 1);
+        }
+    }
     if (NekoRay::dataStore->argv.contains("-tray")) NekoRay::dataStore->flag_tray = true;
     if (NekoRay::dataStore->argv.contains("-debug")) NekoRay::dataStore->flag_debug = true;
     if (NekoRay::dataStore->argv.contains("-flag_linux_run_core_as_admin")) NekoRay::dataStore->flag_linux_run_core_as_admin = true;
@@ -93,9 +99,13 @@ int main(int argc, char* argv[]) {
     auto wd = QDir(QApplication::applicationDirPath());
     if (NekoRay::dataStore->flag_use_appdata) {
         QApplication::setApplicationName("nekoray");
-        wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+        if (!NekoRay::dataStore->appdataDir.isEmpty()) {
+            wd.setPath(NekoRay::dataStore->appdataDir);
+        } else {
+            wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+        }
     }
-    if (!wd.exists()) wd.mkdir(wd.absolutePath());
+    if (!wd.exists()) wd.mkpath(wd.absolutePath());
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
     QDir("temp").removeRecursively();

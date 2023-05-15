@@ -146,7 +146,7 @@ void DialogManageRoutes::UpdateDisplayRouting(NekoRay::Routing *conf, bool qv) {
     //
     ui->sniffing_mode->setCurrentIndex(conf->sniffing_mode);
     ui->outbound_domain_strategy->setCurrentText(conf->outbound_domain_strategy);
-    ui->domainStrategyCombo->setCurrentText(conf->outbound_domain_strategy);
+    ui->domainStrategyCombo->setCurrentText(conf->domain_strategy);
     ui->use_dns_object->setChecked(conf->use_dns_object);
     ui->dns_object->setPlainText(conf->dns_object);
     ui->dns_routing->setChecked(conf->dns_routing);

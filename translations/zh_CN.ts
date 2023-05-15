@@ -235,6 +235,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>If you VPN mode is not working, try to change this option.</source>
         <translation>如果您的VPN模式有问题，请尝试更改此选项。</translation>
     </message>
+    <message>
+        <source>Default On</source>
+        <translation>默认开启</translation>
+    </message>
+    <message>
+        <source>Multiplex (mux)</source>
+        <translation>多路复用 Mux</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -408,6 +416,30 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     <message>
         <source>Custom Config Settings</source>
         <translation>自定义配置 JSON 设置</translation>
+    </message>
+    <message>
+        <source>Apply settings to this group</source>
+        <translation>将设置应用于该组</translation>
+    </message>
+    <message>
+        <source>Multiplex</source>
+        <translation>多路复用</translation>
+    </message>
+    <message>
+        <source>Keep Default</source>
+        <translation>保持默认</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>开启</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>关闭</translation>
+    </message>
+    <message>
+        <source>Confirm</source>
+        <translation>确认</translation>
     </message>
 </context>
 <context>
@@ -1424,6 +1456,10 @@ Split by line.</source>
     <message>
         <source>Please run NekoBox as admin</source>
         <translation>请以管理员权限运行 NekoBox</translation>
+    </message>
+    <message>
+        <source>Restart Proxy</source>
+        <translation>重启代理</translation>
     </message>
 </context>
 <context>

@@ -5,6 +5,8 @@
 #include "db/Database.hpp"
 #include "profile_editor.h"
 
+#include "ui/widget/FloatCheckBox.h"
+
 namespace Ui {
     class DialogEditProfile;
 }
@@ -29,8 +31,13 @@ private slots:
 
     void on_certificate_edit_clicked();
 
+    void on_apply_to_group_clicked();
+
 private:
     Ui::DialogEditProfile *ui;
+
+    std::map<QWidget *, FloatCheckBox *> apply_to_group_ui;
+
     QWidget *innerWidget{};
     ProfileEditor *innerEditor{};
 
@@ -49,7 +56,11 @@ private:
 
     void typeSelected(const QString &newType);
 
+    bool onEnd();
+
     void editor_cache_updated_impl();
+
+    void do_apply_to_group(const QSharedPointer<NekoRay::Group> &group, QWidget *key);
 };
 
 #endif // DIALOG_EDIT_PROFILE_H

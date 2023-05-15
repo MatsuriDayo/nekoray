@@ -132,6 +132,8 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         connect(ui->type, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
             typeSelected(ui->type->itemData(index).toString());
         });
+
+        ui->apply_to_group->hide();
     } else {
         this->ent = NekoRay::profileManager->GetProfile(profileOrGroupId);
         if (this->ent == nullptr) return;
@@ -226,6 +228,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         ui->ws_early_data_length->setText(Int2String(stream->ws_early_data_length));
         ui->reality_pbk->setText(stream->reality_pbk);
         ui->reality_sid->setText(stream->reality_sid);
+        ui->multiplex->setCurrentIndex(stream->multiplex_status);
         CACHE.certificate = stream->certificate;
     } else {
         ui->right_all_w->setVisible(false);
@@ -299,6 +302,13 @@ void DialogEditProfile::typeSelected(const QString &newType) {
             ui->security->setVisible(false);
             ui->security_l->setVisible(false);
         }
+        if (type == "vmess" || type == "vless" || type == "trojan" || type == "shadowsocks") {
+            ui->multiplex->setVisible(true);
+            ui->multiplex_l->setVisible(true);
+        } else {
+            ui->multiplex->setVisible(false);
+            ui->multiplex_l->setVisible(false);
+        }
         // 设置 是否可见
         int streamBoxVisible = 0;
         for (auto label: ui->stream_box->findChildren<QLabel *>()) {
@@ -322,7 +332,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 }
 
-void DialogEditProfile::accept() {
+bool DialogEditProfile::onEnd() {
     // 左边
     ent->bean->name = ui->name->text();
     ent->bean->serverAddress = ui->address->text();
@@ -330,7 +340,7 @@ void DialogEditProfile::accept() {
 
     // bean
     if (!innerEditor->onEnd()) {
-        return;
+        return false;
     }
 
     // 右边 stream
@@ -348,14 +358,24 @@ void DialogEditProfile::accept() {
         stream->header_type = ui->header_type->currentText();
         stream->ws_early_data_name = ui->ws_early_data_name->text();
         stream->ws_early_data_length = ui->ws_early_data_length->text().toInt();
-        stream->certificate = CACHE.certificate;
         stream->reality_pbk = ui->reality_pbk->text();
         stream->reality_sid = ui->reality_sid->text();
+        stream->multiplex_status = ui->multiplex->currentIndex();
+        stream->certificate = CACHE.certificate;
     }
 
     // cached custom
     ent->bean->custom_outbound = CACHE.custom_outbound;
     ent->bean->custom_config = CACHE.custom_config;
+
+    return true;
+}
+
+void DialogEditProfile::accept() {
+    // save to ent
+    if (!onEnd()) {
+        return;
+    }
 
     // finish
     QStringList msg = {"accept"};
@@ -419,5 +439,89 @@ void DialogEditProfile::on_certificate_edit_clicked() {
     if (ok) {
         CACHE.certificate = txt;
         editor_cache_updated_impl();
+    }
+}
+
+void DialogEditProfile::on_apply_to_group_clicked() {
+    if (apply_to_group_ui.empty()) {
+        apply_to_group_ui[ui->multiplex] = new FloatCheckBox(ui->multiplex, this);
+        apply_to_group_ui[ui->sni] = new FloatCheckBox(ui->sni, this);
+        apply_to_group_ui[ui->alpn] = new FloatCheckBox(ui->alpn, this);
+        apply_to_group_ui[ui->host] = new FloatCheckBox(ui->host, this);
+        apply_to_group_ui[ui->path] = new FloatCheckBox(ui->path, this);
+        apply_to_group_ui[ui->utlsFingerprint] = new FloatCheckBox(ui->utlsFingerprint, this);
+        apply_to_group_ui[ui->insecure] = new FloatCheckBox(ui->insecure, this);
+        apply_to_group_ui[ui->certificate_edit] = new FloatCheckBox(ui->certificate_edit, this);
+        apply_to_group_ui[ui->custom_config_edit] = new FloatCheckBox(ui->custom_config_edit, this);
+        apply_to_group_ui[ui->custom_outbound_edit] = new FloatCheckBox(ui->custom_outbound_edit, this);
+        ui->apply_to_group->setText(tr("Confirm"));
+    } else {
+        auto group = NekoRay::profileManager->GetGroup(ent->gid);
+        if (group == nullptr) {
+            MessageBoxWarning("failed", "unknown group");
+            return;
+        }
+        // save this
+        if (onEnd()) {
+            ent->Save();
+        } else {
+            MessageBoxWarning("failed", "failed to save");
+            return;
+        }
+        // copy keys
+        for (const auto &pair: apply_to_group_ui) {
+            if (pair.second->isChecked()) {
+                do_apply_to_group(group, pair.first);
+            }
+            delete pair.second;
+        }
+        apply_to_group_ui.clear();
+        ui->apply_to_group->setText(tr("Apply settings to this group"));
+    }
+}
+
+void DialogEditProfile::do_apply_to_group(const QSharedPointer<NekoRay::Group> &group, QWidget *key) {
+    auto stream = GetStreamSettings(ent->bean.data());
+
+    auto copyStream = [=](void *p) {
+        for (const auto &profile: group->Profiles()) {
+            auto newStream = GetStreamSettings(profile->bean.data());
+            if (newStream == nullptr) continue;
+            if (stream == newStream) continue;
+            newStream->_setValue(stream->_name(p), p);
+            // qDebug() << newStream->ToJsonBytes();
+            profile->Save();
+        }
+    };
+
+    auto copyBean = [=](void *p) {
+        for (const auto &profile: group->Profiles()) {
+            if (profile == ent) continue;
+            profile->bean->_setValue(ent->bean->_name(p), p);
+            // qDebug() << profile->bean->ToJsonBytes();
+            profile->Save();
+        }
+    };
+
+    if (key == ui->multiplex) {
+        copyStream(&stream->multiplex_status);
+    } else if (key == ui->sni) {
+        copyStream(&stream->sni);
+    } else if (key == ui->alpn) {
+        copyStream(&stream->alpn);
+    } else if (key == ui->host) {
+        copyStream(&stream->host);
+    } else if (key == ui->path) {
+        copyStream(&stream->path);
+    } else if (key == ui->utlsFingerprint) {
+        copyStream(&stream->utlsFingerprint);
+    } else if (key == ui->insecure) {
+        copyStream(&stream->allow_insecure);
+    } else if (key == ui->certificate_edit) {
+        copyStream(&stream->certificate);
+    } else if (key == ui->custom_config_edit) {
+        copyBean(&ent->bean->custom_config);
+    } else if (key == ui->custom_outbound_edit) {
+        copyBean(&ent->bean->custom_outbound);
     }
 }
