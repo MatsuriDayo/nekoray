@@ -16,15 +16,13 @@ git clone https://github.com/MatsuriDayo/nekoray.git --recursive
 
 ### 下载 Qt SDK
 
-目前使用的版本是 Qt 5.15.x
-
-暂时不建议使用 Qt 6.x
+目前 Windows Release 使用的版本是 Qt 6.5.x
 
 下载解压后，将 bin 目录添加到环境变量。
 
-#### Qt 5.15.7 MSVC2019 x86_64
+#### Release 编译用到的 Qt 包下载 (MSVC2019 x86_64)
 
-https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt5.15.7-Windows-x86_64-VS2019-16.11.20-20221103.7z
+https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
 
 #### 官方签名版 Qt 5.15.2 （可选，已知有内存泄漏的BUG）
 
