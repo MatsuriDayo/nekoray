@@ -26,11 +26,7 @@ namespace NekoRay::fmt {
             }
             if (ws_early_data_length > 0) {
                 ws["maxEarlyData"] = ws_early_data_length;
-                if (ws_early_data_name.isEmpty()) {
-                    ws["earlyDataHeaderName"] = "Sec-WebSocket-Protocol";
-                } else {
-                    ws["earlyDataHeaderName"] = ws_early_data_name;
-                }
+                ws["earlyDataHeaderName"] = ws_early_data_name;
             }
             streamSettings["wsSettings"] = ws;
         } else if (network == "http") {
