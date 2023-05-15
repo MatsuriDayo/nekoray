@@ -2,15 +2,15 @@
 
 Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 
-Support Windows / Linux / ~~macOS amd64~~ out of the box now.
+Support Windows / Linux out of the box now.
 
 基于 Qt 的跨平台代理配置管理器 (后端 v2ray / sing-box)
 
-目前支持 Windows / Linux / ~~macOS amd64~~ 开箱即用
+目前支持 Windows / Linux 开箱即用
 
 ## Readme Translations
 
-中文 / English (undone) / [fa_IR](README_fa.md)
+中文 / English / [fa_IR](README_fa.md)
 
 ## 下载 / Download
 
@@ -24,10 +24,10 @@ Support Windows / Linux / ~~macOS amd64~~ out of the box now.
 
 ### Package
 
-1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+1. AUR: [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
 2. Scoop extras: `scoop install nekoray`
-3. Homebrew (非官方发布 / unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
-4. APT (非官方发布 / unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
+3. macOS Homebrew (unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
+4. Linux apt (unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
 
 ## 更改记录 & 发布频道 / Changelog & Telegram channel
 
@@ -48,6 +48,7 @@ https://matsuridayo.github.io
 * NaïveProxy ( Custom Core )
 * Hysteria ( Custom Core or sing-box )
 * Custom Outbound
+* Custom Config
 * Custom Core
 
 ## 订阅 / Subscription
@@ -58,7 +59,7 @@ https://matsuridayo.github.io
 ## 运行参数
 
 - `-many` 无视同目录正在运行的实例，强行开启新的实例 (0.11+)。
-- `-appdata` 开启后配置文件会指定目录，未指定目录则使用共享目录，无法多开和自动升级 (0.11+)。
+- `-appdata` 开启后配置文件会指定目录，未指定目录则使用共享目录，无法多开和自动升级 (3.0+)。
 
 ## Windows 运行
 
@@ -70,7 +71,7 @@ https://matsuridayo.github.io
 
 ## macOS
 
-由于缺乏维护，不再提供 macOS 版本下载。最后包含 dmg 的版本是 [2.12](https://github.com/MatsuriDayo/nekoray/releases/download/2.12/nekoray-2.12-2023-01-29-macos-amd64.dmg) 和 [2.11](https://github.com/MatsuriDayo/nekoray/releases/download/2.11/nekoray-2.11-2023-01-13-macos-amd64.dmg)
+由于缺乏维护，不再提供 macOS 版本下载。
 
 您还可以在下面的存储库中非正式地获取更新版本。[非官方发布 / Unofficial releases](https://github.com/aaaamirabbas/nekoray-macos/releases)
 
