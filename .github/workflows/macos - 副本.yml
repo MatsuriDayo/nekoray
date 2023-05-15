@@ -1,4 +1,4 @@
-name: Nekoray build mac
+name: Nekoray build mac 2
 
 on:
   workflow_dispatch:
