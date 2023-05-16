@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/Dreamacro/clash v1.9.0
 	github.com/jsimonetti/rtnetlink v1.2.2
-	github.com/matsuridayo/libneko v0.0.0-20230304130313-5ea96b79b3c3
+	github.com/matsuridayo/libneko v1.0.0 // replaced
 	github.com/v2fly/v2ray-core/v5 v5.0.0 // replaced
 	grpc_server v1.0.0
 	kernel.org/pub/linux/libs/security/libcap/cap v1.2.65
@@ -67,6 +67,7 @@ require (
 	golang.org/x/sync v0.1.0 // indirect
 	golang.org/x/sys v0.3.0 // indirect
 	golang.org/x/text v0.5.0 // indirect
+	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.2.0 // indirect
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
@@ -76,7 +77,7 @@ require (
 	kernel.org/pub/linux/libs/security/libcap/psx v1.2.65 // indirect
 )
 
-replace neko v1.0.0 => ../../neko
+replace github.com/matsuridayo/libneko v1.0.0 => ../../../../libneko
 
 replace grpc_server v1.0.0 => ../../grpc_server
 

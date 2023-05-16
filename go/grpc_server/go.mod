@@ -4,7 +4,8 @@ go 1.19
 
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
-	github.com/matsuridayo/libneko v0.0.0-20230304130313-5ea96b79b3c3
+	github.com/matsuridayo/libneko v1.0.0 // replaced
+	golang.org/x/time v0.3.0
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
 )
@@ -17,3 +18,5 @@ require (
 	golang.org/x/text v0.3.7 // indirect
 	google.golang.org/genproto v0.0.0-20211223182754-3ac035c7e7cb // indirect
 )
+
+replace github.com/matsuridayo/libneko v1.0.0 => ../../../libneko

@@ -9,8 +9,6 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/matsuridayo/libneko/protect_server"
-
 	"github.com/jsimonetti/rtnetlink"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"
 )
@@ -59,14 +57,14 @@ func ToolBox() {
 				log.Println(set)
 			}
 		}
-	case "protect":
-		{
-			if protectListenPath == "" {
-				log.Println("missing protect-listen-path")
-				return
-			}
-			protect_server.ServeProtect(protectListenPath, protectFwMark)
-		}
+	// case "protect":
+	// 	{
+	// 		if protectListenPath == "" {
+	// 			log.Println("missing protect-listen-path")
+	// 			return
+	// 		}
+	// 		protect_server.ServeProtect(protectListenPath, protectFwMark)
+	// 	}
 	case "btd": // Test the permission
 		{
 			d := &net.Dialer{
