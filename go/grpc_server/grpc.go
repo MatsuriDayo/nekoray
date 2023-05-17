@@ -17,12 +17,9 @@ import (
 	"time"
 
 	"github.com/matsuridayo/libneko/neko_common"
-	"github.com/matsuridayo/libneko/neko_log"
 
 	grpc_auth "github.com/grpc-ecosystem/go-grpc-middleware/auth"
 	"google.golang.org/grpc"
-
-	"golang.org/x/time/rate"
 )
 
 type BaseServer struct {
@@ -44,8 +41,6 @@ func RunCore(setupCore func(), server gen.LibcoreServiceServer) {
 	flag.CommandLine.Parse(os.Args[2:])
 
 	neko_common.Debug = *_debug
-	neko_log.RateLimiter = rate.NewLimiter(rate.Limit(100), 150)
-	neko_log.RateLimitExit = true
 
 	go func() {
 		parent, err := os.FindProcess(os.Getppid())
