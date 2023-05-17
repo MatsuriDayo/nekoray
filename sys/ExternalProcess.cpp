@@ -97,12 +97,12 @@ namespace NekoRay::sys {
         connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
             NekoRay::dataStore->core_running = state == QProcess::Running;
 
-            if (!dataStore->core_prepare_exit && state == QProcess::NotRunning) {
+            if (!dataStore->prepare_exit && state == QProcess::NotRunning) {
                 if (failed_to_start) return; // no retry
 
                 restart_id = NekoRay::dataStore->started_id;
                 MW_dialog_message("ExternalProcess", "Crashed");
-                MW_show_log("[Error] core exited, restarting.\n");
+                MW_show_log("[Error] " + QObject::tr("Core exited, restarting."));
 
                 // Restart
                 setTimeout(

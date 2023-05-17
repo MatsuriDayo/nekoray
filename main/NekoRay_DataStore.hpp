@@ -67,7 +67,7 @@ namespace NekoRay {
         int core_port = 19810;
         int started_id = -1919;
         bool core_running = false;
-        bool core_prepare_exit = false;
+        bool prepare_exit = false;
         bool spmode_vpn = false;
         bool spmode_system_proxy = false;
         bool need_keep_vpn_off = false;

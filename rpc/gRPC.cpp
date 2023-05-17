@@ -220,7 +220,7 @@ namespace NekoRay::rpc {
 
     QString Client::Start(bool *rpcOK, const libcore::LoadConfigReq &request) {
         libcore::ErrorResp reply;
-        auto status = default_grpc_channel->Call("Start", request, &reply, 3000);
+        auto status = default_grpc_channel->Call("Start", request, &reply);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;
@@ -234,7 +234,7 @@ namespace NekoRay::rpc {
     QString Client::Stop(bool *rpcOK) {
         libcore::EmptyReq request;
         libcore::ErrorResp reply;
-        auto status = default_grpc_channel->Call("Stop", request, &reply, 3000);
+        auto status = default_grpc_channel->Call("Stop", request, &reply);
 
         if (status == QNetworkReply::NoError) {
             *rpcOK = true;

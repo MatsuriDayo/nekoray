@@ -248,54 +248,8 @@
        <string>Style</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_5">
-       <item row="4" column="0">
-        <layout class="QHBoxLayout" name="_4">
-         <item>
-          <widget class="QGroupBox" name="groupBox_4">
-           <layout class="QHBoxLayout" name="_2">
-            <item>
-             <widget class="QPushButton" name="set_custom_icon">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="text">
-               <string>Set custom icon</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_2">
-           <layout class="QHBoxLayout" name="horizontalLayout_23">
-            <item>
-             <widget class="QLabel" name="label_17">
-              <property name="text">
-               <string>Max log lines</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="max_log_line">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
        <item row="0" column="0">
-        <layout class="QHBoxLayout" name="_3">
+        <layout class="QHBoxLayout" name="style_h_1">
          <item>
           <widget class="QGroupBox" name="groupBox">
            <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -334,6 +288,19 @@
                 <string notr="true">blacksoft</string>
                </property>
               </item>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="set_custom_icon">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Set custom icon</string>
+              </property>
              </widget>
             </item>
            </layout>
@@ -384,8 +351,8 @@
          </item>
         </layout>
        </item>
-       <item row="3" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_12">
+       <item row="2" column="0">
+        <layout class="QHBoxLayout" name="style_h_2">
          <item>
           <widget class="QGroupBox" name="traffic_statistics_box">
            <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -440,8 +407,8 @@
          </item>
         </layout>
        </item>
-       <item row="5" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_24">
+       <item row="3" column="0">
+        <layout class="QHBoxLayout" name="style_h_3">
          <item>
           <widget class="QGroupBox" name="horizontalGroupBox_5">
            <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -462,15 +429,22 @@
           </widget>
          </item>
          <item>
-          <widget class="QGroupBox" name="groupBox_3">
-           <layout class="QHBoxLayout" name="horizontalLayout_25">
+          <widget class="QGroupBox" name="groupBox_2">
+           <layout class="QHBoxLayout" name="horizontalLayout_23">
             <item>
-             <widget class="QCheckBox" name="AA_EnableHighDpiScaling">
-              <property name="toolTip">
-               <string notr="true">Enable Qt::AA_EnableHighDpiScaling, maybe useful for HiDPI screens.</string>
-              </property>
+             <widget class="QLabel" name="label_17">
               <property name="text">
-               <string notr="true">HiDPI Screen workaround</string>
+               <string>Max log lines</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="max_log_line">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
              </widget>
             </item>
@@ -496,13 +470,6 @@
        <item row="0" column="1">
         <widget class="MyLineEdit" name="user_agent"/>
        </item>
-       <item row="3" column="1">
-        <widget class="QCheckBox" name="sub_clear">
-         <property name="text">
-          <string>Clear servers before updating subscription</string>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="1">
         <widget class="QCheckBox" name="sub_use_proxy">
          <property name="text">
@@ -514,6 +481,13 @@
         <widget class="QCheckBox" name="sub_insecure">
          <property name="text">
           <string>Ignore TLS errors when updating subscription</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QCheckBox" name="sub_clear">
+         <property name="text">
+          <string>Clear servers before updating subscription</string>
          </property>
         </widget>
        </item>
@@ -655,8 +629,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>568</width>
-            <height>297</height>
+            <width>198</width>
+            <height>58</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">

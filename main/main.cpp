@@ -111,6 +111,7 @@ int main(int argc, char* argv[]) {
     QDir("temp").removeRecursively();
 
     // HiDPI workaround
+    // Mainly for Windows, not required in Qt6
     if (ReadFileText("./groups/HiDPI").toInt() == 1) {
         QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
         QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
