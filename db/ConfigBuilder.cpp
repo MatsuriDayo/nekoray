@@ -633,6 +633,10 @@ namespace NekoRay {
                 }
             }
 
+            if (ent->type == "vless" && IS_NEKO_BOX) {
+                needMux = false; // TODO remove after 1.3 core
+            }
+
             // common
             if (IS_NEKO_BOX) {
                 // apply domain_strategy
