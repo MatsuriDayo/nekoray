@@ -1454,6 +1454,22 @@ End: %2</source>
         <source>Restart Proxy</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>If there is no response for a long time, it is recommended to restart the software.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to start profile %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Failed to stop, please restart the program.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Core exits too frequently, stop automatic restart this profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1584,6 +1600,10 @@ Direct: %2</source>
     </message>
     <message>
         <source>Subscription request fininshed: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Core exited, restarting.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

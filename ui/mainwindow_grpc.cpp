@@ -5,6 +5,7 @@
 #include "db/ConfigBuilder.hpp"
 #include "db/TrafficLooper.hpp"
 #include "rpc/gRPC.h"
+#include "ui/widget/MessageBoxTimer.h"
 
 #include <QTimer>
 #include <QThread>
@@ -194,6 +195,8 @@ void MainWindow::stop_core_daemon() {
 }
 
 void MainWindow::neko_start(int _id) {
+    if (NekoRay::dataStore->prepare_exit) return;
+
     auto ents = get_now_selected();
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoRay::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
@@ -214,79 +217,147 @@ void MainWindow::neko_start(int _id) {
         return;
     }
 
-    if (NekoRay::dataStore->started_id >= 0) neko_stop();
-    show_log_impl(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
-
+    auto neko_start_stage2 = [=] {
 #ifndef NKR_NO_GRPC
-    libcore::LoadConfigReq req;
-    req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
-    req.set_enable_nekoray_connections(NekoRay::dataStore->connection_statistics);
-    if (NekoRay::dataStore->traffic_loop_interval > 0) {
-        req.add_stats_outbounds("proxy");
-        req.add_stats_outbounds("bypass");
-    }
-    //
-    bool rpcOK;
-    QString error = defaultClient->Start(&rpcOK, req);
-    if (rpcOK && !error.isEmpty()) {
-        MessageBoxWarning("LoadConfig return error", error);
-        return;
-    }
-    //
-    NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
-    NekoRay::traffic::trafficLooper->items = result->outboundStats;
-    NekoRay::dataStore->ignoreConnTag = result->ignoreConnTag;
-    NekoRay::traffic::trafficLooper->loop_enabled = true;
+        libcore::LoadConfigReq req;
+        req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
+        req.set_enable_nekoray_connections(NekoRay::dataStore->connection_statistics);
+        if (NekoRay::dataStore->traffic_loop_interval > 0) {
+            req.add_stats_outbounds("proxy");
+            req.add_stats_outbounds("bypass");
+        }
+        //
+        bool rpcOK;
+        QString error = defaultClient->Start(&rpcOK, req);
+        if (rpcOK && !error.isEmpty()) {
+            runOnUiThread([=] { MessageBoxWarning("LoadConfig return error", error); });
+            return false;
+        }
+        //
+        NekoRay::traffic::trafficLooper->proxy = result->outboundStat.get();
+        NekoRay::traffic::trafficLooper->items = result->outboundStats;
+        NekoRay::dataStore->ignoreConnTag = result->ignoreConnTag;
+        NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
-    for (const auto &ext: result->exts) {
-        NekoRay::sys::running_ext.push_back(ext.second);
-        ext.second->Start();
-    }
+        for (const auto &ext: result->exts) {
+            NekoRay::sys::running_ext.push_back(ext.second);
+            ext.second->Start();
+        }
 
-    NekoRay::dataStore->UpdateStartedId(ent->id);
-    running = ent;
-    refresh_status();
-    refresh_proxy_list(ent->id);
+        NekoRay::dataStore->UpdateStartedId(ent->id);
+        running = ent;
+
+        runOnUiThread([=] {
+            refresh_status();
+            refresh_proxy_list(ent->id);
+        });
+
+        return true;
+    };
+
+    if (!mu_starting.tryLock()) return;
+
+    // timeout message
+    auto restartMsgbox = new QMessageBox(QMessageBox::Question, software_name, tr("If there is no response for a long time, it is recommended to restart the software."),
+                                         QMessageBox::Yes | QMessageBox::No, this);
+    connect(restartMsgbox, &QMessageBox::accepted, this, [=] { MW_dialog_message("", "RestartProgram"); });
+    auto restartMsgboxTimer = new MessageBoxTimer(this, restartMsgbox, 5000);
+
+    runOnNewThread([=] {
+        // stop current running
+        if (NekoRay::dataStore->started_id >= 0) {
+            runOnUiThread([=] { neko_stop(false, true); });
+            sem_stopped.acquire();
+        }
+        // do start
+        MW_show_log(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
+        if (!neko_start_stage2()) {
+            MW_show_log("<<<<<<<< " + tr("Failed to start profile %1").arg(ent->bean->DisplayTypeAndName()));
+        }
+        mu_starting.unlock();
+        // cancel timeout
+        runOnUiThread([=] {
+            restartMsgboxTimer->cancel();
+            restartMsgboxTimer->deleteLater();
+            restartMsgbox->deleteLater();
+        });
+    });
 }
 
-void MainWindow::neko_stop(bool crash) {
+void MainWindow::neko_stop(bool crash, bool sem) {
     auto id = NekoRay::dataStore->started_id;
-    if (id < 0) return;
-    show_log_impl(">>>>>>>> " + tr("Stopping profile %1").arg(running->bean->DisplayTypeAndName()));
-
-    while (!NekoRay::sys::running_ext.isEmpty()) {
-        auto extC = NekoRay::sys::running_ext.takeFirst();
-        extC->Kill();
+    if (id < 0) {
+        if (sem) sem_stopped.release();
+        return;
     }
+
+    auto neko_stop_stage2 = [=] {
+        while (!NekoRay::sys::running_ext.isEmpty()) {
+            auto extC = NekoRay::sys::running_ext.takeFirst();
+            extC->Kill();
+        }
 
 #ifndef NKR_NO_GRPC
-    NekoRay::traffic::trafficLooper->loop_enabled = false;
-    NekoRay::traffic::trafficLooper->loop_mutex.lock();
-    if (NekoRay::dataStore->traffic_loop_interval != 0) {
-        NekoRay::traffic::trafficLooper->UpdateAll();
-        for (const auto &item: NekoRay::traffic::trafficLooper->items) {
-            NekoRay::profileManager->GetProfile(item->id)->Save();
-            refresh_proxy_list(item->id);
+        NekoRay::traffic::trafficLooper->loop_enabled = false;
+        NekoRay::traffic::trafficLooper->loop_mutex.lock();
+        if (NekoRay::dataStore->traffic_loop_interval != 0) {
+            NekoRay::traffic::trafficLooper->UpdateAll();
+            for (const auto &item: NekoRay::traffic::trafficLooper->items) {
+                NekoRay::profileManager->GetProfile(item->id)->Save();
+                runOnUiThread([=] { refresh_proxy_list(item->id); });
+            }
         }
-    }
-    NekoRay::traffic::trafficLooper->loop_mutex.unlock();
+        NekoRay::traffic::trafficLooper->loop_mutex.unlock();
 
-    if (!crash) {
-        bool rpcOK;
-        QString error = defaultClient->Stop(&rpcOK);
-        if (rpcOK && !error.isEmpty()) {
-            MessageBoxWarning("Stop return error", error);
-            return;
+        if (!crash) {
+            bool rpcOK;
+            QString error = defaultClient->Stop(&rpcOK);
+            if (rpcOK && !error.isEmpty()) {
+                runOnUiThread([=] { MessageBoxWarning("Stop return error", error); });
+                return false;
+            }
         }
-    }
 #endif
 
-    NekoRay::dataStore->UpdateStartedId(-1919);
-    NekoRay::dataStore->need_keep_vpn_off = false;
-    running = nullptr;
-    refresh_status();
-    refresh_proxy_list(id);
+        NekoRay::dataStore->UpdateStartedId(-1919);
+        NekoRay::dataStore->need_keep_vpn_off = false;
+        running = nullptr;
+
+        runOnUiThread([=] {
+            refresh_status();
+            refresh_proxy_list(id);
+        });
+
+        return true;
+    };
+
+    if (!mu_stopping.tryLock()) {
+        if (sem) sem_stopped.release();
+        return;
+    }
+
+    // timeout message
+    auto restartMsgbox = new QMessageBox(QMessageBox::Question, software_name, tr("If there is no response for a long time, it is recommended to restart the software."),
+                                         QMessageBox::Yes | QMessageBox::No, this);
+    connect(restartMsgbox, &QMessageBox::accepted, this, [=] { MW_dialog_message("", "RestartProgram"); });
+    auto restartMsgboxTimer = new MessageBoxTimer(this, restartMsgbox, 5000);
+
+    runOnNewThread([=] {
+        // do stop
+        MW_show_log(">>>>>>>> " + tr("Stopping profile %1").arg(running->bean->DisplayTypeAndName()));
+        if (!neko_stop_stage2()) {
+            MW_show_log("<<<<<<<< " + tr("Failed to stop, please restart the program."));
+        }
+        mu_stopping.unlock();
+        if (sem) sem_stopped.release();
+        // cancel timeout
+        runOnUiThread([=] {
+            restartMsgboxTimer->cancel();
+            restartMsgboxTimer->deleteLater();
+            restartMsgbox->deleteLater();
+        });
+    });
 }
 
 void MainWindow::CheckUpdate() {

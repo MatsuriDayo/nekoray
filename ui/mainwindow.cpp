@@ -46,6 +46,8 @@
 #include <QDir>
 #include <QFileInfo>
 
+QElapsedTimer coreRestartTimer;
+
 void UI_InitMainWindow() {
     mainwindow = new MainWindow;
 }
@@ -564,6 +566,16 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         if (info == "Crashed") {
             neko_stop();
         } else if (info.startsWith("CoreRestarted")) {
+            if (coreRestartTimer.isValid()) {
+                auto elasped = coreRestartTimer.restart();
+                if (elasped < 10 * 1000) {
+                    coreRestartTimer = QElapsedTimer();
+                    show_log_impl("[Error] " + tr("Core exits too frequently, stop automatic restart this profile."));
+                    return;
+                }
+            } else {
+                coreRestartTimer.start();
+            }
             neko_start(info.split(",")[1].toInt());
         }
     }
@@ -615,7 +627,6 @@ void MainWindow::on_commitDataRequest() {
     NekoRay::dataStore->splitter_state = ui->splitter->saveState().toBase64();
     //
     auto last_id = NekoRay::dataStore->started_id;
-    neko_stop();
     if (NekoRay::dataStore->remember_enable && last_id >= 0) {
         NekoRay::dataStore->remember_id = last_id;
     }
@@ -625,16 +636,32 @@ void MainWindow::on_commitDataRequest() {
 }
 
 void MainWindow::on_menu_exit_triggered() {
-    neko_set_spmode_system_proxy(false, false);
-    neko_set_spmode_vpn(false, false);
-    if (NekoRay::dataStore->spmode_vpn) return;
-    RegisterHotkey(true);
-    //
-    on_commitDataRequest();
-    //
-    NekoRay::dataStore->core_prepare_exit = true;
-    hide();
-    stop_core_daemon();
+    if (mu_exit.tryLock()) {
+        NekoRay::dataStore->prepare_exit = true;
+        //
+        neko_set_spmode_system_proxy(false, false);
+        neko_set_spmode_vpn(false, false);
+        if (NekoRay::dataStore->spmode_vpn) {
+            mu_exit.unlock(); // retry
+            return;
+        }
+        RegisterHotkey(true);
+        //
+        on_commitDataRequest();
+        //
+        NekoRay::dataStore->save_control_no_save = true; // don't change datastore after this line
+        neko_stop(false, true);
+        //
+        hide();
+        runOnNewThread([=] {
+            sem_stopped.acquire();
+            stop_core_daemon();
+            runOnUiThread([=] {
+                on_menu_exit_triggered(); // continue exit progress
+            });
+        });
+        return;
+    }
     //
     MF_release_runguard();
     if (exit_reason == 1) {

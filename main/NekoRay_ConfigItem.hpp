@@ -36,6 +36,7 @@ namespace NekoRay {
         QString fn;
         bool load_control_must = false; // must load from file
         bool save_control_compact = false;
+        bool save_control_no_save = false;
         QByteArray last_save_content;
 
         JsonStore() = default;

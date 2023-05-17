@@ -13,6 +13,8 @@
 #include <QProcess>
 #include <QTextDocument>
 #include <QShortcut>
+#include <QSemaphore>
+#include <QMutex>
 
 #include "GroupSort.hpp"
 
@@ -49,7 +51,7 @@ public:
 
     void neko_start(int _id = -1);
 
-    void neko_stop(bool crash = false);
+    void neko_stop(bool crash = false, bool sem = false);
 
     void neko_set_spmode_system_proxy(bool enable, bool save = true);
 
@@ -153,6 +155,10 @@ private:
     //
     int proxy_last_order = -1;
     bool select_mode = false;
+    QMutex mu_starting;
+    QMutex mu_stopping;
+    QMutex mu_exit;
+    QSemaphore sem_stopped;
     int exit_reason = 0;
 
     QMap<int, QSharedPointer<NekoRay::ProxyEntity>> get_now_selected();

@@ -359,6 +359,7 @@ namespace NekoRay {
 
     bool JsonStore::Save() {
         if (callback_before_save != nullptr) callback_before_save();
+        if (save_control_no_save) return false;
 
         auto save_content = ToJsonBytes();
         auto changed = last_save_content != save_content;

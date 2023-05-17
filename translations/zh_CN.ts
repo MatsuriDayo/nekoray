@@ -1461,6 +1461,22 @@ Split by line.</source>
         <source>Restart Proxy</source>
         <translation>重启代理</translation>
     </message>
+    <message>
+        <source>Failed to start profile %1</source>
+        <translation>启动配置失败: %1</translation>
+    </message>
+    <message>
+        <source>Failed to stop, please restart the program.</source>
+        <translation>停止失败，请重启程序。</translation>
+    </message>
+    <message>
+        <source>If there is no response for a long time, it is recommended to restart the software.</source>
+        <translation>如果长时间没有反应，建议重启软件。</translation>
+    </message>
+    <message>
+        <source>Core exits too frequently, stop automatic restart this profile.</source>
+        <translation>Core 退出太频繁，停止自动重启。</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1591,6 +1607,10 @@ Release note:
     <message>
         <source>Subscription request fininshed: %1</source>
         <translation>订阅请求完成: %1</translation>
+    </message>
+    <message>
+        <source>Core exited, restarting.</source>
+        <translation>Core 退出，正在重新启动。</translation>
     </message>
 </context>
 <context>
