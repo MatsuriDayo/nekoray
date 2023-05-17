@@ -1,4 +1,4 @@
-name: Nekoray build mac os
+name: Nekoray build matrix - cmake - with macOS
 
 on:
   workflow_dispatch:
@@ -58,15 +58,13 @@ jobs:
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-20.04, macos-10.15 ]
+        platform: [ windows-2022, ubuntu-20.04, macos-11 ]
         arch: [ x64 ]
       fail-fast: false
 
     runs-on: ${{ matrix.platform }}
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-    needs:
-      - build-go
     steps:
       - name: Checking out sources
         uses: actions/checkout@v3
@@ -80,36 +78,30 @@ jobs:
           toolset: 14.2
           arch: ${{ matrix.arch }}
       - name: Download Artifacts for macOS
-        if: matrix.platform == 'macos-10.15'
+        if: matrix.platform == 'macos-11'
         uses: actions/download-artifact@v3
         with:
           path: download-artifact
       # ========================================================================================================= Qt Install
-      - name: macOS - Install Qt 5.15
-        if: matrix.platform == 'macos-10.15'
+      - name: macOS - Install Qt 6.5
+        if: matrix.platform == 'macos-11'
         uses: jurplel/install-qt-action@v3
         with:
-          version: 5.15.2
+          version: 6.5.0
           py7zrversion: ' '
           aqtversion: ' '
           setup-python: false
           cache: true
           cache-key-prefix: QtCache-${{ matrix.platform }}-${{ matrix.arch }}
-      - name: Windows - Download Custom Qt 5.15 SDK
+      - name: Windows - Download Custom Qt 6.5 SDK
         shell: bash
         if: matrix.platform == 'windows-2022'
         run: |
           mkdir qtsdk ; cd qtsdk
-          curl -LSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt5.15.7-Windows-x86_64-VS2019-16.11.20-20221103.7z
+          curl -LSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
           7z x *.7z
           rm *.7z
           mv Qt* Qt
-      - name: Linux - Install Qt 5.12 via apt
-        shell: bash
-        if: matrix.platform == 'ubuntu-20.04'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y zlib1g-dev fcitx-frontend-qt5 qtbase5-dev qttools5-dev libqt5svg5-dev libqt5x11extras5-dev
       # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v3
@@ -121,9 +113,18 @@ jobs:
           key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}
       - name: Build Dependencies
         shell: bash
-        if: steps.cache-deps.outputs.cache-hit != 'true'
+        if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform != 'ubuntu-20.04'
         run: |
           ./libs/build_deps_all.sh
+      - name: Build Dependencies (Docker)
+        shell: bash
+        if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform == 'ubuntu-20.04'
+        run: |
+          docker run --rm \
+            -v $PWD:/nekoray \
+            -w /nekoray \
+            ghcr.io/matsuridayo/debian10-qt5:20230131 \
+            bash -c "./libs/build_deps_all.sh"
       # ========================================================================================================= Generate MakeFile and Build
       - name: Windows - Generate MakeFile and Build
         shell: bash
@@ -135,7 +136,7 @@ jobs:
           source libs/env_qtsdk.sh $PWD/qtsdk/Qt
           mkdir build
           cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+          cmake -GNinja -DQT_VERSION_MAJOR=6 -DCMAKE_BUILD_TYPE=Release ..
           ninja
           cd ..
           ./libs/deploy_windows64.sh
@@ -143,19 +144,18 @@ jobs:
         shell: bash
         if: matrix.platform == 'ubuntu-20.04'
         run: |
-          mkdir build
-          cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
-          ninja
-          cd ..
-          ./libs/deploy_linux64.sh
+          docker run --rm \
+            -v $PWD:/nekoray \
+            -w /nekoray \
+            ghcr.io/matsuridayo/debian10-qt5:20230131 \
+            bash -c "mkdir build && pushd build && cmake -GNinja -DCMAKE_BUILD_TYPE=Release .. && ninja && popd &&./libs/deploy_linux64.sh"
       - name: macOS - Generate MakeFile and Build
         shell: bash
-        if: matrix.platform == 'macos-10.15'
+        if: matrix.platform == 'macos-11'
         run: |
           mkdir build
           cd build
-          cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DNKR_PACKAGE_MACOS=1 ..
+          cmake -GNinja -DQT_VERSION_MAJOR=6 -DCMAKE_BUILD_TYPE=Release -DNKR_PACKAGE_MACOS=1 ..
           ninja
           cd ..
           ./libs/deploy_macos.sh
@@ -184,9 +184,10 @@ jobs:
           path: download-artifact
       - name: Pack
         run: |
-          source libs/deploy_common.sh
           curl -Lo - https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar xzv
           mv ghr*linux_amd64/ghr .
+          ####
+          source libs/deploy_common.sh
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
@@ -203,6 +204,34 @@ jobs:
           ####
           mv macos-amd64/nekoray.dmg $version_standalone-macos-amd64.dmg
           rm -rf macos-amd64
+      - name: Pack Debian
+        if: github.event.inputs.publish != 'y'
+        run: |
+          source libs/deploy_common.sh
+          find . -name artifacts.tgz | xargs -n1 tar xvzf
+          cd deployment
+          cp -r public_res/* linux64
+          cp -r public_res/* windows64
+          rm -rf public_res *.pdb
+          ####
+          bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
+          mv nekoray.deb $version_standalone-debian-x64.deb
+          sudo rm -rf nekoray
+      - name: Pack AppImage
+        run: |
+          source libs/deploy_common.sh
+          find . -name artifacts.tgz | xargs -n1 tar xvzf
+          cd deployment
+          cp -r public_res/* linux64
+          rm -rf public_res *.pdb
+          ####
+          bash ../libs/package_appimage.sh
+          mv nekoray-x86_64.AppImage $version_standalone-linux-x64.AppImage
+      - name: Clean Up
+        run: |
+          cd deployment
+          rm -rf linux64
+          rm -rf windows64
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:
