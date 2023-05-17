@@ -45,6 +45,7 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
+#include <QElapsedTimer>
 
 QElapsedTimer coreRestartTimer;
 
@@ -671,7 +672,10 @@ void MainWindow::on_menu_exit_triggered() {
         QDir::setCurrent(QApplication::applicationDirPath());
 
         auto arguments = NekoRay::dataStore->argv;
-        if (arguments.length() > 0) arguments.removeFirst();
+        if (arguments.length() > 0) {
+            arguments.removeFirst();
+            arguments.removeAll("-tray");
+        }
         auto isLauncher = qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1";
         if (isLauncher) arguments.prepend("--");
         auto program = isLauncher ? "./launcher" : QApplication::applicationFilePath();

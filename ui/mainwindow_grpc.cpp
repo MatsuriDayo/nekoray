@@ -256,7 +256,10 @@ void MainWindow::neko_start(int _id) {
         return true;
     };
 
-    if (!mu_starting.tryLock()) return;
+    if (!mu_starting.tryLock()) {
+        MessageBoxWarning(software_name, "Another profile is starting...");
+        return;
+    }
 
     // timeout message
     auto restartMsgbox = new QMessageBox(QMessageBox::Question, software_name, tr("If there is no response for a long time, it is recommended to restart the software."),

@@ -677,10 +677,6 @@ These settings can be changed later.</source>
         <translation>VPN 设置</translation>
     </message>
     <message>
-        <source>VPN Implementation</source>
-        <translation>VPN 实现</translation>
-    </message>
-    <message>
         <source>Hide Console</source>
         <translation>隐藏控制台</translation>
     </message>

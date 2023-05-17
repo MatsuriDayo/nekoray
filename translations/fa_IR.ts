@@ -679,10 +679,6 @@ These settings can be changed later.</source>
         <translation>تنظیمات vpn</translation>
     </message>
     <message>
-        <source>VPN Implementation</source>
-        <translation>پیاده سازی VPN</translation>
-    </message>
-    <message>
         <source>Hide Console</source>
         <translation>مخفی کردن کنسول</translation>
     </message>

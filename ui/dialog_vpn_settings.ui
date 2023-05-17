@@ -32,7 +32,7 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>VPN Implementation</string>
+         <string notr="true">Stack</string>
         </property>
        </widget>
       </item>
