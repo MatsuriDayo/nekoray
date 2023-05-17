@@ -26,11 +26,6 @@ void MainWindow::setup_grpc() {
             MW_show_log("[Error] gRPC: " + errStr);
         },
         "127.0.0.1:" + Int2String(NekoRay::dataStore->core_port), NekoRay::dataStore->core_token);
-    auto t = new QTimer();
-    connect(t, &QTimer::timeout, this, [=]() {
-        refresh_status();
-    });
-    t->start(2000);
 
     // Looper
     runOnNewThread([=] { NekoRay::traffic::trafficLooper->Loop(); });
