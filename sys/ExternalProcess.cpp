@@ -101,7 +101,7 @@ namespace NekoRay::sys {
                 if (failed_to_start) return; // no retry
 
                 restart_id = NekoRay::dataStore->started_id;
-                MW_dialog_message("ExternalProcess", "Crashed");
+                MW_dialog_message("ExternalProcess", "CoreCrashed");
                 MW_show_log("[Error] " + QObject::tr("Core exited, restarting."));
 
                 // Restart

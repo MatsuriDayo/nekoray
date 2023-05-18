@@ -47,7 +47,7 @@
 #include <QElapsedTimer>
 
 QElapsedTimer coreRestartTimer;
-QAtomicInt logCounter;
+// QAtomicInt logCounter;
 
 void UI_InitMainWindow() {
     mainwindow = new MainWindow;
@@ -151,10 +151,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         runOnUiThread([=] { show_log_impl(cleanVT100String(log)); });
     };
     //
-    auto logCounterTimer = new QTimer(this);
-    connect(logCounterTimer, &QTimer::timeout, this, [&] { logCounter.fetchAndStoreRelaxed(0); });
-    logCounterTimer->setInterval(1000);
-    logCounterTimer->start();
+    // auto logCounterTimer = new QTimer(this);
+    // connect(logCounterTimer, &QTimer::timeout, this, [&] { logCounter.fetchAndStoreRelaxed(0); });
+    // logCounterTimer->setInterval(1000);
+    // logCounterTimer->start();
 
     // table UI
     ui->proxyListTable->callback_save_order = [=] {
@@ -571,10 +571,11 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     } else if (sender == "ExternalProcess") {
         if (info == "Crashed") {
             neko_stop();
+        } else if (info == "CoreCrashed") {
+            neko_stop(true);
         } else if (info.startsWith("CoreRestarted")) {
             if (coreRestartTimer.isValid()) {
-                auto elasped = coreRestartTimer.restart();
-                if (elasped < 10 * 1000) {
+                if (coreRestartTimer.restart() < 10 * 1000) {
                     coreRestartTimer = QElapsedTimer();
                     show_log_impl("[Error] " + tr("Core exits too frequently, stop automatic restart this profile."));
                     return;
@@ -677,7 +678,10 @@ void MainWindow::on_menu_exit_triggered() {
         QDir::setCurrent(QApplication::applicationDirPath());
 
         auto arguments = NekoRay::dataStore->argv;
-        if (arguments.length() > 0) arguments.removeFirst();
+        if (arguments.length() > 0) {
+            arguments.removeFirst();
+            arguments.removeAll("-tray");
+        }
         auto isLauncher = qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1";
         if (isLauncher) arguments.prepend("--");
         auto program = isLauncher ? "./launcher" : QApplication::applicationFilePath();
@@ -1493,7 +1497,7 @@ void MainWindow::show_log_impl(const QString &log) {
         if (showThisLine) newLines << line;
     }
     if (newLines.isEmpty()) return;
-    if (logCounter.fetchAndAddRelaxed(newLines.count()) > NekoRay::dataStore->max_log_line) return;
+    // if (logCounter.fetchAndAddRelaxed(newLines.count()) > NekoRay::dataStore->max_log_line) return;
 
     FastAppendTextDocument(newLines.join("\n"), qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);
