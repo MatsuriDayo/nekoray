@@ -178,6 +178,16 @@ void MainWindow::speedtest_current() {
             } else if (latency > 0) {
                 ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
             }
+            //
+            auto t = new QTimer(this);
+            connect(t, &QTimer::timeout, this, [=] {
+                last_test_time = QTime();
+                refresh_status();
+                t->deleteLater();
+            });
+            t->setInterval(1000);
+            t->setSingleShot(true);
+            t->start();
         });
     });
 #endif
