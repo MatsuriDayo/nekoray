@@ -230,6 +230,15 @@ void MainWindow::neko_start(int _id) {
     }
 
     auto neko_start_stage2 = [=] {
+        if (!NekoRay::dataStore->core_running) {
+            runOnUiThread(
+                [=] {
+                    core_process->Restart();
+                },
+                DS_cores);
+            QThread::sleep(1);
+        }
+
 #ifndef NKR_NO_GRPC
         libcore::LoadConfigReq req;
         req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
@@ -243,6 +252,8 @@ void MainWindow::neko_start(int _id) {
         QString error = defaultClient->Start(&rpcOK, req);
         if (rpcOK && !error.isEmpty()) {
             runOnUiThread([=] { MessageBoxWarning("LoadConfig return error", error); });
+            return false;
+        } else if (!rpcOK) {
             return false;
         }
         //
@@ -337,6 +348,8 @@ void MainWindow::neko_stop(bool crash, bool sem) {
             QString error = defaultClient->Stop(&rpcOK);
             if (rpcOK && !error.isEmpty()) {
                 runOnUiThread([=] { MessageBoxWarning("Stop return error", error); });
+                return false;
+            } else if (!rpcOK) {
                 return false;
             }
         }

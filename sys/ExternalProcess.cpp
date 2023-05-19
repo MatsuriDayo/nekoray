@@ -4,7 +4,7 @@
 #include <QTimer>
 #include <QDir>
 #include <QApplication>
-#include <QThread>
+#include <QElapsedTimer>
 
 namespace NekoRay::sys {
 
@@ -74,6 +74,10 @@ namespace NekoRay::sys {
         }
     }
 
+    //
+
+    QElapsedTimer coreRestartTimer;
+
     CoreProcess::CoreProcess(const QString &core_path, const QStringList &args) : ExternalProcess() {
         ExternalProcess::managed = false;
         ExternalProcess::program = core_path;
@@ -106,18 +110,24 @@ namespace NekoRay::sys {
             if (!dataStore->prepare_exit && state == QProcess::NotRunning) {
                 if (failed_to_start) return; // no retry
 
-                restart_id = NekoRay::dataStore->started_id;
                 MW_dialog_message("ExternalProcess", "CoreCrashed");
-                MW_show_log("[Error] " + QObject::tr("Core exited, restarting."));
+
+                // Retry rate limit
+                if (coreRestartTimer.isValid()) {
+                    if (coreRestartTimer.restart() < 10 * 1000) {
+                        coreRestartTimer = QElapsedTimer();
+                        MW_show_log("[Error] " + QObject::tr("Core exits too frequently, stop automatic restart this profile."));
+                        return;
+                    }
+                } else {
+                    coreRestartTimer.start();
+                }
 
                 // Restart
-                setTimeout(
-                    [=] {
-                        Kill();
-                        ExternalProcess::started = false;
-                        Start();
-                    },
-                    this, 1000);
+                restart_id = NekoRay::dataStore->started_id;
+                MW_show_log("[Error] " + QObject::tr("Core exited, restarting."));
+
+                setTimeout([=] { Restart(); }, this, 1000);
             } else if (state == QProcess::Running && restart_id >= 0) {
                 // Restart profile
                 setTimeout(
@@ -143,6 +153,12 @@ namespace NekoRay::sys {
         //
         ExternalProcess::Start();
         write((dataStore->core_token + "\n").toUtf8());
+    }
+
+    void CoreProcess::Restart() {
+        Kill();
+        ExternalProcess::started = false;
+        Start();
     }
 
 } // namespace NekoRay::sys

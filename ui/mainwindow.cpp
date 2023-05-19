@@ -44,9 +44,6 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
-#include <QElapsedTimer>
-
-QElapsedTimer coreRestartTimer;
 
 void UI_InitMainWindow() {
     mainwindow = new MainWindow;
@@ -579,15 +576,6 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         } else if (info == "CoreCrashed") {
             neko_stop(true);
         } else if (info.startsWith("CoreRestarted")) {
-            if (coreRestartTimer.isValid()) {
-                if (coreRestartTimer.restart() < 10 * 1000) {
-                    coreRestartTimer = QElapsedTimer();
-                    show_log_impl("[Error] " + tr("Core exits too frequently, stop automatic restart this profile."));
-                    return;
-                }
-            } else {
-                coreRestartTimer.start();
-            }
             neko_start(info.split(",")[1].toInt());
         }
     }

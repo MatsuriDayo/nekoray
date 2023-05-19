@@ -1469,10 +1469,6 @@ Split by line.</source>
         <source>If there is no response for a long time, it is recommended to restart the software.</source>
         <translation>如果长时间没有反应，建议重启软件。</translation>
     </message>
-    <message>
-        <source>Core exits too frequently, stop automatic restart this profile.</source>
-        <translation>Core 退出太频繁，停止自动重启。</translation>
-    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1607,6 +1603,10 @@ Release note:
     <message>
         <source>Core exited, restarting.</source>
         <translation>Core 退出，正在重新启动。</translation>
+    </message>
+    <message>
+        <source>Core exits too frequently, stop automatic restart this profile.</source>
+        <translation>Core 退出太频繁，停止自动重启。</translation>
     </message>
 </context>
 <context>

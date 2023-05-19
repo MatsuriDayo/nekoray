@@ -33,6 +33,8 @@ namespace NekoRay::sys {
 
         void Start() override;
 
+        void Restart();
+
     private:
         bool show_stderr = false;
         bool failed_to_start = false;

@@ -1462,10 +1462,6 @@ End: %2</source>
         <source>Failed to stop, please restart the program.</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Core exits too frequently, stop automatic restart this profile.</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ProxyItem</name>
@@ -1600,6 +1596,10 @@ Direct: %2</source>
     </message>
     <message>
         <source>Core exited, restarting.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Core exits too frequently, stop automatic restart this profile.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
