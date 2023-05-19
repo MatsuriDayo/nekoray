@@ -14,6 +14,26 @@
 #include <QDesktopServices>
 #include <QMessageBox>
 
+// ext core
+
+std::list<QSharedPointer<NekoRay::sys::ExternalProcess>> CreateExtCFromExtR(const std::list<std::shared_ptr<NekoRay::fmt::ExternalBuildResult>> &extRs, bool start) {
+    // plz run and start in same thread
+    std::list<QSharedPointer<NekoRay::sys::ExternalProcess>> l;
+    for (const auto &extR: extRs) {
+        QSharedPointer<NekoRay::sys::ExternalProcess> extC(new NekoRay::sys::ExternalProcess());
+        extC->tag = extR->tag;
+        extC->program = extR->program;
+        extC->arguments = extR->arguments;
+        extC->env = extR->env;
+        l.emplace_back(extC);
+        //
+        if (start) extC->Start();
+    }
+    return l;
+}
+
+// grpc
+
 #ifndef NKR_NO_GRPC
 using namespace NekoRay::rpc;
 #endif
@@ -89,16 +109,13 @@ void MainWindow::speedtest_current_group(int mode) {
                     req.set_url(NekoRay::dataStore->test_url.toStdString());
 
                     //
-                    std::list<std::pair<NekoRay::fmt::ExternalBuildResult, QSharedPointer<NekoRay::sys::ExternalProcess>>> exts;
+                    std::list<QSharedPointer<NekoRay::sys::ExternalProcess>> extCs;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
                         auto c = NekoRay::BuildConfig(profile, true, false);
                         // TODO refactor external test
-                        if (!c->exts.empty()) {
-                            exts = c->exts;
-                            for (const auto &ext: exts) {
-                                ext.second->Start();
-                            }
+                        if (!c->extRs.empty()) {
+                            extCs = CreateExtCFromExtR(c->extRs, true);
                             QThread::msleep(500);
                         }
                         //
@@ -117,8 +134,8 @@ void MainWindow::speedtest_current_group(int mode) {
 
                     bool rpcOK;
                     auto result = defaultClient->Test(&rpcOK, req);
-                    for (const auto &ext: exts) {
-                        ext.second->Kill();
+                    for (const auto &extC: extCs) {
+                        extC->Kill();
                     }
                     if (!rpcOK) return;
 
@@ -178,16 +195,6 @@ void MainWindow::speedtest_current() {
             } else if (latency > 0) {
                 ui->label_running->setText(tr("Test Result") + ": " + QString("%1 ms").arg(latency));
             }
-            //
-            auto t = new QTimer(this);
-            connect(t, &QTimer::timeout, this, [=] {
-                last_test_time = QTime();
-                refresh_status();
-                t->deleteLater();
-            });
-            t->setInterval(1000);
-            t->setSingleShot(true);
-            t->start();
         });
     });
 #endif
@@ -245,10 +252,12 @@ void MainWindow::neko_start(int _id) {
         NekoRay::traffic::trafficLooper->loop_enabled = true;
 #endif
 
-        for (const auto &ext: result->exts) {
-            NekoRay::sys::running_ext.push_back(ext.second);
-            ext.second->Start();
-        }
+        runOnUiThread(
+            [=] {
+                auto extCs = CreateExtCFromExtR(result->extRs, true);
+                NekoRay::sys::running_ext.splice(NekoRay::sys::running_ext.end(), extCs);
+            },
+            DS_cores);
 
         NekoRay::dataStore->UpdateStartedId(ent->id);
         running = ent;
@@ -301,10 +310,15 @@ void MainWindow::neko_stop(bool crash, bool sem) {
     }
 
     auto neko_stop_stage2 = [=] {
-        while (!NekoRay::sys::running_ext.isEmpty()) {
-            auto extC = NekoRay::sys::running_ext.takeFirst();
-            extC->Kill();
-        }
+        runOnUiThread(
+            [=] {
+                while (!NekoRay::sys::running_ext.empty()) {
+                    auto extC = NekoRay::sys::running_ext.front();
+                    extC->Kill();
+                    NekoRay::sys::running_ext.pop_front();
+                }
+            },
+            DS_cores);
 
 #ifndef NKR_NO_GRPC
         NekoRay::traffic::trafficLooper->loop_enabled = false;

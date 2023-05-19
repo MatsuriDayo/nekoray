@@ -15,8 +15,8 @@ namespace NekoRay {
 
     QStringList getAutoBypassExternalProcessPaths(const QSharedPointer<BuildConfigResult> &result) {
         QStringList paths;
-        for (const auto &ext: result->exts) {
-            auto path = ext.first.program;
+        for (const auto &extR: result->extRs) {
+            auto path = extR->program;
             if (path.trimmed().isEmpty()) continue;
             paths << path.replace("\\", "/");
         }
@@ -553,7 +553,7 @@ namespace NekoRay {
             auto stream = GetStreamSettings(ent->bean.data());
 
             if (thisExternalStat > 0) {
-                const auto extR = ent->bean->BuildExternal(ext_mapping_port, ext_socks_port, thisExternalStat);
+                auto extR = ent->bean->BuildExternal(ext_mapping_port, ext_socks_port, thisExternalStat);
                 if (extR.program.isEmpty()) {
                     status->result->error = QObject::tr("Core not found: %1").arg(ent->bean->DisplayType());
                     return {};
@@ -562,6 +562,8 @@ namespace NekoRay {
                     status->result->error = extR.error;
                     return {};
                 }
+                extR.tag = ent->bean->DisplayType();
+                status->result->extRs.emplace_back(std::make_shared<fmt::ExternalBuildResult>(extR));
 
                 // SOCKS OUTBOUND
                 if (IS_NEKO_BOX) {
@@ -579,14 +581,6 @@ namespace NekoRay {
                     settings["servers"] = servers;
                     outbound["settings"] = settings;
                 }
-
-                // EXTERNAL PROCESS
-                QSharedPointer<sys::ExternalProcess> extC(new sys::ExternalProcess());
-                extC->tag = ent->bean->DisplayType();
-                extC->program = extR.program;
-                extC->arguments = extR.arguments;
-                extC->env = extR.env;
-                status->result->exts.emplace_back(extR, extC);
             } else {
                 const auto coreR = IS_NEKO_BOX ? ent->bean->BuildCoreObjSingBox() : ent->bean->BuildCoreObjV2Ray();
                 if (coreR.outbound.isEmpty()) {

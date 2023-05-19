@@ -13,7 +13,7 @@ namespace NekoRay {
         QSharedPointer<traffic::TrafficData> outboundStat;         // main
         QStringList ignoreConnTag;
 
-        std::list<std::pair<fmt::ExternalBuildResult, QSharedPointer<sys::ExternalProcess>>> exts; // extR to extC
+        std::list<std::shared_ptr<NekoRay::fmt::ExternalBuildResult>> extRs;
     };
 
     class BuildConfigStatus {

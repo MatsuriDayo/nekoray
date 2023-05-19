@@ -210,7 +210,12 @@ int MessageBoxInfo(const QString &title, const QString &text) {
 void runOnUiThread(const std::function<void()> &callback, QObject *parent) {
     // any thread
     auto *timer = new QTimer();
-    timer->moveToThread(parent == nullptr ? mainwindow->thread() : parent->thread());
+    auto thread = dynamic_cast<QThread *>(parent);
+    if (thread == nullptr) {
+        timer->moveToThread(parent == nullptr ? mainwindow->thread() : parent->thread());
+    } else {
+        timer->moveToThread(thread);
+    }
     timer->setSingleShot(true);
     QObject::connect(timer, &QTimer::timeout, [=]() {
         // main thread

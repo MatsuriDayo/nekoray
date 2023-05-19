@@ -47,7 +47,6 @@
 #include <QElapsedTimer>
 
 QElapsedTimer coreRestartTimer;
-// QAtomicInt logCounter;
 
 void UI_InitMainWindow() {
     mainwindow = new MainWindow;
@@ -150,11 +149,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     MW_show_log_ext_vt100 = [=](const QString &log) {
         runOnUiThread([=] { show_log_impl(cleanVT100String(log)); });
     };
-    //
-    // auto logCounterTimer = new QTimer(this);
-    // connect(logCounterTimer, &QTimer::timeout, this, [&] { logCounter.fetchAndStoreRelaxed(0); });
-    // logCounterTimer->setInterval(1000);
-    // logCounterTimer->start();
 
     // table UI
     ui->proxyListTable->callback_save_order = [=] {
@@ -416,10 +410,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (NekoRay::dataStore->flag_debug) args.push_back("-debug");
 
     // Start core
-    core_process = new NekoRay::sys::CoreProcess(core_path, args);
-    core_process->Start();
-
-    setup_grpc();
+    runOnUiThread(
+        [=] {
+            core_process = new NekoRay::sys::CoreProcess(core_path, args);
+            core_process->Start();
+            setup_grpc();
+        },
+        DS_cores);
 
     // Start last
     if (NekoRay::dataStore->remember_enable) {
@@ -435,6 +432,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
 
     connect(qApp, &QGuiApplication::commitDataRequest, this, &MainWindow::on_commitDataRequest);
+
+    auto t = new QTimer;
+    connect(t, &QTimer::timeout, this, [=]() { refresh_status(); });
+    t->start(2000);
+
+    t = new QTimer;
+    connect(t, &QTimer::timeout, this, [&] { NekoRay::sys::logCounter.fetchAndStoreRelaxed(0); });
+    t->start(1000);
 
     if (!NekoRay::dataStore->flag_tray) show();
 }
@@ -1497,7 +1502,6 @@ void MainWindow::show_log_impl(const QString &log) {
         if (showThisLine) newLines << line;
     }
     if (newLines.isEmpty()) return;
-    // if (logCounter.fetchAndAddRelaxed(newLines.count()) > NekoRay::dataStore->max_log_line) return;
 
     FastAppendTextDocument(newLines.join("\n"), qvLogDocument);
     // qvLogDocument->setPlainText(qvLogDocument->toPlainText() + log);

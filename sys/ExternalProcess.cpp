@@ -4,8 +4,10 @@
 #include <QTimer>
 #include <QDir>
 #include <QApplication>
+#include <QThread>
 
 namespace NekoRay::sys {
+
     ExternalProcess::ExternalProcess() : QProcess() {
         // qDebug() << "[Debug] ExternalProcess()" << this << running_ext;
         this->env = QProcessEnvironment::systemEnvironment().toStringList();
@@ -21,7 +23,9 @@ namespace NekoRay::sys {
 
         if (managed) {
             connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-                MW_show_log_ext_vt100(readAllStandardOutput().trimmed());
+                auto log = readAllStandardOutput();
+                if (logCounter.fetchAndAddRelaxed(log.count("\n")) > NekoRay::dataStore->max_log_line) return;
+                MW_show_log_ext_vt100(log);
             });
             connect(this, &QProcess::readyReadStandardError, this, [&]() {
                 MW_show_log_ext_vt100(readAllStandardError().trimmed());
@@ -36,7 +40,7 @@ namespace NekoRay::sys {
             connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
                 if (state == QProcess::NotRunning) {
                     if (killed) { // 用户命令退出
-                        MW_show_log_ext(tag, "Stopped");
+                        MW_show_log_ext(tag, "External core stopped");
                     } else if (!crashed) { // 异常退出
                         crashed = true;
                         MW_show_log_ext(tag, "[Error] Program exited accidentally: " + errorString());
@@ -45,7 +49,7 @@ namespace NekoRay::sys {
                     }
                 }
             });
-            MW_show_log_ext(tag, "[Starting] " + env.join(" ") + " " + program + " " + arguments.join(" "));
+            MW_show_log_ext(tag, "External core starting: " + env.join(" ") + " " + program + " " + arguments.join(" "));
         }
 
         QProcess::setEnvironment(env);
@@ -76,7 +80,9 @@ namespace NekoRay::sys {
         ExternalProcess::arguments = args;
 
         connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-            MW_show_log(readAllStandardOutput().trimmed());
+            auto log = readAllStandardOutput();
+            if (logCounter.fetchAndAddRelaxed(log.count("\n")) > NekoRay::dataStore->max_log_line) return;
+            MW_show_log(log);
         });
         connect(this, &QProcess::readyReadStandardError, this, [&]() {
             auto log = readAllStandardError().trimmed();

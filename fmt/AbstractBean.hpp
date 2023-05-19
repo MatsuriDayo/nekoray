@@ -17,6 +17,9 @@ namespace NekoRay::fmt {
         QString program;
         QStringList env;
         QStringList arguments;
+        //
+        QString tag;
+        //
         QString error;
         QString config_export;
     };

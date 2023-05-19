@@ -7,6 +7,7 @@
 #include <QStandardPaths>
 #include <QLocalSocket>
 #include <QLocalServer>
+#include <QThread>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoRay.hpp"
@@ -120,6 +121,10 @@ int main(int argc, char* argv[]) {
     // init QApplication
     delete preQApp;
     QApplication a(argc, argv);
+
+    // dispatchers
+    DS_cores = new QThread;
+    DS_cores->start();
 
     // RunGuard
     RunGuard guard("nekoray" + wd.absolutePath());

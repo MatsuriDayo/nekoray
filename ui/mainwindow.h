@@ -185,7 +185,7 @@ private:
 
     // grpc and ...
 
-    void setup_grpc();
+    static void setup_grpc();
 
     void speedtest_current_group(int mode);
 

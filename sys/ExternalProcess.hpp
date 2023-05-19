@@ -40,5 +40,7 @@ namespace NekoRay::sys {
     };
 
     // 手动管理
-    inline QList<QSharedPointer<ExternalProcess>> running_ext;
+    inline std::list<QSharedPointer<ExternalProcess>> running_ext;
+
+    inline QAtomicInt logCounter;
 } // namespace NekoRay::sys
