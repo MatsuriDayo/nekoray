@@ -110,8 +110,14 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         ui->rfsh_r->setCurrentIndex(0);
     } else if (NekoRay::dataStore->traffic_loop_interval == 1000) {
         ui->rfsh_r->setCurrentIndex(1);
-    } else {
+    } else if (NekoRay::dataStore->traffic_loop_interval == 2000) {
         ui->rfsh_r->setCurrentIndex(2);
+    } else if (NekoRay::dataStore->traffic_loop_interval == 3000) {
+        ui->rfsh_r->setCurrentIndex(3);
+    } else if (NekoRay::dataStore->traffic_loop_interval == 5000) {
+        ui->rfsh_r->setCurrentIndex(4);
+    } else {
+        ui->rfsh_r->setCurrentIndex(5);
     }
     //
     ui->language->setCurrentIndex(NekoRay::dataStore->language);
@@ -274,6 +280,12 @@ void DialogBasicSettings::accept() {
         NekoRay::dataStore->traffic_loop_interval = 500;
     } else if (ui->rfsh_r->currentIndex() == 1) {
         NekoRay::dataStore->traffic_loop_interval = 1000;
+    } else if (ui->rfsh_r->currentIndex() == 2) {
+        NekoRay::dataStore->traffic_loop_interval = 2000;
+    } else if (ui->rfsh_r->currentIndex() == 3) {
+        NekoRay::dataStore->traffic_loop_interval = 3000;
+    } else if (ui->rfsh_r->currentIndex() == 4) {
+        NekoRay::dataStore->traffic_loop_interval = 5000;
     } else {
         NekoRay::dataStore->traffic_loop_interval = 0;
     }

@@ -80,7 +80,7 @@ namespace NekoRay::traffic {
         elapsedTimer.start();
         while (true) {
             auto sleep_ms = dataStore->traffic_loop_interval;
-            if (sleep_ms < 500 || sleep_ms > 2000) sleep_ms = 1000;
+            if (sleep_ms < 500 || sleep_ms > 5000) sleep_ms = 1000;
             QThread::msleep(sleep_ms);
             if (dataStore->traffic_loop_interval == 0) continue; // user disabled
 

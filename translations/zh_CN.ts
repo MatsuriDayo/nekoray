@@ -100,14 +100,6 @@
         <translation>流量统计刷新率</translation>
     </message>
     <message>
-        <source>Fast</source>
-        <translation>快</translation>
-    </message>
-    <message>
-        <source>Slow</source>
-        <translation>慢</translation>
-    </message>
-    <message>
         <source>Off</source>
         <translation>关闭</translation>
     </message>

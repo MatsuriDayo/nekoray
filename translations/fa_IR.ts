@@ -101,14 +101,6 @@
         <translation>نرخ تازه سازی آمار ترافیک</translation>
     </message>
     <message>
-        <source>Fast</source>
-        <translation>سریع</translation>
-    </message>
-    <message>
-        <source>Slow</source>
-        <translation>کند</translation>
-    </message>
-    <message>
         <source>Off</source>
         <translation>خاموش</translation>
     </message>

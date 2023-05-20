@@ -367,12 +367,27 @@
              <widget class="QComboBox" name="rfsh_r">
               <item>
                <property name="text">
-                <string>Fast</string>
+                <string notr="true">500ms</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string>Slow</string>
+                <string notr="true">1s</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">2s</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">3s</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">5s</string>
                </property>
               </item>
               <item>
