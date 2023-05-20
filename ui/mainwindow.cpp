@@ -565,10 +565,13 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             this->refresh_groups();
         }
     } else if (sender == "SubUpdater") {
-        // 订阅完毕
-        refresh_proxy_list();
-        if (!info.contains("dingyue")) {
-            show_log_impl(tr("Imported %1 profile(s)").arg(NekoRay::dataStore->imported_count));
+        if (info.startsWith("finish")) {
+            refresh_proxy_list();
+            if (!info.contains("dingyue")) {
+                show_log_impl(tr("Imported %1 profile(s)").arg(NekoRay::dataStore->imported_count));
+            }
+        } else if (info == "NewGroup") {
+            refresh_groups();
         }
     } else if (sender == "ExternalProcess") {
         if (info == "Crashed") {

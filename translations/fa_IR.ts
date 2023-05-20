@@ -1518,10 +1518,6 @@ Release note:
         <translation>به روز رسانی آماده است، برای نصب مجدد راه اندازی شود؟</translation>
     </message>
     <message>
-        <source>As Subscription</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>As link</source>
         <translation>به عنوان لینک</translation>
     </message>
@@ -1600,6 +1596,14 @@ Direct: %2</source>
     </message>
     <message>
         <source>Core exits too frequently, stop automatic restart this profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>As Subscription (create new group)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>As Subscription (add to this group)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

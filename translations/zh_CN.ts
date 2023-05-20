@@ -1491,10 +1491,6 @@ Split by line.</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>As Subscription</source>
-        <translation>作为订阅</translation>
-    </message>
-    <message>
         <source>As link</source>
         <translation>作为链接</translation>
     </message>
@@ -1607,6 +1603,14 @@ Release note:
     <message>
         <source>Core exits too frequently, stop automatic restart this profile.</source>
         <translation>Core 退出太频繁，停止自动重启。</translation>
+    </message>
+    <message>
+        <source>As Subscription (create new group)</source>
+        <translation>作为订阅（创建新组）</translation>
+    </message>
+    <message>
+        <source>As Subscription (add to this group)</source>
+        <translation>作为订阅（添加到该组）</translation>
     </message>
 </context>
 <context>
