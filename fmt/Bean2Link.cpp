@@ -76,7 +76,11 @@ namespace NekoRay::fmt {
         QUrl url;
         url.setScheme("ss");
         auto username = method + ":" + password;
-        url.setUserName(username.toUtf8().toBase64(QByteArray::Base64Option::Base64UrlEncoding));
+        if (method == "2022-blake3-aes-256-gcm" || method == "2022-blake3-aes-128-gcm" || method == "2022-blake3-chacha20-poly1305") {
+            url.setUserName(username.toUtf8());
+        } else {
+            url.setUserName(username.toUtf8().toBase64(QByteArray::Base64Option::Base64UrlEncoding));
+        }
         url.setHost(serverAddress);
         url.setPort(serverPort);
         if (!name.isEmpty()) url.setFragment(name);
