@@ -101,18 +101,17 @@ namespace NekoRay::fmt {
             serverAddress = url.host();
             serverPort = url.port();
 
-            auto urlUserName = url.userName();
-            QString method_password;
-            if (urlUserName.contains(":")) {
-                // 2022 format
-                method_password = urlUserName;
-            } else {
+            if (url.password().isEmpty()) {
                 // traditional format
-                method_password = DecodeB64IfValid(urlUserName, QByteArray::Base64Option::Base64UrlEncoding);
+                auto method_password = DecodeB64IfValid(url.userName(), QByteArray::Base64Option::Base64UrlEncoding);
+                if (method_password.isEmpty()) return false;
+                method = SubStrBefore(method_password, ":");
+                password = SubStrAfter(method_password, ":");
+            } else {
+                // 2022 format
+                method = url.userName();
+                password = url.password();
             }
-            if (method_password.isEmpty()) return false;
-            method = SubStrBefore(method_password, ":");
-            password = SubStrAfter(method_password, ":");
 
             auto query = GetQuery(url);
             plugin = query.queryItemValue("plugin").replace("simple-obfs;", "obfs-local;");
