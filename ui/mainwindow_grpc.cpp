@@ -230,15 +230,6 @@ void MainWindow::neko_start(int _id) {
     }
 
     auto neko_start_stage2 = [=] {
-        if (!NekoRay::dataStore->core_running) {
-            runOnUiThread(
-                [=] {
-                    core_process->Restart();
-                },
-                DS_cores);
-            QThread::sleep(1);
-        }
-
 #ifndef NKR_NO_GRPC
         libcore::LoadConfigReq req;
         req.set_core_config(QJsonObject2QString(result->coreConfig, true).toStdString());
@@ -284,6 +275,25 @@ void MainWindow::neko_start(int _id) {
     if (!mu_starting.tryLock()) {
         MessageBoxWarning(software_name, "Another profile is starting...");
         return;
+    }
+    if (!mu_stopping.tryLock()) {
+        MessageBoxWarning(software_name, "Another profile is stopping...");
+        mu_stopping.unlock();
+        return;
+    }
+    mu_stopping.unlock();
+
+    // check core state
+    if (!NekoRay::dataStore->core_running) {
+        runOnUiThread(
+            [=] {
+                show_log_impl("Try to start the config, but the core has not listened to the grpc port, so restart it...");
+                core_process->start_profile_when_core_is_up = ent->id;
+                core_process->Restart();
+            },
+            DS_cores);
+        mu_starting.unlock();
+        return; // let CoreProcess call neko_start when core is up
     }
 
     // timeout message

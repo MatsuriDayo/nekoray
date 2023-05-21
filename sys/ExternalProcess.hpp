@@ -35,10 +35,12 @@ namespace NekoRay::sys {
 
         void Restart();
 
+        int start_profile_when_core_is_up = -1;
+
     private:
         bool show_stderr = false;
         bool failed_to_start = false;
-        int restart_id = -1;
+        bool restarting = false;
     };
 
     // 手动管理

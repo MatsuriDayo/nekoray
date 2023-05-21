@@ -85,6 +85,19 @@ namespace NekoRay::sys {
 
         connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
             auto log = readAllStandardOutput();
+            if (!NekoRay::dataStore->core_running) {
+                if (log.contains("grpc server listening")) {
+                    // The core really started
+                    NekoRay::dataStore->core_running = true;
+                    if (start_profile_when_core_is_up >= 0) {
+                        MW_dialog_message("ExternalProcess", "CoreStarted," + Int2String(start_profile_when_core_is_up));
+                        start_profile_when_core_is_up = -1;
+                    }
+                } else if (log.contains("failed to serve")) {
+                    // The core failed to start
+                    QProcess::kill();
+                }
+            }
             if (logCounter.fetchAndAddRelaxed(log.count("\n")) > NekoRay::dataStore->max_log_line) return;
             MW_show_log(log);
         });
@@ -105,10 +118,13 @@ namespace NekoRay::sys {
             }
         });
         connect(this, &QProcess::stateChanged, this, [&](QProcess::ProcessState state) {
-            NekoRay::dataStore->core_running = state == QProcess::Running;
+            if (state == QProcess::NotRunning) {
+                NekoRay::dataStore->core_running = false;
+            }
 
             if (!dataStore->prepare_exit && state == QProcess::NotRunning) {
                 if (failed_to_start) return; // no retry
+                if (restarting) return;
 
                 MW_dialog_message("ExternalProcess", "CoreCrashed");
 
@@ -124,18 +140,9 @@ namespace NekoRay::sys {
                 }
 
                 // Restart
-                restart_id = NekoRay::dataStore->started_id;
+                start_profile_when_core_is_up = NekoRay::dataStore->started_id;
                 MW_show_log("[Error] " + QObject::tr("Core exited, restarting."));
-
                 setTimeout([=] { Restart(); }, this, 1000);
-            } else if (state == QProcess::Running && restart_id >= 0) {
-                // Restart profile
-                setTimeout(
-                    [=] {
-                        MW_dialog_message("ExternalProcess", "CoreRestarted," + Int2String(restart_id));
-                        restart_id = -1;
-                    },
-                    this, 1000);
             }
         });
     }
@@ -156,9 +163,12 @@ namespace NekoRay::sys {
     }
 
     void CoreProcess::Restart() {
-        Kill();
+        restarting = true;
+        QProcess::kill();
+        QProcess::waitForFinished(500);
         ExternalProcess::started = false;
         Start();
+        restarting = false;
     }
 
 } // namespace NekoRay::sys

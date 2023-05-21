@@ -410,21 +410,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     runOnUiThread(
         [=] {
             core_process = new NekoRay::sys::CoreProcess(core_path, args);
+            // Remember last started
+            if (NekoRay::dataStore->remember_enable && NekoRay::dataStore->remember_id >= 0) {
+                core_process->start_profile_when_core_is_up = NekoRay::dataStore->remember_id;
+            }
+            // Setup
             core_process->Start();
             setup_grpc();
         },
         DS_cores);
 
-    // Start last
+    // Remember system proxy
     if (NekoRay::dataStore->remember_enable) {
         if (NekoRay::dataStore->remember_spmode.contains("system_proxy")) {
             neko_set_spmode_system_proxy(true, false);
         }
         if (NekoRay::dataStore->remember_spmode.contains("vpn")) {
             neko_set_spmode_vpn(true, false);
-        }
-        if (NekoRay::dataStore->remember_id >= 0) {
-            runOnUiThread([=] { neko_start(NekoRay::dataStore->remember_id); });
         }
     }
 
@@ -578,7 +580,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             neko_stop();
         } else if (info == "CoreCrashed") {
             neko_stop(true);
-        } else if (info.startsWith("CoreRestarted")) {
+        } else if (info.startsWith("CoreStarted")) {
             neko_start(info.split(",")[1].toInt());
         }
     }
