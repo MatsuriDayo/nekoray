@@ -19,7 +19,7 @@
 #include <QInputDialog>
 
 #define ADJUST_SIZE runOnUiThread([=] { adjustSize(); adjustPosition(mainwindow); }, this);
-#define LOAD_TYPE(a) ui->type->addItem(NekoRay::ProfileManager::NewProxyEntity(a)->bean->DisplayType(), a);
+#define LOAD_TYPE(a) ui->type->addItem(NekoGui::ProfileManager::NewProxyEntity(a)->bean->DisplayType(), a);
 
 DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId, QWidget *parent)
     : QDialog(parent), ui(new Ui::DialogEditProfile) {
@@ -129,13 +129,13 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("chain");
 
         // type changed
-        connect(ui->type, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        connect(ui->type, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
             typeSelected(ui->type->itemData(index).toString());
         });
 
         ui->apply_to_group->hide();
     } else {
-        this->ent = NekoRay::profileManager->GetProfile(profileOrGroupId);
+        this->ent = NekoGui::profileManager->GetProfile(profileOrGroupId);
         if (this->ent == nullptr) return;
         this->type = ent->type;
         ui->type->setVisible(false);
@@ -199,7 +199,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     }
 
     if (newEnt) {
-        this->ent = NekoRay::ProfileManager::NewProxyEntity(type);
+        this->ent = NekoGui::ProfileManager::NewProxyEntity(type);
         this->ent->gid = groupId;
     }
 
@@ -211,7 +211,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port_l->setVisible(showAddressPort);
 
     // 右边 stream
-    auto stream = GetStreamSettings(ent->bean.data());
+    auto stream = GetStreamSettings(ent->bean.get());
     if (stream != nullptr) {
         ui->right_all_w->setVisible(true);
         ui->network->setCurrentText(stream->network);
@@ -344,7 +344,7 @@ bool DialogEditProfile::onEnd() {
     }
 
     // 右边 stream
-    auto stream = GetStreamSettings(ent->bean.data());
+    auto stream = GetStreamSettings(ent->bean.get());
     if (stream != nullptr) {
         stream->network = ui->network->currentText();
         stream->security = ui->security->currentText();
@@ -381,13 +381,13 @@ void DialogEditProfile::accept() {
     QStringList msg = {"accept"};
 
     if (newEnt) {
-        auto ok = NekoRay::profileManager->AddProfile(ent);
+        auto ok = NekoGui::profileManager->AddProfile(ent);
         if (!ok) {
             MessageBoxWarning("???", "id exists");
         }
     } else {
         auto changed = ent->Save();
-        if (changed && NekoRay::dataStore->started_id == ent->id) msg << "restart";
+        if (changed && NekoGui::dataStore->started_id == ent->id) msg << "restart";
     }
 
     MW_dialog_message(Dialog_DialogEditProfile, msg.join(","));
@@ -456,7 +456,7 @@ void DialogEditProfile::on_apply_to_group_clicked() {
         apply_to_group_ui[ui->custom_outbound_edit] = new FloatCheckBox(ui->custom_outbound_edit, this);
         ui->apply_to_group->setText(tr("Confirm"));
     } else {
-        auto group = NekoRay::profileManager->GetGroup(ent->gid);
+        auto group = NekoGui::profileManager->GetGroup(ent->gid);
         if (group == nullptr) {
             MessageBoxWarning("failed", "unknown group");
             return;
@@ -480,12 +480,12 @@ void DialogEditProfile::on_apply_to_group_clicked() {
     }
 }
 
-void DialogEditProfile::do_apply_to_group(const QSharedPointer<NekoRay::Group> &group, QWidget *key) {
-    auto stream = GetStreamSettings(ent->bean.data());
+void DialogEditProfile::do_apply_to_group(const std::shared_ptr<NekoGui::Group> &group, QWidget *key) {
+    auto stream = GetStreamSettings(ent->bean.get());
 
     auto copyStream = [=](void *p) {
         for (const auto &profile: group->Profiles()) {
-            auto newStream = GetStreamSettings(profile->bean.data());
+            auto newStream = GetStreamSettings(profile->bean.get());
             if (newStream == nullptr) continue;
             if (stream == newStream) continue;
             newStream->_setValue(stream->_name(p), p);

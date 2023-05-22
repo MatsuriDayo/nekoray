@@ -1,6 +1,6 @@
 #include "Icon.hpp"
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 #include <QPainter>
 

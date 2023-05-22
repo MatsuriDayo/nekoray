@@ -1,20 +1,19 @@
 #pragma once
 
-#include <QSharedPointer>
 #include <QString>
 #include <QList>
 #include <QMutex>
 
 #include "TrafficData.hpp"
 
-namespace NekoRay::traffic {
+namespace NekoGui_traffic {
     class TrafficLooper {
     public:
         bool loop_enabled = false;
         bool looping = false;
         QMutex loop_mutex;
 
-        QList<QSharedPointer<TrafficData>> items;
+        QList<std::shared_ptr<TrafficData>> items;
         TrafficData *proxy = nullptr;
 
         void UpdateAll();
@@ -30,4 +29,4 @@ namespace NekoRay::traffic {
     };
 
     extern TrafficLooper *trafficLooper;
-} // namespace NekoRay::traffic
+} // namespace NekoGui_traffic

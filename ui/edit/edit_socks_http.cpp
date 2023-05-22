@@ -12,16 +12,16 @@ EditSocksHttp::~EditSocksHttp() {
     delete ui;
 }
 
-void EditSocksHttp::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
+void EditSocksHttp::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->SocksHTTPBean();
 
-    if (bean->socks_http_type == NekoRay::fmt::SocksHttpBean::type_Socks4) {
+    if (bean->socks_http_type == NekoGui_fmt::SocksHttpBean::type_Socks4) {
         ui->version->setCurrentIndex(1);
     } else {
         ui->version->setCurrentIndex(0);
     }
-    if (bean->socks_http_type == NekoRay::fmt::SocksHttpBean::type_HTTP) {
+    if (bean->socks_http_type == NekoGui_fmt::SocksHttpBean::type_HTTP) {
         ui->version->setVisible(false);
         ui->version_l->setVisible(false);
     }
@@ -35,9 +35,9 @@ bool EditSocksHttp::onEnd() {
 
     if (ui->version->isVisible()) {
         if (ui->version->currentIndex() == 1) {
-            bean->socks_http_type = NekoRay::fmt::SocksHttpBean::type_Socks4;
+            bean->socks_http_type = NekoGui_fmt::SocksHttpBean::type_Socks4;
         } else {
-            bean->socks_http_type = NekoRay::fmt::SocksHttpBean::type_Socks5;
+            bean->socks_http_type = NekoGui_fmt::SocksHttpBean::type_Socks5;
         }
     }
 

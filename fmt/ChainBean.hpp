@@ -1,8 +1,8 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class ChainBean : public AbstractBean {
     public:
         QList<int> list; // in to out
@@ -15,4 +15,4 @@ namespace NekoRay::fmt {
 
         QString DisplayAddress() override { return ""; };
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

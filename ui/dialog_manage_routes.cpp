@@ -68,8 +68,8 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     builtInSchemesMenu->addActions(this->getBuiltInSchemes());
     ui->preset->setMenu(builtInSchemesMenu);
 
-    QString geoipFn = NekoRay::FindCoreAsset("geoip.dat");
-    QString geositeFn = NekoRay::FindCoreAsset("geosite.dat");
+    QString geoipFn = NekoGui::FindCoreAsset("geoip.dat");
+    QString geositeFn = NekoGui::FindCoreAsset("geosite.dat");
     //
     const auto sourceStringsDomain = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geoipFn);
     directDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
@@ -89,7 +89,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     ui->proxyIPLayout->addWidget(proxyIPTxt, 0, 0);
     ui->blockIPLayout->addWidget(blockIPTxt, 0, 0);
     //
-    REFRESH_ACTIVE_ROUTING(NekoRay::dataStore->active_routing, NekoRay::dataStore->routing)
+    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing)
 
     ADD_ASTERISK(this)
 }
@@ -101,11 +101,11 @@ DialogManageRoutes::~DialogManageRoutes() {
 void DialogManageRoutes::accept() {
     D_C_SAVE_STRING(custom_route_global)
     bool routeChanged = false;
-    if (NekoRay::dataStore->active_routing != active_routing) routeChanged = true;
-    SaveDisplayRouting(NekoRay::dataStore->routing);
-    NekoRay::dataStore->active_routing = active_routing;
-    NekoRay::dataStore->routing->fn = ROUTES_PREFIX + NekoRay::dataStore->active_routing;
-    if (NekoRay::dataStore->routing->Save()) routeChanged = true;
+    if (NekoGui::dataStore->active_routing != active_routing) routeChanged = true;
+    SaveDisplayRouting(NekoGui::dataStore->routing);
+    NekoGui::dataStore->active_routing = active_routing;
+    NekoGui::dataStore->routing->fn = ROUTES_PREFIX + NekoGui::dataStore->active_routing;
+    if (NekoGui::dataStore->routing->Save()) routeChanged = true;
     //
     QString info = "UpdateDataStore";
     if (routeChanged) info += "RouteChanged";
@@ -122,14 +122,13 @@ QList<QAction *> DialogManageRoutes::getBuiltInSchemes() {
     return list;
 }
 
-QAction *DialogManageRoutes::schemeToAction(const QString &name, const NekoRay::Routing &scheme) {
-    auto *action = new QAction(this);
-    action->setText(name);
-    connect(action, &QAction::triggered, [this, &scheme] { this->UpdateDisplayRouting((NekoRay::Routing *) &scheme, true); });
+QAction *DialogManageRoutes::schemeToAction(const QString &name, const NekoGui::Routing &scheme) {
+    auto *action = new QAction(name, this);
+    connect(action, &QAction::triggered, [this, &scheme] { this->UpdateDisplayRouting((NekoGui::Routing *) &scheme, true); });
     return action;
 }
 
-void DialogManageRoutes::UpdateDisplayRouting(NekoRay::Routing *conf, bool qv) {
+void DialogManageRoutes::UpdateDisplayRouting(NekoGui::Routing *conf, bool qv) {
     //
     directDomainTxt->setPlainText(conf->direct_domain);
     proxyDomainTxt->setPlainText(conf->proxy_domain);
@@ -156,7 +155,7 @@ void DialogManageRoutes::UpdateDisplayRouting(NekoRay::Routing *conf, bool qv) {
     ui->direct_dns_strategy->setCurrentText(conf->direct_dns_strategy);
 }
 
-void DialogManageRoutes::SaveDisplayRouting(NekoRay::Routing *conf) {
+void DialogManageRoutes::SaveDisplayRouting(NekoGui::Routing *conf) {
     conf->direct_ip = directIPTxt->toPlainText();
     conf->direct_domain = directDomainTxt->toPlainText();
     conf->proxy_ip = proxyIPTxt->toPlainText();
@@ -186,7 +185,7 @@ void DialogManageRoutes::on_load_save_clicked() {
     layout->addWidget(lineEdit);
     auto list = new QListWidget;
     layout->addWidget(list);
-    for (const auto &name: NekoRay::Routing::List()) {
+    for (const auto &name: NekoGui::Routing::List()) {
         list->addItem(name);
     }
     connect(list, &QListWidget::currentTextChanged, lineEdit, &QLineEdit::setText);
@@ -207,7 +206,7 @@ void DialogManageRoutes::on_load_save_clicked() {
     connect(load, &QPushButton::clicked, w, [=] {
         auto fn = lineEdit->text();
         if (!fn.isEmpty()) {
-            auto r = std::make_unique<NekoRay::Routing>();
+            auto r = std::make_unique<NekoGui::Routing>();
             r->load_control_must = true;
             r->fn = ROUTES_PREFIX + fn;
             if (r->Load()) {
@@ -221,7 +220,7 @@ void DialogManageRoutes::on_load_save_clicked() {
     connect(save, &QPushButton::clicked, w, [=] {
         auto fn = lineEdit->text();
         if (!fn.isEmpty()) {
-            auto r = std::make_unique<NekoRay::Routing>();
+            auto r = std::make_unique<NekoGui::Routing>();
             SaveDisplayRouting(r.get());
             r->fn = ROUTES_PREFIX + fn;
             if (QMessageBox::question(nullptr, software_name, tr("Save routing: %1").arg(fn) + "\n" + r->DisplayRouting()) == QMessageBox::Yes) {
@@ -233,13 +232,13 @@ void DialogManageRoutes::on_load_save_clicked() {
     });
     connect(remove, &QPushButton::clicked, w, [=] {
         auto fn = lineEdit->text();
-        if (!fn.isEmpty() && NekoRay::Routing::List().length() > 1) {
+        if (!fn.isEmpty() && NekoGui::Routing::List().length() > 1) {
             if (QMessageBox::question(nullptr, software_name, tr("Remove routing: %1").arg(fn)) == QMessageBox::Yes) {
                 QFile f(ROUTES_PREFIX + fn);
                 f.remove();
-                if (NekoRay::dataStore->active_routing == fn) {
-                    NekoRay::Routing::SetToActive(NekoRay::Routing::List().first());
-                    REFRESH_ACTIVE_ROUTING(NekoRay::dataStore->active_routing, NekoRay::dataStore->routing)
+                if (NekoGui::dataStore->active_routing == fn) {
+                    NekoGui::Routing::SetToActive(NekoGui::Routing::List().first());
+                    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing)
                 }
                 w->accept();
             }

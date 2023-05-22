@@ -1,7 +1,7 @@
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     void V2rayStreamSettings::BuildStreamSettingsSingBox(QJsonObject *outbound) {
         // https://sing-box.sagernet.org/configuration/shared/v2ray-transport
 
@@ -44,7 +44,7 @@ namespace NekoRay::fmt {
         // 对应字段 tls
         if (security == "tls") {
             QJsonObject tls{{"enabled", true}};
-            if (allow_insecure || dataStore->skip_cert) tls["insecure"] = true;
+            if (allow_insecure || NekoGui::dataStore->skip_cert) tls["insecure"] = true;
             if (!sni.trimmed().isEmpty()) tls["server_name"] = sni;
             if (!certificate.trimmed().isEmpty()) {
                 tls["certificate"] = certificate.trimmed();
@@ -52,7 +52,7 @@ namespace NekoRay::fmt {
             if (!alpn.trimmed().isEmpty()) {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
-            auto fp = utlsFingerprint.isEmpty() ? NekoRay::dataStore->utlsFingerprint : utlsFingerprint;
+            auto fp = utlsFingerprint.isEmpty() ? NekoGui::dataStore->utlsFingerprint : utlsFingerprint;
             if (!fp.isEmpty()) {
                 tls["utls"] = QJsonObject{
                     {"enabled", true},
@@ -194,4 +194,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

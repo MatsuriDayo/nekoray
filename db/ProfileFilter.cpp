@@ -1,10 +1,10 @@
 #include "ProfileFilter.hpp"
 
-namespace NekoRay {
-    void ProfileFilter::Uniq(const QList<QSharedPointer<ProxyEntity>> &in,
-                             QList<QSharedPointer<ProxyEntity>> &out,
+namespace NekoGui {
+    void ProfileFilter::Uniq(const QList<std::shared_ptr<ProxyEntity>> &in,
+                             QList<std::shared_ptr<ProxyEntity>> &out,
                              bool by_address, bool keep_last) {
-        QMap<QString, QSharedPointer<ProxyEntity>> hashMap;
+        QMap<QString, std::shared_ptr<ProxyEntity>> hashMap;
 
         for (const auto &ent: in) {
             QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
@@ -22,11 +22,11 @@ namespace NekoRay {
         }
     }
 
-    void ProfileFilter::Common(const QList<QSharedPointer<ProxyEntity>> &src,
-                               const QList<QSharedPointer<ProxyEntity>> &dst,
-                               QList<QSharedPointer<ProxyEntity>> &out,
+    void ProfileFilter::Common(const QList<std::shared_ptr<ProxyEntity>> &src,
+                               const QList<std::shared_ptr<ProxyEntity>> &dst,
+                               QList<std::shared_ptr<ProxyEntity>> &out,
                                bool by_address, bool keep_last) {
-        QMap<QString, QSharedPointer<ProxyEntity>> hashMap;
+        QMap<QString, std::shared_ptr<ProxyEntity>> hashMap;
 
         for (const auto &ent: src) {
             QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
@@ -46,9 +46,9 @@ namespace NekoRay {
         }
     }
 
-    void ProfileFilter::OnlyInSrc(const QList<QSharedPointer<ProxyEntity>> &src,
-                                  const QList<QSharedPointer<ProxyEntity>> &dst,
-                                  QList<QSharedPointer<ProxyEntity>> &out,
+    void ProfileFilter::OnlyInSrc(const QList<std::shared_ptr<ProxyEntity>> &src,
+                                  const QList<std::shared_ptr<ProxyEntity>> &dst,
+                                  QList<std::shared_ptr<ProxyEntity>> &out,
                                   bool by_address) {
         QMap<QString, bool> hashMap;
 
@@ -64,12 +64,12 @@ namespace NekoRay {
         }
     }
 
-    void ProfileFilter::OnlyInSrc_ByPointer(const QList<QSharedPointer<ProxyEntity>> &src,
-                                            const QList<QSharedPointer<ProxyEntity>> &dst,
-                                            QList<QSharedPointer<ProxyEntity>> &out) {
+    void ProfileFilter::OnlyInSrc_ByPointer(const QList<std::shared_ptr<ProxyEntity>> &src,
+                                            const QList<std::shared_ptr<ProxyEntity>> &dst,
+                                            QList<std::shared_ptr<ProxyEntity>> &out) {
         for (const auto &ent: src) {
             if (!dst.contains(ent)) out += ent;
         }
     }
 
-} // namespace NekoRay
+} // namespace NekoGui

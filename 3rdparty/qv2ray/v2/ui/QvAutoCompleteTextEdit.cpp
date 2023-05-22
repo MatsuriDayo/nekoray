@@ -70,7 +70,7 @@ namespace Qv2ray::ui::widgets {
         c->setWidget(this);
         c->setCompletionMode(QCompleter::PopupCompletion);
         c->setCaseSensitivity(Qt::CaseInsensitive);
-        QObject::connect(c, QOverload<const QString &>::of(&QCompleter::activated), this, &AutoCompleteTextEdit::insertCompletion);
+        QObject::connect(c, static_cast<void (QCompleter::*)(const QString &)>(&QCompleter::activated), this, &AutoCompleteTextEdit::insertCompletion);
     }
 
     AutoCompleteTextEdit::~AutoCompleteTextEdit() {

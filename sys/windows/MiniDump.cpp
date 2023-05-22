@@ -21,7 +21,7 @@ typedef BOOL(WINAPI *MINIDUMPWRITEDUMP)(
     CONST PMINIDUMP_USER_STREAM_INFORMATION UserStreamParam,
     CONST PMINIDUMP_CALLBACK_INFORMATION CallbackParam);
 
-LONG CreateCrashHandler(EXCEPTION_POINTERS *pException) {
+LONG __stdcall CreateCrashHandler(EXCEPTION_POINTERS *pException) {
     QDir::setCurrent(QApplication::applicationDirPath());
 
     HMODULE DllHandle = NULL;

@@ -3,7 +3,7 @@
 
 #include <QMessageBox>
 
-ProxyItem::ProxyItem(QWidget *parent, const QSharedPointer<NekoRay::ProxyEntity> &ent, QListWidgetItem *item)
+ProxyItem::ProxyItem(QWidget *parent, const std::shared_ptr<NekoGui::ProxyEntity> &ent, QListWidgetItem *item)
     : QWidget(parent), ui(new Ui::ProxyItem) {
     ui->setupUi(this);
     this->setLayoutDirection(Qt::LeftToRight);

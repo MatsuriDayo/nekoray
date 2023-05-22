@@ -1,6 +1,6 @@
 #include "w_JsonEditor.hpp"
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 JsonEditor::JsonEditor(const QJsonObject& rootObject, QWidget* parent) : QDialog(parent) {
     setupUi(this);

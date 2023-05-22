@@ -2,34 +2,34 @@
 
 #include "ProxyEntity.hpp"
 
-namespace NekoRay {
+namespace NekoGui {
     class ProfileFilter {
     public:
         static void Uniq(
-            const QList<QSharedPointer<ProxyEntity>> &in,
-            QList<QSharedPointer<ProxyEntity>> &out,
+            const QList<std::shared_ptr<ProxyEntity>> &in,
+            QList<std::shared_ptr<ProxyEntity>> &out,
             bool by_address = false, // def by bean
             bool keep_last = false   // def keep first
         );
 
         static void Common(
-            const QList<QSharedPointer<ProxyEntity>> &src,
-            const QList<QSharedPointer<ProxyEntity>> &dst,
-            QList<QSharedPointer<ProxyEntity>> &out,
+            const QList<std::shared_ptr<ProxyEntity>> &src,
+            const QList<std::shared_ptr<ProxyEntity>> &dst,
+            QList<std::shared_ptr<ProxyEntity>> &out,
             bool by_address = false, // def by bean
             bool keep_last = false   // def keep first
         );
 
         static void OnlyInSrc(
-            const QList<QSharedPointer<ProxyEntity>> &src,
-            const QList<QSharedPointer<ProxyEntity>> &dst,
-            QList<QSharedPointer<NekoRay::ProxyEntity>> &out,
+            const QList<std::shared_ptr<ProxyEntity>> &src,
+            const QList<std::shared_ptr<ProxyEntity>> &dst,
+            QList<std::shared_ptr<ProxyEntity>> &out,
             bool by_address = false // def by bean
         );
 
         static void OnlyInSrc_ByPointer(
-            const QList<QSharedPointer<ProxyEntity>> &src,
-            const QList<QSharedPointer<ProxyEntity>> &dst,
-            QList<QSharedPointer<ProxyEntity>> &out);
+            const QList<std::shared_ptr<ProxyEntity>> &src,
+            const QList<std::shared_ptr<ProxyEntity>> &dst,
+            QList<std::shared_ptr<ProxyEntity>> &out);
     };
-} // namespace NekoRay
+} // namespace NekoGui

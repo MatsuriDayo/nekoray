@@ -1,6 +1,6 @@
 // DO NOT INCLUDE THIS
 
-namespace NekoRay {
+namespace NekoGui_ConfigItem {
     // config 工具
     enum itemType {
         string,
@@ -28,7 +28,7 @@ namespace NekoRay {
     // 可格式化对象
     class JsonStore {
     public:
-        QMap<QString, QSharedPointer<configItem>> _map;
+        QMap<QString, std::shared_ptr<configItem>> _map;
 
         std::function<void()> callback_after_load = nullptr;
         std::function<void()> callback_before_save = nullptr;
@@ -49,7 +49,7 @@ namespace NekoRay {
 
         QString _name(void *p);
 
-        QSharedPointer<configItem> _get(const QString &name);
+        std::shared_ptr<configItem> _get(const QString &name);
 
         void _setValue(const QString &name, void *p);
 
@@ -65,4 +65,6 @@ namespace NekoRay {
 
         bool Load();
     };
-} // namespace NekoRay
+} // namespace NekoGui_ConfigItem
+
+using namespace NekoGui_ConfigItem;

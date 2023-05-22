@@ -13,7 +13,7 @@ class DialogEditGroup : public QDialog {
     Q_OBJECT
 
 public:
-    explicit DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent = nullptr);
+    explicit DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWidget *parent = nullptr);
 
     ~DialogEditGroup() override;
 

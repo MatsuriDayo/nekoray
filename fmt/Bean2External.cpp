@@ -19,7 +19,7 @@
     f.close();                                                    \
     auto TempFile = QFileInfo(f).absoluteFilePath();
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     // -1: Cannot use this config
     // 0: Internal
     // 1: Mapping External
@@ -27,7 +27,7 @@ namespace NekoRay::fmt {
 
     int NaiveBean::NeedExternal(bool isFirstProfile) {
         if (isFirstProfile) {
-            if (dataStore->spmode_vpn) {
+            if (NekoGui::dataStore->spmode_vpn) {
                 return 1;
             }
             return 2;
@@ -38,7 +38,7 @@ namespace NekoRay::fmt {
     int HysteriaBean::NeedExternal(bool isFirstProfile) {
         auto hysteriaCore = [=] {
             if (isFirstProfile) {
-                if (dataStore->spmode_vpn && protocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
+                if (NekoGui::dataStore->spmode_vpn && protocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
                     return 1;
                 }
                 return 2;
@@ -69,7 +69,7 @@ namespace NekoRay::fmt {
     }
 
     ExternalBuildResult NaiveBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
-        ExternalBuildResult result{dataStore->extraCore->Get("naive")};
+        ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("naive")};
 
         auto is_direct = external_stat == 2;
         auto domain_address = sni.isEmpty() ? serverAddress : sni;
@@ -105,7 +105,7 @@ namespace NekoRay::fmt {
     }
 
     ExternalBuildResult HysteriaBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
-        ExternalBuildResult result{dataStore->extraCore->Get("hysteria")};
+        ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria")};
 
         QJsonObject config;
 
@@ -166,7 +166,7 @@ namespace NekoRay::fmt {
     }
 
     ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
-        ExternalBuildResult result{dataStore->extraCore->Get(core)};
+        ExternalBuildResult result{NekoGui::dataStore->extraCore->Get(core)};
 
         result.arguments = command; // TODO split?
 
@@ -206,4 +206,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

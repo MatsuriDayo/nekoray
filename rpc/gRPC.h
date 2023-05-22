@@ -9,7 +9,7 @@ namespace QtGrpc {
     class Http2GrpcChannelPrivate;
 }
 
-namespace NekoRay::rpc {
+namespace NekoGui_rpc {
     class Client {
     public:
         explicit Client(std::function<void(const QString &)> onError, const QString &target, const QString &token);
@@ -39,5 +39,5 @@ namespace NekoRay::rpc {
     };
 
     inline Client *defaultClient;
-} // namespace NekoRay::rpc
+} // namespace NekoGui_rpc
 #endif

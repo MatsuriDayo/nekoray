@@ -1,15 +1,15 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 #include "ProxyEntity.hpp"
 #include "Group.hpp"
 
-namespace NekoRay {
+namespace NekoGui {
     class ProfileManager : public JsonStore {
     public:
         // Manager
-        QMap<int, QSharedPointer<ProxyEntity>> profiles;
-        QMap<int, QSharedPointer<Group>> groups;
+        QMap<int, std::shared_ptr<ProxyEntity>> profiles;
+        QMap<int, std::shared_ptr<Group>> groups;
 
         // JSON
         QList<int> _profiles;
@@ -17,25 +17,25 @@ namespace NekoRay {
 
         ProfileManager();
 
-        [[nodiscard]] static QSharedPointer<ProxyEntity> NewProxyEntity(const QString &type);
+        [[nodiscard]] static std::shared_ptr<ProxyEntity> NewProxyEntity(const QString &type);
 
-        [[nodiscard]] static QSharedPointer<Group> NewGroup();
+        [[nodiscard]] static std::shared_ptr<Group> NewGroup();
 
-        bool AddProfile(const QSharedPointer<ProxyEntity> &ent, int gid = -1);
+        bool AddProfile(const std::shared_ptr<ProxyEntity> &ent, int gid = -1);
 
         void DeleteProfile(int id);
 
-        void MoveProfile(const QSharedPointer<ProxyEntity> &ent, int gid);
+        void MoveProfile(const std::shared_ptr<ProxyEntity> &ent, int gid);
 
-        QSharedPointer<ProxyEntity> GetProfile(int id);
+        std::shared_ptr<ProxyEntity> GetProfile(int id);
 
-        bool AddGroup(const QSharedPointer<Group> &ent);
+        bool AddGroup(const std::shared_ptr<Group> &ent);
 
         void DeleteGroup(int gid);
 
-        QSharedPointer<Group> GetGroup(int id);
+        std::shared_ptr<Group> GetGroup(int id);
 
-        QSharedPointer<Group> CurrentGroup();
+        std::shared_ptr<Group> CurrentGroup();
 
     private:
         void LoadManager();
@@ -46,10 +46,10 @@ namespace NekoRay {
 
         [[nodiscard]] int NewGroupID() const;
 
-        static QSharedPointer<ProxyEntity> LoadProxyEntity(const QString &jsonPath);
+        static std::shared_ptr<ProxyEntity> LoadProxyEntity(const QString &jsonPath);
 
-        static QSharedPointer<Group> LoadGroup(const QString &jsonPath);
+        static std::shared_ptr<Group> LoadGroup(const QString &jsonPath);
     };
 
     extern ProfileManager *profileManager;
-} // namespace NekoRay
+} // namespace NekoGui

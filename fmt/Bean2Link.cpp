@@ -3,7 +3,7 @@
 
 #include <QUrlQuery>
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     QString SocksHttpBean::ToShareLink() {
         QUrl url;
         if (socks_http_type == type_HTTP) { // http
@@ -151,4 +151,4 @@ namespace NekoRay::fmt {
         return url.toString(QUrl::FullyEncoded);
     }
 
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

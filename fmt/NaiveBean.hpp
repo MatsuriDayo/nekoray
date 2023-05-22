@@ -2,7 +2,7 @@
 
 #include "fmt/AbstractBean.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class NaiveBean : public AbstractBean {
     public:
         QString username = "";
@@ -35,4 +35,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

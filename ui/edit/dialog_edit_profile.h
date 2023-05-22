@@ -44,7 +44,7 @@ private:
     QString type;
     int groupId;
     bool newEnt = false;
-    QSharedPointer<NekoRay::ProxyEntity> ent;
+    std::shared_ptr<NekoGui::ProxyEntity> ent;
 
     QString network_title_base;
 
@@ -60,7 +60,7 @@ private:
 
     void editor_cache_updated_impl();
 
-    void do_apply_to_group(const QSharedPointer<NekoRay::Group> &group, QWidget *key);
+    void do_apply_to_group(const std::shared_ptr<NekoGui::Group> &group, QWidget *key);
 };
 
 #endif // DIALOG_EDIT_PROFILE_H

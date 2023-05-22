@@ -15,11 +15,11 @@ public:
 
     ~EditSocksHttp() override;
 
-    void onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) override;
+    void onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) override;
 
     bool onEnd() override;
 
 private:
     Ui::EditSocksHttp *ui;
-    QSharedPointer<NekoRay::ProxyEntity> ent;
+    std::shared_ptr<NekoGui::ProxyEntity> ent;
 };

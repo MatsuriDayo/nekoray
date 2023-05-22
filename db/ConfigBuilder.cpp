@@ -8,12 +8,12 @@
 #include <QFile>
 #include <QFileInfo>
 
-#define BOX_UNDERLYING_DNS NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? "underlying://0.0.0.0" : NekoRay::dataStore->core_box_underlying_dns
-#define BOX_UNDERLYING_DNS_EXPORT NekoRay::dataStore->core_box_underlying_dns.isEmpty() ? (status->forExport ? "local" : "underlying://0.0.0.0") : NekoRay::dataStore->core_box_underlying_dns
+#define BOX_UNDERLYING_DNS dataStore->core_box_underlying_dns.isEmpty() ? "underlying://0.0.0.0" : dataStore->core_box_underlying_dns
+#define BOX_UNDERLYING_DNS_EXPORT dataStore->core_box_underlying_dns.isEmpty() ? (status->forExport ? "local" : "underlying://0.0.0.0") : dataStore->core_box_underlying_dns
 
-namespace NekoRay {
+namespace NekoGui {
 
-    QStringList getAutoBypassExternalProcessPaths(const QSharedPointer<BuildConfigResult> &result) {
+    QStringList getAutoBypassExternalProcessPaths(const std::shared_ptr<BuildConfigResult> &result) {
         QStringList paths;
         for (const auto &extR: result->extRs) {
             auto path = extR->program;
@@ -54,15 +54,15 @@ namespace NekoRay {
 
     // Common
 
-    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport) {
-        auto result = QSharedPointer<BuildConfigResult>(new BuildConfigResult);
-        auto status = QSharedPointer<BuildConfigStatus>(new BuildConfigStatus);
+    std::shared_ptr<BuildConfigResult> BuildConfig(const std::shared_ptr<ProxyEntity> &ent, bool forTest, bool forExport) {
+        auto result = std::make_shared<BuildConfigResult>();
+        auto status = std::make_shared<BuildConfigStatus>();
         status->ent = ent;
         status->result = result;
         status->forTest = forTest;
         status->forExport = forExport;
 
-        auto customBean = dynamic_cast<fmt::CustomBean *>(ent->bean.get());
+        auto customBean = dynamic_cast<NekoGui_fmt::CustomBean *>(ent->bean.get());
         if (customBean != nullptr && customBean->core == "internal-full") {
             result->coreConfig = QString2QJsonObject(customBean->config_simple);
         } else {
@@ -92,9 +92,9 @@ namespace NekoRay {
         return result;
     }
 
-    QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status) {
+    QString BuildChain(int chainId, const std::shared_ptr<BuildConfigStatus> &status) {
         // Make list
-        QList<QSharedPointer<ProxyEntity>> ents;
+        QList<std::shared_ptr<ProxyEntity>> ents;
         auto ent = status->ent;
         auto result = status->result;
 
@@ -155,7 +155,7 @@ namespace NekoRay {
 
     // V2Ray
 
-    void BuildConfigV2Ray(const QSharedPointer<BuildConfigStatus> &status) {
+    void BuildConfigV2Ray(const std::shared_ptr<BuildConfigStatus> &status) {
         // Log
         auto logObj = QJsonObject{{"loglevel", dataStore->log_level}};
         status->result->coreConfig.insert("log", logObj);
@@ -397,8 +397,8 @@ namespace NekoRay {
         status->result->coreConfig.insert("stats", QJsonObject());
     }
 
-    QString BuildChainInternal(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
-                               const QSharedPointer<BuildConfigStatus> &status) {
+    QString BuildChainInternal(int chainId, const QList<std::shared_ptr<ProxyEntity>> &ents,
+                               const std::shared_ptr<BuildConfigStatus> &status) {
         QString chainTag = "c-" + Int2String(chainId);
         QString chainTagOut;
         bool muxApplied = false;
@@ -550,7 +550,7 @@ namespace NekoRay {
             // Outbound
 
             QJsonObject outbound;
-            auto stream = GetStreamSettings(ent->bean.data());
+            auto stream = GetStreamSettings(ent->bean.get());
 
             if (thisExternalStat > 0) {
                 auto extR = ent->bean->BuildExternal(ext_mapping_port, ext_socks_port, thisExternalStat);
@@ -563,7 +563,7 @@ namespace NekoRay {
                     return {};
                 }
                 extR.tag = ent->bean->DisplayType();
-                status->result->extRs.emplace_back(std::make_shared<fmt::ExternalBuildResult>(extR));
+                status->result->extRs.emplace_back(std::make_shared<NekoGui_fmt::ExternalBuildResult>(extR));
 
                 // SOCKS OUTBOUND
                 if (IS_NEKO_BOX) {
@@ -664,7 +664,7 @@ namespace NekoRay {
             // Bypass Lookup for the first profile
             auto serverAddress = ent->bean->serverAddress;
 
-            auto customBean = dynamic_cast<fmt::CustomBean *>(ent->bean.get());
+            auto customBean = dynamic_cast<NekoGui_fmt::CustomBean *>(ent->bean.get());
             if (customBean != nullptr && customBean->core == "internal") {
                 auto server = QString2QJsonObject(customBean->config_simple)["server"].toString();
                 if (!server.isEmpty()) serverAddress = server;
@@ -685,7 +685,7 @@ namespace NekoRay {
 
     // SingBox
 
-    void BuildConfigSingBox(const QSharedPointer<BuildConfigStatus> &status) {
+    void BuildConfigSingBox(const std::shared_ptr<BuildConfigStatus> &status) {
         // Log
         status->result->coreConfig["log"] = QJsonObject{{"level", dataStore->log_level}};
 
@@ -921,7 +921,7 @@ namespace NekoRay {
 
         // tun user rule
         if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn) {
-            auto match_out = NekoRay::dataStore->vpn_rule_white ? "proxy" : "bypass";
+            auto match_out = dataStore->vpn_rule_white ? "proxy" : "bypass";
 
             QString process_name_rule = dataStore->vpn_rule_process.trimmed();
             if (!process_name_rule.isEmpty()) {
@@ -984,10 +984,10 @@ namespace NekoRay {
         // experimental
         QJsonObject experimentalObj;
 
-        if (!status->forTest && NekoRay::dataStore->core_box_clash_api > 0) {
+        if (!status->forTest && dataStore->core_box_clash_api > 0) {
             QJsonObject clash_api = {
-                {"external_controller", "127.0.0.1:" + Int2String(NekoRay::dataStore->core_box_clash_api)},
-                {"secret", NekoRay::dataStore->core_box_clash_api_secret},
+                {"external_controller", "127.0.0.1:" + Int2String(dataStore->core_box_clash_api)},
+                {"secret", dataStore->core_box_clash_api_secret},
                 {"external_ui", "dashboard"},
             };
             experimentalObj["clash_api"] = clash_api;
@@ -998,8 +998,8 @@ namespace NekoRay {
 
     QString WriteVPNSingBoxConfig() {
         // tun user rule
-        auto match_out = NekoRay::dataStore->vpn_rule_white ? "nekoray-socks" : "direct";
-        auto no_match_out = NekoRay::dataStore->vpn_rule_white ? "direct" : "nekoray-socks";
+        auto match_out = dataStore->vpn_rule_white ? "nekoray-socks" : "direct";
+        auto no_match_out = dataStore->vpn_rule_white ? "direct" : "nekoray-socks";
 
         QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {
@@ -1090,4 +1090,4 @@ namespace NekoRay {
         return QFileInfo(file2).absoluteFilePath();
     }
 
-} // namespace NekoRay
+} // namespace NekoGui

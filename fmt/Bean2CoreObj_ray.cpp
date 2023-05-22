@@ -7,7 +7,7 @@
     auto streamSettings = stream->BuildStreamSettingsV2Ray();                                     \
     outbound["streamSettings"] = streamSettings;
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     QJsonObject V2rayStreamSettings::BuildStreamSettingsV2Ray() {
         QJsonObject streamSettings{{"network", network}};
 
@@ -56,10 +56,10 @@ namespace NekoRay::fmt {
         }
 
         if (security == "tls") {
-            auto fp = utlsFingerprint.isEmpty() ? NekoRay::dataStore->utlsFingerprint : utlsFingerprint;
+            auto fp = utlsFingerprint.isEmpty() ? NekoGui::dataStore->utlsFingerprint : utlsFingerprint;
             bool v5_utls = !fp.isEmpty();
             QJsonObject tls;
-            if (allow_insecure || dataStore->skip_cert) tls["allowInsecure"] = true;
+            if (allow_insecure || NekoGui::dataStore->skip_cert) tls["allowInsecure"] = true;
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
             if (!certificate.trimmed().isEmpty()) {
                 tls["disableSystemRoot"] = true;
@@ -212,4 +212,4 @@ namespace NekoRay::fmt {
 
         return result;
     }
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

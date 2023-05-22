@@ -3,23 +3,23 @@
 #include "ProxyEntity.hpp"
 #include "sys/ExternalProcess.hpp"
 
-namespace NekoRay {
+namespace NekoGui {
     class BuildConfigResult {
     public:
         QString error;
         QJsonObject coreConfig;
 
-        QList<QSharedPointer<traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
-        QSharedPointer<traffic::TrafficData> outboundStat;         // main
+        QList<std::shared_ptr<NekoGui_traffic::TrafficData>> outboundStats; // all, but not including "bypass" "block"
+        std::shared_ptr<NekoGui_traffic::TrafficData> outboundStat;         // main
         QStringList ignoreConnTag;
 
-        std::list<std::shared_ptr<NekoRay::fmt::ExternalBuildResult>> extRs;
+        std::list<std::shared_ptr<NekoGui_fmt::ExternalBuildResult>> extRs;
     };
 
     class BuildConfigStatus {
     public:
-        QSharedPointer<BuildConfigResult> result;
-        QSharedPointer<ProxyEntity> ent;
+        std::shared_ptr<BuildConfigResult> result;
+        std::shared_ptr<ProxyEntity> ent;
         bool forTest;
         bool forExport;
 
@@ -44,18 +44,18 @@ namespace NekoRay {
         QJsonArray outbounds;
     };
 
-    QSharedPointer<BuildConfigResult> BuildConfig(const QSharedPointer<ProxyEntity> &ent, bool forTest, bool forExport);
+    std::shared_ptr<BuildConfigResult> BuildConfig(const std::shared_ptr<ProxyEntity> &ent, bool forTest, bool forExport);
 
-    void BuildConfigV2Ray(const QSharedPointer<BuildConfigStatus> &status);
+    void BuildConfigV2Ray(const std::shared_ptr<BuildConfigStatus> &status);
 
-    void BuildConfigSingBox(const QSharedPointer<BuildConfigStatus> &status);
+    void BuildConfigSingBox(const std::shared_ptr<BuildConfigStatus> &status);
 
-    QString BuildChain(int chainId, const QSharedPointer<BuildConfigStatus> &status);
+    QString BuildChain(int chainId, const std::shared_ptr<BuildConfigStatus> &status);
 
-    QString BuildChainInternal(int chainId, const QList<QSharedPointer<ProxyEntity>> &ents,
-                               const QSharedPointer<BuildConfigStatus> &status);
+    QString BuildChainInternal(int chainId, const QList<std::shared_ptr<ProxyEntity>> &ents,
+                               const std::shared_ptr<BuildConfigStatus> &status);
 
     QString WriteVPNSingBoxConfig();
 
     QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath);
-} // namespace NekoRay
+} // namespace NekoGui

@@ -2,7 +2,7 @@
 
 #include <QMainWindow>
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 #ifndef MW_INTERFACE
 
@@ -23,7 +23,7 @@
 
 #endif
 
-namespace NekoRay::sys {
+namespace NekoGui_sys {
     class CoreProcess;
 }
 
@@ -141,7 +141,7 @@ private:
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
     QShortcut *shortcut_esc = new QShortcut(QKeySequence("Esc"), this);
     //
-    NekoRay::sys::CoreProcess *core_process;
+    NekoGui_sys::CoreProcess *core_process;
     qint64 vpn_pid = 0;
     //
     bool qvLogAutoScoll = true;
@@ -149,7 +149,7 @@ private:
     //
     QString title_error;
     int icon_status = -1;
-    QSharedPointer<NekoRay::ProxyEntity> running;
+    std::shared_ptr<NekoGui::ProxyEntity> running;
     QString traffic_update_cache;
     QTime last_test_time;
     //
@@ -161,15 +161,15 @@ private:
     QSemaphore sem_stopped;
     int exit_reason = 0;
 
-    QMap<int, QSharedPointer<NekoRay::ProxyEntity>> get_now_selected();
+    QMap<int, std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected();
 
-    QList<QSharedPointer<NekoRay::ProxyEntity>> get_now_selected_list();
+    QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
-    QList<QSharedPointer<NekoRay::ProxyEntity>> get_selected_or_group();
+    QList<std::shared_ptr<NekoGui::ProxyEntity>> get_selected_or_group();
 
     void dialog_message_impl(const QString &sender, const QString &info);
 
-    void refresh_proxy_list_impl(const int &id = -1, NekoRay::GroupSortAction groupSortAction = {});
+    void refresh_proxy_list_impl(const int &id = -1, GroupSortAction groupSortAction = {});
 
     void refresh_proxy_list_impl_refresh_data(const int &id = -1);
 

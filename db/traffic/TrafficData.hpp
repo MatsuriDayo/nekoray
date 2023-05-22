@@ -1,8 +1,8 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
-namespace NekoRay::traffic {
+namespace NekoGui_traffic {
     class TrafficData : public JsonStore {
     public:
         int id = -1; // ent id
@@ -37,4 +37,4 @@ namespace NekoRay::traffic {
             return UNICODE_LRO + QString("%1↑ %2↓").arg(ReadableSize(uplink), ReadableSize(downlink));
         }
     };
-} // namespace NekoRay::traffic
+} // namespace NekoGui_traffic

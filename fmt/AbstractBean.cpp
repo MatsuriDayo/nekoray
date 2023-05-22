@@ -4,7 +4,7 @@
 #include <QHostInfo>
 #include <QUrl>
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     AbstractBean::AbstractBean(int version) {
         this->version = version;
         _add(new configItem("_v", &this->version, itemType::integer));
@@ -52,6 +52,7 @@ namespace NekoRay::fmt {
             return;
         }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 11, 0) // TODO older QT
         QHostInfo::lookupHost(serverAddress, QApplication::instance(), [=](const QHostInfo &host) {
             auto addr = host.addresses();
             if (!addr.isEmpty()) {
@@ -73,5 +74,6 @@ namespace NekoRay::fmt {
             }
             onFinished();
         });
+#endif
     }
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

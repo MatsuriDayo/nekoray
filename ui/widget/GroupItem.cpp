@@ -41,7 +41,7 @@ QString ParseSubInfo(const QString &info) {
     return result;
 }
 
-GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent, QListWidgetItem *item) : QWidget(parent), ui(new Ui::GroupItem) {
+GroupItem::GroupItem(QWidget *parent, const std::shared_ptr<NekoGui::Group> &ent, QListWidgetItem *item) : QWidget(parent), ui(new Ui::GroupItem) {
     ui->setupUi(this);
     this->setLayoutDirection(Qt::LeftToRight);
 
@@ -50,7 +50,7 @@ GroupItem::GroupItem(QWidget *parent, const QSharedPointer<NekoRay::Group> &ent,
     if (ent == nullptr) return;
 
     connect(this, &GroupItem::edit_clicked, this, &GroupItem::on_edit_clicked);
-    connect(NekoRay::sub::groupUpdater, &NekoRay::sub::GroupUpdater::asyncUpdateCallback, this, [=](int gid) { if (gid == this->ent->id) refresh_data(); });
+    connect(NekoGui_sub::groupUpdater, &NekoGui_sub::GroupUpdater::asyncUpdateCallback, this, [=](int gid) { if (gid == this->ent->id) refresh_data(); });
 
     refresh_data();
 }
@@ -74,8 +74,8 @@ void GroupItem::refresh_data() {
     } else {
         ui->url->setText(ent->url);
         QStringList info;
-        if (ent->last_update != 0) {
-            info << tr("Last update: %1").arg(DisplayTime(ent->last_update, QLocale::ShortFormat));
+        if (ent->sub_last_update != 0) {
+            info << tr("Last update: %1").arg(DisplayTime(ent->sub_last_update, QLocale::ShortFormat));
         }
         auto subinfo = ParseSubInfo(ent->info);
         if (!ent->info.isEmpty()) {
@@ -98,7 +98,7 @@ void GroupItem::refresh_data() {
 }
 
 void GroupItem::on_update_sub_clicked() {
-    NekoRay::sub::groupUpdater->AsyncUpdate(ent->url, ent->id);
+    NekoGui_sub::groupUpdater->AsyncUpdate(ent->url, ent->id);
 }
 
 void GroupItem::on_edit_clicked() {
@@ -114,10 +114,10 @@ void GroupItem::on_edit_clicked() {
 }
 
 void GroupItem::on_remove_clicked() {
-    if (NekoRay::profileManager->groups.count() == 1) return;
+    if (NekoGui::profileManager->groups.count() == 1) return;
     if (QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->name)) ==
         QMessageBox::StandardButton::Yes) {
-        NekoRay::profileManager->DeleteGroup(ent->id);
+        NekoGui::profileManager->DeleteGroup(ent->id);
         MW_dialog_message(Dialog_DialogManageGroups, "refresh-1");
         delete item;
     }

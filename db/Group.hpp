@@ -1,9 +1,9 @@
 #pragma once
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 #include "ProxyEntity.hpp"
 
-namespace NekoRay {
+namespace NekoGui {
     class Group : public JsonStore {
     public:
         int id = -1;
@@ -11,7 +11,7 @@ namespace NekoRay {
         QString name = "";
         QString url = "";
         QString info = "";
-        qint64 last_update = 0;
+        qint64 sub_last_update = 0;
 
         // list ui
         bool manually_column_width = false;
@@ -21,9 +21,9 @@ namespace NekoRay {
         Group();
 
         // 按 id 顺序
-        [[nodiscard]] QList<QSharedPointer<ProxyEntity>> Profiles() const;
+        [[nodiscard]] QList<std::shared_ptr<ProxyEntity>> Profiles() const;
 
         // 按 显示 顺序
-        [[nodiscard]] QList<QSharedPointer<ProxyEntity>> ProfilesWithOrder() const;
+        [[nodiscard]] QList<std::shared_ptr<ProxyEntity>> ProfilesWithOrder() const;
     };
-} // namespace NekoRay
+} // namespace NekoGui

@@ -3,9 +3,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     struct CoreObjOutboundBuildResult {
     public:
         QJsonObject outbound;
@@ -68,4 +68,4 @@ namespace NekoRay::fmt {
         virtual QString ToShareLink() { return {}; };
     };
 
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

@@ -2,7 +2,7 @@
 
 #include <QString>
 
-namespace NekoRay::sub {
+namespace NekoGui_sub {
     class RawUpdater {
     public:
         void updateClash(const QString &str);
@@ -28,4 +28,4 @@ namespace NekoRay::sub {
     };
 
     extern GroupUpdater *groupUpdater;
-} // namespace NekoRay::sub
+} // namespace NekoGui_sub

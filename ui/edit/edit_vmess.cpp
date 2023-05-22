@@ -14,7 +14,7 @@ EditVMess::~EditVMess() {
     delete ui;
 }
 
-void EditVMess::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
+void EditVMess::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->VMessBean();
 

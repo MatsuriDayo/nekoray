@@ -138,8 +138,8 @@ set(PROJECT_SOURCES
         ${PLATFORM_SOURCES}
 
         main/main.cpp
-        main/NekoRay.cpp
-        main/NekoRay_Utils.cpp
+        main/NekoGui.cpp
+        main/NekoGui_Utils.cpp
         main/QJS.cpp
         main/HTTPRequestHelper.cpp
 
@@ -161,7 +161,7 @@ set(PROJECT_SOURCES
         rpc/gRPC.cpp
 
         db/Database.cpp
-        db/TrafficLooper.cpp
+        db/traffic/TrafficLooper.cpp
         db/ProfileFilter.cpp
         db/ConfigBuilder.cpp
 

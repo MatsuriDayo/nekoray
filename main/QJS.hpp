@@ -3,7 +3,7 @@
 class QByteArray;
 class QString;
 
-namespace NekoRay::qjs {
+namespace qjs {
     class QJS {
     public:
         QJS();
@@ -20,4 +20,4 @@ namespace NekoRay::qjs {
     };
 
     QByteArray ReadHookJS();
-} // namespace NekoRay::qjs
+} // namespace qjs

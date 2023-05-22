@@ -5,7 +5,7 @@
 #include <QFile>
 #include <QColor>
 
-namespace NekoRay {
+namespace NekoGui {
 
     ProfileManager *profileManager = new ProfileManager();
 
@@ -40,7 +40,7 @@ namespace NekoRay {
     void ProfileManager::SaveManager() {
     }
 
-    QSharedPointer<ProxyEntity> ProfileManager::LoadProxyEntity(const QString &jsonPath) {
+    std::shared_ptr<ProxyEntity> ProfileManager::LoadProxyEntity(const QString &jsonPath) {
         // Load type
         ProxyEntity ent0(nullptr, nullptr);
         ent0.fn = jsonPath;
@@ -48,7 +48,7 @@ namespace NekoRay {
         auto type = ent0.type;
 
         // Load content
-        QSharedPointer<ProxyEntity> ent;
+        std::shared_ptr<ProxyEntity> ent;
         bool validType = validJson;
 
         if (validType) {
@@ -66,45 +66,45 @@ namespace NekoRay {
 
     //  新建的不给 fn 和 id
 
-    QSharedPointer<ProxyEntity> ProfileManager::NewProxyEntity(const QString &type) {
-        fmt::AbstractBean *bean;
+    std::shared_ptr<ProxyEntity> ProfileManager::NewProxyEntity(const QString &type) {
+        NekoGui_fmt::AbstractBean *bean;
 
         if (type == "socks") {
-            bean = new fmt::SocksHttpBean(NekoRay::fmt::SocksHttpBean::type_Socks5);
+            bean = new NekoGui_fmt::SocksHttpBean(NekoGui_fmt::SocksHttpBean::type_Socks5);
         } else if (type == "http") {
-            bean = new fmt::SocksHttpBean(NekoRay::fmt::SocksHttpBean::type_HTTP);
+            bean = new NekoGui_fmt::SocksHttpBean(NekoGui_fmt::SocksHttpBean::type_HTTP);
         } else if (type == "shadowsocks") {
-            bean = new fmt::ShadowSocksBean();
+            bean = new NekoGui_fmt::ShadowSocksBean();
         } else if (type == "chain") {
-            bean = new fmt::ChainBean();
+            bean = new NekoGui_fmt::ChainBean();
         } else if (type == "vmess") {
-            bean = new fmt::VMessBean();
+            bean = new NekoGui_fmt::VMessBean();
         } else if (type == "trojan") {
-            bean = new fmt::TrojanVLESSBean(fmt::TrojanVLESSBean::proxy_Trojan);
+            bean = new NekoGui_fmt::TrojanVLESSBean(NekoGui_fmt::TrojanVLESSBean::proxy_Trojan);
         } else if (type == "vless") {
-            bean = new fmt::TrojanVLESSBean(fmt::TrojanVLESSBean::proxy_VLESS);
+            bean = new NekoGui_fmt::TrojanVLESSBean(NekoGui_fmt::TrojanVLESSBean::proxy_VLESS);
         } else if (type == "naive") {
-            bean = new fmt::NaiveBean();
+            bean = new NekoGui_fmt::NaiveBean();
         } else if (type == "hysteria") {
-            bean = new fmt::HysteriaBean();
+            bean = new NekoGui_fmt::HysteriaBean();
         } else if (type == "custom") {
-            bean = new fmt::CustomBean();
+            bean = new NekoGui_fmt::CustomBean();
         } else {
-            bean = new fmt::AbstractBean(-114514);
+            bean = new NekoGui_fmt::AbstractBean(-114514);
         }
 
-        auto ent = QSharedPointer<ProxyEntity>(new ProxyEntity(bean, type));
+        auto ent = std::make_shared<ProxyEntity>(bean, type);
         return ent;
     }
 
-    QSharedPointer<Group> ProfileManager::NewGroup() {
-        auto ent = QSharedPointer<Group>(new Group());
+    std::shared_ptr<Group> ProfileManager::NewGroup() {
+        auto ent = std::make_shared<Group>();
         return ent;
     }
 
     // ProxyEntity
 
-    ProxyEntity::ProxyEntity(fmt::AbstractBean *bean, const QString &type_) {
+    ProxyEntity::ProxyEntity(NekoGui_fmt::AbstractBean *bean, const QString &type_) {
         if (type_ != nullptr) this->type = type_;
 
         _add(new configItem("type", &type, itemType::string));
@@ -115,7 +115,7 @@ namespace NekoRay {
 
         // 可以不关联 bean，只加载 ProxyEntity 的信息
         if (bean != nullptr) {
-            this->bean = QSharedPointer<fmt::AbstractBean>(bean);
+            this->bean = std::shared_ptr<NekoGui_fmt::AbstractBean>(bean);
             // 有虚函数就要在这里 dynamic_cast
             _add(new configItem("bean", dynamic_cast<JsonStore *>(bean), itemType::jsonStore));
             _add(new configItem("traffic", dynamic_cast<JsonStore *>(traffic_data.get()), itemType::jsonStore));
@@ -158,7 +158,7 @@ namespace NekoRay {
         }
     }
 
-    bool ProfileManager::AddProfile(const QSharedPointer<ProxyEntity> &ent, int gid) {
+    bool ProfileManager::AddProfile(const std::shared_ptr<ProxyEntity> &ent, int gid) {
         if (ent->id >= 0) {
             return false;
         }
@@ -183,7 +183,7 @@ namespace NekoRay {
         QFile(QString("profiles/%1.json").arg(id)).remove();
     }
 
-    void ProfileManager::MoveProfile(const QSharedPointer<ProxyEntity> &ent, int gid) {
+    void ProfileManager::MoveProfile(const std::shared_ptr<ProxyEntity> &ent, int gid) {
         if (gid == ent->gid || gid < 0) return;
         auto oldGroup = GetGroup(ent->gid);
         if (oldGroup != nullptr && !oldGroup->order.isEmpty()) {
@@ -199,7 +199,7 @@ namespace NekoRay {
         ent->Save();
     }
 
-    QSharedPointer<ProxyEntity> ProfileManager::GetProfile(int id) {
+    std::shared_ptr<ProxyEntity> ProfileManager::GetProfile(int id) {
         return profiles.value(id, nullptr);
     }
 
@@ -212,13 +212,13 @@ namespace NekoRay {
         _add(new configItem("order", &order, itemType::integerList));
         _add(new configItem("url", &url, itemType::string));
         _add(new configItem("info", &info, itemType::string));
-        _add(new configItem("lastup", &last_update, itemType::integer64));
+        _add(new configItem("lastup", &sub_last_update, itemType::integer64));
         _add(new configItem("manually_column_width", &manually_column_width, itemType::boolean));
         _add(new configItem("column_width", &column_width, itemType::integerList));
     }
 
-    QSharedPointer<Group> ProfileManager::LoadGroup(const QString &jsonPath) {
-        QSharedPointer<Group> ent = QSharedPointer<Group>(new Group());
+    std::shared_ptr<Group> ProfileManager::LoadGroup(const QString &jsonPath) {
+        auto ent = std::make_shared<Group>();
         ent->fn = jsonPath;
         ent->Load();
         return ent;
@@ -232,7 +232,7 @@ namespace NekoRay {
         }
     }
 
-    bool ProfileManager::AddGroup(const QSharedPointer<Group> &ent) {
+    bool ProfileManager::AddGroup(const std::shared_ptr<Group> &ent) {
         if (ent->id >= 0) {
             return false;
         }
@@ -262,27 +262,27 @@ namespace NekoRay {
         QFile(QString("groups/%1.json").arg(gid)).remove();
     }
 
-    QSharedPointer<Group> ProfileManager::GetGroup(int id) {
+    std::shared_ptr<Group> ProfileManager::GetGroup(int id) {
         return groups.value(id, nullptr);
     }
 
-    QSharedPointer<Group> ProfileManager::CurrentGroup() {
-        return GetGroup(NekoRay::dataStore->current_group);
+    std::shared_ptr<Group> ProfileManager::CurrentGroup() {
+        return GetGroup(dataStore->current_group);
     }
 
-    QList<QSharedPointer<ProxyEntity>> Group::Profiles() const {
-        QList<QSharedPointer<ProxyEntity>> ret;
+    QList<std::shared_ptr<ProxyEntity>> Group::Profiles() const {
+        QList<std::shared_ptr<ProxyEntity>> ret;
         for (const auto &ent: profileManager->profiles) {
             if (id == ent->gid) ret += ent;
         }
         return ret;
     }
 
-    QList<QSharedPointer<ProxyEntity>> Group::ProfilesWithOrder() const {
+    QList<std::shared_ptr<ProxyEntity>> Group::ProfilesWithOrder() const {
         if (order.isEmpty()) {
             return Profiles();
         } else {
-            QList<QSharedPointer<ProxyEntity>> ret;
+            QList<std::shared_ptr<ProxyEntity>> ret;
             for (auto _id: order) {
                 auto ent = profileManager->GetProfile(_id);
                 if (ent != nullptr) ret += ent;
@@ -291,4 +291,4 @@ namespace NekoRay {
         }
     }
 
-} // namespace NekoRay
+} // namespace NekoGui

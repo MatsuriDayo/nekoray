@@ -10,7 +10,7 @@
 #include <QThread>
 
 #include "3rdparty/RunGuard.hpp"
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 #include "ui/mainwindow_interface.h"
 #include "ui/dialog_first_setup.h"
@@ -58,10 +58,12 @@ int main(int argc, char* argv[]) {
 #endif
 
     // pre-init QApplication
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0) && QT_VERSION >= QT_VERSION_CHECK(5, 10, 0)
     QApplication::setAttribute(Qt::AA_DisableWindowContextHelpButton);
 #endif
+#if QT_VERSION >= QT_VERSION_CHECK(5, 7, 0)
     QApplication::setAttribute(Qt::AA_DontUseNativeDialogs);
+#endif
     QApplication::setQuitOnLastWindowClosed(false);
     auto preQApp = new QApplication(argc, argv);
 
@@ -77,31 +79,31 @@ int main(int argc, char* argv[]) {
 #endif
 
     // Flags
-    NekoRay::dataStore->argv = QApplication::arguments();
-    if (NekoRay::dataStore->argv.contains("-many")) NekoRay::dataStore->flag_many = true;
-    if (NekoRay::dataStore->argv.contains("-appdata")) {
-        NekoRay::dataStore->flag_use_appdata = true;
-        int appdataIndex = NekoRay::dataStore->argv.indexOf("-appdata");
-        if (NekoRay::dataStore->argv.size() > appdataIndex + 1 && !NekoRay::dataStore->argv.at(appdataIndex + 1).startsWith("-")) {
-            NekoRay::dataStore->appdataDir = NekoRay::dataStore->argv.at(appdataIndex + 1);
+    NekoGui::dataStore->argv = QApplication::arguments();
+    if (NekoGui::dataStore->argv.contains("-many")) NekoGui::dataStore->flag_many = true;
+    if (NekoGui::dataStore->argv.contains("-appdata")) {
+        NekoGui::dataStore->flag_use_appdata = true;
+        int appdataIndex = NekoGui::dataStore->argv.indexOf("-appdata");
+        if (NekoGui::dataStore->argv.size() > appdataIndex + 1 && !NekoGui::dataStore->argv.at(appdataIndex + 1).startsWith("-")) {
+            NekoGui::dataStore->appdataDir = NekoGui::dataStore->argv.at(appdataIndex + 1);
         }
     }
-    if (NekoRay::dataStore->argv.contains("-tray")) NekoRay::dataStore->flag_tray = true;
-    if (NekoRay::dataStore->argv.contains("-debug")) NekoRay::dataStore->flag_debug = true;
-    if (NekoRay::dataStore->argv.contains("-flag_linux_run_core_as_admin")) NekoRay::dataStore->flag_linux_run_core_as_admin = true;
+    if (NekoGui::dataStore->argv.contains("-tray")) NekoGui::dataStore->flag_tray = true;
+    if (NekoGui::dataStore->argv.contains("-debug")) NekoGui::dataStore->flag_debug = true;
+    if (NekoGui::dataStore->argv.contains("-flag_linux_run_core_as_admin")) NekoGui::dataStore->flag_linux_run_core_as_admin = true;
 #ifdef NKR_CPP_USE_APPDATA
-    NekoRay::dataStore->flag_use_appdata = true; // Example: Package & MacOS
+    NekoGui::dataStore->flag_use_appdata = true; // Example: Package & MacOS
 #endif
 #ifdef NKR_CPP_DEBUG
-    NekoRay::dataStore->flag_debug = true;
+    NekoGui::dataStore->flag_debug = true;
 #endif
 
     // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
-    if (NekoRay::dataStore->flag_use_appdata) {
+    if (NekoGui::dataStore->flag_use_appdata) {
         QApplication::setApplicationName("nekoray");
-        if (!NekoRay::dataStore->appdataDir.isEmpty()) {
-            wd.setPath(NekoRay::dataStore->appdataDir);
+        if (!NekoGui::dataStore->appdataDir.isEmpty()) {
+            wd.setPath(NekoGui::dataStore->appdataDir);
         } else {
             wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
         }
@@ -110,13 +112,6 @@ int main(int argc, char* argv[]) {
     if (!wd.exists("config")) wd.mkdir("config");
     QDir::setCurrent(wd.absoluteFilePath("config"));
     QDir("temp").removeRecursively();
-
-    // HiDPI workaround
-    // Mainly for Windows, not required in Qt6
-    if (ReadFileText("./groups/HiDPI").toInt() == 1) {
-        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-        QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    }
 
     // init QApplication
     delete preQApp;
@@ -130,7 +125,7 @@ int main(int argc, char* argv[]) {
     RunGuard guard("nekoray" + wd.absolutePath());
     quint64 guard_data_in = GetRandomUint64();
     quint64 guard_data_out = 0;
-    if (!NekoRay::dataStore->flag_many && !guard.tryToRun(&guard_data_in)) {
+    if (!NekoGui::dataStore->flag_many && !guard.tryToRun(&guard_data_in)) {
         // Some Good System
         if (guard.isAnotherRunning(&guard_data_out)) {
             // Wake up a running instance
@@ -150,11 +145,18 @@ int main(int argc, char* argv[]) {
     }
     MF_release_runguard = [&] { guard.release(); };
 
-    // icons
+// icons
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     QIcon::setFallbackSearchPaths(QStringList{
         ":/nekoray",
         ":/icon",
     });
+#else
+    QIcon::setThemeSearchPaths(QStringList{
+        ":/nekoray",
+        ":/icon",
+    });
+#endif
 
     // icon for no theme
     if (QIcon::themeName().isEmpty()) {
@@ -164,23 +166,23 @@ int main(int argc, char* argv[]) {
     // Load coreType
     auto coreLoaded = ReadFileText("groups/coreType");
     if (coreLoaded.isEmpty()) {
-        NekoRay::coreType = -1;
+        NekoGui::coreType = -1;
         loadTranslate(QLocale().name());
         auto dialogFirstSetup = new DialogFirstSetup;
         dialogFirstSetup->exec();
         dialogFirstSetup->deleteLater();
-        if (NekoRay::coreType < 0) {
+        if (NekoGui::coreType < 0) {
             return 0;
         } else {
             QDir().mkdir("groups");
             QFile file;
             file.setFileName("groups/coreType");
             file.open(QIODevice::ReadWrite | QIODevice::Truncate);
-            file.write(Int2String(NekoRay::coreType).toUtf8());
+            file.write(Int2String(NekoGui::coreType).toUtf8());
             file.close();
         }
     } else {
-        NekoRay::coreType = coreLoaded.toInt();
+        NekoGui::coreType = coreLoaded.toInt();
     }
 
     // Dir
@@ -201,35 +203,35 @@ int main(int argc, char* argv[]) {
     }
 
     // Load dataStore
-    switch (NekoRay::coreType) {
-        case NekoRay::CoreType::V2RAY:
-            NekoRay::dataStore->fn = "groups/nekoray.json";
+    switch (NekoGui::coreType) {
+        case NekoGui::CoreType::V2RAY:
+            NekoGui::dataStore->fn = "groups/nekoray.json";
             break;
-        case NekoRay::CoreType::SING_BOX:
-            NekoRay::dataStore->fn = "groups/nekobox.json";
+        case NekoGui::CoreType::SING_BOX:
+            NekoGui::dataStore->fn = "groups/nekobox.json";
             break;
         default:
             MessageBoxWarning("Error", "Unknown coreType.");
             return 0;
     }
-    auto isLoaded = NekoRay::dataStore->Load();
+    auto isLoaded = NekoGui::dataStore->Load();
     if (!isLoaded) {
-        NekoRay::dataStore->Save();
+        NekoGui::dataStore->Save();
     }
 
     // Datastore & Flags
-    if (NekoRay::dataStore->start_minimal) NekoRay::dataStore->flag_tray = true;
+    if (NekoGui::dataStore->start_minimal) NekoGui::dataStore->flag_tray = true;
 
     // load routing
-    NekoRay::dataStore->routing->fn = ROUTES_PREFIX + NekoRay::dataStore->active_routing;
-    isLoaded = NekoRay::dataStore->routing->Load();
+    NekoGui::dataStore->routing->fn = ROUTES_PREFIX + NekoGui::dataStore->active_routing;
+    isLoaded = NekoGui::dataStore->routing->Load();
     if (!isLoaded) {
-        NekoRay::dataStore->routing->Save();
+        NekoGui::dataStore->routing->Save();
     }
 
     // Translate
     QString locale;
-    switch (NekoRay::dataStore->language) {
+    switch (NekoGui::dataStore->language) {
         case 1: // English
             break;
         case 2:
@@ -262,13 +264,13 @@ int main(int argc, char* argv[]) {
     });
 
     // Do preset update
-    if (NekoRay::dataStore->user_agent.isEmpty() || NekoRay::dataStore->user_agent.startsWith("Nekoray/1.0") || NekoRay::dataStore->user_agent.startsWith("ClashForAndroid")) {
+    if (NekoGui::dataStore->user_agent.isEmpty() || NekoGui::dataStore->user_agent.startsWith("Nekoray/1.0") || NekoGui::dataStore->user_agent.startsWith("ClashForAndroid")) {
         if (IS_NEKO_BOX) {
-            NekoRay::dataStore->user_agent = "NekoBox/PC/2.0 (Prefer ClashMeta Format)";
+            NekoGui::dataStore->user_agent = "NekoBox/PC/2.0 (Prefer ClashMeta Format)";
         } else {
-            NekoRay::dataStore->user_agent = "NekoRay/PC/2.0 (Prefer ClashMeta Format)";
+            NekoGui::dataStore->user_agent = "NekoRay/PC/2.0 (Prefer ClashMeta Format)";
         }
-        NekoRay::dataStore->Save();
+        NekoGui::dataStore->Save();
     }
 
     UI_InitMainWindow();

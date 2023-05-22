@@ -2,7 +2,7 @@
 
 #include "AbstractBean.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class V2rayStreamSettings : public JsonStore {
     public:
         QString network = "tcp";
@@ -56,10 +56,10 @@ namespace NekoRay::fmt {
         if (bean == nullptr) return nullptr;
         auto stream_item = bean->_get("stream");
         if (stream_item != nullptr) {
-            auto stream_store = (NekoRay::JsonStore *) stream_item->ptr;
-            auto stream = (NekoRay::fmt::V2rayStreamSettings *) stream_store;
+            auto stream_store = (JsonStore *) stream_item->ptr;
+            auto stream = (NekoGui_fmt::V2rayStreamSettings *) stream_store;
             return stream;
         }
         return nullptr;
     }
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

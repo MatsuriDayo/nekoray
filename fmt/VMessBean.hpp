@@ -3,14 +3,14 @@
 #include "fmt/AbstractBean.hpp"
 #include "fmt/V2RayStreamSettings.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class VMessBean : public AbstractBean {
     public:
         QString uuid = "";
         int aid = 0;
         QString security = "auto";
 
-        QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
+        std::shared_ptr<V2rayStreamSettings> stream = std::make_shared<V2rayStreamSettings>();
 
         VMessBean() : AbstractBean(0) {
             _add(new configItem("id", &uuid, itemType::string));
@@ -29,4 +29,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

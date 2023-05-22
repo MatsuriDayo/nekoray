@@ -1,6 +1,6 @@
 // DO NOT INCLUDE THIS
 
-namespace NekoRay {
+namespace NekoGui {
 
     class Routing : public JsonStore {
     public:
@@ -175,4 +175,4 @@ namespace NekoRay {
 
     extern DataStore *dataStore;
 
-} // namespace NekoRay
+} // namespace NekoGui

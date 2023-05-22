@@ -1,5 +1,9 @@
 #include "base64.h"
 
+#ifndef qsizetype
+#define qsizetype size_t
+#endif
+
 namespace Qt515Base64 {
     namespace {
         struct fromBase64_helper_result {

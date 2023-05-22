@@ -12,7 +12,7 @@
 #include <QMessageBox>
 
 #define AddGroupToListIfExist(_id)                       \
-    auto __ent = NekoRay::profileManager->GetGroup(_id); \
+    auto __ent = NekoGui::profileManager->GetGroup(_id); \
     if (__ent != nullptr) {                              \
         auto wI = new QListWidgetItem();                 \
         auto w = new GroupItem(this, __ent, wI);         \
@@ -24,7 +24,7 @@
 DialogManageGroups::DialogManageGroups(QWidget *parent) : QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
 
-    for (auto id: NekoRay::profileManager->_groups) {
+    for (auto id: NekoGui::profileManager->_groups) {
         AddGroupToListIfExist(id)
     }
 
@@ -39,13 +39,13 @@ DialogManageGroups::~DialogManageGroups() {
 }
 
 void DialogManageGroups::on_add_clicked() {
-    auto ent = NekoRay::ProfileManager::NewGroup();
+    auto ent = NekoGui::ProfileManager::NewGroup();
     auto dialog = new DialogEditGroup(ent, this);
     int ret = dialog->exec();
     dialog->deleteLater();
 
     if (ret == QDialog::Accepted) {
-        NekoRay::profileManager->AddGroup(ent);
+        NekoGui::profileManager->AddGroup(ent);
         AddGroupToListIfExist(ent->id);
         MW_dialog_message(Dialog_DialogManageGroups, "refresh-1");
     }
@@ -53,10 +53,10 @@ void DialogManageGroups::on_add_clicked() {
 
 void DialogManageGroups::on_update_all_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?")) == QMessageBox::StandardButton::Yes) {
-        for (const auto &gid: NekoRay::profileManager->_groups) {
-            auto group = NekoRay::profileManager->GetGroup(gid);
+        for (const auto &gid: NekoGui::profileManager->_groups) {
+            auto group = NekoGui::profileManager->GetGroup(gid);
             if (group == nullptr || group->url.isEmpty()) continue;
-            UI_update_one_group(NekoRay::profileManager->_groups.indexOf(gid));
+            UI_update_one_group(NekoGui::profileManager->_groups.indexOf(gid));
             return;
         }
     }
@@ -65,22 +65,22 @@ void DialogManageGroups::on_update_all_clicked() {
 void UI_update_one_group(int _order) {
     // calculate next group
     int nextOrder = _order;
-    QSharedPointer<NekoRay::Group> nextGroup;
+    std::shared_ptr<NekoGui::Group> nextGroup;
     forever {
         nextOrder += 1;
-        if (nextOrder >= NekoRay::profileManager->_groups.length()) break;
-        auto nextGid = NekoRay::profileManager->_groups[nextOrder];
-        nextGroup = NekoRay::profileManager->GetGroup(nextGid);
+        if (nextOrder >= NekoGui::profileManager->_groups.length()) break;
+        auto nextGid = NekoGui::profileManager->_groups[nextOrder];
+        nextGroup = NekoGui::profileManager->GetGroup(nextGid);
         if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
         break;
     }
 
     // calculate this group
-    auto group = NekoRay::profileManager->GetGroup(NekoRay::profileManager->_groups[_order]);
+    auto group = NekoGui::profileManager->GetGroup(NekoGui::profileManager->_groups[_order]);
     if (group == nullptr) return;
 
     // v2.2: listener is moved to GroupItem, no refresh here.
-    NekoRay::sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
+    NekoGui_sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
         if (nextGroup != nullptr) UI_update_one_group(nextOrder);
     });
 }

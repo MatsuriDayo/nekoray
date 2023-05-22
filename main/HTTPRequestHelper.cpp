@@ -5,27 +5,27 @@
 #include <QEventLoop>
 #include <QMetaEnum>
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
-namespace NekoRay::network {
+namespace NekoGui_network {
 
     NekoHTTPResponse NetworkRequestHelper::HttpGet(const QUrl &url) {
         QNetworkRequest request;
         QNetworkAccessManager accessManager;
         request.setUrl(url);
         // Set proxy
-        if (NekoRay::dataStore->sub_use_proxy) {
+        if (NekoGui::dataStore->sub_use_proxy) {
             QNetworkProxy p;
             // Note: sing-box mixed socks5 protocol error
             p.setType(IS_NEKO_BOX ? QNetworkProxy::HttpProxy : QNetworkProxy::Socks5Proxy);
             p.setHostName("127.0.0.1");
-            p.setPort(NekoRay::dataStore->inbound_socks_port);
-            if (dataStore->inbound_auth->NeedAuth()) {
-                p.setUser(dataStore->inbound_auth->username);
-                p.setPassword(dataStore->inbound_auth->password);
+            p.setPort(NekoGui::dataStore->inbound_socks_port);
+            if (NekoGui::dataStore->inbound_auth->NeedAuth()) {
+                p.setUser(NekoGui::dataStore->inbound_auth->username);
+                p.setPassword(NekoGui::dataStore->inbound_auth->password);
             }
             accessManager.setProxy(p);
-            if (NekoRay::dataStore->started_id < 0) {
+            if (NekoGui::dataStore->started_id < 0) {
                 return NekoHTTPResponse{QObject::tr("Request with proxy but no profile started.")};
             }
         }
@@ -34,9 +34,11 @@ namespace NekoRay::network {
             accessManager.proxy().setCapabilities(cap | QNetworkProxy::HostNameLookupCapability);
         }
         // Set attribute
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 9, 0))
         request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
-        request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, NekoRay::dataStore->user_agent);
-        if (NekoRay::dataStore->sub_insecure) {
+#endif
+        request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, NekoGui::dataStore->user_agent);
+        if (NekoGui::dataStore->sub_insecure) {
             QSslConfiguration c;
             c.setPeerVerifyMode(QSslSocket::PeerVerifyMode::VerifyNone);
             request.setSslConfiguration(c);
@@ -48,7 +50,7 @@ namespace NekoRay::network {
             for (const auto &err: errors) {
                 error_str << err.errorString();
             }
-            MW_show_log(QString("SSL Errors: %1 %2").arg(error_str.join(","), NekoRay::dataStore->sub_insecure ? "(Ignored)" : ""));
+            MW_show_log(QString("SSL Errors: %1 %2").arg(error_str.join(","), NekoGui::dataStore->sub_insecure ? "(Ignored)" : ""));
         });
         //
         {
@@ -70,4 +72,4 @@ namespace NekoRay::network {
         return "";
     }
 
-} // namespace NekoRay::network
+} // namespace NekoGui_network

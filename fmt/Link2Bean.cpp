@@ -3,7 +3,7 @@
 
 #include <QUrlQuery>
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
 
 #define DECODE_V2RAY_N_1                                                                                                        \
     QString linkN = DecodeB64IfValid(SubStrBefore(SubStrAfter(link, "://"), "#"), QByteArray::Base64Option::Base64UrlEncoding); \
@@ -193,14 +193,14 @@ namespace NekoRay::fmt {
 
         auto protocolStr = (query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp").toLower();
         if (protocolStr == "faketcp") {
-            protocol = fmt::HysteriaBean::hysteria_protocol_facktcp;
+            protocol = NekoGui_fmt::HysteriaBean::hysteria_protocol_facktcp;
         } else if (protocolStr.startsWith("wechat")) {
-            protocol = fmt::HysteriaBean::hysteria_protocol_wechat_video;
+            protocol = NekoGui_fmt::HysteriaBean::hysteria_protocol_wechat_video;
         }
 
         if (query.hasQueryItem("auth")) {
             authPayload = query.queryItemValue("auth");
-            authPayloadType = fmt::HysteriaBean::hysteria_auth_string;
+            authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_string;
         }
 
         alpn = query.queryItemValue("alpn");
@@ -212,4 +212,4 @@ namespace NekoRay::fmt {
         return true;
     }
 
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

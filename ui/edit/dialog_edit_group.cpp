@@ -5,11 +5,11 @@
 
 #include <QClipboard>
 
-DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWidget *parent)
+DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWidget *parent)
     : QDialog(parent), ui(new Ui::DialogEditGroup) {
     ui->setupUi(this);
 
-    connect(ui->type, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+    connect(ui->type, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
         ui->cat_sub->setHidden(index == 0);
     });
 
@@ -45,7 +45,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
 
     connect(ui->copy_links, &QPushButton::clicked, this, [=] {
         QStringList links;
-        for (const auto &profile: NekoRay::profileManager->profiles) {
+        for (const auto &profile: NekoGui::profileManager->profiles) {
             if (profile->gid != ent->id) continue;
             links += profile->bean->ToShareLink();
         }
@@ -54,7 +54,7 @@ DialogEditGroup::DialogEditGroup(const QSharedPointer<NekoRay::Group> &ent, QWid
     });
     connect(ui->copy_links_nkr, &QPushButton::clicked, this, [=] {
         QStringList links;
-        for (const auto &profile: NekoRay::profileManager->profiles) {
+        for (const auto &profile: NekoGui::profileManager->profiles) {
             if (profile->gid != ent->id) continue;
             links += profile->bean->ToNekorayShareLink(profile->type);
         }

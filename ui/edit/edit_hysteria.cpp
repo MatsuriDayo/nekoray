@@ -13,7 +13,7 @@ EditHysteria::~EditHysteria() {
     delete ui;
 }
 
-void EditHysteria::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
+void EditHysteria::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->HysteriaBean();
 

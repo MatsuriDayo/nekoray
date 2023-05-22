@@ -3,7 +3,8 @@
 #include <QApplication>
 #include <QDir>
 
-#include "main/NekoRay.hpp"
+#include "3rdparty/fix_old_qt.h"
+#include "main/NekoGui.hpp"
 
 // macOS headers (possibly OBJ-c)
 #if defined(Q_OS_MACOS)
@@ -178,7 +179,7 @@ void AutoRun_SetEnabled(bool enable) {
 
     appCmdList << "-tray";
 
-    if (NekoRay::dataStore->flag_use_appdata) {
+    if (NekoGui::dataStore->flag_use_appdata) {
         appCmdList << "-appdata";
     }
 

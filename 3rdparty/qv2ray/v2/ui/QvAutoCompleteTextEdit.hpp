@@ -55,27 +55,31 @@ QT_BEGIN_NAMESPACE
 class QCompleter;
 QT_END_NAMESPACE
 
-namespace Qv2ray::ui::widgets {
-    class AutoCompleteTextEdit : public QPlainTextEdit {
-        Q_OBJECT
+namespace Qv2ray {
+    namespace ui {
+        namespace widgets {
+            class AutoCompleteTextEdit : public QPlainTextEdit {
+                Q_OBJECT
 
-    public:
-        AutoCompleteTextEdit(const QString &prefix, const QStringList &sourceStrings, QWidget *parent = nullptr);
-        ~AutoCompleteTextEdit();
+            public:
+                AutoCompleteTextEdit(const QString &prefix, const QStringList &sourceStrings, QWidget *parent = nullptr);
+                ~AutoCompleteTextEdit();
 
-    protected:
-        void keyPressEvent(QKeyEvent *e) override;
-        void focusInEvent(QFocusEvent *e) override;
+            protected:
+                void keyPressEvent(QKeyEvent *e) override;
+                void focusInEvent(QFocusEvent *e) override;
 
-    private slots:
-        void insertCompletion(const QString &completion);
+            private slots:
+                void insertCompletion(const QString &completion);
 
-    private:
-        QString lineUnderCursor() const;
-        QString wordUnderCursor() const;
+            private:
+                QString lineUnderCursor() const;
+                QString wordUnderCursor() const;
 
-        QString prefix;
-        QCompleter *c = nullptr;
-    };
-} // namespace Qv2ray::ui::widgets
+                QString prefix;
+                QCompleter *c = nullptr;
+            };
+        } // namespace widgets
+    }     // namespace ui
+} // namespace Qv2ray
 using namespace Qv2ray::ui::widgets;

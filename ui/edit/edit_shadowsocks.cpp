@@ -17,7 +17,7 @@ EditShadowSocks::~EditShadowSocks() {
     delete ui;
 }
 
-void EditShadowSocks::onStart(QSharedPointer<NekoRay::ProxyEntity> _ent) {
+void EditShadowSocks::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->ShadowSocksBean();
 

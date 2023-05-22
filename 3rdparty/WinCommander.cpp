@@ -60,7 +60,7 @@ uint WinCommander::runProcessElevated(const QString &path,
 
     LPCTSTR pszParameters = (LPCTSTR)params.utf16();
     QString dir;
-    if (workingDir.isEmpty())
+    if (workingDir.count() == 0)
         dir = QDir::toNativeSeparators(QDir::currentPath());
     else
         dir = QDir::toNativeSeparators(workingDir);

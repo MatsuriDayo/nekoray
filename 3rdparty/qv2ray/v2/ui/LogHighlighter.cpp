@@ -118,7 +118,7 @@ namespace Qv2ray::ui {
     }
 
     void SyntaxHighlighter::highlightBlock(const QString &text) {
-        for (const HighlightingRule &rule: qAsConst(highlightingRules)) {
+        for (const HighlightingRule &rule: highlightingRules) {
             QRegularExpressionMatchIterator matchIterator = rule.pattern.globalMatch(text);
 
             while (matchIterator.hasNext()) {

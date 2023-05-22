@@ -4,7 +4,7 @@
 #include <QMenu>
 
 #include "3rdparty/qv2ray/v2/ui/QvAutoCompleteTextEdit.hpp"
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -37,8 +37,8 @@ private:
     Qv2ray::ui::widgets::AutoCompleteTextEdit *blockIPTxt;
     Qv2ray::ui::widgets::AutoCompleteTextEdit *proxyIPTxt;
     //
-    NekoRay::Routing routing_cn_lan = NekoRay::Routing(1);
-    NekoRay::Routing routing_global = NekoRay::Routing(0);
+    NekoGui::Routing routing_cn_lan = NekoGui::Routing(1);
+    NekoGui::Routing routing_global = NekoGui::Routing(0);
     //
     QString title_base;
     QString active_routing;
@@ -49,11 +49,11 @@ public slots:
 
     QList<QAction *> getBuiltInSchemes();
 
-    QAction *schemeToAction(const QString &name, const NekoRay::Routing &scheme);
+    QAction *schemeToAction(const QString &name, const NekoGui::Routing &scheme);
 
-    void UpdateDisplayRouting(NekoRay::Routing *conf, bool qv);
+    void UpdateDisplayRouting(NekoGui::Routing *conf, bool qv);
 
-    void SaveDisplayRouting(NekoRay::Routing *conf);
+    void SaveDisplayRouting(NekoGui::Routing *conf);
 
     void on_load_save_clicked();
 };

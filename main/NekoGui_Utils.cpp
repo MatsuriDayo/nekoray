@@ -1,4 +1,4 @@
-#include "NekoRay_Utils.hpp"
+#include "NekoGui_Utils.hpp"
 
 #include "3rdparty/base64.h"
 #include "3rdparty/QThreadCreateThread.hpp"
@@ -189,7 +189,7 @@ bool IsIpAddressV6(const QString &str) {
 
 QString DisplayTime(long long time, int formatType) {
     QDateTime t;
-    t.setSecsSinceEpoch(time);
+    t.setMSecsSinceEpoch(time * 1000);
     return QLocale().toString(t, QLocale::FormatType(formatType));
 }
 

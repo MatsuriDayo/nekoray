@@ -7,10 +7,12 @@
 
 #define LOG(...) Qv2ray::base::log_internal(__VA_ARGS__)
 #define DEBUG(...) Qv2ray::base::log_internal(__VA_ARGS__)
-namespace Qv2ray::base {
-    template<typename... T>
-    inline void log_internal(T... v) {}
-} // namespace Qv2ray::base
+namespace Qv2ray {
+    namespace base {
+        template<typename... T>
+        inline void log_internal(T... v) {}
+    } // namespace base
+} // namespace Qv2ray
 
 #define JsonToString(a) QJsonObject2QString(a, false)
 #define JsonFromString(a) QString2QJsonObject(a)

@@ -9,7 +9,7 @@
 #include <QJsonDocument>
 #include <QElapsedTimer>
 
-namespace NekoRay::traffic {
+namespace NekoGui_traffic {
 
     TrafficLooper *trafficLooper = new TrafficLooper;
     QElapsedTimer elapsedTimer;
@@ -23,8 +23,8 @@ namespace NekoRay::traffic {
         if (interval <= 0) return nullptr;
 
         // query
-        auto uplink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "uplink");
-        auto downlink = NekoRay::rpc::defaultClient->QueryStats(item->tag, "downlink");
+        auto uplink = NekoGui_rpc::defaultClient->QueryStats(item->tag, "uplink");
+        auto downlink = NekoGui_rpc::defaultClient->QueryStats(item->tag, "downlink");
 
         // add diff
         item->downlink += downlink;
@@ -45,7 +45,7 @@ namespace NekoRay::traffic {
 
     QJsonArray TrafficLooper::get_connection_list() {
 #ifndef NKR_NO_GRPC
-        auto str = NekoRay::rpc::defaultClient->ListConnections();
+        auto str = NekoGui_rpc::defaultClient->ListConnections();
         QJsonDocument jsonDocument = QJsonDocument::fromJson(str.c_str());
         return jsonDocument.array();
 #else
@@ -79,10 +79,10 @@ namespace NekoRay::traffic {
     void TrafficLooper::Loop() {
         elapsedTimer.start();
         while (true) {
-            auto sleep_ms = dataStore->traffic_loop_interval;
+            auto sleep_ms = NekoGui::dataStore->traffic_loop_interval;
             if (sleep_ms < 500 || sleep_ms > 5000) sleep_ms = 1000;
             QThread::msleep(sleep_ms);
-            if (dataStore->traffic_loop_interval == 0) continue; // user disabled
+            if (NekoGui::dataStore->traffic_loop_interval == 0) continue; // user disabled
 
             // profile start and stop
             if (!loop_enabled) {
@@ -109,7 +109,7 @@ namespace NekoRay::traffic {
 
             // do conn list update
             QJsonArray conn_list;
-            if (dataStore->connection_statistics) {
+            if (NekoGui::dataStore->connection_statistics) {
                 conn_list = get_connection_list();
             }
 
@@ -125,11 +125,11 @@ namespace NekoRay::traffic {
                     if (item->id < 0) continue;
                     m->refresh_proxy_list(item->id);
                 }
-                if (dataStore->connection_statistics) {
+                if (NekoGui::dataStore->connection_statistics) {
                     m->refresh_connection_list(conn_list);
                 }
             });
         }
     }
 
-} // namespace NekoRay::traffic
+} // namespace NekoGui_traffic

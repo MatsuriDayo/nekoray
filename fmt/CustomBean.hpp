@@ -2,7 +2,7 @@
 
 #include "fmt/AbstractBean.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class CustomBean : public AbstractBean {
     public:
         QString core;
@@ -55,4 +55,4 @@ namespace NekoRay::fmt {
 
         CoreObjOutboundBuildResult BuildCoreObjV2Ray() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

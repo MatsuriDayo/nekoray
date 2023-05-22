@@ -55,36 +55,38 @@
 #include <QTextCharFormat>
 #include <QTextDocument>
 
-namespace Qv2ray::ui {
-    class SyntaxHighlighter : public QSyntaxHighlighter {
-        Q_OBJECT
+namespace Qv2ray {
+    namespace ui {
+        class SyntaxHighlighter : public QSyntaxHighlighter {
+            Q_OBJECT
 
-    public:
-        explicit SyntaxHighlighter(bool darkMode, QTextDocument *parent = nullptr);
+        public:
+            explicit SyntaxHighlighter(bool darkMode, QTextDocument *parent = nullptr);
 
-    protected:
-        void highlightBlock(const QString &text) override;
+        protected:
+            void highlightBlock(const QString &text) override;
 
-    private:
-        struct HighlightingRule {
-            QRegularExpression pattern;
-            QTextCharFormat format;
+        private:
+            struct HighlightingRule {
+                QRegularExpression pattern;
+                QTextCharFormat format;
+            };
+            QVector<HighlightingRule> highlightingRules;
+
+            QTextCharFormat tcpudpFormat;
+            QTextCharFormat dateFormat;
+            QTextCharFormat acceptedFormat;
+            QTextCharFormat rejectedFormat;
+            QTextCharFormat failedFormat;
+            QTextCharFormat warningFormat;
+            QTextCharFormat warningFormat2;
+            QTextCharFormat infoFormat;
+            QTextCharFormat debugFormat;
+            QTextCharFormat timeFormat;
+            QTextCharFormat ipHostFormat;
+            QTextCharFormat v2rayComponentFormat;
         };
-        QVector<HighlightingRule> highlightingRules;
-
-        QTextCharFormat tcpudpFormat;
-        QTextCharFormat dateFormat;
-        QTextCharFormat acceptedFormat;
-        QTextCharFormat rejectedFormat;
-        QTextCharFormat failedFormat;
-        QTextCharFormat warningFormat;
-        QTextCharFormat warningFormat2;
-        QTextCharFormat infoFormat;
-        QTextCharFormat debugFormat;
-        QTextCharFormat timeFormat;
-        QTextCharFormat ipHostFormat;
-        QTextCharFormat v2rayComponentFormat;
-    };
-} // namespace Qv2ray::ui
+    } // namespace ui
+} // namespace Qv2ray
 
 using namespace Qv2ray::ui;

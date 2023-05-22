@@ -2,7 +2,7 @@
 
 #include "fmt/AbstractBean.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class HysteriaBean : public AbstractBean {
     public:
         static constexpr int hysteria_protocol_udp = 0;
@@ -77,4 +77,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

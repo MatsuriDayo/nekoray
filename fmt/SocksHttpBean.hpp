@@ -3,7 +3,7 @@
 #include "fmt/AbstractBean.hpp"
 #include "fmt/V2RayStreamSettings.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class SocksHttpBean : public AbstractBean {
     public:
         static constexpr int type_HTTP = -80;
@@ -14,7 +14,7 @@ namespace NekoRay::fmt {
         QString username = "";
         QString password = "";
 
-        QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
+        std::shared_ptr<V2rayStreamSettings> stream = std::make_shared<V2rayStreamSettings>();
 
         explicit SocksHttpBean(int _socks_http_type) : AbstractBean(0) {
             this->socks_http_type = _socks_http_type;
@@ -34,4 +34,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

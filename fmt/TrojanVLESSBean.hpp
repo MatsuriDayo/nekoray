@@ -3,7 +3,7 @@
 #include "fmt/AbstractBean.hpp"
 #include "fmt/V2RayStreamSettings.hpp"
 
-namespace NekoRay::fmt {
+namespace NekoGui_fmt {
     class TrojanVLESSBean : public AbstractBean {
     public:
         static constexpr int proxy_Trojan = 0;
@@ -13,7 +13,7 @@ namespace NekoRay::fmt {
         QString password = "";
         QString flow = "";
 
-        QSharedPointer<V2rayStreamSettings> stream = QSharedPointer<V2rayStreamSettings>(new V2rayStreamSettings());
+        std::shared_ptr<V2rayStreamSettings> stream = std::make_shared<V2rayStreamSettings>();
 
         explicit TrojanVLESSBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
@@ -32,4 +32,4 @@ namespace NekoRay::fmt {
 
         QString ToShareLink() override;
     };
-} // namespace NekoRay::fmt
+} // namespace NekoGui_fmt

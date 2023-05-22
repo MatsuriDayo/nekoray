@@ -5,7 +5,7 @@
 
 #ifndef NKR_NO_GRPC
 
-#include "main/NekoRay.hpp"
+#include "main/NekoGui.hpp"
 
 #include <QCoreApplication>
 #include <QNetworkAccessManager>
@@ -166,7 +166,7 @@ namespace QtGrpc {
         QNetworkReply::NetworkError Call(const QString &methodName,
                                          const google::protobuf::Message &req, google::protobuf::Message *rsp,
                                          int timeout_ms = 0) {
-            if (!NekoRay::dataStore->core_running) return QNetworkReply::NetworkError(-1919);
+            if (!NekoGui::dataStore->core_running) return QNetworkReply::NetworkError(-1919);
 
             std::string reqStr;
             req.SerializeToString(&reqStr);
@@ -200,7 +200,7 @@ namespace QtGrpc {
     };
 } // namespace QtGrpc
 
-namespace NekoRay::rpc {
+namespace NekoGui_rpc {
 
     Client::Client(std::function<void(const QString &)> onError, const QString &target, const QString &token) {
         this->make_grpc_channel = [=]() { return std::make_unique<QtGrpc::Http2GrpcChannelPrivate>(target, token, "libcore.LibcoreService"); };
@@ -299,6 +299,6 @@ namespace NekoRay::rpc {
             return reply;
         }
     }
-} // namespace NekoRay::rpc
+} // namespace NekoGui_rpc
 
 #endif

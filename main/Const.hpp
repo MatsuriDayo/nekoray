@@ -1,6 +1,6 @@
 #pragma once
 
-namespace NekoRay {
+namespace NekoGui {
     namespace DomainMatcher {
         enum DomainMatcher {
             DEFAULT,
@@ -22,4 +22,4 @@ namespace NekoRay {
             SING_BOX,
         };
     }
-} // namespace NekoRay
+} // namespace NekoGui
