@@ -160,29 +160,29 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
-       <widget class="QPushButton" name="apply_to_group">
-        <property name="text">
-         <string>Apply settings to this group</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QDialogButtonBox" name="buttonBox">
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="standardButtons">
-         <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
-        </property>
-       </widget>
-      </item>
-     </layout>
+         <widget class="QPushButton" name="apply_to_group">
+          <property name="text">
+           <string>Apply settings to this group</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QDialogButtonBox" name="buttonBox">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="standardButtons">
+           <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
@@ -327,6 +327,9 @@
            </item>
            <item row="3" column="0">
             <widget class="QLabel" name="multiplex_l">
+             <property name="toolTip">
+              <string>Server support is required</string>
+             </property>
              <property name="text">
               <string>Multiplex</string>
              </property>
@@ -572,6 +575,9 @@ security (QUIC)</string>
          </item>
          <item row="2" column="0">
           <widget class="QLabel" name="reality_sid_l">
+           <property name="toolTip">
+            <string>Reality short id. Accept only one value.</string>
+           </property>
            <property name="text">
             <string notr="true">Reality Sid</string>
            </property>

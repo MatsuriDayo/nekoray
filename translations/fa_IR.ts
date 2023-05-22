@@ -433,6 +433,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>Confirm</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Server support is required</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Reality short id. Accept only one value.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogFirstSetup</name>
@@ -888,6 +896,10 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>Plugin</source>
         <translation>پلاگین</translation>
+    </message>
+    <message>
+        <source>Server support is required</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

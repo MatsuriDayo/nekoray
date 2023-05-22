@@ -62,10 +62,10 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         ui->groupBox_http->hide();
         ui->inbound_socks_port_l->setText(ui->inbound_socks_port_l->text().replace("Socks", "Mixed (SOCKS+HTTP)"));
         ui->log_level->addItems(QString("trace debug info warn error fatal panic").split(" "));
-        ui->mux_protocol->addItems({"", "h2mux", "smux", "yamux"});
+        ui->mux_protocol->addItems({"h2mux", "smux", "yamux"});
     } else {
         ui->log_level->addItems({"debug", "info", "warning", "none"});
-        ui->mux_protocol->addItems({"", "mux.cool"});
+        ui->mux_protocol->hide();
     }
 
     refresh_auth();

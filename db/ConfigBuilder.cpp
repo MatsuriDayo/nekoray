@@ -602,7 +602,7 @@ namespace NekoGui {
 
             // mux common
             auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless" || ent->type == "shadowsocks";
-            needMux &= !dataStore->mux_protocol.isEmpty() && dataStore->mux_concurrency > 0;
+            needMux &= dataStore->mux_concurrency > 0;
 
             if (stream != nullptr) {
                 if (IS_NEKO_BOX) {

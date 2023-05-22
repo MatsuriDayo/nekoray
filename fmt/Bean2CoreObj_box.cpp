@@ -63,7 +63,7 @@ namespace NekoGui_fmt {
                 tls["reality"] = QJsonObject{
                     {"enabled", true},
                     {"public_key", reality_pbk},
-                    {"short_id", reality_sid},
+                    {"short_id", reality_sid.split(",")[0]},
                 };
             }
             outbound->insert("tls", tls);
