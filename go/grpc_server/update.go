@@ -53,6 +53,10 @@ func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.Update
 		var search string
 		if runtime.GOOS == "windows" && runtime.GOARCH == "amd64" {
 			search = "windows64"
+			// check Qt5 update after nekoray v3.3
+			if _, err := os.Stat("../Qt5Core.dll"); err == nil {
+				search = "windows7-x64"
+			}
 		} else if runtime.GOOS == "linux" && runtime.GOARCH == "amd64" {
 			search = "linux64"
 		} else if runtime.GOOS == "darwin" {

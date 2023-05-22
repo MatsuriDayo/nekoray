@@ -58,8 +58,16 @@ jobs:
   build-cpp:
     strategy:
       matrix:
-        platform: [ windows-2022, ubuntu-20.04 ]
-        arch: [ x64 ]
+        include:
+          - platform: windows-2022
+            arch: x64
+            qt_version: "5.15"
+          - platform: windows-2022
+            arch: x64
+            qt_version: "6.5"
+          - platform: ubuntu-20.04
+            arch: x64
+            qt_version: "5.12"
       fail-fast: false
 
     runs-on: ${{ matrix.platform }}
@@ -78,15 +86,12 @@ jobs:
           toolset: 14.2
           arch: ${{ matrix.arch }}
       # ========================================================================================================= Qt Install
-      - name: Windows - Download Custom Qt 5.15 SDK
+      - name: Windows - Download Custom Qt ${{ matrix.qt_version }} SDK
         shell: bash
         if: matrix.platform == 'windows-2022'
-        run: |
-          mkdir qtsdk ; cd qtsdk
-          curl -LSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
-          7z x *.7z
-          rm *.7z
-          mv Qt* Qt
+        env:
+          DL_QT_VER: ${{ matrix.qt_version }}
+        run: bash ./libs/download_qtsdk_win.sh
       # ========================================================================================================= 编译与 Qt 无关的依赖
       - name: Install ninja-build tool
         uses: seanmiddleditch/gha-setup-ninja@v3
@@ -95,12 +100,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: libs/deps
-          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}
+          key: DepsCache-${{ matrix.platform }}-${{ matrix.arch }}-${{ hashFiles('libs/build_deps_*.sh') }}-Qt${{ matrix.qt_version }}
       - name: Build Dependencies
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform != 'ubuntu-20.04'
-        run: |
-          ./libs/build_deps_all.sh
+        run: ./libs/build_deps_all.sh
       - name: Build Dependencies (Docker)
         shell: bash
         if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform == 'ubuntu-20.04'
@@ -115,13 +119,18 @@ jobs:
         shell: bash
         if: matrix.platform == 'windows-2022'
         env:
+          DL_QT_VER: ${{ matrix.qt_version }}
           CC: cl.exe
           CXX: cl.exe
         run: |
           source libs/env_qtsdk.sh $PWD/qtsdk/Qt
           mkdir build
           cd build
-          cmake -GNinja -DQT_VERSION_MAJOR=6 -DCMAKE_BUILD_TYPE=Release ..
+          if [ "$DL_QT_VER" == "5.15" ]; then
+            cmake -GNinja -DCMAKE_BUILD_TYPE=Release ..
+          else
+            cmake -GNinja -DQT_VERSION_MAJOR=6 -DCMAKE_BUILD_TYPE=Release ..
+          fi
           ninja
           cd ..
           ./libs/deploy_windows64.sh
@@ -141,7 +150,7 @@ jobs:
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:
-          name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}
+          name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: artifacts.tgz
   publish:
     name: Pack & Publish Release
@@ -167,6 +176,9 @@ jobs:
           cd deployment
           cp -r public_res/* linux64
           cp -r public_res/* windows64
+          cp -r public_res/* windows7-x64
+          cp windows64/neko*core.exe windows7-x64
+          cp windows64/updater.exe windows7-x64
           rm -rf public_res *.pdb
           ####
           mv linux64 nekoray
@@ -176,6 +188,10 @@ jobs:
           mv windows64 nekoray
           zip -r $version_standalone-windows64.zip nekoray
           rm -rf nekoray
+          ####
+          mv windows7-x64 nekoray
+          zip -r $version_standalone-windows7-x64.zip nekoray
+          rm -rf nekoray
       - name: Pack Debian
         if: github.event.inputs.publish != 'y'
         run: |
@@ -183,8 +199,6 @@ jobs:
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
-          cp -r public_res/* windows64
-          rm -rf public_res *.pdb
           ####
           bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
           mv nekoray.deb $version_standalone-debian-x64.deb
@@ -195,7 +209,6 @@ jobs:
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
-          rm -rf public_res *.pdb
           ####
           bash ../libs/package_appimage.sh
           mv nekoray-x86_64.AppImage $version_standalone-linux-x64.AppImage
@@ -204,6 +217,9 @@ jobs:
           cd deployment
           rm -rf linux64
           rm -rf windows64
+          rm -rf windows7-x64
+          rm -rf public_res
+          rm -rf *.pdb
       - name: Uploading Artifact
         uses: actions/upload-artifact@master
         with:
