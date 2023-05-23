@@ -1,4 +1,4 @@
-# NekoRay
+# NekoRay / NekoBox For PC
 
 Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 

@@ -151,11 +151,6 @@ int main(int argc, char* argv[]) {
         ":/nekoray",
         ":/icon",
     });
-#else
-    QIcon::setThemeSearchPaths(QStringList{
-        ":/nekoray",
-        ":/icon",
-    });
 #endif
 
     // icon for no theme
