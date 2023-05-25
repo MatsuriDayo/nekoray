@@ -45,6 +45,7 @@ GroupItem::GroupItem(QWidget *parent, const std::shared_ptr<NekoGui::Group> &ent
     ui->setupUi(this);
     this->setLayoutDirection(Qt::LeftToRight);
 
+    this->parentWindow = parent;
     this->ent = ent;
     this->item = item;
     if (ent == nullptr) return;
@@ -102,15 +103,16 @@ void GroupItem::on_update_sub_clicked() {
 }
 
 void GroupItem::on_edit_clicked() {
-    auto dialog = new DialogEditGroup(ent, this);
-    int ret = dialog->exec();
-    dialog->deleteLater();
-
-    if (ret == QDialog::Accepted) {
-        ent->Save();
-        refresh_data();
-        MW_dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(ent->id));
-    }
+    auto dialog = new DialogEditGroup(ent, parentWindow);
+    connect(dialog, &QDialog::finished, this, [=] {
+        if (dialog->result() == QDialog::Accepted) {
+            ent->Save();
+            refresh_data();
+            MW_dialog_message(Dialog_DialogManageGroups, "refresh" + Int2String(ent->id));
+        }
+        dialog->deleteLater();
+    });
+    dialog->show();
 }
 
 void GroupItem::on_remove_clicked() {

@@ -2,12 +2,13 @@
 #include "ui_dialog_edit_group.h"
 
 #include "db/Database.hpp"
+#include "ui/mainwindow_interface.h"
 
 #include <QClipboard>
 
-DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWidget *parent)
-    : QDialog(parent), ui(new Ui::DialogEditGroup) {
+DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWidget *parent) : QDialog(parent), ui(new Ui::DialogEditGroup) {
     ui->setupUi(this);
+    this->ent = ent;
 
     connect(ui->type, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
         ui->cat_sub->setHidden(index == 0);
@@ -21,27 +22,20 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
     ui->manually_column_width->setChecked(ent->manually_column_width);
     ui->copy_links->setVisible(false);
     ui->copy_links_nkr->setVisible(false);
+
     if (ent->id >= 0) { // already a group
         ui->type->setDisabled(true);
         if (!ent->Profiles().isEmpty()) {
             ui->copy_links->setVisible(true);
             ui->copy_links_nkr->setVisible(true);
         }
+    } else { // new group
+        ui->front_proxy->hide();
+        ui->front_proxy_l->hide();
     }
 
-    connect(ui->buttonBox, &QDialogButtonBox::accepted, this, [=] {
-        if (ent->id >= 0) { // already a group
-            if (!ent->url.isEmpty() && ui->url->text().isEmpty()) {
-                MessageBoxWarning(tr("Warning"), tr("Please input URL"));
-                return;
-            }
-        }
-        ent->name = ui->name->text();
-        ent->url = ui->url->text();
-        ent->archive = ui->archive->isChecked();
-        ent->manually_column_width = ui->manually_column_width->isChecked();
-        QDialog::accept();
-    });
+    CACHE.front_proxy = ent->front_proxy_id;
+    refresh_front_proxy();
 
     connect(ui->copy_links, &QPushButton::clicked, this, [=] {
         QStringList links;
@@ -65,4 +59,36 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
 
 DialogEditGroup::~DialogEditGroup() {
     delete ui;
+}
+
+void DialogEditGroup::accept() {
+    if (ent->id >= 0) { // already a group
+        if (!ent->url.isEmpty() && ui->url->text().isEmpty()) {
+            MessageBoxWarning(tr("Warning"), tr("Please input URL"));
+            return;
+        }
+    }
+    ent->name = ui->name->text();
+    ent->url = ui->url->text();
+    ent->archive = ui->archive->isChecked();
+    ent->manually_column_width = ui->manually_column_width->isChecked();
+    ent->front_proxy_id = CACHE.front_proxy;
+    QDialog::accept();
+}
+
+void DialogEditGroup::refresh_front_proxy() {
+    auto fEnt = NekoGui::profileManager->GetProfile(CACHE.front_proxy);
+    ui->front_proxy->setText(fEnt == nullptr ? tr("None") : fEnt->bean->DisplayTypeAndName());
+}
+
+void DialogEditGroup::on_front_proxy_clicked() {
+    auto parent = dynamic_cast<QWidget *>(this->parent());
+    parent->hide();
+    this->hide();
+    GetMainWindow()->start_select_mode(this, [=](int id) {
+        CACHE.front_proxy = id;
+        refresh_front_proxy();
+        parent->show();
+        show();
+    });
 }

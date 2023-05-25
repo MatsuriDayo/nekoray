@@ -207,6 +207,7 @@ namespace NekoGui {
 
     Group::Group() {
         _add(new configItem("id", &id, itemType::integer));
+        _add(new configItem("front_proxy_id", &front_proxy_id, itemType::integer));
         _add(new configItem("archive", &archive, itemType::boolean));
         _add(new configItem("name", &name, itemType::string));
         _add(new configItem("order", &order, itemType::integerList));

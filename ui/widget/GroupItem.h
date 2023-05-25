@@ -27,6 +27,8 @@ public:
 private:
     Ui::GroupItem *ui;
 
+    QWidget *parentWindow;
+
 signals:
 
     void edit_clicked();

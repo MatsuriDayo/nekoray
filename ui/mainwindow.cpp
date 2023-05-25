@@ -592,13 +592,15 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
 
 inline bool dialog_is_using = false;
 
-#define USE_DIALOG(a)            \
-    if (dialog_is_using) return; \
-    dialog_is_using = true;      \
-    auto dialog = new a(this);   \
-    dialog->exec();              \
-    dialog->deleteLater();       \
-    dialog_is_using = false;
+#define USE_DIALOG(a)                               \
+    if (dialog_is_using) return;                    \
+    dialog_is_using = true;                         \
+    auto dialog = new a(this);                      \
+    connect(dialog, &QDialog::finished, this, [=] { \
+        dialog->deleteLater();                      \
+        dialog_is_using = false;                    \
+    });                                             \
+    dialog->show();
 
 void MainWindow::on_menu_basic_settings_triggered() {
     USE_DIALOG(DialogBasicSettings)

@@ -84,6 +84,20 @@
         </item>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QPushButton" name="front_proxy">
+        <property name="text">
+         <string notr="true"/>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="0">
+       <widget class="QLabel" name="front_proxy_l">
+        <property name="text">
+         <string>Front Proxy</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -174,6 +188,22 @@
     <hint type="destinationlabel">
      <x>199</x>
      <y>149</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>DialogEditGroup</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>199</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>157</y>
     </hint>
    </hints>
   </connection>

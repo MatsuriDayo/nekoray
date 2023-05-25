@@ -290,6 +290,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>Manually column width</source>
         <translation>手动调节列宽</translation>
     </message>
+    <message>
+        <source>Front Proxy</source>
+        <translation>前置代理</translation>
+    </message>
+    <message>
+        <source>None</source>
+        <translation>无</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>

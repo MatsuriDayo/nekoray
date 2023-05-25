@@ -93,27 +93,46 @@ namespace NekoGui {
     }
 
     QString BuildChain(int chainId, const std::shared_ptr<BuildConfigStatus> &status) {
-        // Make list
-        QList<std::shared_ptr<ProxyEntity>> ents;
-        auto ent = status->ent;
-        auto result = status->result;
+        auto group = profileManager->GetGroup(status->ent->gid);
+        if (group == nullptr) {
+            status->result->error = QString("This profile is not in any group, your data may be corrupted.");
+            return {};
+        }
 
-        if (ent->type == "chain") {
-            auto list = ent->ChainBean()->list;
-            std::reverse(std::begin(list), std::end(list));
-            for (auto id: list) {
-                ents += profileManager->GetProfile(id);
-                if (ents.last() == nullptr) {
-                    status->result->error = QString("chain missing ent: %1").arg(id);
-                    return {};
+        auto resolveChain = [=](const std::shared_ptr<ProxyEntity> &ent) {
+            QList<std::shared_ptr<ProxyEntity>> resolved;
+            if (ent->type == "chain") {
+                auto list = ent->ChainBean()->list;
+                std::reverse(std::begin(list), std::end(list));
+                for (auto id: list) {
+                    resolved += profileManager->GetProfile(id);
+                    if (resolved.last() == nullptr) {
+                        status->result->error = QString("chain missing ent: %1").arg(id);
+                        break;
+                    }
+                    if (resolved.last()->type == "chain") {
+                        status->result->error = QString("chain in chain is not allowed: %1").arg(id);
+                        break;
+                    }
                 }
-                if (ents.last()->type == "chain") {
-                    status->result->error = QString("chain in chain is not allowed: %1").arg(id);
-                    return {};
-                }
+            } else {
+                resolved += ent;
+            };
+            return resolved;
+        };
+
+        // Make list
+        auto ents = resolveChain(status->ent);
+        if (!status->result->error.isEmpty()) return {};
+
+        if (group->front_proxy_id >= 0) {
+            auto fEnt = profileManager->GetProfile(group->front_proxy_id);
+            if (fEnt == nullptr) {
+                status->result->error = QString("front proxy ent not found.");
+                return {};
             }
-        } else {
-            ents += ent;
+            ents += resolveChain(fEnt);
+            if (!status->result->error.isEmpty()) return {};
         }
 
         // BuildChain
