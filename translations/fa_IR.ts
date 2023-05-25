@@ -1474,6 +1474,10 @@ End: %2</source>
         <source>Failed to stop, please restart the program.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

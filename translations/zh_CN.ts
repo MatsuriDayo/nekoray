@@ -1481,6 +1481,10 @@ Split by line.</source>
         <source>If there is no response for a long time, it is recommended to restart the software.</source>
         <translation>如果长时间没有反应，建议重启软件。</translation>
     </message>
+    <message>
+        <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
+        <translation>选择模式，双击或按回车键选择一个配置文件，按ESC键退出。</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

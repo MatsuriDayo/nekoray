@@ -67,6 +67,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // Setup misc UI
     themeManager->ApplyTheme(NekoGui::dataStore->theme);
     ui->setupUi(this);
+    //
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
     connect(ui->tabWidget->tabBar(), &QTabBar::tabMoved, this, [=](int from, int to) {
@@ -79,7 +80,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     });
     ui->label_running->installEventFilter(this);
     ui->label_inbound->installEventFilter(this);
+    ui->splitter->installEventFilter(this);
+    //
     RegisterHotkey(false);
+    //
     auto last_size = NekoGui::dataStore->mw_size.split("x");
     if (last_size.length() == 2) {
         auto w = last_size[0].toInt();
@@ -827,7 +831,12 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     //
     ui->checkBox_VPN->setChecked(NekoGui::dataStore->spmode_vpn);
     ui->checkBox_SystemProxy->setChecked(NekoGui::dataStore->spmode_system_proxy);
-    if (select_mode) ui->label_running->setText("[" + tr("Select") + "]");
+    if (select_mode) {
+        ui->label_running->setText(tr("Select") + " *");
+        ui->label_running->setToolTip(tr("Select mode, double-click or press Enter to select a profile, press ESC to exit."));
+    } else {
+        ui->label_running->setToolTip({});
+    }
 
     auto make_title = [=](bool isTray) {
         QStringList tt;
@@ -1011,27 +1020,31 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
         auto profile = NekoGui::profileManager->GetProfile(profileId);
         if (profile == nullptr) continue;
 
+        auto isRunning = profileId == NekoGui::dataStore->started_id;
         auto f0 = std::make_unique<QTableWidgetItem>();
         f0->setData(114514, profileId);
 
         // Check state
         auto check = f0->clone();
-        check->setText(profileId == NekoGui::dataStore->started_id ? "✓" : Int2String(row + 1));
+        check->setText(isRunning ? "✓" : Int2String(row + 1));
         ui->proxyListTable->setVerticalHeaderItem(row, check);
 
         // C0: Type
         auto f = f0->clone();
         f->setText(profile->bean->DisplayType());
+        if (isRunning) f->setForeground(palette().link());
         ui->proxyListTable->setItem(row, 0, f);
 
         // C1: Address+Port
         f = f0->clone();
         f->setText(profile->bean->DisplayAddress());
+        if (isRunning) f->setForeground(palette().link());
         ui->proxyListTable->setItem(row, 1, f);
 
         // C2: Name
         f = f0->clone();
         f->setText(profile->bean->name);
+        if (isRunning) f->setForeground(palette().link());
         ui->proxyListTable->setItem(row, 2, f);
 
         // C3: Test Result
@@ -1611,6 +1624,11 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         } else if (obj == ui->label_inbound && mouseEvent->button() == Qt::LeftButton) {
             on_menu_basic_settings_triggered();
             return true;
+        }
+    } else if (event->type() == QEvent::MouseButtonDblClick) {
+        if (obj == ui->splitter) {
+            auto size = ui->splitter->size();
+            ui->splitter->setSizes({size.height() / 2, size.height() / 2});
         }
     }
     return QMainWindow::eventFilter(obj, event);

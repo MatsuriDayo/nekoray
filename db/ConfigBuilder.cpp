@@ -622,7 +622,7 @@ namespace NekoGui {
             status->result->outboundStats += ent->traffic_data;
 
             // mux common
-            auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless" || ent->type == "shadowsocks";
+            auto needMux = ent->type == "vmess" || ent->type == "trojan" || ent->type == "vless";
             needMux &= dataStore->mux_concurrency > 0;
 
             if (stream != nullptr) {
@@ -637,13 +637,9 @@ namespace NekoGui {
                 }
                 if (stream->multiplex_status == 0) {
                     if (!dataStore->mux_default_on) needMux = false;
+                } else if (stream->multiplex_status == 1) {
+                    needMux = true;
                 } else if (stream->multiplex_status == 2) {
-                    needMux = false;
-                }
-            }
-
-            if (ent->type == "shadowsocks") {
-                if (!IS_NEKO_BOX || outbound["udp_over_tcp"] == true || !outbound["plugin"].isNull()) {
                     needMux = false;
                 }
             }
