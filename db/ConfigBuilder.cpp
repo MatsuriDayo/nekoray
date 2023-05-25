@@ -241,10 +241,12 @@ namespace NekoGui {
         // direct & bypass & block
         status->outbounds += QJsonObject{
             {"protocol", "freedom"},
+            {"domainStrategy", dataStore->core_ray_freedom_domainStrategy},
             {"tag", "direct"},
         };
         status->outbounds += QJsonObject{
             {"protocol", "freedom"},
+            {"domainStrategy", dataStore->core_ray_freedom_domainStrategy},
             {"tag", "bypass"},
         };
         status->outbounds += QJsonObject{

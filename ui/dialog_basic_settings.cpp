@@ -404,6 +404,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
     MyLineEdit *core_box_underlying_dns;
     QCheckBox *core_ray_direct_dns;
     QCheckBox *core_ray_windows_disable_auto_interface;
+    QComboBox *core_ray_freedom_domainStrategy;
     //
     auto core_box_underlying_dns_l = new QLabel(tr("Override underlying DNS"));
     core_box_underlying_dns_l->setToolTip(tr(
@@ -442,6 +443,13 @@ void DialogBasicSettings::on_core_settings_clicked() {
         connect(core_ray_direct_dns, &QCheckBox::clicked, this, [&] { CACHE.needRestart = true; });
         layout->addWidget(core_ray_direct_dns_l, ++line, 0);
         layout->addWidget(core_ray_direct_dns, line, 1);
+        //
+        auto core_ray_freedom_domainStrategy_l = new QLabel("Freedom Strategy");
+        core_ray_freedom_domainStrategy = new QComboBox;
+        core_ray_freedom_domainStrategy->addItems({"", "AsIs", "UseIP", "UseIPv4", "UseIPv6"});
+        core_ray_freedom_domainStrategy->setCurrentText(NekoGui::dataStore->core_ray_freedom_domainStrategy);
+        layout->addWidget(core_ray_freedom_domainStrategy_l, ++line, 0);
+        layout->addWidget(core_ray_freedom_domainStrategy, line, 1);
 #ifdef Q_OS_WIN
         auto core_ray_windows_disable_auto_interface_l = new QLabel("NKR_CORE_RAY_WINDOWS_DISABLE_AUTO_INTERFACE");
         core_ray_windows_disable_auto_interface_l->setToolTip(tr("If you VPN mode is not working, try to change this option."));
@@ -463,6 +471,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
             NekoGui::dataStore->core_box_clash_api_secret = core_box_clash_api_secret->text();
         } else {
             NekoGui::dataStore->core_ray_direct_dns = core_ray_direct_dns->isChecked();
+            NekoGui::dataStore->core_ray_freedom_domainStrategy = core_ray_freedom_domainStrategy->currentText();
 #ifdef Q_OS_WIN
             NekoGui::dataStore->core_ray_windows_disable_auto_interface = core_ray_windows_disable_auto_interface->isChecked();
 #endif

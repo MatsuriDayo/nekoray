@@ -277,6 +277,7 @@ namespace NekoGui {
         _add(new configItem("core_box_clash_api_secret", &core_box_clash_api_secret, itemType::string));
         _add(new configItem("core_box_underlying_dns", &core_box_underlying_dns, itemType::string));
         _add(new configItem("core_ray_direct_dns", &core_ray_direct_dns, itemType::boolean));
+        _add(new configItem("core_ray_freedom_domainStrategy", &core_ray_freedom_domainStrategy, itemType::boolean));
         _add(new configItem("vpn_internal_tun", &vpn_internal_tun, itemType::boolean));
 #ifdef Q_OS_WIN
         _add(new configItem("core_ray_windows_disable_auto_interface", &core_ray_windows_disable_auto_interface, itemType::boolean));

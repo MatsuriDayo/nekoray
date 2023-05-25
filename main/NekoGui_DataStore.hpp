@@ -162,6 +162,7 @@ namespace NekoGui {
         QString core_box_underlying_dns = "";
         bool core_ray_direct_dns = false;
         bool core_ray_windows_disable_auto_interface = false;
+        QString core_ray_freedom_domainStrategy = "";
 
         // Other Core
         ExtraCore *extraCore = new ExtraCore;
