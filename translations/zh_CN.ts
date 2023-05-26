@@ -298,6 +298,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>None</source>
         <translation>无</translation>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation>清除</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
@@ -1103,7 +1107,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Add profile from clipboard</source>
-        <translation>从剪切板添加</translation>
+        <translation>从剪贴板添加</translation>
     </message>
     <message>
         <source>Debug Info</source>

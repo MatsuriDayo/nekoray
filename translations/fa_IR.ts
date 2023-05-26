@@ -298,6 +298,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
         <source>None</source>
         <translation type="unfinished">هیچ یک</translation>
     </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished">پاک کردن</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditProfile</name>

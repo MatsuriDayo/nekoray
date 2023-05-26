@@ -36,6 +36,10 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
 
     CACHE.front_proxy = ent->front_proxy_id;
     refresh_front_proxy();
+    connect(ui->front_proxy_clear, &QPushButton::clicked, this, [=] {
+        CACHE.front_proxy = -1;
+        refresh_front_proxy();
+    });
 
     connect(ui->copy_links, &QPushButton::clicked, this, [=] {
         QStringList links;
