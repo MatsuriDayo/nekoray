@@ -28,7 +28,7 @@ EditCustom::~EditCustom() {
 #define SAVE_CUSTOM_BEAN                            \
     P_SAVE_COMBO_STRING(core)                       \
     bean->command = ui->command->text().split(" "); \
-    P_SAVE_STRING_QTEXTEDIT(config_simple)          \
+    P_SAVE_STRING_PLAIN(config_simple)              \
     P_SAVE_COMBO_STRING(config_suffix)              \
     P_SAVE_INT(mapping_port)                        \
     P_SAVE_INT(socks_port)
@@ -62,7 +62,7 @@ void EditCustom::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     // load core ui
     P_LOAD_COMBO_STRING(core)
     ui->command->setText(bean->command.join(" "));
-    P_LOAD_STRING(config_simple)
+    ui->config_simple->setPlainText(bean->config_simple);
     P_LOAD_COMBO_STRING(config_suffix)
     P_LOAD_INT(mapping_port)
     P_LOAD_INT(socks_port)
@@ -75,7 +75,7 @@ void EditCustom::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->core->setDisabled(true);
         ui->core->setCurrentText(preset_core);
         ui->command->setText(preset_command);
-        ui->config_simple->setText(preset_config);
+        ui->config_simple->setPlainText(preset_config);
     }
 
     // custom internal
@@ -145,6 +145,6 @@ void EditCustom::on_as_json_clicked() {
     auto editor = new JsonEditor(QString2QJsonObject(ui->config_simple->toPlainText()), this);
     auto result = editor->OpenEditor();
     if (!result.isEmpty()) {
-        ui->config_simple->setText(QJsonObject2QString(result, false));
+        ui->config_simple->setPlainText(QJsonObject2QString(result, false));
     }
 }

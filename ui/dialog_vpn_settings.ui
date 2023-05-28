@@ -144,7 +144,7 @@ This needs to be run NekoBox with administrator privileges.</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QTextEdit" name="vpn_rule_cidr"/>
+         <widget class="QPlainTextEdit" name="vpn_rule_cidr"/>
         </item>
        </layout>
       </widget>
@@ -156,7 +156,7 @@ This needs to be run NekoBox with administrator privileges.</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_4">
         <item>
-         <widget class="QTextEdit" name="vpn_rule_process"/>
+         <widget class="QPlainTextEdit" name="vpn_rule_process"/>
         </item>
        </layout>
       </widget>

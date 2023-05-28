@@ -23,27 +23,37 @@
 #define D_C_SAVE_STRING(a) NekoGui::dataStore->a = CACHE.a;
 
 #define P_LOAD_STRING(a) ui->a->setText(bean->a);
+#define P_LOAD_STRING_PLAIN(a) ui->a->setPlainText(bean->a);
 #define P_SAVE_STRING(a) bean->a = ui->a->text();
-#define P_SAVE_STRING_QTEXTEDIT(a) bean->a = ui->a->toPlainText();
+#define P_SAVE_STRING_PLAIN(a) bean->a = ui->a->toPlainText();
+
 #define D_LOAD_STRING(a) ui->a->setText(NekoGui::dataStore->a);
+#define D_LOAD_STRING_PLAIN(a) ui->a->setPlainText(NekoGui::dataStore->a);
 #define D_SAVE_STRING(a) NekoGui::dataStore->a = ui->a->text();
-#define D_SAVE_STRING_QTEXTEDIT(a) NekoGui::dataStore->a = ui->a->toPlainText();
+#define D_SAVE_STRING_PLAIN(a) NekoGui::dataStore->a = ui->a->toPlainText();
+
 #define P_LOAD_INT(a)                    \
     ui->a->setText(Int2String(bean->a)); \
     ui->a->setValidator(QRegExpValidator_Number);
 #define P_SAVE_INT(a) bean->a = ui->a->text().toInt();
+
 #define D_LOAD_INT(a)                                  \
     ui->a->setText(Int2String(NekoGui::dataStore->a)); \
     ui->a->setValidator(QRegExpValidator_Number);
 #define D_SAVE_INT(a) NekoGui::dataStore->a = ui->a->text().toInt();
+
 #define P_LOAD_COMBO_STRING(a) ui->a->setCurrentText(bean->a);
 #define P_SAVE_COMBO_STRING(a) bean->a = ui->a->currentText();
+
 #define D_LOAD_COMBO_STRING(a) ui->a->setCurrentText(NekoGui::dataStore->a);
 #define D_SAVE_COMBO_STRING(a) NekoGui::dataStore->a = ui->a->currentText();
+
 #define P_LOAD_COMBO_INT(a) ui->a->setCurrentIndex(bean->a);
 #define P_SAVE_COMBO_INT(a) bean->a = ui->a->currentIndex();
+
 #define D_LOAD_BOOL(a) ui->a->setChecked(NekoGui::dataStore->a);
 #define D_SAVE_BOOL(a) NekoGui::dataStore->a = ui->a->isChecked();
+
 #define P_LOAD_BOOL(a) ui->a->setChecked(bean->a);
 #define P_SAVE_BOOL(a) bean->a = ui->a->isChecked();
 

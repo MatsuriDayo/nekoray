@@ -25,8 +25,8 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new 
     ui->single_core->setVisible(IS_NEKO_BOX);
     ui->single_core->setChecked(NekoGui::dataStore->vpn_internal_tun);
     //
-    D_LOAD_STRING(vpn_rule_cidr)
-    D_LOAD_STRING(vpn_rule_process)
+    D_LOAD_STRING_PLAIN(vpn_rule_cidr)
+    D_LOAD_STRING_PLAIN(vpn_rule_process)
     //
     connect(ui->whitelist_mode, &QCheckBox::stateChanged, this, [=](int state) {
         if (state == Qt::Checked) {
@@ -57,8 +57,8 @@ void DialogVPNSettings::accept() {
     NekoGui::dataStore->vpn_rule_white = ui->whitelist_mode->isChecked();
     NekoGui::dataStore->vpn_internal_tun = ui->single_core->isChecked();
     //
-    D_SAVE_STRING_QTEXTEDIT(vpn_rule_cidr)
-    D_SAVE_STRING_QTEXTEDIT(vpn_rule_process)
+    D_SAVE_STRING_PLAIN(vpn_rule_cidr)
+    D_SAVE_STRING_PLAIN(vpn_rule_process)
     //
     MW_dialog_message("", "UpdateDataStore,VPNChanged");
     QDialog::accept();

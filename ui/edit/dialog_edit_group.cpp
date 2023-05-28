@@ -32,6 +32,7 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
     } else { // new group
         ui->front_proxy->hide();
         ui->front_proxy_l->hide();
+        ui->front_proxy_clear->hide();
     }
 
     CACHE.front_proxy = ent->front_proxy_id;
