@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>Test URL</source>
-        <translation>url تست</translation>
+        <translation type="vanished">url تست</translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
@@ -233,6 +233,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     </message>
     <message>
         <source>Multiplex (mux)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Latency Test URL</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download Test URL</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1412,7 +1420,7 @@ End: %2</source>
     </message>
     <message>
         <source>Input</source>
-        <translation>ورودی</translation>
+        <translation type="vanished">ورودی</translation>
     </message>
     <message>
         <source>[%1] test error: %2</source>
@@ -1436,14 +1444,6 @@ End: %2</source>
     </message>
     <message>
         <source>Current Select</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Please enter the items to be tested, separated by commas
-1. Latency
-2. Download speed
-3. In and Out IP
-4. UDP Latency</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1480,6 +1480,26 @@ End: %2</source>
     </message>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Latency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP latency</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Download speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In and Out IP</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Test Options</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

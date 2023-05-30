@@ -13,6 +13,7 @@
 #include <QPushButton>
 #include <QDesktopServices>
 #include <QMessageBox>
+#include <QDialogButtonBox>
 
 // ext core
 
@@ -63,19 +64,45 @@ void MainWindow::speedtest_current_group(int mode) {
     if (group->archive) return;
 
 #ifndef NKR_NO_GRPC
-    if (speedtesting) return;
+    if (speedtesting) {
+        MessageBoxWarning(software_name, "The last speed test did not exit completely, please wait. If it persists, please restart the program.");
+        return;
+    }
+
     QStringList full_test_flags;
     if (mode == libcore::FullTest) {
-        bool ok;
-        auto s = QInputDialog::getText(nullptr, tr("Input"),
-                                       tr("Please enter the items to be tested, separated by commas\n"
-                                          "1. Latency\n"
-                                          "2. Download speed\n"
-                                          "3. In and Out IP\n"
-                                          "4. UDP Latency"),
-                                       QLineEdit::Normal, "1,4", &ok);
-        full_test_flags = s.trimmed().split(",");
-        if (!ok) return;
+        auto w = new QDialog(this);
+        auto layout = new QVBoxLayout(w);
+        w->setWindowTitle(tr("Test Options"));
+        //
+        auto l1 = new QCheckBox(tr("Latency"));
+        auto l2 = new QCheckBox(tr("UDP latency"));
+        auto l3 = new QCheckBox(tr("Download speed"));
+        auto l4 = new QCheckBox(tr("In and Out IP"));
+        //
+        auto box = new QDialogButtonBox;
+        box->setOrientation(Qt::Horizontal);
+        box->setStandardButtons(QDialogButtonBox::Cancel | QDialogButtonBox::Ok);
+        connect(box, &QDialogButtonBox::accepted, w, &QDialog::accept);
+        connect(box, &QDialogButtonBox::rejected, w, &QDialog::reject);
+        //
+        layout->addWidget(l1);
+        layout->addWidget(l2);
+        layout->addWidget(l3);
+        layout->addWidget(l4);
+        layout->addWidget(box);
+        if (w->exec() != QDialog::Accepted) {
+            w->deleteLater();
+            return;
+        }
+        //
+        if (l1->isChecked()) full_test_flags << "1";
+        if (l2->isChecked()) full_test_flags << "2";
+        if (l3->isChecked()) full_test_flags << "3";
+        if (l4->isChecked()) full_test_flags << "4";
+        //
+        w->deleteLater();
+        if (full_test_flags.isEmpty()) return;
     }
     speedtesting = true;
 
@@ -106,17 +133,33 @@ void MainWindow::speedtest_current_group(int mode) {
                     libcore::TestReq req;
                     req.set_mode((libcore::TestMode) mode);
                     req.set_timeout(3000);
-                    req.set_url(NekoGui::dataStore->test_url.toStdString());
+                    req.set_url(NekoGui::dataStore->test_latency_url.toStdString());
 
                     //
                     std::list<std::shared_ptr<NekoGui_sys::ExternalProcess>> extCs;
+                    QSemaphore extSem;
 
                     if (mode == libcore::TestMode::UrlTest || mode == libcore::FullTest) {
                         auto c = BuildConfig(profile, true, false);
-                        // TODO refactor external test
+                        if (!c->error.isEmpty()) {
+                            profile->full_test_report = c->error;
+                            profile->Save();
+                            auto profileId = profile->id;
+                            runOnUiThread([this, profileId] {
+                                refresh_proxy_list(profileId);
+                            });
+                            continue;
+                        }
+                        //
                         if (!c->extRs.empty()) {
-                            extCs = CreateExtCFromExtR(c->extRs, true);
-                            QThread::msleep(500);
+                            runOnUiThread(
+                                [&] {
+                                    extCs = CreateExtCFromExtR(c->extRs, true);
+                                    QThread::msleep(500);
+                                    extSem.release();
+                                },
+                                DS_cores);
+                            extSem.acquire();
                         }
                         //
                         auto config = new libcore::LoadConfigReq;
@@ -125,18 +168,30 @@ void MainWindow::speedtest_current_group(int mode) {
                         req.set_in_address(profile->bean->serverAddress.toStdString());
 
                         req.set_full_latency(full_test_flags.contains("1"));
-                        req.set_full_speed(full_test_flags.contains("2"));
-                        req.set_full_in_out(full_test_flags.contains("3"));
-                        req.set_full_udp_latency(full_test_flags.contains("4"));
+                        req.set_full_udp_latency(full_test_flags.contains("2"));
+                        req.set_full_speed(full_test_flags.contains("3"));
+                        req.set_full_in_out(full_test_flags.contains("4"));
+
+                        req.set_full_speed_url(NekoGui::dataStore->test_download_url.toStdString());
                     } else if (mode == libcore::TcpPing) {
                         req.set_address(profile->bean->DisplayAddress().toStdString());
                     }
 
                     bool rpcOK;
                     auto result = defaultClient->Test(&rpcOK, req);
-                    for (const auto &extC: extCs) {
-                        extC->Kill();
+                    //
+                    if (!extCs.empty()) {
+                        runOnUiThread(
+                            [&] {
+                                for (const auto &extC: extCs) {
+                                    extC->Kill();
+                                }
+                                extSem.release();
+                            },
+                            DS_cores);
+                        extSem.acquire();
                     }
+                    //
                     if (!rpcOK) return;
 
                     if (result.error().empty()) {
@@ -177,7 +232,7 @@ void MainWindow::speedtest_current() {
         libcore::TestReq req;
         req.set_mode(libcore::UrlTest);
         req.set_timeout(3000);
-        req.set_url(NekoGui::dataStore->test_url.toStdString());
+        req.set_url(NekoGui::dataStore->test_latency_url.toStdString());
 
         bool rpcOK;
         auto result = defaultClient->Test(&rpcOK, req);

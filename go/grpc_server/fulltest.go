@@ -3,7 +3,6 @@ package grpc_server
 import (
 	"context"
 	"encoding/hex"
-	"encoding/json"
 	"fmt"
 	"grpc_server/gen"
 	"io"
@@ -15,6 +14,20 @@ import (
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/speedtest"
 )
+
+func getBetweenStr(str, start, end string) string {
+	n := strings.Index(str, start)
+	if n == -1 {
+		n = 0
+	}
+	str = string([]byte(str)[n:])
+	m := strings.Index(str, end)
+	if m == -1 {
+		m = len(str)
+	}
+	str = string([]byte(str)[:m])
+	return str[len(start):]
+}
 
 func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out *gen.TestResp, _ error) {
 	out = &gen.TestResp{}
@@ -83,15 +96,10 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 	// 出口 IP
 	var out_ip string
 	if in.FullInOut {
-		resp, err := httpClient.Get("https://httpbin.org/get")
+		resp, err := httpClient.Get("https://www.cloudflare.com/cdn-cgi/trace")
 		if err == nil {
-			v := make(map[string]interface{})
-			json.NewDecoder(resp.Body).Decode(&v)
-			if a, ok := v["origin"]; ok {
-				if s, ok := a.(string); ok {
-					out_ip = s
-				}
-			}
+			b, _ := io.ReadAll(resp.Body)
+			out_ip = getBetweenStr(string(b), "ip=", "\n")
 			resp.Body.Close()
 		} else {
 			out_ip = "Error"
@@ -101,7 +109,7 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 	// 下载
 	var speed string
 	if in.FullSpeed {
-		resp, err := httpClient.Get("http://cachefly.cachefly.net/10mb.test")
+		resp, err := httpClient.Get(in.FullSpeedUrl)
 		if err == nil {
 			time_start := time.Now()
 			n, _ := io.Copy(io.Discard, resp.Body)

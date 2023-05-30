@@ -84,10 +84,6 @@
         <translation>并发</translation>
     </message>
     <message>
-        <source>Test URL</source>
-        <translation>测试 URL</translation>
-    </message>
-    <message>
         <source>Use proxy when updating subscription</source>
         <translation>更新订阅时使用代理</translation>
     </message>
@@ -234,6 +230,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mod
     <message>
         <source>Multiplex (mux)</source>
         <translation>多路复用 Mux</translation>
+    </message>
+    <message>
+        <source>Latency Test URL</source>
+        <translation>延迟测试 URL</translation>
+    </message>
+    <message>
+        <source>Download Test URL</source>
+        <translation>下载测试 URL</translation>
     </message>
 </context>
 <context>
@@ -1272,10 +1276,6 @@ End: %2</source>
         <translation>设置</translation>
     </message>
     <message>
-        <source>Input</source>
-        <translation>输入</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>手动输入配置</translation>
     </message>
@@ -1442,18 +1442,6 @@ Split by line.</source>
         <translation>当前选中</translation>
     </message>
     <message>
-        <source>Please enter the items to be tested, separated by commas
-1. Latency
-2. Download speed
-3. In and Out IP
-4. UDP Latency</source>
-        <translation>请输入要测试的项目，用逗号分隔
-1. TCP 延迟
-2. 下载速度
-3. 入口出口 IP
-4. UDP DNS 延迟</translation>
-    </message>
-    <message>
         <source>Show Window</source>
         <translation>显示主窗口</translation>
     </message>
@@ -1488,6 +1476,26 @@ Split by line.</source>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
         <translation>选择模式，双击或按回车键选择一个配置文件，按ESC键退出。</translation>
+    </message>
+    <message>
+        <source>Latency</source>
+        <translation>延迟</translation>
+    </message>
+    <message>
+        <source>UDP latency</source>
+        <translation>UDP 延迟</translation>
+    </message>
+    <message>
+        <source>Download speed</source>
+        <translation>下载速度</translation>
+    </message>
+    <message>
+        <source>In and Out IP</source>
+        <translation>入口出口IP</translation>
+    </message>
+    <message>
+        <source>Test Options</source>
+        <translation>测试选项</translation>
     </message>
 </context>
 <context>

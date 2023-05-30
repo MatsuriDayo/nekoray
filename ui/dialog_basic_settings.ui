@@ -145,37 +145,17 @@
         </layout>
        </item>
        <item>
-        <layout class="QHBoxLayout" name="hlayout_l4">
-         <item>
-          <widget class="QGroupBox" name="groupBox_log">
-           <layout class="QHBoxLayout" name="horizontalLayout">
-            <item>
-             <widget class="QLabel" name="label_3">
-              <property name="text">
-               <string notr="true">Loglevel</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QComboBox" name="log_level"/>
-            </item>
-           </layout>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
         <widget class="QGroupBox" name="groupBox1">
          <layout class="QHBoxLayout" name="horizontalLayout_9" stretch="0,8,1,1">
           <item>
            <widget class="QLabel" name="label_13">
             <property name="text">
-             <string>Test URL</string>
+             <string>Latency Test URL</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="test_url"/>
+           <widget class="QLineEdit" name="test_latency_url"/>
           </item>
           <item>
            <widget class="QLabel" name="label_14">
@@ -186,6 +166,22 @@
           </item>
           <item>
            <widget class="QLineEdit" name="test_concurrent"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
+        <widget class="QGroupBox" name="horizontalGroupBox">
+         <layout class="QHBoxLayout" name="horizontalLayout_12">
+          <item>
+           <widget class="QLabel" name="label_19">
+            <property name="text">
+             <string>Download Test URL</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="MyLineEdit" name="test_download_url"/>
           </item>
          </layout>
         </widget>
@@ -579,6 +575,28 @@
         </widget>
        </item>
        <item>
+        <widget class="QGroupBox" name="groupBox_log">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout">
+          <item>
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string notr="true">Loglevel</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="log_level"/>
+          </item>
+         </layout>
+        </widget>
+       </item>
+       <item>
         <widget class="QGroupBox" name="groupBox_mux">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
@@ -644,8 +662,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>198</width>
-            <height>58</height>
+            <width>568</width>
+            <height>297</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">
