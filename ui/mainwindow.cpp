@@ -375,7 +375,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_clear_test_result);
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_resolve_domain);
             }
-            ui->menu_full_test->setVisible(!IS_NEKO_BOX);
             set_selected_or_group(menuCurrent_Select ? 1 : 0);
         };
     };

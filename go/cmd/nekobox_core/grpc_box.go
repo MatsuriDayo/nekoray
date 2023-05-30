@@ -95,11 +95,13 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 
 	if in.Mode == gen.TestMode_UrlTest {
 		var i *boxbox.Box
+		var cancel context.CancelFunc
 		if in.Config != nil {
 			// Test instance
-			i, instance_cancel, err = boxmain.Create([]byte(in.Config.CoreConfig))
-			if instance_cancel != nil {
-				defer instance_cancel()
+			i, cancel, err = boxmain.Create([]byte(in.Config.CoreConfig))
+			if i != nil {
+				defer i.Close()
+				defer cancel()
 			}
 			if err != nil {
 				return
@@ -115,8 +117,16 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 		out.Ms, err = speedtest.UrlTest(boxapi.CreateProxyHttpClient(i), in.Url, in.Timeout)
 	} else if in.Mode == gen.TestMode_TcpPing {
 		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
-	} else {
-		err = fmt.Errorf("not available")
+	} else if in.Mode == gen.TestMode_FullTest {
+		i, cancel, err := boxmain.Create([]byte(in.Config.CoreConfig))
+		if i != nil {
+			defer i.Close()
+			defer cancel()
+		}
+		if err != nil {
+			return
+		}
+		return grpc_server.DoFullTest(ctx, in, i)
 	}
 
 	return

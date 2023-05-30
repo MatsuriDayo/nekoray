@@ -19,7 +19,7 @@ var update_download_url string
 func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
 	ret := &gen.UpdateResp{}
 
-	client := neko_common.GetProxyHttpClient()
+	client := neko_common.CreateProxyHttpClient(neko_common.GetCurrentInstance())
 
 	if in.Action == gen.UpdateAction_Check { // Check update
 		ctx, cancel := context.WithTimeout(ctx, time.Second*10)

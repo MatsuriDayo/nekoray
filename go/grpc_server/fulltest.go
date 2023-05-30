@@ -1,0 +1,137 @@
+package grpc_server
+
+import (
+	"context"
+	"encoding/hex"
+	"encoding/json"
+	"fmt"
+	"grpc_server/gen"
+	"io"
+	"log"
+	"net"
+	"strings"
+	"time"
+
+	"github.com/matsuridayo/libneko/neko_common"
+	"github.com/matsuridayo/libneko/speedtest"
+)
+
+func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out *gen.TestResp, _ error) {
+	out = &gen.TestResp{}
+	httpClient := neko_common.CreateProxyHttpClient(instance)
+
+	// Latency
+	var latency string
+	if in.FullLatency {
+		t, _ := speedtest.UrlTest(httpClient, in.Url, in.Timeout)
+		out.Ms = t
+		if t > 0 {
+			latency = fmt.Sprint(t, "ms")
+		} else {
+			latency = "Error"
+		}
+	}
+
+	// UDP Latency
+	var udpLatency string
+	if in.FullUdpLatency {
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*3)
+		result := make(chan string)
+
+		go func() {
+			var startTime = time.Now()
+			pc, err := neko_common.DialContext(ctx, instance, "udp", "8.8.8.8:53")
+			if err == nil {
+				defer pc.Close()
+				dnsPacket, _ := hex.DecodeString("0000010000010000000000000377777706676f6f676c6503636f6d0000010001")
+				_, err = pc.Write(dnsPacket)
+				if err == nil {
+					var buf [1400]byte
+					_, err = pc.Read(buf[:])
+				}
+			}
+			if err == nil {
+				var endTime = time.Now()
+				result <- fmt.Sprint(endTime.Sub(startTime).Abs().Milliseconds(), "ms")
+			} else {
+				log.Println("UDP Latency test error:", err)
+				result <- "Error"
+			}
+			close(result)
+		}()
+
+		select {
+		case <-ctx.Done():
+			udpLatency = "Timeout"
+		case r := <-result:
+			udpLatency = r
+		}
+		cancel()
+	}
+
+	// 入口 IP
+	var in_ip string
+	if in.FullInOut {
+		_in_ip, err := net.ResolveIPAddr("ip", in.InAddress)
+		if err == nil {
+			in_ip = _in_ip.String()
+		} else {
+			in_ip = err.Error()
+		}
+	}
+
+	// 出口 IP
+	var out_ip string
+	if in.FullInOut {
+		resp, err := httpClient.Get("https://httpbin.org/get")
+		if err == nil {
+			v := make(map[string]interface{})
+			json.NewDecoder(resp.Body).Decode(&v)
+			if a, ok := v["origin"]; ok {
+				if s, ok := a.(string); ok {
+					out_ip = s
+				}
+			}
+			resp.Body.Close()
+		} else {
+			out_ip = "Error"
+		}
+	}
+
+	// 下载
+	var speed string
+	if in.FullSpeed {
+		resp, err := httpClient.Get("http://cachefly.cachefly.net/10mb.test")
+		if err == nil {
+			time_start := time.Now()
+			n, _ := io.Copy(io.Discard, resp.Body)
+			time_end := time.Now()
+
+			speed = fmt.Sprintf("%.2fMiB/s", (float64(n)/time_end.Sub(time_start).Seconds())/1048576)
+			resp.Body.Close()
+		} else {
+			speed = "Error"
+		}
+	}
+
+	fr := make([]string, 0)
+	if latency != "" {
+		fr = append(fr, fmt.Sprintf("Latency: %s", latency))
+	}
+	if udpLatency != "" {
+		fr = append(fr, fmt.Sprintf("UDPLatency: %s", udpLatency))
+	}
+	if speed != "" {
+		fr = append(fr, fmt.Sprintf("Speed: %s", speed))
+	}
+	if in_ip != "" {
+		fr = append(fr, fmt.Sprintf("In: %s", in_ip))
+	}
+	if out_ip != "" {
+		fr = append(fr, fmt.Sprintf("Out: %s", out_ip))
+	}
+
+	out.FullReport = strings.Join(fr, " / ")
+
+	return
+}

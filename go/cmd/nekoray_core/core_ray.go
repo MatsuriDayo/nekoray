@@ -69,29 +69,51 @@ func setupCore() {
 		return resolver_go.LookupIP(context.Background(), network, host)
 	})
 	//
-	neko_common.GetProxyHttpClient = func() *http.Client {
-		return getProxyHttpClient(instance)
+	neko_common.GetCurrentInstance = func() interface{} {
+		return instance
+	}
+	neko_common.DialContext = func(ctx context.Context, specifiedInstance interface{}, network, addr string) (net.Conn, error) {
+		dest, err := v2rayNet.ParseDestination(fmt.Sprintf("%s:%s", network, addr))
+		if err != nil {
+			return nil, err
+		}
+		if i, ok := specifiedInstance.(*NekoV2RayInstance); ok {
+			return core.Dial(ctx, i.Instance, dest)
+		}
+		if instance != nil {
+			return core.Dial(ctx, instance.Instance, dest)
+		}
+		return neko_common.DialContextSystem(ctx, network, addr)
+	}
+	neko_common.DialUDP = func(ctx context.Context, specifiedInstance interface{}) (net.PacketConn, error) {
+		if i, ok := specifiedInstance.(*NekoV2RayInstance); ok {
+			return core.DialUDP(ctx, i.Instance)
+		}
+		if instance != nil {
+			return core.DialUDP(ctx, instance.Instance)
+		}
+		return neko_common.DialUDPSystem(ctx)
+	}
+	neko_common.CreateProxyHttpClient = func(specifiedInstance interface{}) *http.Client {
+		if i, ok := specifiedInstance.(*NekoV2RayInstance); ok {
+			return createProxyHttpClient(i)
+		}
+		return createProxyHttpClient(instance)
 	}
 }
 
 // PROXY
 
-func getProxyHttpClient(_instance *NekoV2RayInstance) *http.Client {
-	dailContext := func(ctx context.Context, network, addr string) (net.Conn, error) {
-		dest, err := v2rayNet.ParseDestination(fmt.Sprintf("%s:%s", network, addr))
-		if err != nil {
-			return nil, err
-		}
-		return core.Dial(ctx, _instance.Instance, dest)
-	}
-
+func createProxyHttpClient(i *NekoV2RayInstance) *http.Client {
 	transport := &http.Transport{
 		TLSHandshakeTimeout:   time.Second * 3,
 		ResponseHeaderTimeout: time.Second * 3,
 	}
 
-	if _instance != nil {
-		transport.DialContext = dailContext
+	if i != nil {
+		transport.DialContext = func(ctx context.Context, network, addr string) (net.Conn, error) {
+			return neko_common.DialContext(ctx, i, network, addr)
+		}
 	}
 
 	client := &http.Client{
