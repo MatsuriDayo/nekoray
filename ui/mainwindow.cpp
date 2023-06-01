@@ -749,13 +749,12 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_vpn) {
         if (enable) {
             if (IS_NEKO_BOX_INTERNAL_TUN) {
-                bool requestPermission = false;
-#ifdef Q_OS_WIN
-                if (!Windows_IsInAdmin()) {
-                    requestPermission = true;
+                bool requestPermission = !NekoGui::isAdmin();
+#ifdef Q_OS_LINUX
+                if (requestPermission && QProcess::execute("pkexec", {"--help"}) != 0) {
+                    MessageBoxWarning(software_name, "Please install \"pkexec\" first.");
+                    neko_set_spmode_FAILED
                 }
-#else
-                requestPermission = !NekoGui::isAdmin();
 #endif
                 if (requestPermission) {
                     auto n = QMessageBox::warning(GetMessageBoxParent(), software_name, tr("Please run NekoBox as admin"), QMessageBox::Yes | QMessageBox::No);

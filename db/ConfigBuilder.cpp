@@ -732,7 +732,7 @@ namespace NekoGui {
         }
 
         // tun-in
-        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn) {
+        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
             QJsonObject inboundObj;
             inboundObj["tag"] = "tun-in";
             inboundObj["type"] = "tun";
@@ -937,7 +937,7 @@ namespace NekoGui {
         };
 
         // tun user rule
-        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn) {
+        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
             auto match_out = dataStore->vpn_rule_white ? "proxy" : "bypass";
 
             QString process_name_rule = dataStore->vpn_rule_process.trimmed();
