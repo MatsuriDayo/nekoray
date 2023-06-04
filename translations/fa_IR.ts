@@ -1052,10 +1052,6 @@ This needs to be run NekoBox with administrator privileges.</source>
 <context>
     <name>MainWindow</name>
     <message>
-        <source>NekoRay</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Program</source>
         <translation>برنامه</translation>
     </message>
@@ -1455,10 +1451,6 @@ End: %2</source>
         <translation type="unfinished">تنظیمات تغییر کرد</translation>
     </message>
     <message>
-        <source>Restart nekoray to take effect.</source>
-        <translation type="unfinished">برای اعمال تغییرات nekoray را مجددا راه اندازی کنید.</translation>
-    </message>
-    <message>
         <source>Please run NekoBox as admin</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1500,6 +1492,10 @@ End: %2</source>
     </message>
     <message>
         <source>Test Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restart the program to take effect.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

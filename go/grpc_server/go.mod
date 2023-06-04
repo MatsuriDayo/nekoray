@@ -5,7 +5,6 @@ go 1.19
 require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.3.0
 	github.com/matsuridayo/libneko v1.0.0 // replaced
-	golang.org/x/time v0.3.0
 	google.golang.org/grpc v1.49.0
 	google.golang.org/protobuf v1.28.1
 )

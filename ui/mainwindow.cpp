@@ -541,7 +541,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         refresh_status();
     }
     if (info.contains("NeedRestart")) {
-        auto n = QMessageBox::warning(GetMessageBoxParent(), tr("Settings changed"), tr("Restart nekoray to take effect."), QMessageBox::Yes | QMessageBox::No);
+        auto n = QMessageBox::warning(GetMessageBoxParent(), tr("Settings changed"), tr("Restart the program to take effect."), QMessageBox::Yes | QMessageBox::No);
         if (n == QMessageBox::Yes) {
             this->exit_reason = 2;
             on_menu_exit_triggered();
@@ -795,7 +795,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     NekoGui::dataStore->spmode_vpn = enable;
     refresh_status();
 
-    if (NekoGui::dataStore->started_id >= 0) neko_start(NekoGui::dataStore->started_id);
+    if (IS_NEKO_BOX_INTERNAL_TUN && NekoGui::dataStore->started_id >= 0) neko_start(NekoGui::dataStore->started_id);
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
@@ -1107,8 +1107,10 @@ void MainWindow::on_menu_move_triggered() {
     if (ents.isEmpty()) return;
 
     auto items = QStringList{};
-    for (auto &&group: NekoGui::profileManager->groups) {
-        items += Int2String(group->id) + " " + group->name;
+    for (auto gid: NekoGui::profileManager->_groups) {
+        auto group = NekoGui::profileManager->GetGroup(gid);
+        if (group == nullptr) continue;
+        items += Int2String(gid) + " " + group->name;
     }
 
     bool ok;

@@ -17,7 +17,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>NekoRay</string>
+   <string notr="true">nya</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">

@@ -1186,10 +1186,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>清除</translation>
     </message>
     <message>
-        <source>NekoRay</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>fake</source>
         <translation></translation>
     </message>
@@ -1450,8 +1446,8 @@ Split by line.</source>
         <translation>设置改变</translation>
     </message>
     <message>
-        <source>Restart nekoray to take effect.</source>
-        <translation>重启 nekoray 生效。</translation>
+        <source>Restart the program to take effect.</source>
+        <translation>重启程序生效。</translation>
     </message>
     <message>
         <source>Please run NekoBox as admin</source>

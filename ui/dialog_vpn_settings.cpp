@@ -55,12 +55,19 @@ void DialogVPNSettings::accept() {
     NekoGui::dataStore->vpn_hide_console = ui->hide_console->isChecked();
     NekoGui::dataStore->vpn_strict_route = ui->strict_route->isChecked();
     NekoGui::dataStore->vpn_rule_white = ui->whitelist_mode->isChecked();
+    bool isInternalChanged = NekoGui::dataStore->vpn_internal_tun != ui->single_core->isChecked();
     NekoGui::dataStore->vpn_internal_tun = ui->single_core->isChecked();
     //
     D_SAVE_STRING_PLAIN(vpn_rule_cidr)
     D_SAVE_STRING_PLAIN(vpn_rule_process)
     //
-    MW_dialog_message("", "UpdateDataStore,VPNChanged");
+    QStringList msg{"UpdateDataStore"};
+    if (isInternalChanged) {
+        msg << "NeedRestart";
+    } else {
+        msg << "VPNChanged";
+    }
+    MW_dialog_message("", msg.join(","));
     QDialog::accept();
 }
 
