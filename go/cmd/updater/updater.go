@@ -64,6 +64,7 @@ func Updater() {
 	// update move
 	err := Mv("./nekoray_update/nekoray", "./")
 	if err != nil {
+		MessageBoxPlain("NekoGui Updater", "Update failed. Please close the running instance and run the updater again.\n\n"+err.Error())
 		log.Fatalln(err.Error())
 	}
 

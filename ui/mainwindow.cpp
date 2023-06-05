@@ -529,13 +529,19 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         refresh_status();
     }
     if (info.contains("UpdateDataStore")) {
-        auto changed = NekoGui::dataStore->Save();
-        if (info.contains("RouteChanged")) changed = true;
+        auto suggestRestartProxy = NekoGui::dataStore->Save();
+        if (info.contains("RouteChanged")) {
+            suggestRestartProxy = true;
+        }
+        if (info.contains("NeedRestart")) {
+            suggestRestartProxy = false;
+        }
         refresh_proxy_list();
         if (info.contains("VPNChanged") && NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("VPN settings changed"), tr("Restart VPN to take effect."));
-        } else if (changed && NekoGui::dataStore->started_id >= 0 &&
-                   QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
+        }
+        if (suggestRestartProxy && NekoGui::dataStore->started_id >= 0 &&
+            QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
             neko_start(NekoGui::dataStore->started_id);
         }
         refresh_status();
@@ -1141,12 +1147,10 @@ void MainWindow::on_menu_delete_triggered() {
 void MainWindow::on_menu_reset_traffic_triggered() {
     auto ents = get_now_selected();
     if (ents.count() == 0) return;
-    if (QMessageBox::question(this, tr("Confirmation"), QString(tr("Reset traffic of %1 item(s) ?")).arg(ents.count())) == QMessageBox::StandardButton::Yes) {
-        for (const auto &ent: ents) {
-            ent->traffic_data->Reset();
-            ent->Save();
-            refresh_proxy_list(ent->id);
-        }
+    for (const auto &ent: ents) {
+        ent->traffic_data->Reset();
+        ent->Save();
+        refresh_proxy_list(ent->id);
     }
 }
 
@@ -1193,10 +1197,10 @@ void MainWindow::on_menu_export_config_triggered() {
     auto ents = get_now_selected();
     if (ents.count() != 1) return;
     auto ent = ents.first();
-    QString config_core;
+    if (ent->bean->DisplayCoreType() != software_core_name) return;
 
     auto result = BuildConfig(ent, false, true);
-    config_core = QJsonObject2QString(result->coreConfig, true);
+    QString config_core = QJsonObject2QString(result->coreConfig, true);
     QApplication::clipboard()->setText(config_core);
 
     QMessageBox msg(QMessageBox::Information, tr("Config copied"), config_core);

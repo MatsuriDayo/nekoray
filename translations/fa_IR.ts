@@ -769,6 +769,10 @@ This needs to be run NekoBox with administrator privileges.</source>
         <source>Select Profile</source>
         <translation>انتخاب کردن پروفایل</translation>
     </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditCustom</name>
@@ -814,6 +818,10 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Please fill the complete config.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1358,10 +1366,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Remove %1 item(s) ?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Reset traffic of %1 item(s) ?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

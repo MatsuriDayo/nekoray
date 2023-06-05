@@ -63,7 +63,7 @@ namespace NekoGui_fmt {
             return ::DisplayAddress(serverAddress, serverPort);
         }
 
-        QString DisplayCoreType() override { return NeedExternal(false) == 0 ? software_core_name : "Hysteria"; };
+        QString DisplayCoreType() override { return NeedExternal(true) == 0 ? software_core_name : "Hysteria"; };
 
         QString DisplayType() override { return "Hysteria"; };
 

@@ -25,6 +25,11 @@ void EditChain::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
 }
 
 bool EditChain::onEnd() {
+    if (get_edit_text_name().isEmpty()) {
+        MessageBoxWarning(software_name, tr("Name cannot be empty."));
+        return false;
+    }
+
     auto bean = this->ent->ChainBean();
 
     QList<int> idList;

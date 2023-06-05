@@ -767,6 +767,10 @@ This needs to be run NekoBox with administrator privileges.</source>
         <source>Traffic order is from top to bottom</source>
         <translation>流量顺序是从上到下（最后一个配置为流量的出口）</translation>
     </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>名称 不能为空</translation>
+    </message>
 </context>
 <context>
     <name>EditCustom</name>
@@ -813,6 +817,10 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>Please fill the complete config.</source>
         <translation>请填写完整配置。</translation>
+    </message>
+    <message>
+        <source>Name cannot be empty.</source>
+        <translation>名称 不能为空</translation>
     </message>
 </context>
 <context>
@@ -1168,10 +1176,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>Remove %1 item(s) ?</source>
         <translation>删除 %1 个项目？</translation>
-    </message>
-    <message>
-        <source>Reset traffic of %1 item(s) ?</source>
-        <translation>重置 %1 个项目的流量？</translation>
     </message>
     <message>
         <source>Config copied</source>

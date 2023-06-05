@@ -129,14 +129,18 @@ void EditCustom::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
 }
 
 bool EditCustom::onEnd() {
-    auto bean = this->ent->CustomBean();
-
-    SAVE_CUSTOM_BEAN
-
-    if (bean->core.isEmpty()) {
+    if (get_edit_text_name().isEmpty()) {
+        MessageBoxWarning(software_name, tr("Name cannot be empty."));
+        return false;
+    }
+    if (ui->core->currentText().isEmpty()) {
         MessageBoxWarning(software_name, tr("Please pick a core."));
         return false;
     }
+
+    auto bean = this->ent->CustomBean();
+
+    SAVE_CUSTOM_BEAN
 
     return true;
 }

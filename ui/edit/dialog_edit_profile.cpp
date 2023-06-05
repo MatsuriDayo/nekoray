@@ -333,15 +333,15 @@ void DialogEditProfile::typeSelected(const QString &newType) {
 }
 
 bool DialogEditProfile::onEnd() {
-    // 左边
-    ent->bean->name = ui->name->text();
-    ent->bean->serverAddress = ui->address->text();
-    ent->bean->serverPort = ui->port->text().toInt();
-
     // bean
     if (!innerEditor->onEnd()) {
         return false;
     }
+
+    // 左边
+    ent->bean->name = ui->name->text();
+    ent->bean->serverAddress = ui->address->text();
+    ent->bean->serverPort = ui->port->text().toInt();
 
     // 右边 stream
     auto stream = GetStreamSettings(ent->bean.get());

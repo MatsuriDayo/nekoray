@@ -684,6 +684,9 @@
    <property name="text">
     <string>Export %1 config</string>
    </property>
+   <property name="shortcut">
+    <string notr="true">Ctrl+E</string>
+   </property>
   </action>
   <action name="menu_reset_traffic">
    <property name="text">

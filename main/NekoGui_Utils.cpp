@@ -5,6 +5,7 @@
 
 #include <random>
 
+#include <QApplication>
 #include <QUrlQuery>
 #include <QTcpServer>
 #include <QTimer>
@@ -194,9 +195,12 @@ QString DisplayTime(long long time, int formatType) {
 }
 
 QWidget *GetMessageBoxParent() {
-    if (mainwindow == nullptr) return nullptr;
-    if (mainwindow->isVisible()) return mainwindow;
-    return nullptr;
+    auto activeWindow = QApplication::activeWindow();
+    if (activeWindow == nullptr && mainwindow != nullptr) {
+        if (mainwindow->isVisible()) return mainwindow;
+        return nullptr;
+    }
+    return activeWindow;
 }
 
 int MessageBoxWarning(const QString &title, const QString &text) {
