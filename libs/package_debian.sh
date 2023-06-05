@@ -20,7 +20,7 @@ Description: Qt based cross-platform GUI proxy configuration manager (backend: v
 EOF
 
 cat >nekoray/DEBIAN/postinst <<-EOF
-if [ -z /usr/share/applications/nekoray.desktop ]; then
+if [ ! -s /usr/share/applications/nekoray.desktop ]; then
     cat >/usr/share/applications/nekoray.desktop<<-END
     [Desktop Entry]
     Name=nekoray
