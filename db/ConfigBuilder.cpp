@@ -181,8 +181,8 @@ namespace NekoGui {
 
         // Inbounds
         QJsonObject sniffing{
-            {"destOverride", dataStore->fake_dns ? QJsonArray{"fakedns", "http", "tls", "quic"}
-                                                 : QJsonArray{"http", "tls", "quic"}},
+            {"destOverride", dataStore->fake_dns ? QJsonArray{"fakedns", "http", "tls", "quic", "bittorrent"}
+                                                 : QJsonArray{"http", "tls", "quic", "bittorrent"}},
             {"enabled", true},
             {"metadataOnly", false},
             {"routeOnly", dataStore->routing->sniffing_mode == SniffingMode::FOR_ROUTING},
