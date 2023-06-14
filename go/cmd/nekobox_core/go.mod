@@ -57,7 +57,7 @@ require (
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
 	github.com/sagernet/quic-go v0.0.0-20230202071646-a8c8afb18b32 // indirect
 	github.com/sagernet/reality v0.0.0-20230406110435-ee17307e7691 // indirect
-	github.com/sagernet/sing v0.2.5-0.20230611070640-2812461739c3 // indirect
+	github.com/sagernet/sing v0.2.5-0.20230613142554-a3b120b25eab // indirect
 	github.com/sagernet/sing-dns v0.1.5-0.20230426113254-25d948c44223 // indirect
 	github.com/sagernet/sing-mux v0.0.0-20230517134606-1ebe6bb26646 // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.2-0.20230509053848-d83f8fe1194c // indirect
