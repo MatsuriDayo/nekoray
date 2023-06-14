@@ -69,11 +69,9 @@ namespace NekoGui_fmt {
             outbound->insert("tls", tls);
         }
 
-        if (!packet_encoding.isEmpty()) {
-            auto pkt = packet_encoding;
-            if (pkt == "packet") pkt = "packetaddr";
-            outbound->insert("packet_encoding", pkt);
-        }
+        auto pkt = packet_encoding;
+        if (pkt == "packet") pkt = "packetaddr";
+        outbound->insert("packet_encoding", pkt);
     }
 
     CoreObjOutboundBuildResult SocksHttpBean::BuildCoreObjSingBox() {

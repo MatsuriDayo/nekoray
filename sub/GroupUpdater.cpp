@@ -270,6 +270,13 @@ namespace NekoGui_sub {
                     if (type == "vless") {
                         bean->flow = Node2QString(proxy["flow"]);
                         bean->password = Node2QString(proxy["uuid"]);
+                        // meta vless xudp
+                        auto xudp = proxy["xudp"];
+                        if (xudp.IsDefined() && !xudp.IsNull() && Node2Bool(xudp) == false) {
+                            bean->stream->packet_encoding = "";
+                        } else {
+                            bean->stream->packet_encoding = "xudp";
+                        }
                     } else {
                         bean->password = Node2QString(proxy["password"]);
                     }
