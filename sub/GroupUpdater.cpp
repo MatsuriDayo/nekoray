@@ -386,6 +386,7 @@ namespace NekoGui_sub {
                         bean->authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_base64;
                         bean->authPayload = auth;
                     }
+                    bean->obfsPassword = Node2QString(proxy["obfs"]);
 
                     if (Node2Bool(proxy["disable_mtu_discovery"]) || Node2Bool(proxy["disable-mtu-discovery"])) bean->disableMtuDiscovery = true;
                     bean->streamReceiveWindow = Node2Int(proxy["recv-window"]);
