@@ -805,17 +805,26 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
+    auto refresh_speed_label = [=] {
+        if (traffic_update_cache == "") {
+            ui->label_speed->setText(QObject::tr("Proxy: %1\nDirect: %2").arg("", ""));
+        } else {
+            ui->label_speed->setText(traffic_update_cache);
+        }
+    };
+
     // From TrafficLooper
     if (!traffic_update.isEmpty()) {
         traffic_update_cache = traffic_update;
         if (traffic_update == "STOP") {
             traffic_update_cache = "";
         } else {
-            ui->label_speed->setText(traffic_update);
+            refresh_speed_label();
             return;
         }
     }
-    ui->label_speed->setText(traffic_update_cache);
+
+    refresh_speed_label();
 
     // From UI
     if (last_test_time.addSecs(2) < QTime::currentTime()) {
