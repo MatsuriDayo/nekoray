@@ -296,6 +296,8 @@ namespace NekoGui_sub {
                             }
                         }
                         bean->stream->path = Node2QString(ws["path"]);
+                        bean->stream->ws_early_data_length = Node2Int(ws["max-early-data"]);
+                        bean->stream->ws_early_data_name = Node2QString(ws["early-data-header-name"]);
                     }
 
                     auto grpc = NodeChild(proxy, {"grpc-opts", "grpc-opt"});
@@ -329,6 +331,8 @@ namespace NekoGui_sub {
                             }
                         }
                         bean->stream->path = Node2QString(ws["path"]);
+                        bean->stream->ws_early_data_length = Node2Int(ws["max-early-data"]);
+                        bean->stream->ws_early_data_name = Node2QString(ws["early-data-header-name"]);
                     }
 
                     auto grpc = NodeChild(proxy, {"grpc-opts", "grpc-opt"});
