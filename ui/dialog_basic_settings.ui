@@ -611,7 +611,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="groupBox">
+        <widget class="QGroupBox" name="groupBox3">
          <property name="title">
           <string>Switch core</string>
          </property>
@@ -767,7 +767,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QGroupBox" name="horizontalGroupBox">
+        <widget class="QGroupBox" name="horizontalGroupBox2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
            <horstretch>0</horstretch>
