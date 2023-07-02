@@ -13,34 +13,32 @@ namespace NekoGui_fmt {
     auto url = QUrl("https://" + linkN);
 
     bool SocksHttpBean::TryParseLink(const QString &link) {
-        if (!SubStrAfter(link, "://").contains(":")) {
-            // v2rayN shit format
-            DECODE_V2RAY_N_1
+        auto url = QUrl(link);
+        if (!url.isValid()) return false;
+        auto query = GetQuery(url);
 
-            if (hasRemarks) name = url.fragment(QUrl::FullyDecoded);
-            serverAddress = url.host();
-            serverPort = url.port();
-            username = url.userName();
-            password = url.password();
-        } else {
-            auto url = QUrl(link);
-            if (!url.isValid()) return false;
-            auto query = GetQuery(url);
+        if (link.startsWith("socks4")) socks_http_type = type_Socks4;
+        if (link.startsWith("http")) socks_http_type = type_HTTP;
+        name = url.fragment(QUrl::FullyDecoded);
+        serverAddress = url.host();
+        serverPort = url.port();
+        username = url.userName();
+        password = url.password();
+        if (serverPort == -1) serverPort = socks_http_type == type_HTTP ? 443 : 1080;
 
-            if (link.startsWith("socks4")) socks_http_type = type_Socks4;
-            if (link.startsWith("http")) socks_http_type = type_HTTP;
-            name = url.fragment(QUrl::FullyDecoded);
-            serverAddress = url.host();
-            serverPort = url.port();
-            username = url.userName();
-            password = url.password();
-            if (serverPort == -1) serverPort = socks_http_type == type_HTTP ? 443 : 1080;
-
-            stream->security = GetQueryValue(query, "security", "");
-            stream->sni = GetQueryValue(query, "sni");
-
-            if (link.startsWith("https")) stream->security = "tls";
+        // v2rayN fmt
+        if (password.isEmpty() && !username.isEmpty()) {
+            QString n = DecodeB64IfValid(username);
+            if (!n.isEmpty()) {
+                username = SubStrBefore(n, ":");
+                password = SubStrAfter(n, ":");
+            }
         }
+
+        stream->security = GetQueryValue(query, "security", "");
+        stream->sni = GetQueryValue(query, "sni");
+
+        if (link.startsWith("https")) stream->security = "tls";
         return true;
     }
 

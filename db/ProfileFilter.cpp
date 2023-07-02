@@ -1,14 +1,20 @@
 #include "ProfileFilter.hpp"
 
 namespace NekoGui {
+
+    QString ProfileFilter_ent_key(const std::shared_ptr<NekoGui::ProxyEntity> &ent, bool by_address) {
+        by_address &= ent->type != "custom";
+        return by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
+                          : ent->bean->ToJsonBytes();
+    }
+
     void ProfileFilter::Uniq(const QList<std::shared_ptr<ProxyEntity>> &in,
                              QList<std::shared_ptr<ProxyEntity>> &out,
                              bool by_address, bool keep_last) {
         QMap<QString, std::shared_ptr<ProxyEntity>> hashMap;
 
         for (const auto &ent: in) {
-            QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                                     : ent->bean->ToJsonBytes();
+            QString key = ProfileFilter_ent_key(ent, by_address);
             if (hashMap.contains(key)) {
                 if (keep_last) {
                     out.removeAll(hashMap[key]);
@@ -29,13 +35,11 @@ namespace NekoGui {
         QMap<QString, std::shared_ptr<ProxyEntity>> hashMap;
 
         for (const auto &ent: src) {
-            QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                                     : ent->bean->ToJsonBytes();
+            QString key = ProfileFilter_ent_key(ent, by_address);
             hashMap[key] = ent;
         }
         for (const auto &ent: dst) {
-            QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                                     : ent->bean->ToJsonBytes();
+            QString key = ProfileFilter_ent_key(ent, by_address);
             if (hashMap.contains(key)) {
                 if (keep_last) {
                     out += ent;
@@ -53,13 +57,11 @@ namespace NekoGui {
         QMap<QString, bool> hashMap;
 
         for (const auto &ent: dst) {
-            QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                                     : ent->bean->ToJsonBytes();
+            QString key = ProfileFilter_ent_key(ent, by_address);
             hashMap[key] = true;
         }
         for (const auto &ent: src) {
-            QString key = by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                                     : ent->bean->ToJsonBytes();
+            QString key = ProfileFilter_ent_key(ent, by_address);
             if (!hashMap.contains(key)) out += ent;
         }
     }

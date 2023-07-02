@@ -247,16 +247,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     tray->setContextMenu(ui->menu_program); // 创建托盘菜单
     tray->show();                           // 让托盘图标显示在系统托盘上
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
-        switch (reason) {
-            case QSystemTrayIcon::Trigger:
-                if (this->isVisible()) {
-                    hide();
-                } else {
-                    ACTIVE_THIS_WINDOW
-                }
-                break;
-            default:
-                break;
+        if (reason == QSystemTrayIcon::Trigger) {
+            if (this->isVisible()) {
+                hide();
+            } else {
+                ACTIVE_THIS_WINDOW
+            }
         }
     });
 
@@ -284,7 +280,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             a->setCheckable(true);
             if (NekoGui::dataStore->started_id == pf->id) a->setChecked(true);
             ui->menuActive_Server->addAction(a);
-            if (++active_server_item_count == 50) break;
+            if (++active_server_item_count == 100) break;
         }
         // active routing
         for (const auto &old: ui->menuActive_Routing->actions()) {
