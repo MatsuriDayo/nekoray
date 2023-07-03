@@ -71,12 +71,12 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     QString geoipFn = NekoGui::FindCoreAsset("geoip.dat");
     QString geositeFn = NekoGui::FindCoreAsset("geosite.dat");
     //
-    const auto sourceStringsDomain = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geoipFn);
+    const auto sourceStringsDomain = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geositeFn);
     directDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
     proxyDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
     blockDomainTxt = new AutoCompleteTextEdit("geosite", sourceStringsDomain, this);
     //
-    const auto sourceStringsIP = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geositeFn);
+    const auto sourceStringsIP = Qv2ray::components::GeositeReader::ReadGeoSiteFromFile(geoipFn);
     directIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
     proxyIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
     blockIPTxt = new AutoCompleteTextEdit("geoip", sourceStringsIP, this);
