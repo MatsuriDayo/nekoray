@@ -2,14 +2,17 @@
 #include "ui_edit_shadowsocks.h"
 
 #include "fmt/ShadowSocksBean.hpp"
+#include "fmt/Preset.hpp"
 
 EditShadowSocks::EditShadowSocks(QWidget *parent) : QWidget(parent),
                                                     ui(new Ui::EditShadowSocks) {
     ui->setupUi(this);
-    if (IS_NEKO_BOX) {
-        ui->method->addItems({"2022-blake3-aes-128-gcm", "2022-blake3-aes-256-gcm", "2022-blake3-chacha20-poly1305"});
-    } else {
-        ui->uot->hide();
+    ui->method->addItems(IS_NEKO_BOX ? Preset::SingBox::ShadowsocksMethods : Preset::Xray::ShadowsocksMethods);
+    if (!IS_NEKO_BOX) {
+        ui->plugin->hide();
+        ui->plugin_l->hide();
+        ui->plugin_opts->hide();
+        ui->plugin_opts_l->hide();
     }
 }
 

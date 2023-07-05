@@ -8,7 +8,7 @@ import (
 	"syscall"
 
 	"github.com/jsimonetti/rtnetlink"
-	"github.com/v2fly/v2ray-core/v5/transport/internet"
+	"github.com/xtls/xray-core/transport/internet"
 	linuxcap "kernel.org/pub/linux/libs/security/libcap/cap"
 )
 
@@ -102,12 +102,16 @@ func is_fwmark_exist(number int) bool {
 }
 
 func init() {
-	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
-		nekorayLinuxProtect(int(fd))
+	internet.RegisterListenerController(func(network, address string, conn syscall.RawConn) error {
+		conn.Control(func(fd uintptr) {
+			nekorayLinuxProtect(int(fd))
+		})
 		return nil
 	})
-	internet.RegisterDialerController(func(network, address string, fd uintptr) error {
-		nekorayLinuxProtect(int(fd))
+	internet.RegisterDialerController(func(network, address string, conn syscall.RawConn) error {
+		conn.Control(func(fd uintptr) {
+			nekorayLinuxProtect(int(fd))
+		})
 		return nil
 	})
 	underlyingNetDialer = &net.Dialer{

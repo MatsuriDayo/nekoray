@@ -9,7 +9,7 @@
 //
 
 inline QString software_name = "NekoRay";
-inline QString software_core_name = "V2Ray";
+inline QString software_core_name = "Xray";
 
 // Main Functions
 

@@ -402,14 +402,14 @@ namespace NekoGui {
     QString FindCoreAsset(const QString &name) {
         QStringList search{NekoGui::dataStore->v2ray_asset_dir};
         search << QApplication::applicationDirPath();
-        search << "/usr/share/v2ray";
-        search << "/usr/local/share/v2ray";
-        search << "/opt/v2ray";
+        search << "/usr/share/sing-geoip";
+        search << "/usr/share/sing-geosite";
         search << "/usr/share/xray";
         search << "/usr/local/share/xray";
         search << "/opt/xray";
-        search << "/usr/share/sing-geoip";
-        search << "/usr/share/sing-geosite";
+        search << "/usr/share/v2ray";
+        search << "/usr/local/share/v2ray";
+        search << "/opt/v2ray";
         for (const auto &dir: search) {
             if (dir.isEmpty()) continue;
             QFileInfo asset(dir + "/" + name);

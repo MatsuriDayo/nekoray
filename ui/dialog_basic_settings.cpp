@@ -243,7 +243,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
 
     // Security
 
-    ui->utlsFingerprint->addItems(IS_NEKO_BOX ? Preset::SingBox::UtlsFingerPrint : Preset::V2Ray::UtlsFingerPrint);
+    ui->utlsFingerprint->addItems(IS_NEKO_BOX ? Preset::SingBox::UtlsFingerPrint : Preset::Xray::UtlsFingerPrint);
 
     D_LOAD_BOOL(skip_cert)
     ui->enable_js_hook->setCurrentIndex(NekoGui::dataStore->enable_js_hook);

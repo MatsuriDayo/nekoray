@@ -25,7 +25,7 @@
     <widget class="MyLineEdit" name="password"/>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="label_2">
+    <widget class="QLabel" name="plugin_l">
      <property name="text">
       <string>Plugin</string>
      </property>
@@ -46,100 +46,10 @@
      <property name="editable">
       <bool>true</bool>
      </property>
-     <item>
-      <property name="text">
-       <string notr="true">aes-128-gcm</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-192-gcm</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-256-gcm</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">chacha20-ietf-poly1305</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">xchacha20-ieft-poly1305</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-128-ctr</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-192-ctr</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-256-ctr</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-128-cfb</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-192-cfb</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">aes-256-cfb</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">rc4</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">rc4-md5</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">salsa20</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">chacha20</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">chacha20-ietf</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">xchacha20</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">none</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="label_3">
+    <widget class="QLabel" name="plugin_opts_l">
      <property name="text">
       <string>Plugin Args</string>
      </property>

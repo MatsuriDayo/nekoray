@@ -326,12 +326,11 @@ namespace NekoGui {
         }
         dnsServers += QJsonObject{
             {"address", directDnsAddress.replace("https://", "https+local://")},
-            {"fallbackStrategy", "disabled"},
             {"queryStrategy", dataStore->routing->direct_dns_strategy},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
 
-        dns["fallbackStrategy"] = "disabled_if_any_match";
+        dns["disableFallback"] = true;
         dns["servers"] = dnsServers;
         dns["tag"] = "dns";
 
@@ -343,7 +342,6 @@ namespace NekoGui {
         // Routing
         QJsonObject routing;
         routing["domainStrategy"] = dataStore->routing->domain_strategy;
-        routing["domainMatcher"] = "mph";
         if (status->forTest) routing["domainStrategy"] = "AsIs";
 
         // final add user rule (block)
@@ -667,9 +665,6 @@ namespace NekoGui {
                         {"enabled", true},
                         {"concurrency", dataStore->mux_concurrency},
                     };
-                    if (stream != nullptr && !stream->packet_encoding.isEmpty()) {
-                        muxObj["packetEncoding"] = stream->packet_encoding;
-                    }
                     outbound["mux"] = muxObj;
                     muxApplied = true;
                 }

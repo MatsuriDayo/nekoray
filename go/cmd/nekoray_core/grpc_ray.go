@@ -11,7 +11,7 @@ import (
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/speedtest"
 
-	"github.com/v2fly/v2ray-core/v5/nekoutils"
+	"github.com/xtls/xray-core/nekoutils"
 )
 
 type server struct {
