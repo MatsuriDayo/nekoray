@@ -5,7 +5,7 @@
 ```
   | nekoray
   |   go/cmd/*
-  | v2ray_core
+  | Xray-core
   | sing-box-extra
   | sing-box
   | ......

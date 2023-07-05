@@ -62,7 +62,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->host_l->setVisible(false);
         }
         // 传输设置 ED
-        if (txt == "ws") {
+        if (txt == "ws" && IS_NEKO_BOX) {
             ui->ws_early_data_length->setVisible(true);
             ui->ws_early_data_length_l->setVisible(true);
             ui->ws_early_data_name->setVisible(true);
@@ -77,7 +77,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         if (IS_NEKO_BOX) {
             if (!ui->utlsFingerprint->count()) ui->utlsFingerprint->addItems(Preset::SingBox::UtlsFingerPrint);
         } else {
-            if (!ui->utlsFingerprint->count()) ui->utlsFingerprint->addItems(Preset::V2Ray::UtlsFingerPrint);
+            if (!ui->utlsFingerprint->count()) ui->utlsFingerprint->addItems(Preset::Xray::UtlsFingerPrint);
         }
         // 传输设置 是否可见
         int networkBoxVisible = 0;
@@ -93,16 +93,14 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     connect(ui->security, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         if (txt == "tls") {
             ui->security_box->setVisible(true);
-            ui->reality_box->setVisible(true);
-            if (!IS_NEKO_BOX) {
-                ui->reality_pbk->hide();
-                ui->reality_sid->hide();
-                ui->reality_pbk_l->hide();
-                ui->reality_sid_l->hide();
+            ui->tls_camouflage_box->setVisible(true);
+            if (IS_NEKO_BOX) {
+                ui->reality_spx->hide();
+                ui->reality_spx_l->hide();
             }
         } else {
             ui->security_box->setVisible(false);
-            ui->reality_box->setVisible(false);
+            ui->tls_camouflage_box->setVisible(false);
         }
         ADJUST_SIZE
     });
@@ -117,16 +115,16 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         // load type to combo box
         LOAD_TYPE("socks")
         LOAD_TYPE("http")
-        LOAD_TYPE("shadowsocks");
-        LOAD_TYPE("trojan");
-        LOAD_TYPE("vmess");
-        LOAD_TYPE("vless");
-        LOAD_TYPE("naive");
-        LOAD_TYPE("hysteria");
+        LOAD_TYPE("shadowsocks")
+        LOAD_TYPE("trojan")
+        LOAD_TYPE("vmess")
+        LOAD_TYPE("vless")
+        LOAD_TYPE("naive")
+        LOAD_TYPE("hysteria")
         ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
         ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
-        LOAD_TYPE("chain");
+        LOAD_TYPE("chain")
 
         // type changed
         connect(ui->type, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
@@ -275,7 +273,7 @@ void DialogEditProfile::typeSelected(const QString &newType) {
     ui->port->setValidator(QRegExpValidator_Number);
 
     // 星号
-    ADD_ASTERISK(this);
+    ADD_ASTERISK(this)
 
     // 设置 for NekoBox
     if (IS_NEKO_BOX) {
@@ -315,6 +313,9 @@ void DialogEditProfile::typeSelected(const QString &newType) {
             if (!label->isHidden()) streamBoxVisible++;
         }
         ui->stream_box->setVisible(streamBoxVisible);
+    } else {
+        ui->packet_encoding->setVisible(false);
+        ui->packet_encoding_l->setVisible(false);
     }
 
     // 载入 type 之后，有些类型没有右边的设置

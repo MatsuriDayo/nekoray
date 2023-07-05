@@ -1,14 +1,16 @@
 #pragma once
 
 namespace Preset {
-    namespace V2Ray {
-        inline QStringList UtlsFingerPrint = {"", "randomized", "randomizedalpn", "randomizednoalpn", "firefox_auto", "firefox_55", "firefox_56", "firefox_63", "firefox_65", "firefox_99", "firefox_102", "firefox_105", "chrome_auto", "chrome_58", "chrome_62", "chrome_70", "chrome_72", "chrome_83", "chrome_87", "chrome_96", "chrome_100", "chrome_102", "ios_auto", "ios_11_1", "ios_12_1", "ios_13", "ios_14", "android_11_okhttp", "edge_auto", "edge_85", "edge_106", "safari_auto", "safari_16_0", "360_auto", "360_7_5", "360_11_0", "qq_auto", "qq_11_1"};
-    } // namespace V2Ray
+    namespace Xray {
+        inline QStringList UtlsFingerPrint = {"", "chrome", "firefox", "edge", "safari", "360", "qq", "ios", "android", "random", "randomized"};
+        inline QStringList ShadowsocksMethods = {"2022-blake3-aes-128-gcm", "2022-blake3-aes-256-gcm", "2022-blake3-chacha20-poly1305", "aes-256-gcm", "aes-128-gcm", "chacha20-poly1305", "none"};
+    } // namespace Xray
 
     namespace SingBox {
         inline QStringList VpnImplementation = {"gvisor", "system"};
         inline QStringList DomainStrategy = {"", "ipv4_only", "ipv6_only", "prefer_ipv4", "prefer_ipv6"};
         inline QStringList UtlsFingerPrint = {"", "chrome", "firefox", "edge", "safari", "360", "qq", "ios", "android", "random", "randomized"};
+        inline QStringList ShadowsocksMethods = {"2022-blake3-aes-128-gcm", "2022-blake3-aes-256-gcm", "2022-blake3-chacha20-poly1305", "none", "aes-128-gcm", "aes-192-gcm", "aes-256-gcm", "chacha20-ietf-poly1305", "xchacha20-ietf-poly1305", "aes-128-ctr", "aes-192-ctr", "aes-256-ctr", "aes-128-cfb", "aes-192-cfb", "aes-256-cfb", "rc4-md5", "chacha20-ietf", "xchacha20"};
     } // namespace SingBox
 
     namespace Windows {

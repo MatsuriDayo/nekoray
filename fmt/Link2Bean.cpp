@@ -63,6 +63,7 @@ namespace NekoGui_fmt {
         if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
         stream->reality_pbk = GetQueryValue(query, "pbk", "");
         stream->reality_sid = GetQueryValue(query, "sid", "");
+        stream->reality_spx = GetQueryValue(query, "spx", "");
         if (IS_NEKO_BOX) stream->utlsFingerprint = GetQueryValue(query, "fp", "");
 
         // type

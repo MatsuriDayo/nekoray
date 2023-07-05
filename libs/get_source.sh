@@ -20,11 +20,11 @@ NO_ENV=1 ./libs/get_source.sh
 popd
 
 ####
-if [ ! -d "v2ray-core" ]; then
-  git clone --no-checkout https://github.com/MatsuriDayo/v2ray-core.git
+if [ ! -d "Xray-core" ]; then
+  git clone --no-checkout https://github.com/MatsuriDayo/Xray-core.git
 fi
-pushd v2ray-core
-git checkout "$COMMIT_MATSURI_V2RAY"
+pushd Xray-core
+git checkout "$COMMIT_MATSURI_XRAY"
 popd
 
 popd

@@ -39,7 +39,7 @@ These settings can be changed later.</string>
    <item>
     <widget class="QPushButton" name="v2ray">
      <property name="text">
-      <string notr="true">V2Ray</string>
+      <string notr="true">Xray</string>
      </property>
     </widget>
    </item>

@@ -44,6 +44,7 @@ namespace NekoGui_fmt {
         if (security == "reality") {
             query.addQueryItem("pbk", stream->reality_pbk);
             query.addQueryItem("sid", stream->reality_sid);
+            query.addQueryItem("spx", stream->reality_spx);
         }
 
         // type

@@ -632,7 +632,7 @@
           <item>
            <widget class="QRadioButton" name="switch_core_v2ray">
             <property name="text">
-             <string notr="true">V2Ray</string>
+             <string notr="true">Xray</string>
             </property>
            </widget>
           </item>

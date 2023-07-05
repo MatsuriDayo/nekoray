@@ -12,12 +12,11 @@ import (
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/neko_log"
 
-	core "github.com/v2fly/v2ray-core/v5"
-	appLog "github.com/v2fly/v2ray-core/v5/app/log"
-	commonLog "github.com/v2fly/v2ray-core/v5/common/log"
-	v2rayNet "github.com/v2fly/v2ray-core/v5/common/net"
-	"github.com/v2fly/v2ray-core/v5/features/dns"
-	"github.com/v2fly/v2ray-core/v5/features/dns/localdns"
+	appLog "github.com/xtls/xray-core/app/log"
+	commonLog "github.com/xtls/xray-core/common/log"
+	v2rayNet "github.com/xtls/xray-core/common/net"
+	core "github.com/xtls/xray-core/core"
+	"github.com/xtls/xray-core/features/dns"
 )
 
 var instance *NekoV2RayInstance
@@ -53,22 +52,21 @@ func setupCore() {
 		resolver_go.Dial = underlyingNetDialer.DialContext
 		log.Println("using NKR_CORE_RAY_DIRECT_DNS")
 	}
-	localdns.SetLookupFunc(func(network string, host string) (ips []net.IP, err error) {
+	v2rayNet.LookupIP = func(host string) (ips []net.IP, err error) {
 		// fix old sekai
 		defer func() {
 			if len(ips) == 0 {
-				log.Println("LookupIP error:", network, host, err)
+				log.Println("LookupIP error:", host, err)
 				err = dns.ErrEmptyResponse
 			}
 		}()
 		// Normal mode use system resolver (go bug)
 		if getNekorayTunIndex() == 0 {
-			return resolver_def.LookupIP(context.Background(), network, host)
+			return resolver_def.LookupIP(context.Background(), "ip", host)
 		}
 		// Windows VPN mode use Go resolver
-		return resolver_go.LookupIP(context.Background(), network, host)
-	})
-	//
+		return resolver_go.LookupIP(context.Background(), "ip", host)
+	}
 	neko_common.GetCurrentInstance = func() interface{} {
 		return instance
 	}

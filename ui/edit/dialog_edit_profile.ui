@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>800</height>
+    <height>802</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -558,11 +558,31 @@ security (QUIC)</string>
        </widget>
       </item>
       <item>
-       <widget class="QGroupBox" name="reality_box">
+       <widget class="QGroupBox" name="tls_camouflage_box">
         <property name="title">
          <string>TLS Camouflage Settings</string>
         </property>
         <layout class="QGridLayout" name="gridLayout_3">
+         <item row="0" column="1">
+          <widget class="QComboBox" name="utlsFingerprint">
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string notr="true">uTLS</string>
+           </property>
+          </widget>
+         </item>
          <item row="1" column="0">
           <widget class="QLabel" name="reality_pbk_l">
            <property name="toolTip">
@@ -589,25 +609,18 @@ security (QUIC)</string>
          <item row="1" column="1">
           <widget class="MyLineEdit" name="reality_pbk"/>
          </item>
-         <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
+         <item row="3" column="0">
+          <widget class="QLabel" name="reality_spx_l">
+           <property name="toolTip">
+            <string notr="true"/>
            </property>
            <property name="text">
-            <string notr="true">uTLS</string>
+            <string notr="true">SpiderX</string>
            </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QComboBox" name="utlsFingerprint">
-           <property name="editable">
-            <bool>true</bool>
-           </property>
-          </widget>
+         <item row="3" column="1">
+          <widget class="MyLineEdit" name="reality_spx"/>
          </item>
         </layout>
        </widget>

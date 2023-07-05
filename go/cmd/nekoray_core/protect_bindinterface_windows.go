@@ -12,7 +12,7 @@ import (
 
 	"github.com/matsuridayo/libneko/iphlpapi"
 
-	"github.com/v2fly/v2ray-core/v5/transport/internet"
+	"github.com/xtls/xray-core/transport/internet"
 )
 
 // https://docs.microsoft.com/en-us/windows/win32/api/ipmib/ns-ipmib-mib_ipforwardrow
@@ -41,33 +41,37 @@ func init() {
 }
 
 func initRoute() {
-	internet.RegisterListenerController(func(network, address string, fd uintptr) error {
-		bindInterfaceIndex := getBindInterfaceIndex(address)
-		if bindInterfaceIndex != 0 {
-			if err := bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
-				log.Println("bind inbound interface", network, address, err)
-				return err
+	internet.RegisterListenerController(func(network, address string, conn syscall.RawConn) error {
+		var err error
+		conn.Control(func(fd uintptr) {
+			bindInterfaceIndex := getBindInterfaceIndex(address)
+			if bindInterfaceIndex != 0 {
+				if err = bindInterface(fd, bindInterfaceIndex, true, true); err != nil {
+					log.Println("bind inbound interface", network, address, err)
+				}
 			}
-		}
-		return nil
+		})
+		return err
 	})
-	internet.RegisterDialerController(func(network, address string, fd uintptr) error {
-		bindInterfaceIndex := getBindInterfaceIndex(address)
-		if bindInterfaceIndex != 0 {
-			var v4, v6 bool
-			if strings.HasSuffix(network, "6") {
-				v4 = false
-				v6 = true
-			} else {
-				v4 = true
-				v6 = false
+	internet.RegisterDialerController(func(network, address string, conn syscall.RawConn) error {
+		var err error
+		conn.Control(func(fd uintptr) {
+			bindInterfaceIndex := getBindInterfaceIndex(address)
+			if bindInterfaceIndex != 0 {
+				var v4, v6 bool
+				if strings.HasSuffix(network, "6") {
+					v4 = false
+					v6 = true
+				} else {
+					v4 = true
+					v6 = false
+				}
+				if err = bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
+					log.Println("bind outbound interface", network, address, err)
+				}
 			}
-			if err := bindInterface(fd, bindInterfaceIndex, v4, v6); err != nil {
-				log.Println("bind outbound interface", network, address, err)
-				return err
-			}
-		}
-		return nil
+		})
+		return err
 	})
 	underlyingNetDialer = &net.Dialer{
 		Control: func(network, address string, c syscall.RawConn) error {
