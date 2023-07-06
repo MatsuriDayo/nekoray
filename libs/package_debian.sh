@@ -43,7 +43,7 @@ if [ ! -s /usr/share/applications/nekoray.desktop ]; then
 [Desktop Entry]
 Name=nekoray
 Comment=Qt based cross-platform GUI proxy configuration manager (backend: Xray / sing-box)
-Exec=sh -c "PATH=/opt/nekoray:\$PATH /opt/nekoray/nekoray -tray -flag_linux_run_core_as_admin -appdata"
+Exec=sh -c "PATH=/opt/nekoray:\$PATH /opt/nekoray/nekoray -flag_linux_run_core_as_admin -appdata"
 Icon=/opt/nekoray/nekoray.png
 Terminal=false
 Type=Application

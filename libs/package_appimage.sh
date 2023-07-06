@@ -6,6 +6,24 @@ cp -r linux64 nekoray.AppDir
 
 # The file for Appimage
 
+# Start VPN mode without password
+cat >nekoray.AppDir/pkexec <<-EOF
+#!/bin/sh
+
+if [ \$1 = --help ]; then
+  echo "This is not real pkexec."
+  exit 0
+fi
+
+TO_EXEC="\$@"
+
+if [ \$1 = --keep-cwd ]; then
+  TO_EXEC="\${@:2}"
+fi
+
+\$TO_EXEC
+EOF
+
 rm nekoray.AppDir/launcher
 
 cat >nekoray.AppDir/nekoray.desktop <<-EOF
@@ -20,7 +38,7 @@ EOF
 cat >nekoray.AppDir/AppRun <<-EOF
 #!/bin/bash
 HERE="\$(dirname "\$(readlink -f "\${0}")")"
-LD_LIBRARY_PATH=\${HERE}/usr/lib QT_PLUGIN_PATH=\${HERE}/usr/plugins \${HERE}/nekoray -appdata "\$@"
+PATH=\${HERE}/:\$PATH LD_LIBRARY_PATH=\${HERE}/usr/lib QT_PLUGIN_PATH=\${HERE}/usr/plugins \${HERE}/nekoray -appdata "\$@"
 EOF
 
 chmod +x nekoray.AppDir/AppRun
