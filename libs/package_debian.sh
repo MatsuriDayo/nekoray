@@ -53,12 +53,12 @@ fi
 
 sudo setcap cap_net_admin=ep /opt/nekoray/nekobox_core
 chmod +x /opt/nekoray/pkexec
-chmod 0755 /opt/nekoray/pkexec
+sudo chmod 0755 /opt/nekoray/pkexec
 
 update-desktop-database
 EOF
 
-sudo chmod 755 nekoray/DEBIAN/postinst
+sudo chmod 0755 nekoray/DEBIAN/postinst
 
 # desktop && PATH
 

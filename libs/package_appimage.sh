@@ -45,6 +45,7 @@ EOF
 
 chmod +x nekoray.AppDir/AppRun
 chmod +X nekoray.AppDir/pkexec
+sudo chmod 0755 nekoray.AppDir/pkexec
 
 # build
 
