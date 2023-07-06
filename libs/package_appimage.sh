@@ -6,19 +6,21 @@ cp -r linux64 nekoray.AppDir
 
 # The file for Appimage
 
-cat >nekoray.AppDir/nekoray.desktop<<-EOF
-[Desktop Entry]
-Name=nekoray
-Exec=/launcher -- -appdata
-Icon=nekoray
-Type=Application
-Categories=Network
-EOF
+rm nekoray.AppDir/launcher
 
-cat >nekoray.AppDir/AppRun<<-EOF
+# cat >nekoray.AppDir/nekoray.desktop <<-EOF
+# [Desktop Entry]
+# Name=nekoray
+# Exec=/launcher
+# Icon=nekoray
+# Type=Application
+# Categories=Network
+# EOF
+
+cat >nekoray.AppDir/AppRun <<-EOF
 #!/bin/bash
 HERE="\$(dirname "\$(readlink -f "\${0}")")"
-\${HERE}/launcher -- -appdata
+LD_LIBRARY_PATH=\${HERE}/usr/lib QT_PLUGIN_PATH=\${HERE}/usr/plugins \${HERE}/nekoray
 EOF
 
 chmod +x nekoray.AppDir/AppRun
