@@ -23,14 +23,14 @@ EOF
 cat >nekoray/opt/nekoray/pkexec <<-EOF
 #!/bin/sh
 
-if [ "\$1" == "--help" ]; then
+if [ \$1 = --help ]; then
   echo "This is not real pkexec."
   exit 0
 fi
 
 TO_EXEC="\$@"
 
-if [ "\$1" == "--keep-cwd" ]; then
+if [ \$1 = --keep-cwd ]; then
   TO_EXEC="\${@:2}"
 fi
 
@@ -42,8 +42,8 @@ if [ ! -s /usr/share/applications/nekoray.desktop ]; then
     cat >/usr/share/applications/nekoray.desktop<<-END
 [Desktop Entry]
 Name=nekoray
-Comment=Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
-Exec=sh -c "PATH=/opt/nekoray:$PATH /opt/nekoray/nekoray -tray -flag_linux_run_core_as_admin" -appdata
+Comment=Qt based cross-platform GUI proxy configuration manager (backend: Xray / sing-box)
+Exec=sh -c "PATH=/opt/nekoray:\$PATH /opt/nekoray/nekoray -tray -flag_linux_run_core_as_admin" -appdata
 Icon=/opt/nekoray/nekoray.png
 Terminal=false
 Type=Application
