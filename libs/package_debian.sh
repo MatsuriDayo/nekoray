@@ -20,7 +20,7 @@ Description: Qt based cross-platform GUI proxy configuration manager (backend: v
 EOF
 
 # Start VPN mode without password
-cat >/opt/nekoray/pkexec <<-EOF
+cat >nekoray/opt/nekoray/pkexec <<-EOF
 #!/bin/sh
 
 if [ "\$1" == "--help" ]; then
