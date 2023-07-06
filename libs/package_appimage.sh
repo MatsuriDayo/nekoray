@@ -38,10 +38,13 @@ EOF
 cat >nekoray.AppDir/AppRun <<-EOF
 #!/bin/bash
 HERE="\$(dirname "\$(readlink -f "\${0}")")"
-PATH=\${HERE}/:\$PATH LD_LIBRARY_PATH=\${HERE}/usr/lib QT_PLUGIN_PATH=\${HERE}/usr/plugins \${HERE}/nekoray -appdata "\$@"
+export PATH=\${HERE}/:\$PATH 
+echo "PATH: \${PATH}"
+LD_LIBRARY_PATH=\${HERE}/usr/lib QT_PLUGIN_PATH=\${HERE}/usr/plugins \${HERE}/nekoray -appdata "\$@"
 EOF
 
 chmod +x nekoray.AppDir/AppRun
+chmod +X nekoray.AppDir/pkexec
 
 # build
 
