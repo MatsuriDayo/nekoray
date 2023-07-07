@@ -6,19 +6,22 @@ cp -r linux64 nekoray.AppDir
 
 # The file for Appimage
 
-cat >nekoray.AppDir/nekoray.desktop<<-EOF
+rm nekoray.AppDir/launcher
+
+cat >nekoray.AppDir/nekoray.desktop <<-EOF
 [Desktop Entry]
 Name=nekoray
-Exec=/launcher -- -appdata
+Exec=echo "NekoRay started"
 Icon=nekoray
 Type=Application
 Categories=Network
 EOF
 
-cat >nekoray.AppDir/AppRun<<-EOF
+cat >nekoray.AppDir/AppRun <<-EOF
 #!/bin/bash
-HERE="\$(dirname "\$(readlink -f "\${0}")")"
-\${HERE}/launcher -- -appdata
+echo "PATH: \${PATH}"
+echo "NekoRay runing on: \$APPDIR"
+LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/nekoray -appdata "\$@"
 EOF
 
 chmod +x nekoray.AppDir/AppRun
@@ -29,7 +32,7 @@ curl -fLSO https://github.com/AppImage/AppImageKit/releases/latest/download/appi
 chmod +x appimagetool-x86_64.AppImage
 ./appimagetool-x86_64.AppImage nekoray.AppDir
 
-# remove
+# clean
 
 rm appimagetool-x86_64.AppImage
 rm -rf nekoray.AppDir
