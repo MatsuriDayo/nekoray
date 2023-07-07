@@ -2,6 +2,7 @@
 #include "ui_edit_trojan_vless.h"
 
 #include "fmt/TrojanVLESSBean.hpp"
+#include "fmt/Preset.hpp"
 
 EditTrojanVLESS::EditTrojanVLESS(QWidget *parent) : QWidget(parent), ui(new Ui::EditTrojanVLESS) {
     ui->setupUi(this);
@@ -22,6 +23,7 @@ void EditTrojanVLESS::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->flow_l->hide();
     }
     ui->password->setText(bean->password);
+    ui->flow->addItems(IS_NEKO_BOX ? Preset::SingBox::Flows : Preset::Xray::Flows);
     ui->flow->setCurrentText(bean->flow);
 }
 
