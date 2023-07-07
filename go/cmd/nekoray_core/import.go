@@ -77,6 +77,4 @@ import (
 
 	// Load config from file or http(s)
 	_ "github.com/xtls/xray-core/main/confloader/external"
-	// Custom
-	// _ "nekoray_core/v2ray_sip"
 )

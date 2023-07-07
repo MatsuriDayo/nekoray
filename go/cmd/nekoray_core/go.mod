@@ -3,7 +3,6 @@ module nekoray_core
 go 1.19
 
 require (
-	github.com/Dreamacro/clash v1.9.0
 	github.com/jsimonetti/rtnetlink v1.2.2
 	github.com/matsuridayo/libneko v1.0.0 // replaced
 	github.com/xtls/xray-core v1.0.0 // replaced
@@ -12,7 +11,6 @@ require (
 )
 
 require (
-	github.com/Dreamacro/go-shadowsocks2 v0.1.7 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/dgryski/go-metro v0.0.0-20211217172704-adc40b04c140 // indirect
 	github.com/francoispqt/gojay v1.2.13 // indirect
@@ -43,7 +41,6 @@ require (
 	github.com/sagernet/sing-shadowsocks v0.2.2 // indirect
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
 	github.com/seiflotfy/cuckoofilter v0.0.0-20220411075957-e3b120b3f5fb // indirect
-	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/v2fly/ss-bloomring v0.0.0-20210312155135-28617310f63e // indirect
 	github.com/xtls/reality v0.0.0-20230613075828-e07c3b04b983 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
