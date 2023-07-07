@@ -51,9 +51,9 @@ Categories=Network;Application;
 END
 fi
 
-sudo setcap cap_net_admin=ep /opt/nekoray/nekobox_core
+setcap cap_net_admin=ep /opt/nekoray/nekobox_core
 chmod +x /opt/nekoray/pkexec
-sudo chmod 0755 /opt/nekoray/pkexec
+chmod 0755 /opt/nekoray/pkexec
 
 update-desktop-database
 EOF
