@@ -20,14 +20,14 @@ Support Windows / Linux out of the box now.
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases)
 
-[Download](https://github.com/Matsuridayo/nekoray/releases)
+[下载 / Download](https://github.com/Matsuridayo/nekoray/releases)
+
+[安装包的说明，如果你不知道要下载哪一个](https://github.com/MatsuriDayo/nekoray/wiki/Installation-package-description)
 
 ### Package
 
 1. AUR: [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
 2. Scoop extras: `scoop install nekoray`
-3. macOS Homebrew (unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
-4. Linux apt (unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
 
 ## 更改记录 & 发布频道 / Changelog & Telegram channel
 
@@ -79,11 +79,7 @@ https://matsuridayo.github.io
 
 ## 编译教程 / Compile Tutorial
 
-[Linux](docs/Build_Linux.md)
-
-[Mac](docs/Build_MacOS.md) or [用于自动构建的非官方脚本 / Unofficial Script for automatic build](https://github.com/aaaamirabbas/nekoray-macos)
-
-[Windows](docs/Build_Windows.md)
+请看 [技术文档 / Technical documentation](https://github.com/MatsuriDayo/nekoray/tree/main/docs)
 
 ## 捐助 / Donate
 
@@ -101,10 +97,18 @@ XMR
 
 ## Credits
 
-- [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core)
-- [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri)
-- [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core)
+Core:
+
+- [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core) ( < 3.10 )
+- [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri) ( < 3.10 )
+- [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core) ( < 3.10 )
+- [XTLS/Xray-core](https://github.com/XTLS/Xray-core) ( >= 3.10 )
+- [MatsuriDayo/Xray-core](https://github.com/MatsuriDayo/Xray-core) ( >= 3.10 )
 - [SagerNet/sing-box](https://github.com/SagerNet/sing-box)
+- [Matsuridayo/sing-box-extra](https://github.com/MatsuriDayo/sing-box-extra)
+
+Gui:
+
 - [Qv2ray](https://github.com/Qv2ray/Qv2ray)
 - [Qt](https://www.qt.io/)
 - [protobuf](https://github.com/protocolbuffers/protobuf)
