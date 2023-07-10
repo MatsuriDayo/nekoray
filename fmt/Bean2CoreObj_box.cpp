@@ -53,17 +53,18 @@ namespace NekoGui_fmt {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
             auto fp = utlsFingerprint.isEmpty() ? NekoGui::dataStore->utlsFingerprint : utlsFingerprint;
-            if (!fp.isEmpty()) {
-                tls["utls"] = QJsonObject{
-                    {"enabled", true},
-                    {"fingerprint", fp},
-                };
-            }
             if (!reality_pbk.trimmed().isEmpty()) {
                 tls["reality"] = QJsonObject{
                     {"enabled", true},
                     {"public_key", reality_pbk},
                     {"short_id", reality_sid.split(",")[0]},
+                };
+                if (fp.isEmpty()) fp = "chrome";
+            }
+            if (!fp.isEmpty()) {
+                tls["utls"] = QJsonObject{
+                    {"enabled", true},
+                    {"fingerprint", fp},
                 };
             }
             outbound->insert("tls", tls);
