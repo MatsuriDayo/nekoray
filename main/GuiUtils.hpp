@@ -1,9 +1,5 @@
 #pragma once
 
-#ifdef Q_OS_WIN
-#include "sys/windows/guihelper.h"
-#endif
-
 // Dialogs
 
 #define Dialog_DialogBasicSettings "DialogBasicSettings"
@@ -80,23 +76,7 @@
     if (result.isEmpty()) CACHE.a = "";                               \
     editor->deleteLater();
 
-// System
-
-#define _ACTIVE_THIS_WINDOW_COMMON                                             \
-    hide();                                                                    \
-    showMinimized();                                                           \
-    showNormal();                                                              \
-    activateWindow();                                                          \
-    setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive); \
-    raise();
-
-#ifdef Q_OS_WIN
-#define ACTIVE_THIS_WINDOW     \
-    _ACTIVE_THIS_WINDOW_COMMON \
-    Windows_QWidget_SetForegroundWindow(this);
-#else
-#define ACTIVE_THIS_WINDOW _ACTIVE_THIS_WINDOW_COMMON
-#endif
+//
 
 #define ADD_ASTERISK(parent)                                         \
     for (auto label: parent->findChildren<QLabel *>()) {             \

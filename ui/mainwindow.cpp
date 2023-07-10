@@ -251,7 +251,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             if (this->isVisible()) {
                 hide();
             } else {
-                ACTIVE_THIS_WINDOW
+                ActivateWindow(this);
             }
         }
     });
@@ -554,7 +554,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         this->exit_reason = 2;
         on_menu_exit_triggered();
     } else if (info == "Raise") {
-        ACTIVE_THIS_WINDOW
+        ActivateWindow(this);
     } else if (info == "ClearConnectionList") {
         refresh_connection_list({});
     }

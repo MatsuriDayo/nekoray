@@ -18,6 +18,10 @@
 #include <QDateTime>
 #include <QLocale>
 
+#ifdef Q_OS_WIN
+#include "sys/windows/guihelper.h"
+#endif
+
 QStringList SplitLines(const QString &_string) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
     return _string.split(QRegularExpression("[\r\n]"), Qt::SplitBehaviorFlags::SkipEmptyParts);
@@ -209,6 +213,16 @@ int MessageBoxWarning(const QString &title, const QString &text) {
 
 int MessageBoxInfo(const QString &title, const QString &text) {
     return QMessageBox::information(GetMessageBoxParent(), title, text);
+}
+
+void ActivateWindow(QWidget *w) {
+    w->setWindowState(w->windowState() & ~Qt::WindowMinimized);
+    w->setVisible(true);
+#ifdef Q_OS_WIN
+    Windows_QWidget_SetForegroundWindow(w);
+#endif
+    w->raise();
+    w->activateWindow();
 }
 
 void runOnUiThread(const std::function<void()> &callback, QObject *parent) {
