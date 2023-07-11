@@ -81,7 +81,7 @@ namespace Qv2ray::ui::widgets {
         int extra = completion.length() - c->completionPrefix().length();
         tc.movePosition(QTextCursor::Left);
         tc.movePosition(QTextCursor::EndOfWord);
-        tc.insertText(completion.right(extra));
+        tc.insertText(completion.right(extra).toLower());
         setTextCursor(tc);
     }
 
