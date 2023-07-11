@@ -8,12 +8,6 @@ EditShadowSocks::EditShadowSocks(QWidget *parent) : QWidget(parent),
                                                     ui(new Ui::EditShadowSocks) {
     ui->setupUi(this);
     ui->method->addItems(IS_NEKO_BOX ? Preset::SingBox::ShadowsocksMethods : Preset::Xray::ShadowsocksMethods);
-    if (!IS_NEKO_BOX) {
-        ui->plugin->hide();
-        ui->plugin_l->hide();
-        ui->plugin_opts->hide();
-        ui->plugin_opts_l->hide();
-    }
 }
 
 EditShadowSocks::~EditShadowSocks() {
