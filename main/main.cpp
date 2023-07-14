@@ -91,6 +91,7 @@ int main(int argc, char* argv[]) {
     if (NekoGui::dataStore->argv.contains("-tray")) NekoGui::dataStore->flag_tray = true;
     if (NekoGui::dataStore->argv.contains("-debug")) NekoGui::dataStore->flag_debug = true;
     if (NekoGui::dataStore->argv.contains("-flag_linux_run_core_as_admin")) NekoGui::dataStore->flag_linux_run_core_as_admin = true;
+    if (NekoGui::dataStore->argv.contains("-flag_restart_tun_on")) NekoGui::dataStore->flag_restart_tun_on = true;
 #ifdef NKR_CPP_USE_APPDATA
     NekoGui::dataStore->flag_use_appdata = true; // Example: Package & MacOS
 #endif
