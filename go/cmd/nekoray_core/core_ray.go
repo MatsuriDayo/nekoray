@@ -64,7 +64,7 @@ func setupCore() {
 		if getNekorayTunIndex() == 0 {
 			return resolver_def.LookupIP(context.Background(), "ip", host)
 		}
-		// Windows VPN mode use Go resolver
+		// Windows Tun Mode use Go resolver
 		return resolver_go.LookupIP(context.Background(), "ip", host)
 	}
 	neko_common.GetCurrentInstance = func() interface{} {

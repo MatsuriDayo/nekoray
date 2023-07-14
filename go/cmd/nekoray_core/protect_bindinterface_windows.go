@@ -141,7 +141,7 @@ func getBindInterfaceIndex(address string) uint32 {
 		}
 	}
 
-	// Not in VPN mode
+	// Not in Tun Mode
 	if nextInterface == 0 {
 		return 0
 	}

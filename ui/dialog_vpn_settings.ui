@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>VPN Settings</string>
+   <string>Tun Settings</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -89,7 +89,7 @@
       <item>
        <widget class="QCheckBox" name="vpn_ipv6">
         <property name="text">
-         <string>VPN Enable IPv6</string>
+         <string>Tun Enable IPv6</string>
         </property>
        </widget>
       </item>

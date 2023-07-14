@@ -22,8 +22,8 @@ interface nekoray_in {
 // 目前提供的 hook 点
 interface nekoray_hook {
     hook_core_config(config: string): string
-    hook_vpn_config(config: string): string
-    hook_vpn_script(script: string): string
+    hook_tun_config(config: string): string
+    hook_tun_script(script: string): string
     hook_import(content: string): string
 }
 
@@ -41,11 +41,11 @@ class my_hook implements nekoray_hook {
         return JSON.stringify(json)
     }
 
-    hook_vpn_config(config: string): string {
+    hook_tun_config(config: string): string {
         return config // 返回输入，表示不修改
     }
 
-    hook_vpn_script(script: string): string {
+    hook_tun_script(script: string): string {
         console.log("Script") // 输出到 stdout
         this.nekoray.log("Script:", script) // 输出到日志
         return script
@@ -83,10 +83,10 @@ var my_hook = /** @class */ (function () {
         json["dns"]["rules"].push(my_rule);
         return JSON.stringify(json);
     };
-    my_hook.prototype.hook_vpn_config = function (config) {
+    my_hook.prototype.hook_tun_config = function (config) {
         return config; // 返回输入，表示不修改
     };
-    my_hook.prototype.hook_vpn_script = function (script) {
+    my_hook.prototype.hook_tun_script = function (script) {
         console.log("Script"); // 输出到 stdout
         this.nekoray.log("Script:", script); // 输出到日志
         return script;

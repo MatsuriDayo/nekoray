@@ -172,7 +172,7 @@
            </sizepolicy>
           </property>
           <property name="text">
-           <string>VPN Mode</string>
+           <string>Tun Mode</string>
           </property>
          </widget>
         </item>
@@ -860,7 +860,7 @@
   </action>
   <action name="menu_vpn_settings">
    <property name="text">
-    <string>VPN Settings</string>
+    <string>Tun Settings</string>
    </property>
   </action>
   <action name="actionRestart_Program">

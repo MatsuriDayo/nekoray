@@ -1056,9 +1056,9 @@ namespace NekoGui {
         auto source = qjs::ReadHookJS();
         if (!source.isEmpty()) {
             qjs::QJS js(source);
-            auto js_result = js.EvalFunction("hook.hook_vpn_config", config);
+            auto js_result = js.EvalFunction("hook.hook_tun_config", config);
             if (config != js_result) {
-                MW_show_log("hook.js modified your VPN config.");
+                MW_show_log("hook.js modified your Tun config.");
                 config = js_result;
             }
         }
@@ -1087,9 +1087,9 @@ namespace NekoGui {
         auto source = qjs::ReadHookJS();
         if (!source.isEmpty()) {
             qjs::QJS js(source);
-            auto js_result = js.EvalFunction("hook.hook_vpn_script", script);
+            auto js_result = js.EvalFunction("hook.hook_tun_script", script);
             if (script != js_result) {
-                MW_show_log("hook.js modified your VPN script.");
+                MW_show_log("hook.js modified your Tun script.");
                 script = js_result;
             }
         }

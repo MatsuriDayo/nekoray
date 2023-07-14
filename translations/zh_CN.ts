@@ -213,15 +213,15 @@
     </message>
     <message>
         <source>It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.
-For NekoRay, this rewrites the underlying(localhost) DNS in VPN mode.
-For NekoBox, this rewrites the underlying(localhost) DNS in VPN mode, normal mode, and also URL Test.</source>
+For NekoRay, this rewrites the underlying(localhost) DNS in Tun Mode.
+For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mode, and also URL Test.</source>
         <translation>建议留空，但有时会出现问题，这时可以设置这个选项。
-对于 NekoRay 来说，在 VPN 模式下会重写 underlying(localhost) DNS。
-对于 NekoBox 来说，在 VPN 模式、正常模式和 URL 测试中会重写 underlying(localhost) DNS。</translation>
+对于 NekoRay 来说，在 Tun 模式下会重写 underlying(localhost) DNS。
+对于 NekoBox 来说，在 Tun 模式、正常模式和 URL 测试中会重写 underlying(localhost) DNS。</translation>
     </message>
     <message>
-        <source>If you VPN mode is not working, try to change this option.</source>
-        <translation>如果您的VPN模式有问题，请尝试更改此选项。</translation>
+        <source>If you Tun Mode is not working, try to change this option.</source>
+        <translation>如果您的 Tun 模式有问题，请尝试更改此选项。</translation>
     </message>
     <message>
         <source>Default On</source>
@@ -689,16 +689,16 @@ These settings can be changed later.</source>
 <context>
     <name>DialogVPNSettings</name>
     <message>
-        <source>VPN Settings</source>
-        <translation>VPN 设置</translation>
+        <source>Tun Settings</source>
+        <translation>Tun 设置</translation>
     </message>
     <message>
         <source>Hide Console</source>
         <translation>隐藏控制台</translation>
     </message>
     <message>
-        <source>VPN Enable IPv6</source>
-        <translation>启用 VPN IPv6</translation>
+        <source>Tun Enable IPv6</source>
+        <translation>启用 Tun IPv6</translation>
     </message>
     <message>
         <source>Bypass CIDR</source>
@@ -733,7 +733,7 @@ These settings can be changed later.</source>
 
 If still not working, see documentation for more information.
 https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
-        <translation>如果您在启动 VPN 时遇到问题，您可以在此处强制重置 nekobox_core 进程。
+        <translation>如果您在启动 Tun 时遇到问题，您可以在此处强制重置 nekobox_core 进程。
 
 如果仍然无法正常工作，请参阅文档以获取更多信息。
 https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
@@ -1324,12 +1324,12 @@ End: %2</source>
         <translation>全选</translation>
     </message>
     <message>
-        <source>VPN Mode</source>
-        <translation>VPN 模式</translation>
+        <source>Tun Mode</source>
+        <translation>Tun 模式</translation>
     </message>
     <message>
-        <source>Failed to stop VPN process</source>
-        <translation>停止 VPN 失败</translation>
+        <source>Failed to stop Tun process</source>
+        <translation>停止 Tun 失败</translation>
     </message>
     <message>
         <source>Enable System Proxy</source>
@@ -1340,12 +1340,12 @@ End: %2</source>
         <translation>启用 VPN</translation>
     </message>
     <message>
-        <source>VPN settings changed</source>
-        <translation>VPN 设置改变</translation>
+        <source>Tun Settings changed</source>
+        <translation>Tun 设置改变</translation>
     </message>
     <message>
-        <source>Restart VPN to take effect.</source>
-        <translation>重启 VPN 生效。</translation>
+        <source>Restart Tun to take effect.</source>
+        <translation>重启 Tun 生效。</translation>
     </message>
     <message>
         <source>Start</source>
@@ -1396,8 +1396,8 @@ End: %2</source>
         <translation>路由设置</translation>
     </message>
     <message>
-        <source>VPN Settings</source>
-        <translation>VPN 设置</translation>
+        <source>Tun Settings</source>
+        <translation>Tun 设置</translation>
     </message>
     <message>
         <source>Restart Program</source>
@@ -1408,8 +1408,8 @@ End: %2</source>
         <translation>未启动</translation>
     </message>
     <message>
-        <source>Current server is incompatible with VPN. Please stop the server first, enable VPN mode, and then restart.</source>
-        <translation>当前服务器与 VPN 不兼容。请先停止服务器，打开 VPN 模式后再启动。</translation>
+        <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
+        <translation>当前服务器与 Tun 不兼容。请先停止服务器，打开 Tun 模式后再启动。</translation>
     </message>
     <message>
         <source>Open Config Folder</source>

@@ -25,7 +25,7 @@ func nekorayLinuxProtect(fd int) bool {
 		}
 	}
 
-	// check is in VPN mode
+	// check is in Tun Mode
 	if is_fwmark_exist(514) {
 		if cap_net_admin == 1 {
 			// have permission
