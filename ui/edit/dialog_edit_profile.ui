@@ -579,7 +579,7 @@ security (QUIC)</string>
             </sizepolicy>
            </property>
            <property name="text">
-            <string notr="true">uTLS</string>
+            <string notr="true">Fingerprint</string>
            </property>
           </widget>
          </item>

@@ -39,12 +39,12 @@ namespace NekoGui_fmt {
 
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
         if (stream->allow_insecure) query.addQueryItem("allowInsecure", "1");
-        if (IS_NEKO_BOX && !stream->utlsFingerprint.isEmpty()) query.addQueryItem("fp", stream->utlsFingerprint);
+        if (!stream->utlsFingerprint.isEmpty()) query.addQueryItem("fp", stream->utlsFingerprint);
 
         if (security == "reality") {
             query.addQueryItem("pbk", stream->reality_pbk);
-            query.addQueryItem("sid", stream->reality_sid);
-            query.addQueryItem("spx", stream->reality_spx);
+            if (!stream->reality_sid.isEmpty()) query.addQueryItem("sid", stream->reality_sid);
+            if (!stream->reality_spx.isEmpty()) query.addQueryItem("spx", stream->reality_spx);
         }
 
         // type
