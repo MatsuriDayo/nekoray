@@ -307,6 +307,7 @@ set_target_properties(nekoray PROPERTIES
 set(TS_FILES
         translations/zh_CN.ts
         translations/fa_IR.ts
+        translations/ru_RU.ts
         )
 if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_lupdate(nekoray TS_FILES ${TS_FILES})
