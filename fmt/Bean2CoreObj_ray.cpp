@@ -116,7 +116,13 @@ namespace NekoGui_fmt {
         server["port"] = serverPort;
         server["method"] = method;
         server["password"] = password;
-        server["uot"] = uot;
+
+        if (uot != 0) {
+            server["uot"] = true;
+            server["UoTVersion"] = uot;
+        } else {
+            server["uot"] = false;
+        }
 
         servers.push_back(server);
         settings["servers"] = servers;

@@ -14,10 +14,10 @@
    <string notr="true">Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Encryption</string>
+   <item row="0" column="1">
+    <widget class="QComboBox" name="method">
+     <property name="editable">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -31,20 +31,10 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="MyLineEdit" name="plugin_opts"/>
-   </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label_5">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Password</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QComboBox" name="method">
-     <property name="editable">
-      <bool>true</bool>
+      <string>Encryption</string>
      </property>
     </widget>
    </item>
@@ -52,6 +42,16 @@
     <widget class="QLabel" name="plugin_opts_l">
      <property name="text">
       <string>Plugin Args</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="MyLineEdit" name="plugin_opts"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Password</string>
      </property>
     </widget>
    </item>
@@ -74,14 +74,36 @@
      </item>
     </widget>
    </item>
-   <item row="4" column="1">
-    <widget class="QCheckBox" name="uot">
+   <item row="4" column="0">
+    <widget class="QLabel" name="uot_l">
      <property name="toolTip">
       <string>Server support is required</string>
      </property>
-     <property name="text">
-      <string notr="true">UDP over TCP</string>
+     <property name="locale">
+      <locale language="English" country="UnitedStates"/>
      </property>
+     <property name="text">
+      <string>UDP over TCP version</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QComboBox" name="uot">
+     <item>
+      <property name="text">
+       <string>0</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>1</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>2</string>
+      </property>
+     </item>
     </widget>
    </item>
   </layout>

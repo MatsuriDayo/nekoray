@@ -106,7 +106,16 @@ namespace NekoGui_fmt {
         outbound["server_port"] = serverPort;
         outbound["method"] = method;
         outbound["password"] = password;
-        outbound["udp_over_tcp"] = uot;
+
+        if (uot != 0) {
+            QJsonObject udp_over_tcp{
+                {"enabled", true},
+                {"version", uot},
+            };
+            outbound["udp_over_tcp"] = udp_over_tcp;
+        } else {
+            outbound["udp_over_tcp"] = false;
+        }
 
         if (!plugin.trimmed().isEmpty()) {
             outbound["plugin"] = SubStrBefore(plugin, ";");
