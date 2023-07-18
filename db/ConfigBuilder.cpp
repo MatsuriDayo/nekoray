@@ -1002,7 +1002,7 @@ namespace NekoGui {
                 {"secret", dataStore->core_box_clash_api_secret},
                 {"external_ui", "dashboard"},
             };
-            experimentalObj["clash_api"] = clash_api;
+            experimentalObj["clash_api"] = dataStore->core_box_clash_api_ui;
         }
 
         if (!experimentalObj.isEmpty()) status->result->coreConfig.insert("experimental", experimentalObj);

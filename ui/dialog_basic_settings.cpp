@@ -403,6 +403,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
     QCheckBox *core_box_enable_clash_api;
     MyLineEdit *core_box_clash_api;
     MyLineEdit *core_box_clash_api_secret;
+    MyLineEdit *core_box_clash_api_ui;
     MyLineEdit *core_box_underlying_dns;
     QCheckBox *core_ray_direct_dns;
     QCheckBox *core_ray_windows_disable_auto_interface;
@@ -437,6 +438,12 @@ void DialogBasicSettings::on_core_settings_clicked() {
         core_box_clash_api_secret->setText(NekoGui::dataStore->core_box_clash_api_secret);
         layout->addWidget(core_box_clash_api_secret_l, ++line, 0);
         layout->addWidget(core_box_clash_api_secret, line, 1);
+        //
+        auto core_box_clash_api_ui_l = new QLabel("Clash Dashboard");
+        core_box_clash_api_ui = new MyLineEdit;
+        core_box_clash_api_ui->setText(NekoGui::dataStore->core_box_clash_api_ui);
+        layout->addWidget(core_box_clash_api_ui_l, ++line, 0);
+        layout->addWidget(core_box_clash_api_ui, line, 1);
     } else {
         auto core_ray_direct_dns_l = new QLabel("NKR_CORE_RAY_DIRECT_DNS");
         core_ray_direct_dns_l->setToolTip(tr("If you Tun Mode is not working, try to change this option."));
@@ -471,6 +478,7 @@ void DialogBasicSettings::on_core_settings_clicked() {
         if (IS_NEKO_BOX) {
             NekoGui::dataStore->core_box_clash_api = core_box_clash_api->text().toInt() * (core_box_enable_clash_api->isChecked() ? 1 : -1);
             NekoGui::dataStore->core_box_clash_api_secret = core_box_clash_api_secret->text();
+            NekoGui::dataStore->core_box_clash_api_ui = core_box_clash_api_ui->text();
         } else {
             NekoGui::dataStore->core_ray_direct_dns = core_ray_direct_dns->isChecked();
             NekoGui::dataStore->core_ray_freedom_domainStrategy = core_ray_freedom_domainStrategy->currentText();
