@@ -926,8 +926,12 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>پلاگین</translation>
     </message>
     <message>
-        <source>Server support is required</source>
+        <source>Version of UDP over TCP protocol, server support is required.</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished">خاموش</translation>
     </message>
 </context>
 <context>

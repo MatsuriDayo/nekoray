@@ -923,7 +923,15 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Server support is required</source>
-        <translation>Необходима поддержка со стороны сервера</translation>
+        <translation type="vanished">Необходима поддержка со стороны сервера</translation>
+    </message>
+    <message>
+        <source>Version of UDP over TCP protocol, server support is required.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation type="unfinished">Выкл</translation>
     </message>
 </context>
 <context>

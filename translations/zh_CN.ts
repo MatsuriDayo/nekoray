@@ -924,8 +924,12 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>插件</translation>
     </message>
     <message>
-        <source>Server support is required</source>
-        <translation>需要服务器支持</translation>
+        <source>Version of UDP over TCP protocol, server support is required.</source>
+        <translation>UDP over TCP 协议版本，需要服务器支持。</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>关闭</translation>
     </message>
 </context>
 <context>

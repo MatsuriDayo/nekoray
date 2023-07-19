@@ -77,13 +77,13 @@
    <item row="4" column="0">
     <widget class="QLabel" name="uot_l">
      <property name="toolTip">
-      <string>Server support is required</string>
+      <string>Version of UDP over TCP protocol, server support is required.</string>
      </property>
      <property name="locale">
       <locale language="English" country="UnitedStates"/>
      </property>
      <property name="text">
-      <string>UDP over TCP version</string>
+      <string notr="true">UoT</string>
      </property>
     </widget>
    </item>
@@ -91,17 +91,17 @@
     <widget class="QComboBox" name="uot">
      <item>
       <property name="text">
-       <string>0</string>
+       <string>Off</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>1</string>
+       <string notr="true">1</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>2</string>
+       <string notr="true">2</string>
       </property>
      </item>
     </widget>
