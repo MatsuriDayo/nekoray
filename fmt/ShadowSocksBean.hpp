@@ -9,7 +9,7 @@ namespace NekoGui_fmt {
         QString method = "aes-128-gcm";
         QString password = "";
         QString plugin = "";
-        bool uot = false;
+        int uot = 0;
 
         std::shared_ptr<V2rayStreamSettings> stream = std::make_shared<V2rayStreamSettings>();
 
@@ -17,7 +17,7 @@ namespace NekoGui_fmt {
             _add(new configItem("method", &method, itemType::string));
             _add(new configItem("pass", &password, itemType::string));
             _add(new configItem("plugin", &plugin, itemType::string));
-            _add(new configItem("uot", &uot, itemType::boolean));
+            _add(new configItem("uot", &uot, itemType::integer));
             _add(new configItem("stream", dynamic_cast<JsonStore *>(stream.get()), itemType::jsonStore));
         };
 
