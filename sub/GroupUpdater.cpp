@@ -283,8 +283,9 @@ namespace NekoGui_sub {
                     bean->stream->security = "tls";
                     bean->stream->network = Node2QString(proxy["network"], "tcp");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
-                    if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
-                    if (IS_NEKO_BOX) bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
+                    bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
+                    bean->stream->allow_insecure = Node2Bool(proxy["skip-cert-verify"]);
+                    bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
 
                     // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
@@ -318,6 +319,7 @@ namespace NekoGui_sub {
                     bean->security = Node2QString(proxy["cipher"]);
                     bean->stream->network = Node2QString(proxy["network"], "tcp").replace("h2", "http");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
+                    bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
 
@@ -378,6 +380,7 @@ namespace NekoGui_sub {
                     bean->name = Node2QString(proxy["name"]);
                     bean->serverAddress = Node2QString(proxy["server"]);
                     bean->serverPort = Node2Int(proxy["port"]);
+                    bean->hopPort = Node2QString(proxy["ports"]);
                     if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
