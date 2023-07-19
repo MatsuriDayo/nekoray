@@ -340,6 +340,11 @@
                 <string notr="true">فارسی</string>
                </property>
               </item>
+              <item>
+               <property name="text">
+                <string notr="true">Русский</string>
+               </property>
+              </item>
              </widget>
             </item>
            </layout>
