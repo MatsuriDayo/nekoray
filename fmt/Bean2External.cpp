@@ -116,7 +116,7 @@ namespace NekoGui_fmt {
 
         auto server = serverAddress;
         if (!hopPort.trimmed().isEmpty()) {
-            server = WrapIPV6Host(server) + ":" + hopPort;
+            server = WrapIPV6Host(server) + ":" + Int2String(serverPort) + "," + hopPort;
         } else {
             server = WrapIPV6Host(server) + ":" + Int2String(serverPort);
         }
