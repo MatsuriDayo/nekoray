@@ -81,6 +81,58 @@ namespace NekoGui {
             defaultGroup->name = QObject::tr("Default");
             NekoGui::profileManager->AddGroup(defaultGroup);
         }
+        //
+        if (dataStore->flag_reorder) {
+            {
+                // remove all (contains orphan)
+                for (const auto &profile: profiles) {
+                    QFile::remove(profile.second->fn);
+                }
+            }
+            std::map<int, int> gidOld2New;
+            {
+                int i = 0;
+                int ii = 0;
+                QList<int> newProfilesIdOrder;
+                std::map<int, std::shared_ptr<ProxyEntity>> newProfiles;
+                for (auto gid: groupsTabOrder) {
+                    auto group = GetGroup(gid);
+                    gidOld2New[gid] = ii++;
+                    for (auto const &profile: group->ProfilesWithOrder()) {
+                        auto oldId = profile->id;
+                        auto newId = i++;
+                        profile->id = newId;
+                        profile->gid = gidOld2New[gid];
+                        profile->fn = QString("profiles/%1.json").arg(newId);
+                        profile->Save();
+                        newProfiles[newId] = profile;
+                        newProfilesIdOrder << newId;
+                    }
+                    group->order = {};
+                    group->Save();
+                }
+                profiles = newProfiles;
+                profilesIdOrder = newProfilesIdOrder;
+            }
+            {
+                QList<int> newGroupsIdOrder;
+                std::map<int, std::shared_ptr<Group>> newGroups;
+                for (auto oldGid: groupsTabOrder) {
+                    auto newId = gidOld2New[oldGid];
+                    auto group = groups[oldGid];
+                    QFile::remove(group->fn);
+                    group->id = newId;
+                    group->fn = QString("groups/%1.json").arg(newId);
+                    group->Save();
+                    newGroups[newId] = group;
+                    newGroupsIdOrder << newId;
+                }
+                groups = newGroups;
+                groupsIdOrder = newGroupsIdOrder;
+                groupsTabOrder = newGroupsIdOrder;
+            }
+            MessageBoxInfo(software_name, "Profiles and groups reorder complete.");
+        }
     }
 
     void ProfileManager::SaveManager() {

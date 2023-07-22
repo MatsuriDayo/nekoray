@@ -88,6 +88,7 @@ namespace NekoGui {
         bool flag_debug = false;
         bool flag_linux_run_core_as_admin = false;
         bool flag_restart_tun_on = false;
+        bool flag_reorder = false;
 
         // Saved
 
