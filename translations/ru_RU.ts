@@ -239,6 +239,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
         <source>If you Tun Mode is not working, try to change this option.</source>
         <translation>Если TUN-режим не работает как надо, попробуйте изменить эту опцию.</translation>
     </message>
+    <message>
+        <source>Timeout (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

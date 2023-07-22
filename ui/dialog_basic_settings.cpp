@@ -76,6 +76,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_INT(inbound_socks_port)
     D_LOAD_INT_ENABLE(inbound_http_port, http_enable)
     D_LOAD_INT(test_concurrent)
+    D_LOAD_INT(test_download_timeout)
     D_LOAD_STRING(test_latency_url)
     D_LOAD_STRING(test_download_url)
 
@@ -263,6 +264,7 @@ void DialogBasicSettings::accept() {
     D_SAVE_INT(inbound_socks_port)
     D_SAVE_INT_ENABLE(inbound_http_port, http_enable)
     D_SAVE_INT(test_concurrent)
+    D_SAVE_INT(test_download_timeout)
     D_SAVE_STRING(test_latency_url)
     D_SAVE_STRING(test_download_url)
 

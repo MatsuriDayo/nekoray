@@ -243,6 +243,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
         <source>Download Test URL</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Timeout (s)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>

@@ -172,7 +172,7 @@
        </item>
        <item>
         <widget class="QGroupBox" name="horizontalGroupBox">
-         <layout class="QHBoxLayout" name="horizontalLayout_12">
+         <layout class="QHBoxLayout" name="horizontalLayout_12" stretch="0,8,1,1">
           <item>
            <widget class="QLabel" name="label_19">
             <property name="text">
@@ -182,6 +182,16 @@
           </item>
           <item>
            <widget class="MyLineEdit" name="test_download_url"/>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_10">
+            <property name="text">
+             <string>Timeout (s)</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="test_download_timeout"/>
           </item>
          </layout>
         </widget>
@@ -684,8 +694,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>198</width>
-            <height>58</height>
+            <width>568</width>
+            <height>297</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">

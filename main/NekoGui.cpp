@@ -229,6 +229,7 @@ namespace NekoGui {
         _add(new configItem("user_agent", &user_agent, itemType::string));
         _add(new configItem("test_url", &test_latency_url, itemType::string));
         _add(new configItem("test_url_dl", &test_download_url, itemType::string));
+        _add(new configItem("test_dl_timeout", &test_download_timeout, itemType::integer));
         _add(new configItem("current_group", &current_group, itemType::integer));
         _add(new configItem("inbound_address", &inbound_address, itemType::string));
         _add(new configItem("inbound_socks_port", &inbound_socks_port, itemType::integer));

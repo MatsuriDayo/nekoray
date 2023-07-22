@@ -8,6 +8,7 @@ import (
 	"io"
 	"log"
 	"net"
+	"net/http"
 	"strings"
 	"time"
 
@@ -109,16 +110,41 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 	// 下载
 	var speed string
 	if in.FullSpeed {
-		resp, err := httpClient.Get(in.FullSpeedUrl)
-		if err == nil {
-			time_start := time.Now()
-			n, _ := io.Copy(io.Discard, resp.Body)
-			time_end := time.Now()
+		if in.FullSpeedTimeout <= 0 {
+			in.FullSpeedTimeout = 30
+		}
 
-			speed = fmt.Sprintf("%.2fMiB/s", (float64(n)/time_end.Sub(time_start).Seconds())/1048576)
-			resp.Body.Close()
-		} else {
-			speed = "Error"
+		ctx, cancel := context.WithTimeout(context.Background(), time.Second*time.Duration(in.FullSpeedTimeout))
+		result := make(chan string)
+		var bodyClose io.Closer
+
+		go func() {
+			req, _ := http.NewRequestWithContext(ctx, "GET", in.FullSpeedUrl, nil)
+			resp, err := httpClient.Do(req)
+			if err == nil && resp != nil && resp.Body != nil {
+				bodyClose = resp.Body
+				defer resp.Body.Close()
+				//
+				time_start := time.Now()
+				n, _ := io.Copy(io.Discard, resp.Body)
+				time_end := time.Now()
+				result <- fmt.Sprintf("%.2fMiB/s", (float64(n)/time_end.Sub(time_start).Seconds())/1048576)
+			} else {
+				result <- "Error"
+			}
+			close(result)
+		}()
+
+		select {
+		case <-ctx.Done():
+			speed = "Timeout"
+		case s := <-result:
+			speed = s
+		}
+
+		cancel()
+		if bodyClose != nil {
+			bodyClose.Close()
 		}
 	}
 

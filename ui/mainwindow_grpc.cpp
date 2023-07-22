@@ -173,6 +173,7 @@ void MainWindow::speedtest_current_group(int mode) {
                         req.set_full_in_out(full_test_flags.contains("4"));
 
                         req.set_full_speed_url(NekoGui::dataStore->test_download_url.toStdString());
+                        req.set_full_speed_timeout(NekoGui::dataStore->test_download_timeout);
                     } else if (mode == libcore::TcpPing) {
                         req.set_address(profile->bean->DisplayAddress().toStdString());
                     }

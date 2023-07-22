@@ -48,6 +48,7 @@ message TestReq {
   bool full_latency = 8;
   bool full_speed = 9;
   string full_speed_url = 13;
+  int32 full_speed_timeout = 14;
   bool full_in_out = 10;
   bool full_udp_latency = 12;
   //
