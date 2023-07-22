@@ -89,7 +89,7 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
     ui->proxyIPLayout->addWidget(proxyIPTxt, 0, 0);
     ui->blockIPLayout->addWidget(blockIPTxt, 0, 0);
     //
-    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing)
+    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing.get())
 
     ADD_ASTERISK(this)
 }
@@ -102,7 +102,7 @@ void DialogManageRoutes::accept() {
     D_C_SAVE_STRING(custom_route_global)
     bool routeChanged = false;
     if (NekoGui::dataStore->active_routing != active_routing) routeChanged = true;
-    SaveDisplayRouting(NekoGui::dataStore->routing);
+    SaveDisplayRouting(NekoGui::dataStore->routing.get());
     NekoGui::dataStore->active_routing = active_routing;
     NekoGui::dataStore->routing->fn = ROUTES_PREFIX + NekoGui::dataStore->active_routing;
     if (NekoGui::dataStore->routing->Save()) routeChanged = true;
@@ -211,7 +211,7 @@ void DialogManageRoutes::on_load_save_clicked() {
             r->fn = ROUTES_PREFIX + fn;
             if (r->Load()) {
                 if (QMessageBox::question(nullptr, software_name, tr("Load routing: %1").arg(fn) + "\n" + r->DisplayRouting()) == QMessageBox::Yes) {
-                    REFRESH_ACTIVE_ROUTING(fn, r.get())
+                    REFRESH_ACTIVE_ROUTING(fn, r.get()) // temp save to the window
                     w->accept();
                 }
             }
@@ -238,7 +238,7 @@ void DialogManageRoutes::on_load_save_clicked() {
                 f.remove();
                 if (NekoGui::dataStore->active_routing == fn) {
                     NekoGui::Routing::SetToActive(NekoGui::Routing::List().first());
-                    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing)
+                    REFRESH_ACTIVE_ROUTING(NekoGui::dataStore->active_routing, NekoGui::dataStore->routing.get())
                 }
                 w->accept();
             }

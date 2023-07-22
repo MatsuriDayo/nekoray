@@ -50,7 +50,7 @@ QString QStringList2Command(const QStringList &list);
 
 QStringList SplitLines(const QString &_string);
 
-QStringList SplitLinesSkipSharp(const QString &_string);
+QStringList SplitLinesSkipSharp(const QString &_string, int maxLine = 0);
 
 // Base64
 

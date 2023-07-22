@@ -94,8 +94,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         software_core_name = "sing-box";
         // replace default values
         if (NekoGui::dataStore->log_level == "warning") NekoGui::dataStore->log_level = "info";
-        if (!Preset::SingBox::DomainStrategy.contains(NekoGui::dataStore->routing->domain_strategy)) NekoGui::dataStore->routing->domain_strategy = "";
-        if (!Preset::SingBox::DomainStrategy.contains(NekoGui::dataStore->routing->outbound_domain_strategy)) NekoGui::dataStore->routing->outbound_domain_strategy = "";
         if (NekoGui::dataStore->mux_protocol.isEmpty()) NekoGui::dataStore->mux_protocol = "h2mux";
         //
         if (QDir("dashboard").count() == 0) {

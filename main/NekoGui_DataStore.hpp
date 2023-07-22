@@ -33,7 +33,7 @@ namespace NekoGui {
 
         static QStringList List();
 
-        static void SetToActive(const QString &name);
+        static bool SetToActive(const QString &name);
     };
 
     class ExtraCore : public JsonStore {
@@ -74,7 +74,7 @@ namespace NekoGui {
         QString appdataDir = "";
         QStringList ignoreConnTag = {};
 
-        Routing *routing = new Routing;
+        std::unique_ptr<Routing> routing;
         int imported_count = 0;
         bool refreshing_group_list = false;
         bool refreshing_group = false;

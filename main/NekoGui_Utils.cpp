@@ -30,12 +30,14 @@ QStringList SplitLines(const QString &_string) {
 #endif
 }
 
-QStringList SplitLinesSkipSharp(const QString &_string) {
+QStringList SplitLinesSkipSharp(const QString &_string, int maxLine) {
     auto lines = SplitLines(_string);
     QStringList newLines;
+    int i = 0;
     for (const auto &line: lines) {
         if (line.trimmed().startsWith("#")) continue;
         newLines << line;
+        if (maxLine > 0 && ++i >= maxLine) break;
     }
     return newLines;
 }

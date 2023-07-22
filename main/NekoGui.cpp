@@ -1,4 +1,5 @@
 #include "NekoGui.hpp"
+#include "fmt/Preset.hpp"
 
 #include <QFile>
 #include <QDir>
@@ -314,6 +315,10 @@ namespace NekoGui {
                 "domain:crashlytics.com\n"
                 "domain:google-analytics.com";
         }
+        if (IS_NEKO_BOX) {
+            if (!Preset::SingBox::DomainStrategy.contains(domain_strategy)) domain_strategy = "";
+            if (!Preset::SingBox::DomainStrategy.contains(outbound_domain_strategy)) outbound_domain_strategy = "";
+        }
         _add(new configItem("direct_ip", &this->direct_ip, itemType::string));
         _add(new configItem("direct_domain", &this->direct_domain, itemType::string));
         _add(new configItem("proxy_ip", &this->proxy_ip, itemType::string));
@@ -337,12 +342,12 @@ namespace NekoGui {
 
     QString Routing::DisplayRouting() const {
         return QString("[Proxy] %1\n[Proxy] %2\n[Direct] %3\n[Direct] %4\n[Block] %5\n[Block] %6\n[Default Outbound] %7\n[DNS] %8")
-            .arg(SplitLinesSkipSharp(proxy_domain).join(","))
-            .arg(SplitLinesSkipSharp(proxy_ip).join(","))
-            .arg(SplitLinesSkipSharp(direct_domain).join(","))
-            .arg(SplitLinesSkipSharp(direct_ip).join(","))
-            .arg(SplitLinesSkipSharp(block_domain).join(","))
-            .arg(SplitLinesSkipSharp(block_ip).join(","))
+            .arg(SplitLinesSkipSharp(proxy_domain).join(","), 10)
+            .arg(SplitLinesSkipSharp(proxy_ip).join(","), 10)
+            .arg(SplitLinesSkipSharp(direct_domain).join(","), 10)
+            .arg(SplitLinesSkipSharp(direct_ip).join(","), 10)
+            .arg(SplitLinesSkipSharp(block_domain).join(","), 10)
+            .arg(SplitLinesSkipSharp(block_ip).join(","), 10)
             .arg(def_outbound)
             .arg(use_dns_object ? "DNS Object" : "Simple DNS");
     }
@@ -352,11 +357,16 @@ namespace NekoGui {
         return dr.entryList(QDir::Files);
     }
 
-    void Routing::SetToActive(const QString &name) {
+    bool Routing::SetToActive(const QString &name) {
+        NekoGui::dataStore->routing = std::make_unique<Routing>();
+        NekoGui::dataStore->routing->load_control_must = true;
         NekoGui::dataStore->routing->fn = ROUTES_PREFIX + name;
-        NekoGui::dataStore->routing->Load();
-        NekoGui::dataStore->active_routing = name;
-        NekoGui::dataStore->Save();
+        auto ok = NekoGui::dataStore->routing->Load();
+        if (ok) {
+            NekoGui::dataStore->active_routing = name;
+            NekoGui::dataStore->Save();
+        }
+        return ok;
     }
 
     // NO default extra core

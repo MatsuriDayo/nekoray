@@ -219,6 +219,7 @@ int main(int argc, char* argv[]) {
     if (NekoGui::dataStore->start_minimal) NekoGui::dataStore->flag_tray = true;
 
     // load routing
+    NekoGui::dataStore->routing = std::make_unique<NekoGui::Routing>();
     NekoGui::dataStore->routing->fn = ROUTES_PREFIX + NekoGui::dataStore->active_routing;
     isLoaded = NekoGui::dataStore->routing->Load();
     if (!isLoaded) {
