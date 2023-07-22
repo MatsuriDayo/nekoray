@@ -169,6 +169,9 @@ namespace NekoGui_fmt {
 
         QJsonObject settings;
         if (proxy_type == proxy_VLESS) {
+            if (flow == "none") {
+                flow = "";
+            }
             settings = QJsonObject{
                 {"vnext", QJsonArray{
                               QJsonObject{
