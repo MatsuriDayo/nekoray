@@ -116,7 +116,7 @@ void GroupItem::on_edit_clicked() {
 }
 
 void GroupItem::on_remove_clicked() {
-    if (NekoGui::profileManager->groups.count() == 1) return;
+    if (NekoGui::profileManager->groups.size() <= 1) return;
     if (QMessageBox::question(this, tr("Confirmation"), tr("Remove %1?").arg(ent->name)) ==
         QMessageBox::StandardButton::Yes) {
         NekoGui::profileManager->DeleteGroup(ent->id);

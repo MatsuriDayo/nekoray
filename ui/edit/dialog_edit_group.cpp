@@ -44,7 +44,7 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
 
     connect(ui->copy_links, &QPushButton::clicked, this, [=] {
         QStringList links;
-        for (const auto &profile: NekoGui::profileManager->profiles) {
+        for (const auto &[_, profile]: NekoGui::profileManager->profiles) {
             if (profile->gid != ent->id) continue;
             links += profile->bean->ToShareLink();
         }
@@ -53,7 +53,7 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
     });
     connect(ui->copy_links_nkr, &QPushButton::clicked, this, [=] {
         QStringList links;
-        for (const auto &profile: NekoGui::profileManager->profiles) {
+        for (const auto &[_, profile]: NekoGui::profileManager->profiles) {
             if (profile->gid != ent->id) continue;
             links += profile->bean->ToNekorayShareLink(profile->type);
         }

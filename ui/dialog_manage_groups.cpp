@@ -24,7 +24,7 @@
 DialogManageGroups::DialogManageGroups(QWidget *parent) : QDialog(parent), ui(new Ui::DialogManageGroups) {
     ui->setupUi(this);
 
-    for (auto id: NekoGui::profileManager->_groups) {
+    for (auto id: NekoGui::profileManager->groupsTabOrder) {
         AddGroupToListIfExist(id)
     }
 
@@ -53,10 +53,10 @@ void DialogManageGroups::on_add_clicked() {
 
 void DialogManageGroups::on_update_all_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?")) == QMessageBox::StandardButton::Yes) {
-        for (const auto &gid: NekoGui::profileManager->_groups) {
+        for (const auto &gid: NekoGui::profileManager->groupsTabOrder) {
             auto group = NekoGui::profileManager->GetGroup(gid);
             if (group == nullptr || group->url.isEmpty()) continue;
-            UI_update_one_group(NekoGui::profileManager->_groups.indexOf(gid));
+            UI_update_one_group(NekoGui::profileManager->groupsTabOrder.indexOf(gid));
             return;
         }
     }
@@ -68,15 +68,15 @@ void UI_update_one_group(int _order) {
     std::shared_ptr<NekoGui::Group> nextGroup;
     forever {
         nextOrder += 1;
-        if (nextOrder >= NekoGui::profileManager->_groups.length()) break;
-        auto nextGid = NekoGui::profileManager->_groups[nextOrder];
+        if (nextOrder >= NekoGui::profileManager->groupsTabOrder.size()) break;
+        auto nextGid = NekoGui::profileManager->groupsTabOrder[nextOrder];
         nextGroup = NekoGui::profileManager->GetGroup(nextGid);
         if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
         break;
     }
 
     // calculate this group
-    auto group = NekoGui::profileManager->GetGroup(NekoGui::profileManager->_groups[_order]);
+    auto group = NekoGui::profileManager->GetGroup(NekoGui::profileManager->groupsTabOrder[_order]);
     if (group == nullptr) return;
 
     // v2.2: listener is moved to GroupItem, no refresh here.

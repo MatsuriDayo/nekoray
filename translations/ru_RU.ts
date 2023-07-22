@@ -1314,7 +1314,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>По умолчанию</translation>
+        <translation type="vanished">По умолчанию</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1645,6 +1645,10 @@ Release note:
     <message>
         <source>Used: %1 Remain: %2 Expire: %3</source>
         <translation>Использовано: %1, осталось: %2, истекло: %3</translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">По умолчанию</translation>
     </message>
 </context>
 <context>

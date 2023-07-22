@@ -1301,7 +1301,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Default</source>
-        <translation>پیش فرض</translation>
+        <translation type="vanished">پیش فرض</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1649,6 +1649,10 @@ Direct: %2</source>
     <message>
         <source>As Subscription (add to this group)</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default</source>
+        <translation type="unfinished">پیش فرض</translation>
     </message>
 </context>
 <context>

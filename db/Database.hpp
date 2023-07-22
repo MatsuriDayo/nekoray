@@ -5,17 +5,24 @@
 #include "Group.hpp"
 
 namespace NekoGui {
-    class ProfileManager : public JsonStore {
+    class ProfileManager : private JsonStore {
     public:
-        // Manager
-        QMap<int, std::shared_ptr<ProxyEntity>> profiles;
-        QMap<int, std::shared_ptr<Group>> groups;
+        // JsonStore
 
-        // JSON
-        QList<int> _profiles;
-        QList<int> _groups; // with order
+        // order -> id
+        QList<int> groupsTabOrder;
+
+        // Manager
+
+        std::map<int, std::shared_ptr<ProxyEntity>> profiles;
+        std::map<int, std::shared_ptr<Group>> groups;
 
         ProfileManager();
+
+        // LoadManager Reset and loads profiles & groups
+        void LoadManager();
+
+        void SaveManager();
 
         [[nodiscard]] static std::shared_ptr<ProxyEntity> NewProxyEntity(const QString &type);
 
@@ -38,9 +45,9 @@ namespace NekoGui {
         std::shared_ptr<Group> CurrentGroup();
 
     private:
-        void LoadManager();
-
-        void SaveManager();
+        // sort by id
+        QList<int> profilesIdOrder;
+        QList<int> groupsIdOrder;
 
         [[nodiscard]] int NewProfileID() const;
 

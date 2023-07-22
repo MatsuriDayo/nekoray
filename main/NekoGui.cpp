@@ -348,13 +348,8 @@ namespace NekoGui {
     }
 
     QStringList Routing::List() {
-        QStringList l;
-        QDir d;
-        if (d.exists(ROUTES_PREFIX)) {
-            QDir dr(ROUTES_PREFIX);
-            return dr.entryList(QDir::Files);
-        }
-        return l;
+        QDir dr(ROUTES_PREFIX);
+        return dr.entryList(QDir::Files);
     }
 
     void Routing::SetToActive(const QString &name) {
