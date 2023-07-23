@@ -864,7 +864,7 @@ namespace NekoGui {
             };
 
         // Fakedns
-        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
+        if (dataStore->fake_dns && IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
             dnsServers += QJsonObject{
                 {"tag", "dns-fake"},
                 {"address", "fakeip"},
@@ -894,7 +894,7 @@ namespace NekoGui {
         add_rule_dns(status->domainListDNSDirect, "dns-direct");
 
         // fakedns rule
-        if (IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
+        if (dataStore->fake_dns && IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
             dnsRules += QJsonObject{
                 {"inbound", "tun-in"},
                 {"server", "dns-fake"},
@@ -1061,6 +1061,7 @@ namespace NekoGui {
         auto configFn = ":/neko/vpn/sing-box-vpn.json";
         if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
         auto config = ReadFileText(configFn)
+                          .replace("%ENABLED_FAKEDNS%", dataStore->fake_dns ? "true" : "false")
                           .replace("//%IPV6_ADDRESS%", dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
                           .replace("//%SOCKS_USER_PASS%", socks_user_pass)
                           .replace("//%PROCESS_NAME_RULE%", process_name_rule)
