@@ -651,6 +651,7 @@ namespace NekoGui {
                     auto muxObj = QJsonObject{
                         {"enabled", true},
                         {"protocol", dataStore->mux_protocol},
+                        {"padding", dataStore->mux_padding},
                         {"max_streams", dataStore->mux_concurrency},
                     };
                     outbound["multiplex"] = muxObj;

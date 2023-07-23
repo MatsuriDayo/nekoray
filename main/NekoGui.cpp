@@ -237,6 +237,7 @@ namespace NekoGui {
         _add(new configItem("log_level", &log_level, itemType::string));
         _add(new configItem("mux_protocol", &mux_protocol, itemType::string));
         _add(new configItem("mux_concurrency", &mux_concurrency, itemType::integer));
+        _add(new configItem("mux_padding", &mux_padding, itemType::boolean));
         _add(new configItem("mux_default_on", &mux_default_on, itemType::boolean));
         _add(new configItem("traffic_loop_interval", &traffic_loop_interval, itemType::integer));
         _add(new configItem("test_concurrent", &test_concurrent, itemType::integer));

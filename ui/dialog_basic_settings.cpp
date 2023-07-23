@@ -66,6 +66,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     } else {
         ui->log_level->addItems({"debug", "info", "warning", "none"});
         ui->mux_protocol->hide();
+        ui->mux_padding->hide();
     }
 
     refresh_auth();
@@ -240,6 +241,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Mux
     D_LOAD_INT(mux_concurrency)
     D_LOAD_COMBO_STRING(mux_protocol)
+    D_LOAD_BOOL(mux_padding)
     D_LOAD_BOOL(mux_default_on)
 
     // Security
@@ -309,6 +311,7 @@ void DialogBasicSettings::accept() {
     // Mux
     D_SAVE_INT(mux_concurrency)
     D_SAVE_COMBO_STRING(mux_protocol)
+    D_SAVE_BOOL(mux_padding)
     D_SAVE_BOOL(mux_default_on)
 
     // Security
