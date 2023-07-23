@@ -11,9 +11,7 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new 
     ui->setupUi(this);
     ADD_ASTERISK(this);
 
-    ui->fake_dns->setVisible(!IS_NEKO_BOX);
     ui->fake_dns->setChecked(NekoGui::dataStore->fake_dns);
-    //
     ui->vpn_implementation->setCurrentIndex(NekoGui::dataStore->vpn_implementation);
     ui->vpn_mtu->setCurrentText(Int2String(NekoGui::dataStore->vpn_mtu));
     ui->vpn_ipv6->setChecked(NekoGui::dataStore->vpn_ipv6);

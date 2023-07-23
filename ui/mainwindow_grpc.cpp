@@ -376,6 +376,12 @@ void MainWindow::neko_start(int _id) {
             restartMsgboxTimer->cancel();
             restartMsgboxTimer->deleteLater();
             restartMsgbox->deleteLater();
+#ifdef Q_OS_LINUX
+            // Check systemd-resolved
+            if (NekoGui::dataStore->spmode_vpn && NekoGui::dataStore->routing->direct_dns.startsWith("local") && ReadFileText("/etc/resolv.conf").contains("systemd-resolved")) {
+                MW_show_log("[Warning] The default Direct DNS may not works with systemd-resolved, you may consider change your DNS settings.");
+            }
+#endif
         });
     });
 }

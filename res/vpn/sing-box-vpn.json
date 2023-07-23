@@ -1,19 +1,62 @@
 {
+    "log": {
+        "level": "info"
+    },
     "dns": {
+        "fakeip": {
+            "enabled": true,
+            "inet4_range": "198.18.0.0/15",
+            "inet6_range": "fc00::/18"
+        },
         "servers": [
+            {
+                "tag": "dns-remote",
+                "address": "8.8.8.8",
+                "detour": "nekoray-socks"
+            },
             {
                 "tag": "dns-direct",
                 "address": "%DNS_ADDRESS%",
                 "detour": "direct"
+            },
+            {
+                "address": "fakeip",
+                "tag": "dns-fake"
+            },
+            {
+                "address": "rcode://success",
+                "tag": "dns-block"
+            }
+        ],
+        "rules": [
+            {
+                "domain_suffix": [
+                    ".lan"
+                ],
+                "server": "dns-block"
+            },
+            {
+                "process_name": [
+                    "nekoray_core",
+                    "nekoray_core.exe",
+                    "nekobox_core",
+                    "nekobox_core.exe"
+                ],
+                "server": "dns-direct"
+            },
+            {
+                "inbound": "%FAKE_DNS_INBOUND%",
+                "server": "dns-fake"
             }
         ]
     },
     "inbounds": [
         {
             "type": "tun",
+            "tag": "tun-in",
             "interface_name": "%TUN_NAME%",
             "inet4_address": "172.19.0.1/28",
-            %IPV6_ADDRESS%
+            //%IPV6_ADDRESS%
             "mtu": %MTU%,
             "auto_route": true,
             "strict_route": %STRICT_ROUTE%,
@@ -27,7 +70,7 @@
             "type": "socks",
             "tag": "nekoray-socks",
             "udp_fragment": true,
-            %SOCKS_USER_PASS%
+            //%SOCKS_USER_PASS%
             "server": "127.0.0.1",
             "server_port": %PORT%
         },
@@ -48,10 +91,6 @@
         "final": "%FINAL_OUT%",
         "auto_detect_interface": true,
         "rules": [
-            {
-                "inbound": "dns-in",
-                "outbound": "dns-out"
-            },
             {
                 "network": "udp",
                 "port": [
@@ -93,9 +132,13 @@
                     "nekobox_core.exe"
                 ],
                 "outbound": "direct"
+            },
+            //%PROCESS_NAME_RULE%
+            //%CIDR_RULE%
+            {
+                "port": 53,
+                "outbound": "dns-out"
             }
-            %PROCESS_NAME_RULE%
-            %CIDR_RULE%
         ]
     }
 }
