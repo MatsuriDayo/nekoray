@@ -12,6 +12,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QTimer>
 
 class ExtraCoreWidget : public QWidget {
 public:
@@ -158,6 +159,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_BOOL(sub_use_proxy)
     D_LOAD_BOOL(sub_clear)
     D_LOAD_BOOL(sub_insecure)
+    D_LOAD_INT_ENABLE(sub_auto_update, sub_auto_update_enable)
 
     // Core
 
@@ -298,10 +300,17 @@ void DialogBasicSettings::accept() {
 
     // Subscription
 
+    if (ui->sub_auto_update_enable->isChecked()) {
+        TM_auto_update_subsctiption_Reset_Minute(ui->sub_auto_update->text().toInt());
+    } else {
+        TM_auto_update_subsctiption_Reset_Minute(0);
+    }
+
     NekoGui::dataStore->user_agent = ui->user_agent->text();
     D_SAVE_BOOL(sub_use_proxy)
     D_SAVE_BOOL(sub_clear)
     D_SAVE_BOOL(sub_insecure)
+    D_SAVE_INT_ENABLE(sub_auto_update, sub_auto_update_enable)
 
     // Core
 

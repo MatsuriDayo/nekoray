@@ -434,6 +434,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(t, &QTimer::timeout, this, [&] { NekoGui_sys::logCounter.fetchAndStoreRelaxed(0); });
     t->start(1000);
 
+    TM_auto_update_subsctiption = new QTimer;
+    TM_auto_update_subsctiption_Reset_Minute = [&](int m) {
+        TM_auto_update_subsctiption->stop();
+        if (m >= 30) TM_auto_update_subsctiption->start(m * 60 * 1000);
+    };
+    connect(TM_auto_update_subsctiption, &QTimer::timeout, this, [&] { UI_update_all_groups(true); });
+    TM_auto_update_subsctiption_Reset_Minute(NekoGui::dataStore->sub_auto_update);
+
     if (!NekoGui::dataStore->flag_tray) show();
 }
 

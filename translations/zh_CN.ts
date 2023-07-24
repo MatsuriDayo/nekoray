@@ -243,6 +243,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
         <source>Timeout (s)</source>
         <translation>超时（秒）</translation>
     </message>
+    <message>
+        <source>Automatic update</source>
+        <translation>自动更新订阅</translation>
+    </message>
+    <message>
+        <source>Interval (minute, invalid if less than 30)</source>
+        <translation>时间间隔（分钟，少于 30 分钟无效）</translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -309,6 +317,18 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     <message>
         <source>Clear</source>
         <translation>清除</translation>
+    </message>
+    <message>
+        <source>Skip automatic update</source>
+        <translation>跳过自动更新</translation>
+    </message>
+    <message>
+        <source>Common</source>
+        <translation>通用</translation>
+    </message>
+    <message>
+        <source>Share</source>
+        <translation>分享</translation>
     </message>
 </context>
 <context>

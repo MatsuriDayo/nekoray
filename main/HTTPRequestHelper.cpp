@@ -4,6 +4,7 @@
 #include <QNetworkProxy>
 #include <QEventLoop>
 #include <QMetaEnum>
+#include <QTimer>
 
 #include "main/NekoGui.hpp"
 
@@ -52,11 +53,20 @@ namespace NekoGui_network {
             }
             MW_show_log(QString("SSL Errors: %1 %2").arg(error_str.join(","), NekoGui::dataStore->sub_insecure ? "(Ignored)" : ""));
         });
-        //
+        // Wait for response
+        auto abortTimer = new QTimer;
+        abortTimer->setSingleShot(true);
+        abortTimer->setInterval(10000);
+        QObject::connect(abortTimer, &QTimer::timeout, _reply, &QNetworkReply::abort);
+        abortTimer->start();
         {
             QEventLoop loop;
-            QObject::connect(&accessManager, &QNetworkAccessManager::finished, &loop, &QEventLoop::quit);
+            QObject::connect(_reply, &QNetworkReply::finished, &loop, &QEventLoop::quit);
             loop.exec();
+        }
+        if (abortTimer != nullptr) {
+            abortTimer->stop();
+            abortTimer->deleteLater();
         }
         //
         auto result = NekoHTTPResponse{_reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString(),

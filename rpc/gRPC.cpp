@@ -114,9 +114,7 @@ namespace QtGrpc {
                 abortTimer = new QTimer;
                 abortTimer->setSingleShot(true);
                 abortTimer->setInterval(timeout_ms);
-                QObject::connect(abortTimer, &QTimer::timeout, abortTimer, [=]() {
-                    networkReply->abort();
-                });
+                QObject::connect(abortTimer, &QTimer::timeout, networkReply, &QNetworkReply::abort);
                 abortTimer->start();
             }
 

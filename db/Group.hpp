@@ -8,6 +8,7 @@ namespace NekoGui {
     public:
         int id = -1;
         bool archive = false;
+        bool skip_auto_update = false;
         QString name = "";
         QString url = "";
         QString info = "";

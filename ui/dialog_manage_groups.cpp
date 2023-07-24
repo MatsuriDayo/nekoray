@@ -53,34 +53,6 @@ void DialogManageGroups::on_add_clicked() {
 
 void DialogManageGroups::on_update_all_clicked() {
     if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?")) == QMessageBox::StandardButton::Yes) {
-        for (const auto &gid: NekoGui::profileManager->groupsTabOrder) {
-            auto group = NekoGui::profileManager->GetGroup(gid);
-            if (group == nullptr || group->url.isEmpty()) continue;
-            UI_update_one_group(NekoGui::profileManager->groupsTabOrder.indexOf(gid));
-            return;
-        }
+        UI_update_all_groups();
     }
-}
-
-void UI_update_one_group(int _order) {
-    // calculate next group
-    int nextOrder = _order;
-    std::shared_ptr<NekoGui::Group> nextGroup;
-    forever {
-        nextOrder += 1;
-        if (nextOrder >= NekoGui::profileManager->groupsTabOrder.size()) break;
-        auto nextGid = NekoGui::profileManager->groupsTabOrder[nextOrder];
-        nextGroup = NekoGui::profileManager->GetGroup(nextGid);
-        if (nextGroup == nullptr || nextGroup->url.isEmpty()) continue;
-        break;
-    }
-
-    // calculate this group
-    auto group = NekoGui::profileManager->GetGroup(NekoGui::profileManager->groupsTabOrder[_order]);
-    if (group == nullptr) return;
-
-    // v2.2: listener is moved to GroupItem, no refresh here.
-    NekoGui_sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
-        if (nextGroup != nullptr) UI_update_one_group(nextOrder);
-    });
 }

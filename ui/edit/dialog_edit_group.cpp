@@ -6,28 +6,30 @@
 
 #include <QClipboard>
 
+#define ADJUST_SIZE runOnUiThread([=] { adjustSize(); adjustPosition(mainwindow); }, this);
+
 DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWidget *parent) : QDialog(parent), ui(new Ui::DialogEditGroup) {
     ui->setupUi(this);
     this->ent = ent;
 
     connect(ui->type, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
         ui->cat_sub->setHidden(index == 0);
+        ADJUST_SIZE
     });
 
     ui->name->setText(ent->name);
     ui->archive->setChecked(ent->archive);
+    ui->skip_auto_update->setChecked(ent->skip_auto_update);
     ui->url->setText(ent->url);
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
     ui->manually_column_width->setChecked(ent->manually_column_width);
-    ui->copy_links->setVisible(false);
-    ui->copy_links_nkr->setVisible(false);
+    ui->cat_share->setVisible(false);
 
     if (ent->id >= 0) { // already a group
         ui->type->setDisabled(true);
         if (!ent->Profiles().isEmpty()) {
-            ui->copy_links->setVisible(true);
-            ui->copy_links_nkr->setVisible(true);
+            ui->cat_share->setVisible(true);
         }
     } else { // new group
         ui->front_proxy->hide();
@@ -60,6 +62,8 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
         QApplication::clipboard()->setText(links.join("\n"));
         MessageBoxInfo(software_name, tr("Copied"));
     });
+
+    ADJUST_SIZE
 }
 
 DialogEditGroup::~DialogEditGroup() {
@@ -76,6 +80,7 @@ void DialogEditGroup::accept() {
     ent->name = ui->name->text();
     ent->url = ui->url->text();
     ent->archive = ui->archive->isChecked();
+    ent->skip_auto_update = ui->skip_auto_update->isChecked();
     ent->manually_column_width = ui->manually_column_width->isChecked();
     ent->front_proxy_id = CACHE.front_proxy;
     QDialog::accept();

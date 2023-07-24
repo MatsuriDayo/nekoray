@@ -271,6 +271,7 @@ namespace NekoGui {
         _add(new configItem("sp_format", &system_proxy_format, itemType::string));
         _add(new configItem("sub_clear", &sub_clear, itemType::boolean));
         _add(new configItem("sub_insecure", &sub_insecure, itemType::boolean));
+        _add(new configItem("sub_auto_update", &sub_auto_update, itemType::integer));
         _add(new configItem("enable_js_hook", &enable_js_hook, itemType::integer));
         _add(new configItem("log_ignore", &log_ignore, itemType::stringList));
         _add(new configItem("start_minimal", &start_minimal, itemType::boolean));
