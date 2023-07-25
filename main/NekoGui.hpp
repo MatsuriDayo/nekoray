@@ -12,7 +12,9 @@ namespace NekoGui {
 
     QString FindCoreAsset(const QString &name);
 
-    bool isAdmin();
+    QString FindNekoBoxCoreRealPath();
+
+    bool IsAdmin();
 } // namespace NekoGui
 
 #define IS_NEKO_BOX (NekoGui::coreType == NekoGui::CoreType::SING_BOX)

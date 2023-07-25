@@ -53,14 +53,6 @@ namespace NekoGui_sys {
         }
 
         QProcess::setEnvironment(env);
-
-        if (NekoGui::dataStore->flag_linux_run_core_as_admin && dynamic_cast<CoreProcess *>(this) && program != "pkexec") {
-            arguments.prepend(program);
-            arguments.prepend("--keep-cwd");
-            program = "pkexec";
-        }
-
-        QProcess::setEnvironment(env);
         QProcess::start(program, arguments);
     }
 

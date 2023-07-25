@@ -12,6 +12,9 @@
 #ifdef Q_OS_WIN
 #include "sys/windows/guihelper.h"
 #else
+#ifdef Q_OS_LINUX
+#include <sys/linux/LinuxCap.h>
+#endif
 #include <unistd.h>
 #endif
 
@@ -407,6 +410,8 @@ namespace NekoGui {
         return !username.trimmed().isEmpty() && !password.trimmed().isEmpty();
     }
 
+    // System Utils
+
     QString FindCoreAsset(const QString &name) {
         QStringList search{NekoGui::dataStore->v2ray_asset_dir};
         search << QApplication::applicationDirPath();
@@ -428,15 +433,26 @@ namespace NekoGui {
         return {};
     }
 
+    QString FindNekoBoxCoreRealPath() {
+        auto fn = QApplication::applicationDirPath() + "/nekobox_core";
+        auto fi = QFileInfo(fn);
+        if (fi.isSymLink()) return fi.symLinkTarget();
+        return fn;
+    }
+
     short isAdminCache = -1;
 
-    bool isAdmin() {
+    // IsAdmin 主要判断：有无权限启动 Tun
+    bool IsAdmin() {
         if (isAdminCache >= 0) return isAdminCache;
 
-        auto admin = NekoGui::dataStore->flag_linux_run_core_as_admin;
+        bool admin = false;
 #ifdef Q_OS_WIN
         admin = Windows_IsInAdmin();
 #else
+#ifdef Q_OS_LINUX
+        admin |= Linux_GetCapString(FindNekoBoxCoreRealPath()).contains("cap_net_admin");
+#endif
         admin |= geteuid() == 0;
 #endif
 
