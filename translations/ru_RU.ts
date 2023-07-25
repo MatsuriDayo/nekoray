@@ -1404,7 +1404,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Running: %1</source>
-        <translation>Работает: %1</translation>
+        <translation type="vanished">Работает: %1</translation>
     </message>
     <message>
         <source>None</source>

@@ -840,9 +840,15 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     refresh_speed_label();
 
     // From UI
+    QString group_name;
+    if (running != nullptr) {
+        auto group = NekoGui::profileManager->GetGroup(running->gid);
+        if (group != nullptr) group_name = group->name;
+    }
+
     if (last_test_time.addSecs(2) < QTime::currentTime()) {
         auto txt = running == nullptr ? tr("Not Running")
-                                      : tr("Running: %1").arg(running->bean->DisplayName().left(50));
+                                      : QString("[%1] %2").arg(group_name, running->bean->DisplayName()).left(30);
         ui->label_running->setText(txt);
     }
     //
@@ -869,14 +875,15 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (!isTray && NekoGui::IsAdmin()) tt << "[Admin]";
         if (select_mode) tt << "[" + tr("Select") + "]";
         if (!title_error.isEmpty()) tt << "[" + title_error + "]";
-        if (NekoGui::dataStore->spmode_vpn) tt << "[VPN]";
-        if (NekoGui::dataStore->spmode_system_proxy) tt << "[" + tr("System Proxy") + "]";
+        if (NekoGui::dataStore->spmode_vpn && !NekoGui::dataStore->spmode_system_proxy) tt << "[Tun]";
+        if (!NekoGui::dataStore->spmode_vpn && NekoGui::dataStore->spmode_system_proxy) tt << "[" + tr("System Proxy") + "]";
+        if (NekoGui::dataStore->spmode_vpn && NekoGui::dataStore->spmode_system_proxy) tt << "[Tun+" + tr("System Proxy") + "]";
         tt << software_name;
         if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
         if (!NekoGui::dataStore->active_routing.isEmpty() && NekoGui::dataStore->active_routing != "Default") {
             tt << "[" + NekoGui::dataStore->active_routing + "]";
         }
-        if (running != nullptr) tt << running->bean->DisplayTypeAndName();
+        if (running != nullptr) tt << running->bean->DisplayTypeAndName() + "@" + group_name;
         return tt.join(isTray ? "\n" : " ");
     };
 

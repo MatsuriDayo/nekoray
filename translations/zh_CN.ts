@@ -1199,7 +1199,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Running: %1</source>
-        <translation>正在运行: %1</translation>
+        <translation type="vanished">正在运行: %1</translation>
     </message>
     <message>
         <source>None</source>
