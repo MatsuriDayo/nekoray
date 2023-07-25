@@ -14,7 +14,7 @@ import (
 )
 
 func main() {
-	fmt.Println("sing-box-extra:", boxbox.Version(), "NekoBox:", neko_common.Version_neko)
+	fmt.Println("sing-box-extra:", boxbox.Version, "NekoBox:", neko_common.Version_neko)
 	fmt.Println()
 
 	// nekobox_core
