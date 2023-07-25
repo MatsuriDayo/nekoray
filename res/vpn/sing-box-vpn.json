@@ -4,7 +4,7 @@
     },
     "dns": {
         "fakeip": {
-            "enabled": %FAKE_DNS_ENABLE%,
+            "enabled": true,
             "inet4_range": "198.18.0.0/15",
             "inet6_range": "fc00::/18"
         },
@@ -29,6 +29,13 @@
             }
         ],
         "rules": [
+            {
+                "query_type": [
+                    32,
+                    33
+                ],
+                "server": "dns-block"
+            },
             {
                 "domain_suffix": [
                     ".lan"
@@ -132,9 +139,10 @@
                     "nekobox_core.exe"
                 ],
                 "outbound": "direct"
-            },
+            }
             //%PROCESS_NAME_RULE%
             //%CIDR_RULE%
+            ,
             {
                 "port": 53,
                 "outbound": "dns-out"

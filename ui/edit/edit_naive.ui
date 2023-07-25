@@ -13,13 +13,16 @@
   <property name="windowTitle">
    <string notr="true">EditNaive</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_2">
-   <item row="2" column="0">
-    <widget class="QLabel" name="label_3">
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
      <property name="text">
-      <string>Protocol</string>
+      <string>Username</string>
      </property>
     </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="MyLineEdit" name="username"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="label_2">
@@ -30,6 +33,13 @@
    </item>
    <item row="1" column="1">
     <widget class="MyLineEdit" name="password"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Protocol</string>
+     </property>
+    </widget>
    </item>
    <item row="2" column="1">
     <widget class="QComboBox" name="protocol">
@@ -52,13 +62,6 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="label_6">
-     <property name="text">
-      <string>SNI</string>
-     </property>
-    </widget>
-   </item>
    <item row="3" column="1">
     <widget class="QPushButton" name="extra_headers">
      <property name="text">
@@ -66,15 +69,12 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_6">
      <property name="text">
-      <string>Username</string>
+      <string>SNI</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="MyLineEdit" name="username"/>
    </item>
    <item row="4" column="1">
     <widget class="MyLineEdit" name="sni"/>
@@ -83,6 +83,13 @@
     <widget class="QLabel" name="label_7">
      <property name="text">
       <string>Certificate</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QPushButton" name="certificate">
+     <property name="text">
+      <string notr="true">PushButton</string>
      </property>
     </widget>
    </item>
@@ -96,13 +103,6 @@
    <item row="6" column="1">
     <widget class="MyLineEdit" name="insecure_concurrency"/>
    </item>
-   <item row="5" column="1">
-    <widget class="QPushButton" name="certificate">
-     <property name="text">
-      <string notr="true">PushButton</string>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -112,15 +112,6 @@
    <header>ui/widget/MyLineEdit.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>username</tabstop>
-  <tabstop>password</tabstop>
-  <tabstop>protocol</tabstop>
-  <tabstop>extra_headers</tabstop>
-  <tabstop>sni</tabstop>
-  <tabstop>certificate</tabstop>
-  <tabstop>insecure_concurrency</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -863,6 +863,13 @@ namespace NekoGui {
                 {"detour", "direct"},
             };
 
+        // block
+        if (!status->forTest)
+            dnsServers += QJsonObject{
+                {"tag", "dns-block"},
+                {"address", "rcode://success"},
+            };
+
         // Fakedns
         if (dataStore->fake_dns && IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
             dnsServers += QJsonObject{
@@ -892,6 +899,18 @@ namespace NekoGui {
         };
         add_rule_dns(status->domainListDNSRemote, "dns-remote");
         add_rule_dns(status->domainListDNSDirect, "dns-direct");
+
+        // built-in rules
+        if (!status->forTest) {
+            dnsRules += QJsonObject{
+                {"query_type", QJsonArray{32, 33}},
+                {"server", "dns-block"},
+            };
+            dnsRules += QJsonObject{
+                {"domain_suffix", ".lan"},
+                {"server", "dns-block"},
+            };
+        }
 
         // fakedns rule
         if (dataStore->fake_dns && IS_NEKO_BOX_INTERNAL_TUN && dataStore->spmode_vpn && !status->forTest) {
@@ -1071,7 +1090,6 @@ namespace NekoGui {
                           .replace("%STRICT_ROUTE%", dataStore->vpn_strict_route ? "true" : "false")
                           .replace("%FINAL_OUT%", no_match_out)
                           .replace("%DNS_ADDRESS%", BOX_UNDERLYING_DNS)
-                          .replace("%FAKE_DNS_ENABLE%", dataStore->fake_dns ? "true" : "false")
                           .replace("%FAKE_DNS_INBOUND%", dataStore->fake_dns ? "tun-in" : "empty")
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
         // hook.js

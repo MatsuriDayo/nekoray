@@ -335,7 +335,6 @@ void MainWindow::neko_start(int _id) {
     if (!mu_stopping.tryLock()) {
         MessageBoxWarning(software_name, "Another profile is stopping...");
         mu_starting.unlock();
-        mu_stopping.unlock();
         return;
     }
     mu_stopping.unlock();
