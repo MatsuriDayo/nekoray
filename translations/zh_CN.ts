@@ -1372,8 +1372,8 @@ End: %2</source>
         <translation>启用系统代理</translation>
     </message>
     <message>
-        <source>Enable VPN</source>
-        <translation>启用 VPN</translation>
+        <source>Enable Tun</source>
+        <translation>启用 Tun</translation>
     </message>
     <message>
         <source>Tun Settings changed</source>

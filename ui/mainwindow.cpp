@@ -772,6 +772,9 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                         on_menu_exit_triggered();
                     } else {
                         MessageBoxWarning(software_name, "Setcap for Tun mode failed.\n\n1. You may canceled the dialog.\n2. You may be using an incompatible environment like AppImage.");
+                        if (QProcessEnvironment::systemEnvironment().contains("APPIMAGE")) {
+                            MW_show_log("If you are using AppImage, it's impossible to start a Tun. Please use other package instead.");
+                        }
                     }
 #endif
 #ifdef Q_OS_WIN

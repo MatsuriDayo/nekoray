@@ -834,7 +834,7 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Enable VPN</string>
+    <string>Enable Tun</string>
    </property>
   </action>
   <action name="menu_clone">

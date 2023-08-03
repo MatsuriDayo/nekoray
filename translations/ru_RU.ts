@@ -1310,7 +1310,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Скопировать ссылки для выбранных</translation>
     </message>
     <message>
-        <source>Enable VPN</source>
+        <source>Enable Tun</source>
         <translation>Включить TUN-режим</translation>
     </message>
     <message>
