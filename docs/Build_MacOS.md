@@ -1,4 +1,6 @@
-在 macOS 下编译 Nekoray
+提示：编译通过不代表所有功能可用，Tun 系统代理 这种功能大概率是不可用的。如果您懂得修复，我们欢迎您的 Pull Request。
+
+Tip: Passing the compilation does not mean that all functions are available, and the function of Tun system proxy is probably not available. If you know how to fix it, we welcome your Pull Request.
 
 ## git clone 源码
 

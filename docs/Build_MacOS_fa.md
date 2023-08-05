@@ -1,4 +1,4 @@
-# کامپایل کردن Nekoray در macOs
+Tip: Passing the compilation does not mean that all functions are available, and the function of Tun system proxy is probably not available. If you know how to fix it, we welcome your Pull Request.
 
 ## پروژه Nekoray را از منبع آن دریافت کنید
 در `Terminal` در مسیر دلخواه خود، دستور زیر را وارد کنید و دکمه `return` را بفشارید.
