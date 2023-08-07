@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1000</width>
-    <height>802</height>
+    <height>842</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -271,7 +271,7 @@
              </item>
              <item>
               <property name="text">
-               <string notr="true">packet</string>
+               <string notr="true">packetaddr</string>
               </property>
              </item>
              <item>

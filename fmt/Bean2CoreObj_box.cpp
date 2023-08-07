@@ -70,12 +70,8 @@ namespace NekoGui_fmt {
             outbound->insert("tls", tls);
         }
 
-        if (!packet_encoding.isEmpty()) {
-            auto pkt = packet_encoding;
-            if (pkt == "packet") pkt = "packetaddr";
-            outbound->insert("packet_encoding", pkt);
-        } else if (outbound->value("type").toString() == "vless") {
-            outbound->insert("packet_encoding", "");
+        if (outbound->value("type").toString() == "vmess" || outbound->value("type").toString() == "vless") {
+            outbound->insert("packet_encoding", packet_encoding);
         }
     }
 
