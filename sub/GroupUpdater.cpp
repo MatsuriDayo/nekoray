@@ -250,7 +250,7 @@ namespace NekoGui_sub {
                             if (!path.isEmpty()) ssPlugin << "path=" + path;
                             // clash only: skip-cert-verify
                             // clash only: headers
-                             // clash: mux=?
+                            // clash: mux=?
                         }
                         bean->plugin = ssPlugin.join(";");
                     }
