@@ -271,8 +271,8 @@ namespace NekoGui_sub {
                         bean->flow = Node2QString(proxy["flow"]);
                         bean->password = Node2QString(proxy["uuid"]);
                         // meta packet encoding
-                        if (Node2Bool(proxy["PacketAddr"])) {
-                            bean->stream->packet_encoding = "packet";
+                        if (Node2Bool(proxy["packet-addr"])) {
+                            bean->stream->packet_encoding = "packetaddr";
                         } else {
                             // For VLESS, default to use xudp
                             bean->stream->packet_encoding = "xudp";
@@ -324,8 +324,8 @@ namespace NekoGui_sub {
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
 
                     // meta packet encoding
-                    if (Node2Bool(proxy["XUDP"])) bean->stream->packet_encoding = "xudp";
-                    if (Node2Bool(proxy["PacketAddr"])) bean->stream->packet_encoding = "packet";
+                    if (Node2Bool(proxy["xudp"])) bean->stream->packet_encoding = "xudp";
+                    if (Node2Bool(proxy["packet-addr"])) bean->stream->packet_encoding = "packetaddr";
 
                     // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
