@@ -169,9 +169,11 @@ namespace NekoGui_fmt {
         return result;
     }
 
-    CoreObjOutboundBuildResult HysteriaBean::BuildCoreObjSingBox() {
+    CoreObjOutboundBuildResult QUICBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
+        QString protocol = proxy_type == proxy_TUIC ? "tuic" : "hysteria";
 
+        // TLS
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"insecure", allowInsecure},
@@ -180,25 +182,35 @@ namespace NekoGui_fmt {
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QJsonArray{alpn};
 
-        QJsonObject coreHysteriaObj{
-            {"type", "hysteria"},
-            {"server", serverAddress},
-            {"server_port", serverPort},
-            {"obfs", obfsPassword},
-            {"disable_mtu_discovery", disableMtuDiscovery},
-            {"recv_window", streamReceiveWindow},
-            {"recv_window_conn", connectionReceiveWindow},
-            {"up_mbps", uploadMbps},
-            {"down_mbps", downloadMbps},
-            {"tls", coreTlsObj},
-        };
+        // share
+        QJsonObject outbound;
+        outbound["type"] = protocol;
+        outbound["server"] = serverAddress;
+        outbound["server_port"] = serverPort;
+        outbound["tls"] = coreTlsObj;
 
-        if (!hopPort.trimmed().isEmpty()) coreHysteriaObj["hop_ports"] = hopPort;
+        if (protocol == "hysteria") { // Hysteria
+            outbound["obfs"] = obfsPassword;
+            outbound["disable_mtu_discovery"] = disableMtuDiscovery;
+            outbound["recv_window"] = streamReceiveWindow;
+            outbound["recv_window_conn"] = connectionReceiveWindow;
+            outbound["up_mbps"] = uploadMbps;
+            outbound["down_mbps"] = downloadMbps;
 
-        if (authPayloadType == hysteria_auth_base64) coreHysteriaObj["auth"] = authPayload;
-        if (authPayloadType == hysteria_auth_string) coreHysteriaObj["auth_str"] = authPayload;
+            if (!hopPort.trimmed().isEmpty()) outbound["hop_ports"] = hopPort;
+            if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
+            if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
 
-        result.outbound = coreHysteriaObj;
+        } else if (protocol == "tuic") { // TUIC
+            outbound["uuid"] = uuid;
+            outbound["password"] = password;
+            outbound["congestion_control"] = congestionControl;
+            outbound["udp_relay_mode"] = udpRelayMode;
+            outbound["zero_rtt_handshake"] = zeroRttHandshake;
+            outbound["heartbeat"] = heartbeat;
+        }
+
+        result.outbound = outbound;
         return result;
     }
 

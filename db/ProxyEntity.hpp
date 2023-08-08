@@ -15,7 +15,7 @@ namespace NekoGui_fmt {
 
     class NaiveBean;
 
-    class HysteriaBean;
+    class QUICBean;
 
     class CustomBean;
 
@@ -65,8 +65,8 @@ namespace NekoGui {
             return (NekoGui_fmt::NaiveBean *) bean.get();
         };
 
-        [[nodiscard]] NekoGui_fmt::HysteriaBean *HysteriaBean() const {
-            return (NekoGui_fmt::HysteriaBean *) bean.get();
+        [[nodiscard]] NekoGui_fmt::QUICBean *QUICBean() const {
+            return (NekoGui_fmt::QUICBean *) bean.get();
         };
 
         [[nodiscard]] NekoGui_fmt::CustomBean *CustomBean() const {

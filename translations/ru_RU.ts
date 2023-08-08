@@ -852,7 +852,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
 </context>
 <context>
-    <name>EditHysteria</name>
+    <name>EditQUIC</name>
     <message>
         <source>Auth Type</source>
         <translation>Тип авторизации</translation>

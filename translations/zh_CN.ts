@@ -856,7 +856,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
 </context>
 <context>
-    <name>EditHysteria</name>
+    <name>EditQUIC</name>
     <message>
         <source>Certificate</source>
         <translation>证书</translation>

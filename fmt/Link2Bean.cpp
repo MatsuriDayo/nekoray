@@ -1,3 +1,4 @@
+#include "QUICBean.hpp"
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
 
@@ -174,7 +175,7 @@ namespace NekoGui_fmt {
         return !(username.isEmpty() || password.isEmpty() || serverAddress.isEmpty());
     }
 
-    bool HysteriaBean::TryParseLink(const QString &link) {
+    bool QUICBean::TryParseLink(const QString &link) {
         // https://hysteria.network/docs/uri-scheme/
         auto url = QUrl(link);
         auto query = QUrlQuery(url.query());
@@ -192,14 +193,14 @@ namespace NekoGui_fmt {
 
         auto protocolStr = (query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp").toLower();
         if (protocolStr == "faketcp") {
-            protocol = NekoGui_fmt::HysteriaBean::hysteria_protocol_facktcp;
+            protocol = NekoGui_fmt::QUICBean::hysteria_protocol_facktcp;
         } else if (protocolStr.startsWith("wechat")) {
-            protocol = NekoGui_fmt::HysteriaBean::hysteria_protocol_wechat_video;
+            protocol = NekoGui_fmt::QUICBean::hysteria_protocol_wechat_video;
         }
 
         if (query.hasQueryItem("auth")) {
             authPayload = query.queryItemValue("auth");
-            authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_string;
+            authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
         }
 
         alpn = query.queryItemValue("alpn");

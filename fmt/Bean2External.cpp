@@ -35,7 +35,7 @@ namespace NekoGui_fmt {
         return 1;
     }
 
-    int HysteriaBean::NeedExternal(bool isFirstProfile) {
+    int QUICBean::NeedExternal(bool isFirstProfile) {
         auto hysteriaCore = [=] {
             if (isFirstProfile) {
                 if (NekoGui::dataStore->spmode_vpn && protocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
@@ -104,7 +104,7 @@ namespace NekoGui_fmt {
         return result;
     }
 
-    ExternalBuildResult HysteriaBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
+    ExternalBuildResult QUICBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
         ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria")};
 
         QJsonObject config;

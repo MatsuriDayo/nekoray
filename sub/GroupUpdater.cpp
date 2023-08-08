@@ -129,7 +129,7 @@ namespace NekoGui_sub {
         if (str.startsWith("hysteria://")) {
             needFix = false;
             ent = NekoGui::ProfileManager::NewProxyEntity("hysteria");
-            auto ok = ent->HysteriaBean()->TryParseLink(str);
+            auto ok = ent->QUICBean()->TryParseLink(str);
             if (!ok) return;
         }
 
@@ -374,7 +374,7 @@ namespace NekoGui_sub {
                         }
                     }
                 } else if (type_clash == "hysteria") {
-                    auto bean = ent->HysteriaBean();
+                    auto bean = ent->QUICBean();
 
                     bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
                     auto alpn = Node2QStringList(proxy["alpn"]);
@@ -390,11 +390,11 @@ namespace NekoGui_sub {
                     auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
                     auto auth = Node2QString(proxy["auth"]);
                     if (!auth_str.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_string;
+                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
                         bean->authPayload = auth_str;
                     }
                     if (!auth.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_base64;
+                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_base64;
                         bean->authPayload = auth;
                     }
                     bean->obfsPassword = Node2QString(proxy["obfs"]);
