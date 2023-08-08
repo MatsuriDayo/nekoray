@@ -7,7 +7,7 @@ else
   ARCH="amd64"
 fi
 
-source libs/deploy_common.sh
+source libs/env_deploy.sh
 DEST=$DEPLOYMENT/macos-$ARCH
 rm -rf $DEST
 mkdir -p $DEST

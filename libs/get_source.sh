@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source libs/deploy_common.sh
+source libs/env_deploy.sh
 ENV_NEKORAY=1
 source libs/get_source_env.sh
 pushd ..

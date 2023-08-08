@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source libs/deploy_common.sh
+source libs/env_deploy.sh
 if [ "$DL_QT_VER" == "5.15" ]; then
   DEST=$DEPLOYMENT/windows7-x64
 else
@@ -20,8 +20,8 @@ rm -rf translations
 rm -rf libEGL.dll libGLESv2.dll Qt6Pdf.dll
 
 if [ "$DL_QT_VER" != "5.15" ]; then
-  curl -fLSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/libcrypto-3-x64.dll
-  curl -fLSO https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/libssl-3-x64.dll
+  cp $SRC_ROOT/qtsdk/Qt/bin/libcrypto-3-x64.dll .
+  cp $SRC_ROOT/qtsdk/Qt/bin/libssl-3-x64.dll .
 fi
 
 popd

@@ -171,7 +171,7 @@ jobs:
           curl -Lo - https://github.com/tcnksm/ghr/releases/download/v0.13.0/ghr_v0.13.0_linux_amd64.tar.gz | tar xzv
           mv ghr*linux_amd64/ghr .
           ####
-          source libs/deploy_common.sh
+          source libs/env_deploy.sh
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
@@ -195,7 +195,7 @@ jobs:
       - name: Pack Debian
         if: github.event.inputs.publish != 'y'
         run: |
-          source libs/deploy_common.sh
+          source libs/env_deploy.sh
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
@@ -205,7 +205,7 @@ jobs:
           sudo rm -rf nekoray
       - name: Pack AppImage
         run: |
-          source libs/deploy_common.sh
+          source libs/env_deploy.sh
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64

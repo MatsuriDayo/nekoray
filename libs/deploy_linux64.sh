@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source libs/deploy_common.sh
+source libs/env_deploy.sh
 DEST=$DEPLOYMENT/linux64
 rm -rf $DEST
 mkdir -p $DEST
