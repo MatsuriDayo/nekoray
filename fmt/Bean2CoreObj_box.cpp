@@ -193,6 +193,8 @@ namespace NekoGui_fmt {
             {"tls", coreTlsObj},
         };
 
+        if (!hopPort.trimmed().isEmpty()) coreHysteriaObj["hop_ports"] = hopPort;
+
         if (authPayloadType == hysteria_auth_base64) coreHysteriaObj["auth"] = authPayload;
         if (authPayloadType == hysteria_auth_string) coreHysteriaObj["auth_str"] = authPayload;
 

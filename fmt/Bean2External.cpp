@@ -51,7 +51,7 @@ namespace NekoGui_fmt {
         };
 
         if (IS_NEKO_BOX) {
-            if (protocol == hysteria_protocol_udp && hopPort.trimmed().isEmpty()) {
+            if (protocol == hysteria_protocol_udp) {
                 // sing-box support
                 return 0;
             } else {
