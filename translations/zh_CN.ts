@@ -937,10 +937,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>认证有效载荷</translation>
     </message>
     <message>
-        <source>UUID</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Generate UUID</source>
         <translation>生成 UUID</translation>
     </message>
@@ -954,35 +950,15 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>UDP Relay Mode</source>
-        <translation type="unfinished">UDP 中继模式</translation>
+        <translation>UDP 中继模式</translation>
     </message>
     <message>
         <source>Congestion Control</source>
         <translation>拥塞控制</translation>
     </message>
     <message>
-        <source>native</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>quic</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Heartbeat</source>
         <translation>心跳包发送间隔</translation>
-    </message>
-    <message>
-        <source>bbr</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>cubic</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>new_reno</source>
-        <translation></translation>
     </message>
     <message>
         <source>Disable SNI</source>

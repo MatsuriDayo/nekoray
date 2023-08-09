@@ -16,6 +16,13 @@
   <layout class="QGridLayout" name="gridLayout">
    <item row="2" column="0" colspan="2">
     <layout class="QGridLayout" name="obfuscation">
+     <item row="1" column="0">
+      <widget class="QLabel" name="obfsPassword_l">
+       <property name="text">
+        <string>Obfs Password</string>
+       </property>
+      </widget>
+     </item>
      <item row="0" column="1">
       <widget class="QComboBox" name="protocol">
        <item>
@@ -35,22 +42,15 @@
        </item>
       </widget>
      </item>
+     <item row="1" column="1">
+      <widget class="MyLineEdit" name="obfsPassword"/>
+     </item>
      <item row="0" column="0">
       <widget class="QLabel" name="protocol_l">
        <property name="text">
         <string>Protocol</string>
        </property>
       </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="obfsPassword_l">
-       <property name="text">
-        <string>Obfs Password</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="MyLineEdit" name="obfsPassword"/>
      </item>
     </layout>
    </item>
@@ -109,141 +109,6 @@
      </item>
     </layout>
    </item>
-   <item row="13" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_17">
-     <item>
-      <widget class="QLabel" name="streamReceiveWindow_l">
-       <property name="text">
-        <string notr="true">recv_window</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="MyLineEdit" name="streamReceiveWindow"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="connectionReceiveWindow_l">
-       <property name="text">
-        <string notr="true">recv_window_conn</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="MyLineEdit" name="connectionReceiveWindow"/>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0" rowspan="2" colspan="2">
-    <layout class="QGridLayout" name="speed">
-     <item row="0" column="1">
-      <widget class="MyLineEdit" name="hopPort"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="uploadMbps_l">
-       <property name="text">
-        <string>Upload (Mbps)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="MyLineEdit" name="hopInterval"/>
-     </item>
-     <item row="2" column="3">
-      <widget class="QComboBox" name="udpRelayMode">
-       <item>
-        <property name="text">
-         <string notr="true">native</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">quic</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="hopInterval_l">
-       <property name="text">
-        <string>Hop Interval (s)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="MyLineEdit" name="downloadMbps"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="congestionControl">
-       <item>
-        <property name="text">
-         <string notr="true">bbr</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">cubic</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">new_reno</string>
-        </property>
-       </item>
-      </widget>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="downloadMbps_l">
-       <property name="text">
-        <string>Download (Mbps)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="hopPort_l">
-       <property name="text">
-        <string>Hop Port</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="MyLineEdit" name="uploadMbps"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="congestionControl_l">
-       <property name="text">
-        <string>Congestion Control</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="udpRelayMode_l">
-       <property name="text">
-        <string>UDP Relay Mode</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="3">
-      <widget class="QCheckBox" name="zeroRttHandshake">
-       <property name="text">
-        <string>Zero Rtt Handshake</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0" colspan="2">
-      <widget class="QCheckBox" name="disableMtuDiscovery">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Disable MTU Discovery</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
    <item row="3" column="0" rowspan="2" colspan="2">
     <layout class="QGridLayout" name="authentication">
      <item row="2" column="1">
@@ -264,7 +129,7 @@
       </widget>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="password">
+      <widget class="QLabel" name="password_l">
        <property name="text">
         <string>Password</string>
        </property>
@@ -285,7 +150,7 @@
       </widget>
      </item>
      <item row="3" column="1" colspan="2">
-      <widget class="MyLineEdit" name="password_l"/>
+      <widget class="MyLineEdit" name="password"/>
      </item>
      <item row="1" column="1" colspan="2">
       <widget class="MyLineEdit" name="authPayload"/>
@@ -320,6 +185,165 @@
    </item>
    <item row="11" column="1">
     <widget class="MyLineEdit" name="heartbeat"/>
+   </item>
+   <item row="13" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="flowControlWindow">
+     <item>
+      <widget class="QLabel" name="streamReceiveWindow_l">
+       <property name="text">
+        <string notr="true">recv_window</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="MyLineEdit" name="streamReceiveWindow"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="connectionReceiveWindow_l">
+       <property name="text">
+        <string notr="true">recv_window_conn</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="MyLineEdit" name="connectionReceiveWindow"/>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="0" rowspan="2" colspan="2">
+    <layout class="QGridLayout" name="speed">
+     <item row="3" column="0" colspan="3">
+      <widget class="QCheckBox" name="disableMtuDiscovery">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Disable MTU Discovery</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="zeroRttHandshake">
+       <property name="text">
+        <string>Zero Rtt Handshake</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="hopPortLay">
+       <item>
+        <widget class="QLabel" name="hopPort_l">
+         <property name="text">
+          <string>Hop Port</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="hopPort"/>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="2" colspan="2">
+      <layout class="QHBoxLayout" name="hopIntervalLay">
+       <item>
+        <widget class="QLabel" name="hopInterval_l">
+         <property name="text">
+          <string>Hop Interval (s)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="hopInterval"/>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="uploadMbpsLay">
+       <item>
+        <widget class="QLabel" name="uploadMbps_l">
+         <property name="text">
+          <string>Upload (Mbps)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="uploadMbps"/>
+       </item>
+      </layout>
+     </item>
+     <item row="1" column="2" colspan="2">
+      <layout class="QHBoxLayout" name="downloadMbpsLay">
+       <item>
+        <widget class="QLabel" name="downloadMbps_l">
+         <property name="text">
+          <string>Download (Mbps)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="downloadMbps"/>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="0" colspan="2">
+      <layout class="QHBoxLayout" name="congestionControlLay">
+       <item>
+        <widget class="QLabel" name="congestionControl_l">
+         <property name="text">
+          <string>Congestion Control</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="congestionControl">
+         <item>
+          <property name="text">
+           <string notr="true">bbr</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">cubic</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">new_reno</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="2" colspan="2">
+      <layout class="QHBoxLayout" name="udpRelayModeLay">
+       <item>
+        <widget class="QLabel" name="udpRelayMode_l">
+         <property name="text">
+          <string>UDP Relay Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="udpRelayMode">
+         <item>
+          <property name="text">
+           <string notr="true">native</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">quic</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
