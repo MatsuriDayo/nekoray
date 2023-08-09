@@ -416,11 +416,13 @@ namespace NekoGui_sub {
 
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->password = Node2QString(proxy["password"]);
+
                     if (Node2Int(proxy["heartbeat-interval"]) == 0) {
                         bean->heartbeat = Int2String(Node2Int(proxy["heartbeat-interval"]) * 100) + "s";
                     } else {
                         bean->heartbeat = "10s";
                     }
+
                     bean->udpRelayMode = Node2QString(proxy["udp-relay-mode"]);
                     bean->congestionControl = Node2QString(proxy["congestion-controller"]);
 
@@ -430,7 +432,7 @@ namespace NekoGui_sub {
                     bean->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     bean->caText = Node2QString(proxy["ca-str"]);
                     bean->sni = Node2QString(proxy["sni"]);
-                    
+
                 } else {
                     continue;
                 }
