@@ -9,7 +9,6 @@
 EditQUIC::EditQUIC(QWidget *parent) : QWidget(parent), ui(new Ui::EditQUIC) {
     ui->setupUi(this);
     connect(ui->uuidgen, &QPushButton::clicked, this, [=] { ui->uuid->setText(QUuid::createUuid().toString().remove("{").remove("}")); });
-
 }
 
 EditQUIC::~EditQUIC() {
@@ -36,6 +35,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
 
         ui->uuid->hide();
         ui->uuid_l->hide();
+        ui->uuidgen->hide();
         ui->password->hide();
         ui->password_l->hide();
         ui->congestionControl->hide();
@@ -80,8 +80,9 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     // TLS
     P_LOAD_STRING(sni);
     P_LOAD_STRING(alpn);
-    P_LOAD_BOOL(allowInsecure)
     P_C_LOAD_STRING(caText);
+    P_LOAD_BOOL(allowInsecure);
+    P_LOAD_BOOL(disableSni);
 }
 
 bool EditQUIC::onEnd() {
@@ -111,8 +112,9 @@ bool EditQUIC::onEnd() {
     // TLS
     P_SAVE_STRING(sni);
     P_SAVE_STRING(alpn);
-    P_SAVE_BOOL(allowInsecure)
+    P_SAVE_BOOL(allowInsecure);
     P_C_SAVE_STRING(caText);
+    P_SAVE_BOOL(disableSni);
     return true;
 }
 

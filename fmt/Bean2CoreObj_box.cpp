@@ -176,6 +176,7 @@ namespace NekoGui_fmt {
         // TLS
         QJsonObject coreTlsObj{
             {"enabled", true},
+            {"disable_sni", disableSni},
             {"insecure", allowInsecure},
             {"certificate", caText.trimmed()},
             {"server_name", sni},

@@ -53,6 +53,7 @@ namespace NekoGui_fmt {
         QString sni = "";
         QString alpn = ""; // only 1
         QString caText = "";
+        bool disableSni = false;
 
         explicit QUICBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
@@ -83,6 +84,7 @@ namespace NekoGui_fmt {
             _add(new configItem("sni", &sni, itemType::string));
             _add(new configItem("alpn", &alpn, itemType::string));
             _add(new configItem("caText", &caText, itemType::string));
+            _add(new configItem("disableSni", &disableSni, itemType::boolean));
         };
 
         QString DisplayAddress() override {
