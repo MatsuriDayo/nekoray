@@ -14,66 +14,9 @@
    <string notr="true">EditHysteria</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="7" column="1">
-    <widget class="MyLineEdit" name="authPayload"/>
-   </item>
-   <item row="14" column="1">
-    <widget class="QPushButton" name="certificate">
-     <property name="text">
-      <string notr="true">PushButton</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0">
-    <widget class="QLabel" name="authPayload_l">
-     <property name="text">
-      <string>Auth Payload</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="0">
-    <widget class="QLabel" name="authPayloadType_l">
-     <property name="text">
-      <string>Auth Type</string>
-     </property>
-    </widget>
-   </item>
-   <item row="6" column="1">
-    <widget class="QComboBox" name="authPayloadType">
-     <item>
-      <property name="text">
-       <string notr="true">NONE</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">STRING</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string notr="true">BASE64</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="obfsPassword_l">
-     <property name="text">
-      <string>Obfs Password</string>
-     </property>
-    </widget>
-   </item>
    <item row="2" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_12">
-     <item>
-      <widget class="QLabel" name="protocol_l">
-       <property name="text">
-        <string>Protocol</string>
-       </property>
-      </widget>
-     </item>
-     <item>
+    <layout class="QGridLayout" name="obfuscation">
+     <item row="0" column="1">
       <widget class="QComboBox" name="protocol">
        <item>
         <property name="text">
@@ -92,68 +35,62 @@
        </item>
       </widget>
      </item>
-     <item>
-      <widget class="QCheckBox" name="disableMtuDiscovery">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Disable MTU Discovery</string>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="0" column="0" rowspan="2" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="0" column="1">
-      <widget class="MyLineEdit" name="hopPort"/>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="hopInterval_l">
-       <property name="text">
-        <string>Hop Interval (s)</string>
-       </property>
-      </widget>
-     </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="hopPort_l">
+      <widget class="QLabel" name="protocol_l">
        <property name="text">
-        <string>Hop Port</string>
+        <string>Protocol</string>
        </property>
       </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="MyLineEdit" name="hopInterval"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="uploadMbps_l">
+      <widget class="QLabel" name="obfsPassword_l">
        <property name="text">
-        <string>Upload (Mbps)</string>
+        <string>Obfs Password</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="MyLineEdit" name="uploadMbps"/>
-     </item>
-     <item row="1" column="2">
-      <widget class="QLabel" name="downloadMbps_l">
-       <property name="text">
-        <string>Download (Mbps)</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="3">
-      <widget class="MyLineEdit" name="downloadMbps"/>
+      <widget class="MyLineEdit" name="obfsPassword"/>
      </item>
     </layout>
    </item>
-   <item row="13" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_14">
-     <item>
+   <item row="10" column="0" colspan="2">
+    <layout class="QGridLayout" name="TLS">
+     <item row="0" column="1">
+      <widget class="MyLineEdit" name="sni"/>
+     </item>
+     <item row="1" column="2">
+      <widget class="QCheckBox" name="allowInsecure">
+       <property name="text">
+        <string>Allow Insecure</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="sni_l">
+       <property name="text">
+        <string>SNI</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="certificate_l">
+       <property name="text">
+        <string>Certificate</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1" colspan="2">
+      <widget class="QPushButton" name="certificate">
+       <property name="text">
+        <string notr="true">PushButton</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="MyLineEdit" name="alpn"/>
+     </item>
+     <item row="1" column="0">
       <widget class="QLabel" name="alpn_l">
        <property name="toolTip">
         <string notr="true">Only 1 value</string>
@@ -163,50 +100,16 @@
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="MyLineEdit" name="alpn"/>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="allowInsecure">
+     <item row="0" column="2">
+      <widget class="QCheckBox" name="disableSni">
        <property name="text">
-        <string>Allow Insecure</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_16"/>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_19">
-     <item>
-      <widget class="QLabel" name="uuid_l">
-       <property name="text">
-        <string notr="true">UUID</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="MyLineEdit" name="uuid"/>
-     </item>
-     <item>
-      <widget class="QPushButton" name="uuidgen">
-       <property name="text">
-        <string>Generate UUID</string>
+        <string>Disable SNI</string>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="14" column="0">
-    <widget class="QLabel" name="certificate_l">
-     <property name="text">
-      <string>Certificate</string>
-     </property>
-    </widget>
-   </item>
-   <item row="15" column="0" colspan="2">
+   <item row="13" column="0" colspan="2">
     <layout class="QHBoxLayout" name="horizontalLayout_17">
      <item>
       <widget class="QLabel" name="streamReceiveWindow_l">
@@ -230,44 +133,22 @@
      </item>
     </layout>
    </item>
-   <item row="9" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_20">
-     <item>
-      <widget class="QLabel" name="password">
-       <property name="text">
-        <string>Password</string>
-       </property>
-      </widget>
+   <item row="0" column="0" rowspan="2" colspan="2">
+    <layout class="QGridLayout" name="speed">
+     <item row="0" column="1">
+      <widget class="MyLineEdit" name="hopPort"/>
      </item>
-     <item>
-      <widget class="MyLineEdit" name="password_l"/>
-     </item>
-    </layout>
-   </item>
-   <item row="10" column="0" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="1" column="3">
-      <widget class="QCheckBox" name="zeroRttHandshake">
+     <item row="1" column="0">
+      <widget class="QLabel" name="uploadMbps_l">
        <property name="text">
-        <string>Zero Rtt Handshake</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QLabel" name="udpRelayMode_l">
-       <property name="text">
-        <string>UDP Relay Mode</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="congestionControl_l">
-       <property name="text">
-        <string>Congestion Control</string>
+        <string>Upload (Mbps)</string>
        </property>
       </widget>
      </item>
      <item row="0" column="3">
+      <widget class="MyLineEdit" name="hopInterval"/>
+     </item>
+     <item row="2" column="3">
       <widget class="QComboBox" name="udpRelayMode">
        <item>
         <property name="text">
@@ -281,17 +162,17 @@
        </item>
       </widget>
      </item>
-     <item row="1" column="1" colspan="2">
-      <widget class="MyLineEdit" name="heartbeat"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="heartbeat_l">
+     <item row="0" column="2">
+      <widget class="QLabel" name="hopInterval_l">
        <property name="text">
-        <string>Heartbeat</string>
+        <string>Hop Interval (s)</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="1">
+     <item row="1" column="3">
+      <widget class="MyLineEdit" name="downloadMbps"/>
+     </item>
+     <item row="2" column="1">
       <widget class="QComboBox" name="congestionControl">
        <item>
         <property name="text">
@@ -310,31 +191,135 @@
        </item>
       </widget>
      </item>
-    </layout>
-   </item>
-   <item row="5" column="1">
-    <widget class="MyLineEdit" name="obfsPassword"/>
-   </item>
-   <item row="11" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_22">
-     <item>
-      <widget class="QLabel" name="sni_l">
+     <item row="1" column="2">
+      <widget class="QLabel" name="downloadMbps_l">
        <property name="text">
-        <string>SNI</string>
+        <string>Download (Mbps)</string>
        </property>
       </widget>
      </item>
-     <item>
-      <widget class="MyLineEdit" name="sni"/>
-     </item>
-     <item>
-      <widget class="QCheckBox" name="disableSni">
+     <item row="0" column="0">
+      <widget class="QLabel" name="hopPort_l">
        <property name="text">
-        <string>Disable SNI</string>
+        <string>Hop Port</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="MyLineEdit" name="uploadMbps"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="congestionControl_l">
+       <property name="text">
+        <string>Congestion Control</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QLabel" name="udpRelayMode_l">
+       <property name="text">
+        <string>UDP Relay Mode</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="3">
+      <widget class="QCheckBox" name="zeroRttHandshake">
+       <property name="text">
+        <string>Zero Rtt Handshake</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0" colspan="2">
+      <widget class="QCheckBox" name="disableMtuDiscovery">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Disable MTU Discovery</string>
        </property>
       </widget>
      </item>
     </layout>
+   </item>
+   <item row="3" column="0" rowspan="2" colspan="2">
+    <layout class="QGridLayout" name="authentication">
+     <item row="2" column="1">
+      <widget class="MyLineEdit" name="uuid"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="authPayloadType_l">
+       <property name="text">
+        <string>Auth Type</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="authPayload_l">
+       <property name="text">
+        <string>Auth Payload</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="password">
+       <property name="text">
+        <string>Password</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="uuid_l">
+       <property name="text">
+        <string notr="true">UUID</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
+      <widget class="QPushButton" name="uuidgen">
+       <property name="text">
+        <string>Generate UUID</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1" colspan="2">
+      <widget class="MyLineEdit" name="password_l"/>
+     </item>
+     <item row="1" column="1" colspan="2">
+      <widget class="MyLineEdit" name="authPayload"/>
+     </item>
+     <item row="0" column="1" colspan="2">
+      <widget class="QComboBox" name="authPayloadType">
+       <item>
+        <property name="text">
+         <string notr="true">NONE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">STRING</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string notr="true">BASE64</string>
+        </property>
+       </item>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="heartbeat_l">
+     <property name="text">
+      <string>Heartbeat</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="MyLineEdit" name="heartbeat"/>
    </item>
   </layout>
  </widget>
@@ -345,12 +330,6 @@
    <header>ui/widget/MyLineEdit.h</header>
   </customwidget>
  </customwidgets>
- <tabstops>
-  <tabstop>obfsPassword</tabstop>
-  <tabstop>authPayloadType</tabstop>
-  <tabstop>authPayload</tabstop>
-  <tabstop>certificate</tabstop>
- </tabstops>
  <resources/>
  <connections/>
 </ui>
