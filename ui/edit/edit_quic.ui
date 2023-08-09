@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>EditHysteria</class>
+ <class>EditQUIC</class>
  <widget class="QWidget" name="EditQUIC">
   <property name="geometry">
    <rect>
@@ -25,7 +25,7 @@
     </widget>
    </item>
    <item row="7" column="0">
-    <widget class="QLabel" name="authPayload_2">
+    <widget class="QLabel" name="authPayload_l">
      <property name="text">
       <string>Auth Payload</string>
      </property>
