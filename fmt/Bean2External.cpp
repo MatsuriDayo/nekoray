@@ -38,12 +38,12 @@ namespace NekoGui_fmt {
     int QUICBean::NeedExternal(bool isFirstProfile) {
         auto hysteriaCore = [=] {
             if (isFirstProfile) {
-                if (NekoGui::dataStore->spmode_vpn && protocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
+                if (NekoGui::dataStore->spmode_vpn && hyProtocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
                     return 1;
                 }
                 return 2;
             } else {
-                if (protocol == hysteria_protocol_facktcp || !hopPort.trimmed().isEmpty()) {
+                if (hyProtocol == hysteria_protocol_facktcp || !hopPort.trimmed().isEmpty()) {
                     return -1;
                 }
             }
@@ -61,7 +61,7 @@ namespace NekoGui_fmt {
         };
 
         if (IS_NEKO_BOX) {
-            if (proxy_type == proxy_TUIC || protocol == hysteria_protocol_udp) {
+            if (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp) {
                 // sing-box support
                 return 0;
             } else {
@@ -117,7 +117,7 @@ namespace NekoGui_fmt {
     }
 
     ExternalBuildResult QUICBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {
-        if (proxy_type == proxy_TUIC) { // TUIC
+        if (proxy_type == proxy_TUIC) {
             ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("tuic")};
 
             QJsonObject relay;
@@ -128,7 +128,7 @@ namespace NekoGui_fmt {
             relay["congestion_control"] = congestionControl;
             relay["zero_rtt_handshake"] = zeroRttHandshake;
             relay["disable_sni"] = disableSni;
-            relay["heartbeat"] = heartbeat;
+            if (!heartbeat.trimmed().isEmpty()) relay["heartbeat"] = heartbeat;
 
             if (!alpn.trimmed().isEmpty()) relay["alpn"] = QList2QJsonArray(alpn.split(","));
 
@@ -199,8 +199,8 @@ namespace NekoGui_fmt {
             if (authPayloadType == hysteria_auth_base64) config["auth"] = authPayload;
             if (authPayloadType == hysteria_auth_string) config["auth_str"] = authPayload;
 
-            if (protocol == hysteria_protocol_facktcp) config["protocol"] = "faketcp";
-            if (protocol == hysteria_protocol_wechat_video) config["protocol"] = "wechat-video";
+            if (hyProtocol == hysteria_protocol_facktcp) config["protocol"] = "faketcp";
+            if (hyProtocol == hysteria_protocol_wechat_video) config["protocol"] = "wechat-video";
 
             if (!sniGen.isEmpty()) config["server_name"] = sniGen;
             if (!alpn.isEmpty()) config["alpn"] = alpn;

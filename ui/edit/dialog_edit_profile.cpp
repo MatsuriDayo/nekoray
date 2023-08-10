@@ -32,7 +32,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     connect(ui->network, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         ui->network_box->setTitle(network_title_base.arg(txt));
         // 传输设置
-        if (txt == "tcp" || (!IS_NEKO_BOX && txt == "quic")) {
+        if (txt == "tcp") {
             ui->header_type->setVisible(true);
             ui->header_type_l->setVisible(true);
             ui->path->setVisible(true);

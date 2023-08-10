@@ -130,8 +130,7 @@ namespace NekoGui_fmt {
 
     QString QUICBean::ToShareLink() {
         QUrl url;
-        QString local_protocol = proxy_type == proxy_TUIC ? "tuic" : "hysteria";
-        if (local_protocol == "hysteria") { // wip
+        if (proxy_type == proxy_Hysteria) {
             url.setScheme("hysteria");
             url.setHost(serverAddress);
             url.setPort(serverPort);
@@ -143,8 +142,8 @@ namespace NekoGui_fmt {
                 q.addQueryItem("obfsParam", obfsPassword);
             }
             if (authPayloadType == hysteria_auth_string) q.addQueryItem("auth", authPayload);
-            if (protocol == hysteria_protocol_facktcp) q.addQueryItem("protocol", "faketcp");
-            if (protocol == hysteria_protocol_wechat_video) q.addQueryItem("protocol", "wechat-video");
+            if (hyProtocol == hysteria_protocol_facktcp) q.addQueryItem("protocol", "faketcp");
+            if (hyProtocol == hysteria_protocol_wechat_video) q.addQueryItem("protocol", "wechat-video");
             if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
             if (allowInsecure) q.addQueryItem("insecure", "1");
             if (!sni.isEmpty()) q.addQueryItem("peer", sni);
@@ -153,8 +152,8 @@ namespace NekoGui_fmt {
             if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
             if (!q.isEmpty()) url.setQuery(q);
             if (!name.isEmpty()) url.setFragment(name);
-        } else if (local_protocol == "tuic") {
-            // wip
+        } else if (proxy_type == proxy_TUIC) {
+            // TODO std link
         }
         return url.toString(QUrl::FullyEncoded);
     }

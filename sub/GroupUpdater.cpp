@@ -373,20 +373,17 @@ namespace NekoGui_sub {
                             break;
                         }
                     }
-                } else if (type_clash == "hysteria") {
+                } else if (type == "hysteria") {
                     auto bean = ent->QUICBean();
+
+                    bean->hopPort = Node2QString(proxy["ports"]);
+                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
                     auto alpn = Node2QStringList(proxy["alpn"]);
                     bean->caText = Node2QString(proxy["ca-str"]);
                     if (!alpn.isEmpty()) bean->alpn = alpn[0];
                     bean->sni = Node2QString(proxy["sni"]);
-
-                    bean->name = Node2QString(proxy["name"]);
-                    bean->serverAddress = Node2QString(proxy["server"]);
-                    bean->serverPort = Node2Int(proxy["port"]);
-                    bean->hopPort = Node2QString(proxy["ports"]);
-                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
                     auto auth = Node2QString(proxy["auth"]);
@@ -408,19 +405,14 @@ namespace NekoGui_sub {
                     auto downMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
                     if (upMbps > 0) bean->uploadMbps = upMbps;
                     if (downMbps > 0) bean->downloadMbps = downMbps;
-
-                } else if (type_clash == "tuic") {
+                } else if (type == "tuic") {
                     auto bean = ent->QUICBean();
-
-                    if (!Node2QString(proxy["ip"]).isEmpty()) bean->serverAddress = Node2QString(proxy["ip"]);
 
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->password = Node2QString(proxy["password"]);
 
-                    if (Node2Int(proxy["heartbeat-interval"]) == 0) {
-                        bean->heartbeat = Int2String(Node2Int(proxy["heartbeat-interval"]) * 100) + "s";
-                    } else {
-                        bean->heartbeat = "10s";
+                    if (Node2Int(proxy["heartbeat-interval"]) != 0) {
+                        bean->heartbeat = Int2String(Node2Int(proxy["heartbeat-interval"])) + "ms";
                     }
 
                     bean->udpRelayMode = Node2QString(proxy["udp-relay-mode"]);
@@ -433,6 +425,10 @@ namespace NekoGui_sub {
                     bean->caText = Node2QString(proxy["ca-str"]);
                     bean->sni = Node2QString(proxy["sni"]);
 
+                    if (!Node2QString(proxy["ip"]).isEmpty()) {
+                        if (bean->sni.isEmpty()) bean->sni = bean->serverAddress;
+                        bean->serverAddress = Node2QString(proxy["ip"]);
+                    }
                 } else {
                     continue;
                 }

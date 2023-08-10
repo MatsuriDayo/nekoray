@@ -10,23 +10,19 @@ namespace NekoGui_fmt {
         int proxy_type = proxy_Hysteria;
 
         // Hysteria
+
         static constexpr int hysteria_protocol_udp = 0;
         static constexpr int hysteria_protocol_facktcp = 1;
         static constexpr int hysteria_protocol_wechat_video = 2;
-
-        int protocol = 0;
-
-        //
+        int hyProtocol = 0;
 
         static constexpr int hysteria_auth_none = 0;
         static constexpr int hysteria_auth_string = 1;
         static constexpr int hysteria_auth_base64 = 2;
-
         int authPayloadType = 0;
+
         QString authPayload = "";
         QString obfsPassword = "";
-
-        //
 
         int uploadMbps = 100;
         int downloadMbps = 100;
@@ -34,8 +30,6 @@ namespace NekoGui_fmt {
         qint64 streamReceiveWindow = 0;
         qint64 connectionReceiveWindow = 0;
         bool disableMtuDiscovery = false;
-
-        //
 
         int hopInterval = 10;
         QString hopPort = "";
@@ -51,7 +45,7 @@ namespace NekoGui_fmt {
         // TLS
         bool allowInsecure = false;
         QString sni = "";
-        QString alpn = ""; // only 1
+        QString alpn = "";
         QString caText = "";
         bool disableSni = false;
 
@@ -59,7 +53,7 @@ namespace NekoGui_fmt {
             proxy_type = _proxy_type;
             if (proxy_type == 0) {
                 // Hysteria
-                _add(new configItem("protocol", &protocol, itemType::integer));
+                _add(new configItem("protocol", &hyProtocol, itemType::integer));
                 _add(new configItem("authPayloadType", &authPayloadType, itemType::integer));
                 _add(new configItem("authPayload", &authPayload, itemType::string));
                 _add(new configItem("obfsPassword", &obfsPassword, itemType::string));

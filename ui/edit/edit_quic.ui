@@ -170,7 +170,7 @@
       </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="protocol_l">
+      <widget class="QLabel" name="hyProtocol_l">
        <property name="text">
         <string>Protocol</string>
        </property>
@@ -179,7 +179,7 @@
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QComboBox" name="protocol">
+        <widget class="QComboBox" name="hyProtocol">
          <item>
           <property name="text">
            <string notr="true">QUIC</string>
@@ -415,7 +415,7 @@
   <tabstop>udpRelayMode</tabstop>
   <tabstop>heartbeat</tabstop>
   <tabstop>zeroRttHandshake</tabstop>
-  <tabstop>protocol</tabstop>
+  <tabstop>hyProtocol</tabstop>
   <tabstop>disableMtuDiscovery</tabstop>
   <tabstop>obfsPassword</tabstop>
   <tabstop>authPayloadType</tabstop>

@@ -20,12 +20,11 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     auto bean = this->ent->QUICBean();
 
     if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) {
-        // Hysteria
         P_LOAD_STRING(hopPort);
         P_LOAD_INT(hopInterval);
         P_LOAD_INT(uploadMbps);
         P_LOAD_INT(downloadMbps);
-        P_LOAD_COMBO_INT(protocol);
+        P_LOAD_COMBO_INT(hyProtocol);
         P_LOAD_BOOL(disableMtuDiscovery)
         P_LOAD_STRING(obfsPassword);
         P_LOAD_COMBO_INT(authPayloadType);
@@ -46,7 +45,6 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->heartbeat->hide();
         ui->heartbeat_l->hide();
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
-        // TUIC
         P_LOAD_STRING(uuid);
         P_LOAD_STRING(password);
         P_LOAD_COMBO_STRING(congestionControl);
@@ -62,8 +60,8 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->uploadMbps_l->hide();
         ui->downloadMbps->hide();
         ui->downloadMbps_l->hide();
-        ui->protocol->hide();
-        ui->protocol_l->hide();
+        ui->hyProtocol->hide();
+        ui->hyProtocol_l->hide();
         ui->disableMtuDiscovery->hide();
         ui->obfsPassword->hide();
         ui->obfsPassword_l->hide();
@@ -93,7 +91,7 @@ bool EditQUIC::onEnd() {
     P_SAVE_INT(hopInterval);
     P_SAVE_INT(uploadMbps);
     P_SAVE_INT(downloadMbps);
-    P_SAVE_COMBO_INT(protocol);
+    P_SAVE_COMBO_INT(hyProtocol);
     P_SAVE_BOOL(disableMtuDiscovery)
     P_SAVE_STRING(obfsPassword);
     P_SAVE_COMBO_INT(authPayloadType);

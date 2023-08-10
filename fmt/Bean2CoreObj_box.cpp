@@ -171,7 +171,6 @@ namespace NekoGui_fmt {
 
     CoreObjOutboundBuildResult QUICBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
-        QString protocol = proxy_type == proxy_TUIC ? "tuic" : "hysteria";
 
         // TLS
         QJsonObject coreTlsObj{
@@ -183,14 +182,13 @@ namespace NekoGui_fmt {
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QList2QJsonArray(alpn.split(","));
 
-        // share
         QJsonObject outbound;
-        outbound["type"] = protocol;
         outbound["server"] = serverAddress;
         outbound["server_port"] = serverPort;
         outbound["tls"] = coreTlsObj;
 
-        if (protocol == "hysteria") { // Hysteria
+        if (proxy_type == proxy_Hysteria) {
+            outbound["type"] = "hysteria";
             outbound["obfs"] = obfsPassword;
             outbound["disable_mtu_discovery"] = disableMtuDiscovery;
             outbound["recv_window"] = streamReceiveWindow;
@@ -202,13 +200,14 @@ namespace NekoGui_fmt {
             if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
             if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
 
-        } else if (protocol == "tuic") { // TUIC
+        } else if (proxy_type == proxy_TUIC) {
+            outbound["type"] = "tuic";
             outbound["uuid"] = uuid;
             outbound["password"] = password;
             outbound["congestion_control"] = congestionControl;
             outbound["udp_relay_mode"] = udpRelayMode;
             outbound["zero_rtt_handshake"] = zeroRttHandshake;
-            outbound["heartbeat"] = heartbeat;
+            if (!heartbeat.trimmed().isEmpty()) outbound["heartbeat"] = heartbeat;
         }
 
         result.outbound = outbound;

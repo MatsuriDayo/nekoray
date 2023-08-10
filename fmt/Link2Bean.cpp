@@ -179,35 +179,42 @@ namespace NekoGui_fmt {
         // https://hysteria.network/docs/uri-scheme/
         auto url = QUrl(link);
         auto query = QUrlQuery(url.query());
-        if (url.host().isEmpty() || url.port() == -1 || !query.hasQueryItem("upmbps") || !query.hasQueryItem("downmbps")) return false;
+        if (url.host().isEmpty() || url.port() == -1) return false;
 
-        name = url.fragment();
-        serverAddress = url.host();
-        serverPort = url.port();
-        serverAddress = url.host(); // default sni
-        hopPort = query.queryItemValue("mport");
-        obfsPassword = query.queryItemValue("obfsParam");
-        allowInsecure = query.queryItemValue("insecure") == "1";
-        uploadMbps = query.queryItemValue("upmbps").toInt();
-        downloadMbps = query.queryItemValue("downmbps").toInt();
+        if (url.scheme() == "hysteria") {
+            if (!query.hasQueryItem("upmbps") || !query.hasQueryItem("downmbps")) return false;
 
-        auto protocolStr = (query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp").toLower();
-        if (protocolStr == "faketcp") {
-            protocol = NekoGui_fmt::QUICBean::hysteria_protocol_facktcp;
-        } else if (protocolStr.startsWith("wechat")) {
-            protocol = NekoGui_fmt::QUICBean::hysteria_protocol_wechat_video;
+            name = url.fragment();
+            serverAddress = url.host();
+            serverPort = url.port();
+            serverAddress = url.host(); // default sni
+            hopPort = query.queryItemValue("mport");
+            obfsPassword = query.queryItemValue("obfsParam");
+            allowInsecure = query.queryItemValue("insecure") == "1";
+            uploadMbps = query.queryItemValue("upmbps").toInt();
+            downloadMbps = query.queryItemValue("downmbps").toInt();
+
+            auto protocolStr = (query.hasQueryItem("protocol") ? query.queryItemValue("protocol") : "udp").toLower();
+            if (protocolStr == "faketcp") {
+                hyProtocol = NekoGui_fmt::QUICBean::hysteria_protocol_facktcp;
+            } else if (protocolStr.startsWith("wechat")) {
+                hyProtocol = NekoGui_fmt::QUICBean::hysteria_protocol_wechat_video;
+            }
+
+            if (query.hasQueryItem("auth")) {
+                authPayload = query.queryItemValue("auth");
+                authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
+            }
+
+            alpn = query.queryItemValue("alpn");
+            sni = FIRST_OR_SECOND(query.queryItemValue("peer"), query.queryItemValue("sni"));
+
+            connectionReceiveWindow = query.queryItemValue("recv_window").toInt();
+            streamReceiveWindow = query.queryItemValue("recv_window_conn").toInt();
+        } else {
+            // TODO TUIC std link
+            return false;
         }
-
-        if (query.hasQueryItem("auth")) {
-            authPayload = query.queryItemValue("auth");
-            authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
-        }
-
-        alpn = query.queryItemValue("alpn");
-        sni = FIRST_OR_SECOND(query.queryItemValue("peer"), query.queryItemValue("sni"));
-
-        connectionReceiveWindow = query.queryItemValue("recv_window").toInt();
-        streamReceiveWindow = query.queryItemValue("recv_window_conn").toInt();
 
         return true;
     }
