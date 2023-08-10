@@ -213,9 +213,9 @@ set(PROJECT_SOURCES
         ui/edit/edit_naive.cpp
         ui/edit/edit_naive.ui
 
-        ui/edit/edit_hysteria.h
-        ui/edit/edit_hysteria.cpp
-        ui/edit/edit_hysteria.ui
+        ui/edit/edit_quic.h
+        ui/edit/edit_quic.cpp
+        ui/edit/edit_quic.ui
 
         ui/edit/edit_custom.h
         ui/edit/edit_custom.cpp

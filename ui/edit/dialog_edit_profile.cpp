@@ -7,7 +7,7 @@
 #include "ui/edit/edit_vmess.h"
 #include "ui/edit/edit_trojan_vless.h"
 #include "ui/edit/edit_naive.h"
-#include "ui/edit/edit_hysteria.h"
+#include "ui/edit/edit_quic.h"
 #include "ui/edit/edit_custom.h"
 
 #include "fmt/includes.h"
@@ -32,7 +32,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     connect(ui->network, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         ui->network_box->setTitle(network_title_base.arg(txt));
         // 传输设置
-        if (txt == "tcp" || (!IS_NEKO_BOX && txt == "quic")) {
+        if (txt == "tcp") {
             ui->header_type->setVisible(true);
             ui->header_type_l->setVisible(true);
             ui->path->setVisible(true);
@@ -121,6 +121,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         LOAD_TYPE("vless")
         LOAD_TYPE("naive")
         LOAD_TYPE("hysteria")
+        LOAD_TYPE("tuic")
         ui->type->addItem(tr("Custom (%1 outbound)").arg(software_core_name), "internal");
         ui->type->addItem(tr("Custom (%1 config)").arg(software_core_name), "internal-full");
         ui->type->addItem(tr("Custom (Extra Core)"), "custom");
@@ -176,8 +177,8 @@ void DialogEditProfile::typeSelected(const QString &newType) {
         auto _innerWidget = new EditNaive(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
-    } else if (type == "hysteria") {
-        auto _innerWidget = new EditHysteria(this);
+    } else if (type == "hysteria" || type == "tuic") {
+        auto _innerWidget = new EditQUIC(this);
         innerWidget = _innerWidget;
         innerEditor = _innerWidget;
     } else if (type == "custom" || type == "internal" || type == "internal-full") {

@@ -45,6 +45,7 @@ https://matsuridayo.github.io
 * VMess
 * VLESS
 * Trojan
+* TUIC ( sing-box )
 * NaïveProxy ( Custom Core )
 * Hysteria ( Custom Core or sing-box )
 * Custom Outbound

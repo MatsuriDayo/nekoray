@@ -852,7 +852,38 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
 </context>
 <context>
-    <name>EditHysteria</name>
+    <name>EditNaive</name>
+    <message>
+        <source>Protocol</source>
+        <translation>Протокол</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>Пароль</translation>
+    </message>
+    <message>
+        <source>Extra headers</source>
+        <translation>Дополнительные заголовки</translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation>SNI</translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>Имя пользователя</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>Сертификат</translation>
+    </message>
+    <message>
+        <source>Insecure concurrency</source>
+        <translation></translation>
+    </message>
+</context>
+<context>
+    <name>EditQUIC</name>
     <message>
         <source>Auth Type</source>
         <translation>Тип авторизации</translation>
@@ -901,36 +932,33 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <source>Auth Payload</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>EditNaive</name>
     <message>
-        <source>Protocol</source>
-        <translation>Протокол</translation>
+        <source>Disable SNI</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation type="unfinished">Пароль</translation>
     </message>
     <message>
-        <source>Extra headers</source>
-        <translation>Дополнительные заголовки</translation>
+        <source>Generate UUID</source>
+        <translation type="unfinished">Сгенерировать</translation>
     </message>
     <message>
-        <source>SNI</source>
-        <translation>SNI</translation>
+        <source>Heartbeat</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>Имя пользователя</translation>
+        <source>Zero Rtt Handshake</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <source>Congestion Control</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Insecure concurrency</source>
-        <translation></translation>
+        <source>UDP Relay Mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

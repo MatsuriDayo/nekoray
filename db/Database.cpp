@@ -185,7 +185,9 @@ namespace NekoGui {
         } else if (type == "naive") {
             bean = new NekoGui_fmt::NaiveBean();
         } else if (type == "hysteria") {
-            bean = new NekoGui_fmt::HysteriaBean();
+            bean = new NekoGui_fmt::QUICBean(NekoGui_fmt::QUICBean::proxy_Hysteria);
+        } else if (type == "tuic") {
+            bean = new NekoGui_fmt::QUICBean(NekoGui_fmt::QUICBean::proxy_TUIC);
         } else if (type == "custom") {
             bean = new NekoGui_fmt::CustomBean();
         } else {

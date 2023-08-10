@@ -1,3 +1,4 @@
+#include "QUICBean.hpp"
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
 
@@ -127,29 +128,33 @@ namespace NekoGui_fmt {
         return url.toString(QUrl::FullyEncoded);
     }
 
-    QString HysteriaBean::ToShareLink() {
+    QString QUICBean::ToShareLink() {
         QUrl url;
-        url.setScheme("hysteria");
-        url.setHost(serverAddress);
-        url.setPort(serverPort);
-        QUrlQuery q;
-        q.addQueryItem("upmbps", Int2String(uploadMbps));
-        q.addQueryItem("downmbps", Int2String(downloadMbps));
-        if (!obfsPassword.isEmpty()) {
-            q.addQueryItem("obfs", "xplus");
-            q.addQueryItem("obfsParam", obfsPassword);
+        if (proxy_type == proxy_Hysteria) {
+            url.setScheme("hysteria");
+            url.setHost(serverAddress);
+            url.setPort(serverPort);
+            QUrlQuery q;
+            q.addQueryItem("upmbps", Int2String(uploadMbps));
+            q.addQueryItem("downmbps", Int2String(downloadMbps));
+            if (!obfsPassword.isEmpty()) {
+                q.addQueryItem("obfs", "xplus");
+                q.addQueryItem("obfsParam", obfsPassword);
+            }
+            if (authPayloadType == hysteria_auth_string) q.addQueryItem("auth", authPayload);
+            if (hyProtocol == hysteria_protocol_facktcp) q.addQueryItem("protocol", "faketcp");
+            if (hyProtocol == hysteria_protocol_wechat_video) q.addQueryItem("protocol", "wechat-video");
+            if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
+            if (allowInsecure) q.addQueryItem("insecure", "1");
+            if (!sni.isEmpty()) q.addQueryItem("peer", sni);
+            if (!alpn.isEmpty()) q.addQueryItem("alpn", alpn);
+            if (connectionReceiveWindow > 0) q.addQueryItem("recv_window", Int2String(connectionReceiveWindow));
+            if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
+            if (!q.isEmpty()) url.setQuery(q);
+            if (!name.isEmpty()) url.setFragment(name);
+        } else if (proxy_type == proxy_TUIC) {
+            // TODO std link
         }
-        if (authPayloadType == hysteria_auth_string) q.addQueryItem("auth", authPayload);
-        if (protocol == hysteria_protocol_facktcp) q.addQueryItem("protocol", "faketcp");
-        if (protocol == hysteria_protocol_wechat_video) q.addQueryItem("protocol", "wechat-video");
-        if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
-        if (allowInsecure) q.addQueryItem("insecure", "1");
-        if (!sni.isEmpty()) q.addQueryItem("peer", sni);
-        if (!alpn.isEmpty()) q.addQueryItem("alpn", alpn);
-        if (connectionReceiveWindow > 0) q.addQueryItem("recv_window", Int2String(connectionReceiveWindow));
-        if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
-        if (!q.isEmpty()) url.setQuery(q);
-        if (!name.isEmpty()) url.setFragment(name);
         return url.toString(QUrl::FullyEncoded);
     }
 

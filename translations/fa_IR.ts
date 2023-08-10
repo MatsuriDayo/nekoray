@@ -856,7 +856,38 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
 </context>
 <context>
-    <name>EditHysteria</name>
+    <name>EditNaive</name>
+    <message>
+        <source>Protocol</source>
+        <translation>پروتکل</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>رمزعبور</translation>
+    </message>
+    <message>
+        <source>Extra headers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>نام کاربری</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation type="unfinished">گواهی</translation>
+    </message>
+    <message>
+        <source>Insecure concurrency</source>
+        <translation>همزمانی ناامن</translation>
+    </message>
+</context>
+<context>
+    <name>EditQUIC</name>
     <message>
         <source>Certificate</source>
         <translation type="unfinished">گواهی</translation>
@@ -905,36 +936,33 @@ This needs to be run NekoBox with administrator privileges.</source>
         <source>Auth Payload</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>EditNaive</name>
     <message>
-        <source>Protocol</source>
-        <translation>پروتکل</translation>
+        <source>Disable SNI</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>رمزعبور</translation>
-    </message>
-    <message>
-        <source>Extra headers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>SNI</source>
+        <source>Generate UUID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>نام کاربری</translation>
+        <source>Heartbeat</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Certificate</source>
-        <translation type="unfinished">گواهی</translation>
+        <source>Zero Rtt Handshake</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Insecure concurrency</source>
-        <translation>همزمانی ناامن</translation>
+        <source>Congestion Control</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>UDP Relay Mode</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

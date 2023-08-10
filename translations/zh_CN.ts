@@ -856,7 +856,38 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
 </context>
 <context>
-    <name>EditHysteria</name>
+    <name>EditNaive</name>
+    <message>
+        <source>Protocol</source>
+        <translation>协议</translation>
+    </message>
+    <message>
+        <source>Password</source>
+        <translation>密码</translation>
+    </message>
+    <message>
+        <source>Extra headers</source>
+        <translation>附加标头</translation>
+    </message>
+    <message>
+        <source>SNI</source>
+        <translation></translation>
+    </message>
+    <message>
+        <source>Username</source>
+        <translation>用户名</translation>
+    </message>
+    <message>
+        <source>Certificate</source>
+        <translation>证书</translation>
+    </message>
+    <message>
+        <source>Insecure concurrency</source>
+        <translation>不安全并发</translation>
+    </message>
+</context>
+<context>
+    <name>EditQUIC</name>
     <message>
         <source>Certificate</source>
         <translation>证书</translation>
@@ -905,36 +936,33 @@ This needs to be run NekoBox with administrator privileges.</source>
         <source>Auth Payload</source>
         <translation>认证有效载荷</translation>
     </message>
-</context>
-<context>
-    <name>EditNaive</name>
     <message>
-        <source>Protocol</source>
-        <translation>协议</translation>
+        <source>Generate UUID</source>
+        <translation>生成 UUID</translation>
     </message>
     <message>
         <source>Password</source>
         <translation>密码</translation>
     </message>
     <message>
-        <source>Extra headers</source>
-        <translation>附加标头</translation>
+        <source>Zero Rtt Handshake</source>
+        <translation>0-Rtt 握手</translation>
     </message>
     <message>
-        <source>SNI</source>
-        <translation></translation>
+        <source>UDP Relay Mode</source>
+        <translation>UDP 中继模式</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>用户名</translation>
+        <source>Congestion Control</source>
+        <translation>拥塞控制</translation>
     </message>
     <message>
-        <source>Certificate</source>
-        <translation>证书</translation>
+        <source>Heartbeat</source>
+        <translation>心跳包发送间隔</translation>
     </message>
     <message>
-        <source>Insecure concurrency</source>
-        <translation>不安全并发</translation>
+        <source>Disable SNI</source>
+        <translation>不发送服务器名称指示</translation>
     </message>
 </context>
 <context>

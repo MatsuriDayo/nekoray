@@ -129,7 +129,7 @@ namespace NekoGui_sub {
         if (str.startsWith("hysteria://")) {
             needFix = false;
             ent = NekoGui::ProfileManager::NewProxyEntity("hysteria");
-            auto ok = ent->HysteriaBean()->TryParseLink(str);
+            auto ok = ent->QUICBean()->TryParseLink(str);
             if (!ok) return;
         }
 
@@ -373,28 +373,26 @@ namespace NekoGui_sub {
                             break;
                         }
                     }
-                } else if (type_clash == "hysteria") {
-                    auto bean = ent->HysteriaBean();
+                } else if (type == "hysteria") {
+                    auto bean = ent->QUICBean();
+
+                    bean->hopPort = Node2QString(proxy["ports"]);
+                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
                     auto alpn = Node2QStringList(proxy["alpn"]);
+                    bean->caText = Node2QString(proxy["ca-str"]);
                     if (!alpn.isEmpty()) bean->alpn = alpn[0];
                     bean->sni = Node2QString(proxy["sni"]);
-
-                    bean->name = Node2QString(proxy["name"]);
-                    bean->serverAddress = Node2QString(proxy["server"]);
-                    bean->serverPort = Node2Int(proxy["port"]);
-                    bean->hopPort = Node2QString(proxy["ports"]);
-                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
                     auto auth = Node2QString(proxy["auth"]);
                     if (!auth_str.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_string;
+                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
                         bean->authPayload = auth_str;
                     }
                     if (!auth.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::HysteriaBean::hysteria_auth_base64;
+                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_base64;
                         bean->authPayload = auth;
                     }
                     bean->obfsPassword = Node2QString(proxy["obfs"]);
@@ -407,6 +405,30 @@ namespace NekoGui_sub {
                     auto downMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
                     if (upMbps > 0) bean->uploadMbps = upMbps;
                     if (downMbps > 0) bean->downloadMbps = downMbps;
+                } else if (type == "tuic") {
+                    auto bean = ent->QUICBean();
+
+                    bean->uuid = Node2QString(proxy["uuid"]);
+                    bean->password = Node2QString(proxy["password"]);
+
+                    if (Node2Int(proxy["heartbeat-interval"]) != 0) {
+                        bean->heartbeat = Int2String(Node2Int(proxy["heartbeat-interval"])) + "ms";
+                    }
+
+                    bean->udpRelayMode = Node2QString(proxy["udp-relay-mode"]);
+                    bean->congestionControl = Node2QString(proxy["congestion-controller"]);
+
+                    bean->disableSni = Node2Bool(proxy["disable-sni"]);
+                    bean->zeroRttHandshake = Node2Bool(proxy["reduce-rtt"]);
+                    bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
+                    bean->alpn = Node2QStringList(proxy["alpn"]).join(",");
+                    bean->caText = Node2QString(proxy["ca-str"]);
+                    bean->sni = Node2QString(proxy["sni"]);
+
+                    if (!Node2QString(proxy["ip"]).isEmpty()) {
+                        if (bean->sni.isEmpty()) bean->sni = bean->serverAddress;
+                        bean->serverAddress = Node2QString(proxy["ip"]);
+                    }
                 } else {
                     continue;
                 }
