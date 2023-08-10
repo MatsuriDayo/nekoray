@@ -65,10 +65,11 @@ namespace NekoGui_ConfigItem {
         }
     }
 
-    QJsonObject JsonStore::ToJson() {
+    QJsonObject JsonStore::ToJson(const QStringList &without) {
         QJsonObject object;
         for (const auto &_item: _map) {
             auto item = _item.get();
+            if (without.contains(item->name)) continue;
             switch (item->type) {
                 case itemType::string:
                     // Allow Empty

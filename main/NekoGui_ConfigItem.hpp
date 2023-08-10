@@ -53,7 +53,7 @@ namespace NekoGui_ConfigItem {
 
         void _setValue(const QString &name, void *p);
 
-        QJsonObject ToJson();
+        QJsonObject ToJson(const QStringList &without = {});
 
         QByteArray ToJsonBytes();
 

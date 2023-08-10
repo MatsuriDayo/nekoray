@@ -5,7 +5,7 @@ namespace NekoGui {
     QString ProfileFilter_ent_key(const std::shared_ptr<NekoGui::ProxyEntity> &ent, bool by_address) {
         by_address &= ent->type != "custom";
         return by_address ? (ent->bean->DisplayAddress() + ent->bean->DisplayType())
-                          : ent->bean->ToJsonBytes();
+                          : QJsonObject2QString(ent->bean->ToJson({"c_cfg", "c_out"}), true) + ent->bean->DisplayType();
     }
 
     void ProfileFilter::Uniq(const QList<std::shared_ptr<ProxyEntity>> &in,

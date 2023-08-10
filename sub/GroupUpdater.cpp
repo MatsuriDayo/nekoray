@@ -316,7 +316,7 @@ namespace NekoGui_sub {
                     auto bean = ent->VMessBean();
                     bean->uuid = Node2QString(proxy["uuid"]);
                     bean->aid = Node2Int(proxy["alterId"]);
-                    bean->security = Node2QString(proxy["cipher"]);
+                    bean->security = Node2QString(proxy["cipher"], bean->security);
                     bean->stream->network = Node2QString(proxy["network"], "tcp").replace("h2", "http");
                     bean->stream->sni = FIRST_OR_SECOND(Node2QString(proxy["sni"]), Node2QString(proxy["servername"]));
                     bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
@@ -415,8 +415,8 @@ namespace NekoGui_sub {
                         bean->heartbeat = Int2String(Node2Int(proxy["heartbeat-interval"])) + "ms";
                     }
 
-                    bean->udpRelayMode = Node2QString(proxy["udp-relay-mode"]);
-                    bean->congestionControl = Node2QString(proxy["congestion-controller"]);
+                    bean->udpRelayMode = Node2QString(proxy["udp-relay-mode"], bean->udpRelayMode);
+                    bean->congestionControl = Node2QString(proxy["congestion-controller"], bean->congestionControl);
 
                     bean->disableSni = Node2Bool(proxy["disable-sni"]);
                     bean->zeroRttHandshake = Node2Bool(proxy["reduce-rtt"]);
@@ -553,24 +553,52 @@ namespace NekoGui_sub {
         if (group != nullptr) {
             out_all = group->Profiles();
 
+            // 第一次判定：除了 自定义字段 其他全部相同的，视为相同配置
+
             NekoGui::ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
             NekoGui::ProfileFilter::OnlyInSrc(in, out, only_in);
             NekoGui::ProfileFilter::OnlyInSrc(out, in, only_out);
             NekoGui::ProfileFilter::Common(in, out, update_del, false, true);
-            update_del += only_in;
-            if (NekoGui::dataStore->sub_clear) update_del = {};
+
+            // 第二次判定：是否只更改了 名称 或 地址端口
+
+#define key_without_name QJsonObject2QString(ent->bean->ToJson({"name", "c_cfg", "c_out"}), true) + ent->bean->DisplayType()
+#define key_without_serverAddr QJsonObject2QString(ent->bean->ToJson({"addr", "port", "c_cfg", "c_out"}), true) + ent->bean->DisplayType()
+
+            QString notice_added;
+            QString notice_deleted;
+            std::map<QString, std::shared_ptr<NekoGui::ProxyEntity>> only_out_without_name;
+            std::map<QString, std::shared_ptr<NekoGui::ProxyEntity>> only_out_without_serverAddr;
+
+            for (const auto &ent: only_out) {
+                only_out_without_name[key_without_name] = ent;
+                only_out_without_serverAddr[key_without_serverAddr] = ent;
+                notice_added += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
+            }
+
+            for (const auto &ent: only_in) {
+                // qDebug() << ent->bean->name << key_without_name;
+                notice_deleted += "[-] " + ent->bean->DisplayTypeAndName() + "\n";
+                if (only_out_without_name.count(key_without_name)) {
+                    auto updated = only_out_without_name[key_without_name];
+                    ent->bean->name = updated->bean->name;
+                    ent->Save();
+                    update_del += updated;
+                } else if (only_out_without_serverAddr.count(key_without_serverAddr)) {
+                    auto updated = only_out_without_serverAddr[key_without_serverAddr];
+                    ent->bean->serverAddress = updated->bean->serverAddress;
+                    ent->bean->serverPort = updated->bean->serverPort;
+                    ent->Save();
+                    update_del += updated;
+                } else {
+                    update_del += ent;
+                }
+            }
+
+            // Delete unused & show message
 
             for (const auto &ent: update_del) {
                 NekoGui::profileManager->DeleteProfile(ent->id);
-            }
-
-            QString notice_added;
-            for (const auto &ent: only_out) {
-                notice_added += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
-            }
-            QString notice_deleted;
-            for (const auto &ent: only_in) {
-                notice_deleted += "[-] " + ent->bean->DisplayTypeAndName() + "\n";
             }
 
             auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
