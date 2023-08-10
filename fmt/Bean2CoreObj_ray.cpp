@@ -172,7 +172,6 @@ namespace NekoGui_fmt {
             if (flow == "none") {
                 flow = "";
             }
-
             settings = QJsonObject{
                 {"vnext", QJsonArray{
                               QJsonObject{

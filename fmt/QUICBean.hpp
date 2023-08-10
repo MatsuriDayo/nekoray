@@ -35,6 +35,7 @@ namespace NekoGui_fmt {
         QString hopPort = "";
 
         // TUIC
+
         QString uuid = "";
         QString password = "";
         QString congestionControl = "bbr";
@@ -43,6 +44,7 @@ namespace NekoGui_fmt {
         QString heartbeat = "10s";
 
         // TLS
+
         bool allowInsecure = false;
         QString sni = "";
         QString alpn = "";
@@ -51,8 +53,7 @@ namespace NekoGui_fmt {
 
         explicit QUICBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
-            if (proxy_type == 0) {
-                // Hysteria
+            if (proxy_type == proxy_Hysteria) {
                 _add(new configItem("protocol", &hyProtocol, itemType::integer));
                 _add(new configItem("authPayloadType", &authPayloadType, itemType::integer));
                 _add(new configItem("authPayload", &authPayload, itemType::string));
@@ -64,8 +65,7 @@ namespace NekoGui_fmt {
                 _add(new configItem("disableMtuDiscovery", &disableMtuDiscovery, itemType::boolean));
                 _add(new configItem("hopInterval", &hopInterval, itemType::integer));
                 _add(new configItem("hopPort", &hopPort, itemType::string));
-            } else if (proxy_type == 1) {
-                // TUIC
+            } else if (proxy_type == proxy_TUIC) {
                 _add(new configItem("uuid", &uuid, itemType::string));
                 _add(new configItem("password", &password, itemType::string));
                 _add(new configItem("congestionControl", &congestionControl, itemType::string));

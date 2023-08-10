@@ -172,7 +172,6 @@ namespace NekoGui_fmt {
     CoreObjOutboundBuildResult QUICBean::BuildCoreObjSingBox() {
         CoreObjOutboundBuildResult result;
 
-        // TLS
         QJsonObject coreTlsObj{
             {"enabled", true},
             {"disable_sni", disableSni},
@@ -182,10 +181,11 @@ namespace NekoGui_fmt {
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QList2QJsonArray(alpn.split(","));
 
-        QJsonObject outbound;
-        outbound["server"] = serverAddress;
-        outbound["server_port"] = serverPort;
-        outbound["tls"] = coreTlsObj;
+        QJsonObject outbound{
+            {"server", serverAddress},
+            {"server_port", serverPort},
+            {"tls", coreTlsObj},
+        };
 
         if (proxy_type == proxy_Hysteria) {
             outbound["type"] = "hysteria";
@@ -199,7 +199,6 @@ namespace NekoGui_fmt {
             if (!hopPort.trimmed().isEmpty()) outbound["hop_ports"] = hopPort;
             if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
             if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
-
         } else if (proxy_type == proxy_TUIC) {
             outbound["type"] = "tuic";
             outbound["uuid"] = uuid;

@@ -129,7 +129,6 @@ namespace NekoGui_fmt {
             relay["zero_rtt_handshake"] = zeroRttHandshake;
             relay["disable_sni"] = disableSni;
             if (!heartbeat.trimmed().isEmpty()) relay["heartbeat"] = heartbeat;
-
             if (!alpn.trimmed().isEmpty()) relay["alpn"] = QList2QJsonArray(alpn.split(","));
 
             if (!caText.trimmed().isEmpty()) {
@@ -163,7 +162,6 @@ namespace NekoGui_fmt {
             result.arguments = QStringList{"-c", TempFile};
 
             return result;
-
         } else { // Hysteria
             ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria")};
 
