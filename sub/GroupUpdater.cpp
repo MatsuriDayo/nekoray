@@ -268,6 +268,11 @@ namespace NekoGui_sub {
                         }
                         bean->plugin = ssPlugin.join(";");
                     }
+
+                    // sing-mux
+                    auto smux = NodeChild(proxy, {"smux"});
+                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
+
                     auto protocol_n = proxy["protocol"];
                     if (protocol_n.IsDefined()) {
                         continue; // SSR
@@ -300,6 +305,10 @@ namespace NekoGui_sub {
                     bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     bean->stream->allow_insecure = Node2Bool(proxy["skip-cert-verify"]);
                     bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
+
+                    // sing-mux
+                    auto smux = NodeChild(proxy, {"smux"});
+                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
 
                     // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
@@ -336,6 +345,10 @@ namespace NekoGui_sub {
                     bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+
+                    // sing-mux
+                    auto smux = NodeChild(proxy, {"smux"});
+                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
 
                     // meta packet encoding
                     if (Node2Bool(proxy["xudp"])) bean->stream->packet_encoding = "xudp";
