@@ -133,6 +133,14 @@ namespace NekoGui_sub {
             if (!ok) return;
         }
 
+        // TUIC
+        if (str.startsWith("tuic://")) {
+            needFix = false;
+            ent = NekoGui::ProfileManager::NewProxyEntity("tuic");
+            auto ok = ent->QUICBean()->TryParseLink(str);
+            if (!ok) return;
+        }
+
         if (ent == nullptr) return;
 
         // Fix

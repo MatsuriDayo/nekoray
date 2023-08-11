@@ -218,12 +218,12 @@ namespace NekoGui_fmt {
     }
 
     bool QUICBean::TryParseLink(const QString &link) {
-        // https://hysteria.network/docs/uri-scheme/
         auto url = QUrl(link);
         auto query = QUrlQuery(url.query());
         if (url.host().isEmpty() || url.port() == -1) return false;
 
         if (url.scheme() == "hysteria") {
+            // https://hysteria.network/docs/uri-scheme/
             if (!query.hasQueryItem("upmbps") || !query.hasQueryItem("downmbps")) return false;
 
             name = url.fragment();
@@ -253,9 +253,25 @@ namespace NekoGui_fmt {
 
             connectionReceiveWindow = query.queryItemValue("recv_window").toInt();
             streamReceiveWindow = query.queryItemValue("recv_window_conn").toInt();
-        } else {
-            // TODO TUIC std link
-            return false;
+
+        } else if (url.scheme() == "tuic") {
+            // by daeuniverse
+            // https://github.com/daeuniverse/dae/discussions/182
+
+            name = url.fragment();
+            serverAddress = url.host();
+            if (serverPort == -1) serverPort = 443;
+            serverPort = url.port();
+
+            uuid = url.userName();
+            password = url.password();
+
+            congestionControl = query.queryItemValue("congestion_control");
+            alpn = query.queryItemValue("alpn");
+            sni = query.queryItemValue("sni");
+            udpRelayMode = query.queryItemValue("udp_relay_mode");
+            allowInsecure = query.queryItemValue("allow_insecure") == "1";
+            disableSni = query.queryItemValue("disable_sni") == "1";
         }
 
         return true;

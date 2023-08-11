@@ -198,8 +198,23 @@ namespace NekoGui_fmt {
             if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
             if (!q.isEmpty()) url.setQuery(q);
             if (!name.isEmpty()) url.setFragment(name);
+
         } else if (proxy_type == proxy_TUIC) {
-            // TODO std link
+            url.setScheme("tuic");
+            url.setUserName(uuid);
+            url.setPassword(password);
+            url.setHost(serverAddress);
+            url.setPort(serverPort);
+
+            QUrlQuery q;
+            if (!congestionControl.isEmpty()) q.addQueryItem("congestion_control", congestionControl);
+            if (!alpn.isEmpty()) q.addQueryItem("alpn", alpn);
+            if (!sni.isEmpty()) q.addQueryItem("sni", sni);
+            if (!udpRelayMode.isEmpty()) q.addQueryItem("udp_relay_mode", udpRelayMode);
+            if (allowInsecure) q.addQueryItem("allow_insecure", "1");
+            if (disableSni) q.addQueryItem("disable_sni", "1");
+            if (!q.isEmpty()) url.setQuery(q);
+            if (!name.isEmpty()) url.setFragment(name);
         }
         return url.toString(QUrl::FullyEncoded);
     }
