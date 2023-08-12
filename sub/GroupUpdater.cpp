@@ -232,6 +232,13 @@ namespace NekoGui_sub {
                     bean->password = Node2QString(proxy["password"]);
                     auto plugin_n = proxy["plugin"];
                     auto pluginOpts_n = proxy["plugin-opts"];
+
+                    // UDP over TCP
+                    if (Node2Bool(proxy["udp-over-tcp"])) {
+                        bean->uot = Node2Int(proxy["udp-over-tcp-version"]);
+                        if (bean->uot == 0) bean->uot = 2;
+                    }
+
                     if (plugin_n.IsDefined() && pluginOpts_n.IsDefined()) {
                         QStringList ssPlugin;
                         auto plugin = Node2QString(plugin_n);
