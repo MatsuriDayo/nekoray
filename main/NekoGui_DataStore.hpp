@@ -97,6 +97,7 @@ namespace NekoGui {
         QString test_download_url = "http://cachefly.cachefly.net/10mb.test";
         int test_download_timeout = 30;
         int test_concurrent = 5;
+        bool old_share_link_format = true;
         int traffic_loop_interval = 1000;
         bool connection_statistics = false;
         int current_group = 0; // group id

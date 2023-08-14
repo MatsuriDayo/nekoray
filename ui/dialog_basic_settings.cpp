@@ -81,6 +81,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_INT(test_download_timeout)
     D_LOAD_STRING(test_latency_url)
     D_LOAD_STRING(test_download_url)
+    D_LOAD_BOOL(old_share_link_format)
 
     connect(ui->custom_inbound_edit, &QPushButton::clicked, this, [=] {
         C_EDIT_JSON_ALLOW_EMPTY(custom_inbound)
@@ -272,6 +273,7 @@ void DialogBasicSettings::accept() {
     D_SAVE_INT(test_download_timeout)
     D_SAVE_STRING(test_latency_url)
     D_SAVE_STRING(test_download_url)
+    D_SAVE_BOOL(old_share_link_format)
 
     // Style
 

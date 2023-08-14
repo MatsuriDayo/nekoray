@@ -1,4 +1,3 @@
-#include "QUICBean.hpp"
 #include "db/ProxyEntity.hpp"
 #include "fmt/includes.h"
 
@@ -153,9 +152,52 @@ namespace NekoGui_fmt {
             stream->security = objN["tls"].toString();
             // TODO quic & kcp
             return true;
+        } else {
+            // https://github.com/XTLS/Xray-core/discussions/716
+            auto url = QUrl(link);
+            if (!url.isValid()) return false;
+            auto query = GetQuery(url);
+
+            name = url.fragment(QUrl::FullyDecoded);
+            serverAddress = url.host();
+            serverPort = url.port();
+            uuid = url.userName();
+            if (serverPort == -1) serverPort = 443;
+
+            aid = 0; // “此分享标准仅针对 VMess AEAD 和 VLESS。”
+            security = GetQueryValue(query, "encryption", "auto");
+
+            // security
+            stream->network = GetQueryValue(query, "type", "tcp");
+            stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls");
+            auto sni1 = GetQueryValue(query, "sni");
+            auto sni2 = GetQueryValue(query, "peer");
+            if (!sni1.isEmpty()) stream->sni = sni1;
+            if (!sni2.isEmpty()) stream->sni = sni2;
+            if (!query.queryItemValue("allowInsecure").isEmpty()) stream->allow_insecure = true;
+            stream->reality_pbk = GetQueryValue(query, "pbk", "");
+            stream->reality_sid = GetQueryValue(query, "sid", "");
+            stream->reality_spx = GetQueryValue(query, "spx", "");
+            stream->utlsFingerprint = GetQueryValue(query, "fp", "");
+
+            // type
+            if (stream->network == "ws") {
+                stream->path = GetQueryValue(query, "path", "");
+                stream->host = GetQueryValue(query, "host", "");
+            } else if (stream->network == "http") {
+                stream->path = GetQueryValue(query, "path", "");
+                stream->host = GetQueryValue(query, "host", "").replace("|", ",");
+            } else if (stream->network == "grpc") {
+                stream->path = GetQueryValue(query, "serviceName", "");
+            } else if (stream->network == "tcp") {
+                if (GetQueryValue(query, "headerType") == "http") {
+                    stream->header_type = "http";
+                    stream->host = GetQueryValue(query, "host", "");
+                }
+            }
+            return !(uuid.isEmpty() || serverAddress.isEmpty());
         }
 
-        // Std Format
         return false;
     }
 

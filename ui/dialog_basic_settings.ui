@@ -214,6 +214,16 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="old_share_link_format">
+            <property name="toolTip">
+             <string>Share VMess Link with v2rayN Format</string>
+            </property>
+            <property name="text">
+             <string>Old Share Link Format</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="sys_proxy_format">
             <property name="text">
              <string>System proxy format</string>

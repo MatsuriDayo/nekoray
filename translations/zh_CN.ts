@@ -164,6 +164,14 @@
         <translation>高级系统代理设置。请选择一种格式。</translation>
     </message>
     <message>
+        <source>Old Share Link Format</source>
+        <translation>旧分享链接格式</translation>
+    </message>
+    <message>
+        <source>Share VMess Link with v2rayN Format</source>
+        <translation>用 v2rayN 的格式分享 VMess 链接</translation>
+    </message>
+    <message>
         <source>Clear servers before updating subscription</source>
         <translation>更新订阅前清除服务器</translation>
     </message>
