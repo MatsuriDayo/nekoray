@@ -253,7 +253,6 @@ namespace NekoGui_fmt {
 
             connectionReceiveWindow = query.queryItemValue("recv_window").toInt();
             streamReceiveWindow = query.queryItemValue("recv_window_conn").toInt();
-
         } else if (url.scheme() == "tuic") {
             // by daeuniverse
             // https://github.com/daeuniverse/dae/discussions/182

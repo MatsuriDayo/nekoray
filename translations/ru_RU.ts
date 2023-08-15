@@ -251,6 +251,14 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
         <source>Interval (minute, invalid if less than 30)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Share VMess Link with v2rayN Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Old Share Link Format</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
@@ -980,10 +988,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Аргументы</translation>
     </message>
     <message>
-        <source>Server support is required</source>
-        <translation type="vanished">Необходима поддержка со стороны сервера</translation>
-    </message>
-    <message>
         <source>Version of UDP over TCP protocol, server support is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1371,10 +1375,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Перезапустить прокси</translation>
     </message>
     <message>
-        <source>Default</source>
-        <translation type="vanished">По умолчанию</translation>
-    </message>
-    <message>
         <source>Load routing and apply: %1</source>
         <translation>Загрузить маршруты и активировать: %1</translation>
     </message>
@@ -1429,10 +1429,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Not Running</source>
         <translation>Не запущен</translation>
-    </message>
-    <message>
-        <source>Running: %1</source>
-        <translation type="vanished">Работает: %1</translation>
     </message>
     <message>
         <source>None</source>

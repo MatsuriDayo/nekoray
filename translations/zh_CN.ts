@@ -1218,10 +1218,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>错误</translation>
     </message>
     <message>
-        <source>Default</source>
-        <translation type="vanished">默认</translation>
-    </message>
-    <message>
         <source>Confirmation</source>
         <translation>确认</translation>
     </message>
@@ -1232,10 +1228,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>Imported %1 profile(s)</source>
         <translation>导入了 %1 个配置</translation>
-    </message>
-    <message>
-        <source>Running: %1</source>
-        <translation type="vanished">正在运行: %1</translation>
     </message>
     <message>
         <source>None</source>

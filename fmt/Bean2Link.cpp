@@ -198,7 +198,6 @@ namespace NekoGui_fmt {
             if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
             if (!q.isEmpty()) url.setQuery(q);
             if (!name.isEmpty()) url.setFragment(name);
-
         } else if (proxy_type == proxy_TUIC) {
             url.setScheme("tuic");
             url.setUserName(uuid);
