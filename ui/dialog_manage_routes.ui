@@ -172,7 +172,52 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
           <item row="0" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_7">
             <item>
-             <widget class="QLineEdit" name="remote_dns"/>
+             <widget class="QComboBox" name="remote_dns">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">https://8.8.8.8/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://1.0.0.1/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://1.1.1.1/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://dns.google/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://one.one.one.one/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://[2001:4860:4860::8888]/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://[2606:4700:4700::1111]/dns-query</string>
+               </property>
+              </item>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_10">
@@ -210,7 +255,62 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
           <item row="1" column="2">
            <layout class="QHBoxLayout" name="horizontalLayout_8">
             <item>
-             <widget class="QLineEdit" name="direct_dns"/>
+             <widget class="QComboBox" name="direct_dns">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="editable">
+               <bool>true</bool>
+              </property>
+              <item>
+               <property name="text">
+                <string notr="true">localhost</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://223.5.5.5/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://1.12.12.12/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://dns.alidns.com/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">https://doh.pub/dns-query</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">223.5.5.5</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">119.29.29.29</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">2400:3200::1</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">2402:4e00::</string>
+               </property>
+              </item>
+             </widget>
             </item>
             <item>
              <widget class="QLabel" name="label_11">
