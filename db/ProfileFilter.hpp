@@ -15,9 +15,9 @@ namespace NekoGui {
         static void Common(
             const QList<std::shared_ptr<ProxyEntity>> &src,
             const QList<std::shared_ptr<ProxyEntity>> &dst,
-            QList<std::shared_ptr<ProxyEntity>> &out,
-            bool by_address = false, // def by bean
-            bool keep_last = false   // def keep first
+            QList<std::shared_ptr<ProxyEntity>> &outSrc,
+            QList<std::shared_ptr<ProxyEntity>> &outDst,
+            bool by_address = false // def by bean
         );
 
         static void OnlyInSrc(

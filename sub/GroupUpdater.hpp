@@ -1,6 +1,6 @@
 #pragma once
 
-#include <QString>
+#include "db/Database.hpp"
 
 namespace NekoGui_sub {
     class RawUpdater {
@@ -11,7 +11,7 @@ namespace NekoGui_sub {
 
         int gid_add_to = -1; // 导入到指定组 -1 为当前选中组
 
-        int update_counter = 0; // 新增了多少个配置
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> updated_order; // 新增的配置，按照导入时处理的先后排序
     };
 
     class GroupUpdater : public QObject {

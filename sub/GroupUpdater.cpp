@@ -1,4 +1,3 @@
-#include "db/Database.hpp"
 #include "db/ProfileFilter.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
@@ -148,7 +147,7 @@ namespace NekoGui_sub {
 
         // End
         NekoGui::profileManager->AddProfile(ent, gid_add_to);
-        update_counter++;
+        updated_order += ent;
     }
 
 #ifndef NKR_NO_YAML
@@ -450,7 +449,7 @@ namespace NekoGui_sub {
 
                 if (needFix) RawUpdater_FixEnt(ent);
                 NekoGui::profileManager->AddProfile(ent, gid_add_to);
-                update_counter++;
+                updated_order += ent;
             }
         } catch (const YAML::Exception &ex) {
             runOnUiThread([=] {
@@ -528,12 +527,13 @@ namespace NekoGui_sub {
             MW_show_log("<<<<<<<< " + QObject::tr("Subscription request fininshed: %1").arg(groupName));
         }
 
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> in;         // 更新前
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> out_all;    // 更新前 + 更新后
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> out;        // 更新后
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> only_in;    // 只在更新前有的
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> only_out;   // 只在更新后有的
-        QList<std::shared_ptr<NekoGui::ProxyEntity>> update_del; // 更新前后都有的，删除更新后多余的
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> in;          // 更新前
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> out_all;     // 更新前 + 更新后
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> out;         // 更新后
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> only_in;     // 只在更新前有的
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> only_out;    // 只在更新后有的
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> update_del;  // 更新前后都有的，需要删除的新配置
+        QList<std::shared_ptr<NekoGui::ProxyEntity>> update_keep; // 更新前后都有的，被保留的旧配置
 
         // 订阅解析前
         if (group != nullptr) {
@@ -568,64 +568,61 @@ namespace NekoGui_sub {
         if (group != nullptr) {
             out_all = group->Profiles();
 
-            // 第一次判定：除了 自定义字段 其他全部相同的，视为相同配置
+            QString change_text;
 
-            NekoGui::ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
-            NekoGui::ProfileFilter::OnlyInSrc(in, out, only_in);
-            NekoGui::ProfileFilter::OnlyInSrc(out, in, only_out);
-            NekoGui::ProfileFilter::Common(in, out, update_del, false, true);
-
-            // 第二次判定：是否只更改了 名称 或 地址端口
-
-#define key_without_name QJsonObject2QString(ent->bean->ToJson({"name", "c_cfg", "c_out"}), true) + ent->bean->DisplayType()
-#define key_without_serverAddr QJsonObject2QString(ent->bean->ToJson({"addr", "port", "c_cfg", "c_out"}), true) + ent->bean->DisplayType()
-
-            QString notice_added;
-            QString notice_deleted;
-            std::map<QString, std::shared_ptr<NekoGui::ProxyEntity>> only_out_without_name;
-            std::map<QString, std::shared_ptr<NekoGui::ProxyEntity>> only_out_without_serverAddr;
-
-            for (const auto &ent: only_out) {
-                only_out_without_name[key_without_name] = ent;
-                only_out_without_serverAddr[key_without_serverAddr] = ent;
-                notice_added += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
-            }
-
-            for (const auto &ent: only_in) {
-                // qDebug() << ent->bean->name << key_without_name;
-                notice_deleted += "[-] " + ent->bean->DisplayTypeAndName() + "\n";
-                if (only_out_without_name.count(key_without_name)) {
-                    auto updated = only_out_without_name[key_without_name];
-                    ent->bean->name = updated->bean->name;
-                    ent->Save();
-                    update_del += updated;
-                } else if (only_out_without_serverAddr.count(key_without_serverAddr)) {
-                    auto updated = only_out_without_serverAddr[key_without_serverAddr];
-                    ent->bean->serverAddress = updated->bean->serverAddress;
-                    ent->bean->serverPort = updated->bean->serverPort;
-                    ent->Save();
-                    update_del += updated;
-                } else {
-                    update_del += ent;
+            if (NekoGui::dataStore->sub_clear) {
+                // all is new profile
+                for (const auto &ent: out_all) {
+                    change_text += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
                 }
+            } else {
+                // find and delete not updated profile by ProfileFilter
+                NekoGui::ProfileFilter::OnlyInSrc_ByPointer(out_all, in, out);
+                NekoGui::ProfileFilter::OnlyInSrc(in, out, only_in);
+                NekoGui::ProfileFilter::OnlyInSrc(out, in, only_out);
+                NekoGui::ProfileFilter::Common(in, out, update_keep, update_del, false);
+
+                QString notice_added;
+                QString notice_deleted;
+                for (const auto &ent: only_out) {
+                    notice_added += "[+] " + ent->bean->DisplayTypeAndName() + "\n";
+                }
+                for (const auto &ent: only_in) {
+                    notice_deleted += "[-] " + ent->bean->DisplayTypeAndName() + "\n";
+                }
+
+                // sort according to order in remote
+                group->order = {};
+                for (const auto &ent: rawUpdater->updated_order) {
+                    auto deleted_index = update_del.indexOf(ent);
+                    if (deleted_index > 0) {
+                        if (deleted_index >= update_keep.count()) continue; // should not happen
+                        auto ent2 = update_keep[deleted_index];
+                        group->order.append(ent2->id);
+                    } else {
+                        group->order.append(ent->id);
+                    }
+                }
+
+                // cleanup
+                for (const auto &ent: out_all) {
+                    if (!group->order.contains(ent->id)) {
+                        NekoGui::profileManager->DeleteProfile(ent->id);
+                    }
+                }
+
+                change_text = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
+                                         .arg(only_out.length())
+                                         .arg(notice_added)
+                                         .arg(only_in.length())
+                                         .arg(notice_deleted);
+                if (only_out.length() + only_in.length() == 0) change_text = QObject::tr("Nothing");
             }
 
-            // Delete unused & show message
-
-            for (const auto &ent: update_del) {
-                NekoGui::profileManager->DeleteProfile(ent->id);
-            }
-
-            auto change = "\n" + QObject::tr("Added %1 profiles:\n%2\nDeleted %3 Profiles:\n%4")
-                                     .arg(only_out.length())
-                                     .arg(notice_added)
-                                     .arg(only_in.length())
-                                     .arg(notice_deleted);
-            if (only_out.length() + only_in.length() == 0) change = QObject::tr("Nothing");
-            MW_show_log("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + " " + change);
+            MW_show_log("<<<<<<<< " + QObject::tr("Change of %1:").arg(group->name) + "\n" + change_text);
             MW_dialog_message("SubUpdater", "finish-dingyue");
         } else {
-            NekoGui::dataStore->imported_count = rawUpdater->update_counter;
+            NekoGui::dataStore->imported_count = rawUpdater->updated_order.count();
             MW_dialog_message("SubUpdater", "finish");
         }
     }
