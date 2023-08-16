@@ -599,12 +599,14 @@ namespace NekoGui_sub {
                     ent->bean->name = updated->bean->name;
                     ent->Save();
                     update_del += updated;
+                    break;
                 } else if (only_out_without_serverAddr.count(key_without_serverAddr)) {
                     auto updated = only_out_without_serverAddr[key_without_serverAddr];
                     ent->bean->serverAddress = updated->bean->serverAddress;
                     ent->bean->serverPort = updated->bean->serverPort;
                     ent->Save();
                     update_del += updated;
+                    break;
                 } else {
                     update_del += ent;
                 }
