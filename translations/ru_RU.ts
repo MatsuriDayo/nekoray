@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>HTTP Listen Port</source>
-        <translation>Адрес входящих  HTTP</translation>
+        <translation>Адрес входящих HTTP</translation>
     </message>
     <message>
         <source>Enable</source>
@@ -37,7 +37,7 @@
     </message>
     <message>
         <source>Latency Test URL</source>
-        <translation>URL теста пинга</translation>
+        <translation>URL теста задержки</translation>
     </message>
     <message>
         <source>Concurrent</source>
@@ -97,7 +97,7 @@
     </message>
     <message>
         <source>User Agent</source>
-        <translation>User agent</translation>
+        <translation>User Agent</translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
@@ -193,11 +193,11 @@
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation>Переключаем ядро на  %1, нажмите &quot;Да&quot; для изменения и перезапуска программы. Эта функция может быть не очень стабильная, поэтому пожалуйста не переключайте ядро часто.</translation>
+        <translation>Переключаем ядро на  %1, нажмите &quot;Да&quot; для изменения и перезапуска программы. Эта функция может быть нестабильной, поэтому, пожалуйста, не переключайте ядро часто.</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
-        <translation>Выберите PNG-файл</translation>
+        <translation>Выберите PNG файл</translation>
     </message>
     <message>
         <source>Reset</source>
@@ -233,31 +233,31 @@ For NekoRay, this rewrites the underlying(localhost) DNS in Tun Mode.
 For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mode, and also URL Test.</source>
         <translation>Рекомендуется оставить параметр пустым, но иногда это не срабатывает как надо, и в таком случае можно использовать эту опцию.
 Для  NekoRay  это переопределяет нижестоящий (localhost) DNS в  Tun режиме.
-Для  NekoBox  это переопределяет нижестоящий (localhost) DNS в  Tun режиме, нормальном режиме, а также при  URL-тесте.</translation>
+Для  NekoBox  это переопределяет нижестоящий (localhost) DNS в  Tun режиме, нормальном режиме, а также при URL тесте.</translation>
     </message>
     <message>
         <source>If you Tun Mode is not working, try to change this option.</source>
-        <translation>Если TUN-режим не работает как надо, попробуйте изменить эту опцию.</translation>
+        <translation>Если TUN-режим не работает, попробуйте изменить эту опцию.</translation>
     </message>
     <message>
         <source>Timeout (s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Таймаут (с)</translation>
     </message>
     <message>
         <source>Automatic update</source>
-        <translation type="unfinished"></translation>
+        <translation>Автоматическое обновление</translation>
     </message>
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
-        <translation type="unfinished"></translation>
+        <translation>Интервал (в минутах, значение считается неправильным, если меньше 30)</translation>
     </message>
     <message>
         <source>Share VMess Link with v2rayN Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Поделиться ссылкой VMess в формате v2rayN</translation>
     </message>
     <message>
         <source>Old Share Link Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Поделиться ссылкой в старом формате</translation>
     </message>
 </context>
 <context>
@@ -328,15 +328,15 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Skip automatic update</source>
-        <translation type="unfinished"></translation>
+        <translation>Пропустить автоматическое обновление</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">Общие</translation>
+        <translation>Общие</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished">Поделиться</translation>
+        <translation>Поделиться</translation>
     </message>
 </context>
 <context>
@@ -375,7 +375,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Apply settings to this group</source>
-        <translation>Применить настройки к группе</translation>
+        <translation>Применить настройки к этой группе</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -399,7 +399,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
-        <translation>UDP FullCone кодирование пакетов для реализации функционала типа UDP FullCone. Необходима поддержка со стороны сервера, при неправильном выборе подключение не будет работать. Оставьте пустым, если вы не знаете что это и зачем это.</translation>
+        <translation>UDP FullCone кодирование пакетов для реализации функционала типа UDP FullCone. Необходима поддержка со стороны сервера, при неправильном выборе подключение не будет работать. Оставьте пустым, если вы не знаете что и зачем это.</translation>
     </message>
     <message>
         <source>Packet Encoding</source>
@@ -455,7 +455,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>TLS Camouflage Settings</source>
-        <translation>Маскировка TLS</translation>
+        <translation>Настройки маскировки TLS</translation>
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
@@ -500,7 +500,9 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
         <source>It looks like you are using this software for the first time, please select a core.
 
 These settings can be changed later.</source>
-        <translation>Привет! Кажется, вы запустили  эту программу впервые. Пожалуйста, выберите ядро.</translation>
+        <translation>Привет! Кажется, вы запустили  эту программу впервые. Пожалуйста, выберите ядро.
+        
+Эти настройки будет возможно в дальнейшем изменить.</translation>
     </message>
     <message>
         <source>Quit</source>
@@ -706,7 +708,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Load routing: %1</source>
-        <translation>Загрузить машруты&quot; %1</translation>
+        <translation>Загрузить машруты: %1</translation>
     </message>
     <message>
         <source>Save routing: %1</source>
@@ -720,7 +722,9 @@ These settings can be changed later.</source>
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это особенно важно и рекомендуется по умолчанию использовать значение &quot;localhost&queueMicrotask;.
+Если значение по умолчанию не работает, попробуйте поменять его на &quot;223.5.5.5&quot;.
+Для дополнительной информации, посмотрите в документации &quot;Configuration/DNS&quot;.</translation>
     </message>
 </context>
 <context>
@@ -757,7 +761,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
-        <translation>При использовании белого или черного списка, ваш трафик будет обработан ядро nekobox (sign-tun). Это НЕ эквивалент &quot;process mode&quot; как в некотором софте.</translation>
+        <translation>При использовании белого или черного списка, ваш трафик будет обработан ядром nekobox (sign-tun). Это НЕ эквивалент &quot;process mode&quot; как в некотором ПО.</translation>
     </message>
     <message>
         <source>Whitelist mode</source>
@@ -781,6 +785,7 @@ This needs to be run NekoBox with administrator privileges.</source>
 If still not working, see documentation for more information.
 https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
         <translation>Если у вас проблемы с запуском VPN, можно принудительно перезапустить процесс nekobox-core.
+
 Если ничего по-прежнему не работает, ознакомьтесь с документацией:
 https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
@@ -797,7 +802,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <name>EditChain</name>
     <message>
         <source>Traffic order is from top to bottom</source>
-        <translation>Порядок прокси для трафика сверху вниз</translation>
+        <translation>Порядок трафика сверху вниз</translation>
     </message>
     <message>
         <source>Select Profile</source>
@@ -938,35 +943,35 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Auth Payload</source>
-        <translation type="unfinished"></translation>
+        <translation>Полезная нагрузка в режиме авторизации</translation>
     </message>
     <message>
         <source>Disable SNI</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить SNI</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished">Пароль</translation>
+        <translation>Пароль</translation>
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation type="unfinished">Сгенерировать</translation>
+        <translation>Сгенерировать UUID</translation>
     </message>
     <message>
         <source>Heartbeat</source>
-        <translation type="unfinished"></translation>
+        <translation>Сердцебиение (Hearbeat)</translation>
     </message>
     <message>
         <source>Zero Rtt Handshake</source>
-        <translation type="unfinished"></translation>
+        <translation>Без рукопожатия Rtt</translation>
     </message>
     <message>
         <source>Congestion Control</source>
-        <translation type="unfinished"></translation>
+        <translation>Управление перегрузкой</translation>
     </message>
     <message>
         <source>UDP Relay Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим UDP Relay</translation>
     </message>
 </context>
 <context>
@@ -989,11 +994,11 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Version of UDP over TCP protocol, server support is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Версия протокола &quot;UDP over TCP&quot;, требуется поддержка со стороны сервера.</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">Выкл</translation>
+        <translation>Выкл</translation>
     </message>
 </context>
 <context>
@@ -1030,11 +1035,11 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>UUID</source>
-        <translation></translation>
+        <translation>UUID</translation>
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation>Сгенерировать</translation>
+        <translation>Сгенерировать UUID</translation>
     </message>
 </context>
 <context>
@@ -1183,7 +1188,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Connection</source>
-        <translation>Подключения</translation>
+        <translation>Подключение</translation>
     </message>
     <message>
         <source>Status</source>
@@ -1275,7 +1280,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Export %1 config</source>
-        <translation>Экстортировать конфиг %1</translation>
+        <translation>Экспортировать конфиг %1</translation>
     </message>
     <message>
         <source>Reset Traffic</source>
@@ -1355,8 +1360,8 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translatorcomment>ну серьезно, я не представляю, как это нормально перевести. не &quot;разрешить&quot; же?</translatorcomment>
-        <translation>Отрезолвить домен</translation>
+        <translatorcomment>Ну слово &quot;разрешить&quot; можно использоваться и в значении &quot;разобраться&quot;</translatorcomment>
+        <translation>Разрешить доменное имя</translation>
     </message>
     <message>
         <source>Tun Settings</source>
@@ -1384,7 +1389,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Tun Settings changed</source>
-        <translation>Настройки TUN изменилисб</translation>
+        <translation>Настройки TUN изменились</translation>
     </message>
     <message>
         <source>Restart Tun to take effect.</source>
@@ -1408,11 +1413,11 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
-        <translation>Импортировано %1 профилей</translation>
+        <translation>Импортирован(ы) %1 профиль(ей)</translation>
     </message>
     <message>
         <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
-        <translation>HTTP inbound не включен в настройках, поэтому не могут установить системный прокси.</translation>
+        <translation>HTTP inbound не включен в настройках, невозможно установить системный прокси.</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1424,7 +1429,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
-        <translation>Текущий сервер не совместим с TUN-режимом.  Пожалуйста, сначала остановите подключение к серверу, активируйте TUN-режим, и потом перезапустите.</translation>
+        <translation>Текущий сервер не совместим с TUN-режимом. Пожалуйста, сначала остановите подключение к серверу, активируйте TUN-режим, и потом перезапустите.</translation>
     </message>
     <message>
         <source>Not Running</source>
@@ -1499,7 +1504,8 @@ Split by line.</source>
     <message>
         <source>Start: %1
 End: %2</source>
-        <translation>Начало %1 Конец %2</translation>
+        <translation>Начало %1 
+Конец %2</translation>
     </message>
     <message>
         <source>Failed to stop Tun process</source>
@@ -1507,7 +1513,7 @@ End: %2</source>
     </message>
     <message>
         <source>Test Options</source>
-        <translation>Параметры теста</translation>
+        <translation>Параметры тестирования</translation>
     </message>
     <message>
         <source>Latency</source>
@@ -1584,7 +1590,7 @@ End: %2</source>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>Недопуступно</translation>
+        <translation>Недоступно</translation>
     </message>
     <message>
         <source>Proxy: %1
@@ -1636,7 +1642,7 @@ How to update?</source>
     </message>
     <message>
         <source>Clearing servers...</source>
-        <translation>Очишаем сервера...</translation>
+        <translation>Очишаем серверы...</translation>
     </message>
     <message>
         <source>Added %1 profiles:
@@ -1658,11 +1664,11 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Core exits too frequently, stop automatic restart this profile.</source>
-        <translation>Ядро слишком часто прекращает свою работу, больше не будем автоматически перезапускать этот профиль.</translation>
+        <translation>Ядро слишком часто прекращает свою работу, отмена автоматического перезапуска этого профиля.</translation>
     </message>
     <message>
         <source>Core exited, restarting.</source>
-        <translation>Ядро прекратило свою работу, перезапускаем.</translation>
+        <translation>Ядро прекратило свою работу, перезапуск.</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1702,7 +1708,7 @@ Release note:
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">По умолчанию</translation>
+        <translation>По умолчанию</translation>
     </message>
 </context>
 <context>
