@@ -722,9 +722,7 @@ These settings can be changed later.</source>
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation>Это особенно важно и рекомендуется по умолчанию использовать значение &quot;localhost&queueMicrotask;.
-Если значение по умолчанию не работает, попробуйте поменять его на &quot;223.5.5.5&quot;.
-Для дополнительной информации, посмотрите в документации &quot;Configuration/DNS&quot;.</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
