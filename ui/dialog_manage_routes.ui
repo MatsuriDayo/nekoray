@@ -204,7 +204,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
               </item>
               <item>
                <property name="text">
-                <string notr="true">https://one.one.one.one/dns-query</string>
+                <string notr="true">https://cloudflare-dns.com/dns-query</string>
                </property>
               </item>
               <item>
