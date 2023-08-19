@@ -461,6 +461,13 @@
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QCheckBox" name="minimize2tray">
+              <property name="text">
+               <string>Minimize to Tray</string>
+              </property>
+             </widget>
+            </item>
            </layout>
           </widget>
          </item>

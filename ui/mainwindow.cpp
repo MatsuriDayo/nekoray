@@ -450,8 +450,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (tray->isVisible()) {
-        hide();          // 隐藏窗口
-        event->ignore(); // 忽略事件
+        if (NekoGui::dataStore->minimize2tray) {
+            hide();          // 隐藏窗口
+            event->ignore(); // 忽略事件
+        } else {
+            on_menu_exit_triggered();
+        }
     }
 }
 

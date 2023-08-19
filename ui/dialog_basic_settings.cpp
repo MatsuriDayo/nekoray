@@ -109,6 +109,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     D_LOAD_BOOL(check_include_pre)
     D_LOAD_BOOL(connection_statistics)
     D_LOAD_BOOL(start_minimal)
+    D_LOAD_BOOL(minimize2tray)
     D_LOAD_INT(max_log_line)
     //
     if (NekoGui::dataStore->traffic_loop_interval == 500) {
@@ -281,6 +282,7 @@ void DialogBasicSettings::accept() {
     D_SAVE_BOOL(connection_statistics)
     D_SAVE_BOOL(check_include_pre)
     D_SAVE_BOOL(start_minimal)
+    D_SAVE_BOOL(minimize2tray)
     D_SAVE_INT(max_log_line)
 
     if (NekoGui::dataStore->max_log_line <= 0) {
