@@ -55,7 +55,11 @@ namespace NekoGui_fmt {
 
         // security
         stream->network = GetQueryValue(query, "type", "tcp");
-        stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls");
+        if (proxy_type == proxy_Trojan) {
+            stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls").replace("none", "");
+        } else {
+            stream->security = GetQueryValue(query, "security", "").replace("reality", "tls").replace("none", "");
+        }
         auto sni1 = GetQueryValue(query, "sni");
         auto sni2 = GetQueryValue(query, "peer");
         if (!sni1.isEmpty()) stream->sni = sni1;
