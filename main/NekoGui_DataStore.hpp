@@ -112,6 +112,7 @@ namespace NekoGui {
         bool check_include_pre = false;
         QString system_proxy_format = "";
         QStringList log_ignore = {};
+        QStringList log_keep = {};
         bool start_minimal = false;
         int max_log_line = 200;
         QString splitter_state = "";

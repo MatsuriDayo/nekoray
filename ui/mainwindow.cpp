@@ -1537,16 +1537,40 @@ void MainWindow::show_log_impl(const QString &log) {
 
     QStringList newLines;
     auto log_ignore = NekoGui::dataStore->log_ignore;
+    auto log_keep = NekoGui::dataStore->log_keep;
+
     for (const auto &line: lines) {
         bool showThisLine = true;
+
         for (const auto &str: log_ignore) {
             if (line.contains(str)) {
                 showThisLine = false;
                 break;
             }
         }
-        if (showThisLine) newLines << line;
+
+        if (!showThisLine) {
+            continue;
+        }
+
+        // 未设置则输出所有日志
+        if (log_keep.isEmpty()) {
+            newLines << line;
+        } else {
+            bool keepThisLine = false;
+            for (const auto &str: log_keep) {
+                if (line.contains(str)) {
+                    keepThisLine = true;
+                    break;
+                }
+            }
+
+            if (keepThisLine) {
+                newLines << line;
+            }
+        }
     }
+
     if (newLines.isEmpty()) return;
 
     FastAppendTextDocument(newLines.join("\n"), qvLogDocument);
@@ -1592,6 +1616,21 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
         }
     });
     menu->addAction(action_add_ignore);
+
+    auto action_add_keep = new QAction(this);
+    action_add_keep->setText(tr("Set keep keyword"));
+    connect(action_add_keep, &QAction::triggered, this, [=] {
+        auto list = NekoGui::dataStore->log_keep;
+        auto newStr = ui->masterLogBrowser->textCursor().selectedText().trimmed();
+        if (!newStr.isEmpty()) list << newStr;
+        bool ok;
+        newStr = QInputDialog::getMultiLineText(GetMessageBoxParent(), tr("Set keep keyword"), tr("Set the following keywords to keep?\nSplit by line."), list.join("\n"), &ok);
+        if (ok) {
+            NekoGui::dataStore->log_keep = SplitLines(newStr);
+            NekoGui::dataStore->Save();
+        }
+    });
+    menu->addAction(action_add_keep);
 
     auto action_add_route = new QAction(this);
     action_add_route->setText(tr("Save as route"));

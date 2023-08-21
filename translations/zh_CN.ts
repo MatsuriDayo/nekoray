@@ -1490,6 +1490,16 @@ Split by line.</source>
 一行一个。</translation>
     </message>
     <message>
+        <source>Set keep keyword</source>
+        <translation>设置保留关键字</translation>
+    </message>
+    <message>
+        <source>Set the following keywords to keep?
+Split by line.</source>
+        <translation>将以下关键字设置为保留？
+一行一个。</translation>
+    </message>
+    <message>
         <source>Save as route</source>
         <translation>保存为路由规则</translation>
     </message>
