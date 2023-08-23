@@ -218,7 +218,7 @@ namespace NekoGui_sub {
         try {
             auto proxies = YAML::Load(str.toStdString())["proxies"];
             for (auto proxy: proxies) {
-                auto type = Node2QString(proxy["type"]);
+                auto type = Node2QString(proxy["type"]).toLower();
                 auto type_clash = type;
 
                 if (type == "ss" || type == "ssr") type = "shadowsocks";
@@ -233,7 +233,7 @@ namespace NekoGui_sub {
                 ent->bean->serverAddress = Node2QString(proxy["server"]);
                 ent->bean->serverPort = Node2Int(proxy["port"]);
 
-                if (type == "shadowsocks") {
+                if (type_clash == "ss") {
                     auto bean = ent->ShadowSocksBean();
                     bean->method = Node2QString(proxy["cipher"]).replace("dummy", "none");
                     bean->password = Node2QString(proxy["password"]);
@@ -271,12 +271,7 @@ namespace NekoGui_sub {
 
                     // sing-mux
                     auto smux = NodeChild(proxy, {"smux"});
-                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
-
-                    auto protocol_n = proxy["protocol"];
-                    if (protocol_n.IsDefined()) {
-                        continue; // SSR
-                    }
+                    if (Node2Bool(smux["enabled"])) bean->stream->multiplex_status = 1;
                 } else if (type == "socks" || type == "http") {
                     auto bean = ent->SocksHTTPBean();
                     bean->username = Node2QString(proxy["username"]);
@@ -308,7 +303,7 @@ namespace NekoGui_sub {
 
                     // sing-mux
                     auto smux = NodeChild(proxy, {"smux"});
-                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
+                    if (Node2Bool(smux["enabled"])) bean->stream->multiplex_status = 1;
 
                     // opts
                     auto ws = NodeChild(proxy, {"ws-opts", "ws-opt"});
@@ -348,7 +343,7 @@ namespace NekoGui_sub {
 
                     // sing-mux
                     auto smux = NodeChild(proxy, {"smux"});
-                    if (Node2Bool(smux["enabled"]) == true) bean->stream->multiplex_status = 1;
+                    if (Node2Bool(smux["enabled"])) bean->stream->multiplex_status = 1;
 
                     // meta packet encoding
                     if (Node2Bool(proxy["xudp"])) bean->stream->packet_encoding = "xudp";
@@ -404,7 +399,6 @@ namespace NekoGui_sub {
                     auto bean = ent->QUICBean();
 
                     bean->hopPort = Node2QString(proxy["ports"]);
-                    if (bean->serverPort == 0) bean->hopPort = Node2QString(proxy["port"]);
 
                     bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
                     auto alpn = Node2QStringList(proxy["alpn"]);
