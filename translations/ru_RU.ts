@@ -1561,6 +1561,10 @@ End: %2</source>
         <source>Failed to stop, please restart the program.</source>
         <translation>Не удалось остановить, пожалуйста, перезапустите приложение.</translation>
     </message>
+    <message>
+        <source>Stop Testing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

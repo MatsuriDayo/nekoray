@@ -347,6 +347,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0); });
     connect(ui->menu_url_test, &QAction::triggered, this, [=]() { speedtest_current_group(1); });
     connect(ui->menu_full_test, &QAction::triggered, this, [=]() { speedtest_current_group(2); });
+    connect(ui->menu_stop_testing, &QAction::triggered, this, [=]() { speedtest_current_group(114514); });
     //
     auto set_selected_or_group = [=](int mode) {
         // 0=group 1=select 2=unknown(menu is hide)
@@ -358,12 +359,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_tcp_ping);
                 ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_url_test);
                 ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_full_test);
+                ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_stop_testing);
                 ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_clear_test_result);
                 ui->menuCurrent_Select->insertAction(ui->actionfake_4, ui->menu_resolve_domain);
             } else {
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_tcp_ping);
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_url_test);
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_full_test);
+                ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_stop_testing);
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_clear_test_result);
                 ui->menuCurrent_Group->insertAction(ui->actionfake_5, ui->menu_resolve_domain);
             }

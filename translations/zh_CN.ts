@@ -1561,6 +1561,10 @@ Split by line.</source>
         <source>Test Options</source>
         <translation>测试选项</translation>
     </message>
+    <message>
+        <source>Stop Testing</source>
+        <translation>停止测试</translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

@@ -1552,6 +1552,10 @@ End: %2</source>
         <source>Restart the program to take effect.</source>
         <translation type="unfinished">برای مشاهده نتیجه برنامه را دوباره راه اندازی کنید</translation>
     </message>
+    <message>
+        <source>Stop Testing</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProxyItem</name>

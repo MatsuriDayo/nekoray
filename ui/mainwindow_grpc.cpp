@@ -56,12 +56,23 @@ void MainWindow::setup_grpc() {
 // 测速
 
 inline bool speedtesting = false;
+inline QList<QThread *> speedtesting_threads = {};
 
 void MainWindow::speedtest_current_group(int mode) {
     auto profiles = get_selected_or_group();
     if (profiles.isEmpty()) return;
     auto group = NekoGui::profileManager->CurrentGroup();
     if (group->archive) return;
+
+    // menu_stop_testing
+    if (mode == 114514) {
+        while (!speedtesting_threads.isEmpty()) {
+            auto t = speedtesting_threads.takeFirst();
+            if (t != nullptr) t->exit();
+        }
+        speedtesting = false;
+        return;
+    }
 
 #ifndef NKR_NO_GRPC
     if (speedtesting) {
@@ -117,13 +128,20 @@ void MainWindow::speedtest_current_group(int mode) {
         lock_return.lock();
         for (int i = 0; i < threadN; i++) {
             runOnNewThread([&] {
+                speedtesting_threads << QObject::thread();
+
                 forever {
                     //
                     lock_write.lock();
                     if (profiles_test.isEmpty()) {
                         threadN_finished++;
-                        if (threadN == threadN_finished) lock_return.unlock();
+                        if (threadN == threadN_finished) {
+                            // quit control thread
+                            lock_return.unlock();
+                        }
                         lock_write.unlock();
+                        // quit of this thread
+                        speedtesting_threads.removeAll(QObject::thread());
                         return;
                     }
                     auto profile = profiles_test.takeFirst();

@@ -536,6 +536,7 @@
      <addaction name="menu_tcp_ping"/>
      <addaction name="menu_url_test"/>
      <addaction name="menu_full_test"/>
+     <addaction name="menu_stop_testing"/>
      <addaction name="menu_clear_test_result"/>
      <addaction name="menu_resolve_domain"/>
      <addaction name="separator"/>
@@ -895,6 +896,11 @@
   <action name="actionRestart_Proxy">
    <property name="text">
     <string>Restart Proxy</string>
+   </property>
+  </action>
+  <action name="menu_stop_testing">
+   <property name="text">
+    <string>Stop Testing</string>
    </property>
   </action>
  </widget>
