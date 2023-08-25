@@ -651,32 +651,32 @@ bool UI_update_all_groups_Updating = false;
 #define should_skip_group(g) (g == nullptr || g->url.isEmpty() || g->archive || (onlyAllowed && g->skip_auto_update))
 
 void serialUpdateSubscription(const QList<int> &groupsTabOrder, int _order, bool onlyAllowed) {
-    // calculate next group
-    int nextOrder = _order;
-    std::shared_ptr<NekoGui::Group> nextGroup;
-    forever {
-        nextOrder += 1;
-        if (nextOrder >= groupsTabOrder.size()) break;
-        auto nextGid = groupsTabOrder[nextOrder];
-        nextGroup = NekoGui::profileManager->GetGroup(nextGid);
-        if (should_skip_group(nextGroup)) continue;
-        break;
-    }
-
-    // calculate this group
-    auto group = NekoGui::profileManager->GetGroup(groupsTabOrder[_order]);
-    if (group == nullptr) {
+    if (_order >= groupsTabOrder.size()) {
         UI_update_all_groups_Updating = false;
         return;
     }
 
-    // v2.2: listener is moved to GroupItem, no refresh here.
-    NekoGui_sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
-        if (nextGroup == nullptr) {
-            UI_update_all_groups_Updating = false;
-        } else {
-            serialUpdateSubscription(groupsTabOrder, nextOrder, onlyAllowed);
+    // calculate this group
+    auto group = NekoGui::profileManager->GetGroup(groupsTabOrder[_order]);
+    if (group == nullptr || should_skip_group(group)) {
+        serialUpdateSubscription(groupsTabOrder, _order + 1, onlyAllowed);
+        return;
+    }
+
+    int nextOrder = _order + 1;
+    while (nextOrder < groupsTabOrder.size()) {
+        auto nextGid = groupsTabOrder[nextOrder];
+        auto nextGroup = NekoGui::profileManager->GetGroup(nextGid);
+        if (!should_skip_group(nextGroup)) {
+            break;
         }
+        nextOrder += 1;
+    }
+
+    // Async update current group
+    UI_update_all_groups_Updating = true;
+    NekoGui_sub::groupUpdater->AsyncUpdate(group->url, group->id, [=] {
+        serialUpdateSubscription(groupsTabOrder, nextOrder, onlyAllowed);
     });
 }
 
@@ -685,13 +685,7 @@ void UI_update_all_groups(bool onlyAllowed) {
         MW_show_log("The last subscription update has not exited.");
         return;
     }
-    // first: freeze group order
+
     auto groupsTabOrder = NekoGui::profileManager->groupsTabOrder;
-    for (const auto &gid: groupsTabOrder) {
-        auto group = NekoGui::profileManager->GetGroup(gid);
-        if (should_skip_group(group)) continue;
-        // start
-        UI_update_all_groups_Updating = true;
-        serialUpdateSubscription(groupsTabOrder, groupsTabOrder.indexOf(gid), onlyAllowed);
-    }
+    serialUpdateSubscription(groupsTabOrder, 0, onlyAllowed);
 }
