@@ -16,17 +16,24 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="upBox">
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="downloadMbpsLay">
+     <item row="3" column="0">
+      <layout class="QHBoxLayout" name="heartbeatLay">
        <item>
-        <widget class="QLabel" name="downloadMbps_l">
+        <widget class="QLabel" name="heartbeat_l">
          <property name="text">
-          <string>Download (Mbps)</string>
+          <string>Heartbeat</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="MyLineEdit" name="downloadMbps"/>
+        <widget class="MyLineEdit" name="heartbeat">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -41,31 +48,6 @@
        </item>
        <item>
         <widget class="MyLineEdit" name="hopPort"/>
-       </item>
-      </layout>
-     </item>
-     <item row="2" column="1">
-      <layout class="QHBoxLayout" name="udpRelayModeLay">
-       <item>
-        <widget class="QLabel" name="udpRelayMode_l">
-         <property name="text">
-          <string>UDP Relay Mode</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QComboBox" name="udpRelayMode">
-         <item>
-          <property name="text">
-           <string notr="true">native</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">quic</string>
-          </property>
-         </item>
-        </widget>
        </item>
       </layout>
      </item>
@@ -99,17 +81,17 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="0">
-      <layout class="QHBoxLayout" name="uploadMbpsLay">
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="downloadMbpsLay">
        <item>
-        <widget class="QLabel" name="uploadMbps_l">
+        <widget class="QLabel" name="downloadMbps_l">
          <property name="text">
-          <string>Upload (Mbps)</string>
+          <string>Download (Mbps)</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="MyLineEdit" name="uploadMbps"/>
+        <widget class="MyLineEdit" name="downloadMbps"/>
        </item>
       </layout>
      </item>
@@ -127,6 +109,45 @@
        </item>
       </layout>
      </item>
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="uploadMbpsLay">
+       <item>
+        <widget class="QLabel" name="uploadMbps_l">
+         <property name="text">
+          <string>Upload (Mbps)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="uploadMbps"/>
+       </item>
+      </layout>
+     </item>
+     <item row="2" column="1">
+      <layout class="QHBoxLayout" name="udpRelayModeLay">
+       <item>
+        <widget class="QLabel" name="udpRelayMode_l">
+         <property name="text">
+          <string>UDP Relay Mode</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QComboBox" name="udpRelayMode">
+         <item>
+          <property name="text">
+           <string notr="true">native</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string notr="true">quic</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+      </layout>
+     </item>
      <item row="3" column="1">
       <widget class="QCheckBox" name="zeroRttHandshake">
        <property name="text">
@@ -134,26 +155,12 @@
        </property>
       </widget>
      </item>
-     <item row="3" column="0">
-      <layout class="QHBoxLayout" name="heartbeatLay">
-       <item>
-        <widget class="QLabel" name="heartbeat_l">
-         <property name="text">
-          <string>Heartbeat</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="MyLineEdit" name="heartbeat">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-      </layout>
+     <item row="4" column="1">
+      <widget class="QCheckBox" name="uos">
+       <property name="text">
+        <string>UDP over Stream</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </item>

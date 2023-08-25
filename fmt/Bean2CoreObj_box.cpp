@@ -204,7 +204,11 @@ namespace NekoGui_fmt {
             outbound["uuid"] = uuid;
             outbound["password"] = password;
             outbound["congestion_control"] = congestionControl;
-            outbound["udp_relay_mode"] = udpRelayMode;
+            if (uos) {
+                outbound["udp_over_stream"]= true;
+            } else {
+                outbound["udp_relay_mode"] = udpRelayMode;
+            }
             outbound["zero_rtt_handshake"] = zeroRttHandshake;
             if (!heartbeat.trimmed().isEmpty()) outbound["heartbeat"] = heartbeat;
         }

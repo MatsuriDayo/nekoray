@@ -44,6 +44,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->zeroRttHandshake->hide();
         ui->heartbeat->hide();
         ui->heartbeat_l->hide();
+        ui->uos->hide();
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
         P_LOAD_STRING(uuid);
         P_LOAD_STRING(password);
@@ -51,6 +52,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         P_LOAD_COMBO_STRING(udpRelayMode);
         P_LOAD_BOOL(zeroRttHandshake);
         P_LOAD_STRING(heartbeat);
+        P_LOAD_BOOL(uos);
 
         ui->hopPort->hide();
         ui->hopPort_l->hide();
@@ -73,6 +75,9 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->streamReceiveWindow_l->hide();
         ui->connectionReceiveWindow->hide();
         ui->connectionReceiveWindow_l->hide();
+        if (!IS_NEKO_BOX) {
+            ui->uos->hide();
+        }
     }
 
     // TLS
@@ -106,6 +111,7 @@ bool EditQUIC::onEnd() {
     P_SAVE_COMBO_STRING(udpRelayMode);
     P_SAVE_BOOL(zeroRttHandshake);
     P_SAVE_STRING(heartbeat);
+    P_SAVE_BOOL(uos);
 
     // TLS
     P_SAVE_STRING(sni);

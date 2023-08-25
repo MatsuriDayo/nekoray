@@ -446,6 +446,8 @@ namespace NekoGui_sub {
                     bean->caText = Node2QString(proxy["ca-str"]);
                     bean->sni = Node2QString(proxy["sni"]);
 
+                    if (Node2Bool(proxy["udp-over-stream"])) bean->uos = true;
+
                     if (!Node2QString(proxy["ip"]).isEmpty()) {
                         if (bean->sni.isEmpty()) bean->sni = bean->serverAddress;
                         bean->serverAddress = Node2QString(proxy["ip"]);

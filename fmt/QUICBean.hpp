@@ -42,6 +42,7 @@ namespace NekoGui_fmt {
         QString udpRelayMode = "native";
         bool zeroRttHandshake = false;
         QString heartbeat = "10s";
+        bool uos = false;
 
         // TLS
 
@@ -72,6 +73,7 @@ namespace NekoGui_fmt {
                 _add(new configItem("udpRelayMode", &udpRelayMode, itemType::string));
                 _add(new configItem("zeroRttHandshake", &zeroRttHandshake, itemType::boolean));
                 _add(new configItem("heartbeat", &heartbeat, itemType::string));
+                _add(new configItem("uos", &uos, itemType::boolean));
             }
             // TLS
             _add(new configItem("allowInsecure", &allowInsecure, itemType::boolean));
