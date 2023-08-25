@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"strings"
-	"unsafe"
 
 	core "github.com/xtls/xray-core/core"
 	"github.com/xtls/xray-core/features/stats"
@@ -41,7 +40,7 @@ func NewNekoV2rayInstance(configStr string) (*NekoV2RayInstance, error) {
 }
 
 func (i *NekoV2RayInstance) CorePtr() uintptr {
-	return uintptr(unsafe.Pointer(i.Instance))
+	return 0
 }
 
 func (i *NekoV2RayInstance) Close() error {
