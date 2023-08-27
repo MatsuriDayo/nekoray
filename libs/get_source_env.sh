@@ -1,6 +1,6 @@
 if [ ! -z $ENV_NEKORAY ]; then
   export COMMIT_SING_BOX_EXTRA="3c5d4ae9b771f216bc0eeabdf19d840c77e29858"
-  export COMMIT_MATSURI_XRAY="92a8a7f4650fd2e904cd273dee7f5e77271b29de"
+  export COMMIT_MATSURI_XRAY="fa35868d6906c3415f0e2e654ec5cac951e7f9fc"
 fi
 
 if [ ! -z $ENV_SING_BOX_EXTRA ]; then
