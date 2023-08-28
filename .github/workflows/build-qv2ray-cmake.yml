@@ -206,10 +206,10 @@ jobs:
       - name: Pack Red Hat
         if: github.event.inputs.publish != 'y'
         run: |
+          sudo apt update
           sudo apt install alien -y
           cd deployment
-          sudo alien -c nekoray*.deb
-          mv "nekoray*.rpm" "$version_standalone-redhat-x64.rpm"
+          sudo alien -r -c nekoray*.deb
       - name: Pack AppImage
         run: |
           source libs/env_deploy.sh
