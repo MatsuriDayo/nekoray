@@ -208,8 +208,8 @@ jobs:
         run: |
           sudo apt install alien -y
           cd deployment
-          alien -r -c nekoray*.deb
-          mv nekoray*.rpm $version_standalone-redhat-x64.rpm
+          sudo alien -r -c nekoray*.deb
+          mv "nekoray*.rpm" "$version_standalone-redhat-x64.rpm"
       - name: Pack AppImage
         run: |
           source libs/env_deploy.sh
