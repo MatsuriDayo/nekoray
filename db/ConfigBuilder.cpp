@@ -687,7 +687,7 @@ namespace NekoGui {
                 if (!server.isEmpty()) serverAddress = server;
             }
 
-            if (isFirstProfile && !IsIpAddress(serverAddress)) {
+            if (!IsIpAddress(serverAddress)) {
                 status->domainListDNSDirect += "full:" + serverAddress;
             }
 
