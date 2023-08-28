@@ -203,6 +203,13 @@ jobs:
           bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
           mv nekoray.deb $version_standalone-debian-x64.deb
           sudo rm -rf nekoray
+      - name: Pack Red Hat
+        if: github.event.inputs.publish != 'y'
+        run: |
+          sudo apt install alien -y
+          cd deployment
+          alien -r -c nekoray*.deb
+          mv nekoray*.rpm $version_standalone-redhat-x64.rpm
       - name: Pack AppImage
         run: |
           source libs/env_deploy.sh
