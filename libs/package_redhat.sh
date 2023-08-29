@@ -2,4 +2,6 @@
 
 VERSION="$1"
 
-alien -r -c nekoray*.deb --to-rpm "$VERSION-redhat-x64.rpm"
+alien -r -c nekoray*.deb
+
+mv "nekoray*.rpm" "${VERSION}-redhat-x64.rpm"
