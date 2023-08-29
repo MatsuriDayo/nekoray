@@ -211,9 +211,10 @@ jobs:
           source libs/env_deploy.sh
           # find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
-          # cp -r public_res/* linux64
           ####
-          bash ../libs/package_redhat.sh $version_standalone
+          sudo alien -r -c nekoray*.deb
+          ls
+          sudo mv nekoray-*.rpm $version_standalone-redhat-x64.rpm
       - name: Pack AppImage
         run: |
           source libs/env_deploy.sh
