@@ -6,4 +6,4 @@ sudo alien -r -c nekoray*.deb
 
 ls
 
-# sudo mv "*.rpm" "${VERSION}-redhat-x64.rpm"
+sudo mv "nekoray-*.rpm" "${VERSION}-redhat-x64.rpm"
