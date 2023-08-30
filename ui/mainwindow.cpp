@@ -1028,7 +1028,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
                                           return get_latency_for_sort(a) > get_latency_for_sort(b);
                                       }
                                   }
-                                  return ms_a > ms_b;
+                                  return ms_a.toInt() > ms_b.toInt();
                               } else {
                                   if (groupSortAction.method == GroupSortMethod::ByLatency) {
                                       auto int_a = NekoGui::profileManager->GetProfile(a)->latency;
@@ -1038,7 +1038,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
                                           return get_latency_for_sort(a) < get_latency_for_sort(b);
                                       }
                                   }
-                                  return ms_a < ms_b;
+                                  return ms_a.toInt() < ms_b.toInt();
                               }
                           });
                 break;
