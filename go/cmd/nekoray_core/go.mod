@@ -45,7 +45,7 @@ require (
 	github.com/sagernet/wireguard-go v0.0.0-20221116151939-c99467f53f2c // indirect
 	github.com/seiflotfy/cuckoofilter v0.0.0-20220411075957-e3b120b3f5fb // indirect
 	github.com/v2fly/ss-bloomring v0.0.0-20210312155135-28617310f63e // indirect
-	github.com/xtls/reality v0.0.0-20230613075828-e07c3b04b983 // indirect
+	github.com/xtls/reality v0.0.0-20230828171259-e426190d57f6 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go4.org/netipx v0.0.0-20230824141953-6213f710f925 // indirect
 	golang.org/x/crypto v0.12.0 // indirect
