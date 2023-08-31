@@ -150,7 +150,7 @@ namespace NekoGui {
         int vpn_implementation = 0;
         int vpn_mtu = 9000;
         bool vpn_ipv6 = false;
-        bool vpn_hide_console = false;
+        bool vpn_hide_console = true;
         bool vpn_strict_route = false;
         bool vpn_rule_white = false;
         QString vpn_rule_process = "";
