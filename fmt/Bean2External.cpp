@@ -50,6 +50,16 @@ namespace NekoGui_fmt {
             return 1;
         };
 
+        auto hysteria2Core = [=] {
+            if (isFirstProfile) {
+                if (NekoGui::dataStore->spmode_vpn || !hopPort.trimmed().isEmpty()) {
+                    return 1;
+                }
+                return 2;
+            }
+            return 1;
+        };
+
         auto tuicCore = [=] {
             if (isFirstProfile) {
                 if (NekoGui::dataStore->spmode_vpn) {
@@ -70,6 +80,8 @@ namespace NekoGui_fmt {
             }
         } else if (proxy_type == proxy_TUIC) {
             return tuicCore();
+        } else if (proxy_type == proxy_Hysteria2) {
+            return hysteria2Core();
         } else {
             return hysteriaCore();
         }
@@ -162,6 +174,78 @@ namespace NekoGui_fmt {
             result.arguments = QStringList{"-c", TempFile};
 
             return result;
+        } else if (proxy_type == proxy_Hysteria2) {
+            ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria2")};
+
+            QJsonObject config;
+
+            auto server = serverAddress;
+            if (!hopPort.trimmed().isEmpty()) {
+                server = WrapIPV6Host(server) + ":" + hopPort;
+            } else {
+                server = WrapIPV6Host(server) + ":" + Int2String(serverPort);
+            }
+
+            QJsonObject transport;
+            transport["type"] = "udp";
+            transport["udp"] = QJsonObject{
+                {"hopInterval", hopInterval},
+            };
+            config["transport"] = transport;
+
+            config["server"] = server;
+            config["socks5"] = QJsonObject{
+                {"listen", "127.0.0.1:" + Int2String(socks_port)},
+                {"disableUDP", false},
+            };
+            if (username.isEmpty()) {
+                config["auth"] = authPayload;
+            } else {
+                config["auth"] = username + ":" + authPayload;
+            }
+
+            QJsonObject bandwidth;
+            if (uploadMbps > 0) bandwidth["up"] = Int2String(uploadMbps) + " mbps";
+            if (downloadMbps > 0) bandwidth["down"] = Int2String(downloadMbps) + " mbps";
+            config["bandwidth"] = bandwidth;
+
+            QJsonObject quic;
+            if (streamReceiveWindow > 0) quic["initStreamReceiveWindow"] = streamReceiveWindow;
+            if (connectionReceiveWindow > 0) quic["initConnReceiveWindow"] = connectionReceiveWindow;
+            if (disableMtuDiscovery) quic["disablePathMTUDiscovery"] = true;
+
+            config["fastopen"] = true;
+            config["lazy"] = true;
+
+                if (!obfsPassword.isEmpty()) {
+                QJsonObject obfs;
+                obfs["type"] = "salamander";
+                obfs["salamander"] = QJsonObject{
+                    {"password", obfsPassword},
+                };
+
+                config["obfs"] = obfs;
+            }
+
+            QJsonObject tls;
+            auto sniGen = sni;
+            if (sni.isEmpty() && !IsIpAddress(serverAddress)) sniGen = serverAddress;
+            tls["sni"] = sniGen;
+            if (allowInsecure) tls["insecure"] = true;
+            if (!caText.trimmed().isEmpty()) {
+                WriteTempFile("hysteria2_" + GetRandomString(10) + ".crt", caText.toUtf8());
+                QJsonArray certificate;
+                certificate.append(TempFile);
+                tls["certificates"] = certificate;
+            }
+            config["tls"] = tls;
+
+            result.config_export = QJsonObject2QString(config, false);
+            WriteTempFile("hysteria2_" + GetRandomString(10) + ".json", result.config_export.toUtf8());
+            result.arguments = QStringList{"-c", TempFile};
+
+            return result;
+
         } else { // Hysteria
             ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria")};
 

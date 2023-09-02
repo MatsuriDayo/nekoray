@@ -7,6 +7,7 @@ namespace NekoGui_fmt {
     public:
         static constexpr int proxy_Hysteria = 0;
         static constexpr int proxy_TUIC = 1;
+        static constexpr int proxy_Hysteria2 = 3;
         int proxy_type = proxy_Hysteria;
 
         // Hysteria
@@ -34,6 +35,9 @@ namespace NekoGui_fmt {
         int hopInterval = 10;
         QString hopPort = "";
 
+        // Hysteria 2 (Something same as hy1)
+        QString username = "";
+
         // TUIC
 
         QString uuid = "";
@@ -54,9 +58,7 @@ namespace NekoGui_fmt {
 
         explicit QUICBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
-            if (proxy_type == proxy_Hysteria) {
-                _add(new configItem("protocol", &hyProtocol, itemType::integer));
-                _add(new configItem("authPayloadType", &authPayloadType, itemType::integer));
+            if (proxy_type == proxy_Hysteria || proxy_type == proxy_Hysteria2) {
                 _add(new configItem("authPayload", &authPayload, itemType::string));
                 _add(new configItem("obfsPassword", &obfsPassword, itemType::string));
                 _add(new configItem("uploadMbps", &uploadMbps, itemType::integer));
@@ -66,6 +68,13 @@ namespace NekoGui_fmt {
                 _add(new configItem("disableMtuDiscovery", &disableMtuDiscovery, itemType::boolean));
                 _add(new configItem("hopInterval", &hopInterval, itemType::integer));
                 _add(new configItem("hopPort", &hopPort, itemType::string));
+                if (proxy_type == proxy_Hysteria2) {
+                    _add(new configItem("authPayloadType", &authPayloadType, itemType::integer));
+                    _add(new configItem("protocol", &hyProtocol, itemType::integer));
+                } else {
+                    _add(new configItem("username", &username, itemType::string));
+                }
+
             } else if (proxy_type == proxy_TUIC) {
                 _add(new configItem("uuid", &uuid, itemType::string));
                 _add(new configItem("password", &password, itemType::string));

@@ -199,13 +199,25 @@ namespace NekoGui_fmt {
             if (!hopPort.trimmed().isEmpty()) outbound["hop_ports"] = hopPort;
             if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
             if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
+        } else if (proxy_type == proxy_Hysteria2) {
+            outbound["type"] = "hysteria2";
+            outbound["password"] = authPayload;
+
+            if (uploadMbps > 0) outbound["up_mbps"] = uploadMbps;
+            if (downloadMbps > 0) outbound["down_mbps"] = downloadMbps;
+            if (!obfsPassword.isEmpty()) {
+                outbound["obfs"] = QJsonObject{
+                    {"type", "salamander"},
+                    {"password", obfsPassword},
+                };
+            }
         } else if (proxy_type == proxy_TUIC) {
             outbound["type"] = "tuic";
             outbound["uuid"] = uuid;
             outbound["password"] = password;
             outbound["congestion_control"] = congestionControl;
             if (uos) {
-                outbound["udp_over_stream"]= true;
+                outbound["udp_over_stream"] = true;
             } else {
                 outbound["udp_relay_mode"] = udpRelayMode;
             }
