@@ -610,6 +610,7 @@ namespace NekoGui_sub {
                         group->order.append(ent->id);
                     }
                 }
+                group->Save();
 
                 // cleanup
                 for (const auto &ent: out_all) {

@@ -367,6 +367,7 @@ void DialogBasicSettings::on_set_custom_icon_clicked() {
             MessageBoxWarning(title, tr("Please select a valid square image."));
             return;
         }
+        QFile::remove(user_icon_path);
         QFile::copy(fn, user_icon_path);
     } else if (c == 1) {
         QFile::remove(user_icon_path);
