@@ -71,7 +71,7 @@ namespace NekoGui_fmt {
         };
 
         if (IS_NEKO_BOX) {
-            if (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp) {
+            if (!forceExternal && (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp)) {
                 // sing-box support
                 return 0;
             } else {
@@ -213,11 +213,12 @@ namespace NekoGui_fmt {
             if (streamReceiveWindow > 0) quic["initStreamReceiveWindow"] = streamReceiveWindow;
             if (connectionReceiveWindow > 0) quic["initConnReceiveWindow"] = connectionReceiveWindow;
             if (disableMtuDiscovery) quic["disablePathMTUDiscovery"] = true;
+            config["quic"] = quic;
 
-            config["fastopen"] = true;
+            config["fastOpen"] = true;
             config["lazy"] = true;
 
-                if (!obfsPassword.isEmpty()) {
+            if (!obfsPassword.isEmpty()) {
                 QJsonObject obfs;
                 obfs["type"] = "salamander";
                 obfs["salamander"] = QJsonObject{

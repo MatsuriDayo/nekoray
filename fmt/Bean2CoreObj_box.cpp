@@ -180,6 +180,7 @@ namespace NekoGui_fmt {
             {"server_name", sni},
         };
         if (!alpn.trimmed().isEmpty()) coreTlsObj["alpn"] = QList2QJsonArray(alpn.split(","));
+        if (proxy_type == proxy_Hysteria2) coreTlsObj["alpn"] = "h3";
 
         QJsonObject outbound{
             {"server", serverAddress},
@@ -202,9 +203,8 @@ namespace NekoGui_fmt {
         } else if (proxy_type == proxy_Hysteria2) {
             outbound["type"] = "hysteria2";
             outbound["password"] = authPayload;
-
-            if (uploadMbps > 0) outbound["up_mbps"] = uploadMbps;
-            if (downloadMbps > 0) outbound["down_mbps"] = downloadMbps;
+            outbound["up_mbps"] = uploadMbps;
+            outbound["down_mbps"] = downloadMbps;
             if (!obfsPassword.isEmpty()) {
                 outbound["obfs"] = QJsonObject{
                     {"type", "salamander"},

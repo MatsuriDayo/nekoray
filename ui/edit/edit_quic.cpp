@@ -29,6 +29,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         P_LOAD_STRING(authPayload);
         P_LOAD_INT(streamReceiveWindow);
         P_LOAD_INT(connectionReceiveWindow);
+        P_LOAD_BOOL(forceExternal);
 
         ui->uuid->hide();
         ui->uuid_l->hide();
@@ -43,20 +44,39 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->heartbeat->hide();
         ui->heartbeat_l->hide();
         ui->uos->hide();
+        if (!IS_NEKO_BOX) ui->forceExternal->hide();
 
-        if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) {
+        if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) { // hy1
             P_LOAD_COMBO_INT(hyProtocol);
             P_LOAD_COMBO_INT(authPayloadType);
 
             ui->username_l->hide();
             ui->username->hide();
-        } else {
+        } else { // hy2
             P_LOAD_STRING(username);
 
             ui->hyProtocol->hide();
             ui->hyProtocol_l->hide();
             ui->hyProtocol->hide();
             ui->hyProtocol_l->hide();
+            ui->authPayload->hide();
+            ui->authPayload_l->hide();
+            ui->authPayloadType->hide();
+            ui->authPayloadType_l->hide();
+            ui->alpn->hide();
+            ui->alpn_l->hide();
+            ui->TLS->removeItem(ui->alpn_sp);
+            if (IS_NEKO_BOX) {
+                ui->disableMtuDiscovery->hide();
+                ui->hopInterval->hide();
+                ui->hopInterval_l->hide();
+                ui->hopPort->hide();
+                ui->hopPort_l->hide();
+                ui->connectionReceiveWindow->hide();
+                ui->connectionReceiveWindow_l->hide();
+                ui->streamReceiveWindow->hide();
+                ui->streamReceiveWindow_l->hide();
+            }
         }
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
         P_LOAD_STRING(uuid);
@@ -103,6 +123,8 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
 
 bool EditQUIC::onEnd() {
     auto bean = this->ent->QUICBean();
+
+    P_SAVE_BOOL(forceExternal);
 
     // Hysteria
     P_SAVE_STRING(hopPort);

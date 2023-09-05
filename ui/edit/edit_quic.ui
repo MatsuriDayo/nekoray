@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>600</height>
+    <height>628</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -157,8 +157,18 @@
      </item>
      <item row="4" column="1">
       <widget class="QCheckBox" name="uos">
+       <property name="toolTip">
+        <string notr="true">Requires sing-box server</string>
+       </property>
        <property name="text">
-        <string>UDP over Stream</string>
+        <string notr="true">UDP over Stream</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QCheckBox" name="forceExternal">
+       <property name="text">
+        <string>Force use external core</string>
        </property>
       </widget>
      </item>
@@ -358,15 +368,22 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="2">
+     <item row="0" column="0">
+      <widget class="QLabel" name="sni_l">
+       <property name="text">
+        <string>SNI</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="2">
       <widget class="QCheckBox" name="allowInsecure">
        <property name="text">
         <string>Allow Insecure</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="2">
-      <spacer name="horizontalSpacer">
+     <item row="1" column="2">
+      <spacer name="alpn_sp">
        <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
@@ -380,13 +397,6 @@
         </size>
        </property>
       </spacer>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="sni_l">
-       <property name="text">
-        <string>SNI</string>
-       </property>
-      </widget>
      </item>
     </layout>
    </item>
@@ -432,8 +442,11 @@
   <tabstop>udpRelayMode</tabstop>
   <tabstop>heartbeat</tabstop>
   <tabstop>zeroRttHandshake</tabstop>
+  <tabstop>forceExternal</tabstop>
+  <tabstop>uos</tabstop>
   <tabstop>hyProtocol</tabstop>
   <tabstop>disableMtuDiscovery</tabstop>
+  <tabstop>username</tabstop>
   <tabstop>obfsPassword</tabstop>
   <tabstop>authPayloadType</tabstop>
   <tabstop>authPayload</tabstop>
@@ -443,8 +456,8 @@
   <tabstop>sni</tabstop>
   <tabstop>disableSni</tabstop>
   <tabstop>alpn</tabstop>
-  <tabstop>allowInsecure</tabstop>
   <tabstop>certificate</tabstop>
+  <tabstop>allowInsecure</tabstop>
   <tabstop>streamReceiveWindow</tabstop>
   <tabstop>connectionReceiveWindow</tabstop>
  </tabstops>
