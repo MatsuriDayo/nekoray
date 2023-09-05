@@ -13,6 +13,8 @@ namespace NekoGui_fmt {
         QString certificate = "";
         int insecure_concurrency = 0;
 
+        bool disable_log = false;
+
         NaiveBean() : AbstractBean(0) {
             _add(new configItem("username", &username, itemType::string));
             _add(new configItem("password", &password, itemType::string));
@@ -21,6 +23,7 @@ namespace NekoGui_fmt {
             _add(new configItem("sni", &sni, itemType::string));
             _add(new configItem("certificate", &certificate, itemType::string));
             _add(new configItem("insecure_concurrency", &insecure_concurrency, itemType::integer));
+            _add(new configItem("disable_log", &disable_log, itemType::boolean));
         };
 
         QString DisplayCoreType() override { return "Naive"; };

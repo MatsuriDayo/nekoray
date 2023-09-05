@@ -97,7 +97,7 @@ namespace NekoGui_fmt {
         proxy_url.setPort(connect_port);
         proxy_url.setHost(domain_address);
 
-        result.arguments += "--log";
+        if (!disable_log) result.arguments += "--log";
         result.arguments += "--listen=socks://127.0.0.1:" + Int2String(socks_port);
         result.arguments += "--proxy=" + proxy_url.toString(QUrl::FullyEncoded);
         if (domain_address != connect_address)

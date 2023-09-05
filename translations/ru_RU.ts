@@ -892,6 +892,14 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <source>Insecure concurrency</source>
         <translation></translation>
     </message>
+    <message>
+        <source>Disable logs</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Turn on this option if your connection is lost after a while</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditQUIC</name>

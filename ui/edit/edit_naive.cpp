@@ -24,6 +24,7 @@ void EditNaive::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     P_LOAD_STRING(sni);
     P_C_LOAD_STRING(certificate);
     P_LOAD_INT(insecure_concurrency);
+    P_LOAD_BOOL(disable_log);
 }
 
 bool EditNaive::onEnd() {
@@ -36,6 +37,7 @@ bool EditNaive::onEnd() {
     P_SAVE_STRING(sni);
     P_C_SAVE_STRING(certificate);
     P_SAVE_INT(insecure_concurrency);
+    P_SAVE_BOOL(disable_log);
 
     return true;
 }
