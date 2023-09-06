@@ -382,7 +382,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     //
     connect(ui->menu_share_item, &QMenu::aboutToShow, this, [=] {
         QString name;
-        auto selected = get_now_selected();
+        auto selected = get_now_selected_list();
         if (!selected.isEmpty()) {
             auto ent = selected.first();
             name = ent->bean->DisplayCoreType();
@@ -1129,7 +1129,7 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
 }
 
 void MainWindow::on_menu_clone_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.isEmpty()) return;
 
     auto btn = QMessageBox::question(this, tr("Clone"), tr("Clone %1 item(s)").arg(ents.count()));
@@ -1144,7 +1144,7 @@ void MainWindow::on_menu_clone_triggered() {
 }
 
 void MainWindow::on_menu_move_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.isEmpty()) return;
 
     auto items = QStringList{};
@@ -1168,7 +1168,7 @@ void MainWindow::on_menu_move_triggered() {
 }
 
 void MainWindow::on_menu_delete_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.count() == 0) return;
     if (QMessageBox::question(this, tr("Confirmation"), QString(tr("Remove %1 item(s) ?")).arg(ents.count())) ==
         QMessageBox::StandardButton::Yes) {
@@ -1180,7 +1180,7 @@ void MainWindow::on_menu_delete_triggered() {
 }
 
 void MainWindow::on_menu_reset_traffic_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.count() == 0) return;
     for (const auto &ent: ents) {
         ent->traffic_data->Reset();
@@ -1190,7 +1190,7 @@ void MainWindow::on_menu_reset_traffic_triggered() {
 }
 
 void MainWindow::on_menu_profile_debug_info_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.count() != 1) return;
     auto btn = QMessageBox::information(this, software_name, ents.first()->ToJsonBytes(), "OK", "Edit", "Reload", 0, 0);
     if (btn == 1) {
@@ -1207,7 +1207,7 @@ void MainWindow::on_menu_copy_links_triggered() {
         ui->masterLogBrowser->copy();
         return;
     }
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     QStringList links;
     for (const auto &ent: ents) {
         links += ent->bean->ToShareLink();
@@ -1218,7 +1218,7 @@ void MainWindow::on_menu_copy_links_triggered() {
 }
 
 void MainWindow::on_menu_copy_links_nkr_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     QStringList links;
     for (const auto &ent: ents) {
         links += ent->bean->ToNekorayShareLink(ent->type);
@@ -1229,7 +1229,7 @@ void MainWindow::on_menu_copy_links_nkr_triggered() {
 }
 
 void MainWindow::on_menu_export_config_triggered() {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.count() != 1) return;
     auto ent = ents.first();
     if (ent->bean->DisplayCoreType() != software_core_name) return;
@@ -1257,7 +1257,7 @@ void MainWindow::on_menu_export_config_triggered() {
 }
 
 void MainWindow::display_qr_link(bool nkrFormat) {
-    auto ents = get_now_selected();
+    auto ents = get_now_selected_list();
     if (ents.count() != 1) return;
 
     class W : public QDialog {
@@ -1474,17 +1474,6 @@ void MainWindow::on_menu_resolve_domain_triggered() {
 
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
     ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // 弹出菜单
-}
-
-QMap<int, std::shared_ptr<NekoGui::ProxyEntity>> MainWindow::get_now_selected() {
-    auto items = ui->proxyListTable->selectedItems();
-    QMap<int, std::shared_ptr<NekoGui::ProxyEntity>> map;
-    for (auto item: items) {
-        auto id = item->data(114514).toInt();
-        auto ent = NekoGui::profileManager->GetProfile(id);
-        if (ent != nullptr) map[id] = ent;
-    }
-    return map;
 }
 
 QList<std::shared_ptr<NekoGui::ProxyEntity>> MainWindow::get_now_selected_list() {

@@ -161,8 +161,6 @@ private:
     QSemaphore sem_stopped;
     int exit_reason = 0;
 
-    QMap<int, std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected();
-
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_selected_or_group();
