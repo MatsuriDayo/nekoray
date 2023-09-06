@@ -973,10 +973,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation type="unfinished">نام کاربری</translation>
-    </message>
-    <message>
         <source>Force use external core</source>
         <translation type="unfinished"></translation>
     </message>

@@ -980,10 +980,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Режим UDP Relay</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation type="unfinished">Имя пользователя</translation>
-    </message>
-    <message>
         <source>Force use external core</source>
         <translation type="unfinished"></translation>
     </message>

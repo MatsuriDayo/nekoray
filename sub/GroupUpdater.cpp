@@ -124,10 +124,18 @@ namespace NekoGui_sub {
             if (!ok) return;
         }
 
-        // Hysteria
+        // Hysteria1
         if (str.startsWith("hysteria://")) {
             needFix = false;
             ent = NekoGui::ProfileManager::NewProxyEntity("hysteria");
+            auto ok = ent->QUICBean()->TryParseLink(str);
+            if (!ok) return;
+        }
+
+        // Hysteria2
+        if (str.startsWith("hysteria2://") || str.startsWith("hy2://")) {
+            needFix = false;
+            ent = NekoGui::ProfileManager::NewProxyEntity("hysteria2");
             auto ok = ent->QUICBean()->TryParseLink(str);
             if (!ok) return;
         }

@@ -12,7 +12,7 @@ namespace NekoGui_fmt {
 
         bool forceExternal = false;
 
-        // Hysteria
+        // Hysteria 1
 
         static constexpr int hysteria_protocol_udp = 0;
         static constexpr int hysteria_protocol_facktcp = 1;
@@ -23,8 +23,10 @@ namespace NekoGui_fmt {
         static constexpr int hysteria_auth_string = 1;
         static constexpr int hysteria_auth_base64 = 2;
         int authPayloadType = 0;
-
         QString authPayload = "";
+
+        // Hysteria 1&2
+
         QString obfsPassword = "";
 
         int uploadMbps = 100;
@@ -37,18 +39,18 @@ namespace NekoGui_fmt {
         int hopInterval = 10;
         QString hopPort = "";
 
-        // Hysteria 2 (Something same as hy1)
-        QString username = "";
-
         // TUIC
 
         QString uuid = "";
-        QString password = "";
         QString congestionControl = "bbr";
         QString udpRelayMode = "native";
         bool zeroRttHandshake = false;
         QString heartbeat = "10s";
         bool uos = false;
+
+        // HY2&TUIC
+
+        QString password = "";
 
         // TLS
 
@@ -76,9 +78,8 @@ namespace NekoGui_fmt {
                 } else { // hy2
                     uploadMbps = 0;
                     downloadMbps = 0;
-                    _add(new configItem("username", &username, itemType::string));
+                    _add(new configItem("password", &password, itemType::string));
                 }
-
             } else if (proxy_type == proxy_TUIC) {
                 _add(new configItem("uuid", &uuid, itemType::string));
                 _add(new configItem("password", &password, itemType::string));
@@ -114,7 +115,15 @@ namespace NekoGui_fmt {
             }
         }
 
-        QString DisplayType() override { return proxy_type == proxy_TUIC ? "TUIC" : "Hysteria"; };
+        QString DisplayType() override {
+            if (proxy_type == proxy_TUIC) {
+                return "TUIC";
+            } else if (proxy_type == proxy_Hysteria) {
+                return "Hysteria1";
+            } else {
+                return "Hysteria2";
+            }
+        };
 
         int NeedExternal(bool isFirstProfile) override;
 

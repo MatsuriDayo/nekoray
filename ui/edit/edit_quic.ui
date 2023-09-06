@@ -176,13 +176,17 @@
    </item>
    <item>
     <layout class="QGridLayout" name="obfuscation">
-     <item row="2" column="1">
-      <widget class="MyLineEdit" name="obfsPassword"/>
-     </item>
-     <item row="2" column="0">
+     <item row="1" column="0">
       <widget class="QLabel" name="obfsPassword_l">
        <property name="text">
         <string>Obfs Password</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="hyProtocol_l">
+       <property name="text">
+        <string>Protocol</string>
        </property>
       </widget>
      </item>
@@ -222,22 +226,8 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="hyProtocol_l">
-       <property name="text">
-        <string>Protocol</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="username_l">
-       <property name="text">
-        <string>Username</string>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="1">
-      <widget class="MyLineEdit" name="username"/>
+      <widget class="MyLineEdit" name="obfsPassword"/>
      </item>
     </layout>
    </item>
@@ -262,7 +252,7 @@
      <item row="1" column="0">
       <widget class="QLabel" name="authPayload_l">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -275,7 +265,7 @@
      <item row="3" column="0">
       <widget class="QLabel" name="password_l">
        <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
@@ -287,12 +277,6 @@
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="uuid_l">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
        <property name="text">
         <string notr="true">UUID</string>
        </property>
@@ -446,7 +430,6 @@
   <tabstop>uos</tabstop>
   <tabstop>hyProtocol</tabstop>
   <tabstop>disableMtuDiscovery</tabstop>
-  <tabstop>username</tabstop>
   <tabstop>obfsPassword</tabstop>
   <tabstop>authPayloadType</tabstop>
   <tabstop>authPayload</tabstop>

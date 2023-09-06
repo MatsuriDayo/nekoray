@@ -198,11 +198,7 @@ namespace NekoGui_fmt {
                 {"listen", "127.0.0.1:" + Int2String(socks_port)},
                 {"disableUDP", false},
             };
-            if (username.isEmpty()) {
-                config["auth"] = authPayload;
-            } else {
-                config["auth"] = username + ":" + authPayload;
-            }
+            config["auth"] = password;
 
             QJsonObject bandwidth;
             if (uploadMbps > 0) bandwidth["up"] = Int2String(uploadMbps) + " mbps";

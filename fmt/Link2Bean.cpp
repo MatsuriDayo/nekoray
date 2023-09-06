@@ -233,10 +233,9 @@ namespace NekoGui_fmt {
             name = url.fragment();
             serverAddress = url.host();
             serverPort = url.port();
-            serverAddress = url.host(); // default sni
             hopPort = query.queryItemValue("mport");
             obfsPassword = query.queryItemValue("obfsParam");
-            allowInsecure = query.queryItemValue("insecure") == "1";
+            allowInsecure = QStringList{"1", "true"}.contains(query.queryItemValue("insecure"));
             uploadMbps = query.queryItemValue("upmbps").toInt();
             downloadMbps = query.queryItemValue("downmbps").toInt();
 
@@ -275,6 +274,21 @@ namespace NekoGui_fmt {
             udpRelayMode = query.queryItemValue("udp_relay_mode");
             allowInsecure = query.queryItemValue("allow_insecure") == "1";
             disableSni = query.queryItemValue("disable_sni") == "1";
+        } else if (QStringList{"hy2", "hysteria2"}.contains(url.scheme())) {
+            name = url.fragment();
+            serverAddress = url.host();
+            serverPort = url.port();
+            // hopPort = query.queryItemValue("mport");
+            obfsPassword = query.queryItemValue("obfs-password");
+            allowInsecure = QStringList{"1", "true"}.contains(query.queryItemValue("insecure"));
+
+            if (url.password().isEmpty()) {
+                password = url.userName();
+            } else {
+                password = url.userName() + ":" + url.password();
+            }
+
+            sni = query.queryItemValue("sni");
         }
 
         return true;

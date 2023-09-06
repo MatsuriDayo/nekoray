@@ -981,10 +981,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>不发送服务器名称指示</translation>
     </message>
     <message>
-        <source>Username</source>
-        <translation>用户名</translation>
-    </message>
-    <message>
         <source>Force use external core</source>
         <translation>强制使用外部核心</translation>
     </message>

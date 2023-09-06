@@ -19,23 +19,39 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     this->ent = _ent;
     auto bean = this->ent->QUICBean();
 
-    if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria || bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria2) {
-        P_LOAD_STRING(hopPort);
-        P_LOAD_INT(hopInterval);
-        P_LOAD_INT(uploadMbps);
-        P_LOAD_INT(downloadMbps);
-        P_LOAD_BOOL(disableMtuDiscovery)
-        P_LOAD_STRING(obfsPassword);
-        P_LOAD_STRING(authPayload);
-        P_LOAD_INT(streamReceiveWindow);
-        P_LOAD_INT(connectionReceiveWindow);
-        P_LOAD_BOOL(forceExternal);
+    P_LOAD_STRING(hopPort);
+    P_LOAD_INT(hopInterval);
+    P_LOAD_INT(uploadMbps);
+    P_LOAD_INT(downloadMbps);
+    P_LOAD_BOOL(disableMtuDiscovery)
+    P_LOAD_STRING(obfsPassword);
+    P_LOAD_STRING(authPayload);
+    P_LOAD_INT(streamReceiveWindow);
+    P_LOAD_INT(connectionReceiveWindow);
 
+    P_LOAD_BOOL(forceExternal);
+    P_LOAD_COMBO_INT(hyProtocol);
+    P_LOAD_COMBO_INT(authPayloadType);
+    P_LOAD_STRING(uuid);
+    P_LOAD_STRING(password);
+
+    P_LOAD_COMBO_STRING(congestionControl);
+    P_LOAD_COMBO_STRING(udpRelayMode);
+    P_LOAD_BOOL(zeroRttHandshake);
+    P_LOAD_STRING(heartbeat);
+    P_LOAD_BOOL(uos);
+
+    // TLS
+    P_LOAD_STRING(sni);
+    P_LOAD_STRING(alpn);
+    P_C_LOAD_STRING(caText);
+    P_LOAD_BOOL(allowInsecure);
+    P_LOAD_BOOL(disableSni);
+
+    if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria || bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria2) {
         ui->uuid->hide();
         ui->uuid_l->hide();
         ui->uuidgen->hide();
-        ui->password->hide();
-        ui->password_l->hide();
         ui->congestionControl->hide();
         ui->congestionControl_l->hide();
         ui->udpRelayMode->hide();
@@ -47,14 +63,9 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         if (!IS_NEKO_BOX) ui->forceExternal->hide();
 
         if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) { // hy1
-            P_LOAD_COMBO_INT(hyProtocol);
-            P_LOAD_COMBO_INT(authPayloadType);
-
-            ui->username_l->hide();
-            ui->username->hide();
+            ui->password->hide();
+            ui->password_l->hide();
         } else { // hy2
-            P_LOAD_STRING(username);
-
             ui->hyProtocol->hide();
             ui->hyProtocol_l->hide();
             ui->hyProtocol->hide();
@@ -79,14 +90,6 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
             }
         }
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
-        P_LOAD_STRING(uuid);
-        P_LOAD_STRING(password);
-        P_LOAD_COMBO_STRING(congestionControl);
-        P_LOAD_COMBO_STRING(udpRelayMode);
-        P_LOAD_BOOL(zeroRttHandshake);
-        P_LOAD_STRING(heartbeat);
-        P_LOAD_BOOL(uos);
-
         ui->hopPort->hide();
         ui->hopPort_l->hide();
         ui->hopInterval->hide();
@@ -112,13 +115,6 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
             ui->uos->hide();
         }
     }
-
-    // TLS
-    P_LOAD_STRING(sni);
-    P_LOAD_STRING(alpn);
-    P_C_LOAD_STRING(caText);
-    P_LOAD_BOOL(allowInsecure);
-    P_LOAD_BOOL(disableSni);
 }
 
 bool EditQUIC::onEnd() {
@@ -138,9 +134,6 @@ bool EditQUIC::onEnd() {
     P_SAVE_STRING(authPayload);
     P_SAVE_INT(streamReceiveWindow);
     P_SAVE_INT(connectionReceiveWindow);
-
-    // Hysteria2
-    P_SAVE_STRING(username);
 
     // TUIC
     P_SAVE_STRING(uuid);

@@ -202,7 +202,7 @@ namespace NekoGui_fmt {
             if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
         } else if (proxy_type == proxy_Hysteria2) {
             outbound["type"] = "hysteria2";
-            outbound["password"] = authPayload;
+            outbound["password"] = password;
             outbound["up_mbps"] = uploadMbps;
             outbound["down_mbps"] = downloadMbps;
             if (!obfsPassword.isEmpty()) {
