@@ -250,6 +250,27 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
               </property>
              </widget>
             </item>
+            <item>
+             <widget class="QLabel" name="dns_final_out_l">
+              <property name="text">
+               <string>Final DNS Out</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="dns_final_out">
+              <item>
+               <property name="text">
+                <string notr="true">proxy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">bypass</string>
+               </property>
+              </item>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="1" column="2">

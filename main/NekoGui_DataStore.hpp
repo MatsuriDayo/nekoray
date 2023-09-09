@@ -21,6 +21,7 @@ namespace NekoGui {
         bool dns_routing = true;
         bool use_dns_object = false;
         QString dns_object = "";
+        QString dns_final_out = "proxy";
 
         // Misc
         QString domain_strategy = "AsIs";
