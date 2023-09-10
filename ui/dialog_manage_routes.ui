@@ -250,6 +250,40 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
               </property>
              </widget>
             </item>
+            <item>
+             <spacer name="horizontalSpacer_2">
+              <property name="orientation">
+               <enum>Qt::Horizontal</enum>
+              </property>
+              <property name="sizeHint" stdset="0">
+               <size>
+                <width>40</width>
+                <height>20</height>
+               </size>
+              </property>
+             </spacer>
+            </item>
+            <item>
+             <widget class="QLabel" name="dns_final_out_l">
+              <property name="text">
+               <string>Final DNS Out</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="dns_final_out">
+              <item>
+               <property name="text">
+                <string notr="true">proxy</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string notr="true">bypass</string>
+               </property>
+              </item>
+             </widget>
+            </item>
            </layout>
           </item>
           <item row="1" column="2">
@@ -601,6 +635,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</string>
   <tabstop>direct_dns</tabstop>
   <tabstop>direct_dns_strategy</tabstop>
   <tabstop>dns_routing</tabstop>
+  <tabstop>dns_final_out</tabstop>
   <tabstop>use_dns_object</tabstop>
   <tabstop>format_dns_object</tabstop>
   <tabstop>dns_document</tabstop>

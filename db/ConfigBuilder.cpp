@@ -328,7 +328,7 @@ namespace NekoGui {
             {"queryStrategy", dataStore->routing->direct_dns_strategy},
             {"domains", QList2QJsonArray<QString>(status->domainListDNSDirect)},
         };
-        if (dataStore->routing->def_outbound == "bypass") {
+        if (dataStore->routing->dns_final_out == "bypass") {
             dnsServers.prepend(directObj);
         } else {
             dnsServers.append(directObj);
@@ -867,7 +867,7 @@ namespace NekoGui {
                 {"address", directDNSAddress.replace("+local://", "://")},
                 {"detour", "direct"},
             };
-            if (dataStore->routing->def_outbound == "bypass") {
+            if (dataStore->routing->dns_final_out == "bypass") {
                 dnsServers.prepend(directObj);
             } else {
                 dnsServers.append(directObj);

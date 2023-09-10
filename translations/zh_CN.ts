@@ -725,6 +725,10 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
 如果默认值不工作，可以尝试更改为 &quot;223.5.5.5&quot;。
 更多信息，请参阅文档 &quot;配置/DNS&quot;。</translation>
     </message>
+    <message>
+        <source>Final DNS Out</source>
+        <translation>默认 DNS 出站</translation>
+    </message>
 </context>
 <context>
     <name>DialogVPNSettings</name>
