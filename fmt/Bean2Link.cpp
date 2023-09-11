@@ -57,6 +57,7 @@ namespace NekoGui_fmt {
             if (!stream->path.isEmpty()) query.addQueryItem("serviceName", stream->path);
         } else if (stream->network == "tcp") {
             if (stream->header_type == "http") {
+                if (!stream->path.isEmpty()) query.addQueryItem("path", stream->path);
                 query.addQueryItem("headerType", "http");
                 query.addQueryItem("host", stream->host);
             }

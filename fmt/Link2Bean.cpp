@@ -83,6 +83,7 @@ namespace NekoGui_fmt {
             if (GetQueryValue(query, "headerType") == "http") {
                 stream->header_type = "http";
                 stream->host = GetQueryValue(query, "host", "");
+                stream->path = GetQueryValue(query, "path", "");
             }
         }
 
@@ -196,6 +197,7 @@ namespace NekoGui_fmt {
             } else if (stream->network == "tcp") {
                 if (GetQueryValue(query, "headerType") == "http") {
                     stream->header_type = "http";
+                    stream->path = GetQueryValue(query, "path", "");
                     stream->host = GetQueryValue(query, "host", "");
                 }
             }
