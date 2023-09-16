@@ -52,14 +52,14 @@ namespace NekoGui_fmt {
             if (!alpn.trimmed().isEmpty()) {
                 tls["alpn"] = QList2QJsonArray(alpn.split(","));
             }
-            auto fp = utlsFingerprint.isEmpty() ? NekoGui::dataStore->utlsFingerprint : utlsFingerprint;
+            QString fp = utlsFingerprint;
             if (!reality_pbk.trimmed().isEmpty()) {
                 tls["reality"] = QJsonObject{
                     {"enabled", true},
                     {"public_key", reality_pbk},
                     {"short_id", reality_sid.split(",")[0]},
                 };
-                if (fp.isEmpty()) fp = "chrome";
+                if (fp.isEmpty()) fp = "random";
             }
             if (!fp.isEmpty()) {
                 tls["utls"] = QJsonObject{

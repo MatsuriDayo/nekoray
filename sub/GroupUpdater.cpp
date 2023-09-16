@@ -308,6 +308,9 @@ namespace NekoGui_sub {
                     bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     bean->stream->allow_insecure = Node2Bool(proxy["skip-cert-verify"]);
                     bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
+                    if (bean->stream->utlsFingerprint.isEmpty()) {
+                        bean->stream->utlsFingerprint = NekoGui::dataStore->utlsFingerprint;
+                    }
 
                     // sing-mux
                     auto smux = NodeChild(proxy, {"smux"});
@@ -348,6 +351,11 @@ namespace NekoGui_sub {
                     bean->stream->alpn = Node2QStringList(proxy["alpn"]).join(",");
                     if (Node2Bool(proxy["tls"])) bean->stream->security = "tls";
                     if (Node2Bool(proxy["skip-cert-verify"])) bean->stream->allow_insecure = true;
+                    bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
+                    bean->stream->utlsFingerprint = Node2QString(proxy["client-fingerprint"]);
+                    if (bean->stream->utlsFingerprint.isEmpty()) {
+                        bean->stream->utlsFingerprint = NekoGui::dataStore->utlsFingerprint;
+                    }
 
                     // sing-mux
                     auto smux = NodeChild(proxy, {"smux"});

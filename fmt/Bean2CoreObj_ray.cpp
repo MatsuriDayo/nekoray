@@ -43,9 +43,8 @@ namespace NekoGui_fmt {
         }
 
         if (security == "tls") {
-            auto fp = utlsFingerprint.isEmpty() ? NekoGui::dataStore->utlsFingerprint : utlsFingerprint;
             QJsonObject tls;
-            if (!fp.isEmpty()) tls["fingerprint"] = fp;
+            if (!utlsFingerprint.isEmpty()) tls["fingerprint"] = utlsFingerprint;
             if (!sni.trimmed().isEmpty()) tls["serverName"] = sni;
             if (reality_pbk.trimmed().isEmpty()) {
                 if (allow_insecure || NekoGui::dataStore->skip_cert) tls["allowInsecure"] = true;
@@ -65,7 +64,7 @@ namespace NekoGui_fmt {
                 tls["publicKey"] = reality_pbk;
                 tls["shortId"] = reality_sid;
                 tls["spiderX"] = reality_spx;
-                if (fp.isEmpty()) tls["fingerprint"] = "chrome";
+                if (utlsFingerprint.isEmpty()) tls["fingerprint"] = "chrome";
                 streamSettings["realitySettings"] = tls;
                 streamSettings["security"] = "reality";
             }
