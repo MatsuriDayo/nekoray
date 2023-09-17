@@ -40,17 +40,17 @@
        <widget class="QComboBox" name="vpn_implementation">
         <item>
          <property name="text">
+          <string notr="true">Mixed</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
           <string notr="true">gVisor</string>
          </property>
         </item>
         <item>
          <property name="text">
           <string notr="true">System</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string notr="true">Mixed</string>
          </property>
         </item>
        </widget>
