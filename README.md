@@ -26,8 +26,16 @@ Support Windows / Linux out of the box now.
 
 ### Package
 
-1. AUR: [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
-2. Scoop extras: `scoop install nekoray`
+#### AUR
+- [nekoray](https://aur.archlinux.org/packages/nekoray)
+- [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+
+#### archlinuxcn
+- [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
+- [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
+
+#### Scoop extras
+`scoop install nekoray`
 
 ## 更改记录 & 发布频道 / Changelog & Telegram channel
 
