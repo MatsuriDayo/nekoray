@@ -434,6 +434,20 @@ namespace NekoGui_sub {
                     auto downMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
                     if (upMbps > 0) bean->uploadMbps = upMbps;
                     if (downMbps > 0) bean->downloadMbps = downMbps;
+                } else if (type == "hysteria2") {
+                    auto bean = ent->QUICBean();
+
+                    // bean->hopPort = Node2QString(proxy["ports"]);
+
+                    bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
+                    bean->caText = Node2QString(proxy["ca-str"]);
+                    bean->sni = Node2QString(proxy["sni"]);
+
+                    bean->obfsPassword = Node2QString(proxy["obfs-password"]);
+                    bean->password = Node2QString(proxy["password"]);
+
+                    bean->uploadMbps = Node2QString(proxy["up"]).split(" ")[0].toInt();
+                    bean->downloadMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
                 } else if (type == "tuic") {
                     auto bean = ent->QUICBean();
 
