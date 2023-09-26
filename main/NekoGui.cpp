@@ -345,6 +345,7 @@ namespace NekoGui {
         _add(new configItem("sniffing_mode", &this->sniffing_mode, itemType::integer));
         _add(new configItem("use_dns_object", &this->use_dns_object, itemType::boolean));
         _add(new configItem("dns_object", &this->dns_object, itemType::string));
+        _add(new configItem("dns_final_out", &this->dns_final_out, itemType::string));
     }
 
     QString Routing::DisplayRouting() const {
