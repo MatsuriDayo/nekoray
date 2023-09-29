@@ -64,7 +64,7 @@ require (
 	github.com/sagernet/sing-shadowsocks v0.2.5 // indirect
 	github.com/sagernet/sing-shadowsocks2 v0.1.4 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.4 // indirect
-	github.com/sagernet/sing-tun v0.1.13-0.20230925091515-8adce0ea02a9 // indirect
+	github.com/sagernet/sing-tun v0.1.13-0.20230926093931-2a0a0ab228fc // indirect
 	github.com/sagernet/sing-vmess v0.1.8 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230816093905-5a5c285d44a6 // indirect
@@ -91,7 +91,7 @@ require (
 	golang.org/x/tools v0.13.0 // indirect
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20230429144221-925a1e7659e6 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20230711160842-782d3b101e98 // indirect
-	google.golang.org/grpc v1.58.1 // indirect
+	google.golang.org/grpc v1.58.2 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	lukechampine.com/blake3 v1.2.1 // indirect
 )
