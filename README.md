@@ -80,9 +80,11 @@ https://matsuridayo.github.io
 
 ## macOS
 
+[**Unofficial macOS releases** / 非官方发布](https://github.com/abbasnaqdi/nekoray-macos/releases)
+
 由于缺乏维护，不再提供 macOS 版本下载。
 
-您还可以在下面的存储库中非正式地获取更新版本。[非官方发布 / Unofficial releases](https://github.com/aaaamirabbas/nekoray-macos/releases)
+您还可以在下面的存储库中非正式地获取更新版本。
 
 仍可以参照下方教程自行编译，常见问题请参考历史 Issue，欢迎 Pull Request 修复。
 
