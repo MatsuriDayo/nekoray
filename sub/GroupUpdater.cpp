@@ -70,7 +70,6 @@ namespace NekoGui_sub {
             auto j = DecodeB64IfValid(link.fragment().toUtf8(), QByteArray::Base64UrlEncoding);
             if (j.isEmpty()) return;
             ent->bean->FromJsonBytes(j);
-            MW_show_log("nekoray format: " + ent->bean->DisplayTypeAndName());
         }
 
         // SOCKS
