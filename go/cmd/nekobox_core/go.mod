@@ -13,8 +13,6 @@ require (
 require (
 	berty.tech/go-libtor v1.0.385 // indirect
 	cloud.google.com/go/compute/metadata v0.2.3 // indirect
-	github.com/Dreamacro/clash v1.17.0 // indirect
-	github.com/Dreamacro/protobytes v0.0.0-20230617041236-6500a9f4f158 // indirect
 	github.com/ajg/form v1.5.1 // indirect
 	github.com/andybalholm/brotli v1.0.5 // indirect
 	github.com/caddyserver/certmagic v0.19.2 // indirect
@@ -48,23 +46,22 @@ require (
 	github.com/ooni/go-libtor v1.1.8 // indirect
 	github.com/oschwald/maxminddb-golang v1.12.0 // indirect
 	github.com/pierrec/lz4/v4 v4.1.14 // indirect
-	github.com/pires/go-proxyproto v0.7.0 // indirect
 	github.com/quic-go/qpack v0.4.0 // indirect
 	github.com/quic-go/qtls-go1-20 v0.3.4 // indirect
 	github.com/sagernet/cloudflare-tls v0.0.0-20230829051644-4a68352d0c4a // indirect
 	github.com/sagernet/go-tun2socks v1.16.12-0.20220818015926-16cb67876a61 // indirect
-	github.com/sagernet/gvisor v0.0.0-20230627031050-1ab0276e0dd2 // indirect
+	github.com/sagernet/gvisor v0.0.0-20230930141345-5fef6f2e17ab // indirect
 	github.com/sagernet/netlink v0.0.0-20220905062125-8043b4a9aa97 // indirect
-	github.com/sagernet/quic-go v0.0.0-20230919101909-0cc6c5dcecee // indirect
+	github.com/sagernet/quic-go v0.0.0-20231001051131-0fc736a289bb // indirect
 	github.com/sagernet/reality v0.0.0-20230406110435-ee17307e7691 // indirect
-	github.com/sagernet/sing v0.2.12-0.20230925124400-0531fd63eaba // indirect
-	github.com/sagernet/sing-dns v0.1.10-0.20230921024525-fc3e4c051ccd // indirect
+	github.com/sagernet/sing v0.2.13-0.20231001070509-81a98bf16263 // indirect
+	github.com/sagernet/sing-dns v0.1.10 // indirect
 	github.com/sagernet/sing-mux v0.1.3 // indirect
-	github.com/sagernet/sing-quic v0.1.1-0.20230922040527-541e66a4a16d // indirect
+	github.com/sagernet/sing-quic v0.1.2-0.20231001061659-f0ec0e24dd4d // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.5 // indirect
 	github.com/sagernet/sing-shadowsocks2 v0.1.4 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.4 // indirect
-	github.com/sagernet/sing-tun v0.1.13-0.20230926093931-2a0a0ab228fc // indirect
+	github.com/sagernet/sing-tun v0.1.15-0.20230930170051-6cfee41a5684 // indirect
 	github.com/sagernet/sing-vmess v0.1.8 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230816093905-5a5c285d44a6 // indirect
