@@ -38,6 +38,7 @@ namespace NekoGui_fmt {
         query.addQueryItem("security", security);
 
         if (!stream->sni.isEmpty()) query.addQueryItem("sni", stream->sni);
+        if (!stream->alpn.isEmpty()) query.addQueryItem("alpn", stream->alpn);
         if (stream->allow_insecure) query.addQueryItem("allowInsecure", "1");
         if (!stream->utlsFingerprint.isEmpty()) query.addQueryItem("fp", stream->utlsFingerprint);
 
