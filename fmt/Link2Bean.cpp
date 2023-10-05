@@ -239,7 +239,7 @@ namespace NekoGui_fmt {
             // https://hysteria.network/docs/uri-scheme/
             if (!query.hasQueryItem("upmbps") || !query.hasQueryItem("downmbps")) return false;
 
-            name = url.fragment();
+            name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             hopPort = query.queryItemValue("mport");
@@ -269,7 +269,7 @@ namespace NekoGui_fmt {
             // by daeuniverse
             // https://github.com/daeuniverse/dae/discussions/182
 
-            name = url.fragment();
+            name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             if (serverPort == -1) serverPort = 443;
             serverPort = url.port();
@@ -284,7 +284,7 @@ namespace NekoGui_fmt {
             allowInsecure = query.queryItemValue("allow_insecure") == "1";
             disableSni = query.queryItemValue("disable_sni") == "1";
         } else if (QStringList{"hy2", "hysteria2"}.contains(url.scheme())) {
-            name = url.fragment();
+            name = url.fragment(QUrl::FullyDecoded);
             serverAddress = url.host();
             serverPort = url.port();
             // hopPort = query.queryItemValue("mport");
