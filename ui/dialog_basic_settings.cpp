@@ -157,6 +157,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Subscription
 
     ui->user_agent->setText(NekoGui::dataStore->user_agent);
+    ui->user_agent->setPlaceholderText(NekoGui::dataStore->GetUserAgent(true));
     D_LOAD_BOOL(sub_use_proxy)
     D_LOAD_BOOL(sub_clear)
     D_LOAD_BOOL(sub_insecure)

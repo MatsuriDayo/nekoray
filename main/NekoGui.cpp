@@ -230,7 +230,7 @@ namespace NekoGui {
         _add(new configItem("extraCore", dynamic_cast<JsonStore *>(extraCore), itemType::jsonStore));
         _add(new configItem("inbound_auth", dynamic_cast<JsonStore *>(inbound_auth), itemType::jsonStore));
 
-        _add(new configItem("user_agent", &user_agent, itemType::string));
+        _add(new configItem("user_agent2", &user_agent, itemType::string));
         _add(new configItem("test_url", &test_latency_url, itemType::string));
         _add(new configItem("test_url_dl", &test_download_url, itemType::string));
         _add(new configItem("test_dl_timeout", &test_download_timeout, itemType::integer));
@@ -302,6 +302,22 @@ namespace NekoGui {
             remember_id = -1919;
             Save();
         }
+    }
+
+    QString DataStore::GetUserAgent(bool isDefault) const {
+        if (user_agent.isEmpty()) {
+            isDefault = true;
+        }
+        if (isDefault) {
+            QString version = SubStrBefore(NKR_VERSION, "-");
+            if (!version.contains(".")) version = "2.0";
+            if (IS_NEKO_BOX) {
+                return "NekoBox/PC/" + version + " (Prefer ClashMeta Format)";
+            } else {
+                return "NekoRay/PC/" + version + " (Prefer ClashMeta Format)";
+            }
+        }
+        return user_agent;
     }
 
     // preset routing
