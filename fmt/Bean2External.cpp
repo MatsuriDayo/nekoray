@@ -52,7 +52,7 @@ namespace NekoGui_fmt {
 
         auto hysteria2Core = [=] {
             if (isFirstProfile) {
-                if (NekoGui::dataStore->spmode_vpn || !hopPort.trimmed().isEmpty()) {
+                if (NekoGui::dataStore->spmode_vpn) {
                     return 1;
                 }
                 return 2;

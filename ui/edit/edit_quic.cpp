@@ -79,10 +79,6 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
             ui->TLS->removeItem(ui->alpn_sp);
             if (IS_NEKO_BOX) {
                 ui->disableMtuDiscovery->hide();
-                ui->hopInterval->hide();
-                ui->hopInterval_l->hide();
-                ui->hopPort->hide();
-                ui->hopPort_l->hide();
                 ui->connectionReceiveWindow->hide();
                 ui->connectionReceiveWindow_l->hide();
                 ui->streamReceiveWindow->hide();

@@ -197,7 +197,10 @@ namespace NekoGui_fmt {
             outbound["up_mbps"] = uploadMbps;
             outbound["down_mbps"] = downloadMbps;
 
-            if (!hopPort.trimmed().isEmpty()) outbound["hop_ports"] = hopPort;
+            if (!hopPort.trimmed().isEmpty()) {
+                outbound["hop_ports"] = hopPort;
+                outbound["hop_interval"] = hopInterval;
+            }
             if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
             if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
         } else if (proxy_type == proxy_Hysteria2) {
@@ -205,6 +208,11 @@ namespace NekoGui_fmt {
             outbound["password"] = password;
             outbound["up_mbps"] = uploadMbps;
             outbound["down_mbps"] = downloadMbps;
+            
+            if (!hopPort.trimmed().isEmpty()) {
+                outbound["hop_ports"] = hopPort;
+                outbound["hop_interval"] = hopInterval;
+            }
             if (!obfsPassword.isEmpty()) {
                 outbound["obfs"] = QJsonObject{
                     {"type", "salamander"},
