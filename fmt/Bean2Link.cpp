@@ -235,7 +235,7 @@ namespace NekoGui_fmt {
                 q.addQueryItem("obfs", "salamander");
                 q.addQueryItem("obfs-password", obfsPassword);
             }
-            // if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
+            if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
             if (allowInsecure) q.addQueryItem("insecure", "1");
             if (!sni.isEmpty()) q.addQueryItem("sni", sni);
             if (!q.isEmpty()) url.setQuery(q);
