@@ -448,7 +448,7 @@ namespace NekoGui_sub {
                 } else if (type == "hysteria2") {
                     auto bean = ent->QUICBean();
 
-                    // bean->hopPort = Node2QString(proxy["ports"]);
+                    bean->hopPort = Node2QString(proxy["ports"]);
 
                     bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
                     bean->caText = Node2QString(proxy["ca-str"]);
