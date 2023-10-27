@@ -333,10 +333,8 @@ namespace NekoGui {
             block_domain =
                 "geosite:category-ads-all\n"
                 "domain:appcenter.ms\n"
-                "domain:app-measurement.com\n"
                 "domain:firebase.io\n"
-                "domain:crashlytics.com\n"
-                "domain:google-analytics.com";
+                "domain:crashlytics.com\n";
         }
         if (IS_NEKO_BOX) {
             if (!Preset::SingBox::DomainStrategy.contains(domain_strategy)) domain_strategy = "";
