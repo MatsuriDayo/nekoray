@@ -179,7 +179,6 @@ jobs:
           zip -r $version_standalone-windows64.zip nekoray
           rm -rf nekoray
       - name: Pack Debian
-        if: github.event.inputs.publish != 'y'
         run: |
           source libs/env_deploy.sh
           find . -name artifacts.tgz | xargs -n1 tar xvzf
