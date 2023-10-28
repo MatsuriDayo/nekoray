@@ -82,3 +82,6 @@ CMakeLists.txt.user*
 /deployment
 /neko*.sh
 /qtsdk
+
+.vs
+out
