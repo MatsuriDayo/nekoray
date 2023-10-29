@@ -10,7 +10,7 @@ Support Windows / Linux out of the box now.
 
 ## Readme Translations
 
-中文 / English / [fa_IR](README_fa.md)
+中文 / English / [fa_IR](README_fa.md) / [日本語](README_ja.md)
 
 ## 下载 / Download
 
