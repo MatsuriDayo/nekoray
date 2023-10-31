@@ -37,7 +37,7 @@ Support Windows / Linux out of the box now.
 #### Scoop extras
 `scoop install nekoray`
 
-## 更改记录 & 发布频道 / Changelog & Telegram channel
+## 更改日志 & 发布频道 / Changelog & Telegram channel
 
 https://t.me/Matsuridayo
 
@@ -66,9 +66,9 @@ https://matsuridayo.github.io
 * Raw: some widely used formats (like shadowsocks, clash and v2rayN)
 * 原始格式：一些广泛使用的格式（如 shadowsocks、clash 和 v2rayN）
 
-## 运行参数
+## 运行标志
 
-[运行参数](docs/RunFlags.md)
+[运行标志](docs/RunFlags.md)
 
 ## Windows 运行
 
@@ -80,7 +80,7 @@ https://matsuridayo.github.io
 
 ## macOS
 
-由于缺乏维护，不再提供 macOS 版本下载。
+由于缺乏维护，不再提供 macOS 版本的下载。
 
 您还可以在下面的存储库中非正式地获取更新版本。[非官方发布 / Unofficial releases](https://github.com/aaaamirabbas/nekoray-macos/releases)
 
