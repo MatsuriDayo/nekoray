@@ -1,3 +1,4 @@
+<div id="top"></div>
 # NekoRay / NekoBox For PC
 
 Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
@@ -130,3 +131,5 @@ Gui:
 - [zxing-cpp](https://github.com/nu-book/zxing-cpp)
 - [QHotkey](https://github.com/Skycoder42/QHotkey)
 - [AppImageKit](https://github.com/AppImage/AppImageKit)
+
+<p align="right"><a href="#top">🔼 Back to top</a></p>
