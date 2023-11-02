@@ -28,6 +28,9 @@ namespace NekoGui_fmt {
                 if (!host.isEmpty()) transport["host"] = QList2QJsonArray(host.split(","));
             } else if (network == "grpc") {
                 if (!path.isEmpty()) transport["service_name"] = path;
+            } else if (network == "httpupgrade") {
+                if (!path.isEmpty()) transport["path"] = path;
+                if (!host.isEmpty()) transport["host"] = host;
             }
             outbound->insert("transport", transport);
         } else if (header_type == "http") {

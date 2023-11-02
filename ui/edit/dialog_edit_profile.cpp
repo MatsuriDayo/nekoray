@@ -46,7 +46,7 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
             ui->path_l->setVisible(true);
             ui->host->setVisible(false);
             ui->host_l->setVisible(false);
-        } else if (txt == "ws" || txt == "http") {
+        } else if (txt == "ws" || txt == "http" || txt == "httpupgrade") {
             ui->header_type->setVisible(false);
             ui->header_type_l->setVisible(false);
             ui->path->setVisible(true);

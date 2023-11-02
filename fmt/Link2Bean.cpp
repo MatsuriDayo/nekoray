@@ -81,6 +81,9 @@ namespace NekoGui_fmt {
         } else if (stream->network == "http") {
             stream->path = GetQueryValue(query, "path", "");
             stream->host = GetQueryValue(query, "host", "").replace("|", ",");
+        } else if (stream->network == "httpupgrade") {
+            stream->path = GetQueryValue(query, "path", "");
+            stream->host = GetQueryValue(query, "host", "");
         } else if (stream->network == "grpc") {
             stream->path = GetQueryValue(query, "serviceName", "");
         } else if (stream->network == "tcp") {
@@ -199,6 +202,9 @@ namespace NekoGui_fmt {
             } else if (stream->network == "http") {
                 stream->path = GetQueryValue(query, "path", "");
                 stream->host = GetQueryValue(query, "host", "").replace("|", ",");
+            } else if (stream->network == "httpupgrade") {
+                stream->path = GetQueryValue(query, "path", "");
+                stream->host = GetQueryValue(query, "host", "");
             } else if (stream->network == "grpc") {
                 stream->path = GetQueryValue(query, "serviceName", "");
             } else if (stream->network == "tcp") {

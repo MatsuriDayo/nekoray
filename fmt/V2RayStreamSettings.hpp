@@ -8,7 +8,7 @@ namespace NekoGui_fmt {
         QString network = "tcp";
         QString security = "";
         QString packet_encoding = "";
-        // ws/http/grpc/tcp-http
+        // ws/http/grpc/tcp-http/httpupgrade
         QString path = "";
         QString host = "";
         // kcp/quic/tcp-http
