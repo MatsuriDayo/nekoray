@@ -89,6 +89,10 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
     });
     ui->network->removeItem(0);
 
+    if (IS_NEKO_BOX) {
+        ui->network->addItem("httpupgrade");
+    }
+
     // security changed
     connect(ui->security, &QComboBox::currentTextChanged, this, [=](const QString &txt) {
         if (txt == "tls") {
