@@ -19,14 +19,17 @@ Portable 形式、インストーラーなし。Releases からコンパイル�
 ### Package
 
 #### AUR
+
 - [nekoray](https://aur.archlinux.org/packages/nekoray)
-- [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+- [nekoray-git](https://aur.archlinux.org/packages/nekoray-git) [![AUR CI](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml/badge.svg)](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml)
 
 #### archlinuxcn
+
 - [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
 - [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
 
 #### Scoop extras
+
 `scoop install nekoray`
 
 ## Changelog と Telegram チャンネル
@@ -39,23 +42,23 @@ https://matsuridayo.github.io
 
 ## プロキシ
 
-* SOCKS (4/4a/5)
-* HTTP(S)
-* Shadowsocks
-* VMess
-* VLESS
-* Trojan
-* TUIC ( sing-box )
-* NaïveProxy ( Custom Core )
-* Hysteria ( Custom Core or sing-box )
-* Hysteria2 ( Custom Core or sing-box )
-* Custom Outbound
-* Custom Config
-* Custom Core
+- SOCKS (4/4a/5)
+- HTTP(S)
+- Shadowsocks
+- VMess
+- VLESS
+- Trojan
+- TUIC ( sing-box )
+- NaïveProxy ( Custom Core )
+- Hysteria ( Custom Core or sing-box )
+- Hysteria2 ( Custom Core or sing-box )
+- Custom Outbound
+- Custom Config
+- Custom Core
 
 ## サブスクリプション
 
-* Raw: 広く使われているいくつかのフォーマット（shadowsocks、clash、v2rayN など）
+- Raw: 広く使われているいくつかのフォーマット（shadowsocks、clash、v2rayN など）
 
 ## 動作パラメーター
 
@@ -95,7 +98,7 @@ XMR
 
 `49bwESYQjoRL3xmvTcjZKHEKaiGywjLYVQJMUv79bXonGiyDCs8AzE3KiGW2ytTybBCpWJUvov8SjZZEGg66a4e59GXa6k5`
 
-* また、[Google Play](https://play.google.com/store/apps/details?id=moe.nb4a) からも寄付金を購入することができます。アリペイと WeChat の購入オプションもありますので、TG チャンネルのトップをご覧ください。
+- また、[Google Play](https://play.google.com/store/apps/details?id=moe.nb4a) からも寄付金を購入することができます。アリペイと WeChat の購入オプションもありますので、TG チャンネルのトップをご覧ください。
 
 ## クレジット
 

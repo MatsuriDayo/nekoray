@@ -16,7 +16,7 @@
 
 ### بسته
 
-1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+1. AUR [nekoray-git](https://aur.archlinux.org/packages/nekoray-git) [![AUR CI](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml/badge.svg)](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml)
 2. Scoop extras: `scoop install nekoray`
 3. Homebrew (unoffical): [homebrew-nekoray](https://github.com/tdjnodj/homebrew-nekoray)
 4. APT (unoffical): [tdjnodj/apt](https://github.com/tdjnodj/apt)
@@ -31,21 +31,21 @@ https://matsuridayo.github.io
 
 ## پروکسی / Proxy
 
-* SOCKS (4/4a/5)
-* HTTP(S)
-* Shadowsocks
-* VMess
-* VLESS
-* Trojan
-* NaïveProxy ( Custom Core )
-* Hysteria ( Custom Core or sing-box )
-* Hysteria2 ( Custom Core or sing-box )
-* Custom Outbound
-* Custom Core
+- SOCKS (4/4a/5)
+- HTTP(S)
+- Shadowsocks
+- VMess
+- VLESS
+- Trojan
+- NaïveProxy ( Custom Core )
+- Hysteria ( Custom Core or sing-box )
+- Hysteria2 ( Custom Core or sing-box )
+- Custom Outbound
+- Custom Core
 
 ## اشتراک / Subscription
 
-* فرمت های خام: برخی از فرمت های پرکاربرد (مانند shadowsocks، clash و v2rayN)
+- فرمت های خام: برخی از فرمت های پرکاربرد (مانند shadowsocks، clash و v2rayN)
 
 ## پارامترهای عملیاتی
 
@@ -59,6 +59,7 @@ https://matsuridayo.github.io
 ## Linux 
 
 [آموزش اجرای لینوکس](docs/Run_Linux.md)
+
 ## آموزش کامپایل
 
 [Linux](docs/Build_Linux.md)

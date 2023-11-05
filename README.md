@@ -27,14 +27,17 @@ Support Windows / Linux out of the box now.
 ### Package
 
 #### AUR
+
 - [nekoray](https://aur.archlinux.org/packages/nekoray)
-- [nekoray-git](https://aur.archlinux.org/packages/nekoray-git)
+- [nekoray-git](https://aur.archlinux.org/packages/nekoray-git) [![AUR CI](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml/badge.svg)](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml)
 
 #### archlinuxcn
+
 - [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
 - [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
 
 #### Scoop extras
+
 `scoop install nekoray`
 
 ## 更改记录 & 发布频道 / Changelog & Telegram channel
@@ -47,24 +50,24 @@ https://matsuridayo.github.io
 
 ## 代理 / Proxy
 
-* SOCKS (4/4a/5)
-* HTTP(S)
-* Shadowsocks
-* VMess
-* VLESS
-* Trojan
-* TUIC ( sing-box )
-* NaïveProxy ( Custom Core )
-* Hysteria ( Custom Core or sing-box )
-* Hysteria2 ( Custom Core or sing-box )
-* Custom Outbound
-* Custom Config
-* Custom Core
+- SOCKS (4/4a/5)
+- HTTP(S)
+- Shadowsocks
+- VMess
+- VLESS
+- Trojan
+- TUIC ( sing-box )
+- NaïveProxy ( Custom Core )
+- Hysteria ( Custom Core or sing-box )
+- Hysteria2 ( Custom Core or sing-box )
+- Custom Outbound
+- Custom Config
+- Custom Core
 
 ## 订阅 / Subscription
 
-* Raw: some widely used formats (like shadowsocks, clash and v2rayN)
-* 原始格式：一些广泛使用的格式（如 shadowsocks、clash 和 v2rayN）
+- Raw: some widely used formats (like shadowsocks, clash and v2rayN)
+- 原始格式：一些广泛使用的格式（如 shadowsocks、clash 和 v2rayN）
 
 ## 运行参数
 
@@ -106,8 +109,8 @@ XMR
 
 `49bwESYQjoRL3xmvTcjZKHEKaiGywjLYVQJMUv79bXonGiyDCs8AzE3KiGW2ytTybBCpWJUvov8SjZZEGg66a4e59GXa6k5`
 
-* 您也可以通过 [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a) 购买捐赠，另有支付宝微信购买方式，见 TG 频道置顶。
-* Donating via [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a), using credit cards.
+- 您也可以通过 [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a) 购买捐赠，另有支付宝微信购买方式，见 TG 频道置顶。
+- Donating via [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a), using credit cards.
 
 ## Credits
 
