@@ -31,7 +31,7 @@ Support Windows / Linux out of the box now.
 - [nekoray](https://aur.archlinux.org/packages/nekoray)
 - [nekoray-git](https://aur.archlinux.org/packages/nekoray-git) [![AUR CI](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yml/badge.svg)](https://github.com/MatsuriDayo/nekoray/actions/workflows/update-pkgbuild.yaml)
 
-#### Arch Linux CN
+#### archlinuxcn
 
 - [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
 - [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
