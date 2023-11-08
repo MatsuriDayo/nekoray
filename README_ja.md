@@ -1,6 +1,6 @@
 # NekoRay / PC 用 NekoBox
 
-QtベースのクロスプラットフォームGUIプロキシ設定マネージャ（バックエンド：v2ray / sing-box）
+QtベースのクロスプラットフォームGUIプロキシ設定マネージャ (バックエンド：v2ray / sing-box)
 
 Windows / Linuxに対応。
 
@@ -28,7 +28,7 @@ Portable 形式、インストーラーなし。Releases からコンパイル�
 - [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
 - [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
 
-#### Scoop extras
+#### Scoop Extras
 
 `scoop install nekoray`
 
@@ -58,7 +58,7 @@ https://matsuridayo.github.io
 
 ## サブスクリプション
 
-- Raw: 広く使われているいくつかのフォーマット（shadowsocks、clash、v2rayN など）
+- Raw: 広く使われているいくつかのフォーマット (Shadowsocks、Clash、v2rayN など)
 
 ## 動作パラメーター
 

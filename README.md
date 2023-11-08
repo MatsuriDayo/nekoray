@@ -36,11 +36,11 @@ Support Windows / Linux out of the box now.
 - [nekoray](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray)
 - [nekoray-git](https://github.com/archlinuxcn/repo/tree/master/archlinuxcn/nekoray-git)
 
-#### Scoop extras
+#### Scoop Extras
 
 `scoop install nekoray`
 
-## 更改记录 & 发布频道 / Changelog & Telegram channel
+## 更改记录 & 发布频道 / Changelog & Telegram Channel
 
 https://t.me/Matsuridayo
 
@@ -66,8 +66,8 @@ https://matsuridayo.github.io
 
 ## 订阅 / Subscription
 
-- Raw: some widely used formats (like shadowsocks, clash and v2rayN)
-- 原始格式：一些广泛使用的格式（如 shadowsocks、clash 和 v2rayN）
+- Raw: some widely used formats (like Shadowsocks, Clash and v2rayN)
+- 原始格式: 一些广泛使用的格式 (如 Shadowsocks、Clash 和 v2rayN)
 
 ## 运行参数
 
