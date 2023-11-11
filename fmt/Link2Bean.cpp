@@ -54,7 +54,13 @@ namespace NekoGui_fmt {
         if (serverPort == -1) serverPort = 443;
 
         // security
-        stream->network = GetQueryValue(query, "type", "tcp");
+
+        auto type =  GetQueryValue(query, "type", "tcp");
+        if (type == "h2") {
+            type = "http";
+        }
+        stream->network = type;
+
         if (proxy_type == proxy_Trojan) {
             stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls").replace("none", "");
         } else {
