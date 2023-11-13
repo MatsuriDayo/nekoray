@@ -59,12 +59,12 @@ require (
 	github.com/sagernet/reality v0.0.0-20230406110435-ee17307e7691 // indirect
 	github.com/sagernet/sing v0.2.18-0.20231108041402-4fbbd193203c // indirect
 	github.com/sagernet/sing-dns v0.1.10 // indirect
-	github.com/sagernet/sing-mux v0.1.4-0.20231108041445-f9497babe3d5 // indirect
+	github.com/sagernet/sing-mux v0.1.5-0.20231109075101-6b086ed6bb07 // indirect
 	github.com/sagernet/sing-quic v1.0.0 // indirect
 	github.com/sagernet/sing-shadowsocks v0.2.5 // indirect
 	github.com/sagernet/sing-shadowsocks2 v0.1.4 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.4 // indirect
-	github.com/sagernet/sing-tun v0.1.20-0.20231107141025-be3aecff893d // indirect
+	github.com/sagernet/sing-tun v0.1.20-0.20231113060257-901de2a92b17 // indirect
 	github.com/sagernet/sing-vmess v0.1.8 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230816093905-5a5c285d44a6 // indirect
@@ -80,12 +80,12 @@ require (
 	go.uber.org/multierr v1.11.0 // indirect
 	go.uber.org/zap v1.26.0 // indirect
 	go4.org/netipx v0.0.0-20230824141953-6213f710f925 // indirect
-	golang.org/x/crypto v0.14.0 // indirect
+	golang.org/x/crypto v0.15.0 // indirect
 	golang.org/x/exp v0.0.0-20231006140011-7918f672742d // indirect
 	golang.org/x/mod v0.13.0 // indirect
-	golang.org/x/net v0.17.0 // indirect
+	golang.org/x/net v0.18.0 // indirect
 	golang.org/x/sys v0.14.0 // indirect
-	golang.org/x/text v0.13.0 // indirect
+	golang.org/x/text v0.14.0 // indirect
 	golang.org/x/time v0.3.0 // indirect
 	golang.org/x/tools v0.14.0 // indirect
 	golang.zx2c4.com/wireguard/wgctrl v0.0.0-20230429144221-925a1e7659e6 // indirect
