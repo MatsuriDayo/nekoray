@@ -7,6 +7,7 @@ import (
 	"grpc_server/gen"
 	"io"
 	"log"
+	"math"
 	"net"
 	"net/http"
 	"strings"
@@ -14,6 +15,11 @@ import (
 
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/speedtest"
+)
+
+const (
+	KiB = 1024
+	MiB = 1024 * KiB
 )
 
 func getBetweenStr(str, start, end string) string {
@@ -124,11 +130,14 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 			if err == nil && resp != nil && resp.Body != nil {
 				bodyClose = resp.Body
 				defer resp.Body.Close()
-				//
-				time_start := time.Now()
+
+				timeStart := time.Now()
 				n, _ := io.Copy(io.Discard, resp.Body)
-				time_end := time.Now()
-				result <- fmt.Sprintf("%.2fMiB/s", (float64(n)/time_end.Sub(time_start).Seconds())/1048576)
+				timeEnd := time.Now()
+
+				duration := math.Max(timeEnd.Sub(timeStart).Seconds(), 0.000001)
+				resultSpeed := (float64(n) / duration) / MiB
+				result <- fmt.Sprintf("%.2fMiB/s", resultSpeed)
 			} else {
 				result <- "Error"
 			}
