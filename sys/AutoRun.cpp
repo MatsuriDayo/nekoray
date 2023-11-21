@@ -149,7 +149,7 @@ bool AutoRun_IsEnabled() {
 #include <QProcessEnvironment>
 #include <QTextStream>
 
-#define NEWLINE "\r\n"
+#define NEWLINE "\n"
 
 //  launchatlogin.cpp
 //  ShadowClash
