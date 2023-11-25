@@ -163,7 +163,12 @@ namespace NekoGui_fmt {
             stream->sni = objN["sni"].toString();
             stream->header_type = objN["type"].toString();
             auto net = objN["net"].toString();
-            if (!net.isEmpty()) stream->network = net;
+            if (!net.isEmpty()) {
+                if (net == "h2") {
+                    net = "http";
+                }
+                stream->network = net;
+            }
             auto scy = objN["scy"].toString();
             if (!scy.isEmpty()) security = scy;
             // TLS (XTLS?)
@@ -186,7 +191,11 @@ namespace NekoGui_fmt {
             security = GetQueryValue(query, "encryption", "auto");
 
             // security
-            stream->network = GetQueryValue(query, "type", "tcp");
+            auto type = GetQueryValue(query, "type", "tcp");
+            if (type == "h2") {
+                type = "http";
+            }
+            stream->network = type;
             stream->security = GetQueryValue(query, "security", "tls").replace("reality", "tls");
             auto sni1 = GetQueryValue(query, "sni");
             auto sni2 = GetQueryValue(query, "peer");
