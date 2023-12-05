@@ -75,9 +75,6 @@ bool RunGuard::isAnotherRunning(quint64 *data_out) {
 }
 
 bool RunGuard::tryToRun(quint64 *data_in) {
-    if (isAnotherRunning(nullptr)) // Extra check
-        return false;
-
     memLock.acquire();
     const bool result = sharedMem.create(sizeof(quint64));
     if (result) memcpy(sharedMem.data(), data_in, sizeof(quint64));
