@@ -58,12 +58,12 @@ RunGuard::~RunGuard() {
 }
 
 bool RunGuard::isAnotherRunning(quint64 *data_out) {
-    if (sharedMem.isAttached()) {
+    if (sharedMem.isAttached())
         return false;
-    }
 
     memLock.acquire();
-    const bool isRunning = sharedMem.create(sizeof(quint64));if (!isRunning) {
+    const bool isRunning = sharedMem.attach();
+    if (isRunning) {
         if (data_out != nullptr) {
             memcpy(data_out, sharedMem.data(), sizeof(quint64));
         }
@@ -71,21 +71,12 @@ bool RunGuard::isAnotherRunning(quint64 *data_out) {
     }
     memLock.release();
 
-    return !isRunning;
+    return isRunning;
 }
 
-
 bool RunGuard::tryToRun(quint64 *data_in) {
-    if (isAnotherRunning(nullptr)) // Extra check
-        return false;
-
     memLock.acquire();
-
-    bool result = sharedMem.attach();
-    // if success attach, attach return false but the error is NoError, magic, love from qt6
-    // qt docs: If false is returned, call error() to determine which error occurred.
-    if (!result) if (sharedMem.error() == QSharedMemory::NoError) result = true;
-
+    const bool result = sharedMem.create(sizeof(quint64));
     if (result) memcpy(sharedMem.data(), data_in, sizeof(quint64));
     memLock.release();
 
