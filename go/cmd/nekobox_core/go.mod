@@ -62,7 +62,7 @@ require (
 	github.com/sagernet/sing-shadowsocks v0.2.5 // indirect
 	github.com/sagernet/sing-shadowsocks2 v0.1.4 // indirect
 	github.com/sagernet/sing-shadowtls v0.1.4 // indirect
-	github.com/sagernet/sing-tun v0.1.20-0.20231113060257-901de2a92b17 // indirect
+	github.com/sagernet/sing-tun v0.1.20-0.20231116102114-958d6a25a41d // indirect
 	github.com/sagernet/sing-vmess v0.1.8 // indirect
 	github.com/sagernet/smux v0.0.0-20230312102458-337ec2a5af37 // indirect
 	github.com/sagernet/tfo-go v0.0.0-20230816093905-5a5c285d44a6 // indirect

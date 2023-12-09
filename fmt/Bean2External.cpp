@@ -189,7 +189,7 @@ namespace NekoGui_fmt {
             QJsonObject transport;
             transport["type"] = "udp";
             transport["udp"] = QJsonObject{
-                {"hopInterval", hopInterval},
+                {"hopInterval", QString::number(hopInterval) + "s"},
             };
             config["transport"] = transport;
 
