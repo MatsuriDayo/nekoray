@@ -232,11 +232,6 @@
              </property>
              <item>
               <property name="text">
-               <string notr="true"/>
-              </property>
-             </item>
-             <item>
-              <property name="text">
                <string notr="true">tcp</string>
               </property>
              </item>

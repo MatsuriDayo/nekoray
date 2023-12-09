@@ -87,7 +87,6 @@ DialogEditProfile::DialogEditProfile(const QString &_type, int profileOrGroupId,
         ui->network_box->setVisible(networkBoxVisible);
         ADJUST_SIZE
     });
-    ui->network->removeItem(0);
 
 //    if (IS_NEKO_BOX) {
 //        ui->network->addItem("httpupgrade");
