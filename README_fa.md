@@ -62,7 +62,7 @@ https://matsuridayo.github.io
 
 ## آموزش کامپایل
 
-[Linux](docs/Build_Linux.md)
+[Linux](docs/Build_Linux_fa.md)
 
 [Windows](docs/Build_Windows.md)
 
