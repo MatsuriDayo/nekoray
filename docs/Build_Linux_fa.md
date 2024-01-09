@@ -71,4 +71,4 @@ ninja
 پس از کامپایل، فایل `nekoray` به دست می‌آید.
 
 ### کامپایل بخش Go
-لطفاً به [Build_Core.md](./Build_Core.md) مراجعه کنید.
+لطفاً به [Build_Core_fa.md](./Build_Core_fa.md) مراجعه کنید.
