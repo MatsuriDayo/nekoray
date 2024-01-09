@@ -4,22 +4,22 @@
 1. 打开 `基本设置 - 安全 - 启用 hook.js 功能`
 2. js 代码请放置于 `config/hook.nekoray.js` 或 `config/hook.nekobox.js`
 
-## Technical Information
+## 技术信息
 
-* JS engine: QuickJS ES2020.
-* Provided interfaces: as shown in the following code
+* JS Engine: QuickJS ES2020
+* 提供的接口：如下面代码所示
 
-## کد نمونه (typescript)
+## 示例代码 (typescript)
 
 ```ts
 const globalAny: any = globalThis
 
-// روش‌های ارائه‌شده در حال حاضر
+// 目前提供的方法
 interface nekoray_in {
     log(...a: any): void
 }
 
-// نقاط hook ارائه‌شده در حال حاضر
+// 目前提供的 hook 点
 interface nekoray_hook {
     hook_core_config(config: string): string
     hook_tun_config(config: string): string
@@ -42,12 +42,12 @@ class my_hook implements nekoray_hook {
     }
 
     hook_tun_config(config: string): string {
-        return config // بازگشت ورودی، نشان دهنده عدم تغییر
+        return config // 返回输入，表示不修改
     }
 
     hook_tun_script(script: string): string {
-        console.log("Script") // خروجی به stdout
-        this.nekoray.log("Script:", script) // خروجی به لاگ
+        console.log("Script") // 输出到 stdout
+        this.nekoray.log("Script:", script) // 输出到日志
         return script
     }
 
@@ -65,7 +65,7 @@ class my_hook implements nekoray_hook {
 globalAny.hook = new my_hook
 ```
 
-## کد نمونه (javascript)
+## 示例代码 (javascript)
 
 ```js
 var globalAny = globalThis;
@@ -84,11 +84,11 @@ var my_hook = /** @class */ (function () {
         return JSON.stringify(json);
     };
     my_hook.prototype.hook_tun_config = function (config) {
-        return config; // بازگشت ورودی، نشان دهنده عدم تغییر
+        return config; // 返回输入，表示不修改
     };
     my_hook.prototype.hook_tun_script = function (script) {
-        console.log("Script"); // خروجی به stdout
-        this.nekoray.log("Script:", script); // خروجی به لاگ
+        console.log("Script"); // 输出到 stdout
+        this.nekoray.log("Script:", script); // 输出到日志
         return script;
     };
     my_hook.prototype.hook_import = function (content) {
