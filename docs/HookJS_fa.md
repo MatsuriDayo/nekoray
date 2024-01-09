@@ -1,25 +1,25 @@
-# hook.js 使用
-## 如何启用
+# استفاده از فایل hook.js
+## فعالسازی
 
-1. 打开 `基本设置 - 安全 - 启用 hook.js 功能`
-2. js 代码请放置于 `config/hook.nekoray.js` 或 `config/hook.nekobox.js`
+1. `Basic Settings - Security - Enable hook.js function` را روشن کنید
+2. کد JS را در `config/hook.nekoray.js` یا `config/hook.nekobox.js` قرار دهید.
 
-## 技术信息
+## Technical Information
 
-* JS Engine: QuickJS ES2020
-* 提供的接口：如下面代码所示
+* JS engine: QuickJS ES2020.
+* Provided interfaces: as shown in the following code
 
-## 示例代码 (typescript)
+## کد نمونه (typescript)
 
 ```ts
 const globalAny: any = globalThis
 
-// 目前提供的方法
+// روش‌های ارائه‌شده در حال حاضر
 interface nekoray_in {
     log(...a: any): void
 }
 
-// 目前提供的 hook 点
+// نقاط hook ارائه‌شده در حال حاضر
 interface nekoray_hook {
     hook_core_config(config: string): string
     hook_tun_config(config: string): string
@@ -42,12 +42,12 @@ class my_hook implements nekoray_hook {
     }
 
     hook_tun_config(config: string): string {
-        return config // 返回输入，表示不修改
+        return config // بازگشت ورودی، نشان دهنده عدم تغییر
     }
 
     hook_tun_script(script: string): string {
-        console.log("Script") // 输出到 stdout
-        this.nekoray.log("Script:", script) // 输出到日志
+        console.log("Script") // خروجی به stdout
+        this.nekoray.log("Script:", script) // خروجی به لاگ
         return script
     }
 
@@ -65,7 +65,7 @@ class my_hook implements nekoray_hook {
 globalAny.hook = new my_hook
 ```
 
-## 示例代码 (javascript)
+## کد نمونه (javascript)
 
 ```js
 var globalAny = globalThis;
@@ -84,11 +84,11 @@ var my_hook = /** @class */ (function () {
         return JSON.stringify(json);
     };
     my_hook.prototype.hook_tun_config = function (config) {
-        return config; // 返回输入，表示不修改
+        return config; // بازگشت ورودی، نشان دهنده عدم تغییر
     };
     my_hook.prototype.hook_tun_script = function (script) {
-        console.log("Script"); // 输出到 stdout
-        this.nekoray.log("Script:", script); // 输出到日志
+        console.log("Script"); // خروجی به stdout
+        this.nekoray.log("Script:", script); // خروجی به لاگ
         return script;
     };
     my_hook.prototype.hook_import = function (content) {
