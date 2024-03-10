@@ -1,14 +1,18 @@
 # NekoRay / NekoBox для ПК
 
-Основанный на библиотеке Qt кросс-платформенный GUI менеджер для конфигурации прокси (на базе ядер: v2ray / sing-box)
+Кроссплатформенный пользовательский интерфейс (GUI) для управления конфигурациями прокси-серверов, основанный на фреймворке Qt и работающий на V2Ray и sing-box.
 
 Поддерживает Windows / Linux из коробки.
 
+## Переводы README
+
+[中文 / English](README.md) / [fa_IR](README_fa.md) / [日本語](README_ja.md) / Русский
+
 ## Загрузить
 
-### GitHub Релизы (Портативный ZIP-архив)
+### GitHub Релизы (портативный ZIP-архив)
 
-Портативный формат, без установщика. Перейдите в раздел Releases, чтобы загрузить готовые к использованию, предварительно скомпилированные двоичные пакеты.
+Портативный формат без установщика. Перейдите в раздел Релизов (Releases) для загрузки предварительно скомпилированных готовых к использованию пакетов.
 
 [![GitHub All Releases](https://img.shields.io/github/downloads/Matsuridayo/nekoray/total?label=downloads-total&logo=github&style=flat-square)](https://github.com/Matsuridayo/nekoray/releases)
 
@@ -32,11 +36,11 @@
 
 `scoop install nekoray`
 
-## Список изменений & Телеграм Канал
+## Список изменений и Телеграм Канал
 
 https://t.me/Matsuridayo
 
-## Домашняя страница & Документация
+## Домашняя страница и документация
 
 https://matsuridayo.github.io
 
@@ -48,21 +52,21 @@ https://matsuridayo.github.io
 - VMess
 - VLESS
 - Trojan
-- TUIC ( sing-box )
-- NaïveProxy ( Пользовательское ядро )
-- Hysteria ( Пользовательское ядро или sing-box )
-- Hysteria2 ( Пользовательское ядро или sing-box )
-- Пользовательские Исходящие Запросы
-- Пользовательская Конфигурация
+- TUIC (sing-box)
+- NaïveProxy (пользовательское ядро)
+- Hysteria (пользовательское ядро или sing-box)
+- Hysteria2 (пользовательское ядро или sing-box)
+- Пользовательский исходящий трафик
+- Пользовательская конфигурация
 - Пользовательское ядро
 
-## Подписка
+## Подпись
 
-- Raw: некоторые широкоиспользуемые форматы (например, Shadowsocks, Clash и v2rayN)
+- Raw: некоторые широко используемые форматы (например, Shadowsocks, Clash и v2rayN)
 
 ## Параметры работы
 
-[Параметры работы](docs/RunFlags.md)
+[Параметры работы (на китайском)](docs/RunFlags.md)
 
 ## Запуск на Windows
 
@@ -75,21 +79,20 @@ https://matsuridayo.github.io
 ## macOS
 
 Из-за отсутствия поддержки версия для macOS больше не доступна для загрузки.
+Однако вы можете скачать неофициальные версии в репозитории ниже. [Неофициальные релизы](https://github.com/aaaamirabbas/nekoray-macos/releases)
 
-Вы также можете скачать неофициальные обновленные версии в репозитории ниже. [Неофициальные релизы](https://github.com/aaaamirabbas/nekoray-macos/releases)
+Обратитесь к руководству ниже для самостоятельной компиляции пакетов. Пожалуйста, присмотритесь к устаревшим релизам, чтобы узнать о распространённых проблемах. Мы приветствуем Pull Request'ы для внесения исправлений.
 
-Вы все еще можете обратиться к руководству ниже, чтобы скомпилировать самостоятельно.
-Пожалуйста, присмотритесь устаревшим релизам, чтобы узнать о распространенных проблемах. В случае обнаружения ошибок Pull Requests приветствуется для внесения исправлений.
+## Инструкция по компиляции
 
-## Гайд по компиляции
-
-Обратите внимание на: [Техническую Документацию](https://github.com/MatsuriDayo/nekoray/tree/main/docs)
+[Обратите внимание на техническую документацию](https://github.com/MatsuriDayo/nekoray/tree/main/docs)
 
 ## Пожертвование
 
 Если этот проект окажется для вас полезным, вы можете помочь нам и дальше разрабатывать его, сделав пожертвование.
 
-Пожертвования в размере до 50 долларов США можно сделать на странице "Пожертвовать сейчас".[Список поддержавщих](https://mtrdnt.pages.dev/donation_list). Если вы не были добавлены сюда, не стесняйтесь связаться с нами.
+Пожертвования в размере до 50 долларов США можно сделать на странице «Пожертвовать сейчас».
+[Список поддержавших](https://mtrdnt.pages.dev/donation_list). Если вы не были добавлены сюда, пожалуйста, свяжитесь с нами.
 
 USDT TRC20
 
@@ -99,17 +102,15 @@ XMR
 
 `49bwESYQjoRL3xmvTcjZKHEKaiGywjLYVQJMUv79bXonGiyDCs8AzE3KiGW2ytTybBCpWJUvov8SjZZEGg66a4e59GXa6k5`
 
-- Донат через [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a), используя банковскую карту.
-- 
 ## Авторы
 
 Ядра:
 
-- [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core) ( < 3.10 )
-- [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri) ( < 3.10 )
-- [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core) ( < 3.10 )
-- [XTLS/Xray-core](https://github.com/XTLS/Xray-core) ( >= 3.10 )
-- [MatsuriDayo/Xray-core](https://github.com/MatsuriDayo/Xray-core) ( >= 3.10 )
+- [v2fly/v2ray-core](https://github.com/v2fly/v2ray-core) (< 3.10)
+- [MatsuriDayo/Matsuri](https://github.com/MatsuriDayo/Matsuri) (< 3.10)
+- [MatsuriDayo/v2ray-core](https://github.com/MatsuriDayo/v2ray-core) (< 3.10)
+- [XTLS/Xray-core](https://github.com/XTLS/Xray-core) (≥ 3.10)
+- [MatsuriDayo/Xray-core](https://github.com/MatsuriDayo/Xray-core) (≥ 3.10)
 - [SagerNet/sing-box](https://github.com/SagerNet/sing-box)
 - [Matsuridayo/sing-box-extra](https://github.com/MatsuriDayo/sing-box-extra)
 
