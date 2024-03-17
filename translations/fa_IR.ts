@@ -29,7 +29,7 @@
     </message>
     <message>
         <source>User Agent</source>
-        <translation>عامل کاربر</translation>
+        <translation>کاربر</translation>
     </message>
     <message>
         <source>Common</source>
@@ -61,7 +61,7 @@
     </message>
     <message>
         <source>Select</source>
-        <translation>برگزیدن</translation>
+        <translation>انتخاب</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -73,11 +73,11 @@
     </message>
     <message>
         <source>Asset Location</source>
-        <translation>مکان دارایی</translation>
+        <translation>مکان اطلاعات</translation>
     </message>
     <message>
         <source>Default: dir of &quot;nekoray&quot;</source>
-        <translation type="unfinished">مسیر پیش فرض &quot;nekoray&quot;</translation>
+        <translation>مسیر پیش فرض &quot;nekoray&quot;</translation>
     </message>
     <message>
         <source>Concurrent</source>
@@ -85,7 +85,7 @@
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
-        <translation>استفاده از پروکسی زمانی که اشتراک را بروزرسانی می کنید</translation>
+        <translation>آپدیت اشتراک با پروکسی</translation>
     </message>
     <message>
         <source>Security</source>
@@ -94,7 +94,7 @@
     </message>
     <message>
         <source>Statistics refresh rate</source>
-        <translation>نرخ تازه سازی آمار ترافیک</translation>
+        <translation>نرخ تازه سازی آمار</translation>
     </message>
     <message>
         <source>Off</source>
@@ -123,15 +123,15 @@
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>هنگام بررسی به‌روزرسانی، نسخه پیش‌انتشار را نیز لحاظ شود</translation>
+        <translation>درنظر گرفتن نسخه های اولیه (Pre-Release) در زمان بررسی آپدیت</translation>
     </message>
     <message>
         <source>System proxy format</source>
-        <translation>فرمت پروکسی سیستم</translation>
+        <translation>فرمت سیستم پروکسی</translation>
     </message>
     <message>
         <source>Set custom icon</source>
-        <translation>تنظیم آیکون سفارشی</translation>
+        <translation>تنظیم نمایه سفارشی</translation>
     </message>
     <message>
         <source>Hide dashboard at startup</source>
@@ -139,19 +139,19 @@
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
-        <translation>قبل از به‌روزرسانی اشتراک، سرورها را پاک شود</translation>
+        <translation>قبل از به‌روزرسانی اشتراک، سرورها را پاک کن</translation>
     </message>
     <message>
         <source>Ignore TLS errors when updating subscription</source>
-        <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
+        <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده بگیر.</translation>
     </message>
     <message>
         <source>Switch core</source>
-        <translation>سوئیچ هسته</translation>
+        <translation>تعویض هسته</translation>
     </message>
     <message>
         <source>Enable hook.js</source>
-        <translation type="unfinished">فعال سازی hook.js</translation>
+        <translation>فعال سازی hook.js</translation>
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
@@ -163,7 +163,7 @@
     </message>
     <message>
         <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation>هسته به 1% تغییر میابد، روی  &quot;Yes&quot; کلیک کنید تا تغییر پایان یابد و برنامه ریستارت شود. این قابلیت ممکن است پایدار نباشد، لطفا مکررا تعویض نکنید</translation>
+        <translation>هسته به 1% تغییر میابد، روی  &quot;Yes&quot; کلیک کنید تا تغییر پایان یابد و برنامه دوباره اجرا شود. این قابلیت ممکن است پایدار نباشد، لطفا مکررا تعویض نکنید</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
@@ -179,7 +179,7 @@
     </message>
     <message>
         <source>Please select a valid square image.</source>
-        <translation>لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
+        <translation>لطفاً یک تصویر مربعی معتبر انتخاب کنید.</translation>
     </message>
     <message>
         <source>Max log lines</source>
@@ -199,7 +199,7 @@
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
-        <translation>رد شدن از احراز هویت گواهی TLS به طور پیش فرض (allowInsecure)</translation>
+        <translation>به طور پیشفرض از احراز هویت TLS استفاده نشود. (allowInsecure | نا امن)</translation>
     </message>
     <message>
         <source>Default uTLS Fingerprint</source>
@@ -207,11 +207,11 @@
     </message>
     <message>
         <source>Core Options</source>
-        <translation type="unfinished">تنظیمات هسته</translation>
+        <translation>تنظیمات هسته</translation>
     </message>
     <message>
         <source>Override underlying DNS</source>
-        <translation type="unfinished">لغو دی ان اس زیربنایی</translation>
+        <translation>بازنویسی دی ان اس اصلی</translation>
     </message>
     <message>
         <source>It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.
@@ -221,11 +221,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>If you Tun Mode is not working, try to change this option.</source>
-        <translation type="unfinished">اگر حالت تونل برای شما کار نمیکند ، این گزینه را تغییر دهید</translation>
+        <translation>اگر حالت تونل برای شما کار نمیکند ، این گزینه را تغییر دهید</translation>
     </message>
     <message>
         <source>Default On</source>
-        <translation type="unfinished">به صورت پیشفرض فعال</translation>
+        <translation>فعال به صورت پیشفرض</translation>
     </message>
     <message>
         <source>Multiplex (mux)</source>
@@ -233,31 +233,31 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Latency Test URL</source>
-        <translation type="unfinished">آدرس تست تاخیر</translation>
+        <translation>آدرس برای تست تاخیر</translation>
     </message>
     <message>
         <source>Download Test URL</source>
-        <translation type="unfinished">آدرس تست دانلود</translation>
+        <translation>آدرس برای تست دانلود</translation>
     </message>
     <message>
         <source>Timeout (s)</source>
-        <translation type="unfinished">تایم اوت (به ثانیه)</translation>
+        <translation>زمان اتضال بیش از حد انتظار (واحد: ثانیه)</translation>
     </message>
     <message>
         <source>Automatic update</source>
-        <translation type="unfinished">آپدیت اتوماتیک</translation>
+        <translation>آپدیت خودکار</translation>
     </message>
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
-        <translation type="unfinished">فاصله (به دقیقا ، اگر کمتر از ۳۰ باشد نادرست است)</translation>
+        <translation>وقفه (واحد: دقیقه ، اگر کمتر از ۳۰ باشد نادرست است)</translation>
     </message>
     <message>
         <source>Share VMess Link with v2rayN Format</source>
-        <translation type="unfinished"></translation>
+        <translation >اشتراک لینک VMess با فرمت v2rayN</translation>
     </message>
     <message>
         <source>Old Share Link Format</source>
-        <translation type="unfinished"></translation>
+        <translation>اشتراک گذاری لینک با فرمت قدیمی</translation>
     </message>
 </context>
 <context>
@@ -288,15 +288,15 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>URL</source>
-        <translation>URL</translation>
+        <translation>لینک</translation>
     </message>
     <message>
         <source>Copy profile share links</source>
-        <translation>لینک های اشتراک گذاری نمایه را کپی کنید</translation>
+        <translation>کپی لینک اشتراک گذاری پروفایل</translation>
     </message>
     <message>
         <source>Copy profile share links (Neko Links)</source>
-        <translation>لینک های اشتراک گذاری نمایه را کپی کنید (لینک های Neko)</translation>
+        <translation>کپی لینک اشتراک گذاری پروفایل (لینک های Neko)</translation>
     </message>
     <message>
         <source>Warning</source>
@@ -304,11 +304,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Please input URL</source>
-        <translation>لطفا URL را وارد کنید</translation>
+        <translation>لطفا لینک را وارد کنید</translation>
     </message>
     <message>
         <source>Copied</source>
-        <translation>کپی شده است</translation>
+        <translation>کپی شد</translation>
     </message>
     <message>
         <source>Manually column width</source>
@@ -320,15 +320,15 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">هیچ یک</translation>
+        <translation>هیچی</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">پاک کردن</translation>
+        <translation>خالی کردن</translation>
     </message>
     <message>
         <source>Skip automatic update</source>
-        <translation type="unfinished">لغو آپدیت اتوماتیک</translation>
+        <translation>رد کردن آپدیت اتوماتیک</translation>
     </message>
     <message>
         <source>Common</source>
@@ -336,7 +336,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished">اشتراک گذاری</translation>
+        <translation>اشتراک گذاری</translation>
     </message>
 </context>
 <context>
@@ -387,7 +387,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
-        <translation type="unfinished"></translation>
+        <translation>رمزگذاری بسته UDP FullCone برای پیاده سازی ویژگی هایی مانند UDP FullCone. پشتیبانی سرور مورد نیاز است، اگر انتخاب اشتباه انجام شود، اتصال نمی تواند برقرار شود. لطفا آن را خالی بگذارید</translation>
     </message>
     <message>
         <source>Packet Encoding</source>
@@ -399,7 +399,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
-        <translation type="unfinished"></translation>
+        <translation>وقتی فعال شود، V2Ray صحت TLS را برای Remote Host چک نخواهد کرد. (ممکن است امنیت را به خطر بیاندازد)</translation>
     </message>
     <message>
         <source>Allow insecure</source>
@@ -411,11 +411,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Server name indication, clear text.</source>
-        <translation type="unfinished">شناسه نام سرور ، متن صریح</translation>
+        <translation type="unfinished">شناسه نام سرور ، متن واضح</translation>
     </message>
     <message>
         <source>Application layer protocol negotiation, clear text. Please separate them with commas.</source>
-        <translation type="unfinished"></translation>
+        <translation>مذاکره پروتکل لایه برنامه، متن ساده. لطفا آنها را با کاما از هم جدا کنید</translation>
     </message>
     <message>
         <source>Custom (Extra Core)</source>
@@ -431,7 +431,7 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>TLS Security Settings</source>
-        <translation type="unfinished">تنظیمات امنیت TLS</translation>
+        <translation>تنظیمات امنیتی TLS</translation>
     </message>
     <message>
         <source>TLS Camouflage Settings</source>
@@ -439,11 +439,11 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Reality public key اگر خالی نیست، TLS را به REALITY تبدیل کنید</translation>
     </message>
     <message>
         <source>Custom (%1 outbound)</source>
-        <translation type="unfinished"></translation>
+        <translation>سفارشی (%1 خروجی)</translation>
     </message>
     <message>
         <source>Custom (%1 config)</source>
@@ -451,15 +451,15 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Custom Outbound Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیمات سفارشی خروجی</translation>
     </message>
     <message>
         <source>Custom Config Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیمات پیکربندی سفارشی</translation>
     </message>
     <message>
         <source>Apply settings to this group</source>
-        <translation type="unfinished">تنظیمات به این گروه اعمال شود</translation>
+        <translation>تنظیمات برای این گروه اعمال شود</translation>
     </message>
     <message>
         <source>Multiplex</source>
@@ -467,44 +467,44 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Keep Default</source>
-        <translation type="unfinished">نگه داری مقدار پیشفرض</translation>
+        <translation>نگهداری مقدار پیشفرض</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished">فعال</translation>
+        <translation>روشن</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">خاموش</translation>
+        <translation>خاموش</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished">تایید</translation>
+        <translation>تایید کردن</translation>
     </message>
     <message>
         <source>Server support is required</source>
-        <translation type="unfinished">نیازمند پشتیبانی در سمت سرور</translation>
+        <translation>نیازمند پشتیبانی در سمت سرور</translation>
     </message>
     <message>
         <source>Reality short id. Accept only one value.</source>
-        <translation type="unfinished"></translation>
+        <translation>آیدی کوتاه Reality. فقط یک مقدار قبول میکند</translation>
     </message>
 </context>
 <context>
     <name>DialogFirstSetup</name>
     <message>
         <source>First time setup</source>
-        <translation type="unfinished">تنظیم دفعه اول</translation>
+        <translation>تنظیمات اولیه</translation>
     </message>
     <message>
         <source>It looks like you are using this software for the first time, please select a core.
 
 These settings can be changed later.</source>
-        <translation type="unfinished">به نظر میرسد که شما برای اولین بار است که از این نرم افزار استفاده میکنید ، لطفا یک هسته را انتخاب کنید ، این تنظیمات میتواند بعدا تغییر یابد.</translation>
+        <translation>به نظر میرسد که شما برای اولین بار است که از این نرم افزار استفاده میکنید ، لطفا یک هسته را انتخاب کنید ، این تنظیمات را بعدا میتواند تغییر دهید.</translation>
     </message>
     <message>
         <source>Quit</source>
-        <translation type="unfinished">خروج</translation>
+        <translation>خروج</translation>
     </message>
 </context>
 <context>
@@ -515,7 +515,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Show routes</source>
-        <translation>مسیرها را نمایش بده</translation>
+        <translation>نمایش مسیر ها</translation>
     </message>
     <message>
         <source>Show groups</source>
@@ -523,7 +523,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Trigger main window</source>
-        <translation type="unfinished">نمایش پنجره اصلی</translation>
+        <translation>نمایش پنجره اصلی</translation>
     </message>
     <message>
         <source>System Proxy</source>
@@ -534,7 +534,7 @@ These settings can be changed later.</source>
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation>گروه هاگروه ها</translation>
+        <translation>گروه ها</translation>
     </message>
     <message>
         <source>New group</source>
@@ -561,7 +561,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Sniffing Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>حالت Sniffing</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -573,7 +573,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Direct DNS</source>
-        <translation type="unfinished">دی ان اس مستقیم</translation>
+        <translation>دی ان اس مستقیم</translation>
     </message>
     <message>
         <source>Enable DNS Routing</source>
@@ -581,7 +581,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">مسدود کردن</translation>
+        <translation>مسدود کردن</translation>
     </message>
     <message>
         <source>Direct</source>
@@ -613,7 +613,7 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Global</source>
-        <translation type="unfinished">همگانی</translation>
+        <translation>جهانی</translation>
     </message>
     <message>
         <source>Load</source>
@@ -633,15 +633,15 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Load routing: %1</source>
-        <translation type="unfinished">بارگیری مسیر : 1%</translation>
+        <translation>مسیریابی بارگیری : 1%</translation>
     </message>
     <message>
         <source>Save routing: %1</source>
-        <translation type="unfinished">ذخیره مسیر : 1%</translation>
+        <translation>ذخیره مسیریابی : 1%</translation>
     </message>
     <message>
         <source>Remove routing: %1</source>
-        <translation type="unfinished">حذف مسیر : 1%</translation>
+        <translation>حذف مسیریابی : 1%</translation>
     </message>
     <message>
         <source>Default Outbound</source>
@@ -649,39 +649,39 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Domain Strategy</source>
-        <translation type="unfinished">استراتژی دامنه</translation>
+        <translation>استراتژی دامنه</translation>
     </message>
     <message>
         <source>Server Address Strategy</source>
-        <translation type="unfinished">استراتژی آدرس سرور</translation>
+        <translation>استراتژی آدرس سرور</translation>
     </message>
     <message>
         <source>Sniff result for routing</source>
-        <translation type="unfinished"></translation>
+        <translation>Sniff کردن نتایج مسیریابی</translation>
     </message>
     <message>
         <source>Sniff result for destination</source>
-        <translation type="unfinished"></translation>
+        <translation>Sniff کردن نتایج مقصد</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">متداول</translation>
+        <translation>متداول</translation>
     </message>
     <message>
         <source>DNS</source>
-        <translation type="unfinished">دی ان اس</translation>
+        <translation>دی ان اس</translation>
     </message>
     <message>
         <source>Simple DNS Settings</source>
-        <translation type="unfinished">تنظیمات دی ان اس ساده</translation>
+        <translation>تنظیمات دی ان اس ابتدایی</translation>
     </message>
     <message>
         <source>Use DNS Object</source>
-        <translation type="unfinished"></translation>
+        <translation>استفاده از شی، دی ان اس</translation>
     </message>
     <message>
         <source>DNS Object Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>تنظیمات شی دی ان اس</translation>
     </message>
     <message>
         <source>Simple Route</source>
@@ -689,31 +689,31 @@ These settings can be changed later.</source>
     </message>
     <message>
         <source>Custom Route</source>
-        <translation type="unfinished">مسیر سفارشی</translation>
+        <translation>مسیر سفارشی</translation>
     </message>
     <message>
         <source>Custom Route (global)</source>
-        <translation type="unfinished"></translation>
+        <translation>مسیر سفارشی (جهانی)</translation>
     </message>
     <message>
         <source>Note: Other settings are independent for each route set.</source>
-        <translation type="unfinished"></translation>
+        <translation>نکته: تنظیمات دیگر برای هر مسیر مستقل است.</translation>
     </message>
     <message>
         <source>Route sets</source>
-        <translation type="unfinished"></translation>
+        <translation>مجموعه مسیرها</translation>
     </message>
     <message>
         <source>Query Strategy</source>
-        <translation type="unfinished"></translation>
+        <translation>استراتژی Query</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation type="unfinished">اسناد</translation>
+        <translation>مستندات</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished">فرمت</translation>
+        <translation>ساختار</translation>
     </message>
     <message>
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
@@ -730,7 +730,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <name>DialogVPNSettings</name>
     <message>
         <source>Tun Settings</source>
-        <translation>تنظیمات vpn</translation>
+        <translation>تنظیمات Tun</translation>
     </message>
     <message>
         <source>Hide Console</source>
@@ -738,7 +738,7 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
     <message>
         <source>Tun Enable IPv6</source>
-        <translation type="unfinished"></translation>
+        <translation>فعال کردن IPV6 Tun</translation>
     </message>
     <message>
         <source>Bypass CIDR</source>
@@ -758,34 +758,37 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
     <message>
         <source>Proxy CIDR</source>
-        <translation type="unfinished"></translation>
+        <translation>پروکسی CIDR</translation>
     </message>
     <message>
         <source>Proxy Process Name</source>
-        <translation type="unfinished">نام پروسه پراکسی</translation>
+        <translation>نام فرآیند پراکسی</translation>
     </message>
     <message>
         <source>Troubleshooting</source>
-        <translation type="unfinished">عیب یابی</translation>
+        <translation>عیب یابی</translation>
     </message>
     <message>
         <source>If you have trouble starting VPN, you can force reset nekobox_core process here.
 
 If still not working, see documentation for more information.
 https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
-        <translation type="unfinished"></translation>
+        <translation>اگر در راه اندازی VPN مشکل دارید، می توانید فرآیند nekobox_core را در اینجا به اجبار بازنشانی کنید.
+
+اگر هنوز کار نمی کند، برای اطلاعات بیشتر به اسناد مراجعه کنید.
+https://matsuridayo.github.io/n-configuration/#vpn-tun </translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">بازنشانی</translation>
+        <translation>بازنشانی</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">لغو کردن</translation>
+        <translation>لغو کردن</translation>
     </message>
     <message>
         <source>Internal Tun</source>
-        <translation type="unfinished">حالت تونل داخلی</translation>
+        <translation>Tun داخلی</translation>
     </message>
     <message>
         <source>Add a tun inbound to the profile startup, instead of using two processes.
@@ -797,15 +800,15 @@ This needs to be run NekoBox with administrator privileges.</source>
     <name>EditChain</name>
     <message>
         <source>Traffic order is from top to bottom</source>
-        <translation type="unfinished">عبور ترافیک از بالا به پایین است</translation>
+        <translation>ترتیب ترافیک از بالا به پایین است.</translation>
     </message>
     <message>
         <source>Select Profile</source>
-        <translation>انتخاب کردن پروفایل</translation>
+        <translation>انتخاب پروفایل</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation type="unfinished">نام نمیتواند خالی باشد</translation>
+        <translation>نام نمیتواند خالی باشد</translation>
     </message>
 </context>
 <context>
@@ -820,11 +823,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Command</source>
-        <translation type="unfinished">فرمان</translation>
+        <translation>دستور</translation>
     </message>
     <message>
         <source>Config Suffix</source>
-        <translation type="unfinished">پسوند کانفیگ</translation>
+        <translation type="unfinished">مشخص کردن پسوند</translation>
     </message>
     <message>
         <source>Outbound JSON, please read the documentation.</source>
@@ -836,27 +839,27 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Random if it&apos;s empty or zero.</source>
-        <translation type="unfinished"></translation>
+        <translation>تصادفی اگر&apos;s خالی یا صفر.</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished">پیش نمایش</translation>
+        <translation>پیش نمایش</translation>
     </message>
     <message>
         <source>Preview replace</source>
-        <translation type="unfinished"></translation>
+        <translation>جایگزینی پیش نمایش</translation>
     </message>
     <message>
         <source>Preview config</source>
-        <translation type="unfinished"></translation>
+        <translation>پیش نمایش تنظیمات</translation>
     </message>
     <message>
         <source>Please fill the complete config.</source>
-        <translation type="unfinished"></translation>
+        <translation>لطفا تنظیمات را به صورت کامل پر کنید.</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation type="unfinished">نام نمیتواند خالی باشد</translation>
+        <translation>نام نمیتواند خالی باشد</translation>
     </message>
 </context>
 <context>
@@ -871,11 +874,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Extra headers</source>
-        <translation type="unfinished"></translation>
+        <translation>سربرگ اضافی</translation>
     </message>
     <message>
         <source>SNI</source>
-        <translation type="unfinished"></translation>
+        <translation>نشانگر نام سرور (SNI)</translation>
     </message>
     <message>
         <source>Username</source>
@@ -883,7 +886,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished">گواهی</translation>
+        <translation>گواهی</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>
@@ -891,50 +894,50 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Disable logs</source>
-        <translation type="unfinished"></translation>
+        <translation>غیرفعال کردن لاگ ها</translation>
     </message>
     <message>
         <source>Turn on this option if your connection is lost after a while</source>
-        <translation type="unfinished"></translation>
+        <translation>این گزینه را فعال کنید اگر بعد از مدتی اتصال شما قطع می شود.</translation>
     </message>
 </context>
 <context>
     <name>EditQUIC</name>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished">گواهی</translation>
+        <translation>گواهی</translation>
     </message>
     <message>
         <source>Auth Type</source>
-        <translation type="unfinished"></translation>
+        <translation>نحوه احراز هویت</translation>
     </message>
     <message>
         <source>Protocol</source>
-        <translation type="unfinished">پروتکل</translation>
+        <translation>پروتکل</translation>
     </message>
     <message>
         <source>Download (Mbps)</source>
-        <translation type="unfinished">دانلود (مگابیت بر ثانیه)</translation>
+        <translation>دانلود (مگابیت بر ثانیه)</translation>
     </message>
     <message>
         <source>Disable MTU Discovery</source>
-        <translation type="unfinished"></translation>
+        <translation>غیرفعال کردن شناسایی MTU</translation>
     </message>
     <message>
         <source>Hop Interval (s)</source>
-        <translation type="unfinished"></translation>
+        <translation>تعداد پرش (HOP)</translation>
     </message>
     <message>
         <source>Allow Insecure</source>
-        <translation type="unfinished">اجازه ارتباطات ناامن داده شود</translation>
+        <translation>اجازه ارتباطات ناامن داده شود</translation>
     </message>
     <message>
         <source>Hop Port</source>
-        <translation type="unfinished"></translation>
+        <translation>پورت Hop</translation>
     </message>
     <message>
         <source>Upload (Mbps)</source>
-        <translation type="unfinished">آپلود (مگابیت بر ثانیه)</translation>
+        <translation>آپلود (مگابیت بر ثانیه)</translation>
     </message>
     <message>
         <source>Obfs Password</source>
@@ -942,27 +945,27 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>SNI</source>
-        <translation type="unfinished"></translation>
+        <translation>نشانگر نام سرور (SNI)</translation>
     </message>
     <message>
         <source>Auth Payload</source>
-        <translation type="unfinished"></translation>
+        <translation>بسته احرازهویت</translation>
     </message>
     <message>
         <source>Disable SNI</source>
-        <translation type="unfinished"></translation>
+        <translation>غیرفعال کردن SNI</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation type="unfinished"></translation>
+        <translation>رمزعبور</translation>
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation type="unfinished"></translation>
+        <translation>تولید UUID</translation>
     </message>
     <message>
         <source>Heartbeat</source>
-        <translation type="unfinished"></translation>
+        <translation>ضربان قلب</translation>
     </message>
     <message>
         <source>Zero Rtt Handshake</source>
@@ -970,22 +973,22 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Congestion Control</source>
-        <translation type="unfinished"></translation>
+        <translation>کنترل تراکم</translation>
     </message>
     <message>
         <source>UDP Relay Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>حالت UDP Relay</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation type="unfinished"></translation>
+        <translation>استفاده اجباری از هسته خارجی</translation>
     </message>
 </context>
 <context>
     <name>EditShadowSocks</name>
     <message>
         <source>Plugin Args</source>
-        <translation type="unfinished"></translation>
+        <translation>آرگمان های افزونه</translation>
     </message>
     <message>
         <source>Password</source>
@@ -997,7 +1000,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Plugin</source>
-        <translation>پلاگین</translation>
+        <translation>افزونه</translation>
     </message>
     <message>
         <source>Version of UDP over TCP protocol, server support is required.</source>
@@ -1005,7 +1008,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">خاموش</translation>
+        <translation>خاموش</translation>
     </message>
 </context>
 <context>
@@ -1034,7 +1037,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     <name>EditVMess</name>
     <message>
         <source>Alter Id</source>
-        <translation type="unfinished"></translation>
+        <translation>تغییر id</translation>
     </message>
     <message>
         <source>Security</source>
@@ -1046,7 +1049,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation type="unfinished"></translation>
+        <translation>تولید UUID</translation>
     </message>
 </context>
 <context>
@@ -1077,7 +1080,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Last update: %1</source>
-        <translation type="unfinished">آخرین آپدیت : %1</translation>
+        <translation type="unfinished">آخرین بروزرسانی : %1</translation>
     </message>
     <message>
         <source>Confirmation</source>
@@ -1100,7 +1103,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Remove All Comments</source>
-        <translation type="unfinished">حذف همه کامنت ها</translation>
+        <translation>حذف همه نظر ها</translation>
     </message>
     <message>
         <source>Json Editor</source>
@@ -1108,15 +1111,15 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Structure Preview</source>
-        <translation type="unfinished">پیش نمایش ساختار</translation>
+        <translation>پیش نمایش ساختار</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">تایید</translation>
+        <translation>تایید</translation>
     </message>
     <message>
         <source>Json Contains Syntax Errors</source>
-        <translation type="unfinished"></translation>
+        <translation>فایل Json شامل خطای سینتکس است</translation>
     </message>
     <message>
         <source>Original Json may contain syntax errors. Json tree is disabled.</source>
@@ -1124,11 +1127,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>You must correct these errors before continuing.</source>
-        <translation type="unfinished">شما باید این ایرادات را قبل از ادامه دادن اصلاح کنید</translation>
+        <translation>شما باید این ایرادات را قبل از ادامه دادن درست کنید</translation>
     </message>
     <message>
         <source>Syntax Errors</source>
-        <translation>خطاهای نحوی</translation>
+        <translation>خطاهای سینتکس</translation>
     </message>
     <message>
         <source>Please fix the JSON errors or remove the comments before continue</source>
@@ -1155,7 +1158,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Document</source>
-        <translation>اسناد</translation>
+        <translation>مستندات</translation>
     </message>
     <message>
         <source>Update</source>
@@ -1163,11 +1166,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Tun Mode</source>
-        <translation>حالتvpn</translation>
+        <translation>حالت vpn</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>پروکسی سیستمی</translation>
+        <translation>پروکسی سیستم</translation>
     </message>
     <message>
         <source>Type</source>
@@ -1179,7 +1182,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Name</source>
-        <translation>اسم</translation>
+        <translation>نام</translation>
     </message>
     <message>
         <source>Test Result</source>
@@ -1191,7 +1194,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Log</source>
-        <translation>ثبت رویدادها</translation>
+        <translation>لاگ</translation>
     </message>
     <message>
         <source>Connection</source>
@@ -1243,11 +1246,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Start</source>
-        <translation>آغازکردن</translation>
+        <translation>شروع</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>متوقف کردن</translation>
+        <translation>توقف</translation>
     </message>
     <message>
         <source>Routing Settings</source>
@@ -1259,7 +1262,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Delete</source>
-        <translation>از بین بردن</translation>
+        <translation>پاک کردن</translation>
     </message>
     <message>
         <source>Debug Info</source>
@@ -1279,7 +1282,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Export %1 config</source>
-        <translation type="unfinished"></translation>
+        <translation>خروجی گرفتن از %1 تنظیمات</translation>
     </message>
     <message>
         <source>Reset Traffic</source>
@@ -1287,11 +1290,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Scan QR Code</source>
-        <translation>کد QR را اسکن کنید</translation>
+        <translation>اسکن کردن کد QR</translation>
     </message>
     <message>
         <source>Enable System Proxy</source>
-        <translation>پروکسی سیستم را فعال کنید</translation>
+        <translation>فعال کردن سیستم پروکسی</translation>
     </message>
     <message>
         <source>Disable</source>
@@ -1343,7 +1346,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation>لینک های انتخاب شده را کپی کنید</translation>
+        <translation>کپی کردن لینک های انتخاب شده</translation>
     </message>
     <message>
         <source>Enable Tun</source>
@@ -1351,15 +1354,15 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Clone</source>
-        <translation>همزادسازی</translation>
+        <translation>شبیه سازی</translation>
     </message>
     <message>
         <source>Update subscription</source>
-        <translation>اشتراک را به روز کنید</translation>
+        <translation>به روزرسانی اشتراک</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translation>دامنه را حل کنید</translation>
+        <translation>شناسایی کردن دامنه</translation>
     </message>
     <message>
         <source>Tun Settings</source>
@@ -1371,7 +1374,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation>پوشه Config باز شود</translation>
+        <translation>پوشه Config باز کردن</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1399,11 +1402,11 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>وارد شده %1 پروفایل (ها)</translation>
     </message>
     <message>
         <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
-        <translation type="unfinished"></translation>
+        <translation>Http خارجی فعال نیست، can&apos;t پروکسی سیستم را قرار دهید.</translation>
     </message>
     <message>
         <source>Settings</source>
@@ -1411,7 +1414,7 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
-        <translation type="unfinished"></translation>
+        <translation>سرور فعلی با Tun سازگار نیست. لطفا ابتدا سرور را متوقف کنید، حالت Tun را فعال کنید، و سپس آن را ریستارت کنید.</translation>
     </message>
     <message>
         <source>Not Running</source>
@@ -1419,8 +1422,8 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>None</source>
-        <translatorcomment>هیچ یک</translatorcomment>
-        <translation>هیچ یک</translation>
+        <translatorcomment>هیچی</translatorcomment>
+        <translation>هیچ</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1428,19 +1431,19 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Clone %1 item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>شبیه سازی %1 آیتم</translation>
     </message>
     <message>
         <source>Move %1 item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>انتقال %1 آیتم</translation>
     </message>
     <message>
         <source>Remove %1 item(s) ?</source>
-        <translation type="unfinished"></translation>
+        <translation>پاک کردن %1 آیتم</translation>
     </message>
     <message>
         <source>Copied %1 item(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 آیتم کپی شد</translation>
     </message>
     <message>
         <source>Config copied</source>
@@ -1452,16 +1455,17 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>Resolving domain to IP, if support.</source>
-        <translation type="unfinished"></translation>
+        <translation>ترجمه دامنه به آی پی درصورت پشتیبانی</translation>
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation>کلیدواژه نادیده گرفتن را تنظیم کنید</translation>
+        <translation>تنظیم کردن کلید واژه هایی که نادیده گرفته شود</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
 Split by line.</source>
-        <translation type="unfinished"></translation>
+        <translation>کلید واژه های زیر را در نظر نگیرید؟
+        جدا شده با خط</translation>
     </message>
     <message>
         <source>Save as route</source>
@@ -1510,7 +1514,7 @@ End: %2</source>
     </message>
     <message>
         <source>Current Select</source>
-        <translation type="unfinished">انتخاب فعلی</translation>
+        <translation>انتخاب فعلی</translation>
     </message>
     <message>
         <source>Show Window</source>
@@ -1518,47 +1522,47 @@ End: %2</source>
     </message>
     <message>
         <source>Settings changed</source>
-        <translation type="unfinished">تنظیمات تغییر کرد</translation>
+        <translation>تنظیمات تغییر کرد</translation>
     </message>
     <message>
         <source>Please run NekoBox as admin</source>
-        <translation type="unfinished">لطفا Nekobox را با مجوز ادمین اجرا کنید</translation>
+        <translation>لطفا Nekobox را با مجوز ادمین اجرا کنید</translation>
     </message>
     <message>
         <source>Restart Proxy</source>
-        <translation type="unfinished">راه اندازی مجدد پروکسی</translation>
+        <translation>راه اندازی مجدد پروکسی</translation>
     </message>
     <message>
         <source>If there is no response for a long time, it is recommended to restart the software.</source>
-        <translation type="unfinished">اگر برای مدت زمان طولانی هیچ پاسخی دریافت نشد ، پیشنهاد میشود که نرم افزار را دوباره اجرا کنید</translation>
+        <translation>اگر برای مدت زمان طولانی هیچ پاسخی دریافت نشد ، پیشنهاد میشود که نرم افزار را دوباره اجرا کنید</translation>
     </message>
     <message>
         <source>Failed to start profile %1</source>
-        <translation type="unfinished"></translation>
+        <translation>امکان اجرا پروفایل وجود ندارد %1</translation>
     </message>
     <message>
         <source>Failed to stop, please restart the program.</source>
-        <translation type="unfinished">توقف ناموفق بود ، لطفا برنامه را دوباره اجرا کنید</translation>
+        <translation>توقف ناموفق بود ، لطفا برنامه را دوباره اجرا کنید</translation>
     </message>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
-        <translation type="unfinished"></translation>
+        <translation>حالت انتخابی، دابل کلیک و زدن اینتر برای انتخاب پروفایل، زدن ESC برای خروج.</translation>
     </message>
     <message>
         <source>Latency</source>
-        <translation type="unfinished">تاخیر</translation>
+        <translation>تاخیر</translation>
     </message>
     <message>
         <source>UDP latency</source>
-        <translation type="unfinished"></translation>
+        <translation>تاخیر UDP</translation>
     </message>
     <message>
         <source>Download speed</source>
-        <translation type="unfinished">سرعت دانلود</translation>
+        <translation>سرعت دانلود</translation>
     </message>
     <message>
         <source>In and Out IP</source>
-        <translation type="unfinished"></translation>
+        <translation>IP ورود و خروج</translation>
     </message>
     <message>
         <source>Test Options</source>
@@ -1566,11 +1570,11 @@ End: %2</source>
     </message>
     <message>
         <source>Restart the program to take effect.</source>
-        <translation type="unfinished">برای مشاهده نتیجه برنامه را دوباره راه اندازی کنید</translation>
+        <translation>برای مشاهده نتیجه برنامه را دوباره راه اندازی کنید</translation>
     </message>
     <message>
         <source>Stop Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>توقف تست کردن</translation>
     </message>
 </context>
 <context>
@@ -1581,7 +1585,7 @@ End: %2</source>
     </message>
     <message>
         <source>Remove %1?</source>
-        <translation type="unfinished">حذف %1?</translation>
+        <translation>حذف %1?</translation>
     </message>
 </context>
 <context>
@@ -1613,7 +1617,9 @@ End: %2</source>
         <source>Update found: %1
 Release note:
 %2</source>
-        <translation type="unfinished"></translation>
+        <translation>بروز رسانی یافت شد: %1
+    لیست تغییرات:
+        %2</translation>
     </message>
     <message>
         <source>Open in browser</source>
@@ -1638,19 +1644,19 @@ Release note:
     <message>
         <source>%1
 How to update?</source>
-        <translation type="unfinished">چگونه بروزرسانی کنم ؟</translation>
+        <translation>چگونه بروزرسانی شود ؟ %1</translation>
     </message>
     <message>
         <source>Requesting subscription: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>درخواست دادن برای اشتراک: %1</translation>
     </message>
     <message>
         <source>Requesting subscription %1 error: %2</source>
-        <translation type="unfinished"></translation>
+        <translation>درخواست برای اشتراک %1 خطا: %2</translation>
     </message>
     <message>
         <source>Clearing servers...</source>
-        <translation type="unfinished">پاک کردن سرورها</translation>
+        <translation>پاک کردن سرورها</translation>
     </message>
     <message>
         <source>Added %1 profiles:
@@ -1661,11 +1667,11 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Nothing</source>
-        <translation type="unfinished">خالی</translation>
+        <translation type="unfinished">هیچی</translation>
     </message>
     <message>
         <source>Change of %1:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">تغییرات %1:</translation>
     </message>
     <message>
         <source>Chain Proxy</source>
@@ -1673,7 +1679,7 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Core not found: %1</source>
-        <translation type="unfinished">هسته برنامه یافت نشد : %1</translation>
+        <translation>هسته برنامه یافت نشد : %1</translation>
     </message>
     <message>
         <source>Proxy: %1
