@@ -433,6 +433,7 @@ namespace NekoGui {
         search << QApplication::applicationDirPath();
         search << "/usr/share/sing-geoip";
         search << "/usr/share/sing-geosite";
+        search << "/usr/share/sing-box";
         search << "/usr/share/xray";
         search << "/usr/local/share/xray";
         search << "/opt/xray";
