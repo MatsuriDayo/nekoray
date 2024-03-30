@@ -604,7 +604,7 @@ These settings can be changed later.</source>
         <translation>پیشفرض</translation>
     </message>
     <message>
-        <source>Mange route set</source>
+        <source>Manage route set</source>
         <translation type="unfinished">مدیریت مسیرها</translation>
     </message>
     <message>

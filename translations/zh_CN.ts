@@ -650,7 +650,7 @@ These settings can be changed later.</source>
         <translation>删除路由: %1</translation>
     </message>
     <message>
-        <source>Mange route set</source>
+        <source>Manage route set</source>
         <translation>管理路由规则</translation>
     </message>
     <message>

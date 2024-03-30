@@ -570,7 +570,7 @@ These settings can be changed later.</source>
         <translation>Набор маршрутов</translation>
     </message>
     <message>
-        <source>Mange route set</source>
+        <source>Manage route set</source>
         <translation>Изменить набор маршрутов</translation>
     </message>
     <message>
