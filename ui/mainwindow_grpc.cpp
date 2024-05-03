@@ -6,6 +6,7 @@
 #include "db/traffic/TrafficLooper.hpp"
 #include "rpc/gRPC.h"
 #include "ui/widget/MessageBoxTimer.h"
+#include "sys/linux/LinuxCap.h"
 
 #include <QTimer>
 #include <QThread>
@@ -284,6 +285,9 @@ void MainWindow::neko_start(int _id) {
     if (NekoGui::dataStore->prepare_exit) return;
 
     auto ents = get_now_selected_list();
+    if (IS_NEKO_BOX_INTERNAL_TUN)
+        auto ret = Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin-ep");
+
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoGui::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
 
