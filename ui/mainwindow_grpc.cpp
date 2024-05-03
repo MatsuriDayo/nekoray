@@ -288,7 +288,7 @@ void MainWindow::neko_start(int _id) {
 
 #ifdef Q_OS_LINUX
     if (IS_NEKO_BOX_INTERNAL_TUN)
-        auto ret = Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin-ep");
+        Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin-ep");
 #endif
 
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoGui::profileManager->GetProfile(_id);
