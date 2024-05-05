@@ -6,7 +6,6 @@
 #include "db/traffic/TrafficLooper.hpp"
 #include "rpc/gRPC.h"
 #include "ui/widget/MessageBoxTimer.h"
-#include "sys/linux/LinuxCap.h"
 
 #include <QTimer>
 #include <QThread>
@@ -286,10 +285,8 @@ void MainWindow::neko_start(int _id) {
 
     auto ents = get_now_selected_list();
 
-#ifdef Q_OS_LINUX
     if (IS_NEKO_BOX_INTERNAL_TUN)
-        Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin-ep");
-#endif
+        StopVPNProcess();
 
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoGui::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
