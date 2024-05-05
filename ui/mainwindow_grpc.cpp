@@ -284,6 +284,10 @@ void MainWindow::neko_start(int _id) {
     if (NekoGui::dataStore->prepare_exit) return;
 
     auto ents = get_now_selected_list();
+
+    if (IS_NEKO_BOX_INTERNAL_TUN)
+        StopVPNProcess();
+
     auto ent = (_id < 0 && !ents.isEmpty()) ? ents.first() : NekoGui::profileManager->GetProfile(_id);
     if (ent == nullptr) return;
 
