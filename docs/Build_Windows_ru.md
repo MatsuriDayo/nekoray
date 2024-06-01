@@ -1,52 +1,52 @@
-在 Windows 下编译 Nekoray
+Компиляция Nekoray для Windows
 
-### git clone 源码
+### Клонируем репозиторий
 
 ```
 git clone https://github.com/MatsuriDayo/nekoray.git --recursive
 ```
 
-### 安装 Visual Studio
+### Установите Visual Studio
 
-从微软官网安装，可以使用 2019 和 2022 版本，安装 Win32 C++ 开发环境。
+На сайте Microsoft вы можете установить среду разработки Win32 C++ версий 2019 и 2022.
 
-安装好后可以在「开始」菜单找到 `x64 Native Tools Command Prompt`
+После установки вы можете найти командную строку `x64 Native Tools Command Prompt` в меню Пуск.
 
-本文之后的命令均在该 cmd 内执行。`cmake` `ninja` 等工具使用 VS 自带的即可。
+Команды, приведенные в этой статье, выполняются в cmd. С VS можно использовать такие инструменты, как `cmake` и `ninja`.
 
-### 下载 Qt SDK
+### Установите Qt SDK
 
-目前 Windows Release 使用的版本是 Qt 6.5.x
+Текущая версия Qt для Windows Release - Qt 6.5.x.
 
-下载解压后，将 bin 目录添加到环境变量。
+После загрузки и извлечения SDK добавьте каталог bin в переменную окружения.
 
-#### Release 编译用到的 Qt 包下载 (MSVC2019 x86_64)
+#### Скачайте пакеты Qt для компиляции сборки (MSVC2019 x86_64)
 
 https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
 
-#### 官方签名版 Qt 5.15.2 （可选，已知有内存泄漏的BUG）
+#### Официальная подписанная версия Qt 5.15.2 (необязательно, на данный момент в этой версии есть ошибки утечки памяти).
 
-在此下载 `qtbase` `qtsvg` `qttools` 的包并解压到同一个目录。
+Скачайте пакеты `qtbase` `qtsvg` `qttools` здесь и распакуйте их в тот же каталог.
 
 https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_5152/qt.qt5.5152.win64_msvc2019_64/
 
-### C++ 部分编译
+## C++ окружение
 
-#### 编译安装 C/C++ 依赖
+#### Сборка и установка зависимостей C/C++
 
-（这一步可能要挂梯）
+(этот шаг нужен для установки зависимостей)
 
 ```shell
-bash ./libs/build_deps_all.sh
+./libs/build_deps_all.sh
 ```
 
-目前只有 bash 脚本，没有批处理或 powershell，如果 Windows 没有带 bash 建议自行安装。
+На данный момент существуют только скрипты для bash, без batch и powershell, поэтому если на Windows не установлен bash, мы рекомендуем установить его самостоятельно.
 
-CMake 参数等细节与 Linux 大同小异，有问题可以参照 Build_Linux 文档。
+Параметры CMake и другие детали во многом совпадают с Linux, если у вас возникнут вопросы, обратитесь к документации [Build_Linux_ru.md](./Build_Linux_ru.md).
 
-#### 编译本体
+#### Компиляция основного кода
 
-请根据你的 QT Sdk 的位置替换命令
+Замените команды в соответствии с расположением вашего QT Sdk.
 
 ```shell
 mkdir build
@@ -55,10 +55,10 @@ cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=D:/path/to/qt/5.15.
 ninja
 ```
 
-编译完成后得到 `nekoray.exe`
+После компиляции вы получите `nekoray.exe`.
 
-最后运行 `windeployqt nekoray.exe` 自动复制所需 DLL 等文件到当前目录
+Наконец, запустите `windeployqt nekoray.exe` для автоматического копирования необходимых DLL и других файлов в текущий каталог.
 
-### Go 部分编译
+### Компиляция GO кода
 
-请看 [Build_Core.md](./Build_Core.md)
+Смотрите [Build_Core_ru.md](./Build_Core_ru.md)

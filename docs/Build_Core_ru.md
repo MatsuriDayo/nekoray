@@ -1,4 +1,4 @@
-## Сборка nekoray_core и nekobox_core
+## Компиляция nekoray_core и nekobox_core
 
 ### Структура директорий
 
@@ -20,6 +20,6 @@
 
 Для неофициальной сборки не нужна компиляция `updater` `launcher`
 
-### sing-box метки
+### теги sing-box
 
-Посмотреть точное название меток можно в `libs/build_go.sh`.
+Актуальные теги смотрите в файле `libs/build_go.sh`.
