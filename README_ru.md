@@ -98,9 +98,7 @@ USDT TRC20
 XMR
 
 `49bwESYQjoRL3xmvTcjZKHEKaiGywjLYVQJMUv79bXonGiyDCs8AzE3KiGW2ytTybBCpWJUvov8SjZZEGg66a4e59GXa6k5`
-
-- Донат через [Google Play](https://play.google.com/store/apps/details?id=moe.nb4a), используя банковскую карту.
-- 
+ 
 ## Авторы
 
 Ядра:
