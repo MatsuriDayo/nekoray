@@ -18,13 +18,6 @@ source $SRC_ROOT/libs/get_source_env.sh
 NO_ENV=1 ./libs/get_source.sh
 
 popd
-
 ####
-if [ ! -d "Xray-core" ]; then
-  git clone --no-checkout https://github.com/MatsuriDayo/Xray-core.git
-fi
-pushd Xray-core
-git checkout "$COMMIT_MATSURI_XRAY"
-popd
 
 popd

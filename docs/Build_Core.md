@@ -1,11 +1,10 @@
-## 构建 nekoray_core & nekobox_core
+## 构建 nekobox_core
 
 ### 目录结构
 
 ```
   | nekoray
   |   go/cmd/*
-  | Xray-core
   | sing-box-extra
   | sing-box
   | ......

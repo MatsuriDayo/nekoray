@@ -2,7 +2,6 @@
 #include "db/Database.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
-#include "main/QJS.hpp"
 
 #include <QApplication>
 #include <QFile>
@@ -76,19 +75,6 @@ namespace NekoGui {
         // apply custom config
         MergeJson(QString2QJsonObject(ent->bean->custom_config), result->coreConfig);
 
-        // hook.js
-        if (result->error.isEmpty() && !forTest) {
-            auto source = qjs::ReadHookJS();
-            if (!source.isEmpty()) {
-                qjs::QJS js(source);
-                auto js_result = js.EvalFunction("hook.hook_core_config", QJsonObject2QString(result->coreConfig, true));
-                auto js_result_json = QString2QJsonObject(js_result);
-                if (!js_result_json.isEmpty() && result->coreConfig != js_result_json) {
-                    MW_show_log("hook.js modified your " + software_core_name + " json config.");
-                    result->coreConfig = js_result_json;
-                }
-            }
-        }
         return result;
     }
 
@@ -1106,16 +1092,6 @@ namespace NekoGui {
                           .replace("%DNS_ADDRESS%", BOX_UNDERLYING_DNS)
                           .replace("%FAKE_DNS_INBOUND%", dataStore->fake_dns ? "tun-in" : "empty")
                           .replace("%PORT%", Int2String(dataStore->inbound_socks_port));
-        // hook.js
-        auto source = qjs::ReadHookJS();
-        if (!source.isEmpty()) {
-            qjs::QJS js(source);
-            auto js_result = js.EvalFunction("hook.hook_tun_config", config);
-            if (config != js_result) {
-                MW_show_log("hook.js modified your Tun config.");
-                config = js_result;
-            }
-        }
         // write config
         QFile file;
         file.setFileName(QFileInfo(configFn).fileName());
@@ -1137,16 +1113,6 @@ namespace NekoGui {
                           .replace("$PROTECT_LISTEN_PATH", protectPath)
                           .replace("$CONFIG_PATH", configPath)
                           .replace("$TABLE_FWMARK", "514");
-        // hook.js
-        auto source = qjs::ReadHookJS();
-        if (!source.isEmpty()) {
-            qjs::QJS js(source);
-            auto js_result = js.EvalFunction("hook.hook_tun_script", script);
-            if (script != js_result) {
-                MW_show_log("hook.js modified your Tun script.");
-                script = js_result;
-            }
-        }
         // write script
         QFile file2;
         file2.setFileName(QFileInfo(scriptFn).fileName());

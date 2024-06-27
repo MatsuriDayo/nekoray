@@ -94,10 +94,7 @@ func RunCore(setupCore func(), server gen.LibcoreServiceServer) {
 	)
 	gen.RegisterLibcoreServiceServer(s, server)
 
-	name := "nekoray_core"
-	if neko_common.RunMode == neko_common.RunMode_NekoBox_Core {
-		name = "nekobox_core"
-	}
+	name := "nekobox_core"
 
 	log.Printf("%s grpc server listening at %v\n", name, lis.Addr())
 	if err := s.Serve(lis); err != nil {

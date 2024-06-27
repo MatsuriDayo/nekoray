@@ -38,15 +38,13 @@ ninja
 | NKR_NO_QHOTKEY    |                   | 不包含 qhotkey           |
 | NKR_NO_ZXING      |                   | 不包含 zxing             |
 | NKR_NO_GRPC       |                   | 不包含 gRPC              |
-| NKR_NO_QUICKJS    |                   | 不包含 quickjs           |
 | NKR_PACKAGE       |                   | 编译 package 版本 (aur)   |
-| NKR_PACKAGE_MACOS |                   | 编译 macos 版本           |
 | NKR_LIBS          | ./libs/deps/built | 依赖搜索目录                |
 | NKR_DISABLE_LIBS  |                   | 禁用 NKR_LIBS           |
 
 1. `NKR_LIBS` 的值会被追加到 `CMAKE_PREFIX_PATH`
 2. `NKR_PACKAGE` 打开后，`NKR_LIBS` 的默认值为 `./libs/deps/package` ，具体依赖请看 `build_deps_all.sh`
-3. `NKR_PACKAGE_MACOS` 或 `NKR_PACKAGE` 打开后，应用将使用 appdata 目录存放配置，自动更新等功能将被禁用。
+3. `NKR_PACKAGE` 打开后，应用将使用 appdata 目录存放配置，自动更新等功能将被禁用。
 
 ### C++ 部分
 

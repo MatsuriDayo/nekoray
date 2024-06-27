@@ -1,6 +1,3 @@
 [submodule "3rdparty/QHotkey"]
 	path = 3rdparty/QHotkey
 	url = https://github.com/Skycoder42/QHotkey.git
-[submodule "3rdparty/qjs"]
-	path = 3rdparty/qjs
-	url = https://github.com/MatsuriDayo/qjs
