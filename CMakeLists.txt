@@ -225,10 +225,6 @@ set(PROJECT_SOURCES
         ui/dialog_hotkey.h
         ui/dialog_hotkey.ui
 
-        ui/dialog_first_setup.cpp
-        ui/dialog_first_setup.h
-        ui/dialog_first_setup.ui
-
         ui/widget/ProxyItem.cpp
         ui/widget/ProxyItem.h
         ui/widget/ProxyItem.ui

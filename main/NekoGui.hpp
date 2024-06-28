@@ -8,7 +8,7 @@
 // Switch core support
 
 namespace NekoGui {
-    inline int coreType = CoreType::V2RAY;
+    inline int coreType = CoreType::SING_BOX;
 
     QString FindCoreAsset(const QString &name);
 

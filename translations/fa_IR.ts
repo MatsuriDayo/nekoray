@@ -491,23 +491,6 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
 </context>
 <context>
-    <name>DialogFirstSetup</name>
-    <message>
-        <source>First time setup</source>
-        <translation type="unfinished">تنظیم دفعه اول</translation>
-    </message>
-    <message>
-        <source>It looks like you are using this software for the first time, please select a core.
-
-These settings can be changed later.</source>
-        <translation type="unfinished">به نظر میرسد که شما برای اولین بار است که از این نرم افزار استفاده میکنید ، لطفا یک هسته را انتخاب کنید ، این تنظیمات میتواند بعدا تغییر یابد.</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="unfinished">خروج</translation>
-    </message>
-</context>
-<context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
