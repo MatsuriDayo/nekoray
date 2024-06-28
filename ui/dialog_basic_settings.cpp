@@ -228,7 +228,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     ui->utlsFingerprint->addItems(IS_NEKO_BOX ? Preset::SingBox::UtlsFingerPrint : Preset::Xray::UtlsFingerPrint);
 
     D_LOAD_BOOL(skip_cert)
-    ui->enable_js_hook->setCurrentIndex(NekoGui::dataStore->enable_js_hook);
     ui->utlsFingerprint->setCurrentText(NekoGui::dataStore->utlsFingerprint);
 }
 
@@ -304,7 +303,6 @@ void DialogBasicSettings::accept() {
     // Security
 
     D_SAVE_BOOL(skip_cert)
-    NekoGui::dataStore->enable_js_hook = ui->enable_js_hook->currentIndex();
     NekoGui::dataStore->utlsFingerprint = ui->utlsFingerprint->currentText();
 
     // 关闭连接统计，停止刷新前清空记录。

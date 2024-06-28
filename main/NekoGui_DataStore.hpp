@@ -126,7 +126,6 @@ namespace NekoGui {
 
         // Security
         bool skip_cert = false;
-        int enable_js_hook = 0;
         QString utlsFingerprint = "";
 
         // Remember

@@ -164,10 +164,6 @@
         <translation>Не проверять подлинность TLS сертификатов по умолчанию</translation>
     </message>
     <message>
-        <source>Enable hook.js</source>
-        <translation>Использовать hook.js</translation>
-    </message>
-    <message>
         <source>Default uTLS Fingerprint</source>
         <translation>uTLS fingerprint по умолчанию</translation>
     </message>

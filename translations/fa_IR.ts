@@ -146,10 +146,6 @@
         <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
     </message>
     <message>
-        <source>Enable hook.js</source>
-        <translation type="unfinished">فعال سازی hook.js</translation>
-    </message>
-    <message>
         <source>Advanced system proxy settings. Please select a format.</source>
         <translation>تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
     </message>

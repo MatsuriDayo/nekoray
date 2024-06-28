@@ -168,10 +168,6 @@
         <translation>更新订阅时忽略 TLS 错误</translation>
     </message>
     <message>
-        <source>Enable hook.js</source>
-        <translation>启用 hook.js 功能</translation>
-    </message>
-    <message>
         <source>Hide dashboard at startup</source>
         <translation>启动时不显示仪表盘</translation>
     </message>
