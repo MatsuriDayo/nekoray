@@ -217,33 +217,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         }
     });
 
-    // switch core
-    ui->switch_core_v2ray->setChecked(!IS_NEKO_BOX);
-    ui->switch_core_sing_box->setChecked(IS_NEKO_BOX);
-    auto switch_core_on_click = [=] {
-        int neko_core_new;
-        if (sender() == ui->switch_core_sing_box) {
-            if (IS_NEKO_BOX) return;
-            neko_core_new = NekoGui::CoreType::SING_BOX;
-        } else {
-            if (!IS_NEKO_BOX) return;
-            neko_core_new = NekoGui::CoreType::V2RAY;
-        }
-        QString core_name_new = dynamic_cast<QRadioButton *>(sender())->text();
-        if (QMessageBox::question(this, tr("Confirmation"),
-                                  tr("Switching the core to %1, click \"Yes\" to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.")
-                                      .arg(core_name_new)) == QMessageBox::StandardButton::Yes) {
-            QFile file;
-            file.setFileName("groups/coreType");
-            file.open(QIODevice::ReadWrite | QIODevice::Truncate);
-            file.write(Int2String(neko_core_new).toUtf8());
-            file.close();
-            MW_dialog_message("", "RestartProgram");
-        }
-    };
-    connect(ui->switch_core_v2ray, &QRadioButton::clicked, this, switch_core_on_click);
-    connect(ui->switch_core_sing_box, &QRadioButton::clicked, this, switch_core_on_click);
-
     // Mux
     D_LOAD_INT(mux_concurrency)
     D_LOAD_COMBO_STRING(mux_protocol)

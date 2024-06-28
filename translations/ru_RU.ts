@@ -144,10 +144,6 @@
         <translation>Параметры ядра</translation>
     </message>
     <message>
-        <source>Switch core</source>
-        <translation>Выбор ядра</translation>
-    </message>
-    <message>
         <source>Extra Core</source>
         <translation>Дополнительные ядра</translation>
     </message>
@@ -186,14 +182,6 @@
     <message>
         <source>Please select the core name.</source>
         <translation>Выберите имя ядра.</translation>
-    </message>
-    <message>
-        <source>Confirmation</source>
-        <translation>Подтверждение</translation>
-    </message>
-    <message>
-        <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation>Переключаем ядро на  %1, нажмите &quot;Да&quot; для изменения и перезапуска программы. Эта функция может быть нестабильной, поэтому, пожалуйста, не переключайте ядро часто.</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>

@@ -146,24 +146,12 @@
         <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
     </message>
     <message>
-        <source>Switch core</source>
-        <translation>سوئیچ هسته</translation>
-    </message>
-    <message>
         <source>Enable hook.js</source>
         <translation type="unfinished">فعال سازی hook.js</translation>
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
         <translation>تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
-    </message>
-    <message>
-        <source>Confirmation</source>
-        <translation>تائیدیه</translation>
-    </message>
-    <message>
-        <source>Switching the core to %1, click &quot;Yes&quot; to complete the switch and the program will restart. This feature may be unstable, please do not switch frequently.</source>
-        <translation>هسته به 1% تغییر میابد، روی  &quot;Yes&quot; کلیک کنید تا تغییر پایان یابد و برنامه ریستارت شود. این قابلیت ممکن است پایدار نباشد، لطفا مکررا تعویض نکنید</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
