@@ -150,7 +150,7 @@ void MainWindow::speedtest_current_group(int mode) {
                     //
                     libcore::TestReq req;
                     req.set_mode((libcore::TestMode) mode);
-                    req.set_timeout(3000);
+                    req.set_timeout(5000);
                     req.set_url(NekoGui::dataStore->test_latency_url.toStdString());
 
                     //
@@ -250,7 +250,7 @@ void MainWindow::speedtest_current() {
     runOnNewThread([=] {
         libcore::TestReq req;
         req.set_mode(libcore::UrlTest);
-        req.set_timeout(3000);
+        req.set_timeout(5000);
         req.set_url(NekoGui::dataStore->test_latency_url.toStdString());
 
         bool rpcOK;

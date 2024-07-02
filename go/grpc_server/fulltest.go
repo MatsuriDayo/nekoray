@@ -43,7 +43,7 @@ func DoFullTest(ctx context.Context, in *gen.TestReq, instance interface{}) (out
 	// Latency
 	var latency string
 	if in.FullLatency {
-		t, _ := speedtest.UrlTest(httpClient, in.Url, in.Timeout)
+		t, _ := speedtest.UrlTest(httpClient, in.Url, in.Timeout, speedtest.UrlTestStandard_RTT)
 		out.Ms = t
 		if t > 0 {
 			latency = fmt.Sprint(t, "ms")

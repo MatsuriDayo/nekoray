@@ -4,7 +4,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"time"
 
 	"grpc_server"
 	"grpc_server/gen"
@@ -12,9 +11,9 @@ import (
 	"github.com/matsuridayo/libneko/neko_common"
 	"github.com/matsuridayo/libneko/neko_log"
 	"github.com/matsuridayo/libneko/speedtest"
-	"github.com/matsuridayo/sing-box-extra/boxapi"
-	"github.com/matsuridayo/sing-box-extra/boxbox"
-	"github.com/matsuridayo/sing-box-extra/boxmain"
+	box "github.com/sagernet/sing-box"
+	"github.com/sagernet/sing-box/boxapi"
+	boxmain "github.com/sagernet/sing-box/cmd/sing-box"
 
 	"log"
 
@@ -76,7 +75,8 @@ func (s *server) Stop(ctx context.Context, in *gen.EmptyReq) (out *gen.ErrorResp
 		return
 	}
 
-	instance.CloseWithTimeout(instance_cancel, time.Second*2, log.Println)
+	instance_cancel()
+	instance.Close()
 
 	instance = nil
 
@@ -94,7 +94,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 	}()
 
 	if in.Mode == gen.TestMode_UrlTest {
-		var i *boxbox.Box
+		var i *box.Box
 		var cancel context.CancelFunc
 		if in.Config != nil {
 			// Test instance
@@ -114,7 +114,7 @@ func (s *server) Test(ctx context.Context, in *gen.TestReq) (out *gen.TestResp, 
 			}
 		}
 		// Latency
-		out.Ms, err = speedtest.UrlTest(boxapi.CreateProxyHttpClient(i), in.Url, in.Timeout)
+		out.Ms, err = speedtest.UrlTest(boxapi.CreateProxyHttpClient(i), in.Url, in.Timeout, speedtest.UrlTestStandard_RTT)
 	} else if in.Mode == gen.TestMode_TcpPing {
 		out.Ms, err = speedtest.TcpPing(in.Address, in.Timeout)
 	} else if in.Mode == gen.TestMode_FullTest {
