@@ -267,6 +267,10 @@ set_property(TARGET nekoray PROPERTY AUTOUIC ON)
 set_property(TARGET nekoray PROPERTY AUTOMOC ON)
 set_property(TARGET nekoray PROPERTY AUTORCC ON)
 
+set_target_properties(nekoray PROPERTIES
+        WIN32_EXECUTABLE TRUE
+)
+
 # Target Source Translations
 
 set(TS_FILES
