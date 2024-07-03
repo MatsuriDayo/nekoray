@@ -20,7 +20,6 @@ DialogVPNSettings::DialogVPNSettings(QWidget *parent) : QDialog(parent), ui(new 
     ui->hide_console->setVisible(false);
 #endif
     ui->strict_route->setChecked(NekoGui::dataStore->vpn_strict_route);
-    ui->single_core->setVisible(IS_NEKO_BOX);
     ui->single_core->setChecked(NekoGui::dataStore->vpn_internal_tun);
     //
     D_LOAD_STRING_PLAIN(vpn_rule_cidr)

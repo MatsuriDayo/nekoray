@@ -247,6 +247,11 @@
              </item>
              <item>
               <property name="text">
+               <string notr="true">httpupgrade</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
                <string notr="true">http</string>
               </property>
              </item>

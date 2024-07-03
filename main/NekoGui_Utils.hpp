@@ -8,8 +8,8 @@
 
 //
 
-inline QString software_name = "NekoRay";
-inline QString software_core_name = "Xray";
+inline QString software_name = "NekoBox";
+inline QString software_core_name = "sing-box";
 
 // Main Functions
 

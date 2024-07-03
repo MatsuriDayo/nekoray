@@ -12,16 +12,8 @@
         <translation>فعال کردن</translation>
     </message>
     <message>
-        <source>HTTP Listen Port</source>
-        <translation>پورت HTTP درحال شنود</translation>
-    </message>
-    <message>
         <source>Listen Address</source>
         <translation>آدرس درحال شنود</translation>
-    </message>
-    <message>
-        <source>Socks Listen Port</source>
-        <translation>پورت ساکس درحال شنود</translation>
     </message>
     <message>
         <source>concurrency</source>
@@ -198,16 +190,6 @@
         <translation type="unfinished">لغو دی ان اس زیربنایی</translation>
     </message>
     <message>
-        <source>It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.
-For NekoRay, this rewrites the underlying(localhost) DNS in Tun Mode.
-For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mode, and also URL Test.</source>
-        <translation type="unfinished">پیشنهاد میشود که این گزینه را انتخاب نشده باقی بگذارید ، اما گاهی اوقات کار نمیکند در این مواقع شما میتوانید این گزینه را انتخاب کنید ، برای Nekoray این گزینه دی ان اس زیربنایی را در حالت تونل بازنویسی میکند ، و برای NekoBox این گزینه دی ان اس زیربنایی را هم در حالت تونل و هم در حالت معمولی و تست آدرس بازنویسی میکند</translation>
-    </message>
-    <message>
-        <source>If you Tun Mode is not working, try to change this option.</source>
-        <translation type="unfinished">اگر حالت تونل برای شما کار نمیکند ، این گزینه را تغییر دهید</translation>
-    </message>
-    <message>
         <source>Default On</source>
         <translation type="unfinished">به صورت پیشفرض فعال</translation>
     </message>
@@ -241,6 +223,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     </message>
     <message>
         <source>Old Share Link Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mixed (SOCKS+HTTP) Listen Port</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1369,25 +1355,12 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>تنظیمات</translation>
-    </message>
-    <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Not Running</source>
         <translation>در حال اجرا نیست</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translatorcomment>هیچ یک</translatorcomment>
-        <translation>هیچ یک</translation>
     </message>
     <message>
         <source>Select</source>

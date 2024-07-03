@@ -17,7 +17,5 @@ namespace NekoGui {
     bool IsAdmin();
 } // namespace NekoGui
 
-#define IS_NEKO_BOX (NekoGui::coreType == NekoGui::CoreType::SING_BOX)
-#define IS_NEKO_BOX_INTERNAL_TUN (IS_NEKO_BOX && NekoGui::dataStore->vpn_internal_tun)
-#define ROUTES_PREFIX_NAME QString(IS_NEKO_BOX ? "routes_box" : "routes")
+#define ROUTES_PREFIX_NAME QString("routes_box")
 #define ROUTES_PREFIX QString(ROUTES_PREFIX_NAME + "/")

@@ -12,16 +12,8 @@
         <translation>启用</translation>
     </message>
     <message>
-        <source>HTTP Listen Port</source>
-        <translation>HTTP 监听端口</translation>
-    </message>
-    <message>
         <source>Listen Address</source>
         <translation>监听地址</translation>
-    </message>
-    <message>
-        <source>Socks Listen Port</source>
-        <translation>Socks 监听端口</translation>
     </message>
     <message>
         <source>concurrency</source>
@@ -204,18 +196,6 @@
         <translation>覆盖底层 DNS</translation>
     </message>
     <message>
-        <source>It is recommended to leave it blank, but it sometimes does not work, at this time you can set this option.
-For NekoRay, this rewrites the underlying(localhost) DNS in Tun Mode.
-For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mode, and also URL Test.</source>
-        <translation>建议留空，但有时会出现问题，这时可以设置这个选项。
-对于 NekoRay 来说，在 Tun 模式下会重写 underlying(localhost) DNS。
-对于 NekoBox 来说，在 Tun 模式、正常模式和 URL 测试中会重写 underlying(localhost) DNS。</translation>
-    </message>
-    <message>
-        <source>If you Tun Mode is not working, try to change this option.</source>
-        <translation>如果您的 Tun 模式有问题，请尝试更改此选项。</translation>
-    </message>
-    <message>
         <source>Default On</source>
         <translation>默认开启</translation>
     </message>
@@ -242,6 +222,10 @@ For NekoBox, this rewrites the underlying(localhost) DNS in Tun Mode, normal mod
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
         <translation>时间间隔（分钟，少于 30 分钟无效）</translation>
+    </message>
+    <message>
+        <source>Mixed (SOCKS+HTTP) Listen Port</source>
+        <translation>Mixed (SOCKS+HTTP) 监听端口</translation>
     </message>
 </context>
 <context>
@@ -1209,10 +1193,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>Imported %1 profile(s)</source>
         <translation>导入了 %1 个配置</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation>无</translation>
     </message>
     <message>
         <source>Unavailable</source>

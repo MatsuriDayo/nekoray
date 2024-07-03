@@ -26,8 +26,6 @@ namespace NekoGui_fmt {
 
         QString DisplayType() override { return socks_http_type == type_HTTP ? "HTTP" : "Socks"; };
 
-        CoreObjOutboundBuildResult BuildCoreObjV2Ray() override;
-
         CoreObjOutboundBuildResult BuildCoreObjSingBox() override;
 
         bool TryParseLink(const QString &link);

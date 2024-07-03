@@ -95,7 +95,7 @@
             <item>
              <widget class="QLabel" name="inbound_socks_port_l">
               <property name="text">
-               <string>Socks Listen Port</string>
+               <string>Mixed (SOCKS+HTTP) Listen Port</string>
               </property>
              </widget>
             </item>
@@ -106,36 +106,6 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </widget>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="groupBox_http">
-           <layout class="QHBoxLayout" name="horizontalLayout_16">
-            <item>
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>HTTP Listen Port</string>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QLineEdit" name="inbound_http_port">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-             </widget>
-            </item>
-            <item>
-             <widget class="QCheckBox" name="http_enable">
-              <property name="text">
-               <string>Enable</string>
               </property>
              </widget>
             </item>
@@ -709,8 +679,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>198</width>
-            <height>58</height>
+            <width>632</width>
+            <height>299</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_6">

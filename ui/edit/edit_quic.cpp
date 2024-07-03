@@ -60,7 +60,6 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->heartbeat->hide();
         ui->heartbeat_l->hide();
         ui->uos->hide();
-        if (!IS_NEKO_BOX) ui->forceExternal->hide();
 
         if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) { // hy1
             ui->password->hide();
@@ -77,13 +76,11 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
             ui->alpn->hide();
             ui->alpn_l->hide();
             ui->TLS->removeItem(ui->alpn_sp);
-            if (IS_NEKO_BOX) {
-                ui->disableMtuDiscovery->hide();
-                ui->connectionReceiveWindow->hide();
-                ui->connectionReceiveWindow_l->hide();
-                ui->streamReceiveWindow->hide();
-                ui->streamReceiveWindow_l->hide();
-            }
+            ui->disableMtuDiscovery->hide();
+            ui->connectionReceiveWindow->hide();
+            ui->connectionReceiveWindow_l->hide();
+            ui->streamReceiveWindow->hide();
+            ui->streamReceiveWindow_l->hide();
         }
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
         ui->hopPort->hide();
@@ -107,9 +104,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->streamReceiveWindow_l->hide();
         ui->connectionReceiveWindow->hide();
         ui->connectionReceiveWindow_l->hide();
-        if (!IS_NEKO_BOX) {
-            ui->uos->hide();
-        }
+        ui->uos->hide();
     }
 }
 

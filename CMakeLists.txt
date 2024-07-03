@@ -150,7 +150,6 @@ set(PROJECT_SOURCES
         db/ConfigBuilder.cpp
 
         fmt/AbstractBean.cpp
-        fmt/Bean2CoreObj_ray.cpp
         fmt/Bean2CoreObj_box.cpp
         fmt/Bean2External.cpp
         fmt/Bean2Link.cpp

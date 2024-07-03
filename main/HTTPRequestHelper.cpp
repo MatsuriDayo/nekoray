@@ -18,7 +18,7 @@ namespace NekoGui_network {
         if (NekoGui::dataStore->sub_use_proxy) {
             QNetworkProxy p;
             // Note: sing-box mixed socks5 protocol error
-            p.setType(IS_NEKO_BOX ? QNetworkProxy::HttpProxy : QNetworkProxy::Socks5Proxy);
+            p.setType(QNetworkProxy::HttpProxy);
             p.setHostName("127.0.0.1");
             p.setPort(NekoGui::dataStore->inbound_socks_port);
             if (NekoGui::dataStore->inbound_auth->NeedAuth()) {

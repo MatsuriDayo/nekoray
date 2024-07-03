@@ -91,18 +91,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
 
-    // software_name
-    if (IS_NEKO_BOX) {
-        software_name = "NekoBox";
-        software_core_name = "sing-box";
-        // replace default values
-        if (NekoGui::dataStore->log_level == "warning") NekoGui::dataStore->log_level = "info";
-        if (NekoGui::dataStore->mux_protocol.isEmpty()) NekoGui::dataStore->mux_protocol = "h2mux";
-        //
-        if (QDir("dashboard").count() == 0) {
-            QDir().mkdir("dashboard");
-            QFile::copy(":/neko/dashboard-notice.html", "dashboard/index.html");
-        }
+    if (QDir("dashboard").count() == 0) {
+        QDir().mkdir("dashboard");
+        QFile::copy(":/neko/dashboard-notice.html", "dashboard/index.html");
     }
 
     // top bar
@@ -398,10 +389,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (NekoGui::dataStore->core_port <= 0) NekoGui::dataStore->core_port = 19810;
 
     auto core_path = QApplication::applicationDirPath() + "/";
-    core_path += IS_NEKO_BOX ? "nekobox_core" : "nekoray_core";
+    core_path += "nekobox_core";
 
     QStringList args;
-    args.push_back(IS_NEKO_BOX ? "nekobox" : "nekoray");
+    args.push_back("nekobox");
     args.push_back("-port");
     args.push_back(Int2String(NekoGui::dataStore->core_port));
     if (NekoGui::dataStore->flag_debug) args.push_back("-debug");
@@ -726,20 +717,8 @@ void MainWindow::on_menu_exit_triggered() {
 void MainWindow::neko_set_spmode_system_proxy(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_system_proxy) {
         if (enable) {
-#if defined(Q_OS_WIN)
-            if (!IS_NEKO_BOX && !IsValidPort(NekoGui::dataStore->inbound_http_port)) {
-                auto btn = QMessageBox::warning(this, software_name,
-                                                tr("Http inbound is not enabled, can't set system proxy."),
-                                                "OK", tr("Settings"), "", 0, 0);
-                if (btn == 1) {
-                    on_menu_basic_settings_triggered();
-                }
-                return;
-            }
-#endif
             auto socks_port = NekoGui::dataStore->inbound_socks_port;
-            auto http_port = NekoGui::dataStore->inbound_http_port;
-            if (IS_NEKO_BOX) http_port = socks_port;
+            auto http_port = NekoGui::dataStore->inbound_socks_port;
             SetSystemProxy(http_port, socks_port);
         } else {
             ClearSystemProxy();
@@ -761,7 +740,7 @@ void MainWindow::neko_set_spmode_system_proxy(bool enable, bool save) {
 void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_vpn) {
         if (enable) {
-            if (IS_NEKO_BOX_INTERNAL_TUN) {
+            if (NekoGui::dataStore->vpn_internal_tun) {
                 bool requestPermission = !NekoGui::IsAdmin();
                 if (requestPermission) {
 #ifdef Q_OS_LINUX
@@ -799,7 +778,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                 }
             }
         } else {
-            if (IS_NEKO_BOX_INTERNAL_TUN) {
+            if (NekoGui::dataStore->vpn_internal_tun) {
                 // current core is sing-box
             } else {
                 if (!StopVPNProcess()) {
@@ -820,7 +799,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     NekoGui::dataStore->spmode_vpn = enable;
     refresh_status();
 
-    if (IS_NEKO_BOX_INTERNAL_TUN && NekoGui::dataStore->started_id >= 0) neko_start(NekoGui::dataStore->started_id);
+    if (NekoGui::dataStore->vpn_internal_tun && NekoGui::dataStore->started_id >= 0) neko_start(NekoGui::dataStore->started_id);
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
@@ -858,13 +837,8 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         ui->label_running->setText(txt);
     }
     //
-    auto display_http = tr("None");
-    if (IsValidPort(NekoGui::dataStore->inbound_http_port)) {
-        display_http = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_http_port);
-    }
     auto display_socks = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_socks_port);
-    auto inbound_txt = QString("Socks: %1\nHTTP: %2").arg(display_socks, display_http);
-    if (IS_NEKO_BOX) inbound_txt = QString("Mixed: %1").arg(display_socks);
+    auto inbound_txt = QString("Mixed: %1").arg(display_socks);
     ui->label_inbound->setText(inbound_txt);
     //
     ui->checkBox_VPN->setChecked(NekoGui::dataStore->spmode_vpn);

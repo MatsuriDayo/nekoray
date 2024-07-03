@@ -59,8 +59,6 @@ namespace NekoGui_fmt {
 
         virtual int NeedExternal(bool isFirstProfile) { return 0; };
 
-        virtual CoreObjOutboundBuildResult BuildCoreObjV2Ray() { return {}; };
-
         virtual CoreObjOutboundBuildResult BuildCoreObjSingBox() { return {}; };
 
         virtual ExternalBuildResult BuildExternal(int mapping_port, int socks_port, int external_stat) { return {}; };

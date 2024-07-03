@@ -22,19 +22,13 @@ DialogManageRoutes::DialogManageRoutes(QWidget *parent) : QDialog(parent), ui(ne
 
     QStringList qsValue = {""};
     QString dnsHelpDocumentUrl;
-    if (IS_NEKO_BOX) {
-        ui->outbound_domain_strategy->addItems(Preset::SingBox::DomainStrategy);
-        ui->domainStrategyCombo->addItems(Preset::SingBox::DomainStrategy);
-        qsValue += QString("prefer_ipv4 prefer_ipv6 ipv4_only ipv6_only").split(" ");
-        ui->dns_object->setPlaceholderText(DecodeB64IfValid("ewogICJzZXJ2ZXJzIjogW10sCiAgInJ1bGVzIjogW10sCiAgImZpbmFsIjogIiIsCiAgInN0cmF0ZWd5IjogIiIsCiAgImRpc2FibGVfY2FjaGUiOiBmYWxzZSwKICAiZGlzYWJsZV9leHBpcmUiOiBmYWxzZSwKICAiaW5kZXBlbmRlbnRfY2FjaGUiOiBmYWxzZSwKICAicmV2ZXJzZV9tYXBwaW5nIjogZmFsc2UsCiAgImZha2VpcCI6IHt9Cn0="));
-        dnsHelpDocumentUrl = "https://sing-box.sagernet.org/configuration/dns/";
-    } else {
-        ui->outbound_domain_strategy->addItems({"AsIs", "UseIPv4", "UseIPv6", "PreferIPv4", "PreferIPv6"});
-        ui->domainStrategyCombo->addItems({"AsIs", "IPIfNonMatch", "IPOnDemand"});
-        qsValue += QString("use_ip use_ip4 use_ip6").split(" ");
-        ui->dns_object->setPlaceholderText(DecodeB64IfValid("ewogICJzZXJ2ZXJzIjogW10KfQ=="));
-        dnsHelpDocumentUrl = "https://www.v2fly.org/config/dns.html";
-    }
+    //
+    ui->outbound_domain_strategy->addItems(Preset::SingBox::DomainStrategy);
+    ui->domainStrategyCombo->addItems(Preset::SingBox::DomainStrategy);
+    qsValue += QString("prefer_ipv4 prefer_ipv6 ipv4_only ipv6_only").split(" ");
+    ui->dns_object->setPlaceholderText(DecodeB64IfValid("ewogICJzZXJ2ZXJzIjogW10sCiAgInJ1bGVzIjogW10sCiAgImZpbmFsIjogIiIsCiAgInN0cmF0ZWd5IjogIiIsCiAgImRpc2FibGVfY2FjaGUiOiBmYWxzZSwKICAiZGlzYWJsZV9leHBpcmUiOiBmYWxzZSwKICAiaW5kZXBlbmRlbnRfY2FjaGUiOiBmYWxzZSwKICAicmV2ZXJzZV9tYXBwaW5nIjogZmFsc2UsCiAgImZha2VpcCI6IHt9Cn0="));
+    dnsHelpDocumentUrl = "https://sing-box.sagernet.org/configuration/dns/";
+    //
     ui->direct_dns_strategy->addItems(qsValue);
     ui->remote_dns_strategy->addItems(qsValue);
     //

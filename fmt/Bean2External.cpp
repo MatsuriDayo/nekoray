@@ -70,19 +70,11 @@ namespace NekoGui_fmt {
             return 1;
         };
 
-        if (IS_NEKO_BOX) {
-            if (!forceExternal && (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp)) {
-                // sing-box support
-                return 0;
-            } else {
-                // hysteria core support
-                return hysteriaCore();
-            }
-        } else if (proxy_type == proxy_TUIC) {
-            return tuicCore();
-        } else if (proxy_type == proxy_Hysteria2) {
-            return hysteria2Core();
+        if (!forceExternal && (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp)) {
+            // sing-box support
+            return 0;
         } else {
+            // hysteria core support
             return hysteriaCore();
         }
     }

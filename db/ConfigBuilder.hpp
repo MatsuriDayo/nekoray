@@ -46,8 +46,6 @@ namespace NekoGui {
 
     std::shared_ptr<BuildConfigResult> BuildConfig(const std::shared_ptr<ProxyEntity> &ent, bool forTest, bool forExport);
 
-    void BuildConfigV2Ray(const std::shared_ptr<BuildConfigStatus> &status);
-
     void BuildConfigSingBox(const std::shared_ptr<BuildConfigStatus> &status);
 
     QString BuildChain(int chainId, const std::shared_ptr<BuildConfigStatus> &status);
