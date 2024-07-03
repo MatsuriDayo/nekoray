@@ -1776,9 +1776,8 @@ bool MainWindow::StartVPNProcess() {
         return true;
     }
     //
-    auto protectPath = QDir::currentPath() + "/protect";
     auto configPath = NekoGui::WriteVPNSingBoxConfig();
-    auto scriptPath = NekoGui::WriteVPNLinuxScript(protectPath, configPath);
+    auto scriptPath = NekoGui::WriteVPNLinuxScript(configPath);
     //
 #ifdef Q_OS_WIN
     runOnNewThread([=] {
@@ -1790,11 +1789,6 @@ bool MainWindow::StartVPNProcess() {
         runOnUiThread([=] { neko_set_spmode_vpn(false); });
     });
 #else
-    QFile::remove(protectPath);
-    if (QFile::exists(protectPath)) {
-        MessageBoxWarning("Error", "protect cannot be removed");
-        return false;
-    }
     //
     auto vpn_process = new QProcess;
     QProcess::connect(vpn_process, &QProcess::stateChanged, this, [=](QProcess::ProcessState state) {

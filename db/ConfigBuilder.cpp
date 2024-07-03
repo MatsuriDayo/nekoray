@@ -777,7 +777,7 @@ namespace NekoGui {
         return QFileInfo(file).absoluteFilePath();
     }
 
-    QString WriteVPNLinuxScript(const QString &protectPath, const QString &configPath) {
+    QString WriteVPNLinuxScript(const QString &configPath) {
 #ifdef Q_OS_WIN
         return {};
 #endif
@@ -786,9 +786,7 @@ namespace NekoGui {
         if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
         auto script = ReadFileText(scriptFn)
                           .replace("./nekobox_core", QApplication::applicationDirPath() + "/nekobox_core")
-                          .replace("$PROTECT_LISTEN_PATH", protectPath)
-                          .replace("$CONFIG_PATH", configPath)
-                          .replace("$TABLE_FWMARK", "514");
+                          .replace("$CONFIG_PATH", configPath);
         // write script
         QFile file2;
         file2.setFileName(QFileInfo(scriptFn).fileName());
