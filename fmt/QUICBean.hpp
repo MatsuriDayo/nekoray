@@ -5,32 +5,19 @@
 namespace NekoGui_fmt {
     class QUICBean : public AbstractBean {
     public:
-        static constexpr int proxy_Hysteria = 0;
+        // static constexpr int proxy_Hysteria = 0;
         static constexpr int proxy_TUIC = 1;
         static constexpr int proxy_Hysteria2 = 3;
-        int proxy_type = proxy_Hysteria;
+        int proxy_type = proxy_Hysteria2;
 
         bool forceExternal = false;
 
-        // Hysteria 1
-
-        static constexpr int hysteria_protocol_udp = 0;
-        static constexpr int hysteria_protocol_facktcp = 1;
-        static constexpr int hysteria_protocol_wechat_video = 2;
-        int hyProtocol = 0;
-
-        static constexpr int hysteria_auth_none = 0;
-        static constexpr int hysteria_auth_string = 1;
-        static constexpr int hysteria_auth_base64 = 2;
-        int authPayloadType = 0;
-        QString authPayload = "";
-
-        // Hysteria 1&2
+        // Hysteria 2
 
         QString obfsPassword = "";
 
-        int uploadMbps = 100;
-        int downloadMbps = 100;
+        int uploadMbps = 0;
+        int downloadMbps = 0;
 
         qint64 streamReceiveWindow = 0;
         qint64 connectionReceiveWindow = 0;
@@ -62,8 +49,7 @@ namespace NekoGui_fmt {
 
         explicit QUICBean(int _proxy_type) : AbstractBean(0) {
             proxy_type = _proxy_type;
-            if (proxy_type == proxy_Hysteria || proxy_type == proxy_Hysteria2) {
-                _add(new configItem("authPayload", &authPayload, itemType::string));
+            if (proxy_type == proxy_Hysteria2) {
                 _add(new configItem("obfsPassword", &obfsPassword, itemType::string));
                 _add(new configItem("uploadMbps", &uploadMbps, itemType::integer));
                 _add(new configItem("downloadMbps", &downloadMbps, itemType::integer));
@@ -72,14 +58,7 @@ namespace NekoGui_fmt {
                 _add(new configItem("disableMtuDiscovery", &disableMtuDiscovery, itemType::boolean));
                 _add(new configItem("hopInterval", &hopInterval, itemType::integer));
                 _add(new configItem("hopPort", &hopPort, itemType::string));
-                if (proxy_type == proxy_Hysteria) { // hy1
-                    _add(new configItem("authPayloadType", &authPayloadType, itemType::integer));
-                    _add(new configItem("protocol", &hyProtocol, itemType::integer));
-                } else { // hy2
-                    uploadMbps = 0;
-                    downloadMbps = 0;
-                    _add(new configItem("password", &password, itemType::string));
-                }
+                _add(new configItem("password", &password, itemType::string));
             } else if (proxy_type == proxy_TUIC) {
                 _add(new configItem("uuid", &uuid, itemType::string));
                 _add(new configItem("password", &password, itemType::string));
@@ -108,8 +87,6 @@ namespace NekoGui_fmt {
                 return software_core_name;
             } else if (proxy_type == proxy_TUIC) {
                 return "tuic";
-            } else if (proxy_type == proxy_Hysteria) {
-                return "hysteria";
             } else {
                 return "hysteria2";
             }
@@ -118,8 +95,6 @@ namespace NekoGui_fmt {
         QString DisplayType() override {
             if (proxy_type == proxy_TUIC) {
                 return "TUIC";
-            } else if (proxy_type == proxy_Hysteria) {
-                return "Hysteria1";
             } else {
                 return "Hysteria2";
             }

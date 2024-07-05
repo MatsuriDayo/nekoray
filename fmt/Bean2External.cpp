@@ -36,46 +36,26 @@ namespace NekoGui_fmt {
     }
 
     int QUICBean::NeedExternal(bool isFirstProfile) {
-        auto hysteriaCore = [=] {
+        auto extCore = [=] {
             if (isFirstProfile) {
-                if (NekoGui::dataStore->spmode_vpn && hyProtocol != hysteria_protocol_facktcp && hopPort.trimmed().isEmpty()) {
+                if (NekoGui::dataStore->spmode_vpn && hopPort.trimmed().isEmpty()) {
                     return 1;
                 }
                 return 2;
             } else {
-                if (hyProtocol == hysteria_protocol_facktcp || !hopPort.trimmed().isEmpty()) {
+                if (!hopPort.trimmed().isEmpty()) {
                     return -1;
                 }
             }
             return 1;
         };
 
-        auto hysteria2Core = [=] {
-            if (isFirstProfile) {
-                if (NekoGui::dataStore->spmode_vpn) {
-                    return 1;
-                }
-                return 2;
-            }
-            return 1;
-        };
-
-        auto tuicCore = [=] {
-            if (isFirstProfile) {
-                if (NekoGui::dataStore->spmode_vpn) {
-                    return 1;
-                }
-                return 2;
-            }
-            return 1;
-        };
-
-        if (!forceExternal && (proxy_type == proxy_TUIC || hyProtocol == hysteria_protocol_udp)) {
+        if (!forceExternal && (proxy_type == proxy_TUIC || hopPort.trimmed().isEmpty())) {
             // sing-box support
             return 0;
         } else {
-            // hysteria core support
-            return hysteriaCore();
+            // external core support
+            return extCore();
         }
     }
 
@@ -234,67 +214,10 @@ namespace NekoGui_fmt {
             result.arguments = QStringList{"-c", TempFile};
 
             return result;
-
-        } else { // Hysteria
-            ExternalBuildResult result{NekoGui::dataStore->extraCore->Get("hysteria")};
-
-            QJsonObject config;
-
-            // determine server format
-            auto is_direct = external_stat == 2;
-            auto sniGen = sni;
-            if (sni.isEmpty() && !IsIpAddress(serverAddress)) sniGen = serverAddress;
-
-            auto server = serverAddress;
-            if (!hopPort.trimmed().isEmpty()) {
-                server = WrapIPV6Host(server) + ":" + hopPort;
-            } else {
-                server = WrapIPV6Host(server) + ":" + Int2String(serverPort);
-            }
-            config["server"] = is_direct ? server : "127.0.0.1:" + Int2String(mapping_port);
-
-            // listen
-            config["socks5"] = QJsonObject{
-                {"listen", "127.0.0.1:" + Int2String(socks_port)},
-            };
-
-            // misc
-
-            config["retry"] = 5;
-            config["fast_open"] = true;
-            config["lazy_start"] = true;
-            config["obfs"] = obfsPassword;
-            config["up_mbps"] = uploadMbps;
-            config["down_mbps"] = downloadMbps;
-
-            if (authPayloadType == hysteria_auth_base64) config["auth"] = authPayload;
-            if (authPayloadType == hysteria_auth_string) config["auth_str"] = authPayload;
-
-            if (hyProtocol == hysteria_protocol_facktcp) config["protocol"] = "faketcp";
-            if (hyProtocol == hysteria_protocol_wechat_video) config["protocol"] = "wechat-video";
-
-            if (!sniGen.isEmpty()) config["server_name"] = sniGen;
-            if (!alpn.isEmpty()) config["alpn"] = alpn;
-
-            if (!caText.trimmed().isEmpty()) {
-                WriteTempFile("hysteria_" + GetRandomString(10) + ".crt", caText.toUtf8());
-                config["ca"] = TempFile;
-            }
-
-            if (allowInsecure) config["insecure"] = true;
-            if (streamReceiveWindow > 0) config["recv_window_conn"] = streamReceiveWindow;
-            if (connectionReceiveWindow > 0) config["recv_window"] = connectionReceiveWindow;
-            if (disableMtuDiscovery) config["disable_mtu_discovery"] = true;
-            config["hop_interval"] = hopInterval;
-
-            //
-
-            result.config_export = QJsonObject2QString(config, false);
-            WriteTempFile("hysteria_" + GetRandomString(10) + ".json", result.config_export.toUtf8());
-            result.arguments = QStringList{"--no-check", "-c", TempFile};
-
-            return result;
         }
+        ExternalBuildResult e;
+        e.error = "unknown type";
+        return e;
     }
 
     ExternalBuildResult CustomBean::BuildExternal(int mapping_port, int socks_port, int external_stat) {

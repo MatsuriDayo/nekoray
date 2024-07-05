@@ -122,14 +122,6 @@ namespace NekoGui_sub {
             if (!ok) return;
         }
 
-        // Hysteria1
-        if (str.startsWith("hysteria://")) {
-            needFix = false;
-            ent = NekoGui::ProfileManager::NewProxyEntity("hysteria");
-            auto ok = ent->QUICBean()->TryParseLink(str);
-            if (!ok) return;
-        }
-
         // Hysteria2
         if (str.startsWith("hysteria2://") || str.startsWith("hy2://")) {
             needFix = false;
@@ -413,37 +405,6 @@ namespace NekoGui_sub {
                             break;
                         }
                     }
-                } else if (type == "hysteria") {
-                    auto bean = ent->QUICBean();
-
-                    bean->hopPort = Node2QString(proxy["ports"]);
-
-                    bean->allowInsecure = Node2Bool(proxy["skip-cert-verify"]);
-                    auto alpn = Node2QStringList(proxy["alpn"]);
-                    bean->caText = Node2QString(proxy["ca-str"]);
-                    if (!alpn.isEmpty()) bean->alpn = alpn[0];
-                    bean->sni = Node2QString(proxy["sni"]);
-
-                    auto auth_str = FIRST_OR_SECOND(Node2QString(proxy["auth_str"]), Node2QString(proxy["auth-str"]));
-                    auto auth = Node2QString(proxy["auth"]);
-                    if (!auth_str.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_string;
-                        bean->authPayload = auth_str;
-                    }
-                    if (!auth.isEmpty()) {
-                        bean->authPayloadType = NekoGui_fmt::QUICBean::hysteria_auth_base64;
-                        bean->authPayload = auth;
-                    }
-                    bean->obfsPassword = Node2QString(proxy["obfs"]);
-
-                    if (Node2Bool(proxy["disable_mtu_discovery"]) || Node2Bool(proxy["disable-mtu-discovery"])) bean->disableMtuDiscovery = true;
-                    bean->streamReceiveWindow = Node2Int(proxy["recv-window"]);
-                    bean->connectionReceiveWindow = Node2Int(proxy["recv-window-conn"]);
-
-                    auto upMbps = Node2QString(proxy["up"]).split(" ")[0].toInt();
-                    auto downMbps = Node2QString(proxy["down"]).split(" ")[0].toInt();
-                    if (upMbps > 0) bean->uploadMbps = upMbps;
-                    if (downMbps > 0) bean->downloadMbps = downMbps;
                 } else if (type == "hysteria2") {
                     auto bean = ent->QUICBean();
 

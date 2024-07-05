@@ -16,6 +16,48 @@
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <layout class="QGridLayout" name="upBox">
+     <item row="1" column="1">
+      <layout class="QHBoxLayout" name="downloadMbpsLay">
+       <item>
+        <widget class="QLabel" name="downloadMbps_l">
+         <property name="text">
+          <string>Download (Mbps)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="downloadMbps"/>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="0">
+      <layout class="QHBoxLayout" name="hopPortLay">
+       <item>
+        <widget class="QLabel" name="hopPort_l">
+         <property name="text">
+          <string>Hop Port</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="hopPort"/>
+       </item>
+      </layout>
+     </item>
+     <item row="0" column="1">
+      <layout class="QHBoxLayout" name="hopIntervalLay">
+       <item>
+        <widget class="QLabel" name="hopInterval_l">
+         <property name="text">
+          <string>Hop Interval (s)</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="MyLineEdit" name="hopInterval"/>
+       </item>
+      </layout>
+     </item>
      <item row="3" column="0">
       <layout class="QHBoxLayout" name="heartbeatLay">
        <item>
@@ -37,19 +79,26 @@
        </item>
       </layout>
      </item>
-     <item row="0" column="0">
-      <layout class="QHBoxLayout" name="hopPortLay">
+     <item row="1" column="0">
+      <layout class="QHBoxLayout" name="uploadMbpsLay">
        <item>
-        <widget class="QLabel" name="hopPort_l">
+        <widget class="QLabel" name="uploadMbps_l">
          <property name="text">
-          <string>Hop Port</string>
+          <string>Upload (Mbps)</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="MyLineEdit" name="hopPort"/>
+        <widget class="MyLineEdit" name="uploadMbps"/>
        </item>
       </layout>
+     </item>
+     <item row="3" column="1">
+      <widget class="QCheckBox" name="zeroRttHandshake">
+       <property name="text">
+        <string>Zero Rtt Handshake</string>
+       </property>
+      </widget>
      </item>
      <item row="2" column="0">
       <layout class="QHBoxLayout" name="congestionControlLay">
@@ -81,48 +130,6 @@
        </item>
       </layout>
      </item>
-     <item row="1" column="1">
-      <layout class="QHBoxLayout" name="downloadMbpsLay">
-       <item>
-        <widget class="QLabel" name="downloadMbps_l">
-         <property name="text">
-          <string>Download (Mbps)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="MyLineEdit" name="downloadMbps"/>
-       </item>
-      </layout>
-     </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="hopIntervalLay">
-       <item>
-        <widget class="QLabel" name="hopInterval_l">
-         <property name="text">
-          <string>Hop Interval (s)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="MyLineEdit" name="hopInterval"/>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="0">
-      <layout class="QHBoxLayout" name="uploadMbpsLay">
-       <item>
-        <widget class="QLabel" name="uploadMbps_l">
-         <property name="text">
-          <string>Upload (Mbps)</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="MyLineEdit" name="uploadMbps"/>
-       </item>
-      </layout>
-     </item>
      <item row="2" column="1">
       <layout class="QHBoxLayout" name="udpRelayModeLay">
        <item>
@@ -148,14 +155,18 @@
        </item>
       </layout>
      </item>
-     <item row="3" column="1">
-      <widget class="QCheckBox" name="zeroRttHandshake">
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout">
+     <item>
+      <widget class="QCheckBox" name="forceExternal">
        <property name="text">
-        <string>Zero Rtt Handshake</string>
+        <string>Force use external core</string>
        </property>
       </widget>
      </item>
-     <item row="4" column="1">
+     <item>
       <widget class="QCheckBox" name="uos">
        <property name="toolTip">
         <string notr="true">Requires sing-box server</string>
@@ -165,10 +176,16 @@
        </property>
       </widget>
      </item>
-     <item row="4" column="0">
-      <widget class="QCheckBox" name="forceExternal">
+     <item>
+      <widget class="QCheckBox" name="disableMtuDiscovery">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
        <property name="text">
-        <string>Force use external core</string>
+        <string>Disable MTU Discovery</string>
        </property>
       </widget>
      </item>
@@ -176,93 +193,38 @@
    </item>
    <item>
     <layout class="QGridLayout" name="obfuscation">
-     <item row="1" column="0">
+     <item row="0" column="1">
+      <widget class="MyLineEdit" name="obfsPassword"/>
+     </item>
+     <item row="0" column="0">
       <widget class="QLabel" name="obfsPassword_l">
        <property name="text">
         <string>Obfs Password</string>
        </property>
       </widget>
      </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="hyProtocol_l">
-       <property name="text">
-        <string>Protocol</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <widget class="QComboBox" name="hyProtocol">
-         <item>
-          <property name="text">
-           <string notr="true">QUIC</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">FakeTCP</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string notr="true">wechat-video</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
-        <widget class="QCheckBox" name="disableMtuDiscovery">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Disable MTU Discovery</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item row="1" column="1">
-      <widget class="MyLineEdit" name="obfsPassword"/>
-     </item>
     </layout>
    </item>
    <item>
     <layout class="QGridLayout" name="authentication">
-     <item row="2" column="1">
-      <widget class="MyLineEdit" name="uuid"/>
+     <item row="0" column="2">
+      <widget class="QPushButton" name="uuidgen">
+       <property name="text">
+        <string>Generate UUID</string>
+       </property>
+      </widget>
      </item>
      <item row="0" column="0">
-      <widget class="QLabel" name="authPayloadType_l">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
+      <widget class="QLabel" name="uuid_l">
        <property name="text">
-        <string>Auth Type</string>
+        <string notr="true">UUID</string>
        </property>
       </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="MyLineEdit" name="uuid"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="authPayload_l">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="text">
-        <string>Auth Payload</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
       <widget class="QLabel" name="password_l">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
@@ -275,44 +237,8 @@
        </property>
       </widget>
      </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="uuid_l">
-       <property name="text">
-        <string notr="true">UUID</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QPushButton" name="uuidgen">
-       <property name="text">
-        <string>Generate UUID</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="1" colspan="2">
-      <widget class="MyLineEdit" name="password"/>
-     </item>
      <item row="1" column="1" colspan="2">
-      <widget class="MyLineEdit" name="authPayload"/>
-     </item>
-     <item row="0" column="1" colspan="2">
-      <widget class="QComboBox" name="authPayloadType">
-       <item>
-        <property name="text">
-         <string notr="true">NONE</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">STRING</string>
-        </property>
-       </item>
-       <item>
-        <property name="text">
-         <string notr="true">BASE64</string>
-        </property>
-       </item>
-      </widget>
+      <widget class="MyLineEdit" name="password"/>
      </item>
     </layout>
    </item>
@@ -428,11 +354,8 @@
   <tabstop>zeroRttHandshake</tabstop>
   <tabstop>forceExternal</tabstop>
   <tabstop>uos</tabstop>
-  <tabstop>hyProtocol</tabstop>
   <tabstop>disableMtuDiscovery</tabstop>
   <tabstop>obfsPassword</tabstop>
-  <tabstop>authPayloadType</tabstop>
-  <tabstop>authPayload</tabstop>
   <tabstop>uuid</tabstop>
   <tabstop>uuidgen</tabstop>
   <tabstop>password</tabstop>

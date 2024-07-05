@@ -25,13 +25,10 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     P_LOAD_INT(downloadMbps);
     P_LOAD_BOOL(disableMtuDiscovery)
     P_LOAD_STRING(obfsPassword);
-    P_LOAD_STRING(authPayload);
     P_LOAD_INT(streamReceiveWindow);
     P_LOAD_INT(connectionReceiveWindow);
 
     P_LOAD_BOOL(forceExternal);
-    P_LOAD_COMBO_INT(hyProtocol);
-    P_LOAD_COMBO_INT(authPayloadType);
     P_LOAD_STRING(uuid);
     P_LOAD_STRING(password);
 
@@ -48,7 +45,7 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
     P_LOAD_BOOL(allowInsecure);
     P_LOAD_BOOL(disableSni);
 
-    if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria || bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria2) {
+    if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria2) {
         ui->uuid->hide();
         ui->uuid_l->hide();
         ui->uuidgen->hide();
@@ -61,27 +58,14 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->heartbeat_l->hide();
         ui->uos->hide();
 
-        if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_Hysteria) { // hy1
-            ui->password->hide();
-            ui->password_l->hide();
-        } else { // hy2
-            ui->hyProtocol->hide();
-            ui->hyProtocol_l->hide();
-            ui->hyProtocol->hide();
-            ui->hyProtocol_l->hide();
-            ui->authPayload->hide();
-            ui->authPayload_l->hide();
-            ui->authPayloadType->hide();
-            ui->authPayloadType_l->hide();
-            ui->alpn->hide();
-            ui->alpn_l->hide();
-            ui->TLS->removeItem(ui->alpn_sp);
-            ui->disableMtuDiscovery->hide();
-            ui->connectionReceiveWindow->hide();
-            ui->connectionReceiveWindow_l->hide();
-            ui->streamReceiveWindow->hide();
-            ui->streamReceiveWindow_l->hide();
-        }
+        ui->alpn->hide();
+        ui->alpn_l->hide();
+        ui->TLS->removeItem(ui->alpn_sp);
+        ui->disableMtuDiscovery->hide();
+        ui->connectionReceiveWindow->hide();
+        ui->connectionReceiveWindow_l->hide();
+        ui->streamReceiveWindow->hide();
+        ui->streamReceiveWindow_l->hide();
     } else if (bean->proxy_type == NekoGui_fmt::QUICBean::proxy_TUIC) {
         ui->hopPort->hide();
         ui->hopPort_l->hide();
@@ -91,15 +75,9 @@ void EditQUIC::onStart(std::shared_ptr<NekoGui::ProxyEntity> _ent) {
         ui->uploadMbps_l->hide();
         ui->downloadMbps->hide();
         ui->downloadMbps_l->hide();
-        ui->hyProtocol->hide();
-        ui->hyProtocol_l->hide();
         ui->disableMtuDiscovery->hide();
         ui->obfsPassword->hide();
         ui->obfsPassword_l->hide();
-        ui->authPayload->hide();
-        ui->authPayload_l->hide();
-        ui->authPayloadType->hide();
-        ui->authPayloadType_l->hide();
         ui->streamReceiveWindow->hide();
         ui->streamReceiveWindow_l->hide();
         ui->connectionReceiveWindow->hide();
@@ -113,16 +91,13 @@ bool EditQUIC::onEnd() {
 
     P_SAVE_BOOL(forceExternal);
 
-    // Hysteria
+    // Hysteria 2
     P_SAVE_STRING(hopPort);
     P_SAVE_INT(hopInterval);
     P_SAVE_INT(uploadMbps);
     P_SAVE_INT(downloadMbps);
-    P_SAVE_COMBO_INT(hyProtocol);
     P_SAVE_BOOL(disableMtuDiscovery)
     P_SAVE_STRING(obfsPassword);
-    P_SAVE_COMBO_INT(authPayloadType);
-    P_SAVE_STRING(authPayload);
     P_SAVE_INT(streamReceiveWindow);
     P_SAVE_INT(connectionReceiveWindow);
 

@@ -191,27 +191,12 @@ namespace NekoGui_fmt {
             {"tls", coreTlsObj},
         };
 
-        if (proxy_type == proxy_Hysteria) {
-            outbound["type"] = "hysteria";
-            outbound["obfs"] = obfsPassword;
-            outbound["disable_mtu_discovery"] = disableMtuDiscovery;
-            outbound["recv_window"] = streamReceiveWindow;
-            outbound["recv_window_conn"] = connectionReceiveWindow;
-            outbound["up_mbps"] = uploadMbps;
-            outbound["down_mbps"] = downloadMbps;
-
-            if (!hopPort.trimmed().isEmpty()) {
-                outbound["hop_ports"] = hopPort;
-                outbound["hop_interval"] = hopInterval;
-            }
-            if (authPayloadType == hysteria_auth_base64) outbound["auth"] = authPayload;
-            if (authPayloadType == hysteria_auth_string) outbound["auth_str"] = authPayload;
-        } else if (proxy_type == proxy_Hysteria2) {
+        if (proxy_type == proxy_Hysteria2) {
             outbound["type"] = "hysteria2";
             outbound["password"] = password;
             outbound["up_mbps"] = uploadMbps;
             outbound["down_mbps"] = downloadMbps;
-            
+
             if (!hopPort.trimmed().isEmpty()) {
                 outbound["hop_ports"] = hopPort;
                 outbound["hop_interval"] = hopInterval;

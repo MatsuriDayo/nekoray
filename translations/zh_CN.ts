@@ -862,14 +862,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>证书</translation>
     </message>
     <message>
-        <source>Auth Type</source>
-        <translation>认证类型</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>协议</translation>
-    </message>
-    <message>
         <source>Download (Mbps)</source>
         <translation>下载速度 (Mbps)</translation>
     </message>
@@ -900,10 +892,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     <message>
         <source>SNI</source>
         <translation>SNI</translation>
-    </message>
-    <message>
-        <source>Auth Payload</source>
-        <translation>认证有效载荷</translation>
     </message>
     <message>
         <source>Generate UUID</source>
@@ -1223,10 +1211,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation>正在测试</translation>
     </message>
     <message>
-        <source>Http inbound is not enabled, can&apos;t set system proxy.</source>
-        <translation>HTTP 入站未启用，无法设置系统代理。</translation>
-    </message>
-    <message>
         <source>Update</source>
         <translation>更新</translation>
     </message>
@@ -1295,10 +1279,6 @@ End: %2</source>
     <message>
         <source>Remove Unavailable</source>
         <translation>删除不可用的配置</translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>设置</translation>
     </message>
     <message>
         <source>New profile</source>

@@ -858,14 +858,6 @@ This needs to be run NekoBox with administrator privileges.</source>
         <translation type="unfinished">گواهی</translation>
     </message>
     <message>
-        <source>Auth Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation type="unfinished">پروتکل</translation>
-    </message>
-    <message>
         <source>Download (Mbps)</source>
         <translation type="unfinished">دانلود (مگابیت بر ثانیه)</translation>
     </message>
@@ -895,10 +887,6 @@ This needs to be run NekoBox with administrator privileges.</source>
     </message>
     <message>
         <source>SNI</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auth Payload</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

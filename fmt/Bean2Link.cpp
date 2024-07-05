@@ -182,29 +182,7 @@ namespace NekoGui_fmt {
 
     QString QUICBean::ToShareLink() {
         QUrl url;
-        if (proxy_type == proxy_Hysteria) {
-            url.setScheme("hysteria");
-            url.setHost(serverAddress);
-            url.setPort(serverPort);
-            QUrlQuery q;
-            q.addQueryItem("upmbps", Int2String(uploadMbps));
-            q.addQueryItem("downmbps", Int2String(downloadMbps));
-            if (!obfsPassword.isEmpty()) {
-                q.addQueryItem("obfs", "xplus");
-                q.addQueryItem("obfsParam", obfsPassword);
-            }
-            if (authPayloadType == hysteria_auth_string) q.addQueryItem("auth", authPayload);
-            if (hyProtocol == hysteria_protocol_facktcp) q.addQueryItem("protocol", "faketcp");
-            if (hyProtocol == hysteria_protocol_wechat_video) q.addQueryItem("protocol", "wechat-video");
-            if (!hopPort.trimmed().isEmpty()) q.addQueryItem("mport", hopPort);
-            if (allowInsecure) q.addQueryItem("insecure", "1");
-            if (!sni.isEmpty()) q.addQueryItem("peer", sni);
-            if (!alpn.isEmpty()) q.addQueryItem("alpn", alpn);
-            if (connectionReceiveWindow > 0) q.addQueryItem("recv_window", Int2String(connectionReceiveWindow));
-            if (streamReceiveWindow > 0) q.addQueryItem("recv_window_conn", Int2String(streamReceiveWindow));
-            if (!q.isEmpty()) url.setQuery(q);
-            if (!name.isEmpty()) url.setFragment(name);
-        } else if (proxy_type == proxy_TUIC) {
+        if (proxy_type == proxy_TUIC) {
             url.setScheme("tuic");
             url.setUserName(uuid);
             url.setPassword(password);

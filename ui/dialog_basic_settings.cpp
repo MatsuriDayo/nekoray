@@ -159,7 +159,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     //
     CACHE.extraCore = QString2QJsonObject(NekoGui::dataStore->extraCore->core_map);
     if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
-    if (!CACHE.extraCore.contains("hysteria")) CACHE.extraCore.insert("hysteria", "");
     if (!CACHE.extraCore.contains("hysteria2")) CACHE.extraCore.insert("hysteria2", "");
     if (!CACHE.extraCore.contains("tuic")) CACHE.extraCore.insert("tuic", "");
     //

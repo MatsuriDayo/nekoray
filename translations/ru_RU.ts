@@ -857,14 +857,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
 <context>
     <name>EditQUIC</name>
     <message>
-        <source>Auth Type</source>
-        <translation>Тип авторизации</translation>
-    </message>
-    <message>
-        <source>Protocol</source>
-        <translation>Протокол</translation>
-    </message>
-    <message>
         <source>Download (Mbps)</source>
         <translation>Скорость приема (Mbps)</translation>
     </message>
@@ -899,10 +891,6 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>SNI</source>
         <translation>SNI</translation>
-    </message>
-    <message>
-        <source>Auth Payload</source>
-        <translation>Полезная нагрузка в режиме авторизации</translation>
     </message>
     <message>
         <source>Disable SNI</source>
