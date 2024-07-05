@@ -55,9 +55,9 @@ cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=D:/path/to/qt/5.15.
 ninja
 ```
 
-编译完成后得到 `nekoray.exe`
+编译完成后得到 `nekobox.exe`
 
-最后运行 `windeployqt nekoray.exe` 自动复制所需 DLL 等文件到当前目录
+最后运行 `windeployqt nekobox.exe` 自动复制所需 DLL 等文件到当前目录
 
 ### Go 部分编译
 

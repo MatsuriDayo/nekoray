@@ -30,9 +30,9 @@ func main() {
 				time.Sleep(time.Second)
 				Updater()
 				// 3. start
-				exec.Command("./nekoray.exe").Start()
+				exec.Command("./nekobox.exe").Start()
 			} else {
-				// 1. nekoray stop it self and run "updater.exe"
+				// 1. main prog quit and run "updater.exe"
 				Copy("./updater.exe", "./updater.old")
 				exec.Command("./updater.old", os.Args[1:]...).Start()
 			}
@@ -43,7 +43,7 @@ func main() {
 			if os.Getenv("NKR_FROM_LAUNCHER") == "1" {
 				Launcher()
 			} else {
-				exec.Command("./nekoray").Start()
+				exec.Command("./nekobox").Start()
 			}
 		}
 		return

@@ -140,7 +140,7 @@ int main(int argc, char* argv[]) {
             return 0;
         }
         // Some Bad System
-        QMessageBox::warning(nullptr, "NekoRay", "RunGuard disallow to run, use -many to force start.");
+        QMessageBox::warning(nullptr, "NekoGui", "RunGuard disallow to run, use -many to force start.");
         return 0;
     }
     MF_release_runguard = [&] { guard.release(); };
@@ -148,7 +148,7 @@ int main(int argc, char* argv[]) {
 // icons
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     QIcon::setFallbackSearchPaths(QStringList{
-        ":/nekoray",
+        ":/neko",
         ":/icon",
     });
 #endif
@@ -177,9 +177,6 @@ int main(int argc, char* argv[]) {
 
     // Load dataStore
     switch (NekoGui::coreType) {
-        case NekoGui::CoreType::V2RAY:
-            NekoGui::dataStore->fn = "groups/nekoray.json";
-            break;
         case NekoGui::CoreType::SING_BOX:
             NekoGui::dataStore->fn = "groups/nekobox.json";
             break;

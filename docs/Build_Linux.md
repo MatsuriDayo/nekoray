@@ -22,9 +22,9 @@ cmake -GNinja ..
 ninja
 ```
 
-编译完成后得到 `nekoray`
+编译完成后得到 `nekobox`
 
-解压 Release 的压缩包，替换其中的 `nekoray`，删除 `launcher` 即可使用。
+解压 Release 的压缩包，替换其中的 `nekobox`，删除 `launcher` 即可使用。
 
 ## 复杂编译法
 
@@ -69,7 +69,7 @@ cmake -GNinja ..
 ninja
 ```
 
-编译完成后得到 `nekoray`
+编译完成后得到 `nekobox`
 
 ### Go 部分编译
 

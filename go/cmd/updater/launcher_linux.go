@@ -17,7 +17,7 @@ func Launcher() {
 	_debug := flag.Bool("debug", false, "Debug mode")
 	flag.Parse()
 
-	cmd := exec.Command("./nekoray", flag.Args()...)
+	cmd := exec.Command("./nekobox", flag.Args()...)
 
 	ld_env := "LD_LIBRARY_PATH=" + filepath.Join(wd, "./usr/lib")
 	qt_plugin_env := "QT_PLUGIN_PATH=" + filepath.Join(wd, "./usr/plugins")
