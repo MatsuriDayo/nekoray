@@ -2,37 +2,37 @@
 
 sudo apt-get install fuse -y
 
-cp -r linux64 nekoray.AppDir
+cp -r linux64 nekobox.AppDir
 
 # The file for Appimage
 
-rm nekoray.AppDir/launcher
+rm nekobox.AppDir/launcher
 
-cat >nekoray.AppDir/nekoray.desktop <<-EOF
+cat >nekobox.AppDir/nekobox.desktop <<-EOF
 [Desktop Entry]
-Name=nekoray
-Exec=echo "NekoRay started"
-Icon=nekoray
+Name=nekobox
+Exec=echo "nekobox started"
+Icon=nekobox
 Type=Application
 Categories=Network
 EOF
 
-cat >nekoray.AppDir/AppRun <<-EOF
+cat >nekobox.AppDir/AppRun <<-EOF
 #!/bin/bash
 echo "PATH: \${PATH}"
-echo "NekoRay runing on: \$APPDIR"
-LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/nekoray -appdata "\$@"
+echo "nekobox runing on: \$APPDIR"
+LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/nekobox -appdata "\$@"
 EOF
 
-chmod +x nekoray.AppDir/AppRun
+chmod +x nekobox.AppDir/AppRun
 
 # build
 
 curl -fLSO https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
 chmod +x appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage nekoray.AppDir
+./appimagetool-x86_64.AppImage nekobox.AppDir
 
 # clean
 
 rm appimagetool-x86_64.AppImage
-rm -rf nekoray.AppDir
+rm -rf nekobox.AppDir

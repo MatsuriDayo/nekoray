@@ -196,7 +196,7 @@ jobs:
           cp -r public_res/* linux64
           ####
           bash ../libs/package_appimage.sh
-          mv nekoray-x86_64.AppImage $version_standalone-linux-x64.AppImage
+          mv nekobox-x86_64.AppImage $version_standalone-linux-x64.AppImage
       - name: Clean Up
         run: |
           cd deployment
