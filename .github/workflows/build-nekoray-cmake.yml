@@ -4,20 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release Tag'
+        description: "Release Tag"
         required: true
       publish:
-        description: 'Publish: If want ignore'
+        description: "Publish: If want ignore"
         required: false
       artifact-pack:
-        description: 'artifact-pack: If want ignore'
+        description: "artifact-pack: If want ignore"
         required: false
 jobs:
   build-go:
     strategy:
       matrix:
-        cross_os: [ windows, linux ]
-        cross_arch: [ amd64 ]
+        cross_os: [windows, linux]
+        cross_arch: [amd64]
         include:
           - cross_os: public_res
             cross_arch: public_res
@@ -38,7 +38,7 @@ jobs:
         if: steps.cache-common.outputs.cache-hit != 'true'
         uses: actions/setup-go@v3
         with:
-          go-version: ^1.21
+          go-version: ^1.22
       - name: Build golang parts
         if: steps.cache-common.outputs.cache-hit != 'true'
         shell: bash
@@ -61,7 +61,7 @@ jobs:
         include:
           - platform: windows-2022
             arch: x64
-            qt_version: "6.5"
+            qt_version: "6.7"
           - platform: ubuntu-20.04
             arch: x64
             qt_version: "5.12"

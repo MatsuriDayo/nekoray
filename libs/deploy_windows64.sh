@@ -2,11 +2,7 @@
 set -e
 
 source libs/env_deploy.sh
-if [ "$DL_QT_VER" == "5.15" ]; then
-  DEST=$DEPLOYMENT/windows7-x64
-else
-  DEST=$DEPLOYMENT/windows64
-fi
+DEST=$DEPLOYMENT/windows64
 rm -rf $DEST
 mkdir -p $DEST
 
