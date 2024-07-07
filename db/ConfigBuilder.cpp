@@ -523,21 +523,22 @@ namespace NekoGui {
             };
 
         // Direct
-        auto directDNSAddress = dataStore->routing->direct_dns;
-        if (!status->forTest) {
-            QJsonObject directObj{
-                {"tag", "dns-direct"},
-                {"address_resolver", "dns-local"},
-                {"strategy", dataStore->routing->direct_dns_strategy},
-                {"address", directDNSAddress.replace("+local://", "://")},
-                {"detour", "direct"},
-            };
-            if (dataStore->routing->dns_final_out == "bypass") {
-                dnsServers.prepend(directObj);
-            } else {
-                dnsServers.append(directObj);
-            }
+        QJsonObject directObj{
+            {"tag", "dns-direct"},
+            {"address_resolver", "dns-local"},
+            {"strategy", dataStore->routing->direct_dns_strategy},
+            {"address", dataStore->routing->direct_dns},
+            {"detour", "direct"},
+        };
+        if (dataStore->routing->dns_final_out == "bypass") {
+            dnsServers.prepend(directObj);
+        } else {
+            dnsServers.append(directObj);
         }
+        dnsRules.append(QJsonObject{
+            {"outbound", "any"},
+            {"server", "direct"},
+        });
 
         // block
         if (!status->forTest)
@@ -687,7 +688,7 @@ namespace NekoGui {
         QJSONARRAY_ADD(routingRules, status->routingRules)
         auto routeObj = QJsonObject{
             {"rules", routingRules},
-            {"auto_detect_interface", dataStore->spmode_vpn},
+            {"auto_detect_interface", dataStore->spmode_vpn}, // TODO force enable?
             {
                 "geoip",
                 QJsonObject{

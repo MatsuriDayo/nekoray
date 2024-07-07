@@ -1214,18 +1214,18 @@ void MainWindow::on_menu_export_config_triggered() {
 
     QMessageBox msg(QMessageBox::Information, tr("Config copied"), config_core);
     msg.addButton("Copy core config", QMessageBox::YesRole);
-    msg.addButton("Copy test config", QMessageBox::YesRole);
+    msg.addButton("Copy test config", QMessageBox::NoRole);
     msg.addButton(QMessageBox::Ok);
     msg.setEscapeButton(QMessageBox::Ok);
     msg.setDefaultButton(QMessageBox::Ok);
     auto ret = msg.exec();
-    if (ret == 0) {
+    if (ret == 2) {
         result = BuildConfig(ent, false, false);
-        config_core = QJsonObject2QString(result->coreConfig, true);
+        config_core = QJsonObject2QString(result->coreConfig, false);
         QApplication::clipboard()->setText(config_core);
-    } else if (ret == 1) {
+    } else if (ret == 3) {
         result = BuildConfig(ent, true, false);
-        config_core = QJsonObject2QString(result->coreConfig, true);
+        config_core = QJsonObject2QString(result->coreConfig, false);
         QApplication::clipboard()->setText(config_core);
     }
 }
