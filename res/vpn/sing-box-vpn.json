@@ -12,7 +12,7 @@
             {
                 "tag": "dns-remote",
                 "address": "8.8.8.8",
-                "detour": "nekoray-socks"
+                "detour": "neko-socks"
             },
             {
                 "tag": "dns-direct",
@@ -75,7 +75,7 @@
     "outbounds": [
         {
             "type": "socks",
-            "tag": "nekoray-socks",
+            "tag": "neko-socks",
             "udp_fragment": true,
             //%SOCKS_USER_PASS%
             "server": "127.0.0.1",

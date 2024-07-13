@@ -22,7 +22,7 @@ namespace NekoGui {
     }
 
     QString genTunName() {
-        auto tun_name = "nekobox-tun";
+        auto tun_name = "neko-tun";
 #ifdef Q_OS_MACOS
         tun_name = "utun9";
 #endif
@@ -726,8 +726,8 @@ namespace NekoGui {
 
     QString WriteVPNSingBoxConfig() {
         // tun user rule
-        auto match_out = dataStore->vpn_rule_white ? "nekobox-socks" : "direct";
-        auto no_match_out = dataStore->vpn_rule_white ? "direct" : "nekobox-socks";
+        auto match_out = dataStore->vpn_rule_white ? "neko-socks" : "direct";
+        auto no_match_out = dataStore->vpn_rule_white ? "direct" : "neko-socks";
 
         QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {

@@ -131,7 +131,6 @@ set(PROJECT_SOURCES
         3rdparty/qrcodegen.cpp
         3rdparty/QtExtKeySequenceEdit.cpp
 
-        3rdparty/qv2ray/v2/ui/LogHighlighter.cpp
         3rdparty/qv2ray/v2/ui/QvAutoCompleteTextEdit.cpp
         3rdparty/qv2ray/v2/components/proxy/QvProxyConfigurator.cpp
         3rdparty/qv2ray/v2/ui/widgets/common/QJsonModel.cpp
