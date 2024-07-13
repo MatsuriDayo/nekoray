@@ -1,0 +1,18 @@
+name: AUR CI
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'LICENSE'
+      - '!.github/workflows/**'
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: chitang233/aur-pkgbuild-builder@main
+        with:
+          deploy_key: ${{ secrets.DEPLOY_KEY }}
+          package_name: 'nekoray-git'
