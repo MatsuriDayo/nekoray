@@ -247,7 +247,6 @@ namespace NekoGui {
         _add(new configItem("theme", &theme, itemType::string));
         _add(new configItem("custom_inbound", &custom_inbound, itemType::string));
         _add(new configItem("custom_route", &custom_route_global, itemType::string));
-        _add(new configItem("v2ray_asset_dir", &v2ray_asset_dir, itemType::string));
         _add(new configItem("sub_use_proxy", &sub_use_proxy, itemType::boolean));
         _add(new configItem("remember_id", &remember_id, itemType::integer));
         _add(new configItem("remember_enable", &remember_enable, itemType::boolean));
@@ -416,16 +415,12 @@ namespace NekoGui {
     // System Utils
 
     QString FindCoreAsset(const QString &name) {
-        QStringList search{NekoGui::dataStore->v2ray_asset_dir};
+        QStringList search{};
         search << QApplication::applicationDirPath();
         search << "/usr/share/sing-geoip";
         search << "/usr/share/sing-geosite";
-        search << "/usr/share/xray";
-        search << "/usr/local/share/xray";
-        search << "/opt/xray";
-        search << "/usr/share/v2ray";
-        search << "/usr/local/share/v2ray";
-        search << "/opt/v2ray";
+        search << "/usr/lib/nekobox";
+        search << "/usr/share/nekobox";
         for (const auto &dir: search) {
             if (dir.isEmpty()) continue;
             QFileInfo asset(dir + "/" + name);

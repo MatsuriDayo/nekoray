@@ -64,14 +64,6 @@
         <translation>自定义入站</translation>
     </message>
     <message>
-        <source>Asset Location</source>
-        <translation>资源文件路径</translation>
-    </message>
-    <message>
-        <source>Default: dir of &quot;nekoray&quot;</source>
-        <translation>默认值：和 nekoray 同路径</translation>
-    </message>
-    <message>
         <source>Concurrent</source>
         <translation>并发</translation>
     </message>

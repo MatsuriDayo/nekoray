@@ -64,14 +64,6 @@
         <translation>ورودی سفارشی</translation>
     </message>
     <message>
-        <source>Asset Location</source>
-        <translation>مکان دارایی</translation>
-    </message>
-    <message>
-        <source>Default: dir of &quot;nekoray&quot;</source>
-        <translation type="unfinished">مسیر پیش فرض &quot;nekoray&quot;</translation>
-    </message>
-    <message>
         <source>Concurrent</source>
         <translation>هم زمان</translation>
     </message>

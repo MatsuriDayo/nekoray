@@ -141,13 +141,7 @@ namespace NekoGui_sys {
 
     void CoreProcess::Start() {
         show_stderr = false;
-        // set extra env
-        auto v2ray_asset_dir = NekoGui::FindCoreAsset("geoip.dat");
-        if (!v2ray_asset_dir.isEmpty()) {
-            v2ray_asset_dir = QFileInfo(v2ray_asset_dir).absolutePath();
-            env << "XRAY_LOCATION_ASSET=" + v2ray_asset_dir;
-        }
-        //
+        // cwd: same as GUI, at ./config
         ExternalProcess::Start();
         write((NekoGui::dataStore->core_token + "\n").toUtf8());
     }

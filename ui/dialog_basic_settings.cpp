@@ -155,7 +155,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     // Core
 
     ui->groupBox_core->setTitle(software_core_name);
-    ui->core_v2ray_asset->setText(NekoGui::dataStore->v2ray_asset_dir);
     //
     CACHE.extraCore = QString2QJsonObject(NekoGui::dataStore->extraCore->core_map);
     if (!CACHE.extraCore.contains("naive")) CACHE.extraCore.insert("naive", "");
@@ -167,16 +166,6 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         extra_core_layout->addWidget(new ExtraCoreWidget(&CACHE.extraCore, s));
     }
     //
-    connect(ui->core_v2ray_asset, &QLineEdit::textChanged, this, [=] {
-        CACHE.needRestart = true;
-    });
-    connect(ui->core_v2ray_asset_pick, &QPushButton::clicked, this, [=] {
-        auto fn = QFileDialog::getExistingDirectory(this, tr("Select"), QDir::currentPath(),
-                                                    QFileDialog::Option::ShowDirsOnly | QFileDialog::Option::ReadOnly);
-        if (!fn.isEmpty()) {
-            ui->core_v2ray_asset->setText(fn);
-        }
-    });
     connect(ui->extra_core_add, &QPushButton::clicked, this, [=] {
         bool ok;
         auto s = QInputDialog::getText(nullptr, tr("Add"),
@@ -278,7 +267,6 @@ void DialogBasicSettings::accept() {
 
     // Core
 
-    NekoGui::dataStore->v2ray_asset_dir = ui->core_v2ray_asset->text();
     NekoGui::dataStore->extraCore->core_map = QJsonObject2QString(CACHE.extraCore, true);
 
     // Mux
@@ -293,7 +281,7 @@ void DialogBasicSettings::accept() {
     NekoGui::dataStore->utlsFingerprint = ui->utlsFingerprint->currentText();
 
     // 关闭连接统计，停止刷新前清空记录。
-    if (NekoGui::dataStore->traffic_loop_interval == 0 || NekoGui::dataStore->connection_statistics == false) {
+    if (NekoGui::dataStore->traffic_loop_interval == 0 || !NekoGui::dataStore->connection_statistics) {
         MW_dialog_message("", "ClearConnectionList");
     }
 

@@ -108,14 +108,6 @@
         <translation>Ядро</translation>
     </message>
     <message>
-        <source>Asset Location</source>
-        <translation>Расположение файлов</translation>
-    </message>
-    <message>
-        <source>Default: dir of &quot;nekoray&quot;</source>
-        <translation>По умолчанию: текущая папка nekoray</translation>
-    </message>
-    <message>
         <source>Select</source>
         <translation>Выбрать</translation>
     </message>

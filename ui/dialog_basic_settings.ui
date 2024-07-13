@@ -566,39 +566,7 @@
           <item>
            <widget class="QWidget" name="assest_group" native="true">
             <layout class="QGridLayout" name="gridLayout_2">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>Asset Location</string>
-               </property>
-              </widget>
-             </item>
              <item row="0" column="1">
-              <layout class="QGridLayout" name="gridLayout_4">
-               <item row="0" column="0">
-                <widget class="MyLineEdit" name="core_v2ray_asset">
-                 <property name="placeholderText">
-                  <string>Default: dir of &quot;nekoray&quot;</string>
-                 </property>
-                </widget>
-               </item>
-               <item row="0" column="1">
-                <widget class="QPushButton" name="core_v2ray_asset_pick">
-                 <property name="text">
-                  <string>Select</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_3">
-               <property name="text">
-                <string notr="true">Loglevel</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
               <widget class="QComboBox" name="log_level">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -608,14 +576,21 @@
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="1" column="0">
               <widget class="QLabel" name="label_6">
                <property name="text">
                 <string>Multiplex (mux)</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="0" column="0">
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string notr="true">Loglevel</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
               <layout class="QHBoxLayout" name="horizontalLayout">
                <item>
                 <widget class="QComboBox" name="mux_protocol"/>
