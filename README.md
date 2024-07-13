@@ -8,16 +8,6 @@ Support Windows / Linux out of the box now.
 
 目前支持 Windows / Linux 开箱即用
 
-## 4.x 开发计划
-
-软件定位：电脑端节点调试软件。更新频率随机，可用性无保证。机场订阅用户建议使用 Clash Verge Rev 等。
-
-1. 移除 Xray 核心，更新 sing-box。
-2. 移除一些没用的功能。
-3. 更新文档。
-4. 更新部分依赖
-5. 移除 macos 遗留
-
 ## 下载 / Download
 
 ### GitHub Releases (Portable ZIP)
