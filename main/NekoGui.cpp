@@ -419,6 +419,7 @@ namespace NekoGui {
         search << QApplication::applicationDirPath();
         search << "/usr/share/sing-geoip";
         search << "/usr/share/sing-geosite";
+        search << "/usr/share/sing-box";
         search << "/usr/lib/nekobox";
         search << "/usr/share/nekobox";
         for (const auto &dir: search) {
