@@ -1358,11 +1358,12 @@ void MainWindow::on_menu_select_all_triggered() {
     ui->proxyListTable->selectAll();
 }
 
-void MainWindow::on_menu_delete_repeat_triggered() {
+void MainWindow::on_menu_delete_repeat_triggered(bool const search_across_all_profiles) {
     QList<std::shared_ptr<NekoGui::ProxyEntity>> out;
     QList<std::shared_ptr<NekoGui::ProxyEntity>> out_del;
 
-    NekoGui::ProfileFilter::Uniq(NekoGui::profileManager->CurrentGroup()->Profiles(), out, true, false);
+    auto const profiles = search_across_all_profiles ? NekoGui::profileManager->Profiles() : NekoGui::profileManager->CurrentGroup()->Profiles();
+    NekoGui::ProfileFilter::Uniq(profiles, out, true, false);
     NekoGui::ProfileFilter::OnlyInSrc_ByPointer(NekoGui::profileManager->CurrentGroup()->Profiles(), out, out_del);
 
     int remove_display_count = 0;
@@ -1382,6 +1383,10 @@ void MainWindow::on_menu_delete_repeat_triggered() {
         }
         refresh_proxy_list();
     }
+}
+
+void MainWindow::on_menu_delete_duplicates_global_triggered() {
+    return on_menu_delete_repeat_triggered(true);
 }
 
 bool mw_sub_updating = false;

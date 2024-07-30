@@ -28,6 +28,8 @@ namespace NekoGui {
 
         [[nodiscard]] static std::shared_ptr<Group> NewGroup();
 
+        QList<std::shared_ptr<ProxyEntity>> Profiles() const;
+
         bool AddProfile(const std::shared_ptr<ProxyEntity> &ent, int gid = -1);
 
         void DeleteProfile(int id);
