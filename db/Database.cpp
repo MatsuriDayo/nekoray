@@ -14,6 +14,14 @@ namespace NekoGui {
         _add(new configItem("groups", &groupsTabOrder, itemType::integerList));
     }
 
+    QList<std::shared_ptr<ProxyEntity>> ProfileManager::Profiles() const {
+        QList<std::shared_ptr<ProxyEntity>> ret;
+        for (const auto &[_, profile]: profiles) {
+            ret += profile;
+        }
+        return ret;
+    }
+
     QList<int> filterIntJsonFile(const QString &path) {
         QList<int> result;
         QDir dr(path);

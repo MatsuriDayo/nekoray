@@ -542,6 +542,7 @@
      <addaction name="separator"/>
      <addaction name="menu_remove_unavailable"/>
      <addaction name="menu_delete_repeat"/>
+     <addaction name="menu_delete_duplicates_global"/>
      <addaction name="separator"/>
      <addaction name="menu_update_subscription"/>
     </widget>
@@ -727,6 +728,14 @@
    </property>
    <property name="shortcut">
     <string notr="true">Ctrl+Shift+D</string>
+   </property>
+  </action>
+  <action name="menu_delete_duplicates_global">
+   <property name="text">
+    <string>Remove Duplicates Across All Groups</string>
+   </property>
+   <property name="shortcut">
+    <string notr="true"></string>
    </property>
   </action>
   <action name="actionfake">
