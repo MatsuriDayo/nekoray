@@ -169,7 +169,6 @@ jobs:
           cd deployment
           cp -r public_res/* linux64
           cp -r public_res/* windows64
-          cp -r public_res/* windows-arm64
           rm -rf public_res *.pdb
           ####
           mv linux64 nekoray
