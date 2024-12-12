@@ -121,7 +121,9 @@ private slots:
 
     void on_menu_select_all_triggered();
 
-    void on_menu_delete_repeat_triggered();
+    void on_menu_delete_repeat_triggered(bool const search_across_all_profiles = false);
+
+    void on_menu_delete_duplicates_global_triggered();
 
     void on_menu_remove_unavailable_triggered();
 
