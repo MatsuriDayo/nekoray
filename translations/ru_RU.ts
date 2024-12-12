@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>Mixed (SOCKS+HTTP) Listen Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Смешанный (SOCKS+HTTP) прослушивающий порт</translation>
     </message>
 </context>
 <context>
@@ -663,11 +663,13 @@
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Особенно важно, и рекомендуется использовать значение &quot;localhost&quot; по умолчанию.
+    Если значение по умолчанию не работает, попробуйте изменить его на &quot;223.5.5.5&quot;.
+Для получения дополнительной информации см. документ &quot;Configuration/DNS&quot;.</translation>
     </message>
     <message>
         <source>Final DNS Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Окончательный выход DNS</translation>
     </message>
 </context>
 <context>
@@ -839,11 +841,11 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Disable logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить логи</translation>
     </message>
     <message>
         <source>Turn on this option if your connection is lost after a while</source>
-        <translation type="unfinished"></translation>
+        <translation>Включите эту опцию, если соединение пропадает через некоторое время</translation>
     </message>
 </context>
 <context>
@@ -914,7 +916,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation type="unfinished"></translation>
+        <translation>Принудительное использование внешнего ядра</translation>
     </message>
 </context>
 <context>
@@ -1496,11 +1498,11 @@ End: %2</source>
     </message>
     <message>
         <source>Stop Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить тестирование</translation>
     </message>
     <message>
         <source>URL Test</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-Тест</translation>
     </message>
 </context>
 <context>
@@ -1651,7 +1653,7 @@ Release note:
     </message>
     <message>
         <source>The last speed test did not exit completely, please wait. If it persists, please restart the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Последний тест скорости не завершился полностью, пожалуйста, подождите. Если проблема сохраняется, пожалуйста, перезапустите программу.</translation>
     </message>
 </context>
 <context>
