@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         cross_os: [windows, linux]
-        cross_arch: [amd64]
+        cross_arch: [amd64, arm64]
         include:
           - cross_os: public_res
             cross_arch: public_res
@@ -177,7 +177,11 @@ jobs:
           ####
           mv windows64 nekoray
           zip -r $version_standalone-windows64.zip nekoray
+          ####
+          mv -f windows-arm64/*.exe nekoray/
+          zip -r $version_standalone-windows-arm64.zip nekoray
           rm -rf nekoray
+          rm -rf windows-arm64
       - name: Pack Debian
         run: |
           source libs/env_deploy.sh
@@ -202,6 +206,7 @@ jobs:
           cd deployment
           rm -rf linux64
           rm -rf windows64
+          rm -rf windows-arm64
           rm -rf public_res
           rm -rf *.pdb
       - name: Uploading Artifact
