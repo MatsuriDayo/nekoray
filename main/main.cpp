@@ -91,6 +91,7 @@ int main(int argc, char* argv[]) {
     if (NekoGui::dataStore->argv.contains("-debug")) NekoGui::dataStore->flag_debug = true;
     if (NekoGui::dataStore->argv.contains("-flag_restart_tun_on")) NekoGui::dataStore->flag_restart_tun_on = true;
     if (NekoGui::dataStore->argv.contains("-flag_reorder")) NekoGui::dataStore->flag_reorder = true;
+    if (NekoGui::dataStore->argv.contains("-toggle_config")) NekoGui::dataStore->flag_toggle_config = true;
 #ifdef NKR_CPP_USE_APPDATA
     NekoGui::dataStore->flag_use_appdata = true; // Example: Package & MacOS
 #endif

@@ -1725,6 +1725,7 @@ void MainWindow::RegisterHotkey(bool unregister) {
         NekoGui::dataStore->hotkey_group,
         NekoGui::dataStore->hotkey_route,
         NekoGui::dataStore->hotkey_system_proxy_menu,
+        NekoGui::dataStore->hotkey_toggle_config,
     };
 
     for (const auto &key: regstr) {
@@ -1755,6 +1756,12 @@ void MainWindow::HotkeyEvent(const QString &key) {
             on_menu_routing_settings_triggered();
         } else if (key == NekoGui::dataStore->hotkey_system_proxy_menu) {
             ui->menu_spmode->popup(QCursor::pos());
+        } else if (key == NekoGui::dataStore->hotkey_toggle_config) {
+            if (NekoGui::dataStore->started_id >= 0) {
+                neko_stop();
+            } else {
+                neko_start();
+            }
         }
     });
 }

@@ -1,5 +1,3 @@
-// DO NOT INCLUDE THIS
-
 namespace NekoGui {
 
     class Routing : public JsonStore {
@@ -89,6 +87,7 @@ namespace NekoGui {
         bool flag_debug = false;
         bool flag_restart_tun_on = false;
         bool flag_reorder = false;
+        bool flag_toggle_config = false; // Pbac2
 
         // Saved
 
@@ -159,6 +158,7 @@ namespace NekoGui {
         QString hotkey_group = "";
         QString hotkey_route = "";
         QString hotkey_system_proxy_menu = "";
+        QString hotkey_toggle_config = ""; // Pf754
 
         // Core
         int core_box_clash_api = -9090;
