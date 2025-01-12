@@ -41,7 +41,7 @@
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>Проверять пре-релизы при обновлениях</translation>
+        <translation>Включить пре-релизы при проверке обновлений</translation>
     </message>
     <message>
         <source>System proxy format</source>
@@ -145,7 +145,7 @@
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
-        <translation>Не проверять подлинность TLS сертификатов по умолчанию</translation>
+        <translation>Пропускать проверку подлинности TLS-сертификатов по умолчанию (allowInsecure)</translation>
     </message>
     <message>
         <source>Default uTLS Fingerprint</source>
@@ -217,7 +217,7 @@
     </message>
     <message>
         <source>Mixed (SOCKS+HTTP) Listen Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Смешанный (SOCKS+HTTP) порт для входящих подключений</translation>
     </message>
 </context>
 <context>
@@ -343,7 +343,7 @@
     </message>
     <message>
         <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation>Нижележащий транспорт. Должен соответствовать конфигурации сервера, иначе подключение будет невозможно.</translation>
+        <translation>Метод нижележащего транспорта. Он должен соответствовать конфигурации сервера, иначе подключение будет невозможно.</translation>
     </message>
     <message>
         <source>Network</source>
@@ -395,7 +395,7 @@
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
-        <translation>Если вкл., то  клиент не будет проверять валидность TLS-сертификата, предоставленного сервером</translation>
+        <translation>Если включено, то клиент не будет проверять валидность TLS-сертификата, предоставленного сервером (безопасность эквивалентна открытому тексту)</translation>
     </message>
     <message>
         <source>Allow insecure</source>
@@ -419,7 +419,7 @@
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
-        <translation>Публичный ключ Reality. Если задано значение, то будет использован протокол Reality для TLS.</translation>
+        <translation>Публичный ключ Reality. Если не пусто, то TLS превратится в REALITY.</translation>
     </message>
     <message>
         <source>Reality short id. Accept only one value.</source>
@@ -470,7 +470,7 @@
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Режим системного прокси</translation>
+        <translation>Режим проксирования</translation>
     </message>
 </context>
 <context>
@@ -520,7 +520,7 @@
     </message>
     <message>
         <source>Note: Other settings are independent for each route set.</source>
-        <translation>Остальные настройки будут индивидуальны
+        <translation>Примечание: остальные настройки будут индивидуальны
 для каждого набора маршрутов.</translation>
     </message>
     <message>
@@ -663,11 +663,13 @@
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это особенно важно, и рекомендуется использовать значение по умолчанию &quot;localhost&quot;.
+Если значение по умолчанию не работает, попробуйте изменить его на &quot;223.5.5.5&quot;.
+Для получения дополнительной информации см. документ &quot;Конфигурация/DNS&quot;.</translation>
     </message>
     <message>
         <source>Final DNS Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Итоговый DNS Out</translation>
     </message>
 </context>
 <context>
@@ -835,15 +837,15 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>
-        <translation></translation>
+        <translation>Небезопасный мультипоток</translation>
     </message>
     <message>
         <source>Disable logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить логи</translation>
     </message>
     <message>
         <source>Turn on this option if your connection is lost after a while</source>
-        <translation type="unfinished"></translation>
+        <translation>>Включите эту опцию, если ваше соединение обрывается через некоторое время</translation>
     </message>
 </context>
 <context>
@@ -858,7 +860,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Hop Interval (s)</source>
-        <translation></translation>
+        <translation>>Интервал перехода (сек.)</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -870,7 +872,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Hop Port</source>
-        <translation></translation>
+        <translation>Порт перехода</translation>
     </message>
     <message>
         <source>Upload (Mbps)</source>
@@ -914,7 +916,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation type="unfinished"></translation>
+        <translation>Принудительно использовать внешнее ядро</translation>
     </message>
 </context>
 <context>
@@ -989,7 +991,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <name>GroupItem</name>
     <message>
         <source>Update Subscription</source>
-        <translation>Обновить</translation>
+        <translation>Обновить подписку</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -1099,7 +1101,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Tun Mode</source>
-        <translation>Режим TUN</translation>
+        <translation>Режим туннелирования</translation>
     </message>
     <message>
         <source>System Proxy</source>
@@ -1303,8 +1305,8 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translatorcomment>Ну слово &quot;разрешить&quot; можно использоваться и в значении &quot;разобраться&quot;</translatorcomment>
-        <translation>Разрешить доменное имя</translation>
+        <translatorcomment>Ну слово &quot;разрешить&quot; можно использоваться и в значении &quot;разобраться&quot; ;;;;; Здесь бы больше подошло слово &quot;определить&quot;, хоть и разрешить тоже звучит неплохо </translatorcomment>
+        <translation>Определить доменное имя</translation>
     </message>
     <message>
         <source>Tun Settings</source>
@@ -1364,7 +1366,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
-        <translation>Текущий сервер не совместим с TUN-режимом. Пожалуйста, сначала остановите подключение к серверу, активируйте TUN-режим, и потом перезапустите.</translation>
+        <translation>Текущий сервер не совместим с режимом туннелирования. Пожалуйста, сначала остановите подключение к серверу, активируйте TUN-режим, и потом перезапустите.</translation>
     </message>
     <message>
         <source>Not Running</source>
@@ -1404,11 +1406,11 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Resolving domain to IP, if support.</source>
-        <translation>Отрезолвить домен в IP-адрес, если поддерживается.</translation>
+        <translation>Превращение доменного имени в IP-адрес, если поддерживается.</translation>
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation>Ключевые слова для игнорирования</translation>
+        <translation>Задать ключевые слова для игнорирования</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
@@ -1496,11 +1498,11 @@ End: %2</source>
     </message>
     <message>
         <source>Stop Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить тестирование</translation>
     </message>
     <message>
         <source>URL Test</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-тест</translation>
     </message>
 </context>
 <context>
@@ -1651,7 +1653,7 @@ Release note:
     </message>
     <message>
         <source>The last speed test did not exit completely, please wait. If it persists, please restart the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Последнее тестирование скорости не завершилось полностью, пожалуйста, подождите. Если проблема не исчезнет, пожалуйста, перезапустите программу.</translation>
     </message>
 </context>
 <context>
