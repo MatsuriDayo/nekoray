@@ -7,6 +7,7 @@
 #include <QTimer>
 
 #include "main/NekoGui.hpp"
+#include "main/SimpleHttpClient.h"
 
 namespace NekoGui_network {
 
@@ -44,6 +45,15 @@ namespace NekoGui_network {
             c.setPeerVerifyMode(QSslSocket::PeerVerifyMode::VerifyNone);
             request.setSslConfiguration(c);
         }
+
+#ifdef __GNUC__
+        {
+            QNetworkAccessManagerAlternative::HttpClient syncClient;
+            auto res = syncClient.executeGetRequest(request, accessManager);
+            return NekoHTTPResponse{res.success ? "" : res.error,
+                                    res.body.toLocal8Bit(), res.headers};
+        }
+#else
         //
         auto _reply = accessManager.get(request);
         connect(_reply, &QNetworkReply::sslErrors, _reply, [](const QList<QSslError> &errors) {
@@ -73,6 +83,7 @@ namespace NekoGui_network {
                                        _reply->readAll(), _reply->rawHeaderPairs()};
         _reply->deleteLater();
         return result;
+#endif
     }
 
     QString NetworkRequestHelper::GetHeader(const QList<QPair<QByteArray, QByteArray>> &header, const QString &name) {

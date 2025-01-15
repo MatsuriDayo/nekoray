@@ -107,6 +107,10 @@ else ()
     list(APPEND NKR_EXTERNAL_TARGETS qhotkey)
 endif ()
 
+# if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+#     include_directories(3rdparty/cpp-httplib)
+# endif()
+
 #### debug print ####
 
 if (DBG_CMAKE)
@@ -126,6 +130,7 @@ set(PROJECT_SOURCES
         main/NekoGui.cpp
         main/NekoGui_Utils.cpp
         main/HTTPRequestHelper.cpp
+        main/SimpleHttpClient.cpp
 
         3rdparty/base64.cpp
         3rdparty/qrcodegen.cpp
