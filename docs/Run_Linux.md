@@ -1,27 +1,32 @@
-## Linux 安装
+## Linux Installation
 
-### Debian 系发行版
+For installation, you can use this script:  
+```sh
+sh install-nekoray.sh
+```
 
-使用 Debian 系发行版时，推荐使用 .deb 包安装：
+### Debian-Based Distributions
+
+For Debian-based distributions, it is recommended to use the `.deb` package for installation:
 
 ```shell
 sudo apt install ./nekoray-*-debian-x64.deb
 ```
 
-安装完成后，桌面快捷方式启动自带参数 `-appdata`，如果想要直接启动并使用之前的配置，注意附带本参数。
+After installation, the desktop shortcut will launch with the `-appdata` parameter. If you want to launch directly and use previous configurations, make sure to include this parameter.
 
-### Arch 系发行版
+### Arch-Based Distributions
 
-使用 Arch 系发行版时，推荐从 ```aur``` 或 ```archlinuxcn``` 安装：
+For Arch-based distributions, it is recommended to install from `AUR` or `archlinuxcn`:
 
 #### AUR
-##### 最新稳定版
+##### Latest Stable Version
 
 ```shell
 [yay/paru] -S nekoray
 ```
 
-##### 最新 Git 版 (开发版)
+##### Latest Git Version (Development Version)
 
 ```shell
 [yay/paru] -S nekoray-git
@@ -29,53 +34,61 @@ sudo apt install ./nekoray-*-debian-x64.deb
 
 #### archlinuxcn
 
-##### 最新稳定版
+##### Latest Stable Version
 
 ```shell
 sudo pacman -S nekoray
 ```
 
-##### 最新 Git 版 (开发版)
+##### Latest Git Version (Development Version)
 
 ```shell
 sudo pacman -S nekoray-git
 ```
 
-### 其他发行版
+### Other Distributions
 
-下载 .zip 文件，解压到合适的路径，开箱即用。
+Download the `.zip` file, extract it to a suitable directory, and use it right away.
 
-或下载 .AppImage，并使用 `chmod +x nekoray-*-AppImage-x64.AppImage` 给予可执行权限。
+Alternatively, download the `.AppImage` file and grant execution permissions using:
 
-具体使用方法见下文。
+```shell
+chmod +x nekoray-*-AppImage-x64.AppImage
+```
 
-## Linux 运行
+Refer to the following sections for detailed usage instructions.
 
-**使用 Linux 系统相信您已具备基本的排错能力，
-本项目不提供特定发行版/架构的支持，预编译文件不能满足您的需求时，请自行编译/适配。**
+## Linux Usage
 
-已知部分 Linux 发行版无法使用、非 x86_64 暂无适配，可以尝试自行编译。
+**Using a Linux system implies that you have basic troubleshooting skills.  
+This project does not provide specific support for distributions/architectures. If the precompiled files do not meet your needs, please compile/adjust them yourself.**
 
-目前 Release 便携包解压后，有两种使用方法：
+Note: Some Linux distributions are known to be incompatible, and there is no current support for non-x86_64 architectures. You may attempt to compile the software yourself.
 
-1. System: 若要使用系统的 Qt5 运行库，请执行 `./nekoray`
-2. Bundle: 若要使用预编译的 Qt 运行库，请执行 `./launcher`
+For the current release, portable packages can be used in two ways after extraction:
 
-### Bundle
+1. **System Mode**: To use the system's Qt5 runtime library, execute `./nekoray`.
+2. **Bundle Mode**: To use the precompiled Qt runtime library, execute `./launcher`.
 
-要求：已安装主流的发行版和 xcb 桌面环境。
+### Bundle Mode
 
-运行： `./launcher` 或 部分系统可双击打开
+**Requirements**: A mainstream distribution with an xcb desktop environment installed.
 
-launcher 参数
+**Run**: Execute `./launcher`, or double-click to open on some systems.
 
-* `./launcher -- -appdata` ( `--` 后的参数传递给主程序 )
-* `-debug` Debug mode
+Launcher parameters:
 
-Ubuntu 22.04: `sudo apt install libxcb-xinerama0`
+- `./launcher -- -appdata` (Parameters after `--` are passed to the main program.)
+- `-debug` Debug mode
 
-### System
+For Ubuntu 22.04:  
+```shell
+sudo apt install libxcb-xinerama0
+```
 
-要求：已安装主流的发行版和 xcb 桌面环境，已安装 Qt5.12 ~ Qt5.15 环境。
+### System Mode
 
-运行： `./nekoray` 或 部分系统可双击打开。如果无法运行，建议使用 Bundle 版。
+**Requirements**: A mainstream distribution with an xcb desktop environment installed and a Qt5.12 ~ Qt5.15 environment set up.
+
+**Run**: Execute `./nekoray`, or double-click to open on some systems. If it fails to run, it is recommended to use the Bundle version.
+
